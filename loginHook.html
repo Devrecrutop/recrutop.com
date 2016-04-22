@@ -1,0 +1,56 @@
+<!-- UTS/ocdapps/loginHook.html -->
+<if $ouid>
+<div class="hookOuter webUserHookOuter ocdHookOuter ocdHOlogged">
+<else>
+<div class="hookOuter webUserHookOuter ocdHookOuter">
+</if>
+<form name="ocdloginform" method="post" action="{$basePath}index.php/page/ocdapp/bb/1/" onsubmit="">
+	<div class="hookHeader webUserHookHeader ocdHookHeader">[t]Login[/t]</div>
+	
+	<if $ouid>
+	{* we are logged in already *}
+	<div class="hookText webUserHookText ocdHookText logged">[t]Welcome back,[/t] <span class="ocdLoggedName">{$name}</span></div>
+	<div class="hookButton webUserHookButton ocdHookButton wuhLoggedinProfile"><input type="button" value="[tb]Profile page[/tb]" class="button" onclick="window.location='{$basePath}index.php/page/ocdapp/bb/1/command/profile'"></div>
+	<div class="hookButton webUserHookButton ocdHookButton wuhLoggedinOut"><input type="button" value="[tb]Log out[/tb]" class="button" onclick="window.location='{$basePath}index.php/page/ocdapp/bb/1/command/logout/x/{$rnd}'"></div>
+	<else>
+	{* not logged in!!! *}
+	<div class="hookWord webUserHookKeyWord ocdHookKeyWord"><label for="CandidateLoginEmail">[t]User name / e-mail[/t]</label></div>
+	<div class="hookInput webUserHookInput ocdHookInput"><input type="text" name="ocd_username" value="" id="CandidateLoginEmail" ></div>
+	<div class="hookWord webUserHookKeyWord ocdHookKeyWord"><label for="PassWord">[t]Password[/t]</label></div>
+	<div class="hookInput webUserHookInput ocdHookInput"><input type="password" name="ocd_password" value="" id="PassWord" ></div>
+	<div class="hookText webUserHookText ocdHookText"><span>[t]Not registered?[/t]</span> <a href="{$basePath}index.php/page/applicants/bb/1/command/startsignup">[t]Sign up now[/t]</a></div>
+	<if [uts:show_forgot_pwd]><div class="hookText webUserHookText ocdHookText ocdFrgtPswrd"><a href="{$basePath}index.php/page/applicants/bb/1/command/forgotpwdform">[t]Forgot password?[/t]</a></div></if>
+	<div class="hookButton webUserHookButton ocdHookButton wuhNotLoggedIn"><input type="submit" name="bOcdSubmit" value="[tb]Submit[/tb]" class="button"></div>
+    
+    
+    
+	</if>
+	
+	<input type="hidden" name="command" value="login">
+	<input type="hidden" name="origin" value="ocdhook">
+	<input type="hidden" name="lastURI" value="{$lastURI|escape}">
+</form>
+
+<if [uts:show_forgot_pwd_email] && !$ouid>
+    <form name="ocdForgotPasswordForm" method="post" action="{$basePath}index.php/page/applicants/bb/1/" onsubmit="">
+    
+        <div class="hookText webUserHookText ocdHookText ocdFrgtPswrd">
+            <a href="{$basePath}index.php/page/applicants/bb/1/command/forgotpwdform">[t]Forgot password?[/t]</a>
+        </div>
+        <div class="hookWord webUserHookKeyWord ocdHookKeyWord">
+            <label for="forgot_password_email">[t]User name / e-mail[/t]</label>
+        </div>
+        <div class="hookInput webUserHookInput ocdHookInput">
+            <input type="text" name="email" value="" id="forgot_password_email">
+        </div>
+        <div class="hookButton webUserHookButton ocdHookButton wuhNotLoggedIn">
+            <input type="submit" name="bForgotPasswordSubmit" value="[tb]Send password[/tb]" class="button">
+        </div>
+        
+        <input type="hidden" name="command" value="forgotpwd">
+        <input type="hidden" name="retryCmd" value="start">
+    
+    </form>
+</if>
+
+</div>
