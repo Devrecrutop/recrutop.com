@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="fr">
+<head>
+<title>OTYS DEVELOPMENT</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta http-equiv="Content-Script-Type" content="text/Javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link type="text/css" href="http://www.recrutop.com/_css_global/globalStyling.css" rel="stylesheet">
+<link type="text/css" href="http://www.recrutop.com/_css/styleInter.css" rel="stylesheet">
+<link href="http://www.recrutop.com/_css/listmenu_h.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="http://www.recrutop.com/_images/[code].ico">
+
+<!-- ACMSBUSJAB<Inter> / <[code] - Inter> / <5> MENUS / <Farah Belkadi> -->
+
+<!--jsrepository:require(JQueryBase, JQueryMagicSelect, JQueryInputDescr, JsFsMenu)-->
+
+</head>
+<body>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+    $('select').magicSelect();
+
+    inputDescr('#IdName','Value Description');
+
+    });
+</script>
+
+<div id="outerInter">
+	<div id="header">
+		<a href="http://www.recrutop.com/" title="[klantnaam]" target="_self" id="logoLink"><img alt="[klantnaam]" src="http://www.recrutop.com/_images/logo-baseline.png" border="0"></a>
+
+		<div id="connexion">
+			[ocdLoginHook]
+			<!--START_HLB_5-->[hoofdcat]<!--END_HLB_5-->
+		</div>
+
+		<div class="cleaner"></div>
+	</div>
+	<div id="menu">
+		<!--START_FLIGHT MENU-->
+		<ul class="menulist" id="listMenuRoot">
+		<!--START_HLB_1--><li class="s[active]">[hoofdcat]
+		<!--START_SLB_FM--><ul class="sousmenu">
+		<!--START_SLB_FMROW--><li><a href="[fm_row_url]">[fm_row_name]</a>
+		<!--START_SLB_FM_level_1--><ul>
+		<!--START_level_1--><li><a href="[fm_row_url_1]">[fm_row_name_1]</a></li>
+		<!--END_level_1--></ul>
+		<!--END_SLB_FM_level_1--></li>
+		<!--END_SLB_FMROW--></ul>
+		<!--END_SLB_FM--></li>
+		<!--END_HLB_1--></ul>
+		<!--END_FLIGHT MENU-->
+		<div class="cleaner"></div>
+	</div>
+
+	<div id="contenu">
+
+	<div id="sidebar" class="floatLeft">
+
+		<div id="contact">
+			[teaser6]
+		</div>
+
+		<div id="JobCat">
+			[teaser7]
+		</div>
+
+			<div id="blocCandidatReseau">
+
+				<div id="candidat">
+
+					[JobSearchHook]
+
+					<!--START_HLB_4-->
+					<div class="candidatLink">[hoofdcat]</div>
+					<!--END_HLB_4-->
+
+					[teaser2]
+
+				</div>
+
+				<div id="tsr5">
+
+					[teaser5]
+
+				</div>
+
+			</div>
+
+	</div>
+	<div id="content" class="floatLeft">
+
+		[teaser1]
+			[bisjab]
+
+
+
+		<div class="cleaner"></div>
+
+	</div>
+
+		<div class="cleaner"></div>
+	</div>
+	<div id="footer">
+		<!--START_HLB_2-->
+		[hoofdcat] |
+		<!--END_HLB_2-->
+		Copyright &copy; <a href="http://www.recrutop.com" title="[klantnaam]" target="_self">[klantnaam] [yearnow]</a>
+		<a href="http://www.otys.fr" title="OTYS Recruiting Technology" target="_blank"><img src="http://www.recrutop.com/_images/otys.gif" border="0" alt="OTYS Recruiting Technology" style="margin-bottom:-1px"></a>
+	</div>
+</div>
+
+<script type="text/javascript">
+    var listMenu = new FSMenu('listMenu', true, 'display', 'block', 'none');
+
+    listMenu.animations[listMenu.animations.length] = FSMenu.animFade;
+
+    listMenu.animations[listMenu.animations.length] = FSMenu.animSwipeDown;
+
+    var arrow = null;
+
+    addEvent(window, 'load', new Function('listMenu.activateMenu("listMenuRoot", arrow)'));
+
+</script>
+</body>
+</html>
