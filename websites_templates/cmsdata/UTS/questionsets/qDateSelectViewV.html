@@ -1,0 +1,16 @@
+<!--date select view V-->
+<!-- /UTS/questionsets/qDateSelectViewV.html -->
+<div class="formInput formSmallInput apllDate">
+<label {*for="{$elementName}"*}>{$qd.question|escape}{if $required} <span>*</span>{/if}</label>
+<html_uts_select_date time=$currentValue field_order="DMY" month_format="%B" prefix=$elementName day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year=$startYear end_year=$endYear reverse_years=true>
+</div>
+<if $qd.explanation>
+<div class="explain aplDateExplain">
+	{$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplDateError">
+	{$currentErrorMessage}
+</div>
+</if>

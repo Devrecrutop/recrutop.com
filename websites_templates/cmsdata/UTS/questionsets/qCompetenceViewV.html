@@ -1,0 +1,104 @@
+<!--START COMPETENCE V-->
+<h3 class="formTitle aplCmpFormTitle">{$qd.question|escape}{if $required}<span>*</span>{/if}</h3>
+<if $qd.explanation>
+	<div class="explain" aplCmpExplain>
+	    {$qd.explanation|escape}
+	</div>
+</if>
+<div class="formInput formSmallInput aplCmpFormSubTitle">
+	<label>[t]Competence[/t]</label>
+	<input class="button" type="button" value="[tb]Add item[/tb]" onclick="qsAddCVItem('{$qd.id}', '')">	
+</div>
+<foreach from=$items item=item key=key>
+	{assign var="catPath" value=""}
+	<div class="formGroup aplCmpFormGroup">
+
+	<foreach from=$categoriesTree item=categorisOnLevelList key=level >
+		{assign var="currCatIdName" value="L`$level`_category_id"}				
+		{assign var="prevCatIdName" value="L`$level-1`_category_id"}
+		{if $level == 1}
+			{assign var="prevCatId" value=0}
+		{else}
+			{assign var="prevCatId" value=$item.$prevCatIdName}
+		{/if}
+		{assign var="currCatId" value=$item.$currCatIdName}				
+		<if $isMyProfile && $item.competence_id != 0>
+			{*
+			<!--											
+			<div class="formInput cmpCatFormInput">
+			<label>{$level}.&nbsp;<if $level == 1>[t]Category[/t]<else>[t]Subcategory[/t]</if>:</label>																						
+			<span>{$categorisOnLevelList[$prevCatId][$currCatId]}</span>																					 		
+			</div>
+			-->
+			*}
+			{assign var="catName" value=$categorisOnLevelList[$prevCatId][$currCatId]}
+			{if $catPath == ""}
+				{assign var="catPath" value="`$catName`"}
+			{else}
+				{assign var="catPath" value="`$catPath`, `$catName`"}
+			{/if}
+		<else>
+		<div class="formInput aplCmpCat">
+			<label>{$level}.&nbsp;<if $level == 1>[t]Category[/t]<else>[t]Subcategory[/t]</if>:</label>						
+			<select name="{$elementNamePrefix}_{$key}_L{$level}_category_id" id="{$elementNamePrefix}_{$key}_L{$level}_category_id" onChange="qsSetCmpSelect('{$level}', '{$maxLevel}', '{$elementNamePrefix}', '{$key}', this.options[this.selectedIndex].value);">			
+				<option value="0">---</option>												
+				<html_options options=$categorisOnLevelList[$prevCatId] selected=$currCatId>								 												
+			</select>
+		</div>
+		</if>
+	</foreach>
+
+	<if $isMyProfile && $item.competence_id != 0>
+		<div class="formInput aplCmpCmp">
+			<label>[t]Competence[/t]:</label>
+			{assign var="maxCatIdName" value="L`$maxLevel`_category_id"}
+			{assign var="maxCatId" value=$item.$maxCatIdName}
+			<span>{$competenceList[$maxCatId][$item.competence_id]} ({$catPath})</span>
+		</div>
+	<else>
+		<div class="formInput aplCmpCmp">
+			<label>[t]Competence[/t]:</label>
+			<select name="{$elementNamePrefix}_{$key}_competence_id" id="{$elementNamePrefix}_{$key}_competence_id">
+				<option value="0">---</option>
+				{assign var="maxCatIdName" value="L`$maxLevel`_category_id"}
+				{assign var="maxCatId" value=$item.$maxCatIdName}
+				<html_options options=$competenceList[$maxCatId] selected=$item.competence_id>
+			</select>						
+		</div>
+	</if>
+	<if $isMyProfile && $item.competence_id != 0>
+		<div class="formInput aplCmpLvl">
+			<label>[t]Level[/t]:</label>
+			<span>{$levelList[$item.level_id]}</span>
+		</div>
+		<div class="formInput aplCmpCert">
+			<label>[t]Certificate[/t]:</label>
+			<span>{$certificateList[$item.certificate_id]}</span>
+		</div>
+	<else>
+		<div class="formInput aplCmpLvl">
+			<label>[t]Level[/t]:</label>
+			<select name="{$elementNamePrefix}_{$key}_level_id">			
+			<html_options options=$levelList selected=$item.level_id>
+			</select>
+		</div>
+		<div class="formInput aplCmpCert">
+			<label>[t]Certificate[/t]:</label>
+			<select name="{$elementNamePrefix}_{$key}_certificate_id">			
+			<html_options options=$certificateList selected=$item.certificate_id>
+			</select>
+		</div>			
+	</if>		
+	<if $itemsErrors[$key]>
+		<div class="error aplCmpError">
+		    {$itemsErrors[$key]}    
+		</div>	
+	</if>
+	<input type="hidden" name="{$elementNamePrefix}_{$key}_iid" value="{$item.iid|escape}">
+	<div class="formInput formSmallInput formDeleteButton aplCmpDeleteButton">
+		<label>&nbsp;</label>
+		<input class="button" name="button" type="button" value="[tb]Delete item[/tb]" onclick="qsDeleteCVItem('{$qd.id}', '', '{$key}')">
+	</div>
+
+	</div>
+</foreach>

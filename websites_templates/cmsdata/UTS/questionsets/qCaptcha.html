@@ -1,0 +1,19 @@
+<!--captcha view.-->
+<div class="formInput aplCsc">
+<label for="captcha">[t]Security code:[/t]</label>
+<img id="captcha" src="/_javascript_global/securimage/securimage_show.php?code_name=qscaptcha&amp;ssid={$sessionId}&amp;sid={$random}" alt="CAPTCHA Image" >
+<a href="#" onclick="document.getElementById('captcha').src = '/_javascript_global/securimage/securimage_show.php?code_name=qscaptcha&amp;ssid={$sessionId}&amp;sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" {*border="0"*} style="border-width: 0px;"></a>
+<a href="/_javascript_global/securimage/securimage_play.php?code_name=qscaptcha&amp;" rel="external"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" {*border="0"*} style="border-width: 0px;"></a>
+</div>
+<div class="formInput formSmallInput aplCic">
+<label for="captchaCode">[t]Code[/t]<span>*</span></label>
+<input type="text" name="{$elementName}" id="captchaCode" {if $clientid != 1269}autocomplete="off"{/if}> {* BKo: client 1269 wants valid HTML 4 Strict, autocomplete cannot be thus used *}
+</div>
+<div class="explain aplCaptchaExplain explain_{$elementName}">
+    [t]Please enter the right security code as you see on the image.[/t]
+</div>
+<if $currentErrorMessage>
+<div class="error aplCaptchaError" id="error_{$elementName}">
+    {$currentErrorMessage}    
+</div>
+</if>

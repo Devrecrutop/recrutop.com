@@ -1,0 +1,18 @@
+<!--START PUBLICATION H-->
+<h3>{$qd.question|escape}</h3>
+<if $qd.explanation>
+<div class="explain">
+    {$qd.explanation|escape}
+</div>
+</if>
+
+<foreach from=$items item=item key=key>
+<div class="formGroup">
+
+	<div class="formInput positionWFormInput">
+		<label>{$item.extra_field_label|escape}:</label>
+		<input name="extra_field_{$key}" type="text" value="{$item.extra_field_data|escape}">
+	</div>	
+	
+</div>
+</foreach>

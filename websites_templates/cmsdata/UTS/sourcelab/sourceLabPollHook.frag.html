@@ -1,0 +1,30 @@
+
+<!--jsrepository:require(JQueryBase)-->
+<script type="text/javascript" src="/_javascript_global/SlService.js"></script>
+
+
+<script type="text/javascript">
+//{literal}
+// define ready function
+
+$(document).ready(function() {
+	try{
+    SlService = new SlService();
+    SlService.poll(0,0);
+	}
+	catch(err)
+	{
+		// Added by Maikel. Poll is having issue which messes-up our scripts
+	}
+});
+
+//{/literal}
+</script>
+<div class="hookOuter" id="sourceLabPollHook">
+<!-- /UTS/sourcelab/sourceLabPollHook.frag.html -->
+
+	<div id="SlOverview"></div>
+
+
+<div class="cleaner actHCleaner"></div>
+</div>

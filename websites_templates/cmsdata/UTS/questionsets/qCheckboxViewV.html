@@ -1,0 +1,15 @@
+<!-- Checkbox view V-->
+<div class="formInput formSmallInput formCheckboxContainer aplCheckContainer" id="KQDIV_{$qd.id}">
+<label>{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+<input type="checkbox" id="{$elementName}_Y" name="{$elementName}" value="1" class="radiobutton" {if $currentValue == 1}checked{/if}>
+</div>
+<if $qd.explanation>
+<div class="explain aplMCheckExplain">
+    {$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplMCheckError">
+    {$currentErrorMessage}    
+</div>
+</if>

@@ -1,0 +1,194 @@
+<!--start education h-->
+<div class="cleaner aplEduOuter">
+<!-- UTS/questionsets/qEducationHistoryViewH.html. -->
+<h3 class="formTitle aplEduFormTitle">{$qd.question|escape}{if $required}<span>*</span>{/if}</h3>
+<if $qd.explanation>
+<div class="explain aplEduExplain">
+    {$qd.explanation|escape}
+</div>
+</if>
+<div class="cleaner"></div>
+<ul class="aplEduFormList">
+<foreach from=$items item=item key=key>
+	<li class="aplEduFormItem {cycle values='Odd,Even'}">
+		<table style="width:100%;">
+		    <tr>
+		        <td style="width:140px;">{$item.startDate|date_format:"%Y-%m"}{if $item.startDate && $item.endDate} - {/if}{$item.endDate|date_format:"%Y-%m"}</td>
+		        <td id="tdDegree{$key}">{$item.Degree|escape}</td>
+		        <td style="width:10px;"><img src="[website]/_images_global/edit.png" style="cursor: pointer;" onclick="$('#eduCont{$key}').toggle(500)" alt="[thn]Toggle editing[/thn]" title="[thn]Click to show/hide editing panel[/thn]"></td>
+		    </tr>
+		</table>
+		
+		<div class="formGroup aplEduFormGroup" id="eduCont{$key}">
+			<div class="formInput aplEduEducation">
+				<label>[t]Education[/t]:</label>
+
+                                {if $education_history_select}
+                            
+
+                                        <select name="{$elementNamePrefix}_{$key}_main_category" id="{$elementNamePrefix}_{$key}_main_category" onchange="changeEducationCategory_{$key}(this, '{$elementNamePrefix}', '{$key}')">
+                                            <option value="0"> --- </option>
+                                        {foreach from=$educationMainCategories item=mainCategory}
+
+                                            <option value="{$mainCategory.id}" {if $savedEducationCategories[$item.iid].category_id==$mainCategory.id} SELECTED {/if} >{if $mainCategory.category_name_ml}{$mainCategory.category_name_ml}{else}{$mainCategory.category_name}{/if}</option>
+                                        {/foreach}
+                                        </select>
+
+                                        <script>
+                                            var catids = '';
+                                        </script>
+                                        <span id="{$elementNamePrefix}_{$key}_subcategory_0" />
+                                        {foreach from=$educationSubCategories key=mainCategoryId item=subCategories}
+
+                                            <script>
+                                                comma = '';
+                                                if (catids.length) comma = ',';
+                                                catids = catids + comma + '{$mainCategoryId}';
+                                            </script>
+                                            
+                                            <select class="qEducationHistoryView_subCategorySelect_{$mainCategoryId}" data-value="{$savedEducationCategories[$item.iid].sub_category_id}" name="{$elementNamePrefix}_{$key}_sub_category[{$mainCategoryId}]" id="{$elementNamePrefix}_{$key}_subcategory_{$mainCategoryId}" {if $savedEducationCategories[$item.iid].category_id!=$mainCategoryId}style="display:none;"{else}style="display:inline;"{/if}>
+                                                <option value="0"> --- </option>
+                                                
+                        {*
+						{section name=wesselsec loop=$subCategories}
+							<option value="{$subCategories[wesselsec].id}" {if $savedEducationCategories[$item.iid].sub_category_id==$subCategories[wesselsec].id} SELECTED {/if}>
+							    {if $subCategories[wesselsec].subcategory_name_ml}
+							          {$subCategories[wesselsec].subcategory_name_ml}
+							    {else}
+							          {$subCategories[wesselsec].subcategory_name}
+							    {/if}
+							</option>
+						{/section}
+						*}
+                                            </select>
+                                        {/foreach}
+
+                                        <script>
+                                        
+                                            function changeEducationCategory_{$key}(element, elementNamePrefix, key) {literal} {
+
+                                                catArray = catids.split(',');
+                                                for (index = 0; index < catArray.length; ++index) {
+                                                    // hide all
+                                                    //alert('hide: ' + elementNamePrefix+'_'+key+'_'+'subcategory_'+catArray[index]);
+                                                    document.getElementById(elementNamePrefix+'_'+key+'_'+'subcategory_'+catArray[index]).style.display = 'none';
+
+                                                    if ( document.getElementById('magicSelect'+elementNamePrefix+'_'+key+'_'+'subcategory_'+catArray[index]) != undefined ) {
+                                                        document.getElementById('magicSelect'+elementNamePrefix+'_'+key+'_'+'subcategory_'+catArray[index]).style.display = 'none';
+                                                    }
+                                                    
+                                                    //$( '#'+elementNamePrefix+'_'+key+'_'+'subcategory_'+catArray[index] ).addClass('magicForce');
+                                                }
+                                                // display the one we want
+                                                //alert('show ' + elementNamePrefix+'_'+key+'_'+'subcategory_'+element.value);
+                                                document.getElementById(elementNamePrefix+'_'+key+'_'+'subcategory_'+element.value).style.display = 'inline';
+                                                if ( document.getElementById('magicSelect'+elementNamePrefix+'_'+key+'_'+'subcategory_'+element.value) != undefined ) {
+                                                    //document.getElementById('magicSelect'+elementNamePrefix+'_'+key+'_'+'subcategory_'+element.value).style.display = 'inline';
+                                                }
+
+                                                //$( '#'+elementNamePrefix+'_'+key+'_'+'subcategory_'+catArray[index] ).removeClass('magicForce');
+                                            }
+                                        {/literal}
+                                        </script>
+
+                                {else}
+                                    <input name="{$elementNamePrefix}_{$key}_Degree" type="text"  value="{$item.Degree|escape}" onchange="$('#tdDegree{$key}').html(this.value)">
+                                {/if}
+			</div>
+			
+			{if $useCvItemCategories}
+				<div class="formInput">
+					<label>[t]Item type[/t]:</label>
+					<select name="{$elementNamePrefix}_{$key}_id_category">
+						<option value="0">---</option>
+						{html_options options=$cvItemCategoriesEducation selected=$item.id_category}
+					</select>
+				</div>
+			{/if}
+			
+			<div class="formInput aplEduDirection">
+				<label>[t]Direction[/t]:</label>
+				<input name="{$elementNamePrefix}_{$key}_DegreeDirection" type="text" value="{$item.DegreeDirection|escape}">
+			</div>
+			<div class="formInput aplEduInstitute">
+				<label>[t]Institute[/t]:</label>
+				<input name="{$elementNamePrefix}_{$key}_InstituteNameAndPlace" type="text" value="{$item.InstituteNameAndPlace|escape}">
+			</div>
+			<div class="formInput aplEduDegree">
+				<label>[t]Degree[/t]:</label>
+				<input name="{$elementNamePrefix}_{$key}_Diploma" type="text"  value="{$item.Diploma|escape}">
+			</div>
+			<div class="formInput formSmallInput apllDate aplEduStartDate">
+				<label>[t]Start date[/t]:</label>
+				{if $item.startDate != ''}
+				<html_uts_select_date time=$item.startDate field_order="DMY" month_format="%B" prefix=$startDatePrefix|cat:$key day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year="-90" end_year="+5" reverse_years=true>
+				{else}
+				<html_uts_select_date time="0000-00-00" field_order="DMY" month_format="%B" prefix=$startDatePrefix|cat:$key day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year="-90" end_year="+5" reverse_years=true>
+				{/if}
+			</div>
+			<div class="formInput formSmallInput apllDate aplEduEndDate">
+				<label>[t]End date:[/t]</label>
+				{if $item.endDate != ''}
+				<html_uts_select_date time=$item.endDate field_order="DMY" month_format="%B" prefix=$endDatePrefix|cat:$key day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year="-90" end_year="+5" reverse_years=true>
+				{else}
+				<html_uts_select_date time="0000-00-00" field_order="DMY" month_format="%B" prefix=$endDatePrefix|cat:$key day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year="-90" end_year="+5" reverse_years=true>
+				{/if}
+			</div>
+			<div class="formInput formSmallInput alpEduDeleteButton">
+				<label>&nbsp;</label>
+				<input class="smallButton aplSB aplEduSb" name="button" type="button" value="[tb]Delete item[/tb]" onclick="qsDeleteCVItem('{$qd.id}', '', '{$key}')">
+				<input type="hidden" name="{$elementNamePrefix}_{$key}_iid" value="{$item.iid|escape}">
+			</div>
+		</div>
+	<if $itemsErrors[$key]>
+		<div class="error aplEduError">
+		    {$itemsErrors[$key]}    
+		</div>
+	</if>
+	</li>
+</foreach>
+</ul>
+	<div class="formInput formSmallInput aplEduSubTitle">
+	<label>[t]Education add[/t]</label>
+	<input class="smallButton aplSB aplEduSb" type="button" value="[tb]Add item[/tb]" onclick="qsAddCVItem('{$qd.id}', '')">
+	</div>
+</div>
+
+{if $education_history_select}
+<script type="text/javascript">
+{literal}
+
+$(document).ready(function() {
+	
+	var educationSubCategories = {/literal}{$educationSubCategories|@json_encode}{literal};
+	
+	console.log(new Date().getTime());
+	
+	$.each(educationSubCategories, function (mainCategoryId, subCategories) {
+		
+		var options = '';
+		$.each(subCategories, function (index, subCategory) {
+            var name = (subCategory.subcategory_name_ml != undefined && subCategory.subcategory_name_ml != null && subCategory.subcategory_name_ml.length > 0) ? subCategory.subcategory_name_ml : subCategory.subcategory_name;
+            name =
+            	name
+            	.replace(/&/g, '&amp;')
+                .replace(/>/g, '&gt;')
+                .replace(/</g, '&lt;')
+                .replace(/"/g, '&quot;');
+            options += "<option value=" + subCategory.id + ">" + name + "</option>";
+        }); 
+		
+		$('select.qEducationHistoryView_subCategorySelect_' + mainCategoryId).each(function (index, select) {
+			var value = $(select).attr('data-value');
+			$(select).append(options).val(value);
+		});
+		
+	});	
+	
+	console.log(new Date().getTime());
+	
+});
+
+{/literal}
+</script>
+{/if}

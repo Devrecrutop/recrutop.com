@@ -1,0 +1,18 @@
+<!--date select view H-->
+<!-- /UTS/questionsets/qDateTimeSelectViewH.html -->
+<div class="formInput formSmallInput apllDate">
+<label for="{$elementName}">{$qd.question|escape}{if $required} <span>*</span>{/if}</label>
+<html_uts_select_date time=$currentValue field_order="DMY" month_format="%B" prefix=$elementName day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year=$startYear end_year=$endYear reverse_years=true>
+&nbsp;
+<html_select_time time=$currentValue prefix=$elementName display_seconds=false minute_interval=5>
+</div>
+<if $qd.explanation>
+<div class="explain aplDateExplain explain_{$elementName}">
+	{$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplDateError error_{$elementName}">
+	{$currentErrorMessage}
+</div>
+</if>

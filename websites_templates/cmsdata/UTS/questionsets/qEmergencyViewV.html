@@ -1,0 +1,55 @@
+<!--START EMERGENCY V-->
+<h3>{$qd.question|escape}</h3>
+<if $qd.explanation>
+<div class="explain">
+    {$qd.explanation|escape}
+</div>
+</if>
+
+<div class="formInput formSmallInput">
+<label>[t]Emergency contact[/t]</label>
+<input type="button" value="[tb]Add item[/tb]" onclick="qsAddCVItem('{$qd.id}', '')">
+</div>
+
+<foreach from=$items item=item key=key>
+<div class="formGroup">
+
+	<div class="formInput positionWFormInput">
+		<label>[t]Name[/t]:</label>
+		<input name="{$elementNamePrefix}_{$key}_contact_name" type="text" value="{$item.contact_name|escape}">
+	</div>
+	
+  <div class="formInput positionWFormInput">
+		<label>[t]Relation[/t]:</label>
+		<input name="{$elementNamePrefix}_{$key}_relation" type="text" value="{$item.relation|escape}">
+	</div>	
+	
+  <div class="formInput positionWFormInput">
+		<label>[t]Phone #1[/t]:</label>
+		<input name="{$elementNamePrefix}_{$key}_phone_1" type="text" value="{$item.phone_1|escape}">
+	</div>
+  
+  <div class="formInput positionWFormInput">
+		<label>[t]Phone #2[/t]:</label>
+		<input name="{$elementNamePrefix}_{$key}_phone_2" type="text" value="{$item.phone_2|escape}">
+	</div>      
+  
+  <div class="formInput formRadio aplRadioInput">
+  <label>[t]Primary[/t]:</label>
+  <input type="checkbox" name="{$elementNamePrefix}_{$key}_primary_contact" value="1" {if $item.primary_contact == "1"}checked{/if} class="radiobutton"><span>[t]Yes[/t]</span>
+  </div>   	
+			
+	<div class="formInput formSmallInput formDeleteButton">
+		<label>&nbsp;</label>
+		<input name="button" type="button" value="[t]Delete item[/t]" onclick="qsDeleteCVItem('{$qd.id}', '', '{$key}')">
+	</div>
+	
+	<if $itemsErrors[$key]>
+	<div class="error">
+	    {$itemsErrors[$key]}    
+	</div>
+	</if>
+	
+	<input type="hidden" name="{$elementNamePrefix}_{$key}_iid" value="{$item.iid|escape}">
+</div>
+</foreach>

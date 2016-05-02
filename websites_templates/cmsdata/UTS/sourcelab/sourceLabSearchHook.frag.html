@@ -1,0 +1,31 @@
+
+
+<!--jsrepository:require(JQueryBase)-->
+<script type="text/javascript" src="/_javascript_global/SlService.js"></script>
+
+
+<script type="text/javascript">
+//{literal}
+// define ready function
+
+$(document).ready(function() {
+	try{
+    SlServiceHook = new SlServiceHook();
+    SlServiceHook.loadSearchBox();
+	}
+	catch(err)
+	{
+		// Added by Maikel
+	}
+});
+
+//{/literal}
+</script>
+<div class="hookOuter" id="sourceLabSearchHook">
+<!-- /UTS/sourcelab/sourceLabSearchHook.frag.html -->
+
+<div id="SlSearchHook">
+</div>
+
+<div class="cleaner actHCleaner"></div>
+</div>

@@ -1,0 +1,69 @@
+<!--START PUBLICATION H-->
+
+<!-- UTS/questionsets/qChurchViewH.html -->
+
+
+<script type="text/javascript" src="/_javascript_global/jquery.js"></script>
+
+<script type="text/javascript">
+
+var jqQsChurchHandler = '{$handler}';
+
+{literal}
+
+// element onchange handler
+function selectChurch(inputTxtChurch)
+{
+	valChurchInput = $('#'+inputTxtChurch).val();  
+	$('#busyRowBox').addClass('lookBusy');    
+	var churchCityName  = $("#"+inputTxtChurch).val();
+	lengthInputC = churchCityName.length;
+    
+	$.post(jqQsChurchHandler, {command: 'getChurchListAjax', findChurch: valChurchInput},reloadChurchSelect,'json');
+}
+function reloadChurchSelect(data)
+{
+    $('#busyRowBoxChurch').removeClass('lookBusy');
+    if(data.ok)
+	{
+		$('#qsChurchList').html(data.msg);
+    }
+}
+
+{/literal}
+</script>
+
+
+
+<div class="formInput aplTextInput">
+<label for="{$elementId}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+<input type="text" value="{$items.candidate_church|escape}" name="{$elementName}_candidate_church" id="{$elementId}_candidate_church" onchange="selectChurch('{$elementId}_candidate_church');" >
+<input type="hidden"  name="{$elementName}_checkerr"  value="{if $required}1{else}0{/if}">
+</div>
+
+	<if $itemsErrors.candidate_church>
+	<div class="error">
+	    {$itemsErrors.candidate_church}    
+	</div>
+	</if>
+
+
+<div class="formInput positionWFormInput churchSelect">
+	<label>[t]Church[/t]:</label>
+	<select name="{$elementNamePrefix}_supplier_id" id="qsChurchList">
+		<option value="0">---</option>												
+		<html_options options=$customerList selected=$items.supplier_id>
+	</select>
+	<span class="spanBox" id="busyRowBoxChurch" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+</div>
+
+<if $qd.explanation>
+<div class="explain aplTextExplain explain_{$elementName}">
+    {$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplTextError error_{$elementName}">
+    {$currentErrorMessage}    
+</div>
+</if>

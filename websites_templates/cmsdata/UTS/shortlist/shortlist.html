@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="{$slDef.website}/_css/sl_list.css" type="text/css">
+<div id="sl_list">
+{if $slDef.search_form == 1}
+	<form action="{$slDef.website}/index.php/page/JobsRemote/command/search" method="post" target="{$_target}">
+		<input type="text" name="trefwoord">
+		<br>
+		<input type="submit" value="[th]Search[/th]">
+	</form>
+{/if}
+<ul>
+{foreach from=$data key=id item=vacancy}
+	<li>
+		<a href="{$vacancy.remote_link}" target="{$_target_link}">{$vacancy.name}</a>
+{if $slDef.location}
+		<div><span>[th]Location[/th]:</span>&nbsp;{$vacancy.locatie}</div>
+{/if}
+{if $slDef.company}
+		<div><span>[th]Company[/th]:</span>&nbsp;{$vacancy.werkgever}</div>
+{/if}
+{if $slDef.region}
+		<div><span>[th]Region[/th]:</span>&nbsp;{$vacancy.region}</div>
+{/if}
+	</li>
+{/foreach}
+</ul>
+</div>

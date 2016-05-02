@@ -1,0 +1,21 @@
+<!--file view V-->
+<div class="formInput aplFileInput">
+<label for="{$elementId}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+<input class="file" id="{$elementId}" type="file" name="{$elementName}">
+<if $currentValue && !$currentErrorMessage>
+<div class="formInput formSmallInput aplFileButton">
+<label><a href="{$displayLink}" target="_blank" title="{$currentValue.mime_type}">{$currentValue.filename}</a></label>
+<input class="smallButton aplSB aplFileSb" type="button" value="[tb]Delete item[/tb]" onclick="qsDeleteFile('{$qd.id}', 0)">
+</div>
+</if>
+</div>
+<if $qd.explanation>
+<div class="explain aplFileExplain">
+	{$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplFileError">
+	{$currentErrorMessage}    
+</div>
+</if>

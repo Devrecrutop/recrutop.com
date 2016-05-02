@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="{$slDef.website}/_css/sl_list.css" type="text/css">
+<div id="sl_list">
+{if $slDef.search_form == 1}
+        {if $slDef.actonomy == 1}
+            <form name="advsearchhookform" method="post" action="{$slDef.website}/index.php/page/advsearchvacs/bb/1" target="{$_target}">
+			<div class="hookInput actHInput actHIKw"><input type="text" id="asSearchHookKeywords" name="main_keywords"></div>
+			<div class="hookInput actHInput actHVsi" style="display:none">
+				<select id="hook_multisel_kw_options" name="main_keywords_options[]" multiple="multiple" size="5">
+					<option label="Vacancy name" value="title" selected="selected">Vacancy name</option>
+                                        <option label="Job description" value="description" selected="selected">Job description</option>
+                                        <option label="Profile and culture" value="profile_culture" selected="selected">Profile and culture</option>
+                                        <option label="Salary" value="salary" selected="selected">Salary</option>
+                                        <option label="Short description" value="chapo" selected="selected">Short description</option>
+                                        <option label="Reference numbers" value="refs" selected="selected">Reference numbers</option>
+                                        <option label="Customer name" value="customer_name">Customer name</option>
+                                </select>
+                        </div>           
+                                            
+            <div class="hookButton actHButton"><input type="submit" name="bApplSubmit" value="Search" class="button" ></div>
+            <input type="hidden" name="command" value="submitrequest">
+            <input type="hidden" name="origin" value="hook">
+	</form>
+        {else}
+	<form action="{$slDef.website}/index.php/page/JobsRemote/command/search" method="post" target="{$_target}">
+		<input type="text" name="trefwoord">
+		<br>
+		<input type="submit" value="[th]Search[/th]">
+	</form>
+        {/if}
+{/if}
+<ul>
+{foreach from=$data key=id item=vacancy}
+	<li>
+		<a href="{$vacancy.remote_link}?sx={$slDef.id}" target="{$_target_link}" >{$vacancy.name}</a>
+{if $slDef.location}
+		<div><span>[t]Location[/t]:</span>&nbsp;{$vacancy.locatie}</div>
+{/if}
+{if $slDef.company}
+		<div><span>[t]Company[/t]:</span>&nbsp;{$vacancy.werkgever}</div>
+{/if}
+{if $slDef.region}
+		<div><span>[t]Region[/t]:</span>&nbsp;{$vacancy.region}</div>
+{/if}
+	</li>
+{/foreach}
+</ul>
+</div>

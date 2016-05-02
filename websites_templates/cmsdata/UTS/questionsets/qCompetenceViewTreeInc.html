@@ -1,0 +1,114 @@
+<!-- /UTS/questionsets/qCompetenceViewTreeInc.html DEFAULT -->
+
+{if $itemData}	
+		
+	{foreach from=$itemData.cats key=cat_id item=category}
+  
+  {if $category.name}
+  {*for new competence cat name is empty*}
+    {if $category.level == 1}	
+	   <h2 class="category_level_{$category.level}">{$category.name|escape}</h2>
+	  {else}
+	   <h3 class="category_level_{$category.level}">{$category.name|escape}</h3>
+    {/if} 
+	{/if}
+		
+		{if $category.cmp}					 
+      <ul class="aplEduFormList">
+                		     		     
+		  {foreach from=$category.cmp item=cmp key=cmp_id}
+		  
+		  {*FOR COMPETENCIE SELECT AND DISPLAY NAME*}
+      {assign var="maxCatIdName" value="L`$maxLevel`_category_id"}
+      {assign var="maxCatId" value=$cmp.$maxCatIdName}		  
+		  
+    	<li class="aplEduFormItem {cycle values='Odd,Even'}">
+    		<table style="width:100%;">
+    		    <tr>  		        
+    		        <td id="tdCmpItem{$cmp.__qsItemKey}}">
+                  {if $cmp.competence_id}
+                    {$competenceList[$maxCatId][$cmp.competence_id]|escape}
+                    {if $cmp.level_id} - {$levelList[$cmp.level_id]|escape}{/if}
+                  {else}[t]New Competence[/t]{/if}
+                </td>
+    		        <td {*style="width:10px;"*} align="right">
+    		          <input class="button" name="button" type="button" value="[tb]Delete item[/tb]" onclick="qsDeleteCVItem('{$qd.id}', '', '{$cmp.__qsItemKey}')">
+    		          <input class="button" name="button" type="button" value="[tb]Edit item[/tb]" onclick="$('#cmpItemCont{$cmp.__qsItemKey}').toggle(500)">    		          
+                </td>
+    		    </tr>
+    		</table>    		  
+  		  		  
+        <div class="formGroup aplCmpFormGroup" id="cmpItemCont{$cmp.__qsItemKey}" {if $cmp.competence_id}style="display: none;"{/if}>
+          {*<div>C: {$cmp.competence_id}</div>*}
+                 
+        	<foreach from=$categoriesTree item=categorisOnLevelList key=level >
+        		{assign var="currCatIdName" value="L`$level`_category_id"}				
+        		{assign var="prevCatIdName" value="L`$level-1`_category_id"}
+        		{if $level == 1}
+        			{assign var="prevCatId" value=0}
+        		{else}
+        			{assign var="prevCatId" value=$cmp.$prevCatIdName}
+        		{/if}
+        		{assign var="currCatId" value=$cmp.$currCatIdName}				
+  
+        		<div class="formInput aplCmpCat">
+        			<label>{$level}.&nbsp;<if $level == 1>[t]Category[/t]<else>[t]Subcategory[/t]</if>:</label>
+        			<select name="{$elementNamePrefix}_{$cmp.__qsItemKey}_L{$level}_category_id" id="{$elementNamePrefix}_{$cmp.__qsItemKey}_L{$level}_category_id" onChange="qsSetCmpSelect('{$level}', '{$maxLevel}', '{$elementNamePrefix}', '{$cmp.__qsItemKey}', this.options[this.selectedIndex].value);">			
+        			<option value="0">---</option>
+        			<html_options options=$categorisOnLevelList[$prevCatId] selected=$currCatId>
+        			</select>
+        		</div>
+        	</foreach>        
+          
+          
+      		<div class="formInput aplCmpCmp">
+      			<label>[t]Competence[/t]:</label>
+      			<select name="{$elementNamePrefix}_{$cmp.__qsItemKey}_competence_id" id="{$elementNamePrefix}_{$cmp.__qsItemKey}_competence_id">
+      				<option value="0">---</option>      				
+      				<html_options options=$competenceList[$maxCatId] selected=$cmp.competence_id>
+      			</select>						
+      		</div>      
+        
+      		<div class="formInput aplCmpLvl">
+      			<label>[t]Level[/t]:</label>
+      			<select name="{$elementNamePrefix}_{$cmp.__qsItemKey}_level_id">
+      			<html_options options=$levelList selected=$cmp.level_id>
+      			</select>
+      		</div>
+      		
+      		<div class="formInput aplCmpCert">
+      			<label>[t]Certificate[/t]:</label>
+      			<select name="{$elementNamePrefix}_{$cmp.__qsItemKey}_certificate_id">			
+      			<html_options options=$certificateList selected=$cmp.certificate_id>
+      			</select>
+      		</div>	      
+        
+        	<if $itemsErrors[$cmp.__qsItemKey]>
+        		<div class="error aplCmpError">
+        		    {$itemsErrors[$cmp.__qsItemKey]}    
+        		</div>	
+        	</if>
+                
+        	<input type="hidden" name="{$elementNamePrefix}_{$cmp.__qsItemKey}_iid" value="{$cmp.iid|escape}">
+        	{*
+        	<div class="formInput formSmallInput formDeleteButton aplCmpDeleteButton">
+        		<label>&nbsp;</label>
+        		<input class="button" name="button" type="button" value="[tb]Delete item[/tb]" onclick="qsDeleteCVItem('{$qd.id}', '', '{$cmp.__qsItemKey}')">
+        	</div>
+          *}      
+  		  </div>
+		  
+		  </li>
+		  {/foreach}
+		  
+		  </ul>
+		{/if}
+										
+		{if $category.cats}																															
+      {include file="qCompetenceViewTreeInc.html" itemData=$category}											
+		{/if}
+								
+	</li>				
+	{/foreach}
+
+{/if}

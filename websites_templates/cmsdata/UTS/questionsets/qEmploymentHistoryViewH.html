@@ -1,0 +1,235 @@
+<!-- jquery for not letting people check motre then one job date till now -->
+{literal} 
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".lastWorkExpChck").live("click", function(){
+    var checked_id = this.id;
+    console.log(checked_id);
+           $(".lastWorkExpChck").each(function() {
+           if($(this).attr("checked") == true && this.id != checked_id){
+              $(this).attr("checked", false);
+           }          
+       });
+    });
+	$(".lastWorkExpChck").each(function() {
+		 if ($(this).attr("checked") ) {
+			 console.log('checked');
+			 $(this).parent().prev('.aplWorkEndDate').hide();
+		 }
+	 });
+	 $(".lastWorkExpChck").click(function() {
+		 if ($(this).attr("checked") ) {
+			 $(this).parent().prev('.aplWorkEndDate').hide();
+		 } else {
+			 $(this).parent().prev('.aplWorkEndDate').show();
+		 }
+	 });
+
+	 $('ul.aplWorkFormList > li').each(function(index, el) {
+
+	 	var itemPrefix = $(el).data('cvItemPrefix');
+
+	 	$('*', $(el)).change(function() {
+	 		$('input[name=' + itemPrefix + '_LockLinkedinItem]').val(1);
+	 	});
+
+	 });
+
+});
+
+
+
+function toggleEndDate(element, id) {
+
+    if ( element.checked ) {
+        document.getElementById('endDateDiv_'+id).style.display = 'none';
+    } else {
+        document.getElementById('endDateDiv_'+id).style.display = 'block';
+    }
+}
+
+
+</script>            
+{/literal}          
+
+<!--START WORK EXPERIENCE H-->
+<div class="cleaner aplWorkOuter">
+<!-- UTS/questionsets/qEmploymentHistoryViewH.html -->
+<h3 class="formTitle aplWorkFormTitle">{$qd.question|escape}{if $required}<span>*</span>{/if}</h3>
+<if $qd.explanation>
+<div class="explain aplWorkExplain explain_{$elementName}">
+    {$qd.explanation|escape}
+</div>
+</if>
+<div class="cleaner"></div>
+	<ul class="aplWorkFormList">
+	<foreach from=$items item=item key=key>
+		<li class="aplEduFormItem {cycle values='Odd,Even'}" data-cv-item-prefix="{$elementNamePrefix}_{$key}">
+			<table style="width:100%;">
+			    <tr>
+			        <td style="width:140px;">{if $item.startDate == "0000-00-00"}[t]heden[/t]{else}{$item.startDate|date_format:"%Y-%m"}{/if}{if $item.startDate && $item.endDate} - {/if}{if $item.endDate == "0000-00-00" || $item.EndDateOriginal == "heden"}[t]heden[/t]{else}{$item.endDate|date_format:"%Y-%m"}{/if}</td>
+                                <td id="tdPosition{$key}">{$item.Experience|escape}</td>
+
+                                {if $languageItemExists[$item.iid]}
+                                    <td>[t]Load from other language[/t]:
+
+                                        <select id="loadFromLanguage_{$item.iid}">
+                                            <option value="0"> --- </option>
+
+                                            {foreach from=$languageItemExists[$item.iid] item=languageVersion}
+
+                                            <option value="{$languageVersion.lang_code}">{$languageVersion.lang_code}</option>
+
+                                            {/foreach}
+
+                                        </select>
+
+                                        <input type="button" class="smallButton" value="[th]Load[/th]" onclick="loadLanguageVersion_{$item.iid}(document.getElementById('loadFromLanguage_{$item.iid}').value, {$item.iid}, '{$elementNamePrefix}', '{$key}' );" />
+
+                                    </td>
+                                {/if}
+
+                                
+			        <td style="width:10px;"><img src="[website]/_images_global/edit.png" style="cursor: pointer;" onclick="$('#empCont{$key}').toggle(500)" alt="[thn]Toggle editing[/thn]" title="[thn]Click to show/hide editing panel[/thn]"></td>
+			    </tr>
+			</table>
+
+
+                        {foreach from=$languageItemExists[$item.iid] item=languageVersion}
+                            {foreach from=$languageVersion key=field item=value}
+                                <input type="hidden" id="{$item.iid}_{$languageVersion.lang_code}_{$field}" value="{$value|escape}" />
+                            {/foreach}
+                        {/foreach}
+
+
+                    <script>
+
+
+                        function loadLanguageVersion_{$item.iid}(language, itemid, elementNamePrefix, key)  {literal} {
+
+                            if ( language ) {
+
+                                if ( document.getElementById(elementNamePrefix+'_'+key+'_'+'Experience') != undefined ) {
+                                    document.getElementById(elementNamePrefix+'_'+key+'_'+'Experience').value = document.getElementById(itemid+'_'+language+'_'+'Experience').value ;
+                                }
+                                if ( document.getElementById(elementNamePrefix+'_'+key+'_'+'EmployerNameAndPlace') != undefined ) {
+                                    document.getElementById(elementNamePrefix+'_'+key+'_'+'EmployerNameAndPlace').value = document.getElementById(itemid+'_'+language+'_'+'EmployerNameAndPlace').value ;
+                                }
+                                if ( document.getElementById(elementNamePrefix+'_'+key+'_'+'PositionType') != undefined ) {
+                                    document.getElementById(elementNamePrefix+'_'+key+'_'+'PositionType').value = document.getElementById(itemid+'_'+language+'_'+'PositionType').value ;
+                                }
+                                if ( document.getElementById(elementNamePrefix+'_'+key+'_'+'Industry') != undefined ) {
+                                    document.getElementById(elementNamePrefix+'_'+key+'_'+'Industry').value = document.getElementById(itemid+'_'+language+'_'+'Industry').value ;
+                                }
+                                if ( document.getElementById(elementNamePrefix+'_'+key+'_'+'ExperienceDescription') != undefined ) {
+                                    document.getElementById(elementNamePrefix+'_'+key+'_'+'ExperienceDescription').value = document.getElementById(itemid+'_'+language+'_'+'ExperienceDescription').value ;
+                                }
+                                if ( document.getElementById(elementNamePrefix+'_'+key+'_'+'Termination') != undefined ) {
+                                    document.getElementById(elementNamePrefix+'_'+key+'_'+'Termination').value = document.getElementById(itemid+'_'+language+'_'+'Termination').value ;
+                                }
+                                if ( document.getElementById(elementNamePrefix+'_'+key+'_'+'PositionGroup') != undefined ) {
+                                    document.getElementById(elementNamePrefix+'_'+key+'_'+'PositionGroup').value = document.getElementById(itemid+'_'+language+'_'+'PositionGroup').value ;
+                                }
+                                if ( document.getElementById(elementNamePrefix+'_'+key+'_'+'Duration') != undefined ) {
+                                    document.getElementById(elementNamePrefix+'_'+key+'_'+'Duration').value = document.getElementById(itemid+'_'+language+'_'+'Duration').value ;
+                                }
+                                if ( document.getElementById(elementNamePrefix+'_'+key+'_'+'work_website') != undefined ) {
+                                    document.getElementById(elementNamePrefix+'_'+key+'_'+'work_website').value = document.getElementById(itemid+'_'+language+'_'+'work_website').value ;
+                                }
+                                if ( document.getElementById(elementNamePrefix+'_'+key+'_'+'remarks') != undefined ) {
+                                    document.getElementById(elementNamePrefix+'_'+key+'_'+'remarks').value = document.getElementById(itemid+'_'+language+'_'+'remarks').value ;
+                                }
+                            }
+                        }
+                                {/literal}
+                    </script>
+
+			<div class="formGroup aplWorkFormGroup" id="empCont{$key}">
+				<div class="formInput aplWorkPosition">
+					<label>[t]Position[/t]:</label>
+					<input id="{$elementNamePrefix}_{$key}_Experience" name="{$elementNamePrefix}_{$key}_Experience" type="text" value="{$item.Experience|escape}" onchange="$('#tdPosition{$key}').html(this.value)">
+				</div>
+				
+				{if $useCvItemCategories}
+					<div class="formInput">
+						<label>[t]Item type[/t]:</label>
+						<select name="{$elementNamePrefix}_{$key}_id_category">
+							<option value="0">---</option>
+							{html_options options=$cvItemCategoriesWorkExperience selected=$item.id_category}
+						</select>
+					</div>
+				{/if}
+				
+				<div class="formInput aplWorkEmployer">
+					<label>[t]Employer[/t]:</label>
+					<input id="{$elementNamePrefix}_{$key}_EmployerNameAndPlace" name="{$elementNamePrefix}_{$key}_EmployerNameAndPlace" type="text" value="{$item.EmployerNameAndPlace|escape}">
+				</div>
+				<div class="formInput formSmallInput apllDate aplWorkStartDate">
+					<label>[t]Start date[/t]:</label>
+					<div>
+					{if $item.startDate != ''}
+					<html_uts_select_date time=$item.startDate field_order="DMY" month_format="%B" prefix=$startDatePrefix|cat:$key day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year="-90" end_year="+5" reverse_years=true>
+					{else}
+					<html_uts_select_date time="0000-00-00" field_order="DMY" month_format="%B" prefix=$startDatePrefix|cat:$key day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year="-90" end_year="+5" reverse_years=true>
+					{/if}
+					</div>
+				</div>
+			<div class="formInput formSmallInput apllDate aplWorkEndDate" id="endDateDiv_{$item.iid}" {if $item.EndDateOriginal == "heden"} style="display:none;" {/if}>
+					<label>[t]End date[/t]:</label>
+					<div>
+					{if $item.endDate != ''}
+					<html_uts_select_date time=$item.endDate field_order="DMY" month_format="%B" prefix=$endDatePrefix|cat:$key day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year="-90" end_year="+5" reverse_years=true>
+					{else}
+					<html_uts_select_date time="0000-00-00" field_order="DMY" month_format="%B" prefix=$endDatePrefix|cat:$key day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year="-90" end_year="+5" reverse_years=true>
+					{/if}
+					</div>
+				</div>
+				
+			
+	          	<div class="formInput formCheckbox aplWorkingNow">
+					<label>[tg]Heden[/tg]</label>
+				<input class="lastWorkExpChck" id="{$elementNamePrefix}_{$key}_last_work_experience" name="{$elementNamePrefix}_{$key}_last_work_experience" type="checkbox" value="1" {if $item.last_work_experience || $item.EndDateOriginal == "heden"} checked="checked" {/if} onchange="toggleEndDate(this, '{$item.iid}');" />
+				</div>
+	    			
+				<div class="formInput aplWorkDescription">
+					<label>[t]Job description[/t]</label>
+					<textarea class="functionTxt" id="{$elementNamePrefix}_{$key}_ExperienceDescription" name="{$elementNamePrefix}_{$key}_ExperienceDescription">{$item.ExperienceDescription|escape}</textarea>
+				</div>
+				
+				
+				<div class="formInput aplWorkReasonEnd">
+					<label>[t]Reason for ending[/t]:</label>
+					<textarea class="fieldTxtArea" id="{$elementNamePrefix}_{$key}_Termination" name="{$elementNamePrefix}_{$key}_Termination">{$item.Termination|escape}</textarea>
+				</div>
+	
+	                    {if $extraFields}
+	                    {foreach from=$extraFields item=extraField}
+	                       
+				<div class="formInput aplWorkEmployer">
+	                            <label>{$extraField.fieldname}: </label>
+	                            <textarea class="fieldTxtArea" name="{$elementNamePrefix}_{$key}_extraField-{$extraField.id}">{$textLookup[$item.iid][$extraField.id]}</textarea>
+				</div>
+	                    {/foreach}
+	                    {/if}
+	
+				<div class="formInput formSmallInput formDeleteButton aplWorkDeleteButton">
+					<label>&nbsp;</label>
+					<input class="smallButton aplSB aplWorkSb" name="button" type="button" value="[tb]Delete item[/tb]" onclick="qsDeleteCVItem('{$qd.id}', '', '{$key}')">
+					<input type="hidden" name="{$elementNamePrefix}_{$key}_iid" value="{$item.iid|escape}">
+					<input type="hidden" name="{$elementNamePrefix}_{$key}_LinkedinId" value="{$item.LinkedinId|escape}">
+					<input type="hidden" name="{$elementNamePrefix}_{$key}_LockLinkedinItem" value="{if $item.LockLinkedinItem}1{else}0{/if}">
+				</div>
+			</div>
+		<if $itemsErrors[$key]>
+			<div class="error aplWorkError error_{$elementName}">
+			    {$itemsErrors[$key]}    
+			</div>
+		</if>
+		</li>
+	</foreach>
+	</ul>
+	<div class="formInput formSmallInput aplWorkSubHeader">
+		<label> </label>
+		<input class="smallButton aplSB aplWorkSb" type="button" value="[tb]Add item[/tb]" onclick="qsAddCVItem('{$qd.id}', '')">
+	</div>
+</div>

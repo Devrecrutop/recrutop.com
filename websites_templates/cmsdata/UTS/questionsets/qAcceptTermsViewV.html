@@ -1,0 +1,26 @@
+<!--accept terms view V-->
+
+<div id="a">{$mobile_enabled}</div>
+<div class="formInput aplTextAreaInput aplPrivAreaInput">
+	<label for="{$elementName}">{$qd.question|escape}</label>
+	{* BKo: commenting out readonly, as it causes issues in W3 validator *}
+	<div class="formInputTaC" id="{$elementName}" {*readonly*}>[th]Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.[/th]</div>
+</div>
+<div class="formInput formSmallInput formCheckboxContainer aplCheckContainer">
+	<label for="{$elementName}">[t]I agree:[/t]{if $required}<span>*</span>{/if}</label>
+	<input id="{$elementName}_Y" type="checkbox" name="{$elementName}" value="1" {if $currentValue == "1"}checked{/if} class="radiobutton">
+	{* BKo: commenting out for, as it causes issues in W3 validator *}
+	<span {*for="{$elementName}_Y"*}>[t]Yes[/t]</span>
+</div>
+
+<if $qd.explanation>
+	<div class="explain aplRadioExplain">
+		{$qd.explanation|escape}
+	</div>
+</if>
+
+<if $currentErrorMessage>
+	<div class="error aplRadioError">
+		{$currentErrorMessage}    
+	</div>
+</if>

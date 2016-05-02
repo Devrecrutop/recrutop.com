@@ -1,0 +1,29 @@
+<!-- UTS/questionsets/qGenderViewH.html STANDARD -->
+<div class="formInput formRadio aplGenderInput" id="KQDIV_{$qd.id}">
+	<label {*for="{$elementName}"*}>{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+	<label for="{$elementName}_m" class="labelRadio">
+		<input type="radio" id="{$elementName}_m" name="{$elementName}" value="M" {if $currentValue == "M"}checked{/if} class="radiobutton">
+		[t]Male[/t]
+	</label>
+	<label for="{$elementName}_f" class="labelRadio">
+		<input type="radio" id="{$elementName}_f" name="{$elementName}" value="F" {if $currentValue == "F"}checked{/if} class="radiobutton">
+		[t]Female[/t]
+	</label>
+	<if !$required>
+	<label for="{$elementName}_o" class="labelRadio radioButtonHide">
+		<input type="radio" name="{$elementName}" value="" {if $currentValue == ""}checked{/if} class="radiobutton">
+		[t]Not specified[/t]
+	</label>
+	</if>
+	<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+</div>
+<if $qd.explanation>
+<div class="explain aplGenderExplain explain_{$elementName}">
+    {$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplGenderError error_{$elementName}">
+    {$currentErrorMessage}    
+</div>
+</if>
