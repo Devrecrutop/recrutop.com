@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title>dummy</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!--jsrepository:require(JQueryBase)-->
+<script type="text/javascript" src="/_javascript_global/SlService.js"></script>
+<script type="text/javascript">
+
+var client_code = '{$client_code}';
+var client_hash = '{$client_hash}';
+var candidate_email = '{$candidate_email}';
+
+//{literal}
+$(document).ready(function() {
+    SlService = new SlService();
+    
+    SlService.edit('', candidate_email, client_hash);
+});
+//{/literal}
+</script>
+
+<div class="outer custOuter custFinOuter custFinDetOuter">
+<h1 class="hookHeader custFinHeader">[tg]Group picture[/tg]</h1>
+
+{$menu} 
+
+<div class="text TsIntro">[t]Group picture text[/t]</div>
+
+<div id="SlSearch"></div>
+{* the overview should be rendered inside the following div *}
+<div id="SlOverview"></div>
+<div id="slCVPicture"></div>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

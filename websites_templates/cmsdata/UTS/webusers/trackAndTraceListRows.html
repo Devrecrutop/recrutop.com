@@ -1,0 +1,73 @@
+{foreach from=$tasks item=t}
+<tr class="ajaxTrackAndTraceListRow"  id="{cycle values="tatFlip,tatFlop"}">
+<td class="tatListExpand">
+{assign var="expandButtonMargin" value=$t._treeLevel*12}
+<span style="width:12px;float:left;margin-left:{$expandButtonMargin}px;">
+{if $t._hasSubtasks}
+{if $t._expanded}
+<img src="http://{$uts.cursite}/_images_global/minus.gif" style="margin-top:5px;cursor:pointer;" onclick="trackAndTraceListCollapse({$t.id});" {* onclick="window.location='http://{$uts.cursite}/index.php/page/trackandtrace/command/collapse/taskid/{$t.id}/bb/1'" *}>
+{else}
+<img src="http://{$uts.cursite}/_images_global/plus.gif" style="margin-top:5px;cursor:pointer;" onclick="trackAndTraceListExpand({$t.id});" {* onclick="window.location='http://{$uts.cursite}/index.php/page/trackandtrace/command/expand/taskid/{$t.id}/bb/1'" *}>
+{/if}
+{else}
+&nbsp;
+{/if}
+</span>
+</td>
+{if in_array('Type', $columns)}<td class="">
+<div class="tatTaskTypeList" style="{if isset($t._taskTypeColor) && '' != $t._taskTypeColor}background-color:#{$t._taskTypeColor};color:#{$t._taskTypeInvColor};{/if}">
+{if $t._taskType != ''}{$t._taskType|escape}{else}&nbsp;{/if}
+</div>
+</td>{/if}
+{if in_array('Id', $columns)}<td class="" style="text-align:right;">{$t.id}</td>{/if}
+{if in_array('Nr', $columns)}<td class="">{if $t._sectionNumbering}{$t._sectionNumbering}{else}&nbsp;{/if}</td>{/if}
+{if in_array('Task', $columns)}<td class="tatListTitle"><a onclick="window.location='http://{$uts.cursite}/index.php/page/trackandtrace/command/detail/taskid/{$t.id}/bb/1/CurrentLanguage/{$CurrentLanguage}'">{$t._title|escape}</a></td>{/if}
+{if in_array('Taskgroup', $columns)}<td class="">{if $t._taskgroup != ''}{$t._taskgroup|escape}{else}&nbsp;{/if}</td>{/if}
+{if in_array('Usergroup', $columns)}<td class="">{if $t._usergroup != ''}{$t._usergroup|escape}{else}&nbsp;{/if}</td>{/if}
+{if in_array('AssignedTo', $columns)}<td class="tatListAssigned">{if $t._assigned_to !== ''}{$t._assigned_to|escape}{else}&nbsp;{/if}</td>{/if}
+{if in_array('Owner', $columns)}<td class="">{if $t._owner !== ''}{$t._owner|escape}{else}&nbsp;{/if}</td>{/if}
+{if in_array('Manager', $columns)}<td class="">{if $t._manager !== ''}{$t._manager|escape}{else}&nbsp;{/if}</td>{/if}
+{if in_array('Created', $columns)}<td class="tatListCreated" nowrap="nowrap">{$t._dt_created}</td>{/if}
+{if in_array('Start', $columns)}<td class="" nowrap="nowrap">{if $t._date_start}{$t._date_start}{else}&nbsp;{/if}</td>{/if}
+{if in_array('Deadline', $columns)}<td class="" nowrap="nowrap">{if $t._deadline}{$t._deadline}{else}&nbsp;{/if}</td>{/if}
+{if in_array('Completed', $columns)}<td class="" nowrap="nowrap">{if $t._dt_completed}{$t._dt_completed}{else}&nbsp;{/if}</td>{/if}
+{if in_array('Priority', $columns)}<td class="{if $t.priority == "high" || ($t.priority == 'user' && $t._priority == "urgent")} tatHighPriority{/if}">{if $t._priority != ''}{$t._priority|escape}{else}&nbsp;{/if}</td>{/if}
+{if in_array('Status', $columns)}<td nowrap>
+<div nowrap class="tatStatusList {if $t.status && $t.status != 'user'}tatStatus{$t._cssStatusSuffix}{/if}" {if $t.status == 'user' && isset($t._status_color) && '' != $t._status_color}style="background-color: #{$t._status_color};"{/if}>
+{if $t._status != ''}{$t._status|escape}{else}&nbsp;{/if}
+</div>
+</td>{/if}
+{if in_array('RelatedTo', $columns)}<td class="">
+{foreach from=$t._relations item=relation}
+<img src="
+{if $relation.type == 'candidate'}/_images_global/trackandtrace/candidate.gif{/if}
+{if $relation.type == 'customer'}/_images_global/trackandtrace/customer.gif{/if}
+{if $relation.type == 'customer_contactperson'}/_images_global/trackandtrace/customer.gif{/if}
+{if $relation.type == 'contactperson'}/_images_global/trackandtrace/customer.gif{/if}
+{if $relation.type == 'support'}/_images_global/trackandtrace/support.gif{/if}
+{if $relation.type == 'job'}/_images_global/trackandtrace/job.gif{/if} " 
+title="{$relation.type|capitalize}: {$relation.info|escape:'html'}">
+{foreachelse}
+&nbsp;
+{/foreach}
+</td>{/if}
+{if in_array('Active', $columns)}<td class="">{if $t.active}[t]Yes[/t]{else}[t]No[/t]{/if}</td>{/if}
+{if in_array('EstimatedTime', $columns)}<td class="tatListRequired{if $t._hasSubtasks && $t._calculateHours} tatCalculatedValue{/if}" style="text-align:right">{if $t.time_required}{$t.time_required|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""} [t]hrs[/t]{else}&nbsp;{/if}</td>{/if}
+{if in_array('TimeTaken', $columns)}<td class="tatListTaken{if $t._hasSubtasks && $t._calculateHours} tatCalculatedValue{/if}" style="text-align:right">{if $t.time_taken}{$t.time_taken|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""} [t]hrs[/t]{else}&nbsp;{/if}</td>{/if}
+{if in_array('RemainingHours', $columns)}<td class="{if $t._hasSubtasks && $t._calculateHours} tatCalculatedValue{/if}" style="text-align:right">{if $t._remaining_hours}{$t._remaining_hours|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""} [t]hrs[/t]{else}&nbsp;{/if}</td>{/if}
+{if in_array('CalculatedEstimate', $columns)}<td class="" style="text-align:right">{if $t._calculated_estimate}{$t._calculated_estimate|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""} [t]hrs[/t]{else}&nbsp;{/if}</td>{/if}
+{if in_array('Price', $columns)}<td class="tatListPrice{if $t._hasSubtasks && $t._calculatePrice} tatCalculatedValue{/if}" style="text-align:right">{if $t._price}{$t._price|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""}{else}&nbsp;{/if}</td>{/if}
+{if in_array('EstimatedPrice', $columns)}<td class="{if $t._hasSubtasks && $t._calculatePrice} tatCalculatedValue{/if}" style="text-align:right">{if $t._est_price}{$t._est_price|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""}{else}&nbsp;{/if}</td>{/if}
+{if in_array('Progress', $columns)}<td class="" style="text-align: right;">{$t.progress} %</td>{/if}
+{if in_array('Billable', $columns)}<td class="">
+{if $t.billable == 'free'}<span class="tatBillableFree">[t]FR[/t]</span>
+{elseif $t.billable == 'in_group'}<span class="tatBillableInGroup">[t]IG[/t]</span>
+{elseif $t.billable == 'billable'}<span class="tatBillableBillable">[t]BL[/t]</span>
+{else}<span class="tatBillableUnknown">[t]UK[/t]</span>
+{/if}
+
+</td>{/if}
+{if in_array('Appointment', $columns)}<td class="" nowrap="nowrap">{if $t._dt_appointment}{$t._dt_appointment}{else}&nbsp;{/if}</td>{/if}
+
+</tr>
+{/foreach}

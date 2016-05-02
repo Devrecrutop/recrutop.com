@@ -1,0 +1,121 @@
+<!-- UTS/webshop/catalogListToolBar.inc.html -->
+<!-- HTML VALID BY MD -->
+<div class="wSpToolBar">
+	<div class="wSpToolBarR">
+		{if $enablePaging}
+			[t]Displaying[/t]
+			<span>{$productFirst}</span>
+			[t]to[/t]
+			<span>{$productLast}</span>
+			[t]from total[/t]
+			<span>{$productCount}</span>
+		{else}
+			[t]Results[/t]:
+			<span>{$productCount}</span>
+		{/if}
+	</div>
+	{if $enablePaging}
+		<div class="wSpToolBarP">
+		[t]Page:[/t]
+		{if $offset}
+			<a href="{$handler}/command/catalogList{if $categoryId}/categoryId/{$categoryId}{/if}/offset/{$pagePrev}">[t]Previous[/t]</a>
+		{/if}
+		{foreach from=$pages key=pageNr item=pageOffset}
+			{if $pageOffset == $offset}
+				<span>{$pageNr}</span>
+			{else}
+				<a href="{$handler}/command/catalogList{if $categoryId}/categoryId/{$categoryId}{/if}/offset/{$pageOffset}" class="pageNumber">{$pageNr}</a>
+			{/if}
+		{/foreach}
+		{if ($offset + $limit) < $productCount}
+			<a href="{$handler}/command/catalogList{if $categoryId}/categoryId/{$categoryId}{/if}/offset/{$pageNext}">[t]Next[/t]</a>
+		{/if}
+		</div>
+	{/if}
+	<div class="wSpToolBarI">
+		<div class="wSpToolBarPag">
+			<select id="wSpChangePageBy" onchange="wSpChangeSortLimit(this.value)">
+				<option value="5" {if $limit == 5}selected="selected"{/if}>5</option>
+				<option value="10" {if $limit == 10}selected="selected"{/if}>10</option>
+				<option value="25" {if $limit == 25}selected="selected"{/if}>25</option>
+				<option value="100" {if $limit == 100}selected="selected"{/if}>100</option>
+			</select>
+			[t]per page[/t]
+		</div>
+		{if $categories}
+			<div class="wSpToolBarC">
+				<label>[t]Category[/t]</label>
+				<select id="wSpToolBarSortC" onchange="wSpChangeSortCategory(this.value)">
+					<option value="0">[th]all[/th]</option>
+					{foreach from=$categories item=category}
+						<option value="{$category.id}" {if $category.id == $categoryId}selected="selected"{/if}>{$category.name|escape}</option>
+					{/foreach}
+				</select>
+			</div>
+		{/if}
+		<div class="wSpToolBarO">
+			<label>[t]Order by[/t]</label>
+			<select id="wSpToolBarSortO" onchange="wSpChangeSortAscDesc(this.value)">
+				<option value="position" {if $orderBy == 'position'}selected="selected"{/if}>[th]Position[/th]</option>
+				<option value="name" {if $orderBy == 'name'}selected="selected"{/if}>[th]Name[/th]</option>
+				<option value="price" {if $orderBy == 'price'}selected="selected"{/if}>[th]Price[/th]</option>
+				<option value="articlecode" {if $orderBy == 'articlecode'}selected="selected"{/if}>[th]Article code[/th]</option>
+			</select>
+		</div>
+	</div>
+	<div class="cleaner wSpCleaner"></div>
+</div>
+
+<script type="text/javascript">
+var wSpvHandler='{$handler|escape:"javascript"}';
+var wSpvCategories={if $categoriesJson}{$categoriesJson}{else}''{/if};;
+var wSpvWebShopUrl='{$webShopUrl|escape:'javascript'}';
+{literal}
+function wSpChangeSortLimit(val){
+	if(val != undefined)
+	{	    
+	   if ({/literal}"{$categoryId}"{literal} != "")
+        {
+		window.location=wSpvHandler+'/command/catalogList/categoryId/{/literal}{$categoryId}{literal}/limit/'+val;
+        }
+        else {
+        window.location=wSpvHandler+'/command/catalogList/limit/'+val;    
+        }
+	}
+}
+function wSpChangeSortCategory(val){
+	if(val != undefined)
+	{
+		if (val == 0) {
+			window.location=wSpvWebShopUrl;
+		}
+		else {
+			window.location=wSpvCategories[val]['url'];
+		}
+	}
+}
+function wSpChangeSortAscDesc(val){
+	if(val != undefined)
+	{
+	   if ({/literal}"{$categoryId}"{literal} != "")
+        {
+		window.location=wSpvHandler+'/command/catalogList/categoryId/{/literal}{$categoryId}{literal}/orderBy/'+val;
+        }
+        else {
+        window.location=wSpvHandler+'/command/catalogList/orderBy/'+val;    
+        }		
+	}
+}
+
+$('.wSpToolBarPag').click(function(){
+	wSpChangeSortLimit($("#wSpChangePageBy").next('.magicSelectOptions').find(':checked').val());
+});
+$('.wSpToolBarC').click(function(){
+	wSpChangeSortCategory($("#wSpToolBarSortC").next('.magicSelectOptions').find(':checked').val());
+});
+$('.wSpToolBarO').click(function(){
+	wSpChangeSortAscDesc($("#wSpToolBarSortO").next('.magicSelectOptions').find(':checked').val());
+});
+
+{/literal}
+</script>

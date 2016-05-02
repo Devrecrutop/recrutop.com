@@ -1,0 +1,33 @@
+<!--uts:begin inner-->
+<div class="outer wSpOuter wSpTcOuter">
+<!-- /UTS/webshop/webshopTermsConditions.html -->
+	<h1 class="title wSpTitle wSpTcTitle">[t]Terms of agreement[/t]</h1>
+	<div class="intro wSpTcText">
+		<p>{$terms}</p>
+	</div>
+    <form name="form2" method="post" action="/index.php/page/webshop/webShopCmsCategoryId/{$webShopCmsCategoryId}/bb/1">
+        <input type="hidden" name="businessid" value="{$businesstype}" class="logintblinput">
+        <input type="hidden" name="command" id="command" value="payment" class="logintblinput">
+        <input type="hidden" name="typepayment" id="typepayment" value="" class="logintblinput">
+        <input type="hidden" name="wgcpid" id="wgcpid" value="{$wgcpid}" class="logintblinput">  
+        <div class="formInput wSpTcAgree">
+        	<label>[t]I have read and agree to the terms and conditions[/t]</label>
+        	<input type="checkbox" name="agreedterms" value="1" id="agreedterms" class="logintblinput"> [t]Akkoord[/t]
+			<div class="cleaner wSpCleaner"></div>
+        </div>
+        {if $error}
+       		<div class="error">
+            	{if $error == 'ERR_OGONE_FAILED'}[t]Uw betaling is niet uitgevoerd, probeer het op een andere manier.[/t]{/if}
+            </div>
+        {/if}
+        <div class="buttonContainer">
+            {if $invoice_webshop}
+            <input class="button wSpTcFactB" type="submit" name="Submit" value="[th]Op factuur afrekenen[/th]" onClick="document.getElementById('typepayment').value = 'invoice';return confirmSubmit()">
+            {/if}
+            {if $ogone_enabled}
+            	<input class="button wSpTcOgoneB" type="submit" name="Submit" value="[th]Betaal via Ogone[/th]" onClick="document.getElementById('typepayment').value = 'ogone';return confirmSubmit()">
+            {/if}
+        </div>
+    </form>
+</div>
+<!--uts:end inner-->

@@ -1,0 +1,30 @@
+<!-- MD: /UTS/vacancies/semanticalCompanyMatchHook.html -->
+<div class="hookOuter semanticalCompanyMatchHook">
+	<div class="hookHeader">[t]Featured Organisations[/t]</div>
+	{foreach from=$companies item=company}
+		<div class="hookItemContainer">
+			<div class="hookItemLogo">
+				{if $company.wg_logo}
+					<a href="{$company.url}">
+						<img src="{$website}/_images_upload/{$company.wg_logo|escape}" alt="{$company.werkgever}" />
+					</a>
+				{/if}
+			</div>
+			<div class="hookItemTitle">
+				<a href="{$company.url}">
+					{$company.werkgever}
+				</a>
+			</div>
+			<div class="hookItemDesription">
+				{if $company.num_vacancies==1}
+					{$company.num_vacancies} [t]potential job[/t]
+				{else}
+					{$company.num_vacancies} [t]potential jobs[/t]
+				{/if}
+			</div>
+			<div class="cleaner"></div>
+		</div>
+	{/foreach}
+</div>
+
+<!-- semanticalCompanyMatchHook end -->

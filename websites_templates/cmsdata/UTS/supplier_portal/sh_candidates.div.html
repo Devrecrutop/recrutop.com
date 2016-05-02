@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="PSPad editor, www.pspad.com">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer custOuter supplOuter">
+<!-- /UTS/supplier_portal/sh_candidates.div.html -->
+<h1 class="title">[t]Supplied Candidates[/t]</h1>
+
+{$customer_main_menu}
+
+{$customer_menu}
+
+
+<form method="post" action="{$script}" style="margin-top:30px;">
+<div class="formInput">
+<label>[t]Vacancy[/t]:</label>
+{html_options name=vacancy options=$vacancies selected=$vacancy onchange="javascript:this.form.submit();"}
+</div>
+<div class="formInput formCheckbox">
+<label></label>
+<input name="passive" type="hidden" value="N"><input name="passive" type="checkbox" value="Y" {if $passive=="Y"}checked{/if} onclick="javascript:this.form.vacancy.value='0';this.form.submit();">[t]Oude vacatures[/t]
+</div>
+</form>
+
+{foreach from=$candidates item=cand key=kid}
+<div class="itemContainer">
+<h3 class="itemTitle"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/can_detail/kid/{$kid}/vid/{$cand.vacatureid}">{$cand.voornaam} {$cand.tussenvoegsel} {$cand.achternaam}</a></h3>
+<div class="itemWord custCandInsertDate"><span>[t]Supply date[/t]:</span>{$cand.invoerdatum|date_format:"%d.%m.%Y"}</div>
+<div class="itemWord custCandJob"><span>[t]Function[/t]:</span>{$cand.functie_o}</div>
+<div class="itemWord"><span>[t]Reference nr.[/t]:</span>{$cand.ref_nr}</div>
+{if $cand.werkgever && $cand.toon_opdrachtgever}
+<div class="itemWord"><span>[t]Employer[/t]:</span> {$cand.werkgever}</div>
+{/if}
+{if $cand.cand_status}
+<div class="itemWord"><span>[t]Status[/t]:</span>{$cand.cand_status}</div>
+{/if}
+{if $cand.status1}
+<div class="itemWord"><span>{$status1_name}:</span>{$cand.status1}</div>
+{/if}
+{if $cand.status2}
+<div class="itemWord"><span>{$status2_name}:</span>{$cand.status2}</div>
+{/if}
+{if $cand.status3}
+<div class="itemWord"><span>{$status3_name}:</span>{$cand.status3}</div>
+{/if}
+{if $staffing}
+<div class="itemWord"><span>[t]Staffing[/t]:</span>{$cand.staffing_status}</div>{/if}
+{if $hiring_manager}
+{if $cand.note}
+<div class="itemDescription" title="{$cand.note}"><img src="http://bo01.otys.nl/adm/hta/images/notitie_icoon.gif"></div>
+{/if}
+{/if}
+<div class="itemFooter">
+<div class="itemFooterWord custCandEmail" title="[th]Send e-mail to[/th] {$cand._contactpersoon}"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/mailform/id/{$cand.reactieid}"><img src="/_images_global/email.gif" border="0" alt="{$cand.contactpersoon}"></a></div>
+</div>
+</div>
+{/foreach}
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>MyProfilePage0</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+<!--
+function hidestatus(){
+window.status='Otys e-Recruiting Systems'
+return true
+}
+if (document.layers)
+document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+document.onmouseover=hidestatus
+document.onmouseout=hidestatus
+-->
+</SCRIPT>
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<table class="vacstable" cellpadding="0" cellspacing="0" border="0">
+
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Relatie startpagina[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+
+<tr>
+<td class="pageLinkContainer">
+{$customer_menu}
+</td>
+</tr>
+
+<!--START_Block1-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<!--START_Title1-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Wat kunt u doen?[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Welkom in het werkgevers gedeelte van onze website. U kunt hier zelf zoeken naar kandidaten met mogelijk geschikte profielen voor de vacatures die u heeft, zelf vacatures plaatsen en zien welke kandidaten zich hiervoor hebben aangemeld.[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+
+
+
+{if $vcnt}
+<!--START_Block2-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<!--START_Title2-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Vacature informatie[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title2-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text2-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Er zijn {$vcnt} vacatures door uw bedrijf ingevoerd, waarvan {$vcnt_cp} vacatures door u persoonlijk[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text2-->
+</table>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Block2-->
+{/if}
+
+{if $wmcnt}
+<!--START_Block3-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<!--START_Title3-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]berichten[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title3-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text3-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]U heeft {$wmcnt} berichten. U kunt ze <a href="{$wmlink}">hier</a> bekijken...[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text3-->
+</table>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Block3-->
+{/if}
+
+</table>
+<!--uts:end inner-->
+</body>
+</html>

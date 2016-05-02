@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="http://www.otys.nl/_images/visa/visa.css">
+  
+  {literal}
+  <style type="text/css" media="all">
+    body {
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #bgImage {
+      position: absolute;
+      z-index: 1;
+      width: 826px;
+      height: 345px; 
+    }
+    .itemValue {
+      position: absolute;
+      z-index: 2;
+      text-align: center;
+      overflow: hidden;
+      height: 23px;
+      line-height: 23px;
+    }
+    #traineeInternName {
+      top: 148px;
+      left: 71px;
+      width: 430px;
+    }
+    #fieldOfTraining {
+      top: 148px;
+      right: 61px;
+      width: 210px;
+    }
+    #phaseName {
+      top: 192px;
+      left: 71px;
+      width: 180px;
+    }
+    #phaseStartDate {
+      top: 192px;
+      left: 275px;
+      width: 165px;
+    }
+    #phaseEndDate {
+      top: 192px;
+      left: 455px;
+      width: 165px;
+    }
+    #phaseNr {
+      top: 192px;
+      right: 123px;
+      width: 30px;
+    }
+    #phaseOf {
+      top: 192px;
+      right: 68px;
+      width: 30px;
+    }
+    #briefDescrOfTraining {
+      top: 240px;
+      left: 71px;
+      width: 660px;
+      height: 60px;
+      line-height: 18px;
+      text-align: left;
+    }
+    #specificGoals {
+      top: 330px;
+      left: 71px;
+      width: 660px;
+      height: 80px;
+      line-height: 18px;
+      text-align: left;
+    }
+    #knowledgeSkills {
+      top: 457px;
+      left: 71px;
+      width: 660px;
+      height: 38px;
+      line-height: 18px;
+      text-align: left;
+    }
+    #culturalPlans {
+      top: 520px;
+      left: 71px;
+      width: 660px;
+      height: 35px;
+      line-height: 18px;
+      text-align: left;
+    }
+    #specificTasks {
+      top: 595px;
+      left: 71px;
+      width: 660px;
+      height: 75px;
+      line-height: 18px;
+      text-align: left;
+    }
+    #supervisionMethods {
+      top: 710px;
+      left: 71px;
+      width: 660px;
+      height: 70px;
+      line-height: 18px;
+      text-align: left;
+    }
+    #methodsOfPerformance {
+      top: 810px;
+      left: 71px;
+      width: 660px;
+      height: 93px;
+      line-height: 18px;
+      text-align: left;
+    }
+    #pager {
+      position: absolute;
+      bottom: 190px;
+      right: 56px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+  </style>
+  {/literal}
+  
+
+           
+  </head>
+  <body>
+  
+  <img src="http://www.otys.nl/_images/visa/page_3c.jpg" id="bgImage"> 
+  
+    	          <div class="itemValue" id="traineeInternName">{$traineeInternName|escape}</div>{**}
+
+    	          <div class="itemValue" id="fieldOfTraining">{$fieldOfTraining|escape}</div>{**}
+
+    	          <div class="itemValue" id="phaseName">{$phaseName|escape}</div>{**}
+
+    	          <div class="itemValue" id="phaseStartDate">{$phaseStartDate|escape}</div>{**}
+
+    	          <div class="itemValue" id="phaseEndDate">{$phaseEndDate|escape}</div>{**}
+
+    	          <div class="itemValue" id="phaseNr">{$phaseNr|escape}</div>{**}
+    	          
+    	          <div class="itemValue" id="phaseOf">{$phaseOf|escape}</div>{**}
+
+    	          <div class="itemValue" id="briefDescrOfTraining">{$briefDescrOfTraining|escape}</div>{**}
+
+    	          <div class="itemValue" id="specificGoals">{$specificGoals|escape}</div>{**}
+
+    	          <div class="itemValue" id="knowledgeSkills">{$knowledgeSkills|escape}</div>{**}
+
+    	          <div class="itemValue" id="culturalPlans">{$culturalPlans}</div>{**}
+
+    	          <div class="itemValue" id="specificTasks">{$specificTasks|escape}</div>{**}
+
+    	          <div class="itemValue" id="supervisionMethods">{$supervisionMethods}</div>{**}
+
+    	          <div class="itemValue" id="methodsOfPerformance">{$methodsOfPerformance|escape}</div>{**}
+
+    <!--
+    <div id="r_programSponsorName">{$programSponsorName|escape}</div>{**}
+    <div id="r_programNr">{$programNr|escape}</div>{**}
+    -->
+    
+  </div>
+  <div id="pager">Page {$paging.current} of {$paging.total}</div>
+  </body>
+</html>    

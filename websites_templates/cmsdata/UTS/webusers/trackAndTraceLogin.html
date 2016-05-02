@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer">
+<!-- /UTS/webusers/trackAndTraceLogin.html -->
+<h1 class="title">[t]Your session has expired[/t]</h1>
+<div class="intro">
+[t]The session that you have been using, has expired. Please use your login and password to login. If you logged in using a token, please re-enter the token URL to login.[/t]
+</div>
+
+<form action="http://{$uts.cursite}/index.php/page/webuser/code/[code]/bb/1" method="POST"> 
+
+<input type="hidden" name="command" value="login_hook">
+<input type="hidden" name="Login" value="1">
+<input type="hidden" name="trackTraceLogin" value="1">
+
+<div>
+<label for="CandidateLoginEmail">[t]E-mail address[/t]</label>
+</div>
+
+<div>
+<input type="Text" name="Email" size=25 value="" id="CandidateLoginEmail">
+</div>
+
+<div>
+<label for="PassWord">[t]Password[/t]</label>
+</div>
+
+<div>
+<input type="password" name="PassWord" size=25 value="" id="PassWord">
+</div>
+
+<div>
+<input type="hidden" name="persistentCookie" value="0">
+<input type="checkbox" name="persistentCookie" value="1">
+<label for="persistentCookie">[t]Stay logged in[/t]</label>
+</div>
+
+<div>
+<input name="Submit" type="Submit" value="[th]Log in[/th]" class="button">
+</div>
+
+</form>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!--uts:begin inner-->
+<div class="outer wSpOuter wSpOpOuter">
+	<!-- /UTS/webshop/orderPdf.html -->
+	{if $website && $logo}
+		<img src="{$website}/_images_upload/{$logo}"/>
+	{/if}
+
+	<h2 class="title">{$salutation}</h2>
+
+	<h2 class="title">[t]Order details[/t]</h2>
+
+	<div>
+		[t]Date added[/t]: {$order.dateAdded}
+	</div>
+
+	{if $order.ipAccepted}
+		<div>
+			[t]IP accepted[/t]: {$order.ipAccepted}
+		</div>
+	{/if}
+	<div>
+		[tg]Below you will find an overview of your order[/tg]
+		<br>
+	</div>
+
+	<div>
+		{foreach from=$items item=item}
+			<h2 class="oPrWtSubTitle">
+				{if $item.type == 'own_snippet'}{$item.header}{/if}
+				{if $item.type == 'product' && $item.exclude_title == 0}{$item.name}{/if}
+				{if $item.name == 'total'}[th]Total[/th]{/if}
+				{if $item.name == 'sub_total'}[th]Sub total[/th]{/if}
+				{if $item.type == 'snippet' && $item.exclude_title == 0}{$item.name}{/if}
+			</h2>
+			<div class="oPrWtDescr">{$item.description}</div>
+			{if $item.type == 'product'}
+				{if $item.hide_invoice_line != 1}
+					<p>
+						<table border="0" cellpadding="0" cellspacing="0" class="oPrWtPTbl">
+							<tr>
+								<td class="oPrWtPC1">{if $item.amount > 1}{$item.amount} x{/if} {$item.invoice_line} {if $item.amount > 1}[th]&agrave;[/th] {if $round_down}{$item.price.price|floor|number_format:0:",":"."}{else}{$item.price.price|number_format:2:",":"."}{/if} {$proposal.currency} [th]per item[/th]{/if}</td>
+								<td class="oPrWtPC2">{if $round_down}{$item.price.price*$item.amount|floor|number_format:0:",":"."}{else}{$item.price.price*$item.amount|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+								<td class="oPrWtPC3">{if $item.price.period == 'week'}[th]per week[/th]{/if}{if $item.price.period == 'month'}[th]per month[/th]{/if}{if $item.price.period == 'year'}[th]per year[/th]{/if}{if $item.price.period == 'once'}[th]once only[/th]{/if}</td>
+							</tr>
+						</table>
+					</p>
+				{/if}
+			{/if}   
+		{/foreach}
+
+		{if $order.products|@count > 0}
+			<table style="width: 100%;" border="1" cellspacing="0" cellpadding="7">
+				<thead>
+					<tr>
+						<th rowspan="2">[t]Product name[/t]</th>
+						<th colspan="2">[t]Price per item[/t]</th>
+						<th rowspan="2">[t]Amount[/th]</th>
+						<th colspan="2">[t]Sum[/t]</th>
+						<th rowspan="2">[t]Period[/t]</th>
+					</tr>
+					<tr>
+						<th>[t]VAT exc.[/t]</th>
+						<th>[t]VAT inc.[/t]</th>
+						<th>[t]VAT exc.[/t]</th>
+						<th>[t]VAT inc.[/t]</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach from=$order.products item=p}
+						<tr>
+							<td>{if $hideUrl != 1}<a href="{$handler}/command/catalogDetail/productId/{$p.id}">{$p.title|escape}</a>{else}{$p.title|escape}{/if}</td>                
+							<td style="text-align: right">{$p.item_price} {$p.currency}</td>
+							<td style="text-align: right">{$p.item_price_vat_inc} {$p.currency}</td>
+							<td style="text-align: right">{$p.amount}</td>                
+							<td style="text-align: right">{$p.price} {$p.currency}</td>
+							<td style="text-align: right">{$p.price_vat_inc} {$p.currency}</td>                
+							<td>
+							{if $p.period == 'week'}[t]weekly[/t]
+							{elseif $p.period == 'month'}[t]monthly[/t]
+							{elseif $p.period == 'year'}[t]annually[/t]
+							{elseif $p.period == 'once'}[t]once[/t]
+							{else}{$p.period|escape}
+							{/if}
+							</td>                
+						</tr>
+					{/foreach}
+				</tbody>
+			</table>
+		{/if}
+	</div>
+
+	<br>
+
+	<div>
+		<table>
+			<tbody>
+				<tr>
+					<td>[t]Total (VAT exc.)[/t]{if $order.discount > 0} [t]without discount[/t]{/if}:</td>
+					<td style="text-align: right">{$order.total.price} {$order.total.currency}</td>
+				</tr>
+				<tr>
+					<td>[t]VAT[/t]:</td>
+					<td style="text-align: right">{$order.total.vat} {$order.total.currency}</td>
+				</tr>
+				<tr>
+					<td>[t]Total (VAT inc.)[/t]{if $order.discount > 0} [t]without discount[/t]{/if}:</td>
+					<td style="text-align: right">{$order.total.price_vat_inc} {$order.total.currency}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	{if $order.discount > 0}
+	<div>
+		<table>
+			<tbody>
+				<tr>
+					<td>[t]Discount percentage[/t]:</td>
+					<td style="text-align: right">{$order.discount|string_format:"%.2f"}%</td>
+				</tr>
+				<tr>
+					<td>[t]Total (VAT exc.) with discount[/t]:</td>
+					<td style="text-align: right">{math equation="(x / 100) * (100 - y)" x=$order.total.price y=$order.discount} {$order.total.currency}</td>
+				</tr>
+				<tr>
+					<td>[t]VAT[/t]:</td>
+					<td style="text-align: right">{math equation="(x / 100) * (100 - y)" x=$order.total.vat y=$order.discount} {$order.total.currency}</td>
+				</tr>
+				<tr>
+					<td>[t]Total (VAT inc.) with discount[/t]:</td>
+					<td style="text-align: right">{math equation="(x / 100) * (100 - y)" x=$order.total.price_vat_inc y=$order.discount} {$order.total.currency}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+{/if}
+</div>
+{if $order.termsAndConditions}
+	<div>[tg]Terms and conditions[/tg]</div>
+	<div>{$order.termsAndConditions}</div>
+{/if}
+<!--uts:end inner-->

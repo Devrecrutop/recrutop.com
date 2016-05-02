@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Banners</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<!--uts:begin inner-->
+<!-- /UTS/wiqets/wiqetsForm.html -->
+{literal}
+<script>
+function save() {
+	if (document.getElementById('Id').value==''){
+		if (!document.getElementById('Wiqet[wiqetCode]').value){
+			alert('[th]Please publish wiqet first (click on Opslaan button in editor).[/th]');
+			return(false);
+		}
+	}
+}
+{/literal}
+</script>
+<div class="outer wiqetOuter">
+{if $data.id}
+<h1 class="title wiqetTitle">[th]Edit a Wiqet[/th]</h1>
+{else}
+<h1 class="title wiqetTitle">[th]Add a Wiqet[/th]</h1>
+{/if}
+{$customer_menu}
+
+{if $data.id}
+<div class="text wiqetText">[th]Below you see the Wiqet that you created before. Please edit it there, and press "Save" when done.[/th]</div>
+{else}
+<div class="text wiqetText">[th]To add a new Wiqet, enter a name, choose a type and create the Wiqet. Then please press save.[/th]</div>
+{/if}
+
+<form name="Wiqet" action="/index.php/page/wiqets/bb/1/Id/{$data.id}" method="POST">
+<input type="hidden" name="command" value="save">
+<input type="hidden" name="Id" id="Id" value="{$data.id}">
+<input type="hidden" name="IVuniqueId" value="{$IVuniqueId}">
+
+
+<div class="formInput">
+<label for="name">[t]Name[/t]</label>
+<input type="text" id="name" name="name" value="{$data.name}">
+</div>
+
+{if $enableVideo}
+<div class="formInput">
+<label for="type">[t]Type[/t]</label>
+{if $data.id}
+{if $wiqetType == 'video'}[t]Video[/t]{else}[t]Photo[/t]{/if}
+<input type="hidden" name="type" value="{$wiqetType}" >
+{else}
+<select name="type" onchange="document.forms['Wiqet'].command.value='add';document.forms['Wiqet'].submit();">
+<option value="photo">[t]Photo[/t]</option>
+<option value="video" {if $wiqetType == 'video'}selected="selected"{/if}>[t]Video[/t]</option>
+</select>
+{/if}
+</div>
+{/if}
+
+<div class="formInput formMultiCheckbox">
+<label>{if $enableVideo}[t]Use as[/t]{else}[t]Type[/t]{/if}</label>
+<div class="formCheckboxContainer">
+<span><input type="hidden" name="use_job" value="0"><input type="checkbox" name="use_job" class="radiobuttons" value="1" {if $data.use_job}checked{/if}>
+<label>[t]Job[/t]</label>
+</span>
+<span><input type="hidden" name="use_network" value="0"><input type="checkbox" name="use_network" class="radiobuttons" value="1" {if $data.use_network}checked{/if}>
+<label>[t]Network[/t]</label>
+</span>
+</div>
+</div>
+
+<div class="buttonContainer"><input type="button" class="button" value="[tb]Save[/tb]" {if $wiqetType == 'video'}onclick="document.forms['Wiqet'].submit();"{else}onclick="javascript:publishAndSubmit(this.form);"{/if}></div>
+
+<h2 class="subHeader">[t]Wiqet[/t]</h2>
+<div class="text">
+
+{if $wiqetType != 'video'}
+<script src="http://www.introvoice.nl/2.0/Wiqet.js" type="text/javascript"></script>
+<!-- <script src="http://bo01.otys.nl/adm/hta/wiqets/js/Wiqet.js" type="text/javascript"></script> -->
+{/if}
+
+
+{if $wiqetType == 'video'}
+
+<script type="text/javascript" src="http://backend.wiqet.com/wiqetembeds/824e6f3f5b987be8a35fc21b80849185/wiqetOtis.js" ></script>
+
+<script type="text/javascript">
+
+var allowWiqetCallbackSubmit = {if $data.id}false{else}true{/if};
+{literal}
+
+function wiqetCallback(wiqetCode, deleteCode, deletePinCode){
+
+    var wiqetCode = wiqetCode;
+    var deleteCode = deleteCode; // Not used anymore ..
+    var deletePinCode = deletePinCode; // Not used anymore ..
+
+    document.getElementById('Wiqet[wiqetCode]').value = wiqetCode;
+	document.getElementById('Wiqet[playerUrl]').value = '?wiqetCode=' + wiqetCode;
+	document.getElementById('Wiqet[deletePinCode]').value = deletePinCode;
+	document.getElementById('Wiqet[deleteCode]').value = deleteCode;
+	
+	if (!allowWiqetCallbackSubmit)
+		return;
+	
+	document.getElementById('wiqet_proceedto').value = "detail";
+	document.forms['Wiqet'].submit();
+}
+{/literal}
+
+</script>
+
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width = "450" height = "375" align = "middle" id = "movie" name="movie" codebase = "https://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
+    <param name = "movie" value = "http://backend.wiqet.com/wiqetembeds/{$customerid}/editor_movie.swf?uniqueId={$IVuniqueId}&deleteCode={$data.deleteCode}&deletePinCode={$data.deletePinCode}&modus=editor&introvoiceCode={$data.wiqetCode}&customerId={$customerid}">
+    <param name = "quality" value = "high" >
+    <param name = "wmode" value = "transparent" >
+    <param name = "bgcolor" value = "#FFFFFF" >
+    <param name = "allowScriptAccess" value = "always" >
+<embed src = "http://backend.wiqet.com/wiqetembeds/{$customerid}/editor_movie.swf?uniqueId={$customerid}&deleteCode={$data.deleteCode}&deletePinCode={$data.deletePinCode}&modus=editor&introvoiceCode={$data.wiqetCode}&customerId={$customerid}" quality = "high" bgcolor = "#FFFFFF" width = "450" height = "375" name = "movie" align = "middle" play = "true" loop = "false" quality = "high" wmode = "transparent" allowScriptAccess = "always" type = "application/x-shockwave-flash" pluginspage = "http://www.macromedia.com/go/getflashplayer"></embed></object>
+
+<input type="hidden" id="Wiqet[wiqetCode]" name="Wiqet[wiqetCode]" value="" >
+<input type="hidden" id="Wiqet[playerUrl]" name="Wiqet[playerUrl]" value="" >
+<input type="hidden" id="Wiqet[deletePinCode]" name="Wiqet[deletePinCode]" value="" >
+<input type="hidden" id="Wiqet[deleteCode]"	name="Wiqet[deleteCode]" value="" >
+<input type="hidden" id="wiqet_proceedto" name="wiqet_proceedto" value="list" >
+ 	
+{else}
+
+<div id="flashWiqet">Wiqet wordt geladen...</div>
+<div id="formWiqet">Formulier wordt geladen...</div>
+
+{/if}
+<script type="text/javascript">
+var IVcustomerId = '{$customerid}';
+var IVuniqueId = '{$IVuniqueId}';
+var IVWiqetCode = '{$data.wiqetCode}';
+{if $wiqetType == 'video'}
+var IVplayerUrl = '/_flash/editor_movie.swf';
+{else}
+var IVplayerUrl = '/_flash/editor.swf';
+{/if}
+//var IVplayerUrl = 'http://bo01.otys.nl/adm/hta/wiqets/editor.swf';
+//var IVplayerUrl = 'http://www.wiqet.nl/media/flash/editor.swf';
+var IVDisplayUrl = '';
+var IVwidth = '450px';
+var IVheight = '420px';
+var IValign = 'middle';
+var IVbgColor = '#ffffff';
+var IVdivForm = 'formWiqet';
+var IVdivPlayer = 'flashWiqet';
+var IVdivLink = 'linkWiqet';
+var IVFormName = 'Wiqet';
+var IVFormnameType = 'hidden'; //hidden
+var deleteCode = '{$data.deleteCode}';
+var deletePinCode = '{$data.deletePinCode}';
+{if $wiqetType != 'video'}
+/*
+var error = play_wiqet(IVDisplayUrl,
+IVplayerUrl,
+'editor',
+IVWiqetCode,
+IVcustomerId,
+IVuniqueId,
+IVwidth,
+IVheight,
+IValign,
+IVbgColor,
+IVdivLink,
+IVdivForm,
+IVdivPlayer,
+IVFormName,
+IVFormnameType,
+deleteCode,
+deletePinCode
+);
+if (error) document.write(error);
+*/
+{/if}
+</script>
+</div>
+
+{if $enableVideo}
+<div id="infoWiget"></div>
+{/if}
+
+{if $data.wiqetCode}
+[t]You can use html Wiqet code to display Wiqet in other websites, blogs or communities servers.[/t]<br>
+[t]Click on code below and press ctrl+C to copy code to clipboard.[/t]
+{*<input type="text" value="{$flashcode|escape}" name="flashcode" id="flashcode" size="80" readonly="readonly" class="deeptabletextnowidth">*}
+<textarea name="flashcode" id="flashcode" style="width:400px;height:110px;" onclick="this.select();">{$flashcode|escape}</textarea>
+{/if}
+</div>
+</form>
+<!--
+<td class="formTblButtonCell" > <input type="submit" class="button" value="[t]Save[/t]" onclick="javascript:return save();">
+<tr>
+<td class="formButton" colspan="2">
+<input type="button" name="newagent" value="[th]New CV Search Agent[/th]" class="button" onclick="location='/index.php/page/agentsCustomers/command/newagent/bb/1'">
+</td>
+</tr>
+-->
+
+<!--uts:end inner-->
+</body>
+</html>

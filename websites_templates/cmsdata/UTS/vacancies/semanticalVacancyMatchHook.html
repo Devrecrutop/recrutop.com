@@ -1,0 +1,32 @@
+<!-- MD: /UTS/vacancies/semanticalVacancyMatchHook.html -->
+
+{if $smarty.server.REMOTE_ADDR == '188.204.121.50' || $smarty.server.REMOTE_ADDR == '10.100.10.6'}
+	{debug}
+{/if}
+
+<div class="hookOuter semanticalVacancyMatchHook">
+	<div class="hookHeader">[t]Matched Vacancies[/t]</div>
+	{foreach from=$vacancies item=vacancy}
+		<div class="hookItemContainer">
+			<div class="hookItemScore"><div>{$vacancy.score}%</div></div>
+			<div class="hookItemLogo">
+				{if $vacancy.wg_logo}
+					<a href="{$vacancy.data.JobUrl}">
+						<img src="{$website}/_images_upload/{$vacancy.wg_logo|escape}" alt="{if $vacancy.lang_title}{$vacancy.lang_title}{else}{$vacancy.title}{/if}" />
+					</a>
+				{/if}
+			</div>
+			<div class="hookItemTitle">
+				<a href="{$vacancy.data.JobUrl}">
+					{if $vacancy.lang_title}{$vacancy.lang_title}{else}{$vacancy.title}{/if}
+				</a>
+			</div>
+			<div class="hookItemDesription">
+				{if $vacancy.lang_description}{$vacancy.lang_description|truncate:110}{else}{$vacancy.description|truncate:110}{/if}
+			</div>
+			<div class="cleaner"></div>
+		</div>
+	{/foreach}
+</div>
+
+<!-- semanticalVacancyMatchHook end -->

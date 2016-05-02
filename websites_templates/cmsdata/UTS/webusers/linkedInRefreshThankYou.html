@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer">
+    <!-- /UTS/webusers/linkedInRefreshThankYou.html -->
+    
+    {$menu}
+    
+    {if $msg == 'MSG_OK'}
+    
+	    <h1 class="title">[t]Thank you[/t]</h1>
+	    
+	    <div class="intro">
+	        [t]Thank you for refreshing your link with LinkedIn.[/t]
+	    </div>
+	    
+	{elseif $msg == 'MSG_FAILED'}
+    
+        <h1 class="title">[t]Linking to LinkedIn failed[/t]</h1>
+        
+        <div class="intro">
+            [t]Linking to LinkedIn has failed.[/t]
+        </div>
+        
+    {/if}
+    
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

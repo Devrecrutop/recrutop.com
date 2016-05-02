@@ -1,0 +1,65 @@
+{* req.ext.js: JQueryBase *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer webUOuter wuRecomMessOuter">
+<!-- /UTS/webusers/recommendationsMessages.html -->
+<!-- Template Webdevelopment validated 06-2013 -->
+
+{if $message == 'MSG_CANDIDATE_THANK_YOU'}
+
+	<h1 class="title">[t]Thank you[/t]</h1>
+	<div class="intro">[t]Thank you. Your recommendation was sent. We have sent a notification to the person you have written the recommendation about.[/t]</div>
+
+{elseif $message == 'MSG_RELATION_THANK_YOU'}
+
+	<h1 class="title">[t]Thank you[/t]</h1>
+	<div class="intro">[t]Thank you. Your recommendation was sent. We have sent a notification to the company you have written the recommendation about.[/t]</div>
+	
+{elseif $message == 'MSG_CANDIDATE_ALREADY_RECOMMENDED'}
+
+	<h1 class="title">[t]Already recommended[/t]</h1>
+	<div class="intro">[t]You have already given a recommendation about this candidate.[/t]</div>
+	
+	<meta http-equiv="refresh" content="10;URL=http://{$uts.cursite}/index.php/page/candetail/bb/1/command/start/id/{$candidateId}">
+
+{elseif $message == 'MSG_RELATION_ALREADY_RECOMMENDED'}
+
+	<h1 class="title">[t]Already recommended[/t]</h1>
+	<div class="intro">[t]You have already given a recommendation about this company.[/t]</div>
+	
+	<meta http-equiv="refresh" content="10;URL=http://{$uts.cursite}/index.php/network/cust/{$relationConnectionId}">
+
+{elseif $message == 'MSG_REQUEST_THANK_YOU'}
+
+	<h1 class="title">[t]Thank you[/t]</h1>
+	<div class="intro">[t]Your recommendation request has been sent.[/t]</div>
+	
+	<meta http-equiv="refresh" content="10;URL=http://{$uts.cursite}/index.php/page/recommendations/bb/1/command/genericEntityRecommendations/subcommand/overview">		
+	
+{elseif $message == 'MSG_ALREADY_REQUESTED'}
+
+	<h1 class="title">[t]Already requested[/t]</h1>
+	<div class="intro">[t]You have already requested a recommendation from this person.[/t]</div>
+	
+	<meta http-equiv="refresh" content="10;URL=http://{$uts.cursite}/index.php/page/recommendations/bb/1/command/genericEntityRecommendations/subcommand/start">	
+	
+{elseif $message == 'MSG_ALREADY_RECEIVED'}
+
+	<h1 class="title">[t]Already received[/t]</h1>
+	<div class="intro">[t]You have already received a recommendation from this person.[/t]</div>
+	
+	<meta http-equiv="refresh" content="10;URL=http://{$uts.cursite}/index.php/page/recommendations/bb/1/command/genericEntityRecommendations/subcommand/start">
+	
+{/if}
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

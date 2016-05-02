@@ -1,0 +1,166 @@
+<!--uts:begin inner-->
+
+<div class="outer wSpOuter wSpCOgOuter">
+<!-- /UTS/webshop/checkoutGuest.html -->
+<!-- WV20111103 Order of field changed, partly based on NRC request -->
+
+{if $allCategories}
+<div>
+<a href="{$handler}/command/catalogList">[t]Products[/t]</a>
+</div>
+{/if}
+
+<h1 class="title wSpCOgTitle">[t]Enter your details[/t]</h1>
+
+<form name="checkoutform" action="{$handler}/command/checkoutGuest" method="post" enctype="multipart/form-data" class="wSpCOgItemContainer">
+	<div class="text">[t]Enter your details below.[/t]</div>
+<div class="formGroup wSpCOgAccountGroup">
+	<h2 class="subHeader">[t]Account[/t]</h2>
+	<div class="formInput">
+		<label>[t]Username[/t]</label>
+		<input type="text" name="username" value="{$values.username|escape}" />
+		{if $errors.username}
+		<div class="error">
+			{if $errors.username == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+		</div>
+		{/if}
+	</div>
+	<div class="formInput">
+		<label>[t]Password[/t]</label>
+		<input type="password" name="password" value="{$values.password|escape}" />
+		{if $errors.password}
+		<div class="error">
+			{if $errors.password == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+			{if $errors.password == 'MSG_PASSWORD_DIFFERENT'}[t]Passwords do not match[/t]{/if}
+			
+		</div>
+		{/if}
+	</div>
+	<div class="formInput">
+		<label>[t]Repeat password[/t]</label>
+		<input type="password" name="rpassword" value="{$values.rpassword|escape}" />
+		{if $errors.rpassword}
+		<div class="error">
+			{if $errors.rpassword == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+		</div>
+		{/if}
+	</div>
+</div>
+<div class="formGroup wSpCOgContactDetailsGroup">
+	<h2 class="subHeader">[t]Contact Details[/t]</h2>
+	<div class="formInput formInputEmail">
+		<label>[t]E-mail[/t]</label>
+		<input type="text" name="email" value="{$values.email|escape}" />
+		{if $errors.email}
+		<div class="error">
+			{if $errors.email == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+			{if $errors.email == 'MSG_INVALID_EMAIL'}[t]E-mail address is invalid[/t]{/if}
+		</div>
+		{/if}
+	</div>
+	<div class="formInput formInputFirstName">
+		<label>[t]First name[/t]</label>
+		<input type="text" name="firstname" value="{$values.firstname|escape}" />
+		{if $errors.firstname}
+			<div class="error">{if $errors.firstname == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}</div>
+		{/if}
+	</div>
+	<div class="formInput formInputLastName">
+		<label>[t]Last name[/t]</label>
+		<input type="text" name="lastname" value="{$values.lastname|escape}" />
+		{if $errors.lastname}
+		<div class="error">
+			{if $errors.lastname == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+		</div>
+		{/if}
+	</div>
+	<div class="formInput formInputCompany">
+		<label>[t]Company[/t]</label>
+		<input type="text" name="company" value="{$values.company|escape}" />
+		{if $errors.company}
+		<div class="error">
+			{if $errors.company == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+		</div>
+		{/if}
+	</div>
+	<div class="formInput formInputAdress">
+		<label>[t]Address[/t]</label>
+		<textarea name="address">{$values.address|escape}</textarea>
+		{if $errors.address}
+		<div class="error">
+			{if $errors.address == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+		</div>
+		{/if}
+	</div>
+	<div class="formInput formInputZip">
+		<label>[t]ZIP[/t]</label>
+		<input type="text" name="zip" value="{$values.zip|escape}" />
+		{if $errors.zip}
+		<div class="error">
+			{if $errors.zip == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+		</div>
+		{/if}
+	</div>
+	<div class="formInput formInputCity">
+		<label>[t]City[/t]</label>
+		<input type="text" name="city" value="{$values.city|escape}" />
+		{if $errors.city}
+		<div class="error">
+			{if $errors.city == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+		</div>
+		{/if}
+	</div>
+	<div class="formInput formInputCountry">
+		<label>[t]Country[/t]</label>
+		<select name="country">
+			<option value="">--</option>
+			{html_options options=$countries selected=$values.country}
+		</select>
+		{if $errors.country}
+		<div class="error">
+			{if $errors.country == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+		</div>
+		{/if}
+	</div>
+	<div class="formInput formInputPhone">
+		<label>[t]Phone[/t]</label>
+		<input type="text" name="phone" value="{$values.phone|escape}" />
+		{if $errors.phone}
+		<div class="error">
+			{if $errors.phone == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+		</div>
+		{/if}
+	</div>
+	<div class="formInput formInputFax">
+		<label>[t]Fax[/t]</label>
+		<input type="text" name="fax" value="{$values.fax|escape}" />
+	</div>
+</div>
+	<div class="formInput formInputTax">
+		<label>[t]Tax number[/t]</label>
+		<input type="text" name="taxnumber" value="{$values.taxnumber|escape}" />
+	</div>
+  
+  <!-- UF BEGIN -->
+  {if [uts:upload_file]}
+	<div class="formInput">
+		<label>[t]Upload file[/t]</label>		
+		<input type="file" name="document" />	
+		
+		{if $errors.document}
+		<div class="error">
+			{if $errors.document == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+		</div>
+		{/if}		
+		
+	</div>
+	{/if} {*UPLOAD FILE END*}
+	<!-- UF END -->
+	
+	<div class="buttonContainer wSpCOgButton">
+		<input class="button" type="submit" value="[th]Make the order![/th]">
+	</div>
+</form>
+
+</div>
+<!--uts:end inner-->

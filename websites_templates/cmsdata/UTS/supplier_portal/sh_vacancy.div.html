@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- /UTS/supplier_portal/sh_vacancy.div.html -->
+<div class="outer custOuter spOuter spVacOuter">
+
+<h1 class="title shTitle">{$functie_o}</h1>
+{$customer_menu}
+<!--START_ref_nr-->
+<h2 class="subHeader shSubHeader shSubHRef">[t]Reference nr.[/t]</h2>
+<!--SingleWordLink1-->
+<div class="text shText shTextRef">{$data.ref_nr}</div>
+<!--END_ref_nr-->
+
+<!--START_locatie-->
+<h2 class="subHeader shSubHeader shSubHLoc">[t]Location[/t]</h2>
+<!--SingleWordLink1-->
+<div class="text shText shTextLoc">{$data.locatie}</div>
+<!--END_locatie-->
+
+
+
+{foreach from=$details item=detail}
+<h2 class="subHeader shSubHeader shSubHDet">{$detail.name}</h2>
+<div class="text shText shTextDet">{$detail.value}</div>
+{/foreach}
+
+
+
+
+{if $data.File}
+<h2 class="subHeader shSubHeader shSubHDesc">[t]Detailed Description[/t]<!--SingleWordLink2--></h2>
+<div class="text shText shTextDesc"><a href="{$path_http}{$data.File}" target="_blank">{$data.File}</a></div>
+{/if}
+
+<h2 class="subHeader shSubHeader shSubHCons">[t]Consultant[/t]<!--SingleWordLink3--></h2>
+<div class="text shText shTextCons">{$data.cp_voorl} {$data.cp_achtern}</div>
+
+<h2 class="subHeader shSubHeader shSubHVend">[t]Vendor Information[/t]</h2>
+
+{if $data.werkgever && $data.toon_opdrachtgever}
+<div class="text shText shTextWerkgever">
+<span>[t]Employer[/t]:</span>
+{$data.werkgever}
+</div>
+{/if}
+
+{if $data.invoerdatum}
+<div class="text shText shTextInvoerdatum">
+<span>[t]Entry Date[/t]:</span>
+{$data.invoerdatum|date_format:"%d.%m.%Y"}
+</div>
+{/if}
+
+{if $data.start_assigment}
+<div class="text shText shTextAssigment">
+<span>[t]Start Date[/t]:</span>
+{$data.start_assigment}
+</div>
+{/if}
+
+{if $data.duration_assigment}
+<div class="text shText shTextDuration">
+<span>[t]Period[/t]:</span>
+{$data.duration_assigment}
+</div>
+{/if}
+
+{if $data.tariff_assigment}
+<div class="text shText shTextAssigment">
+<span>[t]Tariff Indication[/t]:</span>
+{$data.tariff_assigment}
+</div>
+{/if}
+
+<div class="buttonContainer shButtonContainer">
+<!--START_BUTTON1--> <!-- <input class="button" type="button"  name="Button" value="[t]Print[/t]" onClick="javascript:document.printframe.location='customers_ext.php?command=detail&vid={$id}&option=print&code={$code}';"> --><!--END_BUTTON1-->
+<!--START_BUTTON2-->
+<input  class="button shVacancyButton_1" type="button" value="[th]Back[/th]" onClick="window.location='/index.php/page/sh_portal/bb/1/code/{$code}/command/list'" name="button">
+<!--ButtonLink2-->
+<!--END_BUTTON2-->
+<!--START_BUTTON3-->
+<input class="button shVacancyButton_2" type="button" name="Button4" value="[th]Present Candidate[/th]" onClick="location='{if $uses_applicants}/index.php/page/spapplicants/bb/1/command/spapplyforjob/vid/{$id}/backcommand/detail{else}CandidatesRemote.php?command=enroll&vid={$id}&code={$code}&backcommand=detail&supplier=1{/if}';">
+<!--ButtonLink3-->
+<input class="button shVacancyButton_3" type="button" name="Button5" value="[th]Previously Presented[/th]" onClick="location='/index.php/page/sh_portal/bb/1/code/{$code}/command/c_list/vacancy/{$id}';">
+<!--ButtonLink3-->
+<!--END_BUTTON3-->
+</div>
+
+
+{if !$disable_textkernel}
+<div class="shTextAuto">
+	<h2 class="subHeader">[t]Automatic Candidate Registration[/t]</h2><!--SingleWordLink1-->
+	<div class="text">[t]You can automatically enter a candidate into our system using the options below. First, enter the
+candidate's e-mail address. Then, find the candidate's CV on your harddisk, using the file upload box. If we allready have the candidate
+in our system, we will notify you. If now, we will extract the CV automatically, and you can check and correct this after.[/t]
+	</div>
+
+	<!--START_CANDIDATE_FIELDS-->
+	<script language="JavaScript" type="text/javascript">
+	{literal}
+	function checkform() {
+	  form=document.form_cv;
+	  if (form.c_email.value == "") {
+		alert( "[t]Please enter your email address.[/t]" );
+		form.c_email.focus();
+		return false ;
+	  }
+	  else{
+		if (emailcheck(form.c_email.value)==false){
+		  form.c_email.focus();
+		}
+		else{
+		 if (form.file.value !="") {
+			  var ffv = form.file.value.toLowerCase();
+			  if (!(ffv.substring(ffv.length - 4) == '.doc' || ffv.substring(ffv.length - 5) == '.docx')) {
+				  alert( "[t]Only Word documents (.doc/.docx) can be uploaded.[/t]" );
+			  } else {
+				form.submit();
+				document.getElementById('progressbar').style.display="block";
+			  }
+		  }
+		  else{
+			form.submit();
+		  }
+		}
+	  }
+	  return true ;
+	}
+	function checkfile() {
+	  form=document.form_cv;
+		 if (form.file.value !="") {
+			  var ffv = form.file.value.toLowerCase();
+			  if (!(ffv.substring(ffv.length - 4) == '.doc' || ffv.substring(ffv.length - 5) == '.docx')) {
+				  alert( "[t]Only Word documents (.doc/.docx) can be uploaded.[/t]" );
+			  } else {
+				form.submit();
+				document.getElementById('progressbar').style.display="block";
+			  }
+		  }
+		  else{
+			form.submit();
+		  }
+	  return true ;
+	}
+	function emailcheck(emailstr) {
+	mess="[t]Invalid E-mail address[/t]";
+			apos=emailstr.indexOf("@")
+			dotpos=emailstr.lastIndexOf(".")
+			if (emailstr == "" || apos<1 || dotpos-apos<2) {
+				alert(mess);
+				return false;
+			}else{
+				return true;
+			}
+	}
+	{/literal}
+	</script>
+
+	<form name="form_cv" action="{if $uses_applicants}/index.php/page/spapplicants/bb/1/backcommand/detail{else}CandidatesRemote.php?command=enroll&vid={$id}&code={$code}&backcommand=detail&supplier=1{/if}" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="command" value="{if $uses_applicants}spapplyforjobtk{else}enroll{/if}">
+	<input type="hidden" name="vid" value="{$id}">
+	<input type="hidden" name="code" value="{$code}">
+	<input type="hidden" name="backcommand" value="detail">
+	<input type="hidden" name="supplier" value="1">
+	<input type="hidden" name="vendor_add_cv" value="1">
+
+	<div class="formInput shEmailCon">
+	<label>[t]E-mail[/t]:</label>
+	<input type="text" name="c_email" id="c_email" size="35" value="">
+	</div>
+
+	{if $added_email_already_exists neq ""}
+	<div class="error">[t]this email already exists: [/t]{$added_email_already_exists}</div>
+	{/if}
+
+	<div class="formInput shCvCon">
+	<label>[t]CV[/t]:</label>
+	<input type="hidden" name="MAX_FILE_SIZE" value="512000">
+	<input type="file" name="file">
+	</div>
+
+	<div class="buttonContainer shButtonContainer">
+	{if $noEmail eq 1}
+		<input class="button" type="button" name="Button4" value="[th]Automatic Candidate Registration[/th]" onClick="return checkfile();">
+	{else}
+		<input class="button" type="button" name="Button4" value="[th]Automatic Candidate Registration[/th]" onClick="return checkform();">    
+	{/if}
+	</div>
+	</form>
+
+	<!--ButtonLink3-->
+	{if $smarty.session.candidate_textkernel_went_wrong != 1}
+	<div id="progressbar" style="display:none"><img src="http://bo01.otys.nl/adm/hta/images/busy_bar{$CurrentLanguage}.gif" {* MD: causes loop because img doesnt exist onerror="this.src='http://bo01.otys.nl/adm/hta/images/busy_bar.gif'" *} ></div>
+	{/if}
+	<!--END_CANDIDATE_FIELDS-->
+	{/if}
+
+	<!--START_Photo-->
+	{if $data.Photo}
+	<img src="{$path_http}{$data.Photo}" border="0">
+	{/if}
+	<!--END_Photo-->
+
+</div>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

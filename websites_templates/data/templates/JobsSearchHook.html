@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>JobsSearch</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+<!--
+function hidestatus(){
+window.status='Otys e-Recruiting Systems'
+return true
+}
+if (document.layers)
+document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+document.onmouseover=hidestatus
+document.onmouseout=hidestatus
+-->
+</SCRIPT>
+</head>
+<body>
+<!--START_9--> 
+
+<form name="jobsrchfrm" action="/index.php/page/JobsRemote/id/[id]/cat/all/list/1/command/search/bb/1" method="post"> 
+<div class="hookOuter jshOuter">
+<!--START_PageTitle-->
+<div class="hookHeader jshHeader">[PageTitle]</div>
+<!--END_PageTitle-->
+
+<!--START_Block1-->
+<!--START_Text1-->
+<div class="hookText jshText">[Text1]</div>
+<!--END_Text1-->
+<!--END_Block1-->
+
+<div class="hookItemContainer jshIc">
+<!--START_CRIT-->
+<!--START_H_CRIT-->
+<div class="hookItemWord jshInput jshHinput">
+<label>[naam]</label>
+<!--START_H_CRIT_SELECT-->
+<select name="[veld]">[[veld]]</select>
+<!--END_H_CRIT_SELECT-->
+<!--START_H_CRIT_MULTISELECT-->
+<select name="[veld][]" multiple="multiple">[[veld]]</select>
+<!--END_H_CRIT_MULTISELECT-->
+</div>
+<!--END_H_CRIT-->
+
+<!--START_V_CRIT-->
+<div class="hookItemWord jshInput jshVInput">
+<label for="jobSearchVQuestion">[naam]</label>
+<!--START_V_CRIT_SELECT-->
+<select name="[[veld]]">[[veld]]</select>
+<!--END_V_CRIT_SELECT-->
+<!--START_V_CRIT_MULTISELECT-->
+<select name="[veld][]" multiple id="jobSearchVQuestion">[[veld]]</select>
+<!--END_V_CRIT_MULTISELECT-->
+</div>
+<!--END_V_CRIT-->
+<!--END_CRIT-->
+<div class="hookItemWord jshInput jshTrefwoord"><label for="trefwoord">[SingleWord1]</label><!--SingleWordLink1--><input type="text" name="trefwoord" id="trefwoord"></div>
+</div>
+
+<div class="hookButton jshBc"><input class="button" type="submit" value="[Button1]" id="JobSearchSubmit"><!--ButtonLink1--></div>
+
+</div>
+</form>  
+<!--END_9-->
+</body>
+</html>

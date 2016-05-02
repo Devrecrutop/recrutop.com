@@ -1,0 +1,25 @@
+
+<!-- UTS/vacancies/viewJobRotationsHook.html -->
+{if $hasRotations}
+<div class="hookOuter jrttOuter">
+
+	<div class="hookHeader jrttHeader">[t]Job Rotations[/t]</div>
+	
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="jrttTable">
+  <tr>
+    <td width="40%">[t]Department[/t]</td>
+    <td width="40%">[t]Position[/t]</td>
+    <td width="20%">[t]Duration[/t]</td>        
+  </tr>  
+  {foreach from=$rotations item=r}
+  <tr>
+    <td>{$r._department|escape}</td>
+    <td>{$r._position|escape}</td>
+    <td>{if $r.duration}{$r.duration|escape}{else}{$r.start_ate|escape} - {$r.end_date|escape}{/if}
+    </td>    
+  </tr>
+  {/foreach}  
+  </table>
+  
+</div>
+{/if}

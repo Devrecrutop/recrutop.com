@@ -1,0 +1,30 @@
+<!-- /UTS/vacancies/vacancyFavoriteButton.html STANDARD-->
+<!-- HOOK add_job_as_favourite_to_cp-->
+
+{if $already_favorite}
+<div class="jobFavorite remove">
+<form action="/index.php/page/JobsRemote/" method="POST">
+
+    <input type="hidden" name="candidate_id" value="{$candidate_id}" />
+    <input type="hidden" name="job_id" value="{$job_id}" />
+    <input type="hidden" name="command" value="delete_from_favorites" />
+    <input type="hidden" name="called_from_url" value="{$called_from_url}" />
+
+    <input type="submit" value="[t]Remove from favorites[/t]" />
+</form>
+</div>
+{else}
+<div class="jobFavorite add">
+<form action="/index.php/page/JobsRemote/" method="POST">
+    
+    <input type="hidden" name="candidate_id" value="{$candidate_id}" />
+    <input type="hidden" name="job_id" value="{$job_id}" />
+    <input type="hidden" name="command" value="add_to_favorites" />
+    <input type="hidden" name="called_from_url" value="{$called_from_url}" />
+    
+    <input type="submit" value="[t]Add to favorites[/t]" />
+</form>
+</div>
+{/if}
+
+<!-- HOOK add_job_as_favourite_to_cp end -->

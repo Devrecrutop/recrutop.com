@@ -1,0 +1,45 @@
+<!-- UTS/webshop/alsoViewedProductsHook.html -->
+
+<!--BEGIN alsoViewedProductsHook-->
+<div class="hookOuter wSpHouter wSpOVHouter">
+	<div class="hookHeader wSpHheader wSpOVHheader">[t]Users who viewed this product viewed also[/t]</div>
+	
+  <div class="hookItemWrapper wSpHiwr wSpOVHiwr">
+	{foreach from=$products item=p}
+      <div class="hookItemContainer wSpHic wSpOVHic">
+			
+        {if [uts:show_img]}
+        <div class="hookItemImage wSpHii wSpOVHimage">
+  			{if $p.image}
+  				<a href="{$p.url}"><img src="[website]/_images_upload/{$p.image}"></a>	
+  			{else}
+  				<div style="width:50px;height:{$hookThumbnailHeight}px;">
+  					<div style="background-color:#ddd;border:1px solid #bbb;height: 100%;">
+  						<div style="margin-top:8%;font-size:0.7em;text-align:center;color:#bbb;">[t]No image[/t]</div>
+  						<div style="text-align:center;color:#fff;font-size:0.8em;">[t]Coming soon...[/t]</div>
+  					</div>
+  				</div>
+  			{/if}
+  			</div>
+  			{/if}
+  			
+  			<div class="hookItemTitle wSpHit wSpOVHit"><a href="{$p.url}">{$p._title}</a></div>
+  			
+  			{if [uts:show_category]}
+  			<div class="hookItemWord wSpHiw wSpOVHiwPriceEx"><label>[t]Category:[/t]</label> {$p._category}</div>
+  			{/if}
+  			
+  			{if [uts:show_price_vat_excl]}
+  			<div class="hookItemWord wSpHiw wSpOVHiwPriceEx"><label>[t]Price:[/t]</label> {$p.symbol} {$p._price} <!-- {$p.currency} --></div>
+  			{/if}
+  			{if [uts:show_price_vat_incl]}
+  			<div class="hookItemWord wSpHiw wSpOVHiwPriceInc"><label>[t]Price (VAT inc.):[/t]</label> {$p.symbol} {$p._price_vat_inc} <!-- {$p.currency} --></div>
+  			{/if}
+  			
+  			<div class="cleaner wSpCleaner wSpOVCleaner"></div>
+  			
+      </div>
+	{/foreach}
+	</div>
+</div>
+<!--END alsoViewedProductsHook-->

@@ -1,0 +1,336 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>
+CustomersCandidatesDetail
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+<!--
+function hidestatus(){
+window.status='Otys e-Recruiting Systems'
+return true
+}
+if (document.layers)
+document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+document.onmouseover=hidestatus
+document.onmouseout=hidestatus
+-->
+</SCRIPT>
+</head>
+<body>
+<!--uts:begin inner-->
+<script language="Javascript1.2">
+<!--
+{literal}
+function printWindow(){
+browserVersion = parseInt(navigator.appVersion)
+if (browserVersion >= 4) window.print()
+}
+function request() {
+//location = 'CustomersRemote.php?command=prerequest&code={$code}&kid={$id}';
+}
+function print_it() {
+//window.actionframe.location = 'CustomersRemote.php?command=detail&code=[code]&kid=[id]&option=print';
+document.frames.actionframe.location = 'CustomersRemote.php?command=detail&code={$code}&kid={$id}&option=print&vid={$vid}&reid={$reid}';
+}
+function check_formstate(tabcode){
+layerShow(tabcode);
+//switch_tab(tabcode);
+}
+{/literal}
+// -->
+</script>
+
+<!-- /UTS/supplier_portal/sh_candidate.div.html -->
+<table border="0" cellspacing="0" cellpadding="0" class="vacsTable">
+
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Candidate[/t]: {$candidate.voornaam} {$candidate.tussenvoegsel} {$candidate.achternaam}</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_PageTitle-->
+{if $customer_main_menu}
+<tr>
+<td class="pageLinkContainer">{$customer_main_menu}</td>
+</tr>
+{/if}
+<tr>
+<td class="pageLinkContainer">{$customer_menu}</td>
+</tr>
+<tr>
+<td class="shCDstatusContainer">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="shCDstatusTbl">
+<tr>
+<td colspan="2" class="shCDtblHeader">[t]Status History[/t]</td>
+</tr>
+<tr>
+<td colspan="2" class="shCDdivContainer">
+<div Id="history" style="height:80px;width;100%;overflow:auto;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="shCandListNameTbl">
+{foreach from=$history item=row }
+<tr>
+<td class="shCDStatusHistory">
+<span class="shCDhistoryDate" style="margin-top:0px;">{$row.changetime|date_format:"%d-%m-%Y"}</span>
+{if $row.status}
+<span class="shCandListStatus1"><span class="shCandListStatusLabel">[t]Status[/t]:</span>{$row.status}</span>
+{/if}
+{if $row.vb_procedures_status}
+<span class="shCandListStatus2">
+<span class="shCandListStatusLabel">{$status1_name}:</span> {$row.vb_procedures_status}</span>
+{/if}
+{if $row.vb_procedures_status2}
+<span class="shCandListStatus3"><span class="shCandListStatusLabel">{$status2_name}:</span> {$row.vb_procedures_status2} </span>
+{/if}
+{if $row.vb_procedures_status3}
+<span class="shCandListStatus4"><span class="shCandListStatusLabel">{$status3_name}:</span> {$row.vb_procedures_status3} </span>
+{/if}
+{if $staffing}
+<span class="shCandListStatus5"><span class="shCandListStatusLabel">[t]Note[/t]:</span> {$row.note} </span>
+{/if}
+</td>
+</tr>
+{/foreach}
+</table>
+</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{if $data}
+<tr>
+<td class="shCDstatusContainer">
+<!--START CV-->
+{if !$nodata}
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="shCDstatusTbl">
+<tr>
+<td class="shCDtblHeader">[t]Resume[/t]: {$candidate.voornaam} {$candidate.tussenvoegsel} {$candidate.achternaam} - {$candidate.woonplaats}</td>
+<tr>
+<td>
+<div style="height:300px;width;100%;overflow:auto;">
+<table border="0" width="100%">
+{foreach from=$data item=record}
+{if $record.value}
+<!--START_RECORD-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<tr>
+<td class="formSubHeaderContainer">
+<table border="0" cellpadding="0"  cellspacing="0"  class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">{$record.name}</td>
+</tr>
+</table>
+</td>
+</tr>
+{if $record.part=="TXT"}
+<!--START_TEXT_PART-->
+<tr>
+<td class="formTextContainer">
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">{$data.value}</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_TEXT_PART-->
+{/if}
+{if $record.part=="SKI" || $record.part=="OTH"}
+<!--START_ITEM_PART-->
+<tr>
+<td class="formText">
+<table cellpadding="0" cellspacing="0">
+{foreach from=$record.value key=subkey item=subvalue}
+<!--START_SUBITEM-->
+<tr>
+<td valign="top" class="HQuestion"><i>{if $fieldnames.subkey}{$fieldnames.subkey}{else}{$subkey}{/if}</i></td>
+<td valign="top" class="CCSubItem">
+{if is_array($subvalue) && count($subvalue) > 0}
+{foreach from=$subvalue item=subv}
+{$subv}
+<br>
+{/foreach}
+{else}
+{$subvalue}
+{/if}
+</td>
+</tr>
+<!--END_SUBITEM-->
+{/foreach}
+</table>
+</td>
+</tr>
+<!--END_ITEM_PART-->
+{/if}
+{if $record.part=="OPL" || $record.part=="WER"}
+{foreach from=$record.value key=subkey item=item}
+<!--START_HISTORY_ITEM-->
+<tr>
+<td class="formText">
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td style="font-size:10px;color:#666666;">[t]Van/tot[/t]<!--SingleWordLink2--></td>
+<td>{$item.StartDate} - {$item.EndDate}</td>
+</tr>
+{foreach from=$item key=subkey item=subvalue}
+{if ($subkey!="StartDate" && $subkey!="EndDate") && $subvalue}
+<!--START_SUBITEM-->
+<tr>
+<td class="HQuestion">{if $fieldnames.$subkey}{$fieldnames.$subkey}{else}{$subkey}{/if}</td>
+<td>{$subvalue}</td>
+</tr>
+<!--END_SUBITEM-->
+{/if}
+{/foreach}
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_HISTORY_ITEM-->
+{/foreach}
+{/if}
+</table>
+</td>
+</tr>
+<!--END_RECORD-->
+{/if}
+{/foreach}
+</table>
+</div>
+</td>
+</tr>
+</table>
+{/if}
+<!--END CV-->
+</td>
+</tr>
+{else}
+<tr>
+<td><i>[t]No resume present[/t]</i></td>
+</tr>
+{/if}
+<!--ORIGINAL_CV-->
+{if $nr}
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="shCDstatusTbl">
+<tr>
+<td colspan="2" class="shCDtblHeader">[t]Original CV[/t]</td>
+</tr>
+<tr>
+<td class="shCDactionContainer">
+<a href = "/index.php/page/viewcv/bypass_smartlink/1/nr/{$nr}/bb/1" target="actionframe">{$cv}</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{/if}
+<!--END_ORIGINAL_CV-->
+
+
+	{if $agendaItems}
+	<tr>
+		<td>
+			[t]Agenda items[/t]
+			
+			{foreach from=$agendaItems item=agendaitem}			
+			<div class="agendaitem_portal">
+				<table>
+					<tr>
+						<td>
+							[t]Start[/t]
+						</td>
+						<td>
+							{$agendaitem.begintijd|date_format:"%d-%m-%Y %H:%M"}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							[t]End[/t]
+						</td>
+						<td>
+							{$agendaitem.eindtijd|date_format:"%d-%m-%Y %H:%M"}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							[t]Titel[/t]
+						</td>
+						<td>
+							{$agendaitem.titel}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							[t]Location[/t]
+						</td>
+						<td>
+							{$agendaitem.locatie}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							[t]Description[/t]
+						</td>
+						<td>
+							{$agendaitem.omschrijving}
+						</td>
+					</tr>
+				</table>
+			</div>			
+			{/foreach}
+			
+		</td>
+	</tr>
+	{/if}
+
+<tr>
+<td class="formButton">
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td><input type="button" class="button shCandidateButton_1" name="form" value="[th]Terug[/th]" onClick="document.location='{$terug}';"><!--ButtonLink3--></td>
+<!--<td>&nbsp;</td>
+<td><input name="button" class="button shCandidateButton_2" type="button" onClick="request();" value="[th]Contact this candidate[/th]"></td>-->
+<td>&nbsp;</td>
+<td><input name="button2"class="button shCandidateButton_3" type="button" onClick="print_it();" value="[th]Print Resume[/th]"> </td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><input type="button" class="button shCandidateButton_4" name="form" value="[th]Respond[/th]" onClick="document.location='/index.php/page/customers_ext/bb/1/exp//command/reaction/kid/{$kid}/terug/customers/terug_cmd/candjob_list/vid/{$vid}/supplier/1';"></td>
+{if $supDepCan}
+{*SUPPLIER CAN PUBLISH/DEPUBLSIH CANDIDATE*}
+  {if $candidate.publiceer_anoniem_cons}
+  <td><input type="button" class="button shCandidateButton_5" name="form" value="[th]Depublish[/th]" onClick="document.location='/index.php/page/sh_portal/bb/1/code/{$code|escape}/command/can_depublish/kid/{$kid|escape}/vid/{$vid|escape}/';"></td>
+  {else}
+  <td><input type="button" class="button shCandidateButton_5" name="form" value="[th]Publish[/th]" onClick="document.location='/index.php/page/sh_portal/bb/1/code/{$code|escape}/command/can_publish/kid/{$kid|escape}/vid/{$vid|escape}/';"></td>
+  {/if}
+{/if}
+
+{if $supplierCanEditCandidate} 
+  <td><input type="button" class="button shCandidateButton_6" name="form" value="[th]Edit[/th]" onClick="document.location='/index.php/page/spapplicants/bb/1/command/profilechangebysup/kid/{$kid|escape}/vid/{$vid|escape}/pageno/1/';"></td>
+{/if}
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<iframe name="actionframe" width="1" height="1" border="0" frameborder="NO"></iframe>
+<!--uts:end inner-->
+</body>
+</html>

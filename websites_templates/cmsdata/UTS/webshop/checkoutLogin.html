@@ -1,0 +1,124 @@
+<!--uts:begin inner-->
+<div class="outer wSpOuter wSpCOlOuter">
+    <!-- /UTS/webshop/checkoutLogin.html -->
+    <script>
+    {literal}
+		function forgotpw(){
+			document.forms['loginform'].action='/index.php/page/CustomersRemote/bb/1/command/forgotpassword';
+			document.getElementById('wg_username_forgot_pwd').value = document.getElementById('username').value;
+			document.forms['loginform'].submit();
+		}
+    {/literal}
+    </script>
+	{if $allCategories}
+		<div>
+			<a href="{$handler}/command/catalogList">[t]Products[/t]</a>
+		</div>
+	{/if}
+    <h1 class="title wSpCOlTitle">[t]Order Confirmation[/t]</h1>
+    <div class="wSpCOlInner">
+		<form name="loginform" action="{$handler}/command/login" method="post" class="wSpCOlLoginItem">
+			<h2 class="subHeader wSpCOlLoginTitle">[t]Order by login[/t]</h2>
+			<div class="text">[t]If you have an account with us, please use your username and password to confirm the order.[/t]</div>
+			<div class="formInput">
+				<label>[t]E-mail[/t]</label>
+				<input type="text" name="username" id="username" value="{$username|escape}">
+				<input type="hidden" name="wg_username_forgot_pwd" id="wg_username_forgot_pwd" value="{$username|escape}">
+			</div>
+			<div class="formInput">
+				<label>[t]Password[/t]</label>
+				<input type="password" name="password">
+			</div>
+			{if $error}
+				<div class="error">
+				{if $error == 'MSG_INVALID_LOGIN'}
+					[t]Invalid login user name or password was entered.[/t]
+				{else}
+					{$error|escape}
+				{/if}
+				</div>
+			{/if}
+			<div class="buttonContainer wSpCOlLoginButton">
+				<input class="button forgotButton" type="button" value="[th]Forgot password[/th]" onClick="forgotpw();"> 
+				<input class="button" type="submit" value="[th]Confirm order![/th]">
+			</div>
+		</form>
+		
+		{if $webshopFoShortEnroll}
+		<form name="checkoutform" action="{$handler}/command/checkoutGuestShort" method="post" enctype="multipart/form-data" class="wSpCOgItemContainer">
+      
+      <div class="formGroup wSpCOgContactDetailsGroup">
+
+      	<h2 class="subHeader">[t]Create account[/t]</h2>
+
+      	<div class="formInput formInputCompany">
+      		<label>[tg]Company[/tg]</label>
+      		<input type="text" name="company" value="{$enrollValues.company|escape}" />
+      		{if $enrollErrors.company}
+      		<div class="error">
+      			{if $enrollErrors.company == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+      		</div>
+      		{/if}
+      	</div>
+      	
+      	<div class="formInput formInputFirstName">
+      		<label>[tg]First name[/tg]</label>
+      		<input type="text" name="firstname" value="{$enrollValues.firstname|escape}" />
+      		{if $enrollErrors.firstname}
+      			<div class="error">{if $enrollErrors.firstname == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}</div>
+      		{/if}
+      	</div>
+      	
+      	<div class="formInput formInputFirstName">
+      		<label>[tg]Middle name[/tg]</label>
+      		<input type="text" name="middlename" value="{$enrollValues.middlename|escape}" />
+      		{if $enrollErrors.middlename}
+      			<div class="error">{if $enrollErrors.middlename == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}</div>
+      		{/if}
+      	</div>      	
+      	
+      	<div class="formInput formInputLastName">
+      		<label>[tg]Last name[/tg]</label>
+      		<input type="text" name="lastname" value="{$enrollValues.lastname|escape}" />
+      		{if $enrollErrors.lastname}
+      		<div class="error">
+      			{if $enrollErrors.lastname == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+      		</div>
+      		{/if}
+      	</div>
+
+      	<div class="formInput formInputEmail">
+      		<label>[tg]E-mail[/tg]</label>
+      		<input type="text" name="email" value="{$enrollValues.email|escape}" />
+      		{if $enrollErrors.email}
+      		<div class="error">
+      			{if $enrollErrors.email == 'MSG_FIELD_IS_MANDATORY'}[t]Field is mandatory[/t]{/if}
+      			{if $enrollErrors.email == 'MSG_INVALID_EMAIL'}[t]E-mail address is invalid[/t]{/if}
+      		</div>
+      		{/if}
+      	</div>     
+        
+      	<div class="buttonContainer wSpCOgButton">
+      		<input class="button" type="submit" value="[th]Create the account[/th]">
+      	</div>                 
+      
+      </div>
+            		      
+		</form>
+		{else}		
+		
+		<form class="wSpCOlGuestItem">
+			<h2 class="subHeader wSpCOlGuestTitle">[t]Proceed without signing in[/t]</h2>
+			<div class="text">[t]Alternatively you can proceed without customer login details.[/t]</div>
+			{if $kid}
+				<div class="text">[t]This will connect the order with your applicant account.[/t]</div>
+			{/if}
+			<div class="buttonContainer wSpCOlGuestButton"><input class="button" type="button" value="[th]Proceed without signing in[/th]" onClick="window.location='{$handler}/command/checkoutGuest'"></div>
+		</form>
+		
+		{/if}
+		
+		<div class="cleaner wSpCleaner wSpCOlCleaner"></div>
+	</div>
+</div>
+<!--uts:end inner-->

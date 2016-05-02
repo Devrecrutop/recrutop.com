@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>[t]Apply to multiple vacancies[/t]</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+<!--
+// {literal}
+function deleteFromJobBasket(id) {
+	var xhr; 
+    try {
+		xhr = new ActiveXObject('Msxml2.XMLHTTP');
+	}
+    catch (e) {	
+        try {
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+        catch (e2) {
+			try {
+				xhr = new XMLHttpRequest();
+			}
+			catch (e3) {
+				xhr = false;
+			}
+        }
+    }
+  	xhr.open('GET', "/index.php/page/jobbasket/command/jobbasketdelete/vid/" + id,  true); 
+	xhr.onreadystatechange = function() { 
+		if(xhr.readyState == 4) {
+			if(xhr.status == 200) {
+				try {
+					response = eval("(" + xhr.responseText + ")");
+					if (response['status'] == 'OK') {
+						// defined in jobBasketHook.html UTS template
+						if(typeof jobBasketRefreshCount == 'function') { 
+							jobBasketRefreshCount(response['data']['vacanciesCount']);
+						}
+						//document.getElementById('jobBasketItem' + id).style.display = 'none';
+						item = document.getElementById('jobBasketItem' + id);
+						item.parentNode.removeChild(item);
+						if (response['data']['vacanciesCount'] == 0) {
+							alert('[th]There are no vacancies left. You will be redirected to our open entry form.[/th]');
+							window.location = '/index.php/page/applicants/command/startsignup/bb/1';
+						}
+						return;
+					}
+				}
+				catch (exception) {
+				}
+			}
+            alert('Request failed'); // response error
+        }
+    }; 
+	xhr.send(null); 
+}
+// {/literal}
+//-->
+</script>
+
+{if $jobs}
+
+<ul class="approwItemList jbsktContainer">
+{foreach from=$jobs item=job}
+<li class="approwItem jbskItemTitle" id="jobBasketItem{$job.id}">
+<a class="jbskJob" href="/index.php/page/JobsRemote/bb/1/command/detail/vid/{$job.id}">{$job.title|escape}</a>
+<a class="jbskDel" href="#" onclick="deleteFromJobBasket({$job.id})">[t]delete[/t]</a>
+</li>
+{/foreach}
+</ul>
+
+{/if}
+
+<!--uts:end inner-->
+</body>
+</html>

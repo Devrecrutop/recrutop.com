@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="PSPad editor, www.pspad.com">
+<title>
+</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<table border="0" cellspacing="0" cellpadding="0" class="vacstable">
+<tr>
+<td class="formHeaderContainer">
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader"><H1>[t]Send an E-mail to the Consultant[/t]</H1></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="pageLinkContainer">{$customer_menu}</td>
+</tr>
+<tr>
+<td valign="top" >
+<form method="post" action="/index.php/page/sh_portal/bb/1/code/{$code}/command/sendmail">
+<input type="hidden" name="terug" value="{$terug}">
+<input type="hidden" name="to" value="{$data.cp_email}">
+<input type="hidden" name="rid" value="{$id}">
+<input type="hidden" name="from" value="{$cp.wg_cp_voornaam} {$cp.wg_cp_achtern}">
+<input type="hidden" name="from_email" value="{$cp.wg_cp_email}">
+<table border="0" cellspacing="3" cellpadding="0">
+<tr>
+<td>[t]From[/t]:</td>
+<td>{$cp.wg_cp_voornaam} {$cp.wg_cp_voorl} {$cp.wg_cp_tussenvoegsel} {$cp.wg_cp_achtern} </td>
+</tr>
+<tr>
+<td>[t]To[/t]:</td>
+<td>{$data._contactpersoon}</td>
+</tr>
+<tr>
+<td>[t]Subject[/t]:</td>
+{assign var="notify" value=":"}
+<td><input type="text" name="subject" value="[th]VMP Notify[/th]: {$data.voornaam} {$data.achternaam} - {$data.functie_o}"></td>
+</tr>
+<tr>
+<td colspan="2" class="formSubHeaderContainer">
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Message[/t]</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td colspan="2"><textarea name="message" cols="50" rows="10">
+[th]Candidate[/th]: {$data.voornaam} {$data.achternaam}
+[th]Vacancy[/th]: {$data.functie_o}
+[th]Reference nr.[/th]: {$data.ref_nr}
+{if  $data.werkgever && $data.toon_opdrachtgever}[th]Employer[/th]:{$data.werkgever} {/if}
+</textarea></td>
+</tr>
+<tr>
+<td><input class="button" type="submit" value="[th]Send[/th]"></td>
+<td><input class="button" type="submit" value="[th]Back[/th]" onclick="javascript:document.location='{$terug}';return false;"></td>
+</tr>
+</table>
+</form>
+</td>
+</tr>
+</table>
+
+<!--uts:end inner-->
+</body>
+</html>

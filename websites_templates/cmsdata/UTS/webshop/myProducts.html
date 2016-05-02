@@ -1,0 +1,47 @@
+<!--uts:begin inner-->
+<div class="outer wSpOuter wSpMpOuter">
+<!-- /UTS/webshop/myProducts.html -->
+<div>
+{if $allCategories}
+<a href="{$handler}/command/catalogList">[t]Products[/t]</a>
+{/if}
+</div>
+
+<h1 class="title">[t]My products[/t]</h1>
+
+<div class="text">
+<a href="{$handler}/command/cartView">[t]View my shopping cart[/t]</a>
+</div>
+
+{if $orders}
+<h2 class="title">[t]Orders list[/t]</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>[t]Date[/t]</th>
+            <th>[t]Order total[/t]</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    {foreach from=$orders item=order}
+        <tr>
+            <td>{$order.add_time}</td>
+            <td style="text-align: right">{$order.price} {$order.currency}</td>
+            <td>
+                <a href="{$handler}/command/viewOrder/orderId/{$order.id}">[t]View order[/t]</a>
+                | <a href="{$handler}/command/printPdf/orderId/{$order.id}">[t]Print order[/t]</a>
+            </td>
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
+
+{else}
+<div class="text">
+[t]There are no orders from you yet.[/t]
+</div>
+{/if}
+
+<!--uts:end inner-->

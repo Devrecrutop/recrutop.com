@@ -1,0 +1,63 @@
+<!--uts:begin inner-->
+<div class="wSpOuter wSpSCartOuter">
+<!-- /UTS/webshop/webshop_confirmation.html -->
+    <div>[t]Dear[/t]</div>
+    <div>[t]Thank you for your purchase at our webshop. Below you will find your order overview.[/t]</div>
+    {if $products}
+    <table border="0" cellpadding="5" cellspacing="0" style="border:1px solid #888;margin:1em 0;" width="100%">
+        <thead>
+            <tr>
+                <th style="font-size:12px;color:#FFF;" bgcolor="#888888">&nbsp;</th>
+                <th style="font-size:12px;color:#FFF;" bgcolor="#888888">[t]Product name[/t]</th>
+                <th style="font-size:12px;color:#FFF;" bgcolor="#888888" align="right">[t]Price[/t]</th>
+                <th style="font-size:12px;color:#FFF;" bgcolor="#888888" align="right">[t]Amount[/th]</th>
+                <th style="font-size:12px;color:#FFF;" bgcolor="#888888" align="right">[t]Sum[/t]</th>
+                <th style="font-size:12px;color:#FFF;" bgcolor="#888888">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {foreach from=$products item=p}
+            <tr>
+                <td class="wSpSCartPcol1" style="font-size:12px;border-bottom:1px solid #888;">
+                    {if $p.thumbnail}
+                    	<img src="{$websiteuse}/_images_upload/{$p.thumbnail}" style="width: 75px;">
+                    {else}
+                        <div style="width:75px;height:{$cartThumbnailHeight}px;">
+                            <div style="background-color:#ddd;border:1px solid #bbb;height: 100%;">
+                                <div style="margin-top:15%;font-size:1.0em;text-align:center;color:#fff;">[t]No image[/t]</div>
+                                <div style="text-align:center;color:#fff;font-size:0.5em;">[t]Coming soon...[/t]</div>
+                            </div>
+                        </div>
+                    {/if}
+                </td>
+                <td style="font-size:12px;border-bottom:1px solid #888;">{$p.invoice_title|escape}</td>
+                <td style="font-size:12px;border-bottom:1px solid #888;" align="right">{$p.symbol} {$p.item_price} <!-- {$p.currency} --></td>
+                <td style="font-size:12px;border-bottom:1px solid #888;" align="right">{$p.amount}</td>
+                <td style="font-size:12px;border-bottom:1px solid #888;" align="right">{$p.symbol} {$p.price} <!--  {$p.currency}--></td>
+                <td style="font-size:12px;border-bottom:1px solid #888;">{if $p.tag_line}{$p.tag_line}{else}&nbsp;{/if}</td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+    <div style="text-align:right;">
+        <table border="0" cellpadding="5" cellspacing="0" style="border:1px solid #888;margin:1em 0;" width="100%">
+            <tr>
+                <td style="font-size:12px;">[t]Total (VAT exc.)[/t]</td>
+                <td style="font-size:12px;text-align: right">{$total.symbol} {$total.price} <!-- {$total.currency} --></td>
+            </tr>
+            <tr>
+                <td style="font-size:12px;">[t]VAT[/t]</td>
+                <td style="font-size:12px;text-align: right">{$total.symbol} {$total.vat} <!-- {$total.currency} --></td>
+            </tr>
+            <tr>
+                <td style="font-size:12px;">[t]Total (VAT inc.)[/t]</td>
+                <td style="font-size:12px;text-align: right">{$total.symbol} {$total.price_vat_inc} <!-- {$total.currency} --></td>
+            </tr>
+        </table>
+    </div>
+    {/if}
+</div>
+<br />
+<div>[t]If you have any questions, please let us know.[/t]</div>
+<div>[t]Best regards,[/t]</div>
+<!--uts:end inner-->

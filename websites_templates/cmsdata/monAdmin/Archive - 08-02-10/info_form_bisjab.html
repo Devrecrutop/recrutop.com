@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>REACTIEFORMULIER BISJAB</title>
+<link rel="stylesheet" href="http://www.yourit.nl/recrut/_css/style2.css" type="text/css">
+<!-- FORM SENDER CHANGE CODES AND HIDDEN FIELDS FOR EACH CUSTOMER -->
+</head>
+<style>
+body{
+margin:10px;
+}
+</style>
+<body>
+
+<!--START_9-->
+<!--START-->
+
+<table class="maintable" width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<form action="http://213.206.122.28/mailer/mailer_fl2.php?command=mail&code=otys_install" method="post" enctype="multipart/form-data">
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden;"><label>Leave this field EMPTY!<input type="text" name="email" /></label></div>
+<input type="hidden" name="to_email" value="info@domain.nl">
+<input type="hidden" name="to_naam" value="INSTALL OTYS 4">
+<input type="hidden" name="email_onderwerp" value="">
+<input type="hidden" name="header_consultant" value="Informatie aanvraag">
+<input type="hidden" name="footer_consultant" value=" ">
+<input type="hidden" name="header_customer" value="<p>Geachte heer/mevrouw,</p><p>We hebben uw informatieaanvraag ontvangen, waarvoor onze dank.<br>Wij zullen zo spoedig mogelijke contact met u opnemen.</p><p>&nbsp;</p>">
+<input type="hidden" name="footer_customer" value="Met vriendelijke groet,<br><br>INSTALL OTYS 4">
+<input type="hidden" name="notify_subject_consultant" value="Informatie aanvraag vanaf de website">
+<input type="hidden" name="notify_subject_customer" value="Uw aanvraag bij INSTALL OTYS 4">
+<input type="hidden" name="code" value="otys_install">
+
+<tr> 
+<td class="formHeaderContainer">
+
+<table cellspacing="0" cellpadding="0" border="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[titel]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<!--START_1-->
+<tr> 
+<td class="introContainer">
+
+<table cellspacing="0" cellpadding="0" border="0" class="introTbl">
+<tr>
+<td class="intro">[introfoto][introtekst]<!--INTROLINKS--></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_1-->
+
+<!--COL1-->
+<tr> 
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader"><h2>[kop]</h2></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="tekstblokje" align="left">{foto}[body]<!--LINKS--></td>
+</tr>
+<!--ENDCOL1-->
+
+<tr> <!-- these fields are free, except Email -->
+<td>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr> 
+<td class="HQuestion">Nom</td>
+<td class="fieldContainer"><input type="text" name="Nom"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Fonction</td>
+<td class="fieldContainer"><input type="text" name="Fonction"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Soci&eacute;t&eacute;</td>
+<td class="fieldContainer"><input type="text" name="Societe"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Adresse</td>
+<td class="fieldContainer"><input type="text" name="Adresse"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Code postal</td>
+<td class="fieldContainer"><input type="text" name="Code postal"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Ville</td>
+<td class="fieldContainer"><input type="text" name="Ville"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Téléphone</td>
+<td class="fieldContainer"><input type="text" name="Téléphone"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">N&ring; de portable</td>
+<td class="fieldContainer"><input type="text" name="N de portable"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">E-Mail</td>
+<!-- obligatory -->
+<td class="fieldContainer"><input type="text" name="E-Mail"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Commentaires</td>
+<td class="fieldContainer"><textarea name="Commentaires" cols="40" rows="6"></textarea></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td align="left" class="formButton"><input class="button" type="submit" name="Submit" value="Envoyer"></td>
+</tr>
+
+</form>
+</table>
+<!--END-->
+<!--END_9-->
+</body>
+</html>

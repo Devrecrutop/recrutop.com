@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Track & Trace Detail</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer tatDT">
+
+<h1 class="title">[t]Folder[/t]: [t]{$title|escape}[/t]</h1>
+
+{$CustomersMenu}
+
+<div class="text">
+{if $command_dossier == 'add'}
+<a href="http://{$uts.cursite}/index.php/page/trackandtrace/command/dossier/taskid/{$taskid}/command_dossier/list/bb/1">[t]Back to task folder[/t]</a>
+{else}
+<a href="http://{$uts.cursite}/index.php/page/trackandtrace/command/detail/taskid/{$taskid}/bb/1">[t]Back to task detail[/t]</a>&nbsp;|&nbsp;
+<img src="/_images_global/dossier/document.gif" style="margin-bottom: -3px;" > <a href="http://{$uts.cursite}/index.php/page/trackandtrace/bb/1/command/dossier/taskid/{$taskid}/command_dossier/add/entity/document">[t]Add document[/t]</a>
+{/if}
+</div>
+
+{$html}
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title>dummy</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!--/UTS/sourcelab/entranceticket.html-->
+<!--jsrepository:require(JQueryBase)-->
+<script type="text/javascript" src="/_javascript_global/SlService.js"></script>
+<script type="text/javascript"> 
+
+//var client_code = '{$client_code}';
+var client_hash = '{$client_hash}';
+
+
+//{literal}
+
+$(document).ready(function() {
+
+		SlService = new SlService();
+		
+		var post = {'data[Barcode][slID]': '{/literal}{$eventId}{literal}',
+          'data[Barcode][slBadgeId]': "{/literal}{$candidateId}{literal}", 
+					'data[Barcode][slFirstName]': "{/literal}{$candidate_data.voornaam|escape:javascript}{literal}",
+					'data[Barcode][slLastNamePrefix]': "{/literal}{$candidate_data.tussenvoegsel|escape:javascript}{literal}",
+					'data[Barcode][slLastName]': "{/literal}{$candidate_data.achternaam|escape:javascript}{literal}",
+					'data[Barcode][slGender]': "{/literal}{$candidate_data.SLgender|escape:javascript}{literal}",
+					'data[Barcode][slStreet]': "{/literal}{$candidate_data.street|default:$candidate_data.adres|escape:javascript}{literal}",
+					'data[Barcode][slHouseNumber]': "{/literal}{$candidate_data.house_number|escape:javascript}{literal}",
+					'data[Barcode][slHouseNumberAddition]': "",
+					'data[Barcode][slPostalcode]': "{/literal}{$candidate_data.postcode|escape:javascript}{literal}",
+					'data[Barcode][slCity]': "{/literal}{$candidate_data.woonplaats|escape:javascript}{literal}",
+					'data[Barcode][slEmail]': "{/literal}{$candidate_data.email|escape:javascript}{literal}",
+					'data[Barcode][slDateOfEndStudy]': "{/literal}{$candidate_data.SLDateOfEndStudy|escape:javascript}{literal}",
+					'data[Barcode][slEducation]': "{/literal}{$candidate_data.SLEducation|escape:javascript}{literal}",
+					'data[Barcode][slDateOfBirth]': "{/literal}{$candidate_data.SLDateOfBirth|escape:javascript}{literal}"
+					   };
+		
+		SlService.entranceTicket(post, "{/literal}{$candidate_data.email|escape:javascript}{literal}", client_hash);
+		
+        
+});
+
+//{/literal}
+</script>
+
+<div class="outer custOuter custFinOuter custFinDetOuter">
+<h1 class="title">[tg]Entrance ticket[/tg]</h1>
+
+{$menu} 
+
+<div class="text TsIntro">[t]Entrance ticket[/t]</div>
+
+<div id="SlSearch"></div>
+{* the overview should be rendered inside the following div *}
+<div id="SlOverview"></div>
+<div id="slCVPicture"></div>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

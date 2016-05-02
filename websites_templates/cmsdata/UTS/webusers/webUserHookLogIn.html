@@ -1,0 +1,43 @@
+<div class="hookOuter webUserHookOuter">
+
+<div class="hookHeader webUserHookHeader">
+{if $trackTraceLogin}[t]Track & Trace Login[/t]{elseif $webShopLogin}[t]Web Shop Login[/t]{else}[t]Login[/t]{/if}
+</div>
+
+<div class="hookText webUserHookText">
+{if $trackTraceLogin}[t]Enter your e-mail address and password to login to the Track & Trace page.[/t]
+{elseif $webShopLogin}[t]Enter your e-mail address and password to login to the shopping cart.[/t]
+{else}[t]Enter your e-mail address and password to login.[/t]
+{/if}
+</div>
+
+<form action="http://{$uts.cursite}/index.php/page/webuser/code/{$code}/bb/1" method="POST"> 
+
+<input type="hidden" name="command" value="login_hook">
+<input type="hidden" name="Login" value="1">
+{if $trackTraceLogin}<input type="hidden" name="trackTraceLogin" value="1">{/if}
+{if $webShopLogin}<input type="hidden" name="webShopLogin" value="1">{/if}
+
+<div class="hookWord webUserHookKeyWord">
+<label for="CandidateLoginEmail">[t]E-mail address[/t]</label>
+</div>
+
+<div class="hookInput webUserHookInput">
+<input type="Text" name="Email" size=25 value="" id="CandidateLoginEmail">
+</div>
+
+<div class="hookWord webUserHookKeyWord">
+<label for="PassWord">[t]Password[/t]</label>
+</div>
+
+<div class="hookInput webUserHookInput">
+<input type="password" name="PassWord" size=25 value="" id="PassWord">
+</div>
+
+<div class="hookButton webUserHookButton">
+<input name="Submit" type="Submit" value="[th]Log in[/th]" class="button">
+</div>
+
+</form>
+
+</div> 

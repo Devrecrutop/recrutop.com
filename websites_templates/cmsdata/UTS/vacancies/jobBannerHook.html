@@ -1,0 +1,109 @@
+<!-- job banner hook start -->
+
+{if $job}
+  {if $job_banner_refreshing}
+  {literal}
+  <script>
+  
+  
+    $(document).ready(function() {
+      
+      {/literal}
+      var job_banner_refresh_time = '{$job_banner_refresh_time}';
+      {literal}
+      
+      var refreshId = setInterval(function()
+      {      
+        jobBannerContentReload();
+      }, job_banner_refresh_time);    
+    });
+
+  
+  
+    function jobBannerContentReload() {
+      $("#jobHookContentReloader").fadeTo(200, 0).delay(600);
+   
+      $.ajax({
+        type: 'GET',
+        url: '/index.php/page/jobbanner_refresh/',
+        timeout: 3000,
+        dataType: "json",
+        cache: false,
+        success: function(data) {
+         
+        $("#jobBannerHookTitleText").text(data.title);
+        $("#jobBannerHookTitleText").attr('href', data.jobLink);
+        $("#jobBannerHookCustomerText").text(data.customer);
+         
+         
+        if (data.Photo){
+          $("#jobBannerHookPhotoDiv").css("display", "block");
+          $("#jobBannerHookPhoto").attr('src', data.photoLink);
+          $("#jobBannerHookPhoto").show();
+        }
+        else{
+          $("#jobBannerHookPhotoDiv").css("display", "none");
+          $("#jobBannerHookPhoto").attr('src', "");
+          $("#jobBannerHookPhoto").hide();
+        }
+  
+        if (data.id){
+          $("#jobBannerHookReadMoreDiv").css("display", "block");
+          $("#jobBannerHookReadMoreLink").attr('href', data.jobLink);
+          if (data.description)  $("#jobBannerHookReadMoreDescription").text(data.description);
+          
+        }
+        else{
+          $("#jobBannerHookReadMoreDiv").css("display", "none");
+          $("#jobBannerHookReadMoreLink").attr('href', "");
+          $("#jobBannerHookReadMoreDescription").text("");
+  
+        }       
+          
+         $("#jobHookContentReloader").fadeTo("slow",1);
+          
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        }
+     });
+    }
+    
+  </script>
+  {/literal}  
+  {/if}          
+{/if}  
+              
+{if $job}
+    {if $show_3rd_job_party_urls && $job.detail_url}
+        {assign var="jobUrl" value=$job.detail_url}
+    {else}
+        {assign var="jobUrl" value="/index.php/page/JobsRemote/command/detail/vid/`$job.id`"}
+    {/if}
+
+
+<div class="hookOuter jbbOuter">
+<!-- UTS/vacancies/jobBannerHook.html -->
+	<div class="hookHeader jbbHeader">[t]Job Banner[/t]</div>
+	
+  <div id="jobHookContentReloader">  
+	<div class="hookItemTitle jbbFunctionName"><a href="{$jobUrl}" id="jobBannerHookTitleText">{$job.title|escape}</a></div>
+
+	<div class="hookItemWord jbbIw jbbIwCustomer" id="jobBannerHookCustomerText">{$job.customer|escape} </div>
+
+	
+  {if !$hide_logo}
+  <div id="jobBannerHookPhotoDiv" {if !$job.Photo}style="display:none;"{else}style="display:block;"{/if}>
+	<div class="hookImage jbbImage"><img src="[website]/_images_upload/{$job.Photo|escape}" id="jobBannerHookPhoto"></div>
+	</div>
+  {/if}
+	
+  <div id="jobBannerHookReadMoreDiv" {if !$job.id}style="display:none;"{else}style="display:block;"{/if}>
+	<div class="hookText jbbText"><div id="jobBannerHookReadMoreDescription">{$job.description|truncate:[uts:limit_characters]:"..."}</div> <a href="{$jobUrl}" id="jobBannerHookReadMoreLink">[t]Lees meer[/t]</a></div>
+	</div>
+  
+  </div>
+  
+</div>
+{/if}
+
+<!-- job banner hook end -->

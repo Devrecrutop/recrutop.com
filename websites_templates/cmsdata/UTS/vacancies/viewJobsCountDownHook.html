@@ -1,0 +1,29 @@
+<div class="hookOuter jcdHContainer">
+	
+	<div class="hookTitle jcdHHeader">
+		<h1>[t]Countdown[/t]</h1>
+	</div>
+	
+	<div class="hookSubTitle jcdHSubHeader">
+		<h2>[t]NU open voor inschrijving[/t]</h2>
+	</div>
+	<!--{$test}-->
+
+	<div class="hookDetailsContainer jcdHDetailsContainer">
+		
+		<table width="100%" class="jcdhTable" border="0" cellspacing="0" cellpadding="0">
+		{foreach from=$list item=l}
+		<tr class="jcdHFirstRow">
+			<td class="hookWord jsdHWord"><a href="{$l.url}">{$l.name}</a>&nbsp;</td>
+			<td class="hookWord jsdHDays">{$l.days_left}&nbsp;[t]days[/t]</td>			
+		</tr>
+		<tr>
+			<td colspan="2" class="hookWord jsdHWerkgever">{$l.werkgever}&nbsp;</td>						
+		</tr>
+	  {/foreach} 
+	  </table>
+		
+	</div>
+
+</div>
+<iframe name="actionframe" width="0" height="0" frameborder="0" scrolling="No"></iframe>

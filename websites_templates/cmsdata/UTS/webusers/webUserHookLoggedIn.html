@@ -1,0 +1,29 @@
+<div class="hookOuter webUserHookOuter">
+
+<div class="hookHeader webUserHookHeader">
+{if $trackTraceLogin}
+[t]Welcome to Track & Trace[/t]
+{else}
+[t]Welcome[/t]
+{/if}
+</div>
+
+<div class="hookText webUserHookText">
+{if $trackTraceLogin}
+[t]Welcome back[/t] {$FirstName} {$InFix} {$LastName}.
+[t]Click 'Logout' to leave Track & Trace.[/t]
+{else}
+[t]Welcome back[/t] {$FirstName} {$InFix} {$LastName}.
+[t]Click the 'My Profile' button to edit your details. Click 'Logout' to leave your personal secure area.[/t]
+{/if}
+</div>
+
+<div class="hookButton webUserHookButton">
+<input type="button" value="{if $trackTraceLogin}[th]Track & Trace[/th]{else}[th]My profile[/th]{/if}" class="button" onclick="window.location='http://{$uts.cursite}/index.php/page/webuser/command/myprofile/code/{$code}/bb/1'">
+</div>
+
+<div class="hookButton webUserHookButton">
+<input type="button" value="[th]Log out[/th]" class="button" onclick="window.location='http://{$uts.cursite}/index.php/page/webuser/command/logout/code/{$code}/bb/1'">
+</div>
+
+</div>

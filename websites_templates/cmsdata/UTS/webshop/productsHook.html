@@ -1,0 +1,151 @@
+<!-- web shop cart hook start -->
+<!-- UTS/webshop/productsHook.html -->
+
+<!--NEW PRODUCTS HOOK-->
+{if $type == 'newproducts'}
+<div class="hookOuter wSpHouter wSpNPHouter">
+	<div class="hookHeader wSpHheader wSpNPHheader">[t]New products[/t]</div>
+    <div class="hookItemWrapper wSpHiwr wSpNPHiwr">
+	{foreach from=$products item=p}
+		<div class="hookItemContainer wSpHic wSpNPHic">
+			<div class="hookItemImage wSpHii wSpNPHimage">
+			{if $p.image}
+				<a href="{$p.url}"><img src="[website]/_images_upload/{$p.image}"></a>
+			{else}
+				<div style="width:50px;height:{$hookThumbnailHeight}px;">
+					<div style="background-color:#ddd;border:1px solid #bbb;height: 100%;">
+						<div style="margin-top:8%;font-size:0.7em;text-align:center;color:#bbb;">[t]No image[/t]</div>
+						<div style="text-align:center;color:#fff;font-size:0.8em;">[t]Coming soon...[/t]</div>
+					</div>
+				</div>
+			{/if}
+			</div>
+			<div class="hookItemTitle wSpHit wSpNPHit"><a href="{$p.url}">{$p._title}</a></div>
+			<div class="hookItemWord wSpHiw wSpNPHiwPriceEx"><label>[t]Price:[/t]</label>{$p.symbol} {$p._price} <!-- {$p.currency} --></div>
+			<div class="hookItemWord wSpHiw wSpNPHiwPriceInc"><label>[t]Price (VAT inc.):[/t]</label>{$p.symbol} {$p._price_vat_inc} <!-- {$p.currency} --></div>
+			<div class="cleaner wSpCleaner wSpNPCleaner"></div>
+        </div>
+	{/foreach}
+	</div>
+</div>
+<!--END NEW PRODUCTS-->
+
+<!--BESTSELLERS HOOK-->
+{elseif $type == 'bestsellers'}
+<div class="hookOuter wSpHouter wSpBSHouter">
+	<div class="hookHeader wSpHheader wSpBSHheader">[t]Bestsellers[/t]</div>
+    <div class="hookItemWrapper wSpHiwr wSpBSHiwr">
+	{foreach from=$products item=p}
+        <div class="hookItemContainer wSpHic wSpBSHic">
+			<div class="hookItemImage wSpHii wSpBSHimage">
+			{if $p.image}
+				<a href="{$p.url}"><img src="[website]/_images_upload/{$p.image}"></a>
+			{else}
+				<div style="width:50px;height:{$hookThumbnailHeight}px;">
+					<div style="background-color:#ddd;border:1px solid #bbb;height: 100%;">
+						<div style="margin-top:8%;font-size:0.7em;text-align:center;color:#bbb;">[t]No image[/t]</div>
+						<div style="text-align:center;color:#fff;font-size:0.8em;">[t]Coming soon...[/t]</div>
+					</div>
+				</div>
+			{/if}
+			</div>
+			<div class="hookItemTitle wSpHit wSpBSHit"><a href="{$p.url}">{$p._title}</a></div>
+			<div class="hookItemWord wSpHiw wSpBSHiwPriceEx"><label>[t]Price:[/t]</label> {$p.symbol} {$p._price} <!-- {$p.currency} --></div>
+			<div class="hookItemWord wSpHiw wSpBSHiwPriceInc"><label>[t]Price (VAT inc.):[/t]</label> {$p.symbol} {$p._price_vat_inc} <!-- {$p.currency} --></div>
+			<div class="cleaner wSpCleaner wSpBSCleaner"></div>
+        </div>
+	{/foreach}
+	</div>
+</div>
+<!--END BESTSELLERS-->
+
+<!--OTHERSVIEWED HOOK-->
+{elseif $type == 'others_viewed'}
+<div class="hookOuter wSpHouter wSpOVHouter">
+	<div class="hookHeader wSpHheader wSpOVHheader">[t]Users who viewed this product viewed also[/t]</div>
+    <div class="hookItemWrapper wSpHiwr wSpOVHiwr">
+	{foreach from=$products item=p}
+        <div class="hookItemContainer wSpHic wSpOVHic">
+			<div class="hookItemImage wSpHii wSpOVHimage">
+			{if $p.image}
+				<a href="{$p.url}"><img src="[website]/_images_upload/{$p.image}"></a>	
+			{else}
+				<div style="width:50px;height:{$hookThumbnailHeight}px;">
+					<div style="background-color:#ddd;border:1px solid #bbb;height: 100%;">
+						<div style="margin-top:8%;font-size:0.7em;text-align:center;color:#bbb;">[t]No image[/t]</div>
+						<div style="text-align:center;color:#fff;font-size:0.8em;">[t]Coming soon...[/t]</div>
+					</div>
+				</div>
+			{/if}
+			</div>
+			<div class="hookItemTitle wSpHit wSpOVHit"><a href="{$p.url}">{$p._title}</a></div>
+			<div class="hookItemWord wSpHiw wSpOVHiwPriceEx"><label>[t]Price:[/t]</label> {$p.symbol} {$p._price} <!-- {$p.currency} --></div>
+			<div class="hookItemWord wSpHiw wSpOVHiwPriceInc"><label>[t]Price (VAT inc.):[/t]</label> {$p.symbol} {$p._price_vat_inc} <!-- {$p.currency} --></div>
+			<div class="cleaner wSpCleaner wSpOVCleaner"></div>
+        </div>
+	{/foreach}
+	</div>
+</div>
+<!--END OTHERSVIEWED-->
+
+<!--OTHERSBOUGHT HOOK-->
+{elseif $type == 'others_bought'}
+<div class="hookOuter wSpHouter wSpOBHouter">
+	<div class="hookHeader wSpHheader wSpOBHheader">[t]Users who bought this product bought also[/t]</div>
+    <div class="hookItemWrapper wSpHiwr wSpOBHiwr">
+	{foreach from=$products item=p}
+        <div class="hookItemContainer wSpHic wSpOBHic">
+			<div class="hookItemImage wSpHii wSpOBHimage">
+			{if $p.image}
+				<a href="{$p.url}"><img src="[website]/_images_upload/{$p.image}"></a>	
+			{else}
+				<div style="width:50px;height:{$hookThumbnailHeight}px;">
+					<div style="background-color:#ddd;border:1px solid #bbb;height: 100%;">
+						<div style="margin-top:8%;font-size:0.7em;text-align:center;color:#bbb;">[t]No image[/t]</div>
+						<div style="text-align:center;color:#fff;font-size:0.8em;">[t]Coming soon...[/t]</div>
+					</div>
+				</div>
+			{/if}
+			</div>
+			<div class="hookItemTitle wSpHit wSpOBHit"><a href="{$p.url}">{$p._title}</a></div>
+			<div class="hookItemWord wSpHiw wSpOBHiwPriceEx"><label>[t]Price:[/t]</label> {$p.symbol} {$p._price} <!-- {$p.currency} --></div>
+			<div class="hookItemWord wSpHiw wSpOBHiwPriceInc"><label>[t]Price (VAT inc.):[/t]</label> {$p.symbol} {$p._price_vat_inc} <!-- {$p.currency} --></div>
+			<div class="cleaner wSpCleaner wSpOBCleaner"></div>
+        </div>
+	{/foreach}
+	</div>
+</div>
+<!--END OTHERSBOUGHT-->
+
+	<!--COUNTERSALES HOOK-->
+{elseif $type == 'countersales'}
+<div class="hookOuter wSpHouter wSpCSHouter">
+	<div class="hookHeader wSpHheader wSpCSHheader">[t]Counter sales[/t]</div>
+    <div class="hookItemWrapper wSpHiwr wSpCSHiwr">
+	{foreach from=$products item=p}
+        <div class="hookItemContainer wSpHic wSpCSHic">
+			<div class="hookItemImage wSpHii wSpCSHimage">
+			{if $p.image}
+				<a href="{$p.url}"><img src="[website]/_images_upload/{$p.image}"></a>
+			{else}
+				<div style="width:50px;height:{$hookThumbnailHeight}px;">
+					<div style="background-color:#ddd;border:1px solid #bbb;height: 100%;">
+						<div style="margin-top:8%;font-size:0.7em;text-align:center;color:#bbb;">[t]No image[/t]</div>
+						<div style="text-align:center;color:#fff;font-size:0.8em;">[t]Coming soon...[/t]</div>
+					</div>
+				</div>
+			{/if}
+			</div>
+			<div class="hookItemTitle wSpHit wSpCSHit"><a href="{$p.url}">{$p._title}</a></div>
+			<div class="hookItemWord wSpHiw wSpCSHiwPriceEx"><label>[t]Price:[/t]</label> {$p.symbol} {$p._price} <!-- {$p.currency} --></div>
+			<div class="hookItemWord wSpHiw wSpCSHiwPriceInc"><label>[t]Price (VAT inc.):[/t]</label> {$p.symbol} {$p._price_vat_inc} <!-- {$p.currency} --></div>
+			<div class="cleaner wSpCleaner wSpCSCleaner"></div>
+        </div>
+	{/foreach}
+	</div>
+</div>
+<!--END COUNTERSALES-->
+
+{/if}
+
+<!-- web shop cart hook end -->

@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Magica</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base href="http://{$website}/_customerdata/customer{$customer_id}/jobs/">
+{$headelements}
+<link type="text/css" href="http://{$website}/_css_global/globalFlatNavigationStyling.css" rel="stylesheet">
+<link type="text/css" href="http://{$website}/_css/jobDetail_{$SiteId}.css" rel="stylesheet">
+
+<!-- js for registering click on custom apply for job button -->
+<script type="text/javascript" src="/_javascript_global/applyclickcounter.js"></script>
+<script type="text/javascript">{literal}
+// <![CDATA[
+function addToJobBasket() {
+    var xhr;
+    try {
+        xhr = new ActiveXObject('Msxml2.XMLHTTP');
+    } catch (e) {
+        try {
+            xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        } catch (e2) {
+            try {
+                xhr = new XMLHttpRequest();
+            } catch (e3) {
+                xhr = false;
+            }
+        }
+    }
+
+    xhr.open('GET', "http://{/literal}{$website}/index.php/page/jobbasket/command/jobbasketadd/vid/{$jobid}{literal}",  true);
+    xhr.onreadystatechange = function() {
+	    if(xhr.readyState == 4) {
+	        if(xhr.status == 200) {
+	             try {
+	                 response = eval("(" + xhr.responseText + ")");
+	                 if (response['status'] == 'OK') {
+	                      // defined in jobBasketHook.html UTS template
+	                      if(typeof jobBasketRefreshCount == 'function') {
+	                           jobBasketRefreshCount(response['data']['vacanciesCount']);
+	                      }
+	                      alert('{/literal}{$System3}{literal}'); // job was added to the job basket
+	                      return;
+	                 }
+	                 if (response['status'] == 'ERR_NOT_AVAIL') {
+	                      alert('{/literal}{$System4}{literal}'); // job is unavailable
+	                      return;
+	                 }
+	             } catch (exception) {}
+	         }
+	         alert('Request failed'); // response error
+	    }
+    };
+    xhr.send(null);
+}
+// ]]>
+{/literal}</script>
+</head>
+<body{$bodyattributes}>
+<div id="jobsCustomPage">
+<!-- UTS/vacancies/JobsCustomOuterTemplate.html STANDARD -->
+
+<div id="jobsCustomHeader">
+	<div id="jobsCustomNavigation">
+	<a href="{$client.website}/"><img src="{$logosrc}" alt="{$logoalt}"></a>
+	{if $flatnav}
+		<ul>
+			{foreach from=$flatnav item=link}
+				<li><a href="{$link.link}">{$link.label}</a></li>
+			{/foreach}
+		</ul>
+	{/if}
+	</div>
+</div>
+
+{if $jobmissing}
+<div id="jobsCustomJob">
+	<div class="missing">
+		<h3>[tg]This vacancy is no longer present[/tg]</h3>
+	</div>
+</div>
+{else}
+<div id="jobsCustomJob">
+	<div class="detail">
+	{$custtmpl}
+	</div>
+</div>
+<div id="jobsCustomBtns">
+<div class="buttonContainer jbdBc">
+	{* <input id="btn4" class="button jbdButton jbdButApl" type="button" value="{$Button3}" onclick="{$apply_click_counter}location='{$client.website}/index.php/page/applicants/command/applyforjob/vid/{$jobid}/bb/1&amp;SiteId={$SiteId}';"> *}
+	<input id="btn4" class="button jbdButton jbdButApl" type="button" value="{$Button3}" onclick="{$apply_click_counter}location='{$apply_url|escape:'javascript'}';">
+	<input id="btn5" class="button jbdButton jbdButBasket" type="button" name="addtobasket" value="{$Button5}" onclick="addToJobBasket();">
+	<input id="btn4" class="button jbdButton jbdButMail" type="button" name="mailfriend" value="{$Button4}" onclick="location='{$client.website}/index.php/page/JobsRemote/command/mailfriend/bb/1/vid/{$jobid}';">
+	<input id="btn1" class="button jbdButton jbdButPrint" type="button" value="{$Button1}" onclick="window.print();">
+	<input id="btn2" class="button jbdButton jbdButBack" type="button" value="{$Button2}" onclick="javascript:history.go(-1)">
+</div>
+</div>
+{/if}
+
+</div></body>
+</html>

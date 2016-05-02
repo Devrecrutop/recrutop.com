@@ -1,0 +1,30 @@
+<!-- web shop cart hook start -->
+<div class="hookOuter wSpHouter wSpCrtHouter">
+<!-- UTS/webshop/cartHook.html -->
+    <div class="hookHeader wSpHheader wSpCrtHheader">[t]Shopping cart[/t]</div>
+    <div class="hookItemWrapper wSpHiwr wSpCrtHiwr">
+	{if $products|@count}
+       	<div class="hookItemContainer wSpHic wSpCrtHic">
+           	<div class="hookItemWord wSpHiw wSpCrtHArticles">
+			{if $total.amount == 1}
+				<label class="articles">[t]Article[/t]:</label>1
+			{else}
+				<label class="articles">[t]Articles[/t]:</label> {$total.amount}
+			{/if}
+				<div class="cleaner wSpCleaner"></div>
+				<div class="hookItemWord wSpHiw wSpCrtHiwPriceEx"><label>[t]Price:[/t]</label><!-- {$total.currency} --> {$total.symbol} {$total.price}</div>
+				<div class="hookItemWord wSpHiw wSpCrtHiwPriceInc"><label>[t]Price (VAT inc.):[/t]</label> {$total.symbol} {$total.price_vat_inc}</div>
+			</div>
+			<div class="wSpCrtHActions">
+				<div class="wSpCrtHActionView"><input class="button" id="wSpCrtHLview" type="button" value="[th]View Contents[/th]" onClick="window.location='{$handler}/command/cartView'"></div>
+	        	<div class="wSpCrtHActionCheckOut"><input class="button" id="wSpCrtHLCheck" type="button" value="[th]Checkout[/th]" onClick="window.location='{$handler}/command/checkout'"></div>
+				<div class="cleaner wSpCleaner"></div>
+			</div>
+			<div class="cleaner wSpCleaner"></div>
+		</div>
+	{else}
+       	<div class="wSpCrtHCartEmpty">[t]Shopping cart is empty.[/t]</div>
+	{/if}
+    </div>
+</div>
+<!-- web shop cart hook end -->

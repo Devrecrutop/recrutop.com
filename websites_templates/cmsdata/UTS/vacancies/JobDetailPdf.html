@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Magica</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link type="text/css" href="{$website}/_css_global/globalFlatNavigationStyling.css" rel="stylesheet">
+<link type="text/css" href="{$website}/_css/jobDetail_{$SiteId}.css" rel="stylesheet">
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- pdf object for loading pdf content-->
+<script type="text/javascript" src="/_javascript_global/pdfobject.js"></script>
+
+<!-- js for registering click on custom apply for job button -->
+<script type="text/javascript" src="/_javascript_global/applyclickcounter.js"></script>
+
+<script type="text/javascript">
+
+var pdfUrl = '{$pdf_url|escape:javascript}';
+var pdfWidth = parseInt('[uts:PdfWidth]');
+var pdfHeight = parseInt('[uts:PdfHeight]');
+var pdfHeightPx = '950px';
+var pdfWidthPx = '700px';
+
+{literal}
+window.onload = function () {
+  if(!isNaN(pdfHeight))
+  {
+    pdfHeightPx = pdfHeight + 'px';
+  }  
+  
+  if(!isNaN(pdfWidth))
+  {
+    pdfWidthPx = pdfWidth + 'px';
+  }      
+
+  var myPDF = new PDFObject({
+    url: pdfUrl,
+    id: 'myPDF',
+    width: pdfWidthPx,
+    height: pdfHeightPx,
+    		     
+    pdfOpenParams: { 
+      view: 'Fit',
+      pagemode: 'none',
+      toolbar: '0',
+      statusbar: '0',
+      messages: '0',
+      navpanes: '0'
+    }  
+	
+  }).embed("jobPdf");
+};
+{/literal}
+</script>
+
+<div id="jobsCustomPage">
+<!-- UTS/vacancies/JobDetailPdf.html STANDARD -->
+
+<div id="jobsCustomHeader">
+	<div id="jobsCustomNavigation">
+	<a href="{$client.website}/"><img src="{$logosrc}" alt="{$logoalt}"></a>
+	{if $flatnav}
+		<ul>
+			{foreach from=$flatnav item=link}
+				<li><a href="{$link.link}">{$link.label}</a></li>
+			{/foreach}
+		</ul>
+	{/if}
+	</div>
+</div>
+
+{if $photo}
+<!--START_Photo-->
+<div class="photo1 jbdPhoto1">
+<div class="photo2 jbdPhoto2">
+  <img src="/_images_upload/{$photo}" border="0" alt=""> 
+</div>
+</div>
+<!--END_Photo-->
+{/if}
+
+{if !$job.id}
+<div id="jobsCustomJob">
+	<div class="missing">
+		<h3>[tg]This vacancy is no longer present[/tg]</h3>
+	</div>
+</div>
+{else}
+<div id="jobsCustomJob">
+	<div class="detail" style="text-align: center;">
+		<h1 class="title jbdTitle">{$job.functie_o|escape}</h1>     
+		<div id="jobPdf"><a href="{$pdf_url|escape:javascript}" style="text-decoration:underline;">[t]Cannot see the PDF? Click here to open directly[/t]</a></div>{*pdf will be loaded here*}
+	</div>  
+</div>
+	
+	{if $nobuttons}
+	  {if !$noapply && $applyLink}
+	    <a href="{$applyLink.link}">{$applyLink.text}</a>
+	    <br />
+	    <br />
+	  {/if}
+	{else}
+<div id="jobsCustomBtns">
+	<!--START_BUTTON_SECTION-->
+	<div class="buttonContainer jbdBc">
+	<!-- <div class="buttonContainer jbdBc" style="text-align: center; margin-top: 10px;"> -->
+	
+	{* 
+	<!-- standard print button -->
+	<input class="button jbdButton jbdButPrint" type="button" name="Button" value="[t]Pring[/t]" onClick="javascript:window.printframe.location='/index.php/page/JobsRemote/command/detail/vid/{$job.id}/option/print/CurrentLanguage/{$CurrentLanguage}/bb/1';">
+	
+	{if [uts:ShowPdfPrintBttn]}
+	<!-- PDF print button here -->
+	<input class="button jbdButton jbdButPrint" type="button" name="bttnPdf" value="[t]Print PDF[/t]" onClick="javascript:window.printframe.location='/index.php/page/JobsRemote/command/detail/vid/{$job.id}/option/printpdf/CurrentLanguage/{$CurrentLanguage}/bb/1';">
+	{/if}
+	*}
+	
+	<input class="button jbdButton jbdButBack" type="button" value="[t]Back[/t]" onClick="javascript:history.go(-1)" name="button">
+	
+	<!--START_BUTTON3-->
+	{if !$applyDisabled}
+	 <!--START_APPLICATION_BUTTON-->
+	  {if !$applyData.applicationUrlText}
+	    <!--START_APPLICATION_BUTTON_STANDARD-->
+	    {if $applyData.apply_page == '_blank'}
+	        <input class="button jbdButton jbdButApl" type="button" name="Button4" value="[t]Apply[/t]" onClick="{$applyData.clickCounter}window.open('{$applyData.apply_url}','{$applyData.apply_page}');">
+	    {else}
+	        <input class="button jbdButton jbdButApl" type="button" name="Button4" value="[t]Apply[/t]" onClick="{$applyData.clickCounter}location='{$applyData.apply_url}';">
+	    {/if}
+	    <!--END_APPLICATION_BUTTON_STANDARD-->
+	  {else}
+	    <!--START_APPLICATION_BUTTON_CUSTOM-->
+	    <input class="button jbdButton jbdButApl" type="button" name="Button4" value="{$applyData.applicationUrlText}" onClick="{$applyData.clickCounter}window.open('{$applyData.apply_url}','{$applyData.apply_page}');">
+	    <!--END_APPLICATION_BUTTON_CUSTOM-->
+	  {/if}
+	<!--END_APPLICATION_BUTTON-->
+	{/if}
+	<!--END_BUTTON3-->
+	
+	
+	{if $enableJobBasket && !$job.remove_apply_button}
+	<!--START_BUTTON5-->
+	<script type="text/javascript">
+	<!--
+	{literal}
+	function addToJobBasket() {
+	
+		var xhr;
+	    try {
+			xhr = new ActiveXObject('Msxml2.XMLHTTP');
+		}
+	    catch (e) {
+	        try {
+				xhr = new ActiveXObject('Microsoft.XMLHTTP');
+			}
+	        catch (e2) {
+				try {
+					xhr = new XMLHttpRequest();
+				}
+				catch (e3) {
+					xhr = false;
+				}
+	        }
+	    }
+	
+	{/literal}
+		xhr.open('GET', "{$website}/index.php/page/jobbasket/command/jobbasketadd/vid/{$job.id}",  true);
+	{literal}
+		xhr.onreadystatechange = function() {
+	
+			if(xhr.readyState == 4) {
+				if(xhr.status == 200) {
+	
+					try {
+	
+						response = eval("(" + xhr.responseText + ")");
+	
+						if (response['status'] == 'OK') {
+	
+							// defined in jobBasketHook.html UTS template
+							if(window.console) {
+								console.log(typeof jobBasketRefreshCount);
+							}
+							if(typeof jobBasketRefreshCount == 'function') {
+								jobBasketRefreshCount(response['data']['vacanciesCount']);
+							}
+	
+							alert('[System3]'); // job was added to the job basket
+							return;
+						}
+						if (response['status'] == 'ERR_NOT_AVAIL') {
+	
+							alert('[System4]'); // job is unavailable
+							return;
+						}
+					}
+					catch (exception) {
+					}
+	
+				}
+	        }
+		//	alert('Request failed'); // response error
+	    };
+	
+		xhr.send(null);
+	}
+	{/literal}
+	//-->
+	</script>
+	<input class="button jbdButton jbdButBasket" type="button" name="addtobasket" value="[t]Add to Job Basket[/t]"  onClick="javascript:addToJobBasket();"><!--ButtonLink5-->
+	<!--END_BUTTON5-->
+	{/if}
+	
+	<!--START_BUTTON4-->
+	<input class="button jbdButton jbdButMail" type="button" name="mailfriend" value="[t]Mail a friend[/t]"  onClick="location='/index.php/page/JobsRemote/command/mailfriend/vid/{$job.id}/bb/1';">
+	<!--END_BUTTON4-->
+	</div>
+	<!--END_BUTTON_SECTION-->
+	{/if} 
+	{* end of buttons *}
+
+{/if}
+{* job is not missing *}
+
+</div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

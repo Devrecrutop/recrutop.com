@@ -1,0 +1,105 @@
+<!--uts:begin inner-->
+<div class="outer wSpOuter wSpSCartOuter">
+	<!-- /UTS/webshop/cartView.html -->
+	{if $allCategories}
+		<div>
+			<a href="{$handler}/command/catalogList">[t]Products[/t]</a>
+		</div>
+	{/if}
+	
+	<h1 class="title wSpSCartTitle">
+	{if $products}
+		[t]Shopping cart[/t]
+	{else}
+		[t]Shopping cart is empty[/t]
+	{/if}
+	</h1>
+	
+	{if $productAdded}
+		<div class="intro wSpSCartAdded">
+			{$productAddedName} [t]was successfully added to the shopping cart.[/t]
+		</div>
+	{/if}
+	
+	{if $products}
+		<form action="{$handler}/command/updateCart" method="post" id="webShopCartViewForm">
+			<table border="0" cellpadding="0" cellspacing="0" class="wSpSCartProductsTbl">
+				<thead>
+					<tr>
+						<th class="wSpSCartPth1">&nbsp;</th>
+						<th class="wSpSCartPth2">[t]Product name[/t]</th>
+						<th class="wSpSCartPth3">[t]Price[/t]</th>
+						<th class="wSpSCartPth4" colspan="2">[t]Amount[/th]</th>
+						<th class="wSpSCartPth5">[t]Sum[/t]</th>
+					</tr>
+				</thead>
+				<tbody>
+					{foreach from=$products item=p}
+						<tr>
+							<td class="wSpSCartPcol1">
+								<div class="wSpSCartImgC">
+									{if $p.thumbnail}
+										<a href="{$handler}/command/catalogDetail/productId/{$p.id}">
+											<img src="/_images_upload/{$p.thumbnail}" style="width: 75px;">
+										</a>
+									{else}
+										<div class="wSpLItemNoImgC" style="width:75px;height:{$cartThumbnailHeight}px;">
+											<div class="wSpLItemNoImg">[t]No image[/t]</div>
+											<div class="wSpLItemComSoon">[t]Coming soon...[/t]</div>
+										</div>
+									{/if}
+								</div>
+							</td>
+							<td class="wSpSCartPcol2"><a href="{$handler}/command/catalogDetail/productId/{$p.id}">{$p.invoice_title|escape}</a></td>
+							<td class="wSpSCartPcol3">{$p.symbol} {$p.item_price} <!-- {$p.currency} --></td>
+							<td class="wSpSCartPcol4 wSpAmm"><input type="text" size="2" name="productAmount{$p.id}" value="{$p.amount}" onChange="this.form.submit();"></td>
+							<td class="wSpSCartPcol4b"><a href="{$handler}/command/deleteFromCart/productId/{$p.id}" title="[th]Remove from shopping cart[/th]"><img src="/_images_global/wsDel.gif"></a></td>
+							<td class="wSpSCartPcol5">{$p.symbol} {$p.price} <!--  {$p.currency}--></td>
+							{if $p.tag_line}
+								<td class="wSpSCartPcol6">{$p.tag_line}</td>
+							{/if}
+							{if $p.delivery_information}
+								<td class="wSpSCartPcol6">{$p.delivery_information}</td>
+							{/if}
+						</tr>
+					{/foreach}
+				</tbody>
+			</table>
+		</form>
+		
+		<div class="wSpOrderTotals wSpSCartTotals">
+			<table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<th>[t]Total (VAT exc.)[/t]</th>
+					<td>{$total.symbol} <span>{$total.price}</span></td>
+				</tr>
+				<tr>
+					<th>[t]VAT[/t]</th>
+					<td>{$total.symbol} <span>{$total.vat}</span></td>
+				</tr>
+				<tr>
+					<th>[t]Total (VAT inc.)[/t]</th>
+					<td>{$total.symbol} <span>{$total.price_vat_inc}</span></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div class="wSpOrderActions wSpSCartActionButtons">
+			{if $cartReturnUrl}
+			<input class="button wSpSCartActionBContinue" type="button" value="[th]Continue shopping[/th]" onClick="window.location='{$cartReturnUrl}'">
+			{/if}
+			<input class="button wSpSCartActionBCheckout" type="button" value="[th]Checkout[/th]" onClick="window.location='{$handler}/command/checkout'">
+		</div>
+		<div class="cleaner"></div>
+
+		{else}
+
+		<div>[t]There are no items in the shopping cart.[/t]
+			{if $cartReturnUrl}
+				[t]Return to the[/t] <a href="{$cartReturnUrl}">[t]web shop[/t]</a>.
+			{/if}
+		</div>
+	{/if}
+	<div class="cleaner"></div>
+</div>
+<!--uts:end inner-->

@@ -1,0 +1,69 @@
+{* req.ext.js: JQueryBase *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer webUOuter wuRecommFormOuter">
+	<!-- /UTS/webusers/recommendationsForm.html -->
+	<!-- Template Webdevelopment validated 06-2013 -->
+
+	<h1 class="title">[t]Send a recommendation[/t]</h1>
+	<div class="intro">[t]Fill in the fields below to give a recommendation.[/t]</div>
+	
+	<form action="{$handler}/bb/1" method="post">
+		<input type="hidden" name="command" value="genericEntityRecommendations">
+		<input type="hidden" name="subcommand" value="add">
+		<input type="hidden" name="entity" value="{$entity}">
+		<input type="hidden" name="id" value="{$id}">
+		<input type="hidden" name="recommendationId" value="{$data.recommendationId}">
+		{if $loginTokenOrigin}
+		<input type="hidden" name="loginTokenOrigin" value="1">
+		{/if}
+
+		<h2 class="subHeader">[t]Your details[/t]</h2>
+		<div class="formInput">
+			<label for="fromFirstName">[t]First name[/t]:<span>*</span></label>
+			<input type="text" name="fromFirstName" id="fromFirstName" value="{$data.fromFirstName|escape}" {if $loggedIn}disabled="disabled"{/if}>
+			{if in_array('ERR_MISSING_FIRST_NAME', $validationErrors)}
+				<div class="error">[t]Your name needs to be filled in.[/t]</div>
+			{/if}
+		</div>
+		<div class="formInput">
+			<label for="fromInfix">[t]Infix[/t]:</label>
+			<input type="text" name="fromInfix" id="fromInfix" value="{$data.fromInfix|escape}" {if $loggedIn}disabled="disabled"{/if}>
+		</div>
+		<div class="formInput">
+			<label for="fromLastName">[t]Last name[/t]:<span>*</span></label>
+			<input type="text" name="fromLastName" id="fromLastName" value="{$data.fromLastName|escape}" {if $loggedIn}disabled="disabled"{/if}>
+			{if in_array('ERR_MISSING_LAST_NAME', $validationErrors)}
+				<div class="error">[t]Your name needs to be filled in.[/t]</div>
+			{/if}
+		</div>
+		<div class="formInput">
+			<label for="fromFirstName">[t]E-mail[/t]:<span>*</span></label>
+			<input type="text" name="fromEmail" id="fromEmail" value="{$data.fromEmail|escape}" {if $loggedIn}disabled="disabled"{/if}>
+			{if in_array('ERR_MISSING_EMAIL', $validationErrors)}
+				<div class="error">[t]Your e-mail needs to be filled in.[/t]</div>
+			{elseif in_array('ERR_INVALID_EMAIL', $validationErrors)}
+				<div class="error">[t]E-mail address is invalid.[/t]</div>
+			{/if}
+		</div>
+	
+		<h2 class="subHeader">[t]Recommendation[/t]</h2>
+		<div class="formInput">
+			<textarea name="recommendation" id="recommendation" class="fieldTxtArea" rows="5" cols="30">{$data.recommendation|escape}</textarea>
+			{if in_array('ERR_MISSING_RECOMMENDATION', $validationErrors)}
+				<div class="error">[t]You need to fill in the recommendation.[/t]</div>
+			{/if}
+		</div>
+		<div class="buttonContainer">
+			<input class="button" name="Submit" type="Submit" value="[th]Send[/th]">
+		</div>
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

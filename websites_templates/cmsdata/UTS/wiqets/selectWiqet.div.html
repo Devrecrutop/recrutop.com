@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>
+Banners
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+
+<!--uts:begin inner-->
+</script>
+<div class="outer">
+<h1 class="title">[t]Select wiqet for [/t]{$vacname}</h1>
+{$customer_menu}
+<div class="text wiqetText">[t]In the menu below, select a Wiqet that you have previously made to be shown.[/t]</div>
+
+<form name="Wiqet" action="/index.php/page/wiqets/command/save/bb/1/Id/{$data.id}" method="POST">
+<input type="hidden" name="command" value="assign">
+<input type="hidden" name="vid" id="vid" value="{$vid}">
+<div class="formInput">
+<label>[t]Wiqet presentation[/t]:</label>
+<select name="wiqetid" title="[th]Wiqet select[/th]">
+<option value="0">---</option>
+{html_options options=$wiqetsList selected=$wiqetid}
+</select>
+</div>
+<div class="buttonContainer">
+	<input type="submit" class="button" value="[t]Select[/t]" >
+	<input type="button"  value="[th]Back[/th]" onClick="window.location='/index.php/page/customers_ext/bb/1/exp//command/default'" name="button" class="button">
+</div>
+<!--<input type="button" name="newagent" value="[th]New CV Search Agent[/th]" class="button" onclick="location='/index.php/page/agentsCustomers/command/newagent/bb/1'">-->
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

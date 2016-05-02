@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer">
+    <!-- /UTS/webusers/linkedInRefresh.html -->
+    
+    {$menu}
+    
+    <h1 class="title">[t]Expiry of your link to LinkedIn[/t]</h1>
+    
+    <div class="intro">
+	    {if $expired}	    
+	       [t]Your link with LinkedIn has expired. Please click the button below to reactivate your link.[/t]
+	    {else}
+	       [t]Your link with LinkedIn is about to expire in[/t] {$daysToExpiration} [t]days. Please click the button below to extend your link.[/t]
+	    {/if}
+    </div>
+    
+    <form action="{$handler}">
+        <input type="hidden" name="command" value="authenticate">
+        <input type="hidden" name="bb" value="1">
+        <div class="buttonContainer">
+            <input class="button" name="submit" type="submit" value="[th]Refresh LinkedIn expiration[/th]">
+        </div>    
+    </form>
+    
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

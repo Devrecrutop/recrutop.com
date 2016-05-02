@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- /UTS/vacancies/mailing_vacaturebank_list.html -->
+
+<div style="background:#f4f4f5;padding:20px;color:#5d5d60;">    
+    {foreach from=$vacancyArray item=vacancy} 
+        <div style="margin-bottom:10px;border-bottom:1px #afafaf solid;">
+		
+            <div style="clear:both;margin-bottom:10px;">
+				[t]Title[/t]: <a style="font-weight:bold;text-decoration:none;font-size:120%;" href="{$vacancy.href}" target="_blank">{$vacancy.functie_o}</a>
+            </div>
+			
+			{if $vacancy.sal_o}
+				<div style="clear:both;margin-bottom:10px;">
+					<div style="width:30%;font-weight:bold;float:left;margin-bottom:5px;">[t]Salary[/t]:</div>
+					<div style="width:70%;text-align:left;display:inline;">{$vacancy.sal_o}</div>
+				</div>
+			{/if}
+			
+			{if $vacancy.locatie}
+				<div style="clear:both;margin-bottom:10px;">
+					<div style="width:30%;font-weight:bold;float:left;margin-bottom:5px;">[t]Job location[/t]:</div>
+					<div style="width:70%;text-align:left;display:inline;">{$vacancy.locatie}</div>
+				</div>
+			{/if}
+			
+			{if $vacancy.employer_start_date}
+				<div style="clear:both;margin-bottom:10px;">
+					<div style="width:30%;font-weight:bold;float:left;margin-bottom:5px;">[t]Employer Start date[/t]:</div>
+					<div style="width:70%;text-align:left;display:inline;">{$vacancy.employer_start_date}</div>
+				</div>
+			{/if}
+			
+			{if $vacancy.extra_fld_04.txt}
+				<div style="clear:both;margin-bottom:10px;">
+					<div style="width:30%;font-weight:bold;float:left;margin-bottom:5px;">{$vacancy.extra_fld_04.caption}:</div>
+					<div style="width:70%;text-align:left;display:inline;">{$vacancy.extra_fld_04.txt}</div>
+				</div>
+			{/if}
+			
+			{if $vacancy.rotations}
+                {foreach from=$vacancy.rotations item=rotation}
+					<div style="clear:both;margin-bottom:10px;">
+						<div style="width:30%;font-weight:bold;float:left;margin-bottom:5px;">[t]Rotations[/t]:</div>
+						<div style="width:70%;text-align:left;display:inline;">{$rotation.department} - {$rotation.position} - {$rotation.duration} [t]months[/t]</div>
+					</div>
+                {/foreach}
+            {/if}  
+			
+			
+            {if $vacancy.chapo}
+                    <div style="clear:both;margin-bottom:10px;">
+                        {$vacancy.chapo}
+                        <a href="{$vacancy.href}" target="_blank">[t]Find  out  more![/t]</a>
+                    </div>
+            {/if}
+			
+            {if $vacancy.wg_logo}
+				<div style="clear:both;margin-bottom:10px;"><img alt="" src="{$vacancy.wg_logo}" /></div>
+            {/if}        
+        </div>
+    {/foreach}    
+</div>
+<!--uts:end inner-->
+</body>
+</html>

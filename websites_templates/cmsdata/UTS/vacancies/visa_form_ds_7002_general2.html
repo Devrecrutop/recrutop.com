@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  
+  {literal}
+  <style type="text/css" media="all">
+    #bgImage {
+      position: absolute;
+      z-index: 1;
+      width: 826px;
+      height: 1102px;
+    }
+    .itemValue {
+      position: absolute;
+      z-index: 2;      
+      text-align: center;
+      overflow: hidden;      
+      height: 23px;
+      line-height: 23px;
+    }  
+    #nameOfSupervisor {
+      top: 150px;
+      left: 198px;
+      width: 320px;
+    }
+    #responsibleOfficer {
+      top: 537px;
+      left: 376px;
+      width: 160px;
+    }
+    #programSponsorName {
+      top: 558px;
+      left: 207px;
+      width: 310px;
+    }
+    #programNr {
+      top: 558px;
+      right: 71px;
+      width: 78px;
+    }
+    #pager {
+      position: absolute;
+      bottom: 518px;
+      right: 56px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+  </style>
+  {/literal}
+  
+
+           
+  </head>
+  <body>
+  
+  <img src="http://www.otys.nl/_images/visa/page_2c.jpg" id="bgImage">
+    <div class="itemValue" id="nameOfSupervisor">{$nameOfSupervisor|escape}</div>{**}
+    <div class="itemValue" id="responsibleOfficer">&nbsp;</div>{*nameOfSupervisor SHOULD BE EMPTY NOW*}
+    <div class="itemValue" id="programSponsorName">{$programSponsorName}</div>{**}
+    <div class="itemValue" id="programNr">{$programNr|escape}</div>{**}
+    <div id="pager">Page {$paging.current} of {$paging.total}</div>
+  </body>
+</html>    

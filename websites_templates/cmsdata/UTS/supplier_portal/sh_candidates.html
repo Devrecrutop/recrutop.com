@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="PSPad editor, www.pspad.com">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- /UTS/supplier_portal/sh_candidates.html -->
+<table border="0" cellpadding="0" cellspacing="0" class="vacsTable" width="100%">
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Supplied Candidates[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+{if $customer_main_menu}
+<tr>
+<td class="pageLinkContainer">{$customer_main_menu}</td>
+</tr>
+{/if}
+
+<tr>
+<td class="pageLinkContainer">{$customer_menu}</td>
+</tr>
+
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0">
+<form method="post" action="{$script}">
+<tr>
+<td>[t]Vacancy[/t]:&nbsp;</td>
+<td>{html_options name=vacancy options=$vacancies selected=$vacancy onchange="javascript:this.form.submit();"}</td>
+<td><input name="passive" type="hidden" value="N"><input name="passive" type="checkbox" value="Y" {if $passive=="Y"}checked{/if} onclick="javascript:this.form.vacancy.value='0';this.form.submit();"></td>
+<td>[t]Oude vacatures[/t]</td>
+</tr>
+</form>
+</table>
+
+
+</td>
+</tr>
+
+<tr>
+<td class="shCandListContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="shCandListTbl">
+{foreach from=$candidates item=cand key=kid}
+<tr>
+<td class="shCandListNameContainer">
+
+<table border="0" cellpadding="0" cellspacing="1" class="shCandListNameTbl">
+<tr>
+<td class="shCandListDate">[t]Supply date[/t]: {$cand.invoerdatum|date_format:"%d.%m.%Y"}</td>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="shCandListName"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/can_detail/kid/{$kid}/vid/{$cand.vacatureid}">{$cand.voornaam} {$cand.tussenvoegsel} {$cand.achternaam}</a></td>
+<td class="shCandListJob">[t]Function[/t]: {$cand.functie_o}</td>
+</tr>
+</table>
+
+</td>
+<td class="shCandListNote">{if $hiring_manager}
+{if $cand.note}<div title="{$cand.note}"><img src="http://bo01.otys.nl/adm/hta/images/notitie_icoon.gif"></div>{else}&nbsp;{/if}{/if}</td>
+<td class="shCandListEmail" title="[th]Send e-mail to[/th] {$cand._contactpersoon}"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/mailform/id/{$cand.reactieid}"><img src="/_images_global/email.gif" border="0" alt="{$cand.contactpersoon}"></a></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="shCandListStatus">
+<span class="shCandListStatus1"><span class="shCandListStatusLabel">[t]Reference nr.[/t]:</span> {$cand.ref_nr} </span>
+{if $cand.werkgever && $cand.toon_opdrachtgever}
+<span class="shCandListStatus1"><span class="shCandListStatusLabel">[t]Employer[/t]:</span> {$cand.werkgever} </span>
+{/if}
+<br>
+
+{if $cand.cand_status}<span class="shCandListStatus1"><span class="shCandListStatusLabel">[t]Status[/t]:</span> {$cand.cand_status} </span>{/if}
+{if $cand.status1}<span class="shCandListStatus2"><span class="shCandListStatusLabel">{$status1_name}:</span> {$cand.status1} </span>{/if}
+{if $cand.status2}<span class="shCandListStatus3"><span class="shCandListStatusLabel">{$status2_name}:</span> {$cand.status2} </span>{/if}
+{if $cand.status3}<span class="shCandListStatus4"><span class="shCandListStatusLabel">{$status3_name}:</span> {$cand.status3} </span>{/if}
+{if $staffing}<span class="shCandListStatus5"><span class="shCandListStatusLabel">[t]Staffing[/t]:</span> {$cand.staffing_status} </span>{/if}
+
+</td>
+</tr>
+{/foreach}
+</table>
+
+
+</td>
+</tr>
+</table>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title>dummy</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!--jsrepository:require(JQueryBase)-->
+<script type="text/javascript" src="/_javascript_global/SlService.js"></script>
+<script type="text/javascript">
+
+var useHookSearchopt = "{$useHookSearchopt}";
+var hookSearchopt = '{$hookSearchopt|escape:javascript}';
+
+
+//{literal}
+$(document).ready(function() {
+    SlService = new SlService();
+    if (useHookSearchopt == 1) {
+        // called when hook submit clicked
+        SlService.loadSearchBoxPrefilled(hookSearchopt);
+    }
+    else{
+        SlService.loadSearchBox();
+        SlService.loadOverviewBox();
+    }
+});
+
+//{/literal}
+</script>
+
+
+
+<div class="outer custOuter custFinOuter custFinDetOuter">
+<h1 class="title">[tg]Group picture overview[/tg]</h1>
+
+<div class="text TsIntro">[t]Group picture overview text[/t]</div>
+
+
+{* the left menu should be rendered inside the following div *}
+<div id="SlSearch"></div>
+{* the overview should be rendered inside the following div *}
+<div id="SlOverview"></div>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

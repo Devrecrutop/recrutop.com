@@ -1,0 +1,89 @@
+<!--uts:begin inner-->
+<div class="outer wSpOuter wSpVOOuter">
+<!-- /UTS/webshop/viewOrder.html -->
+
+<div>
+{if $allCategories}
+<a href="{$handler}/command/catalogList">[t]Products[/t]</a>
+{/if}
+{if $allCategories && !$message}|{/if}
+{if !$message}
+<a href="{$handler}/command/myProducts">[t]My products[/t]</a>
+{/if}
+</div>
+
+{if $message == 'MSG_THANKYOU'}
+
+<h1 class="title">[t]Thank you for your order[/t]</h1>
+
+<div class="text">[t]Your order has been sent.[/t]</div>
+{else}
+
+
+
+{/if}
+
+{if $orderId}
+<div class="wSpVoProductsPos">
+	<table border="0" cellpadding="0" cellspacing="0" class="wSpVoProductsTbl">
+            <tr>
+                <th class="wSpVoPth1">[t]Product name[/t]</th>
+                <th class="wSpVoPth2">[t]Price per item[/t]</th>
+                <th class="wSpVoPth3">[t]Ammount[/th]</th>
+                <th class="wSpVoPth4">[t]Sum[/t]</th>
+				{if $p.period}
+                	<th class="wSpSCartPth5a">[t]Period[/t]&nbsp;</th>
+                {/if}
+				{if $p.tag_line}
+					<th class="wSpSCartPth5b">[t]Tag line[/t]</th>
+				{/if}
+				{if $p.delivery_information}
+					<th class="wSpSCartPth5c">[t]Delivery information[/t]</th>
+				{/if}
+            </tr>
+
+            {foreach from=$order.products item=p}
+            <tr>
+                <td class="wSpVoPcol1"><a href="{$handler}/command/catalogDetail/productId/{$p.id}">{$p.title|escape}</a></td>                
+                <td class="wSpVoPcol2">{$p.symbol} {$p.item_price} <!-- {$p.currency} --></td>
+				<td class="wSpVoPcol3">{$p.amount}</td>                
+                <td class="wSpVoPcol4">{$p.symbol} {$p.price} <!-- {$p.currency} --></td>            
+				{if $p.period}
+                    <td class="wSpVoPcol5">
+                        {if $p.period == 'week'}[t]weekly[/t]
+                        {elseif $p.period == 'month'}[t]monthly[/t]
+                        {elseif $p.period == 'year'}[t]annually[/t]
+                        {elseif $p.period == 'once'}[t]once[/t]
+                        {else}{$p.period|escape}
+                        {/if}
+                    </td>
+                {/if}
+                {if $p.tag_line}
+                	<td class="wSpVoPcol6">{$p.tag_line|escape}</td>
+                {/if}
+                {if $p.delivery_information}
+                	<td class="wSpVoPcol6">{$p.delivery_information|escape}</td>
+               	{/if}            
+            </tr>
+            {/foreach}
+    </table>
+</div>
+
+
+
+
+
+<div class="wSpOrderTotals wSpVoTotals">
+	<div class="itemWord wSpIw wSpCartTotalPriceEx"><label>[t]Total (VAT exc.)[/t]</label> {$order.total.symbol} <span>{$order.total.price}</span> <!-- {$order.total.currency} --></div>
+	<div class="itemWord wSpIw wSpCartTotalVAT"><label>[t]VAT[/t]</label> {$order.total.symbol} <span>{$order.total.vat}</span> <!-- {$order.total.currency} --></div>
+	<div class="itemWord wSpIw wSpCartTotalPriceInc"><label>[t]Total (VAT inc.)[/t]</label> {$order.total.symbol} <span>{$order.total.price_vat_inc}</span> <!-- {$order.total.currency} --></div>
+</div>
+<div class="wSpOrderActions wSpVoActionButtons">
+	<div class="wSpVoActionButtonPdfLogo"><a id="wSpVoActionButtonPdfL" href="{$handler}/command/printPdf/orderId/{$orderId}" target="_blank"><img src="/_images_global/pdf.gif" border="0"></a></div>
+	<div class="wSpVoActionButtonPdf"><a id="wSpVoActionButtonPdfL" href="{$handler}/command/printPdf/orderId/{$orderId}" target="_blank">[th]Print to PDF[/th]</a></div>
+</div>
+
+
+{/if}
+</div>
+<!--uts:end inner-->

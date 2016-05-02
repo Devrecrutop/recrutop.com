@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="PSPad editor, www.pspad.com">
+<title>
+</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer custOuter custSuplContact">	
+	<!-- /uts/supplier_portal/sh_mailform.div.html STANDARD -->
+	<h1 class="title">[t]Send an E-mail to the Consultant[/t]</h1>
+
+	{$customer_menu}
+	
+
+	<form method="post" action="/index.php/page/sh_portal/bb/1/code/{$code}/command/sendmail">
+		<input type="hidden" name="terug" value="{$terug}">
+		<input type="hidden" name="to" value="{$data.cp_email}">
+		<input type="hidden" name="rid" value="{$id}">
+		<input type="hidden" name="from" value="{$cp.wg_cp_voornaam} {$cp.wg_cp_achtern}">
+		<input type="hidden" name="from_email" value="{$cp.wg_cp_email}">
+
+		<div class="formInput">
+			<label>[t]From[/t]:</label>
+			<span>{$cp.wg_cp_voornaam} {$cp.wg_cp_voorl} {$cp.wg_cp_tussenvoegsel} {$cp.wg_cp_achtern}</span>
+		</div>
+		<div class="formInput">
+			<label>[t]To[/t]:</label>
+			<span>{$data._contactpersoon}</span>
+		</div>
+		<div class="formInput">
+			<label>[t]Subject[/t]:</label>
+			{assign var="notify" value=":"}
+			<input type="text" name="subject" value="[th]VMP Notify[/th]: {$data.voornaam} {$data.achternaam} - {$data.functie_o}">
+		</div>
+		<h2 class="subHeader">[t]Message[/t]</h2>
+		<div class="">
+			<textarea name="message" rows="10" style="width:555px !important;">[th]Candidate[/th]: {$data.voornaam} {$data.achternaam}
+[th]Vacancy[/th]: {$data.functie_o}
+[th]Reference nr.[/th]: {$data.ref_nr}
+{if $data.werkgever && $data.toon_opdrachtgever}[th]Employer[/th]: {$data.werkgever}{/if}</textarea>
+		</div>
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[th]Send[/th]">
+			<input class="button" type="submit" value="[th]Back[/th]" onclick="javascript:document.location='{$terug}';return false;">
+		</div>
+	</form>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!-- web shop topics hook start -->
+<div class="hookOuter wSpHouter wSpHEHouter">
+<!-- UTS/webshop/topicsHook.html -->
+	<div class="hookHeader wSpHheader wSpHEHheader">[t]Topics[/t]</div>
+    <div class="hookItemWrapper wSpHiwr wSpHEHiwr">
+	{foreach from=$topics item=t}
+		<div class="hookItemContainer wSpHic wSpHEHic">
+			<div class="hookItemTitle wSpHit wSpHEHit"><a href="{$handler}/command/catalogList/helperId/{$t.id}">{$t.name}</a></div>
+		</div>
+	{/foreach}
+	</div>
+</div>
+<!-- web shop topics hook end -->

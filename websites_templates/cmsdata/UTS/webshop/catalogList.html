@@ -1,0 +1,96 @@
+<!--uts:begin inner-->
+<div class="outer wSpOuter wSpCatListOuter">
+<!-- /UTS/webshop/catalogList.html -->
+
+<div class="wSpCrum">
+    {if !$shopHomePage}
+    	{if $allCategories}
+    		<a href="{$webShopUrl}">[t]Products[/t]</a>
+    	{else}
+    		[t]Products[/t]
+    	{/if}
+    	/
+    	{$categoryName|escape}
+    {/if}
+</div>
+
+<div class="wSpHeader">
+	{if $shopHomePage}
+		<h1 class="title wSpTitle">[t]Web Shop[/t]</h1>
+	{else}
+		<h1 class="title wSpTitle">{$categoryName|escape}</h1>
+	{/if}
+	<div class="intro">[t]See our products below.[/t]</div>
+</div>
+<div class="cleaner wSpCleaner"></div>
+
+{if $products}
+
+{literal}
+<script type="text/javascript">
+	function AddToCart(myid) {
+                document.addToCartForm.productId.value = myid;
+                document.addToCartForm.submit();
+                return;
+		{/literal}
+		var url = '{$handler}/command/addToCart/productId/' + myid +'/quantity/1';
+		{literal}
+		window.location	= url;
+		return false;
+	}
+</script>
+{/literal}
+<form name="addToCartForm" method="GET" action="{$handler}">
+    <input type="hidden" name="command" value="addToCart">
+    <input type="hidden" name="productId" value="">
+    <input type="hidden" name="quantity" value="1">
+</form>
+    <ol class="itemWrapper wSpIwr wSpList" start="{$productFirst}">
+        {foreach from=$products item=p}
+            <li class="itemContainer wSpIc wSpLic{cycle values='Col1,Col2,Col3'}">
+                	<div class="wSpLImgC">
+					{if $p.image}
+						<a href="{$p.url}"><img src="/_images_upload/{$p.image}"></a>
+					{else}
+						<div class="wSpLItemNoImgC" style="width:{$thumbnailWidth}px;height:{$thumbnailHeight}px;">
+							<div class="wSpLItemNoImg">[t]No image[/t]</div>
+							<div class="wSpLItemComSoon">[t]Coming soon...[/t]</div>
+						</div>
+					{/if}
+					</div>
+					<h3 class="itemTitle wSpLPt"><a class="wSpLPLink" href="{$p.url}">{$p._title|escape}</a></h3>
+                    <div class="wSpLDescC">
+                        {if $p.tag_line}
+                        <div>{$p.tag_line|escape}</div>
+                        {/if}
+                        {if $p.delivery_information}
+                        <div>{$p.delivery_information|escape}</div>
+                        {/if}
+						{$p._description|truncate:100}
+						<a href="{$p.url}" class="wSpLReadmore">[t]Read more[/t]</a>
+                    </div>
+                    <div class="wSpLPriceC">
+					{if $categories}
+						<div class="wSpLPCat"><span>[t]Category:[/t]</span>{$categories[$p.category_id].name|escape}</div>
+					{/if}
+					<div class="wSpLPPrice"><span>[t]Price:[/t]</span>{$p.symbol} {$p._price} <!-- {$p.currency} --><span class="period">{if $p.period == 'week'}([t]weekly[/t]){elseif $p.period == 'month'}([t]monthly[/t]){elseif $p.period == 'year'}([t]annually[/t]){elseif $p.period == 'once'}{else}{$p.period|escape}{/if}</span></div>
+                        <div class="wSpLPVr"><span>[t]VAT rate:[/t]</span>{$p._vat_percentage} %</div>
+                        <div class="wSpLPVa"><span>[t]VAT:[/t]</span>{$p.symbol} {$p._vat_amount} <!-- {$p.currency} --></div>
+                        <div class="wSpLPVinc"><span>[t]Price (VAT inc.):[/t]</span>{$p.symbol} {$p._price_vat_inc} <!-- {$p.currency} --></div>
+                        <div class="wSpLPButton">
+							<input class="button" type="button" value="[th]Add to cart[/th]" onClick="AddToCart({$p.id});">
+						</div>
+                    </div>
+                <div class="cleaner wSpCleaner"></div>
+            </li>
+        {/foreach}
+    </ol>
+{else}
+	<div class="text">[t]There are no products found in this category.[/t]</div>
+{/if}
+
+
+<include file="catalogListToolBar.inc.html">
+
+</div>
+<!--uts:end inner-->

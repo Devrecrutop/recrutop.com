@@ -1,0 +1,59 @@
+<!--START-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8;">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--END-->
+<!--uts:begin inner-->
+
+<!--
+<subject>{if $vacancies_new|@count == 1}[t]Interesting vacancy[/t] {$vacancies_new[0].name} [t]looks like[/t] {else}[t]Interesting vacancies look like[/t] {/if}{$vacancy_old.name}</subject>
+-->
+
+<!--START_Block1-->
+
+<!--START_Title1-->
+
+<!--END_Title1-->
+<!--START_Text1-->
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;"></p>
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;"><b>
+{if ('' != $name)}
+	[t]Dear {$name}[/t]
+{else}
+	[t]Dear Sir or Madam[/t]
+{/if}
+</b></p>
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">
+[t]Following new vacancies look like [/t]
+<strong><!--.vacancy.ahref.{$vacancy_old.id}.-->{$vacancy_old.name}<!--.vacancy.a.-->{if '' != $vacancy_old.uid} ({$vacancy_old.uid}){/if}:</strong>
+</p>
+
+<table style="background: white; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc;" cellpadding="5" cellspacing="0" width="500">
+<tr>
+	<td style="background: #eee; border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px; text-align: center;"><b>[t]Vacancy[/t]</b></td>
+	<td style="background: #eee; border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px; text-align: center;"><b>[t]Nr.[/t]</b></td>
+	<td style="background: #eee; border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px; text-align: center;"><b>[t]Score[/t]</b></td>
+</tr>
+{foreach from=$vacancies_new item=vacancy}
+<tr>
+	<td style="border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;"><!--.vacancy.ahref.{$vacancy.id}.-->{$vacancy.name}<!--.vacancy.a.--></td>
+	<td style="border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;">{$vacancy.uid}</td>
+	<td style="border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px; text-align: right;">{$vacancy.score}%</td>
+</tr>
+{/foreach}
+</table>
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Kind regards[/t]<br></p>
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;"><b>[t]OTYS Team[/t]</b></p>
+
+<!--END_Text1-->
+
+<!--END_Block1-->
+
+<!--uts:end inner-->
+</body>
+</html>

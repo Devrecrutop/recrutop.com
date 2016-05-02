@@ -1,0 +1,14 @@
+<div class="formInput aplCsc">
+	<label>[t]Security code:[/t]</label>
+	<img id="captchaOJE" src="/_javascript_global/securimage/securimage_show.php?sid={$random}&code_name={$sess_code}" alt="CAPTCHA Image" >
+	<a href="#" onclick="document.getElementById('captchaOJE').src = '/_javascript_global/securimage/securimage_show.php?code_name={$sess_code}&sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0" ></a>
+	<a href="/_javascript_global/securimage/securimage_play.php?code_name={$sess_code}"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0" ></a>
+</div>
+<div class="formInput formSmallInput aplCic">
+	<label>[t]Code[/t]</label>
+	<input type="text" name="captchaOJE" id="captcha_inp">
+</div>
+
+<div class="explain aplCaptchaExplain">
+	[t]Please enter the right security code as you see on the image.[/t]
+</div>

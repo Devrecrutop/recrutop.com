@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer webUOuter wuRecomReqOuter">
+<!-- /UTS/webusers/recommendationsRequest.html -->
+<!-- Template Webdevelopment validated 06-2013 -->
+	<h1 class="title">[t]Request a recommendation[/t]</h1>
+
+	{$menu}
+	{$submenu}
+
+	<div class="intro">[t]Fill in the fields below to request a recommendation.[/t]</div>
+	
+	<form action="{$handler}/bb/1" method="post">
+		<input type="hidden" name="command" value="genericEntityRecommendations">
+		<input type="hidden" name="subcommand" value="sendRequest">
+	
+		<h2 class="subHeader">[t]Request recommendation from[/t]</h2>
+		<div class="formInput">
+			<label for="fromFirstName">[t]First name[/t]:<span>*</span></label>
+			<input type="text" name="fromFirstName" id="fromFirstName" value="{$data.fromFirstName|escape}" {if $loggedIn}disabled="disabled"{/if}>
+			{if in_array('ERR_MISSING_FIRST_NAME', $validationErrors)}
+				<div class="error">[t]Recipient's name needs to be filled in.[/t]</div>
+			{/if}
+		</div>
+		<div class="formInput">
+			<label for="fromInfix">[t]Infix[/t]:</label>
+			<input type="text" name="fromInfix" id="fromInfix" value="{$data.fromInfix|escape}" {if $loggedIn}disabled="disabled"{/if}>
+		</div>
+		<div class="formInput">
+			<label for="fromLastName">[t]Last name[/t]:<span>*</span></label>
+			<input type="text" name="fromLastName" id="fromLastName" value="{$data.fromLastName|escape}" {if $loggedIn}disabled="disabled"{/if}>
+			{if in_array('ERR_MISSING_LAST_NAME', $validationErrors)}
+				<div class="error">[t]Recipient's name needs to be filled in.[/t]</div>
+			{/if}
+		</div>
+		<div class="formInput">
+			<label for="fromFirstName">[t]E-mail[/t]:<span>*</span></label>
+			<input type="text" name="fromEmail" id="fromEmail" value="{$data.fromEmail|escape}" {if $loggedIn}disabled="disabled"{/if}>
+			{if in_array('ERR_MISSING_EMAIL', $validationErrors)}
+				<div class="error">[t]Recipient's e-mail needs to be filled in.[/t]</div>
+			{elseif in_array('ERR_INVALID_EMAIL', $validationErrors)}
+				<div class="error">[t]Recipient's address is invalid.[/t]</div>
+			{/if}
+		</div>
+		
+		<h2 class="subHeader">[t]Personal message[/t]</h2>
+		<div class="formInput">
+			<textarea name="message" id="message" class="fieldTxtArea" rows="5" cols="30">{$data.message|escape}</textarea>
+		</div>
+	
+		<div class="buttonContainer">
+			<input class="button" name="Submit" type="Submit" value="[th]Send[/th]">
+		</div>
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

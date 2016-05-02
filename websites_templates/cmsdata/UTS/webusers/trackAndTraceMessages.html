@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if "[uts:metatime]">
+<meta http-equiv="refresh" content="[uts:metatime];url={$redirecturl}">
+</if>
+<div class="outer">
+<!-- /UTS/webusers/trackAndTraceMessages.html -->
+<h1 class="title">[t]Thank you![/t]</h1>
+<div class="intro">
+<if $messageId>
+	<if $messageId == "MSG_COMMENT_ADDED">
+		<p>[t]Your comment has been added to the task![/t]</p>
+		<if "[uts:metatime]">
+			<p>[t]Now you are going to be redirected back to the task detail...[/t]</p>
+		</if>
+	</if>
+	<if $messageId == "MSG_TASK_ADDED">
+		<p>[t]Your task has been created![/t]</p>
+		<if "[uts:metatime]">
+			<p>[t]Now you are going to be redirected the task detail...[/t]</p>
+		</if>
+	</if>
+</if>
+</div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

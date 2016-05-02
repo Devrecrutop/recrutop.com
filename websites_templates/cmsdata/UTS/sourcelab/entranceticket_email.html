@@ -1,0 +1,20 @@
+{* this email is sent to the candidate when requests EntranceTicket  *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear {$name|escape},[/t]</p>
+
+<p>[t]You can download the ticket by clicking on the link below.[/t]</p>
+<p>{$entrancetticket_content}</p>
+<p>[t]Kind regards,
+{$contactPerson}
+{$client}
+{$website}[/t]</p>
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<!--uts:end inner-->
+</body>
+</html>

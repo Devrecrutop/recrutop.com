@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer webUOuter wuRecommDetOuter">
+	<!-- /UTS/webusers/recommendationsDetail.html -->
+	<!-- Template Webdevelopment validated 06-2013 -->
+	{$menu}
+	{$submenu}
+	
+	<h1 class="title">[t]Recommendation detail[/t]</h1>
+	<div class="formInput">
+		<label>[t]Name[/t]:</label>
+		{if $r._is_for_me}{$r._from_name|escape}{else}{$r._for_name|escape}{/if}
+	</div>
+	<div class="formInput">
+		<label>[t]E-mail[/t]:</label>
+		{if $r._is_for_me}{$r._from_email|escape}{else}{$r._for_email|escape}{/if}
+	</div>
+	{if $r.recommendation_ts_request}
+	<div class="formInput">
+		<label>[t]Request date[/t]:</label>
+		{$r._request_date|escape}
+	</div>
+	{/if}
+	{if $r.recommended}
+	<div class="formInput">
+		<label>[t]Recommendation[/t]:</label>
+		{$r.recommendation|escape}
+	</div>
+	{/if}
+	{if $r._is_for_me}
+		{if $r.recommended}
+			<form action="{$handler}/bb/1" method="post">
+				<input type="hidden" name="command" value="genericEntityRecommendations">
+				<input type="hidden" name="subcommand" value="publish">
+				<input type="hidden" name="recommendationId" value="{$r.id}">
+				
+				<div class="formInput formSmallInput">
+					<label>[t]Publish[/t]:</label>
+					<input type="hidden" name="published" value="0">
+					<input type="checkbox" name="published" value="1" {if $r.published}checked="checked"{/if}>
+				</div>
+				
+				<div class="buttonContainer">
+					<input class="button" name="Submit" type="Submit" value="[th]Save[/th]">
+				</div>
+			</form>
+		{/if}
+	{/if}
+	{if $r._is_from_me}
+		{if !$r.recommended}
+			<form action="{$handler}/bb/1" method="post">
+				<input type="hidden" name="command" value="genericEntityRecommendations">
+				<input type="hidden" name="subcommand" value="add">
+				<input type="hidden" name="recommendationId" value="{$r.id}">
+				<input type="hidden" name="listMode" value="1">
+			
+				<div class="formInput">
+					<textarea name="recommendation" id="recommendation" class="fieldTxtArea" rows="5" cols="30">{$r.recommendation|escape}</textarea>
+				</div>
+				
+				<div class="buttonContainer">
+					<input class="button" name="Submit" type="Submit" value="[th]Save[/th]">
+				</div>
+			</form>
+		{/if}
+	{/if}
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

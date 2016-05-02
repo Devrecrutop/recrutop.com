@@ -1,0 +1,56 @@
+<html>
+<head>
+<style>
+<link type="text/css" href="http://www.otys.nl/_css/interviewApp.css" rel="stylesheet">
+</style>
+</head>
+<body>
+<div class="logo">
+<div class="logoLeft"><img src="http://www.otys.nl/_images/tma/otys.jpg"></div>
+<div class="logoRight"><img src="http://www.otys.nl/_images/tma/priman.jpg"></div>
+</div>
+<h1>[t]Interview[/t]</h1>
+<p>[t]On {$i.entryDateTime|substr:6:2}-{$i.entryDateTime|substr:4:2}-{$i.entryDateTime|substr:0:4} we have conducted an interview with {$i.candidate|escape} for the vacancy {$i.vacancy|escape}.[/t]</p>
+<div>
+	<div>
+		[t]Candidate[/t]:
+		<span>{$i.candidate|escape}</span>
+	</div>
+	<div>
+		[t]Vacancy[/t]:
+		<span>{$i.vacancy|escape}</span>
+	</div>
+	<div>
+		[t]Entry date[/t]:
+		<span>{$i.entryDateTime|substr:6:2}-{$i.entryDateTime|substr:4:2}-{$i.entryDateTime|substr:0:4}</span>
+	</div>
+</div>
+
+{if $i.Competencies}
+
+	<h2>[t]Competencies[/t]</h2>
+
+	{foreach from=$i.Competencies item=competency}
+		<div>
+			{$competency.competency|escape} - {$competency.level|replace:"TMA ":""|ucfirst|escape}
+		</div>
+	{/foreach}
+
+{/if}
+
+{if $i.remarks1 || $i.remarks2 || $i.remarks3 || $i.remarks4 || $i.remarks5 || $i.remarks6 || $i.remarks7 || $i.remarks8}
+
+    <h2>[t]Notes[/t]</h2>
+        
+	{foreach from=$i.remarksTitles key=remarkField item=remarkTitle}
+	
+		{if $i[$remarkField]}            
+			<h3>{$remarkTitle|escape}</h3>                
+			<div>{$i[$remarkField]}</div>            
+		{/if}
+	
+	{/foreach}
+
+{/if}
+</body>
+</html>

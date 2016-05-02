@@ -1,0 +1,107 @@
+{* req.ext.js: JQueryBase *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Track & Trace List</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<script type="text/javascript">
+var handler = '{$handler}';
+//{literal}
+
+function trackAndTraceListExpand(taskid) {
+	trackAndTraceListSubmit(taskid, 'expandajax');
+}
+
+function trackAndTraceListCollapse(taskid) {
+	trackAndTraceListSubmit(taskid, 'collapseajax');
+}
+
+function trackAndTraceListSubmit(taskid, command) {
+// Do something with jQuery
+	$.get(
+		handler + '/command/' + command + '/taskid/' + taskid,
+        function(data){
+			//data = eval('(' + data + ')');
+            if (data.status=='OK') {  
+				$('tr.ajaxTrackAndTraceListRow').remove();
+				$('#ajaxTrackAndTraceListHeader').after(data.data.rows);
+            }
+		},
+		"json"
+	);
+}
+
+//{/literal}
+</script>
+<style type="text/css">
+{literal}
+.tatTaskTypeList {
+	margin: -2px;
+    padding: 2px 4px;
+}
+{/literal}
+</style>
+<div class="outer">
+<!-- UTS/webusers/trackAndTraceList.html STANDARD -->
+
+<h1 class="title">[t]Track & Trace List[/t]</h1>
+
+{$CustomersMenu}
+
+<div class="intro">
+[t]Double click a task to view a detail.[/t]
+</div>
+
+<div id="ttMore"><span id="ttMoreFat">Meer informatie nodig over track & trace?</span><span id="ttVideo">Een online video met uitleg is te bekijken via:</span><a href="http://www.otysacademy.nl/index.php/page/mailings/command/showarticle/artid/13968/bb/1/catid/">http://www.otysacademy.nl/index.php/page/mailings/command/showarticle/artid/13968/bb/1/catid/</a>
+</div>
+{if $addTasks}
+<div class="text tatListCreateTask">
+<a href="http://{$uts.cursite}/index.php/page/trackandtrace/command/addtask/bb/1/CurrentLanguage/{$CurrentLanguage}">[t]Create task[/t]</a>
+</div>
+{/if}
+
+{if $tasks}
+<table border="0" cellpadding="0" cellspacing="0" class="tatListTable">
+<tr id="ajaxTrackAndTraceListHeader">
+<th>[t]E[/t]</th>
+{if in_array('Type', $columns)}<th>[t]Type[/t]</th>{/if}
+{if in_array('Id', $columns)}<th>[t]ID[/t]</th>{/if}
+{if in_array('Nr', $columns)}<th>[t]Nr[/t]</th>{/if}
+{if in_array('Task', $columns)}<th>[t]Task[/t]</th>{/if}
+{if in_array('Taskgroup', $columns)}<th>[t]Taskgroup[/t]</th>{/if}
+{if in_array('Usergroup', $columns)}<th>[t]Usergroup[/t]</th>{/if}
+{if in_array('AssignedTo', $columns)}<th>[t]Assigned[/t]</th>{/if}
+{if in_array('Owner', $columns)}<th>[t]Owner[/t]</th>{/if}
+{if in_array('Manager', $columns)}<th>[t]Manager[/t]</th>{/if}
+{if in_array('Created', $columns)}<th>[t]Created[/t]</th>{/if}
+{if in_array('Start', $columns)}<th>[t]Start[/t]</th>{/if}
+{if in_array('Deadline', $columns)}<th>[t]Deadline[/t]</th>{/if}
+{if in_array('Completed', $columns)}<th>[t]Completed[/t]</th>{/if}
+{if in_array('Priority', $columns)}<th>[t]Priority[/t]</th>{/if}
+{if in_array('Status', $columns)}<th>[t]Status[/t]</th>{/if}
+{if in_array('RelatedTo', $columns)}<th>[t]Related to[/t]</th>{/if}
+{if in_array('Active', $columns)}<th>[t]Active[/t]</th>{/if}
+{if in_array('EstimatedTime', $columns)}<th>[t]Est. time[/t]</th>{/if}
+{if in_array('TimeTaken', $columns)}<th>[t]Time taken[/t]</th>{/if}
+{if in_array('RemainingHours', $columns)}<th>[t]Rem. hours[/t]</th>{/if}
+{if in_array('CalculatedEstimate', $columns)}<th>[t]CES[/t]</th>{/if}
+{if in_array('Price', $columns)}<th>[t]Price[/t]</th>{/if}
+{if in_array('EstimatedPrice', $columns)}<th>[t]Est. price[/t]</th>{/if}
+{if in_array('Progress', $columns)}<th>[t]Progress[/t]</th>{/if}
+{if in_array('Billable', $columns)}<th>[t]Billable[/t]</th>{/if}
+{if in_array('Appointment', $columns)}<th>[t]Planned[/t]</th>{/if}
+</tr>
+{include file="trackAndTraceListRows.html"}
+</table>
+{else}
+<div class="text">[t]No tasks.[/t]</div>
+{/if}
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,16 @@
+{* this email is sent to the consultant after he made booking for a job EMAIL 2 *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear {$consultantName|escape},[/t]</p>
+<p>[t]The following booking is made by {$contactName|escape} for {$customerName|escape}[/t]</p>
+<p>[t]{$jobName|escape} is booked from {$fromDateTime|escape} until {$toDateTime|escape}[/t]</p>
+
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="PSPad editor, www.pspad.com">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- /UTS/supplier_portal/sh_vacancies.html-->
+<div class="outer custOuter spOuter spVacsOuter">
+<!-- {$passive} -->
+<h1 class="title">{if $passive=="N"}[t]Open Vendor Jobs[/t]{else}[t]Closed Vendor Jobs[/t]{/if}</h1>
+
+{$customer_main_menu}
+{$customer_menu}
+
+<div class="text">
+<p>[t]The list below contains all the jobs that we currently offer to vendors. Click the Job Title to see details regarding the job,and to be able to present your candidates to us. For history purposes, you can use the menu to filter for jobs that are no longer active.[/t]</p>
+<form method="post">
+	<select name="passive" onchange="javascript:this.form.submit();">
+	<option value="N" {if $passive=="N"}selected{/if}>[th]Open Vendor Jobs[/th]</option>
+	<option value="Y" {if $passive=="Y"}selected{/if}>[th]Closed Vendor Jobs[/th]</option>
+	</select>
+	
+	{if $additionalJobOptions && $jobStatusses}
+		<select name="jobstatus" onchange="javascript:this.form.submit();">
+			<option value="0" > - [th]Job status[/th] - </option>
+			{foreach from=$jobStatusses item=statusname key=statusid}
+			<option value="{$statusid}" {if $smarty.post.jobstatus==$statusid || $smarty.get.jobstatus==$statusid}selected{/if}>{$statusname}</option>
+			{/foreach}
+		</select>	
+	{/if}
+</form>
+</div>
+
+{if $sortFields}
+	[t]Sorteer op: [/t]
+	{foreach from=$sortFields key=sortField item=sortUrl}
+	
+		{if $sortFieldDisplayNames[$sortField]}
+			&nbsp;<a href="{$sortUrl}">[t]{$sortFieldDisplayNames[$sortField]}[/t]</a>&nbsp;
+		{else}
+			&nbsp;<a href="{$sortUrl}">[t]{$sortField}[/t]</a>&nbsp;
+		{/if}
+	{/foreach}
+{/if}
+
+{assign var="oldcat" value=""}
+
+{foreach from=$rows item=rec key=vid}
+{if $oldcat<>$rec.catname}
+<div class="category">{$rec.catname}</div>
+{assign var="oldcat" value=$rec.catname}
+{/if}
+
+<div class="itemContainer">
+<h3 class="itemTitle" {if $additionalJobOptions && $rec.vacancy_status} style="float:left;"{/if}><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/vac_detail/vid/{$vid}">{$rec.vacname}</a></h3>
+
+{if $additionalJobOptions && $rec.vacancy_status}
+<div class="itemWord" style="float:right;">
+<span>[t]Status[/t]:</span>
+{$rec.vacancy_status}
+</div>
+{/if}
+
+<!-- refno -->
+<div class="itemWord" {if $additionalJobOptions && $rec.vacancy_status} style="clear:both;"{/if}>
+<span>[t]Reference nr.[/t]:</span>
+{$rec.ref_nr}
+</div>
+
+
+{if $rec.werkgever && $rec.toon_opdrachtgever}
+<div class="itemWord">
+<span>[t]Opdrachtgever[/t]:</span>
+{$rec.werkgever}
+</div>
+{/if}
+
+{if $rec.wg_plaats_bezoek}
+<div class="itemWord">
+<span>[t]Plaats[/t]:</span>
+{$rec.wg_plaats_bezoek}
+</div>
+{/if}
+
+{if $rec.publiceer_date}
+<div class="itemWord">
+<span>[t]Publicatiedatum[/t]:</span>
+{$rec.publiceer_date|date_format:"%d.%m.%Y"}
+</div>
+{/if}
+
+{if $rec.start_assigment}
+<div class="itemWord">
+<span>[t]Start datum[/t]:</span>
+{$rec.start_assigment}</span>
+</div>
+{/if}
+
+{if $description && $rec.short_description}
+<div class="itemDescription">{$rec.short_description}</div>
+{/if}
+</div>
+{/foreach}
+
+{if $additionalJobOptions}
+	{if $smarty.post.jobstatus}	
+		{capture name="jobstatusPaging"}/jobstatus/{$smarty.post.jobstatus}{/capture} 
+	{elseif $smarty.get.jobstatus}
+		{capture name="jobstatusPaging"}/jobstatus/{$smarty.get.jobstatus}{/capture} 
+	{/if}
+	{assign var="jobstatusPaging" value=$smarty.capture.jobstatusPaging}
+{/if}
+
+{if $navigation && $pages>1	}
+<table cellspacing="0" cellpadding="0" border="0" class="navTbl jblNavTbl">
+<tr>
+<td class="navPrevious jblNavPrev">
+{if $currPage>1}
+<a href="/index.php/page/{$page}/bb/{$bb}/command/{$command}/passive/{$passive}{$jobstatusPaging}/currpage/{$currPage-1}">[t]Previous[/t]</a>
+{/if}
+</td>
+<td class="navNumber jblNavNumb">
+
+
+{section name=_pages start=1 loop=$pages+1 step=1}
+{if $smarty.section._pages.index==$currPage}
+<a href="/index.php/page/{$page}/bb/{$bb}/command/{$command}/passive/{$passive}{$jobstatusPaging}/currpage/{$smarty.section._pages.index}">{$smarty.section._pages.index}</a>
+{else}
+<a href="/index.php/page/{$page}/bb/{$bb}/command/{$command}/passive/{$passive}{$jobstatusPaging}/currpage/{$smarty.section._pages.index}">{$smarty.section._pages.index}</a>
+{/if}
+{/section}
+</td>
+<td class="navNext jblNavNext">
+{if $currPage<$pages}
+<a href="/index.php/page/{$page}/bb/{$bb}/command/{$command}/passive/{$passive}{$jobstatusPaging}/currpage/{$currPage+1}">[t]Next[/t]</a>
+{/if}
+</td>
+</tr>
+</table>
+{/if}
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

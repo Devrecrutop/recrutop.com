@@ -1,0 +1,138 @@
+<!--uts:begin inner-->
+<div class="outer wSpOuter wSpCatDetailOuter">
+<!-- /UTS/webshop/catalogDetail.html -->
+	<div class="wSpCrum">
+		{if $allCategories}
+			<a href="{$webShopUrl}">[t]Products[/t]</a>
+		{else}
+			[t]Products[/t]
+		{/if}
+		/ <a href="{$p.category_url}">{$categoryName|escape}</a> / {$p._title}
+	</div>
+	<div class="wSpDetailC">
+		<div class="wSpHeader">
+			{if $rewrite_header}
+			<h1 class="title wSpTitle">{$rewrite_header}</h1>
+			{else}
+			<h1 class="title wSpTitle">{$p._title|escape}</h1>
+			{/if}
+			{if $p.tag_line}
+				<div>{$p.tag_line|escape}</div>
+			{/if}
+			{if $rewrite_keyword}
+			<h2 class="wSpSubT">{$rewrite_keyword}</h2>
+			{else}
+			<h2 class="wSpSubT">{$categoryName|escape}</h2>
+			{/if}
+		</div>
+		<div class="cleaner wSpCleaner"></div>
+		<div class="wSpItemH">
+			<div class="wSpImgC">
+            	<div class="wSpImgCImg">
+				{if $p.photogallery}
+					<script type="text/javascript" src="/_javascript_global/galleria-1.2.4.min.js"></script>   
+					<script type="text/javascript" src="/_css_global/galleria/classic.white/galleria.classic.min.js"></script>   
+					<link type="text/css" href="/_css_global/galleria/classic.white/galleria.classic.css" rel="stylesheet">
+					<script type="text/javascript">
+						var productDetailPhotoSliderWidth = {$imageWidth};
+						var productDetailPhotoSliderHeight = {$imageHeight};
+						//{literal}
+						$(document).ready(function() {
+							$('#productDetailPhotoSlider').galleria({
+								width:  productDetailPhotoSliderWidth,
+								height: productDetailPhotoSliderHeight + 50
+							});
+						});
+						//{/literal}
+					</script>
+					<div id="productDetailPhotoSlider">
+						{if $p.image}<a href="[website]/_images_upload/{$p.image}"><img src="[website]/_images_upload/{$p.thumbnail}" style="display: none;"></a>{/if}
+						{foreach from=$p.photogallery item=i}
+							<a href="[website]/_images_upload/{$i.image}"><img src="[website]/_images_upload/{$i.thumbnail}" style="display: none;"></a>
+						{/foreach}
+					</div>
+				{elseif $p.image}
+					<img src="[website]/_images_upload/{$p.image}" style="width:{$imageWidth}px;">
+				{else}
+					<div style="width:{$imageWidth}px;height:{$imageHeight}px;background-color:#ddd;border:1px solid #bbb;">
+						<div style="margin-top:30%;font-size:2em;text-align:center;color:#fff;font-weight:bold;">[t]No image[/t]</div>
+						<div style="text-align:center;color:#fff;font-size:1.5em;font-weight:bold;">[t]Coming soon...[/t]</div>
+					</div>
+				{/if}
+                </div>
+				<div class="wSpInfoC">
+					<div class="wSpCat"><span>[t]Category:[/t]</span>{$categoryName|escape}</div>
+					<div class="wSpPrice"><span>[t]Price:[/t]</span>{$p.symbol} {$p._price} <!-- {$p.currency} --><div>{if $p.period == 'week'}[t]weekly[/t]{elseif $p.period == 'month'}[t]monthly[/t]{elseif $p.period == 'year'}[t]annually[/t]{elseif $p.period == 'once'}{else}{$p.period|escape}{/if}</div></div>
+					<div class="wSpVATp"><span>[t]VAT rate:[/t]</span>{$p._vat_percentage} %</div>
+					<div class="wSpVATa"><span>[t]VAT:[/t]</span>{$p.symbol} {$p._vat_amount} <!-- {$p.currency} --></div>
+					<div class="wSpVacInc"><span>[t]Price (VAT inc.):[/t]</span>{$p.symbol} {$p._price_vat_inc} <!-- {$p.currency} --></div>
+					<div class="wSpInvL"><span>[t]Invoice line:[/t]</span>{$p.invoice_line}</div>
+					{if $p.delivery_information}<div class="wSpDelI"><span>[t]Delivery information:[/t]</span>{$p.delivery_information}</div>{/if}
+										
+					{if [uts:show_business_contact_logo]}
+					 {if $p._wg_wgcp_links && $p._wg_logo && $p._wg_network_link}
+					 <div class="wSpWgCpPhoto"><a href="{$p._wg_network_link}"><img src="[website]/_images_upload/{$p._wg_logo}"></a></div>
+					 {/if}					
+					{/if}
+					
+					{if [uts:show_business_contact_name]}
+
+					 {if $p._wg_wgcp_links && $p._wg_name && $p._wg_network_link}
+					 <div class="wSpWgCp"><span>[t]Company:[/t]</span><a href="{$p._wg_network_link}">{$p._wg_name|escape}</a></div>
+					 {/if}
+					
+					{/if}					
+					
+					{if [uts:show_contact_person_photo]}
+					 {if $p._wg_wgcp_links && $p._wgcp_photo && $p._wgcp_pp_link}
+					 <div class="wSpWgCpPhoto"><a href="{$p._wgcp_pp_link}"><img src="[website]/_images_upload/{$p._wgcp_photo}"></a></div>
+					 {/if}
+					{/if}
+					
+					{if [uts:show_contact_person_name]}
+					 {if $p._wg_wgcp_links && $p._wgcp_name && $p._wgcp_pp_link}
+					 <div class="wSpWgCp"><span>[t]Contact:[/t]</span><a href="{$p._wgcp_pp_link}">{$p._wgcp_name|escape}</a></div>
+					 {/if}
+					{/if}
+					
+					<div class="wSpAmm"><label>[t]Amount:[/t]</label><input class="wSpText" type="text" value="1" id="webShopProductAmount" size="2"></div>
+					<div class="buttonContainer wSpDBuyButton">
+						<input class="button" type="button" value="[th]Add to cart[/th]" onClick="window.location='{$handler}/command/addToCart/productId/{$p.id}/quantity/' + document.getElementById('webShopProductAmount').value + '/fromdetail/1'">
+					</div>
+				</div>
+			</div>
+			<!--content-->
+			{if $rewrite_description}
+                        <!-- $rewrite_description -->
+			<div class="wSpDesc">{$rewrite_description}</div>
+			{else}
+                        <!-- $p.description -->
+			<div class="wSpDesc">{$p.description}</div>
+			{/if}
+			<!--info-->
+		</div>
+		<div class="cleaner wSpCleaner"></div>
+		{if $p.video_type == 'code' && $p.video_code}
+			<div>
+				{$p.video_code}
+			</div>
+		{/if}
+
+		{if $p.video_type == 'file' && $p.video_file}
+			{literal}
+			<script type="text/javascript" src="/_javascript_global/flvplayer/flvplayer/swfobject.js"></script>
+			<script type="text/javascript">
+				var playervars = false;
+				swfobject.embedSWF("/_javascript_global/flvplayer/flvplayer/flvplayer.swf?playerpath=/_javascript_global/flvplayer/flvplayer&contentpath=/_images_upload&preloader=preloader-ajax.swf&preview={/literal}{if $p.video_preview}{$p.video_preview}{else}../_images_global/spacer.gif{/if}{literal}&video={/literal}{$p.video_file}{literal}&captions=&preroll=&autoplay=&loop=&islive=&volume=&smoothing=true&autoscale=false&videowidth=640&videoheight=375&skincolor=0xCCCCCC&skinscalemaximum=&skin=skin-applestyle.swf&preloader=&buttonoverlay=&ending=&debug=", "videoCanvas", "640", "410", "9.0.28", "expressInstall.swf", playervars, { scale: "noscale", allowfullscreen: "true",salign: "tl", bgcolor: "#FFFFFF", base: "."},  { align: "left"});
+			</script>
+			<div id="videoCanvas">
+				<p>This <a href="http://www.video-flash.de/flv-flash-fullscreen-video-player/">Flash Video Player</a> requires the Adobe Flash Player.</p>
+				<p><a href="http://www.adobe.com/go/getflashplayer" target="_blank">
+				<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /></a></p>
+			</div>  
+			{/literal} 
+		{/if}
+	</div>
+	<!--end info-->
+</div>
+<!--uts:end inner-->

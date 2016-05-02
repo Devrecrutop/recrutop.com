@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Track & Trace Detail</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/webusers/trackAndTraceDetail.html -->
+<style type="text/css">
+{literal}
+.tatTaskTypeDetail {
+    display: inline;
+    left: -4px;
+    margin: -2px 0;
+    padding: 2px 4px;
+    position: relative;
+}
+{/literal}
+</style>
+
+<div class="outer tatDT">
+
+<h1 class="title">[t]{$task._title|escape}[/t]</h1>
+
+{$CustomersMenu}
+
+<div class="text">
+<a href="http://{$uts.cursite}/index.php/page/trackandtrace/command/list/bb/1/CurrentLanguage/{$CurrentLanguage}">[t]Back to tasks list[/t]</a>&nbsp;|&nbsp;
+<a href="http://{$uts.cursite}/index.php/page/trackandtrace/command/dossier/taskid/{$taskid}/command_dossier/list/bb/1/CurrentLanguage/{$CurrentLanguage}">[t]Folder[/t]</a>
+</div>
+
+<table border="0" cellpadding="0" cellspacing="0" class="tatDTbasicH">
+<tr>
+<td class="tatDTbasicCont" valign="top">
+
+{include file="trackAndTraceDetailFields.html" fields=$fieldsLeft}
+
+</td>
+<td class="tatDTrightCol" valign="top">
+
+{include file="trackAndTraceDetailFields.html" fields=$fieldsRight}
+
+</td>
+</tr>
+</table>
+
+{if $task.description}
+<div class="tatDTdescC">
+<h2 class="title tatDTdescTitle">[t]Description[/t]</h2>
+<div class="tatDTdescr">{$task.description}</div>
+</div>
+{/if}
+
+{if $showComments || $comments}
+<div class="tatDTcomH">
+{if $comments}
+<div class="tatDTcomHTitle">[t]Comments[/t]</div>
+{foreach from=$comments item=c}
+<div class="tatDTcomC">
+<div class="tatDTcomTitle">{$c._from|escape} [t]at[/t] {$c._dt}</div>
+<div class="tatDTcomDesc">{if $c.format == 'html'}{$c.comment}{else}{$c.comment|escape|replace:"\t":"    "|replace:" ":"&nbsp; "|nl2br}{/if}</div>
+</div>
+{/foreach}
+{/if}
+
+</div>
+{/if}
+
+{if $addComments}
+<script language="javascript" type="text/javascript" src="/_javascript_global/editor/TinyMCE/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript">
+//{literal}
+
+tinyMCE.init({
+	theme : "advanced",
+	mode: "exact",
+	elements : "comment",
+	theme_advanced_toolbar_location : "top",
+	theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,"
+	+ "justifyleft,justifycenter,justifyright,justifyfull,formatselect,"
+	+ "bullist,numlist,outdent,indent",
+	theme_advanced_buttons2 : "link,unlink,separator,"
+	+"undo,redo,separator,sub,sup,charmap",
+	theme_advanced_buttons3 : "",
+	height:"200px",
+	width:"100%"
+});
+
+//{/literal}
+</script>
+
+<div>
+<form name="addcommentf" action="http://{$uts.cursite}/index.php/page/trackandtrace/command/savecomment/bb/1/taskid/{$task.id}" method="post">
+<input type="hidden" name="custContactId" value="{$custContactId}" >
+<h2 class="tatDTaddC">[t]Add comment[/t]</h2>
+<div class="formInput">
+<textarea name="comment" id="comment" cols="30" rows="10">{if $commentData}{$commentData.comment}{/if}</textarea>
+</div>
+<if $errors && $errors.comment>
+<div class="error">[t]The text of the comment cannot not be empty![/t]</div>
+</if>
+<div class="buttonContainer"><input type="submit" value="[tb]Submit comment[/tb]" class="button"></div>
+</form>
+</div>
+{/if}
+
+
+{if $changeStatus}
+<div class="tatChangeStatus">
+    <form name="changestatus" action="http://{$uts.cursite}/index.php/page/trackandtrace/command/savestatus/bb/1/taskid/{$task.id}" method="post">
+    	<div class="tatStatusLeft">
+        	<select name="taskstatus">
+                {foreach from=$statusses item=status key=name}
+                <option value="{$name}" {if $name == $task.status}selected{/if}>{$status}</option>
+                {/foreach}
+            </select>
+        </div>
+        <div class="tatStatusRight">
+        	<div class="buttonContainer"><input type="submit" value="[tb]Submit change[/tb]" class="button"></div>
+        </div>
+    </form>
+</div>
+{/if}
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

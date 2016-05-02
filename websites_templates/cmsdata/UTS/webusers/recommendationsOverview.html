@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer webUOuter wuRecomListOuter">
+<!-- /UTS/webusers/recommendationsOverview.html -->
+<!-- Template Webdevelopment validated 06-2013 -->
+	<h1 class="title">[t]Recommendations overview[/t]</h1>
+
+	{$menu}
+	{$submenu}
+
+	<div class="intro">[t]Find below all recommendations that you have received, requested and those that others have requested.[/t]</div>
+	{if $recommendations}
+		<table class="custLinTbl recommOverview" cellpadding="0" cellspacing="0" border="0" width="100%">
+		<tr>
+			<th>[t]Last update date[/t]</th>
+			<th>[t]Request date[/t]</th>
+			<th>[t]Request[/t]</th>
+			<th>[t]Name[/t]</th>
+			<th>[t]Published[/t]</th>
+			<th>[t]Status[/t]</th>
+		</tr>
+		{foreach from=$recommendations item=r}
+		<tr onclick="window.location.href='{$handler}/command/genericEntityRecommendations/subcommand/detail/id/{$r.id}/bb/1';" style="cursor:pointer;">
+			<td>{$r._update_date|escape}</td>
+			<td>{if $r.recommendation_ts_request}{$r._request_date|escape}{/if}</td>
+			<td>{if $r._is_from_me}[t]From me[/t]{/if}{if $r._is_for_me}[t]For me[/t]{/if}</td>
+			<td>{if $r._is_for_me}{$r._from_name|escape}{else}{$r._for_name|escape}{/if}</td>
+			<td>{if $r.published}[t]Yes[/t]{else}[t]No[/t]{/if}</td>
+			<td>{if $r.recommended}[t]Recommendation given[/t]{else}[t]Request sent[/t]{/if}</td>
+		</tr>		
+		{/foreach}
+		</table>
+	{else}
+		[t]There are no recommendations nor recommendation requests yet.[/t]
+	{/if}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

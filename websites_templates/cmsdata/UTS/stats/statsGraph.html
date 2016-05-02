@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer StOuter StOuterList">
+<!-- /UTS/stats/statsGraph.html -->
+
+<div class="StHeader">
+<h1 class="title StTitle">[t]Statistics[/t]</h1>
+<h2 class="StSubT">[t]See our statistics below.[/t]</h2>
+</div>
+<div style="clear:both"></div>
+
+
+{if $statistics}
+<ol class="StList">
+{foreach from=$statistics item=s}
+<li style="clear: both;">
+<div class="StLItemC">
+    <div class="StLItemTitle">{$s.name}</div>
+    <div style="width:400px;" class="StLImgC">
+        {if $s.image}
+        <img src="/_images_upload/{$s.image}" style="width:400px;">
+        {/if}
+    </div>
+<div style="clear:both;"></div>
+</div>
+</li>
+{/foreach}
+</ol>
+
+{else}
+
+<div class="text">[t]There are no statistics published.[/t]</div>
+
+{/if}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

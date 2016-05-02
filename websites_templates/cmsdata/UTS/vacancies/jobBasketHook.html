@@ -1,0 +1,25 @@
+<!-- job basket hook start -->
+
+<script type="text/javascript">
+<!--
+//{literal}
+
+// called from JobsDetail.html, refresh after AJAX call
+function jobBasketRefreshCount(count) {
+	e = document.getElementById('jobBasketVacanciesCount');
+	e.innerHTML = count;
+}
+
+//{/literal}
+//-->
+</script>
+
+<div class="hookOuter jbskHOuter">
+<!-- UTS/vacancies/jobBasketHook.html -->
+	<div class="hookHeader jbskHHeader" title="[t]My Jobs[/t]">[t]My Jobs[/t]</div>
+	<div class="hookItemContainer jbskIc">
+		<div class="hookItemTitle jbskIt"><a href="/index.php/page/applicants/command/applyforjobmultiple" title="{$vacanciesCount} [t]vacancies[/t][t], apply[/t]"><span id="jobBasketVacanciesCount">{$vacanciesCount}</span>&nbsp;[t]vacancies[/t]{if $vacanciesCount != "0"}[t],&nbsp;apply[/t]{/if}</a></div>
+	</div>
+</div>
+
+<!-- job basket hook end -->

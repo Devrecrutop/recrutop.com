@@ -1,0 +1,16 @@
+<!-- web shop categories hook start -->
+<div class="hookOuter wSpHouter wSpHEHouter">
+<!-- UTS/webshop/categoriesHook.html -->
+	<div class="hookHeader wSpHheader wSpHEHheader">[t]Categories[/t]</div>
+    <div class="hookItemWrapper wSpHiwr wSpHEHiwr">
+		<div class="hookItemContainer wSpHic wSpHEHic wSpHEfirst">
+			<div class="hookItemTitle wSpHit wSpHEHit"><a href="{$webShopUrl}">[t]All products[/t]</a></div>
+		</div>
+	{foreach from=$categories item=c}
+		<div class="hookItemContainer wSpHic wSpHEHic">
+			<div class="hookItemTitle wSpHit wSpHEHit"><a href="{$c.url}">{$c.category_name}</a></div>
+		</div>
+	{/foreach}
+	</div>
+</div>
+<!-- web shop categories hook end -->

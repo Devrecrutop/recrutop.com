@@ -1,0 +1,52 @@
+<!--uts:begin inner-->
+
+<div class="ckOuter{if $cookie_accepted} accepted{/if}{if $hide_ccp} hide{/if}">
+	<div class="ccButton"></div>
+	<!-- /UTS/webusers/ask_cookie_permission.html STANDARD -->
+	<div class="ckInner">
+		<div class="formHeader ckFormHeader">[t]Accept cookies[/t]<img src="_images_global/ckClose.png" border="0" id="ckClose" alt="Close"></div>
+		<if [uts:showExplanation]>
+			<div class="ckExplanation">[t]Explanation[/t]</div>
+		</if>
+	    {if $cookie_cms > 0}
+	        <div class="ckMoreLink"><a href="/index.php/cms_categorie/{$cookie_cms}/id/{$cookie_cms}/bb/1">[t]Learn more[/t]</a></div>
+	    {/if}
+		<form action="/index.php/page/ask_cookie/" method="POST" target="_self">
+			<div><label for="acceptCookies"><input type="checkbox" id="acceptCookies" name="acceptCookies" {if $cookie_accepted}checked{/if}>[t]I accept cookies from this website[/t]</label></div>
+			
+			<div><input name="Submit" type="Submit" value="[th]Accept[/th]" class="ckButton"></div>
+			
+			<div class="ckHideInput"><label class="hidecc" for="hideControlPanel"><input type="checkbox" id="hideControlPanel" name="hideControlPanel" {if $hide_ccp}checked{/if}>[t]Hide Cookie Control Panel[/t]</label></div>
+
+			<div class="cleaner"></div>
+			    	    
+		</form>
+	</div>
+</div>
+{literal}
+<script type="text/javascript">
+	window.jQuery || document.write('<script src="_javascript_global/jquery.js"><\/script>');
+</script>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	jQuery(".ccButton").click(function() {
+		jQuery(".ckInner").toggle();
+	});
+	jQuery("#ckClose").click(function() {
+	jQuery(".ckInner").hide();
+	});
+});
+</script>
+{/literal}
+<!--[if IE]>
+{literal}
+<script type="text/javascript">
+if(document.compatMode != 'CSS1Compat'){
+	/* Detect Quirks Mode */	
+	jQuery("head").append("<link rel='stylesheet' href='_css_global/globalQuirksStyling.css' type='text/css'>");
+}
+</script>
+{/literal}
+<![endif]-->
+
+<!--uts:end inner-->

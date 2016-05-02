@@ -1,0 +1,257 @@
+{if $fields}
+
+{if $fields.Status}
+<table style="margin-bottom: 1em;">
+<tr>
+<td class="tatStatusDTpos"><div class="tatStatusDetail {if $task.status && $task.status != 'user'}tatStatus{$task._cssStatusSuffix}{/if}" {if $task.status == 'user' && isset($task._status_color) && '' != $task._status_color}style="background-color: #{$task._status_color};"{/if}>{$task._status|escape}</div></td>
+</tr>
+</table>
+{/if}
+
+
+{if $fields && (count($fields) != 1 || !$fields.Status)}
+
+<table cellpadding="0" cellspacing="0" border="0" class="tatDTbasicT">
+
+{if $fields.Type}
+{if $task._taskType != ''}
+<tr>
+<th>[t]Type[/t]:</th>
+<td>
+<div {if isset($task._taskTypeColor) && '' != $task._taskTypeColor}class="tatTaskTypeDetail" style="background-color:#{$task._taskTypeColor};color:#{$task._taskTypeInvColor};"{/if}>
+{$task._taskType|truncate:3:""}
+</div>
+</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Id}
+<tr>
+<th>[t]Id[/t]:</th>
+<td>#{$task.id}</td>
+</tr>
+{/if}
+
+{if $fields.Nr}
+{if $task._sectionNumbering}
+<tr>
+<th>[t]Numbering[/t]:</th>
+<td>{$task._sectionNumbering}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Taskgroup}
+{if $task._taskgroup != ''}
+<tr>
+<th>[t]Taskgroup[/t]:</th>
+<td>{$task._taskgroup|escape}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Usergroup}
+{if $task._usergroup != ''}
+<tr>
+<th>[t]Usergroup[/t]:</th>
+<td>{$task._usergroup|escape}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Created}
+<tr>
+<th>[t]Created[/t]:</th>
+<td>{$task._dt_created}</td>
+</tr>
+{/if}
+
+{if $fields.Start}
+{if $task._date_start}
+<tr>
+<th>[t]Start[/t]:</th>
+<td>{$task._date_start}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Completed}
+{if $task._dt_completed}
+<tr>
+<th>[t]Completed[/t]:</th>
+<td>{$task._dt_completed}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Deadline}
+{if $task._deadline}
+<tr>
+<th>[t]Deadline[/t]:</th>
+<td>{$task._deadline}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.AssignedTo}
+{if $task._assigned_to}
+<tr>
+<th>[t]Assigned[/t]:</th>
+<td>{$task._assigned_to|escape}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Owner}
+{if $task._owner}
+<tr>
+<th>[t]Owner[/t]:</th>
+<td>{$task._owner|escape}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Manager}
+{if $task._manager}
+<tr>
+<th>[t]Manager[/t]:</th>
+<td>{$task._manager|escape}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Priority}
+{if $task._priority != ''}
+<tr>
+<th>[t]Priority[/t]:</th>
+<td class="{if $task.priority == "high" || ($task.priority == 'user' && $task._priority == "urgent")}tatHighPriority{/if}">{$task._priority|escape}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.RelatedTo}
+{if $task._relations != ''}
+<tr>
+<th>[t]Related to[/t]:</th>
+<td>
+{foreach from=$task._relations item=relation}
+{if $relation.type == 'candidate'}<img src="/_images_global/trackandtrace/candidate.gif">
+{elseif $relation.type == 'customer'}<img src="/_images_global/trackandtrace/customer.gif">[t]Customer[/t]:
+{elseif $relation.type == 'customer_contactperson'}<img src="/_images_global/trackandtrace/customer.gif">[t]Customer contact[/t]:
+{elseif $relation.type == 'contactperson'}<img src="/_images_global/trackandtrace/customer.gif">[t]Consultant[/t]:
+{elseif $relation.type == 'support'}<img src="/_images_global/trackandtrace/support.gif">[t]Support[/t]:
+{elseif $relation.type == 'job'}<img src="/_images_global/trackandtrace/job.gif">[t]Vacancy[/t]:
+{else}{$relation.type|capitalize}:
+{/if}
+{$relation.info|escape}<br >
+{/foreach}
+</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Active}
+<tr>
+<th>[t]Active[/t]:</th>
+<td>{if $task.active}[t]Yes[/t]{else}[t]No[/t]{/if}</td>
+</tr>
+{/if}
+
+{if $fields.EstimatedTime}
+{if $task.time_required}
+<tr>
+<th>[t]Est. time[/t]:</th>
+<td class="{if $task._hasSubtasks && $task._calculateHours}tatCalculatedValue{/if}">{$task.time_required|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""} [t]hours[/t]</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.EstimatedTimeDeveloper}
+{if $task.estimate_developer}
+<tr>
+<th>[t]Est. time (dev.)[/t]:</th>
+<td>{$task.estimate_developer|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""} [t]hours[/t]</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.TimeTaken}
+{if $task.time_taken}
+<tr>
+<th>[t]Time taken[/t]:</th>
+<td class="{if $task._hasSubtasks && $task._calculateHours}tatCalculatedValue{/if}">{$task.time_taken|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""} [t]hours[/t]</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.CalculatedEstimate}
+{if $task._calculated_estimate}
+<tr>
+<th>[t]CES[/t]:</th>
+<td>{$task._calculated_estimate|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""} [t]hours[/t]</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.RemainingHours}
+{if $task._remaining_hours}
+<tr>
+<th>[t]Rem. hours[/t]:</th>
+<td class="{if $task._hasSubtasks && $task._calculateHours}tatCalculatedValue{/if}">{$task._remaining_hours|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""} [t]hours[/t]</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Price}
+{if $task._price}
+<tr>
+<th>[t]Price[/t]:</th>
+<td class="{if $task._hasSubtasks && $task._calculatePrice}tatCalculatedValue{/if}">{$task._price|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Tariff}
+{if $task.tariff}
+<tr>
+<th>[t]Tariff[/t]:</th>
+<td>{$task.tariff|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.EstimatedPrice}
+{if $task._est_price}
+<tr>
+<th>[t]Est. price[/t]:</th>
+<td class="{if $task._hasSubtasks && $task._calculatePrice}tatCalculatedValue{/if}">{$task._est_price|string_format:"%.2f"|regex_replace:"/\.?0?0$/":""}</td>
+</tr>
+{/if}
+{/if}
+
+{if $fields.Progress}
+<tr>
+<th>[t]Progress[/t]:</th>
+<td>{$task.progress} %</td>
+</tr>
+{/if}
+
+{if $fields.Billable}
+<tr>
+<th>[t]Billable[/t]:</th>
+<td>
+{if $task.billable == 'free'}<span class="tatBillableFree">[t]Free[/t]</span>
+{elseif $task.billable == 'in_group'}<span class="tatBillableInGroup">[t]In group[/t]</span>
+{elseif $task.billable == 'billable'}<span class="tatBillableBillable">[t]Billable[/t]</span>
+{else}<span class="tatBillableUnknown">[t]Unknown[/t]</span>
+{/if}
+</td>
+</tr>
+{/if}
+
+</table>
+
+{/if}
+
+{/if}

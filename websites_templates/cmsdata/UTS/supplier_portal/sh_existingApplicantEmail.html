@@ -1,0 +1,27 @@
+{* this email is sent to the enroll admin after a new applicant enrolled *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+    [t]Dear {$name|escape},[/t]
+</p>
+<p>
+    [t]An existing applicant has been presented for a job via website.[/t]
+</p>
+<p>
+    [t]Applicant name[/t]:  <strong>{$applicantName|escape}</strong><br>
+    [t]E-mail[/t]: <strong>{$applicantEmail|escape}</strong><br>
+    [t]Website[/t]: <strong>{$website}</strong><br>
+</p>
+
+<p>
+<i>[t]Remark: this e-mail message has been automatically generated[/t]</i>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

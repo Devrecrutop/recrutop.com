@@ -1,0 +1,16 @@
+{* cron script vacancies/notifyCustomerApproachingPublishEndDate.php *}
+<!-- TPL: /UTS/vacancies/emailNotifyCustomerPubEndDate.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear {$relationContact|escape},[/t]</p>
+<p>[t]The vacancy {$vacancyName|escape} will be unpublished on the {$vacancyPublishEndDate|escape}.[/t]</p>
+<p>[t]Regards {$consultant|escape}.[/t]</p> 
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p><b></b>
+<!--uts:end inner-->
+</body>
+</html>

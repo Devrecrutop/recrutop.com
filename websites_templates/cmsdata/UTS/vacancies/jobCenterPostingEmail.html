@@ -1,0 +1,22 @@
+{* this email is sent to the email addresses specified in website setting job_center_report_email when xml is posed by cron to the jobcenter *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear madam/sir,[/t]</p>
+<p>[t]This email contains the report on vacancies that have been posted and updated in JobCenter.[/t]</p>
+<p>[t]Number of vacancies in xml:[/t]{$total|escape}</p>
+<p>[t]Number of new vacancies in xml:[/t]{$added|escape}</p>
+<p>[t]Number of updates:[/t]{$updated|escape}</p>
+
+<p>[t]Send on:[/t] {if $error}[t]sending was unsuccessful due to an error, please contact OTYS support.[/t]{else}{$sent_date|escape}{/if}</p>
+<p>[t]Regards,[/t]<br>OTYS</p>
+
+
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<!--uts:end inner-->
+</body>
+</html>

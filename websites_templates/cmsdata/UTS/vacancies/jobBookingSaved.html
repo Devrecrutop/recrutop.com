@@ -1,0 +1,38 @@
+{* template thank you page for booking jobs *}
+{* req.ext.js: JQueryBase *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>whatever</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+
+<script type="text/javascript">
+<!--
+
+var jobId = '{$jobId}';
+
+//{literal}
+
+
+$(document).ready(function() {
+
+	// redirect back after 5 sec
+	setTimeout($(document).attr('location', '/index.php/page/JobsRemote/bb/1/command/detail/vid/'+jobId), 150000);		
+
+});
+
+//{/literal}
+//-->
+</script>
+
+<div>
+[t]Your booking for[/t] {$jobName} [t]for[/t] {$customerName} [t]from[/t]: {$fromDateTime} [t]to[/to]: {$toDateTime} [t]was admitted[/t], [t]made by[/t] {$contactName}.
+</div>
+
+
+<!--uts:end inner-->
+</body>
+</html>
