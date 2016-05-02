@@ -76,10 +76,7 @@ canvas {
 
 
 
-
-
-
-.outer{
+#outer{
   position: absolute;
   z-index: 1;
 }
