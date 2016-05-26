@@ -1,0 +1,60 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>[t]Network Connection List[/t]</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="moduleOuter nwCustListBody">
+<!-- /UTS/network/search_customer_connection_list.html -->
+<H1 class="moduleHeader nwCustListTitle">[t]Werkges zoeken[/t]</H1>
+
+{if $nameIntervals}
+	<div class="moduleNavContainer nwCustListNav">
+	{foreach from=$nameIntervals key=intervalKey item=nameInterval}
+		<a href="{$thisWebsite}/index.php/page/network/command/custlist/greaterOrEqualTo/{$nameInterval.greaterOrEqualTo}/lessOrEqualTo/{$nameInterval.lessOrEqualTo}{if $cms_categorie}/cms_categorie/{$cms_categorie}{/if}">{$intervalKey}</a> |
+	{/foreach}
+	</div>
+{/if}
+
+{foreach from=$customerTypes item=customerType}
+	<div class="moduleListHolder modulenwCustListHolder">
+	{if $count_customer_types && $count_customer_types > 1}
+		{if $websites.$customerType}
+			<div class="moduleCategory nwCustListCategory">{$customerType}</div>
+		{/if}
+	{/if}
+
+	{foreach from=$websites.$customerType item=website}
+		{assign var='websiteId' value=$website.id}
+		{assign var='klantid' value=$website.klantid}
+		
+		<div class="moduleItemContainer nwCustListItem" onClick="location='{if $website.network_text}{$thisWebsite}{$website.url}{else}{$website.website}{/if}';">
+			<div class="moduleItemImg nwCustListImg"><a href="{if $website.network_text}{$thisWebsite}{$website.url}{else}{$website.website}" target="_blank{/if}" title="{$website.name}"><img src="/_images_upload/{if $website.network_image == "Picture" && $website.network_picture}{$website.network_picture}{else}{$website.network_logo}{/if}" alt="{$website.name}" border="0"></a></div>
+			<div class="moduleItemLink nwCustListItemName"><a href="{if $website.network_text}{$thisWebsite}{$website.url}{else}{$website.website}" target="_blank{/if}" title="{$website.name}">{$website.name}</a></div>
+		
+			{foreach from=$websitesType.$websiteId key=i item=websiteType}{if $i}, {/if}{$websiteTypes.$websiteType}{/foreach}
+				<div class="moduleShortDescription nwCustListShortText">{$website.portfolio_text|truncate:300:"..."}</div>
+				<div class="nwCustListItemClear"></div>
+		</div>
+	{/foreach}
+	</div>
+{/foreach}
+
+{if $nameIntervals}
+	{if $websites}
+		<div class="moduleNavContainer nwCustListNav">
+			{foreach from=$nameIntervals key=intervalKey item=nameInterval}
+				<a href="{$thisWebsite}/index.php/page/network/command/custlist/greaterOrEqualTo/{$nameInterval.greaterOrEqualTo}/lessOrEqualTo/{$nameInterval.lessOrEqualTo}{if $cms_categorie}/cms_categorie/{$cms_categorie}{/if}">{$intervalKey}</a> |
+			{/foreach}
+		</div>
+	{else}
+		<div class="moduleAppRow nwCustListNoData">[t]There are no connections in this range.[/t]</div>
+	{/if}
+{/if}
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

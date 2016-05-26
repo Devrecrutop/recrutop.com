@@ -1,0 +1,30 @@
+{* this email is sent to the job owner after an applicant applied for his job *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/applicants/applicationNotifEmail.html -->
+<p>[t]Dear {$name|escape},[/t]</p>
+
+{if $showLinkInEmail}
+<p>[t]A new applicant has applied for your job:[/t]<!--.vacancy.ahref.{$jobId}.-->{$jobtitle|escape}<!--.vacancy.a.--></p>
+{else}
+<p>[t]A new applicant has applied for your job:{$jobtitle|escape}[/t]</p>
+{/if}
+<p>[t]Applicant name: {$applicantName|escape}[/t]<br>[t]E-mail: {$applicantEmail|escape}[/t]<br>{if $refnr} [t]Ref.nr.[/t]: {$refnr|escape}{/if}<br>[t]Applicant city: {$applicantCity|escape}[/t]<br>[t]Applicant phone: {$applicantPhone|escape}[/t]</p>
+{if $display_vacancy_link}
+<p>[t]Vacancy: [/t] <a href="{$vacancyLink|escape}">[t]Vacancy [/t]</a></p>
+{/if}
+{if $LinkSec}
+<p>
+[linkname][t]Your link text[/t][/linkname]
+</p>
+{/if}
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+
+<!--uts:end inner-->
+</body>
+</html>

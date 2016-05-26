@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>medica evenementen detail</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer eveOuter eveDetOuter">
+<!-- UTS/events/EventsDetail.div.html -->
+
+<!--START_1-->
+<h1 class="title eveTitle eveDetTitle">[`Title]</h1>
+
+{if $vw_top}
+<div class="evdVWtop">{$vw_top}</div>
+{/if}
+
+{if $wd_top}
+<div class="evdWDtop">{$wd_top}</div>
+{/if}
+
+<div class="category eveCat eveDetCat">[Category]</div>
+
+<div class="photo1 evePhoto1 eveDetPhoto1"><div class="photo2 evePhoto2 eveDetPhoto2">{literal}{Photo}{/literal}</div></div>
+
+{if $show_location == 1}
+<h2 class="subHeader eveSh eveDetSh eveDetShLoc">[t]Locatie[/t]</h2>
+<div class="text eveText eveDetTextLoc">[Location]</div>
+{/if}
+
+{if $show_date}
+<h2 class="subHeader eveSh eveDetSh eveDetShSd">[t]Startdatum[/t]</h2>
+<div class="text eveText eveDetText">
+	<span class="startDate eveSd eveDetSd">[Start_Date] [StartTime]<b></b></span>
+	<span class="endDate eveSd eveDetEd">[End_Date] [EndTime]</span>
+</div>
+{/if}
+
+{if $show_expiration}
+<h2 class="subHeader eveSh eveDetSh eveDetShLastDate">[t]Uiterste inschrijfdatum[/t]</h2>
+<div class="text eveText eveDetTextLastDate">[Expiration_Date]</div>
+{/if}
+
+{if $show_contactperson}
+<h2 class="subHeader eveSh eveDetSh eveDetShCp">[t]Contactpersoon[/t]</h2>
+<div class="text eveText eveDetText eveDetTextCp">[Consultant]</div>
+{/if}
+
+<h2 class="subHeader eveSh eveDetSh eveDetShInfo">[t]Uitgebreide informatie[/t]</h2>
+<div class="text eveText eveDetText eveDetTextInfo">{literal}{File}{/literal}</div>
+
+<!--START_2-->
+<h2 class="subHeader eveSh eveDetSh eveDetShDesc">[CustomTextFieldTitle]</h2>
+<div class="text eveText eveDetText eveDetTextDesc">[CustomTextFieldData]</div>
+<!--END_2-->
+
+{if $vw_bottom}
+<div class="evdVWbottom">
+{$vw_bottom}
+</div>
+{/if}
+
+{if $wd_bottom}
+<div class="evdWDbottom">
+{$wd_bottom}
+</div>
+{/if}
+
+<div class="buttonContainer eveBc eveDetBc">
+<!--uts:begin button print-->
+<input class="button eveBut eveDetButPrint" type="button" value="[tb]Afdrukken[/tb]" onClick="javascript:window.open('/index.php/page/eventsfo/command/cal_detail/evid/[id]/option/print/code/[code]/bb/1')" name="Button">
+<!--uts:end button print-->
+<!--uts:begin button back-->
+<input class="button eveBut eveDetButBack" type="button" value="[tb]Terug[/tb]" onClick="location='/index.php/page/eventsfo/command/list/code/[code]/bb/1'" name="button">
+<!--uts:end button back-->
+<!--uts:begin button apply-->
+
+<!--START_3-->
+{if $new_applicant_login_module}
+<input type="button"  name="Button4" value="[tb]Inschrijven[/tb]" onClick="location='/index.php/page/eventsapplicants/command/applyforevent/evid/[id]/ConsultantId/[ConsultantId]/code/[code]/bb/1';" class="button">
+{else}
+<input class="button eveBut eveDetButSubscr" type="button" value="[tb]Inschrijven[/tb]" onClick="location='/index.php/page/participantsfo/command/participate/evid/[id]/ConsultantId/[ConsultantId]/code/[code]/bb/1';" name="Button4">
+{/if}
+<!--END_3-->
+
+<!--uts:end button apply-->
+<!--uts:begin button mailafriend-->
+<input class="button eveBut eveDetButMaf" type="button" value="[tb]Mail-a-friend[/tb]" onClick="location='/index.php/page/eventsfo/command/mailfriend/evid/[id]/code/[code]/bb/1';" name="mailfriend">
+<!--uts:end button mailafriend-->
+
+<!--uts:begin button exhibitors-->
+{if $exhibitorsforclient}
+<input type="button"  name="button" value="[tb]Exhibitors[/tb]" onClick="location='/index.php/page/eventsfo/command/exhibitorslist/evid/[id]/code/[code]/bb/1';" class="button">
+{/if}
+<!--uts:end button exhibitors-->
+
+
+<!--uts:begin button fairmap-->
+{if $sourcelab_module}
+<input type="button"  name="button" value="[tb]Fairmap[/tb]" onClick="location='/index.php/page/sourcelab/command/fairmap/eventId/[id]/bb/1';" class="button">
+{/if}
+<!--uts:end button fairmap-->
+
+
+</div>
+
+<!--END_1-->
+
+</div>
+<!--uts:end inner-->
+
+</body>
+</html>

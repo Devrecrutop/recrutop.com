@@ -1,0 +1,20 @@
+<!--uts:begin inner-->
+<!-- /UTS/invoicing/mail_invoice.html -->
+<p>[t]Dear[/t] <b>{$recipientName},</b></p>
+
+<p>[t]Find attached the following invoice:[/t]</p>
+
+<p>Invoice number: {$invoice_number}<br>
+Period: {$period} <br>
+Invoice date: {$invoice_date} <br>
+Invoice due date: {$invoice_due_date} <br>
+Your ref. name: {$your_ref_name} <br>
+Your ref.: {$your_ref} <br></p>
+
+<p class="utsSignature">
+[t]Kind regards[/t],<br>
+[t]<b>{$consultantName}</b><br>
+{$clientName}[/t]
+</p>
+
+<!--uts:end inner-->

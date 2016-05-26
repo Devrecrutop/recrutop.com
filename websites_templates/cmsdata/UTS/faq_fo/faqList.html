@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>FAQ LIST</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--uts:begin inner-->
+{literal}
+<script language="JavaScript" type="text/javascript">
+function gotocat(catid) {
+x=document.forms.cform;
+x.catid.value=catid;
+x.submit();
+}
+{/literal}
+</script>
+<!-- /UTS/faq_fo/faqList.html New version JB PAVEL -->
+<div class="outer faqOuter faqROuter">
+	<h1 class="title faqTitle faqRTitle">[th]Vaak gestelde vragen[/th]</h1>
+
+	<div class="faqIntro">
+		<h2 class="subHeader faqSh faqRSh">[th]Een antwoord op uw vragen.[/th]</h2>
+		<div class="text faqText faqRText">[th]Hieronder kunt u in het zoekveld uw vraag invoeren, of gewoon één of meerdere trefwoorden. Met het menu kunt u browsen door de categorieën waarin onze vragen en antwoorden zijn verdeeld. De meest recente vragen staan op de startpagina vermeld.[/th]</div>
+	</div>
+
+	<form id="faqQ" name="sform" action="/index.php/page/faq_remote/command/search/bb/1/catid/{$catid}" method="post">
+		<h2 class="subHeader faqSh faqRsh">[t]Stel hier uw vraag[/t]</h2>
+		<div class="formInput faqInput faqRInput">
+			<label for="query">[t]Vraag[/t]</label>
+			<input type="text" name="query">
+		</div>
+		<div class="buttonContainer faqBc faqRBc">
+			<input type="submit" value="[tb]Stuur ons uw eigen vraag[/tb]" name="submit" class="button"><!--ButtonLink1-->
+		</div>
+	</form>
+
+	<form id="faqS" name="cform" action="/index.php/page/faq_remote/bb/1" method=post>
+		<h2 class="subHeader faqSh faqRSh">[t]U kunt ook zoeken op onderwerp[/t]</h2>
+		<div class="text faqText faqRText"></div>
+	
+		<div class="formInput faqInput faqRInput">
+			<label for="category">[t]Onderwerp[/t]</label>
+			{html_options name=category options=$cats selected=$catid}
+		</div>
+		<div class="buttonContainer faqBc faqRBc">
+			<input type="button" value="[tb]Zoeken[/tb]" class="button" onClick="gotocat(category.options[category.selectedIndex].value)"><!--ButtonLink1-->
+			<input type="hidden" name="catid" value="">
+		</div>
+	</form>
+
+	<div class="faqQList">
+		<h2 class="subHeader faqSh faqRSh">[t]Actuele vragen[/t]</h2>
+		<div class="textWord faqText faqRText">
+		    {foreach from=$arts key=id item=art}
+			  <span><a href="/index.php/page/faq_remote/command/viewart/artid/{$id}/bb/1/catid/{$catid}">{$art}</a></span>
+		    {/foreach}
+		</div>
+	</div>
+	{if $questionpending}
+	<form id="faqNq" method="post" action="/index.php/page/faq_remote/bb/1/command/newquestion">
+		<div class="faqOutro">
+			<h2 class="subHeader faqSh">[t]Een vraag indienen voor de lijst met vaak gestelde vragen[/t]</h2>
+			<div class="text">[t]Indien u het antwoord op uw vraag niet heeft kunnen vinden, kunt u hieronder uw eigen vraag stellen. We zullen hem dan binnen 24 uur beantwoorden én opnemen in onze database met vaak gestelde vragen.[/t]<!--TextLink6--></div>
+			<div class="buttonContainer faqBc faqRBc">
+				<input type="hidden" name="catid" value="{$catid}">
+				<input class="button" type="submit" value="[tb]Selecteer[/tb]"><!--ButtonLink2-->
+			</div>
+		</div>
+	</form>
+	{/if}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

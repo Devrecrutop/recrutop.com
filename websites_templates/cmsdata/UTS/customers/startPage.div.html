@@ -1,0 +1,86 @@
+<meta http-equiv="Content-Type" content="text custText/html; charset=UTF-8">
+
+<!--uts:begin inner-->
+
+<!--START_9-->
+<!--UT: Startpage-->
+<div class="outer custOuter custOuterStart">
+<!-- /UTS/customers/startPage.div.html -->
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<h1 class="title custTitle">[t]Werkgever startpagina[/t]</h1>
+<!--END_PageTitle-->
+[CustomersMenu]
+<!--START_Block1-->
+<div class="custIC custICopen">
+<!--START_Title1-->
+<h2 class="subHeader custSH custSH">[t]What can you do?[/t]</h2>
+<!--END_Title1-->
+<!--START_text custText1-->
+<div class="text custText">[t]Welcome to the customer section of our website. You can search for candidates that may match your profile, upload new vacancies or view candidates that have applied for one of your jobs.[/t]</div>
+<!--END_text custText1-->
+</div>
+<!--END_Block1-->
+
+<!--START_Block2-->
+<div class="custIC custICjobs">
+<!--START_Title2-->
+<h2 class="subHeader custSH">[t]Vacancy information[/t]</h2>
+<!--END_Title2-->
+<!--START_text custText2-->
+<div class="text custText">[t]Your company has added {$vcnt} vacancies of which {$vcnt_cp} were added by you.[/t]</div>
+
+
+{if $allow_jobs_amount_period || $allow_jobs_amount_publish}
+<div>
+	{if $allow_jobs_amount_period}
+		{if $jobs_period == "month"}
+			{assign var=period value="[t]month[/t]"}
+		{elseif $jobs_period == "year"}
+			{assign var=period value="[t]year[/t]"}
+		{else}
+			{assign var=period value="[t]unknown period[/t]"}
+		{/if}
+
+		[t]You have {$jobsCount} jobs inserted this {$period} from {$jobs_amount_period} possible jobs.[/t]<br >
+	{/if}
+	{if $allow_jobs_amount_publish}
+		[t]You have {$publicCount} published jobs from {$jobs_amount_publish} possible publicable jobs.[/t]<br >
+	{/if}
+</div>
+{/if}
+<!--END_text custText2-->
+</div>
+<!--END_Block2-->
+
+{*<!--PA:{$premium_account_customers} ACTACC:{$wgCpHasActiveAccount}-->*}
+{if $premium_account_customers && !$wgCpHasActiveAccount && $client_ogone_enabled}
+<br>
+<div>
+<h2 class="subHeader">[t]Premium account[/t]</h2>
+<a href="/index.php/page/premiumaccount/command/ogonecustomersetup/bb/1/">[t]Upgrade to a premium account[/t]</a>
+</div>
+{/if}
+
+<if $wmcnt>
+<!--START_Block3-->
+<div class="custIC custICmessage"><!-- Hidden in GlobalStyling - on request of the Consultants because of permissions/language errors - WV31032010 -->
+<!--START_Title3-->
+<h2 class="subHeader custSH">[t]Messages[/t]</h2>
+<!--END_Title3-->
+<!--START_text custText3-->
+<div class="text custText">[t]There are {$wmcnt} messages for you.[/t] <a href="{$wmlink}">[t]You can read them here[/t]</a>.</div>
+<!--END_text custText3-->
+</div>
+<!--END_Block3-->
+</if>
+
+{if $allow_jobbrokers}
+<!-- JobBrokers statistics -->
+<h2 class="subHeader custSH">[t]Statistics[/t]</h2>
+<iframe src="{$iframelink}" width="100%" frameborder="no" height="1250" ></iframe>
+{/if}
+</div>
+<!--END_9-->
+<!--uts:end inner-->

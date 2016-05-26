@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+// functions here
+function recrowdSubmitHandler() {
+    return true;
+}
+//{/literal}
+</script>
+
+<div class="outer aplOuter recrowdOuter rcwdAplJobSetOuter">
+	<!-- /UTS/applicants/recrowdApplicantJobSettings.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t][/t]</h1>
+	<div class="intro">[t]Please, choose below what kind of job you are interested in.[/t]</div>
+
+	<form name="recrowdForm" action="{$handler}" method="post" onsubmit="return recrowdSubmitHandler()">
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+			<label>[t]I am interested in:[/t]</label>
+			<label for="interim" class="labelRadio aplRadioInput">
+				<input type="radio" id="recruitment_type_interim" name="rf_recruitment_type" value="interim" class="radiobutton" {if $data.type == "interim" || !$data.type}checked="checked"{/if}>
+				<span title="[thn]Interim jobs[/thn]">[t]Interim jobs[/t]</span>
+			</label>
+			<label for="chbJobTypeSplitz" class="labelRadio aplRadioInput">
+				<input type="radio" id="recruitment_type_recruitment" name="rf_recruitment_type" value="recruitment" class="radiobutton" {if $data.type == "recruitment"}checked="checked"{/if}>
+				<span title="[thn]Steady jobs[/thn]">[t]Steady jobs[/t]</span>
+			</label>
+			<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[tb]Continue[/tb]" name="sSubmit">
+		</div>
+		
+		<input type="hidden" name="command" value="saveSettingForm">
+		<input type="hidden" name="candidate_id" value="{$candidate_id|escape}">
+		<input type="hidden" name="continue_with" value="selectRecruiter">
+		<input type="hidden" name="candidate_code" value="{$candidate_code}">
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

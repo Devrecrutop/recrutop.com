@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!--system part-->
+<script language="javascript" type="text/javascript" src="/_javascript_global/editor/TinyMCE/tiny_mce.js"></script>
+
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yahoo/yahoo-min.js"></script>
+<script language="javascript" type="text/javascript">
+//{literal}
+var mobile = false, ua = navigator.userAgent, m;
+
+if (YAHOO.env.ua.webkit) {
+    if (/ Mobile\//.test(ua)) {
+        mobile = "iPhone";
+    } else {
+        m=ua.match(/NokiaN[^\/]*/);
+        if (m) {
+            mobile = m[0]; // Nokia N-series, ex: NokiaN95
+        }
+    }
+} else if (YAHOO.env.ua.opera) {
+    m=ua.match(/Opera Mini[^;]*/);
+    if (m) {
+        mobile = m[0]; // ex: Opera Mini/2.0.4509/1316
+    }
+}
+
+if (!mobile) {
+    // code here won't execute in the detected mobile browsers
+	tinyMCE.init({
+	theme : "advanced",
+	mode: "exact",
+	elements : "body",
+	theme_advanced_toolbar_location : "top",
+	theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,"
+	+ "justifyleft,justifycenter,justifyright,justifyfull,formatselect,"
+	+ "bullist,numlist,outdent,indent",
+	theme_advanced_buttons2 : "link,unlink,separator,"
+	+"undo,redo,separator,sub,sup,charmap",
+	theme_advanced_buttons3 : "",
+	height:"200px",
+	width:"100%"
+	  });
+}
+//{/literal}
+</script>
+
+
+<!--display part-->
+<div class="outer blogOuter blogDetailOuter">
+<!-- /UTS/blog/articleDetail.html -->
+	<h1 class="title blgTitle blgDetailTitle">{$a.title|escape}</h1>
+
+	<if $errormode>
+		<div class="error">[t]There were errors in the reaction data you attempted to post. Please correct them and post again.[/t] <a href="#react">&gt;&gt;</a></div>
+	</if>
+
+	<div class="intro">
+        {if $a._showpublisherimg == 1}<img src="{$a._publisherimage}" alt="{$a._username}" height="42" width="42"/>{/if}
+        <span class="blogAuthorName">{$a._username}</span> {$a._date_published}
+    </div>
+	
+	{if $a._categories|@sizeof > 0}
+		<div class="itemWord category blgCat">
+			<span>[t]Categories[/t]:</span>
+			<foreach from=$a._categories item=cat name=blgCat>
+				{$cat}{if not $smarty.foreach.blgCat.last}, {/if}
+			</foreach>
+		</div>
+	{/if}
+	<div class="text">
+		{if $a.fullsize_image}
+			<div class="photo blgItemPhoto">
+				<img src="{$a.fullsize_image}">
+			</div>
+		{/if}
+		{$a._fullbody}
+	</div>
+
+	<!--ARTICLE FOOTER-->
+	<div class="menuContainer blogMenu blogDetailMenu">
+		<div class="menuLink menuLinkFirstChild">{$a.viewcount} [t]views[/t]</div>
+		<div class="menuLink mlBlgReactCnt">
+			{if $reacnt}
+				<a href="#reactions">{$reacnt}[t] reaction(s)[/t]</a>
+			{else}
+				[t]No reactions[/t]
+			{/if}
+		</div>
+		<if $allow_reactions>
+		<div class="menuLink mlBlgReact"><a href="#react">[t]React[/t]</a></div>
+		</if>
+		<div class="menuLink mlBlgPrint"><a href="/index.php/page/blog/command/print/uid/{$uid}/{$language}/bb/1" target="_blank" title="[th]This printing page will open in a new window[/th]">[t]Print[/t]</a></div>
+		<div class="menuLink mlBlgMail menuLinkLastChild"><a href="/index.php/page/blog/command/mailafriend/uid/{$uid}/cms_categorie/{$cmsCategory}/CurrentLanguage/{$language}/bb/1">[t]Mail a friend[/t]</a></div>
+	</div>
+	<!--END ARTICLE FOOTER-->
+
+	<!--REACTIONS OVERVIEW-->
+	<if $reacnt>
+<div class="blgDtRcontainer">
+		<a name="reactions"></a>
+		<h2 class="subHeader">[t]Reactions[/t] ({$reacnt})</h2>
+		<foreach from=$reactions item=re>
+		<div class="itemContainer blgDtRitemContainer">
+			<a name="rea{$re.id}"></a>
+			<div class="itemWord blgDtRheader"><span>{$re._name|escape}</span> {$re._date_entered}</div>
+			<div class="itemDescription">{$re.body}</div>
+		</div>
+		</foreach>
+</div>
+	</if>
+	<!--END REACTIONS OVERVIEW-->
+
+	<!--REACTION FORM-->
+	<if $allow_reactions>
+		<form id="reactf" name="reactf" action="/index.php/page/blog/bb/1/command/submit" method="post">
+			<input name="uid" type="hidden" value="{$uid}">
+			<input name="cms_categorie" type="hidden" value="{$cmsCategory}">
+			<input name="CurrentLanguage" type="hidden" value="{$language}">
+			<a name="react"></a>
+			<h2 class="subHeader">[t]React[/t]</h2>
+			<div class="formInput">
+			<label for="inputName">[t]Your name[/t]:<span>*</span></label>
+			<input class="blgDtTxtFld" id="inputName" name="r_name" type="text" value="{if $redata}{$redata.name}{/if}">
+			</div>
+			<if $errors && $errors.name>
+				<div class="error">[t]Please enter your name![/t]</div>
+			</if>
+			<div class="formInput">
+			<label for="inputEmail">[t]Your e-mail address[/t]:<span>*</span></label>
+			<input class="blgDtTxtFld" id="inputEmail" name="r_email" type="text" value="{if $redata}{$redata.email}{/if}">
+			</div>
+			<if $errors && $errors.email>
+				<div class="error">[t]Please enter a valid e-mail address![/t]</div>
+			</if>
+			<div class="formInput">
+			<label for="inputWebsite">[t]Your website[/t]:</label>
+			<input class="blgDtTxtFld" id="inputWebsite" name="r_website" type="text" value="{if $redata}{$redata.website}{else}http://{/if}">
+			</div>
+			<!-- <div class="formInput blgFiSubject">
+			<label for="inputSubject">[t]Subject[/t]:<span>*</span></label>
+			<input class="blgDtTxtFld" id="inputSubject" name="r_subject" type="text" value="{if $redata}{$redata.subject}{/if}">
+			</div> -->
+			<if $errors && $errors.subject>
+				<div class="error">[t]Please enter a reaction subject![/t]</div>
+			</if>
+			<if $settings.antispam_method == "captcha">
+				<div class="formInput">
+				<label for="captcha">[t]Please enter the security code exactly as shown[/t]:</label>
+				<img id="captcha" src="{$website}/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image"><a href="#" onclick="document.getElementById('captcha').src = '{$website}/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="{$website}/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]"></a><a href="{$website}/_javascript_global/securimage/securimage_play.php"><img src="{$website}/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]"></a>
+				</div>
+				<div class="formInput">
+				<label for="inputCode">[t]Code[/t]:<span>*</span></label>
+				<input class="blgDtTxtFld" id="inputCode" type="text" name="captcha" value="">
+				</div>
+				<if $errors && $errors.captcha>
+					<div class="error">[t]Please enter the right security code![/t]</div>
+				</if>
+			</if>
+			<div class="formInput blgContEdit"><textarea name="body" id="body" cols=30 rows="10">{if $redata}{$redata.body}{/if}</textarea></div>
+			<if $errors && $errors.body>
+				<div class="error">[t]The text of the reaction may not be empty![/t]</div>
+			</if>
+
+<div class="blgBcHolder">
+			<div class="formCheckboxR">
+			<input id="inputReaction" name="r_sendreactions" type="checkbox" value="1" {if $redata && $redata.sendreactions}checked{/if}>
+			<label for="inputReaction">[t]Send further reactions to my e-mail[/t]</label>
+			</div>
+			<div class="buttonContainer"><input type="submit" value="[tb]Submit reaction[/tb]" class="button"></div>
+</div>
+<div class="cleaner"></div>
+
+		</form>
+	<else>
+		<div class="text">[t]This article is restricted. You have to be logged in to be able to add further reactions.[/t]</div>
+	</if>
+<!--END REACTION FORM-->
+</div>
+<!--uts:end inner-->
+</body>
+</html>

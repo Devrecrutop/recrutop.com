@@ -1,0 +1,85 @@
+{* start animate collapse stuff *}
+{* this has to be at the end! *}
+<!-- /UTS/advsearch/jsFootCandidates.inc.html -->
+
+{* Md temp add because Ext. JS in UTS doesnt work *}
+<script type="text/javascript" src="[website]/_javascript_global/jquery.fancybox.js"></script>
+<link type="text/css" href="[website]/_css_global/fancybox/jquery.fancybox.css" rel="stylesheet">
+
+
+<script type="text/javascript" defer="true">
+var kwAskURL='{$handler}/command/kwautocomplete/arg/';
+//{literal}
+animatedcollapse.ontoggle=function($, divobj, state){ //fires each time a DIV is expanded/contracted
+  //$: Access to jQuery
+  //divobj: DOM reference to DIV being expanded/ collapsed. Use "divobj.id" to get its ID
+  //state: "block" or "none", depending on state
+  //if (divobj.id=='actGoogleMaps' && state=='block') {
+    // no action needed now
+  //}
+}
+animatedcollapse.init()
+// define ready function
+$(document).ready(function() {
+  // setup cluetips
+  $('a.cluetips').cluetip({
+    width:            '[uts:cluetip_width]',
+    height:           '[uts:cluetip_height]',
+    sticky:           true,    // keep visible until manually closed
+    mouseOutClose:    true,
+	clickThrough:     true,
+    closeText:        '[th]Close[/th]'
+  });
+  
+  $('a.cluetips2').cluetip({
+        activation:       'click',
+        width:            350,
+        sticky:           true,
+        ajaxCache:        false,  
+        closeText:        '[th]Close[/th]'
+    });
+  
+  // setup query editor autocomplete if available
+  if ($('#qeKeywords').length) {
+    $('#qeKeywords').autocomplete({ 
+      serviceUrl:kwAskURL,
+      minChars:3,
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:200
+      //deferRequestBy: 0, //miliseconds
+      // callback function:
+      //onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+     });
+  }
+  // setup flash map for facets
+  if ($('#kaart').length) {
+    swfobject.embedSWF("/_flash/landkaart.swf", "kaart", "220", "300", "7.0.0", "", flashvars, params);
+  }
+    var reqScripts = "[uts:ext_javascripts]";
+  if(reqScripts.indexOf('JQueryMultiSelect') > -1){
+    // setup jquery multiselect for keyword options
+    if ($('#qe_multisel_kw_options').length) $('#qe_multisel_kw_options').multiSelect({
+        selectAllText: '[th]Select all[/th]',
+        noneSelected: '[th]Select fields...[/th]',
+        oneOrMoreSelected: '[th]Select fields (% selected)...[/th]'
+    });
+    }
+	
+    // fancybox, used for send results by email for instance
+	$("a[rel=prettyPopin]").each(
+		function()
+		{
+			$(this).fancybox
+			({
+				'autoScale'     	: true,
+				'type'				: 'ajax'
+			});
+		}
+	);
+    
+});
+//{/literal}
+</script>
+
+{* end animate collapse stuff *}

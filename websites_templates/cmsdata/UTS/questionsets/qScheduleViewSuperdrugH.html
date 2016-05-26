@@ -1,0 +1,49 @@
+<!--/UTS/questionsets/qScheduleViewSuperdrugH.html - text superdrug view H -->
+<div class="formInput formSmallInput aplTextInput aplTextInputScedule KQDIV_{$qd.id}" id="KQDIV_{$qd.id}">
+	<label for="{$elementId}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+
+        <table class="scheduleTable">
+            <tr>
+                <th class="hours">[t]Hours[/t]</th>
+                <th>[t]monday[/t]</th>
+                <th>[t]tuesday[/t]</th>
+                <th>[t]wednesday[/t]</th>
+                <th>[t]thursday[/t]</th>
+                <th>[t]friday[/t]</th>
+                <th>[t]saturday[/t]</th>
+                <th>[t]sunday[/t]</th>
+            </tr>
+            <tr>
+                <td>[t]From[/t]</td>
+                <td><input type="text" value="{$currentValue.monday_from|escape}" name="{$elementNamePrefix}_monday_from"></td>
+                <td><input type="text" value="{$currentValue.tuesday_from|escape}" name="{$elementNamePrefix}_tuesday_from"></td>
+                <td><input type="text" value="{$currentValue.wednesday_from|escape}" name="{$elementNamePrefix}_wednesday_from"></td>
+                <td><input type="text" value="{$currentValue.thursday_from|escape}" name="{$elementNamePrefix}_thursday_from"></td>
+                <td><input type="text" value="{$currentValue.friday_from|escape}" name="{$elementNamePrefix}_friday_from"></td>
+                <td><input type="text" value="{$currentValue.saturday_from|escape}" name="{$elementNamePrefix}_saturday_from"></td>
+                <td><input type="text" value="{$currentValue.sunday_from|escape}" name="{$elementNamePrefix}_sunday_from"></td>
+            </tr>
+            <tr>
+                <td>[t]To[/t]</td>
+                <td><input type="text" value="{$currentValue.monday_to|escape}" name="{$elementNamePrefix}_monday_to"></td>
+                <td><input type="text" value="{$currentValue.tuesday_to|escape}" name="{$elementNamePrefix}_tuesday_to"></td>
+                <td><input type="text" value="{$currentValue.wednesday_to|escape}" name="{$elementNamePrefix}_wednesday_to"></td>
+                <td><input type="text" value="{$currentValue.thursday_to|escape}" name="{$elementNamePrefix}_thursday_to"></td>
+                <td><input type="text" value="{$currentValue.friday_to|escape}" name="{$elementNamePrefix}_friday_to"></td>
+                <td><input type="text" value="{$currentValue.saturday_to|escape}" name="{$elementNamePrefix}_saturday_to"></td>
+                <td><input type="text" value="{$currentValue.sunday_to|escape}" name="{$elementNamePrefix}_sunday_to"></td>
+            </tr>
+        </table>
+</div>
+
+
+<if $qd.explanation>
+	<div class="explain aplTextExplain explain_{$elementName}">
+		{$qd.explanation|escape}
+	</div>
+</if>
+<if $currentErrorMessage>
+	<div class="error aplTextError error_{$elementName}">
+		{$currentErrorMessage}    
+	</div>
+</if>

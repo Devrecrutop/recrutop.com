@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- jobsdetail-->
+<html>
+<head>
+<title>[t]JobsDetail[/t]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<!--uts:begin inner-->
+<!--START_9-->
+<!--MENUBAR-->
+<!--BUTTONS_TOP-->
+
+<!-- /UTS/google_map/google_map_hook.div.html -->
+<div class="outer gmOuter">
+<!--START_PageTitle-->
+<div class="title gmTitle">[t]Google Map[/t]</div>
+<!--END_PageTitle-->
+
+{if $PLACE == "top"}
+<form name="jobsearchgmfrm" action=""  method="post">
+<input type="hidden" name="gm_make_search" value="1">
+{foreach item=fn from=$fieldnamearray}
+<div class="formInpu gmFI">
+<label for="{$fn.veld}">{$fn.naam}</label>
+<select name="{$fn.veld}_gm" id="{$fn.veld}_gm" >
+<option value="">---</option>
+{html_options options=$fn.values selected=$fn.FieldValue}
+</select>
+</div>
+{/foreach}
+
+<div class="formInput gmFI">
+<label for="[t]Keyword[/t]">[t]Keyword[/t]</label>
+<input type="text" name="trefwoord" id="trefwoord" value="{$post_data.trefwoord}">
+</div>
+
+{* JMa: we're climbing the DOM tree until we get to the FORM element *}
+{literal}
+<div class="buttonContainer gmBc"><input type="submit" value="[tb]Search[/tb]"  class="button" id="JobSearchSubmit" onclick="var g=this;while(g.parentNode!=null){if (g.action != null) {g.action += '#gms';break};g=g.parentNode};return true"></div>
+{/literal}
+</form>
+{if $gmaps_no_results}
+<div class="intro gmIntro">[t]No results found, displaying all available.[/t]</div>
+{/if}
+
+<!--START_GOOGLEMAP-->
+{if $googleMapsV3}
+<iframe src="/index.php/page/googlemaps/id/{$GMtempId}/height/[uts:GMheight]/langNr/{$langNr}/search/{$search}/balloon/yes" style="width: 100%; height: [uts:GMheight]px;" frameborder="NO" border="0"></iframe>
+{else}
+<iframe src="http://yourit.nl/googlemaps/?id={$GMtempId}&domain={$GMdomain}&height=[uts:GMheight]&langNr={$langNr}&search={$search}&klantid={$klantid}&balloon=yes" style="width: 100%; height: [uts:GMheight]px;" frameborder="NO" border="0"></iframe>
+{/if}
+<!--END_GOOGLEMAP-->
+{elseif $PLACE == "bottom"}
+{elseif $PLACE == "left"}
+{elseif $PLACE == "right"}{/if}
+{* <iframe id="printframe" name="printframe" width="0" height="0" frameborder="0" scrolling="NO"></iframe> MD: Why? Causes issues @jobdetail *}
+</div>
+<!--END_9-->
+<!--uts:end inner-->
+</body>
+</html>

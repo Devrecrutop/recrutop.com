@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+
+<if $messageId>	
+<if $messageId == "MSG_FORM_PROCESSED">
+<div class="outer aplOuter aplSimplMessOuter">
+<!-- /UTS/questionsets/qsInteractions.html x-->
+<h1 class="title">[t]Form has been processed[/t]</h1>
+<div class="intro">[t]Thank you very much for your response.[/t]</div>
+</div>
+</if>
+<if $messageId == "MSG_FORM_FIM_KILLED">
+<div class="outer aplOuter aplSimplMessOuter">
+<!-- /UTS/questionsets/qsInteractions.html y-->
+<h1 class="title">[t]Application terminated[/t]</h1>
+<div class="intro">[t]Unfortunately you are not suited for this position.[/t]</div>
+</div>
+</if>
+<if $messageId == "MSG_FORM_FIM_OK">
+<div class="outer aplOuter aplSimplMessOuter">
+<!-- /UTS/questionsets/qsInteractions.html -->
+<h1 class="title">[t]Successfull application[/t]</h1>
+<div class="intro">[t]Thank you for applying for this job.[/t]</div>
+</div>
+</if>
+
+</if>
+
+<!--uts:end inner-->
+</body>
+</html>

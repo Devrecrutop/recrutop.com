@@ -1,0 +1,74 @@
+<script language="javascript" type="text/javascript" src="/_javascript_global/jquery.form.js"></script>
+<script type="text/javascript">
+var return_url = '{$handler}/command_dossier/list';
+//{literal}
+
+var options = { success: handleResponse, url: $("#noteform").attr('action'), dataType: 'json', iframe: 'true' };
+
+//$(document).ready(function() { 
+	$("#noteform").ajaxForm(options);	
+//}
+
+function handleResponse(data, statusText, xhr, $form) {
+	if (statusText != 'success') {
+		showError('[th]Submit failed.[/th]');
+		return;
+	}
+	
+	
+	
+	
+			if (data.status=='ERROR') {
+                if (data.errorDescription=='ERR_MISSING_SUBJECT') {
+                    showError('[th]Please fill the subject.[/th]');
+				}
+				else if (data.errorDescription=='ERR_MISSING_NOTE') {
+                    showError('[th]Please fill the note text.[/th]');
+                }
+				else {
+                    showError('[th]Error occurred:[/th] '+data.errorDescription);
+                }
+            }
+			else {
+                window.location = return_url;
+            }
+	
+	/*
+    if (responseText.status != 'OK') {
+		showError('There were errors during validating this form.');
+		return;
+	}
+	*/
+	
+
+}
+
+function showError(msg) {
+	$('#error').html(msg);
+	$('#error').css('display', 'block');
+}
+
+//{/literal}
+</script>
+<div style="width:350px;">
+<!-- /UTS/candidates/noteForm.frag.html -->
+    <form class="internal" id="noteform" name="noteform" action="{$handler}/command_dossier/submitajax/entity/note" method="post">
+        <h1 class="title">[t]Make a note[/t]</h1>
+        <div class="formInput">
+        <label>[t]Subject[/t]</label>
+        <input type="text" name="subject" value="" >
+        </div>
+        <div class="formInput">
+        <label>[t]Text[/t]</label>
+        <textarea name="text"></textarea>
+        </div>
+		
+        <div class="error" id="error" style="display: none;"></div>
+        
+        <div class="buttonContainer">
+            <input type="submit" name="bSubmit" value="[tb]Submit[/tb]" class="button">
+        </div>
+        <input type="hidden" name="command_dossier" value="submitajax">
+        <input type="hidden" name="kid" value="{$kid}">
+    </form>
+</div>

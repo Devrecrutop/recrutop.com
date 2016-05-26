@@ -1,0 +1,149 @@
+<?
+//print "hallo";
+
+$_POST = $HTTP_POST_VARS;
+$_GET  = $HTTP_GET_VARS;
+//var_dump($_GET);
+if ($_POST['done'] == 1) {
+	
+	//var_dump($_POST);
+	//die;
+	
+	extract($_POST,EXTR_OVERWRITE);
+	
+	if ($vid) $id = $vid;
+	if ($uid) $id = $uid;
+
+	/*
+	if ($REMOTE_ADDR == "80.127.127.127") {
+		foreach ($_POST AS $key=>$val) {
+			print "key : $key -- val : $val <br>";
+			die;
+		}
+	}
+	*/
+$link=false;
+	if ($page=='fullref') {
+		if ($id) {
+			switch($script) {
+				case 'klanten_remote_fl2':
+					$page='kandidaat';
+					break;
+				case 'JobsRemote':
+					$page='vacature';
+					$solliciteren=0;
+					break;
+				case 'CandidatesRemote':
+					$page='vacature';
+					$solliciteren=1;
+					break;
+				case 'index':
+					$page='ref';
+					break;
+				default:
+					unset($page);
+			}
+		} else {
+			$clng=($CurrentLanguage)?"&CurrentLanguage=$CurrentLanguage":'';
+			switch($script) {
+				case 'JobsRemote':
+					$link="http://85.112.17.5/vacatures/JobsRemote.php?bb=1&command=list&code=insta7&cat=all&novid=1";
+					break;
+			}
+			unset($page);
+			unset($_POST['page']);
+		}
+		if (isset($page)) $_POST['page']=$page;
+		unset($script);
+		unset($_POST['script']);
+	}
+
+	if ($page && $id) {
+		if ($page == "kandidaat") {
+			$link = "http://85.112.17.5/vacatures/CustomersRemote.php?bb=1&command=detail&code=insta7&kid=$id";
+		} else if ($page == "vacature" && !$solliciteren) {
+			$clng=($CurrentLanguage)?"&CurrentLanguage=$CurrentLanguage":'';
+			$link = "http://85.112.17.5/vacatures/JobsRemote.php?bb=1&command=detail&vid=$id&code=insta7$clng";
+			if ($shcntnvb == 1) $link .= "&shcntnvb=1";
+			
+		} else if ($page == "vacature" && $solliciteren == 1) {
+			$clng=($CurrentLanguage)?"&CurrentLanguage=$CurrentLanguage":'';
+			$link = "http://85.112.17.5/vacatures/CandidatesRemote.php?command=application&vid=$id&code=insta7&bb=1$clng";
+			if ($slcntnvb == 1) $link .= "&slcntnvb=1";
+		} else {
+			$link = "http://85.112.17.5/cms/index.php?code=insta7";
+		}
+	} else {
+		if (!$link) $link = "http://85.112.17.5/cms/index.php?code=insta7";
+	}
+	
+	if ($page=='confirm') {
+		$link = "http://85.112.17.5/vacatures/mailings/confirm.php?bb=1&code=insta7&uid=$uid";
+		//print $link;
+		//die;
+	}
+	if ($page=='unsubscribe') {
+		$clng=($CurrentLanguage)?"&CurrentLanguage=$CurrentLanguage":'';
+		$link = "http://85.112.17.5/vacatures/mailings/mailings.php?bb=1&code=insta7&command=unsubscribe_imm&email=$email&ref=$ref&refid=$refid&preselect=$preselect$clng";
+	}
+	if ($page=='nm_showarticle') {
+		$clng=($CurrentLanguage)?"&CurrentLanguage=$CurrentLanguage":'';
+		$link = "http://85.112.17.5/vacatures/mailings/mailings.php?bb=1&code=insta7&command=showarticle&artid=$id$clng";
+	}
+	if ($page=='nm_showarticle_code') {
+		$clng=($CurrentLanguage)?"&CurrentLanguage=$CurrentLanguage":'';
+		$link = "http://85.112.17.5/vacatures/mailings/mailings.php?bb=1&code=insta7&command=showarticle&acode=$acode$clng";
+	}
+	
+	if ($page=='ref') {
+		$clng=($CurrentLanguage)?"&CurrentLanguage=$CurrentLanguage":'';
+		$index=($CurrentLanguage)?"index.php":"index.php";
+		$link = "http://85.112.17.5/cms/$index?cms_categorie=$cms_categorie&content=$content&id=$id&code=insta7$clng";
+	}
+	if ($page=='ag_invitations') {
+		$clng=($CurrentLanguage)?"&CurrentLanguage=$CurrentLanguage":'';
+		$link = "http://85.112.17.5/vacatures/InvitationsRemote.php?bb=1&id=$id&choice=$choice&code=$code"."$clng";
+	}
+	
+
+?>
+<html>
+<head>
+<title>INSTALL OTYS 4</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<META name="AUTHOR"	content="Mr. Fahrenheit InterActive, powered by OTYS e-Recruiting Systems">
+<META name="LOCALE" content="NL">
+<META name="REPLYTO"content="webmaster@otys.nl">
+<META name="ROBOTS" content="index,follow">
+</head>
+<frameset rows="0,*" frameborder="NO" border="0" framespacing="0"> 
+<frame src="leeg.html" scrolling="NO" name="leeg" marginwidth="0" marginheight="0" noresize frameborder="NO">
+<frame src="<?=$link ?>" name="mainFrame" scrolling="AUTO" marginwidth="0" marginheight="0" noresize frameborder="NO">
+</frameset>
+<noframes>
+<body bgcolor="#FFFFFF" text="#000000">
+</body>
+</noframes> 
+</html>
+<?
+} else {
+	foreach ($_GET AS $key=>$val) {
+		$hiddens .= "<input type=\"hidden\" name=\"".$key."\" value=\"".$val."\">\n";
+	}
+	unset($_GET);
+?>
+<html>
+<head>
+<title>INSTALL OTYS 4</title>
+</head>
+<body onload="window.document.portalform.submit()">
+<form name="portalform" action="http://www.yourit.nl/insta7/portal.php" method="post">
+<?=$hiddens ?>
+<input type="hidden" name="done" value="1">
+</form>
+</body>
+</html>
+<?
+}

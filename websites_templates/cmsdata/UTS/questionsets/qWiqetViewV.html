@@ -1,0 +1,175 @@
+<!--START WIQET-->
+
+<input type="hidden" name="{$elementName}[id]" value="{$currentValue.id}">
+<input type="hidden" name="{$elementName}[wiqet_id]" value="{$currentValue.wiqet_id}">
+
+<h3 class="formTitle aplCmpFormTitle">{$qd.question|escape}{if $required}<span>*</span>{/if}</h3>
+
+<if $qd.explanation>
+<div class="explain" aplCmpExplain>
+    {$qd.explanation|escape}
+</div>
+</if>
+
+<div class="moduleFormGroup">
+
+	<div class="moduleFormInput positionWFormInput">
+		<label>[t]Name[/t]:</label>
+		<input name="{$elementName}[name]" type="text" value="{$currentValue.name|escape}" id="qWiqetViewName">
+	</div>
+	
+{if $enableVideo}
+
+	<div class="moduleFormInput positionWFormInput">
+		<label>[t]Type[/t]:</label>
+		{if $currentValue.id}
+		{if $currentValue.wiqet_type == 'video'}[t]Video[/t]{else}[t]Photo[/t]{/if}
+		<input type="hidden" name="{$elementName}[wiqet_type]" value="{$currentValue.wiqet_type}" >
+		{else}
+		<select name="{$elementName}[wiqet_type]" onchange="qsSwitchWiqetType('{$qd.id}', this.value, document.getElementById('qWiqetViewName').value);">
+		<option value="photo">[t]Photo[/t]</option>
+		<option value="video" {if $currentValue.wiqet_type == 'video'}selected="selected"{/if}>[t]Video[/t]</option>
+		</select>
+		{/if}
+	</div>
+
+{/if}
+
+
+{if $currentValue.wiqet_type == 'video'}
+
+<script type="text/javascript" src="http://backend.wiqet.com/wiqetembeds/824e6f3f5b987be8a35fc21b80849185/wiqetOtis.js" ></script>
+
+<script type="text/javascript">
+
+{literal}
+function wiqetCallback(wiqetCode, deleteCode, deletePinCode){
+
+    var wiqetCode = wiqetCode;
+    var deleteCode = deleteCode; // Not used anymore ..
+    var deletePinCode = deletePinCode; // Not used anymore ..
+
+	{/literal}
+    document.getElementById('{$elementName}[wiqetCode]').value = wiqetCode;
+	document.getElementById('{$elementName}[playerUrl]').value = '?wiqetCode=' + wiqetCode;
+	document.getElementById('{$elementName}[deletePinCode]').value = deletePinCode;
+	document.getElementById('{$elementName}[deleteCode]').value = deleteCode;
+	{literal}
+	
+}
+{/literal}
+
+</script>
+
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width = "450" height = "375" align = "middle" id = "movie" name="movie" codebase = "https://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
+    <param name = "movie" value = "http://backend.wiqet.com/wiqetembeds/{$customerid}/editor_movie.swf?uniqueId={$IVuniqueId}&deleteCode={$currentValue.deleteCode}&deletePinCode={$currentValue.deletePinCode}&modus=editor&introvoiceCode={$currentValue.wiqetCode}&customerId={$customerid}">
+    <param name = "quality" value = "high" >
+    <param name = "wmode" value = "transparent" >
+    <param name = "bgcolor" value = "#FFFFFF" >
+    <param name = "allowScriptAccess" value = "always" >
+<embed src = "http://backend.wiqet.com/wiqetembeds/{$customerid}/editor_movie.swf?uniqueId={$customerid}&deleteCode={$currentValue.deleteCode}&deletePinCode={$currentValue.deletePinCode}&modus=editor&introvoiceCode={$currentValue.wiqetCode}&customerId={$customerid}" quality = "high" bgcolor = "#FFFFFF" width = "450" height = "375" name = "movie" align = "middle" play = "true" loop = "false" quality = "high" wmode = "transparent" allowScriptAccess = "always" type = "application/x-shockwave-flash" pluginspage = "http://www.macromedia.com/go/getflashplayer"></embed></object>
+
+<input type="hidden" id="{$elementName}[wiqetCode]" name="{$elementName}[wiqetCode]" value="" >
+<input type="hidden" id="{$elementName}[playerUrl]" name="{$elementName}[playerUrl]" value="" >
+<input type="hidden" id="{$elementName}[deletePinCode]" name="{$elementName}[deletePinCode]" value="" >
+<input type="hidden" id="{$elementName}[deleteCode]"	name="{$elementName}[deleteCode]" value="" >
+ 	
+{else}
+
+	<script src="http://www.introvoice.nl/2.0/Wiqet.js" type="text/javascript"></script>
+	<div id="flashWiqet">Wiqet wordt geladen...</div>
+	<div id="formWiqet">Formulier wordt geladen...</div>
+	
+{/if}
+	
+	<script type="text/javascript">
+	
+	var IVcustomerId = '{$customerid}';
+	var IVuniqueId = '{$IVuniqueId}';
+	var IVWiqetCode = '{$currentValue.wiqetCode}';
+	var IVplayerUrl = '/_flash/editor.swf';
+	//var IVplayerUrl = 'http://bo01.otys.nl/adm/hta/wiqets/editor.swf';
+	//var IVplayerUrl = 'http://www.wiqet.nl/media/flash/editor.swf';
+	var IVDisplayUrl = '';
+	var IVwidth = '450px';
+	var IVheight = '420px';
+	var IValign = 'middle';
+	var IVbgColor = '#ffffff';
+	var IVdivForm = 'formWiqet';
+	var IVdivPlayer = 'flashWiqet';
+	var IVdivLink = 'linkWiqet';
+	var IVFormName = '{$elementName}';
+	var IVFormnameType = 'hidden'; //hidden
+	
+	var error = play_wiqet(	IVDisplayUrl,
+													IVplayerUrl,
+													'editor',
+													IVWiqetCode,
+													IVcustomerId,
+													IVuniqueId,
+													IVwidth,
+													IVheight,
+													IValign,
+													IVbgColor,
+													IVdivLink,
+													IVdivForm,
+													IVdivPlayer,
+													IVFormName,
+													IVFormnameType,
+													'{$currentValue.deleteCode}',
+													'{$currentValue.deletePinCode}');
+													
+	if (error) document.write(error);
+	
+	{literal}
+	// this is called after wiqet is saved
+	function onWiqetSaved()
+	{		
+	}
+	
+function qsSwitchWiqetType(qid, type, name) {
+   
+	var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", window.location);
+	
+	var hiddenField1 = document.createElement("input");
+	hiddenField1.setAttribute("type", "hidden");
+    hiddenField1.setAttribute("name", "wiqet_type");
+    hiddenField1.setAttribute("value", type);
+	form.appendChild(hiddenField1);
+	
+	var hiddenField2 = document.createElement("input");
+	hiddenField2.setAttribute("type", "hidden");
+    hiddenField2.setAttribute("name", "name");
+    hiddenField2.setAttribute("value", name);
+	form.appendChild(hiddenField2);
+	
+    document.body.appendChild(form);
+    form.submit();
+   
+   
+    /*var f=document.forms['qsForm'];
+    f.command.value=vMicroCommand;
+    f.qsmicrocommand.value='switchwiqettype';
+    f.param1.value=qid;    
+    f.param2.value=type;
+	f.param3.value=name;
+    f.submit();*/
+}
+	
+	{/literal}
+	
+	</script>
+
+	<div class="moduleFormInput moduleFormSmallInput">
+		<input type="button" class="button" value="[t]Upload Wiqet[/t]" onclick="publish();">
+	</div>
+	
+	{if $currentValue.id}
+	<div class="moduleFormInput moduleFormSmallInput">	
+		<input name="button" type="button" value="[t]Delete Wiqet[/t]" onclick="qsDeleteWiqet('{$qd.id}', '{$currentValue.id}')">
+	</div>
+	{/if}
+	
+</div>

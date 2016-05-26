@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+{* This variable produces a faulty page when going 'back' $redirecturl WV_20121004 *}
+</if>
+<!-- /UTS/ocdapps/simpleMessage.html -->
+<div class="outer">
+<h1 class="title">
+<if $type == "THANK_YOU">
+[t]Thank you![/t]
+<elseif $type == "ERROR">
+[t]Error occured![/t]
+<elseif $type == "INFORMATION">
+[t]Information[/t]
+</if>
+</h1>
+<div class="intro">
+<if $messageId>
+<if $messageId == "USER_NOT_FOUND">
+<p>[t]There is no user registered under this username.[/t]</p>
+<elseif $messageId == "ACCESS_DENIED">
+<p>[t]Access denied. The password is not valid or this user is not allowed to login directly.[/t]</p>
+<elseif $messageId == "MSG_USER_LOCKED_OUT">
+<p>[t]Your account is blocked, please contact us to unlock your account.[/t]</p>
+<elseif $messageId == "SESSION_EXPIRED">
+<p>[t]Your session has expired. Redirecting to the homepage...[/t]</p>
+<elseif $messageId == "LOGIN_DATA_UPDATED">
+<p>[t]Your login data has been updated. Redirecting back...[/t]</p>
+<elseif $messageId == "SIGN_UP_SUCCESS">
+<p>[t]You have signed up succesfully. You can log in using your credentials later. Redirecting to the homepage...[/t]</p>
+<elseif $messageId == "INVALID_TOKEN">
+<p>[t]Invalid login token.[/t]</p>
+<elseif $messageId == "EXPIRED_TOKEN">
+<p>[t]Sorry, this login token has already expired.[/t]</p>
+<elseif $messageId == "WEBUSER_LOGGED_OUT">
+<p>[t]Someoneelse has logged in using the same login credentials from a different location. Therefore you have been logged out.[/t]</p> 
+<p>[t]Redirecting to the homepage...[/t]</p>
+</if>
+</if>
+</div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

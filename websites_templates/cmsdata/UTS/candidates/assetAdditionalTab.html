@@ -1,0 +1,61 @@
+<!-- /UTS/candidates/assetAdditionaTab.html -->
+
+{if $wiqet}
+<div style="float: left;">
+{$wiqet}
+</div>
+<div style="clear: both"></div>
+{/if}
+
+<script type="text/javascript">
+//{literal}
+  // setup cluetips
+  $('a.cluetips').cluetip({
+    sticky:           true,    // keep visible until manually closed
+    closeText:        '[th]Close[/th]',
+	activation:       'click',
+    width:            500,
+    ajaxCache:        false
+  });
+ 
+//{/literal}
+</script>
+
+<style type="text/css">
+/*{literal}*/
+  a.cluetips {
+    cursor:pointer;
+  }  
+
+/*{/literal}*/
+</style>
+
+{foreach from=$assets key=code item=field}
+
+{if $data[$code]|@count}
+	<div style="background-color: #eee; border: 1px solid #aaa; padding: 4px; margin-bottom: 0.5em; margin-top: 1em; clear: left;">{$field}</div>
+
+	{foreach from=$data[$code] item=d}
+	<div>
+		<div style="float: left; margin-bottom: 5px;">
+		{if $d.service_type == 'youtube'}<a class="cluetips" title="{$d.subject|escape}" rel="{$handler}/command_dossier/detail/entity/{$d.DossierType}/id/{$d.id}"><img src="http://img.youtube.com/vi/{$d.external_id}/1.jpg" style="margin-right: 8px;" ></a>
+		{elseif $d.service_type == 'slideshare'}<a class="cluetips" title="{$d.subject|escape}" rel="{$handler}/command_dossier/detail/entity/{$d.DossierType}/id/{$d.id}"><img src="http://cdn.slideshare.net/{$d.external_id}-thumbnail-2" style="margin-right: 8px;" ></a>
+		{else}{*$d.html*}
+		{/if}
+		</div>
+		<div style="font-weight: bold;"><a class="cluetips" title="{$d.subject|escape}" rel="{$handler}/command_dossier/detail/entity/{$d.DossierType}/id/{$d.id}">{$d.subject|escape}</a></div>
+		<div>{$d.remarks|escape}</div>
+		<div style="clear: both"></div>
+	</div>	
+	{/foreach}
+
+{/if}
+
+
+{/foreach}
+
+{if $cnt_rows == 0 && !$wiqet}
+        <div class="noItemsToDisplay" >
+            [t]There are no items to display...[/t]
+        </div>
+{/if}

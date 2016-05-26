@@ -1,0 +1,43 @@
+{* used when user doesn't have "candidate" permissions to view current page *}
+<html lang="en">
+<head>
+<title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
+</head>
+<body>
+<!--uts:begin inner-->
+<form name="form2" method="post" action="/index.php/command/kandidaatlogin">
+<div class="outer aplOuter aplStartOuter cmsCandSecureOuter">
+<!-- /UTS/misc/cms_candidate_login.html standard -->
+<h1 class="title aplTitle aplStartTitle">[t]Candidate login[/t]</h1>
+<div class="intro aplIntro aplStartIntro">
+<p>[t]Access to this page is restricted.[/t]</p>
+[t]To continue, enter your username and password. Use your email address and the password you entered when you registered. This information was e-mailed to you after your registration.[/t]
+</div>
+<div class="formInput aplInput aplStartInputE">
+<label for="emailaddress">[t]Username:[/t]</label>
+<input type="text" name="email" id="emailaddress">
+</div>
+<div class="formInput aplInput aplStartInputPwd">
+<label for="userpassword">[t]Password:[/t]</label>
+<input type="password" name="password" id="userpassword">
+</div>
+{if $error_code == 'access_denied'}
+<div class="error aplError aplStartError">[t]You are not known in this system, or you don't have the necessary rights.[/t]</div>
+{elseif $error_code == 'no_rights'}
+<div class="error aplError aplStartError">[t]Sorry, you don't have the rights necessary to access this page.[/t]</div>
+{elseif $error_code == 'no_credentials'}
+<div class="error aplError aplStartError">[t]Please enter your username and password.[/t]</div>
+{else}
+<div class="error aplError aplStartError">{$error}</div>
+{/if}
+
+<div class="buttonContainer aplBc aplStartBc">
+	<input type="submit" name="Submit" value="[th]Login[/th]" class="button">
+	<div class="cleaner aplCleaner aplButtonCleaner"></div>
+</div>
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

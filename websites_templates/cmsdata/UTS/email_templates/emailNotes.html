@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/email_templates/emailNotes.html -->
+<p>{$text}</p>
+
+{if !empty($phone)}
+	<p>[t]Phone:[/t] {$phone}</p>
+{/if}
+
+{if !empty($cellphone)}
+	<p>[t]Cellular:[/t] {$cellphone}</p>
+{/if}
+
+{if !empty($email)}
+	<p>[t]Email:[/t] {$email}</p>
+{/if}
+
+<p>
+	<i>[t]Remark: this e-mail message has been automatically generated[/t]</i>
+</p>
+<!--uts:end inner-->
+</body>
+</html>

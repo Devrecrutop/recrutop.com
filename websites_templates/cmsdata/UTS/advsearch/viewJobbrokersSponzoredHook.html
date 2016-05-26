@@ -1,0 +1,120 @@
+{* req. ext. javascript: JQueryBase *}
+
+<script type="text/javascript">
+
+{*SCRIPT PARAMS*}
+var jbUrl      = '{$jbRequest.url}';
+var jbKeywords = '{$jbRequest.keywords}';
+var jbCriteria = '{$jbRequest.criteria}';
+var jbCode     = '{$jbRequest.code}';
+var jbAmount   = '{$jbRequest.amount}';
+
+{*TEMPLATE SETTINGS*}
+var stJBShowCompany = parseInt('[uts:show_company]');
+var stJBShowDescr = parseInt('[uts:show_descr]');
+var stJBShowLogo = parseInt('[uts:show_logo]');
+var stJBShowLanguage = parseInt('[uts:show_language]');
+var stJBShowPubDate = parseInt('[uts:show_pub_date]');
+var stJBShowCountry = parseInt('[uts:show_country]');
+var stJBShowCity = parseInt('[uts:show_city]');
+var stJBShowLatitude = parseInt('[uts:show_latitude]');
+var stAmountVacancies = parseInt('[uts:amount_vacancies]');
+
+//{literal}
+
+function setJbHookContent(data)
+{
+  if(!data)
+  { 
+    return false;
+  }
+      
+  var jbEla = null;  
+  var jbId = null;
+  var counter = 0;
+  for (i in data)
+  {
+    if(counter == stAmountVacancies) continue;
+    jbEla = null;
+    
+    jbEla = document.createElement('a');
+    jbEla.setAttribute('class', 'jbLink hookItemTitle');
+    jbEla.setAttribute('href', data[i].link);
+    jbEla.setAttribute('target', '_blank');
+    jbEla.appendChild(document.createTextNode(data[i].title));
+      
+    if(jbEla)
+    {     
+      // outer container
+      jbId = null;
+      jbId = data[i].id;
+      if(!jbId)
+      {
+        jbId = Math.floor(Math.random()*1000);
+      }
+      jbId = 'JB'+jbId;      
+      $('#jobbrokersSponzoredHookContent').append('<div id="'+jbId+'" class="jbItem hookItemContainer"></div>');
+      
+      // logo
+      if(stJBShowLogo && data[i].logo.length)      
+      {                
+        $('#'+jbId).append('<img src="'+data[i].logo+'" border="0" class="jbLogo">');        
+      }                        
+      
+      // link ALWAYS
+      $('#'+jbId).append(jbEla);
+            
+      // extended data      
+      if(stJBShowPubDate && data[i].pubDate.length)
+      {
+        $('#'+jbId).append('<div class="jbDate jbWord hookWord">' + data[i].pubDate + '</div>');
+      }
+      if(stJBShowCompany && data[i].company.length)
+      {
+        $('#'+jbId).append('<div class="jbCompany jbWord hookWord">' + data[i].company + '</div>');
+      }                              
+      if(stJBShowDescr && data[i].description.length)
+      {
+        $('#'+jbId).append('<div class="jbDescr jbWord hookWord">' + data[i].description + '</div>');
+      }
+      
+      if(stJBShowCountry && data[i].country.length)
+      {
+        $('#'+jbId).append('<div class="jbCountry jbWord hookWord">' + data[i].country + '</div>');
+      }
+      if(stJBShowCity && data[i].city.length)
+      {
+        $('#'+jbId).append('<div class="jbCity jbWord hookWord">' + data[i].city + '</div>');
+      }                        
+    }
+    counter++;// ELA
+    
+    //$('#jobbrokersSponzoredHookContent').append('<p>' + data[i].title + '</p>');            
+  }                                         
+}
+
+
+$(document).ready(function() {
+
+  //$('#jobbrokersSponzoredHookContent').html('<b>Searching...</b>'); 
+
+  $.ajax({
+    type: 'GET',    
+    url : jbUrl,
+    data: {code: jbCode, keywords: jbKeywords, criteria: jbCriteria, amount: jbAmount},
+    success: setJbHookContent,
+    dataType: 'json'
+  });        
+    
+});
+
+//{/literal}
+</script>
+
+<div class="hookOuter jobbrokersSponzoredHookOut" id="jobbrokersSponzoredHook">
+<!-- /UTS/advsearch/viewJobbrokersSponzoredHook.html -->
+  <div class="hookHeader jobbrokersSponzoredHookHeader">[t]Job Brokers Sponzored[/t]</div>
+  <div id="jobbrokersSponzoredHookContent">
+  
+  </div>
+</div>

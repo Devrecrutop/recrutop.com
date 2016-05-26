@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer cpOuter">
+<!-- /UTS/customers/subscriptionList.html -->
+<h1 class="title cpTitle">[t]Subscription list[/t]2</h1>
+{$menu}
+<div class="intro cpIntro">[t]If you are subscribed to one or more newsletters, you can find the details regarding your registration below.[/t]</div>
+<table cellspacing="0" cellpadding="0" border="0" class="cpTbl">
+<tr>
+<td class="cpTblHeader cpTblHDate">[t]Newsletter[/t]</th>
+<td class="cpTblHeader cpTblHJob">[t]Status[/t]</th>
+<td class="cpTblHeader cpTblHLoc">[t]Action[/t]</th>
+</tr>
+<foreach from=$newsletters key=id item=newsletter>
+<tr>
+<td class="cpListDateTime">{$newsletter.subject}</td>
+<td class="cpListLink">
+{if $newsletter.status == 1}[t]Subscribed[/t]{/if}
+{if $newsletter.status != 1}-{/if}
+</td>
+<td class="cpListLocation">
+{if $newsletter.status == 1}<a href="/index.php/page/customers_ext/bb/1/command/unsubscribe/id/{$id}" onClick="if(confirm('[th]Are you sure?[/th]') == 1) return true; else return false;">[t]Unsubscribe[/t]</a>{/if}
+{if $newsletter.status != 1}<a href="/index.php/page/customers_ext/bb/1/command/subscribe/id/{$id}">[t]Subscribe[/t]</a>{/if}
+</td>
+</tr>
+</foreach>
+</table>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

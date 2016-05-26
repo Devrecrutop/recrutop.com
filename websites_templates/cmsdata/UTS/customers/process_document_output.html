@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+{literal}
+<script type="text/javascript">
+<!--
+{/literal}
+
+var handler = '{$handler}'
+
+{literal}
+function downloadDocument(docId)
+{
+    var url = handler + '/command=docmicrocall&docmicrocmd=docdownload&docid=' + docId;       
+    $('#doc-download-ifrm').attr('src', url);
+    return false;
+}
+              
+//-->
+</script>
+{/literal}
+
+<!-- /UTS/customers/process_document_output.html -->
+<form action="{$handler}" method="POST">
+<input type="hidden" name="command" value="processactions"> {*PROCESS NEXT ACTION*}
+
+<div class="outer docOutput">
+<h1 class="title">[t]Download your document here[/t]</h1>
+
+<a href="" onClick="return downloadDocument('{$docId}')">{$docName}</a>
+
+<div class="buttonContainer">
+<!--START_BUTTON2-->
+<input type="submit" value="[th]Continue[/th]" name="bttnContinue" class="button">
+<!--END_BUTTON2-->
+</div>
+
+</div>
+
+</form>
+
+{*IFRAME TO DOWNLOAD DOCUMENT*}
+<iframe name="doc-download-ifrm" id="doc-download-ifrm" width="0" height="0" frameborder="no" application="yes" scrolling="No" frameborder="0" marginwidth="0" marginheight="0"></iframe>
+
+
+<!--uts:end inner-->
+</body>
+</html>

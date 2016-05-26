@@ -1,0 +1,34 @@
+<!-- misc/recruiter_rating_for_candidates.html -->
+{if !$rated}
+<div class="outer recRateOuter">
+<form class="recruiterRatingForm" action="/index.php/page/raterecruiter/command/save/bb/1" method="post">
+<h1 class="title recRateTitle">[t]Rate your Recruiter[/t]</h1>
+<div class="formText recRateText">[t]By rating your Recruiter you supply us with appreciated feedback.[/t]</div>
+<div class="formInput recRateInput">
+  <label>[t]Your name[/t]</label><input type="text" name="candidate_name" value="{$candidate_name}" disabled="disabled">
+</div>
+<div class="formInput recRateInput">
+  <label>[t]Your recruiters name[/t]</label><input type="text" name="recruiter_name" value="{$recruiter_name}" disabled="disabled">
+</div>
+<div class="formInput recRateInput">
+  <label>[t]Rating[/t]:</label><select size="1" name="rating">
+<option value="0"></option>
+<option value="1"{if $rating==1} selected="selected"{/if}>[th]slecht[/th]</option>
+<option value="2"{if $rating==2} selected="selected"{/if}>[th]matig[/th]</option>
+<option value="3"{if $rating==3} selected="selected"{/if}>[th]voldoende[/th]</option>
+<option value="4"{if $rating==4} selected="selected"{/if}>[th]goed[/th]</option>
+<option value="5"{if $rating==5} selected="selected"{/if}>[th]uitmuntend[/th]</option>
+</select>
+</div>
+<input type="hidden" name="for" value="{$hc}">
+<div class="formButton recRateButton">
+  <input class="button" type="submit" name="saverating" value="[tt]Save[/tt]">
+</div>
+</form>
+</div>
+{else}
+<div class="outer recRateOuter recruiterRated">
+<h1 class="title recRateTitle">[t]Rating saved[/t]</h1>
+<div class="formText recRateText">[t]Thank you for rating your recruiter.[/t]</div>
+</div>
+{/if}

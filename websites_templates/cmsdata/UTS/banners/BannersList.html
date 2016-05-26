@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>
+Banners
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body margin="0">
+<!--uts:begin inner-->
+<!-- UTS Template /UTS/Banners/BannersList.html -->
+<div class="outer bnrOuter">
+<h1 class="title bnrTitle">[t]Banners[/t]</h1>
+
+{$customer_menu}
+
+<div class="text bnrText">[t]Here, you can choose banners and upload images for them. Please click "Create New Banner" to add a new banner to the system. You can select a number of views to limit the use of the banner.[/t]</div>
+
+<table border="0" cellpadding="0" cellspacing="0" class="bnrNvTbl">
+<tr>
+<td><a href="/index.php/page/banner_engine/command/add/bb/1/">[t]Add new[/t]</a></td>
+{if $allow_buy_banner && 1==0} {*will be disabled -  I dont think that payment was used! special payment form banners didnt work*}
+<td>|</td>
+<td><a href="/index.php/page/online_payment/command/initialize/bb/1/">[t]Buy a Banner[/t]</a></td>
+</tr>
+{/if}
+</table>
+
+<table cellpadding="0" cellspacing="0" class="hqTbl bnrListTbl" border="0" >
+<tr>
+<th>[t]Banner[/t]</th>
+<th>[t]Name[/t]</th>
+<th>[t]Type[/t]</th>
+<th>[t]Size[/t]</th>
+<th>[t]Action[/t]</th>
+</tr>
+{foreach key=bn_key item=bn from=$BannersList}
+<tr id="{cycle values="bnrFlip,bnrFlop"}">
+<td>{if $bn.uploaded_photo}<a href="/index.php/page/banner_engine/command/show_photo/bb/1/BannerId/{$bn.rep_id}/BannerCode/{$bn.unique_code}" target="_blank" border="0"><img src="/_images_global/photo_icon.gif" border="0" alt="[t]Banner uploaded[/t]" width="21" height="16"></a>{else}<img src="/_images_global/photo_delete_icon.gif" border="0" alt="[t]Banner was not uploaded[/t]" width="21" height="16">{/if}</td>
+<td>{$bn.banner_display_name} ({$bn.banner_name})</td>
+<td>{$bn.banner_type}</td>
+<td>{$bn.banner_width} x {$bn.banner_height} px</td>
+<td><a href="/index.php/page/banner_engine/command/edit/bb/1/BannerId/{$bn.rep_id}"><img src="/_images_global/zoeken.gif" border="0" alt="edit" ></a>
+{if $bn.uploaded_photo}<a href="/index.php/page/banner_engine/command/delete/bb/1/BannerId/{$bn.rep_id}"><img src="/_images_global/buttonClearFilter.gif" border="0" alt="delete" ></a>{/if}</td>
+</tr>
+{foreachelse}
+<tr>
+<td colspan="5" class="hqNoItems bnrNoItems">[t]There are no available banners![/t]</td>
+</tr>
+{/foreach}
+</table>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

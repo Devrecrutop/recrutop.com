@@ -1,0 +1,188 @@
+<div class="hookOuter cslOuter candidateShortListHook">
+<!-- UTS/candidates/candidate_shortlist_hook.html CUSTOM -->
+
+	<div class="hookHeader cslTitle">[t]Candidates[/t]</div>
+	{foreach from=$candidate_list key="candidateHookItemKey" item=candidateHookItem}
+
+	{if $uts.siteid == $candidateHookItem.main.enrollSiteId}
+	<div class="hookItemContainer cslItemContainer">
+		{if "[uts:candidates_shortlist_picture]" && $candidateHookItem.main.foto}
+        <div class="hookItemPhoto">
+			<a href="[website]/index.php/page/candetail/bb/1/command/start/id/{$candidateHookItemKey}/origin/advsearchcvs">
+				<img src="/index.php/page/candetail/command/displayphoto/cid/{$candidateHookItem.main.id}" alt="[th]Candidate's photo[/th]">
+			</a>
+        </div>
+        {/if}
+		<div class="hookItemTitle candidateItemForNr">
+			<a href="[website]/index.php/page/candetail/bb/1/command/start/id/{$candidateHookItemKey}/origin/advsearchcvs">
+				{if "[uts:showPublicCVTitle]" && $candidateHookItem.extended.public_cv_title}
+					{$candidateHookItem.extended.public_cv_title}
+				{else}
+					{$candidateHookItem.main._uid}
+				{/if}
+			</a>
+		</div>
+
+		{if "[uts:showCity]" && $candidateHookItem.main.woonplaats}
+		<div class="hookItemWord cslKeyword cslKwCity">
+			<span>[t]City:[/t]</span>
+			{$candidateHookItem.main.woonplaats}
+		</div>
+		{/if}
+		
+		{if $candidateHookItem.main._uid}
+			<div class="hookItemWord cslKeyword cslKwCity">
+				<span>Référence:</span>
+				{$candidateHookItem.main._uid}
+			</div>
+		{/if}
+		
+		{if "[uts:showRegistrationDate]" && $candidateHookItem.main.invoerdatum}
+			<div class="hookItemWord cslKeyword cslKwRegDate">
+				<span>[t]Registration date:[/t]</span>
+				{$candidateHookItem.main.invoerdatum}
+			</div>
+		{/if}
+
+		{*DISPLAY MATCHCRITERILA DEFINED IN TEMPLATE BEGIN*}
+		{if $allowShowMc}
+			<div class="hookItemWord cslKeyword abcbalbla">
+				<span>Spécialité:</span>
+				{foreach from=$candidateHookItem.__show_matchcriteria key=mcDataField item=mcData}
+					{if $mcData.name == 'BTP'}
+						{$mcData.str_values|escape} 
+					{/if}
+				{/foreach}	
+			</div>				
+		{/if}
+		{*DISPLAY MATCHCRITERILA DEFINED IN TEMPLATE END*
+		
+
+		{if "[uts:showExperience]" && $candidateHookItem.employmentHistory}
+		<div class="hookItemWord cslKeyword cslKwExp">
+			<span>[t]Experience:[/t]</span>
+			{foreach from=$candidateHookItem.employmentHistory key="candidateEmploymentItemKey" item=candidateEmploymentItem}
+			<div class="candidateExperienceWrapper">
+				<div class="candidateItemForExperienceDates">
+					{if $candidateEmploymentItem.StartDateOriginal}
+						{$candidateEmploymentItem.StartDateOriginal}
+					{else}
+						{$candidateEmploymentItem.StartDate|date_format:"%d-%m-%Y"}
+					{/if}
+					{if ($candidateEmploymentItem.StartDate || $candidateEmploymentItem.StartDateOriginal) && ($candidateEmploymentItem.EndDate || $candidateEmploymentItem.EndDateOriginal)}
+						&nbsp;-&nbsp;
+					{/if}
+					{if $candidateEmploymentItem.EndDateSpec == 'today'}
+						[tg]today[/tg]
+					{else}
+						{if $candidateEmploymentItem.EndDateOriginal}
+							{$candidateEmploymentItem.EndDateOriginal}
+						{else}
+							{$candidateEmploymentItem.EndDate|date_format:"%d-%m-%Y"}
+						{/if}
+					{/if}
+				</div>
+				{if $candidateEmploymentItem.Experience}
+				<div class="candidateItemForExperienceJobtitle">
+					{$candidateEmploymentItem.Experience}
+				</div>
+				{/if}
+				{if $candidateEmploymentItem.EmployerNameAndPlace}
+				<div class="candidateItemForExperienceEmployerNameAndPlace">
+					{$candidateEmploymentItem.EmployerNameAndPlace}
+				</div>
+				{/if}
+				<div class="cleaner"></div>
+			</div>
+			{/foreach}
+		</div>
+		{/if}
+
+		{if "[uts:showEducation]" && $candidateHookItem.educationHistory}
+		<div class="hookItemWord cslKeyword cslKwEdu">
+			<span>[t]Education:[/t]</span>
+			{foreach from=$candidateHookItem.educationHistory key="candidateEducationItemKey" item=candidateEducationItem}
+			<div class="candidateEducationWrapper"> 
+				<div class="candidateItemForEducationDates">
+					{if $candidateEducationItem.StartDateOriginal}
+						{$candidateEducationItem.StartDateOriginal}
+					{else}
+						{$candidateEducationItem.StartDate|date_format:"%d-%m-%Y"}
+					{/if}
+					{if ($candidateEducationItem.StartDate || $candidateEducationItem.StartDateOriginal) && ($candidateEducationItem.EndDate || $candidateEducationItem.EndDateOriginal)}
+						&nbsp;-&nbsp;
+					{/if}
+					{if $candidateEducationItem.EndDateSpec == 'today'}
+						[tg]today[/tg]
+					{else}
+						{if $candidateEducationItem.EndDateOriginal}
+							{$candidateEducationItem.EndDateOriginal}
+						{else}
+							{$candidateEducationItem.EndDate|date_format:"%d-%m-%Y"}
+						{/if}
+					{/if}
+				</div>
+				{if $candidateEducationItem.Degree}
+				<div class="candidateItemForEducationDegree">
+					{$candidateEducationItem.Degree}
+				</div>
+				{/if}
+				{if $candidateEducationItem.DegreeDirection}
+				<div class="candidateItemForEducationDegreeDirection">
+					{$candidateEducationItem.DegreeDirection}
+				</div>
+				{/if}
+				{if $candidateEducationItem.Diploma}
+				<div class="candidateItemForEducationDiploma">
+					{$candidateEducationItem.Diploma}
+				</div>
+				{/if}
+				{if $candidateEducationItem.InstituteNameAndPlace}
+				<div class="candidateItemForEducationInstituteNameAndPlace">
+					{$candidateEducationItem.InstituteNameAndPlace}
+				</div>
+				{/if}
+				<div class="cleaner"></div>
+			</div>
+			{/foreach}
+		</div>
+		{/if}
+		
+		
+		{*DISPLAY MATCHCRITERILA DEFINED IN TEMPLATE BEGIN*}
+		{if $allowShowMc}
+		  {foreach from=$mcToShow key=mcField item=mcFieldData}
+		  
+  		  {foreach from=$candidateHookItem.__show_matchcriteria key=mcDataField item=mcData}
+    		  {if $mcDataField == $mcField && $mcData.str_values}
+          <div class="hookItemWord cslKeyword cslKwMcVal">
+      			{if "[uts:showMCTitle]"}<span>{$mcData.name|escape}:</span>{/if}
+            {$mcData.str_values|escape}  			
+      		</div>
+      		{/if}
+        {/foreach}		  
+		  
+		  {/foreach}
+		{/if}
+		{*DISPLAY MATCHCRITERILA DEFINED IN TEMPLATE END*}
+
+		{if "[uts:showShortDescription]" && $candidateHookItem.main.chapo}
+		<div class="hookItemWord cslKeyword cslKwDescr">
+			<span>[t]Short description:[/t]</span>
+			{$candidateHookItem.main.chapo}
+		</div>
+		{/if}
+
+		<div class="hookItemWord cslKeyword cslKwChangeDate">
+			<span>Dernière MAJ</span>
+			{if $candidateHookItem.main.wijzigingsdatum}
+				{$candidateHookItem.main.wijzigingsdatum|date_format:"%d-%m-%Y"}
+			{else}
+				{$candidateHookItem.main.invoerdatum}
+			{/if}
+		</div>
+		
+	</div>
+	{/if}
+	{/foreach}
+</div>

@@ -1,0 +1,339 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>[t]network Detail[/t]</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+
+<script type="text/javascript" language="JavaScript">
+{literal}
+<!--
+{/literal}
+
+  var ntwSaved = parseInt('{$ntwSaved}');
+
+{literal}  
+  if(!isNaN(ntwSaved) && ntwSaved == 1)
+  {
+    window.onload = pageSaved; 
+  }
+
+  function pageSaved() 
+  { 
+  	alert('[th]Network page was saved.[/th]'); 
+  } 
+
+  function goToSavedNetworkPages()
+  {
+    window.location = '/index.php/page/savednetworkpages/bb/1/command/list/';
+  }
+
+  function saveNetworkPage(uid)
+  {
+    if(uid.length > 0)
+    {
+      window.location = '/index.php/page/savednetworkpages/bb/1/command/savepage/uid/'+uid;
+    }
+    else
+    {
+      alert('[th]Missing Network UID[/th]');
+    }
+  }
+  
+  
+  function mailAFriend(uid)
+  {
+    if(uid.length > 0)
+    {
+      window.location = '/index.php/page/network/bb/1/command/mfaddress/connectionId/'+uid;
+    }
+    else
+    {
+      alert('[th]Missing Network UID[/th]');
+    }  
+  }  
+//-->
+{/literal}
+</script>
+
+
+{assign var='websiteId' value=$website.id}
+{assign var='klantid' value=$website.klantid}
+<div class="outer nwOuter nwDOuter">
+<!-- /UTS/network/customer_detail.div.html DEFAULT -->
+<h1 class="title nwTitle nwDTitle">{$website.name}</h1>
+<div class="photo1 nwPhoto nwDPhoto"><div class="photo2">
+
+
+{if $website.website eq "http://" && $show_header}
+<img src="{$clients.$klantid._website}/_images_upload/{if $website.network_image == "Picture" && $website.network_picture}{$website.network_picture}{else}{$website.network_logo}{/if}" alt="{$website.name}" border="0" >
+{else}
+<a href="{$website.website}" title="{$website.name}" target="_blank"><img src="{$clients.$klantid._website}/_images_upload/{if $website.network_image == "Picture" && $website.network_picture}{$website.network_picture}{else}{$website.network_logo}{/if}" alt="{$website.name}" border="0" ></a>
+{/if}
+
+</div></div>
+
+{if $website.show_contact}
+<h2 class="subHeader nwSh nwDSh nwShAddress">[t]Adres gegevens[/t]</h2>
+<div class="text nwText nwDText nwTextAddress">
+<p>
+{if $website.city}
+<div class="textWord nwTw nwDTw nwTwAddress"><span>[t]Adres:[/t]</span>{$website.address}</div>
+{/if}
+
+{if $website.postalcode}
+<div class="textWord nwTw nwDTw nwTwPostalcode"><span>[t]Postcode:[/t]</span>{$website.postalcode}</div>
+{/if}
+
+{if $website.city}
+<div class="textWord nwTw nwDTw nwTwCity"><span>[t]Stad:[/t]</span>{$website.city}</div>
+{/if}
+
+{if $website.country}
+<div class="textWord nwTw nwDTw nwTwCountry"><span>[t]Land:[/t]</span>{$website.country}</div>
+{/if}
+
+{if $website.phone}
+<div class="textWord nwTw nwDTw nwTwPhone"><span>[t]Phone[/t]:</span>{$website.phone}</div>
+{/if}
+
+{if $website.fax}
+<div class="textWord nwTw nwDTw nwTwFax"><span>[t]Fax[/t]:</span>{$website.fax}</div>
+{/if}
+
+{if $website.email}
+<div class="textWord nwTw nwDTw nwTwEmail"><span>[t]E-mail[/t]:</span><a href="mailto:{$website.email}">{$website.email}</a></div>
+{/if}
+
+{if $website.website && $website.website neq 'http://' && $website.website neq 'http:///'}
+<div class="textWord nwTw nwDTw nwTwWebsite"><span>[t]Website[/t]:</span><a href="{$website.website}" title="{$website.name}" target="_blank">{$website.name}</a></div>
+{/if}
+</p>
+</div>
+{/if}
+
+{if $website.network_text}
+
+{if $website.show_contact}
+<h2 class="subHeader nwSh nwDSh nwShContact">[t]Over:[/t] {$website.name}</h2>
+{/if}
+<div class="text nwText nwDText nwTwContact pavel">{$website.network_text|replace:'<UL><br />':'<UL>'|replace:'</P><br />':'</P>'}</div>
+{/if}
+
+{if $website.reference}
+<h2 class="subHeader nwSh nwDSh nwShRef">[t]Referentie[/t]</h2>
+<div class="text nwText nwDText nwTwRef">{$website.reference}</div>
+{/if}
+
+{if $use_customizable_network}
+{foreach from=$questionsAnswers key=_qid item=r}
+{if $r.customerAnswer}
+<div class="itemContainer nwDItemContainer nDItemContainerQs_{$_qid}">
+<h2 class="subHeader nwSh nwDSh"><div class="qaQuestion">{$r.Question|escape}</div></h2>
+{if $r.Type eq 'Code' }
+<div class="text nwText nwDText"><div id="CustomQs_{$_qid}" class="qa{$r.Type}">{$r.customerAnswer}</div></div>
+{elseif $r.Type eq 'Image' }
+<div class="text nwText nwDText"><div id="CustomQs_{$_qid}" class="qa{$r.Type}"><img src="{$clients.$klantid._website}/_images_upload/{$r.customerAnswer}" class="qaImageSrc"></div></div>
+{elseif $r.Type eq 'Contact'}
+<!-- QS CONTACT -->
+<div class="text nwText nwDText">
+  <div id="CustomQs_{$_qid}" class="qa{$r.Type}">
+  {*$r.customerAnswer|escape*}
+  {foreach from=$r.customerAnswer item=cc}
+    
+    <div classs="customerContactQsAnswer">
+      {if $cc.pp_photo}
+      <div><img src="/_images_upload/{$cc.pp_photo|escape}" border="0">   </div>
+      {/if}
+      
+      <div>{$cc.wg_cp_voornaam|escape} {$cc.wg_cp_tussenvoegsel|escape} {$cc.wg_cp_achtern|escape}</div>
+      
+      {if $cc.wg_cp_functie}
+      <div>{$cc.wg_cp_functie|escape}</div>
+      {/if}      
+      
+      {if $cc.education}
+      <div>{$cc.education|escape}</div>
+      {/if}
+    
+      {if $cc.long_descr}
+      <div>{$cc.long_descr}</div>
+      {/if}
+    </div>
+  {/foreach}
+  </div>
+</div>
+{elseif $r.Type eq 'Address'}
+<!-- QS ADDRESS -->
+<div class="text nwText nwDText"><div id="CustomQs_{$_qid}" class="qa{$r.Type}">{$r.customerAnswer|escape}</div></div>
+{elseif $r.Type eq 'MultiRadios'}
+<!-- QS MULTIRATIOS -->
+<div class="text nwText nwDText">
+  <div id="CustomQs_{$_qid}" class="qa{$r.Type}">
+  
+  <span class="multiRadiosLeftText">{$r.customerAnswer.leftText|escape}</span>
+  <span class="multiRadiosValues">
+  {if $r.customerAnswer.numRadios}
+    {section name=mr start=1 loop=$r.customerAnswer.numRadios+1}
+     {if $smarty.section.mr.index == $r.customerAnswer.value}
+      <span class="multiRadiosSelected" style="background-color:{$networkStylingData.hook_font};border-color:{$networkStylingData.hook_bg};">{$smarty.section.mr.index}</span>
+     {else}
+  	   <span class="multiRadios">{$smarty.section.mr.index}</span>
+  	 {/if}
+  	{/section}
+  {/if}
+  </span>
+  <span class="multiRadiosRightText">{$r.customerAnswer.rightText|escape}</span>   
+  
+  {*$r.customerAnswer.asText|escape*}    
+    
+  </div>
+</div>
+{else}
+<div class="text nwText nwDText"><div id="CustomQs_{$_qid}" class="qa{$r.Type}">{$r.customerAnswer}</div></div>
+{/if}
+</div>
+{/if}
+{/foreach}
+{/if}
+
+ 
+{if $vw_html}
+<div class="text nwText nwDText">{$vw_html}</div>
+{/if}
+
+{if $shortlist}
+<h2 class="subHeader nwSh nwDSh">[t]Recente vacatures van[/t] {$website.name}</h2>
+<div class="text nwText nwDText">[t]Hieronder vindt u een aantal van de meest recente vacatures die door dit bedrijf zijn gepubliceerd. Klik op de vacaturetitel om een uitgebreide beschrijving van de vacature te bekijken.[/t]</div>
+
+<div class="nwLw nwJobShortListWrapper">
+{foreach from=$shortlist key=i item=s}
+<div class="itemContainer nwJobShortListContainer nwJobIc">
+<h3 class="itemTitle nwJobShortListTitle nwJobIt"><a href="{$s.link}">{$s.name}</a></h3>
+{if $s.location}
+<div class="itemWord nwJobShortListWord nwJobIw"><span></span>{$s.location}</div>
+{/if}
+</div>
+{/foreach}
+</div>
+{/if}
+
+{if $eventShortlist}
+<div class="nwEventShortList">
+<h2>[t]Recent events from [/t] {$website.name}</h2>
+
+<div class="nwLw nwEventListWrapper">
+{foreach from=$eventShortlist key=i item=e}
+	<div class="itemContainer nwEventShortListItem nwEvIc">
+	<h3 class="itemTitle nwEventShortListTitle nwEvIt"><a href="{$e.link}">{$e.Title}</a></h3>
+	{if $e.Location}
+	<div class="itemWord nwEventShortListLocation nwEvIw">[t]Location[/t]: {$e.Location}</div>
+	{/if}
+	{if $e.StartDate}
+	<div class="itemWord nwEventShortListLocation nwEvIw">[t]Start[/t]: {$e.StartDate} {if $e.StartTime != "00:00:00"}[t]at[/t] {$e.StartTime|date_format:"%H:%M"}{/if}</div>
+	{/if}
+	</div>
+{/foreach}
+</div>
+
+</div>
+{/if}
+
+
+{if [uts:show_related_products]}
+  {if $linkProducts && $wgProducts}
+  <div class="nwProductShortList">
+  <h2>[t]Related products:[/t]</h2>  
+  
+	{foreach from=$wgProducts item=p}
+	<div class="nwProductShortListItem">
+	<div class="nwProductShortListTitle"><a href="/index.php/page/webshop/bb/1/command/catalogDetail/productId/{$p.id}">{$p.product_name|escape}</a></div>
+  {if [uts:show_product_thumbnail] && $p.thumbnail_filename}      
+    <div class="nwProductImg"><a href="/index.php/page/webshop/bb/1/command/catalogDetail/productId/{$p.id}"><img src="/_images_upload/{$p.thumbnail_filename}" alt="{$p.product_name|escape}" border="0"></a></div>
+  {/if}
+  {if [uts:show_product_descr] && $p.description}
+    <div class="nwProductDescr">{$p.description|escape}</div>
+  {/if}
+  </div>  				
+	{/foreach}
+  		  
+  </div>
+  {/if}
+{/if}
+
+
+{if $useGenericEntityRecommendations}
+
+	{* This is recommendations system used by various entities, currently candidates and relations. See CSM setting
+	   use_recommendations_fo, task #207979 *}
+	   
+	{if $recommendations}
+	<div class="nwPPrightCol nwRecommendationShortList">
+		<h2 class="subHeader nwSh nwDSh" >[t]Recommendations[/t]</h2>
+		
+		<div class="nwLw nwEventListWrapper">
+		{foreach from=$recommendations key=recomk item=recom}
+			<div class="itemContainer nwRecommendationShortListItem nwEvIc">
+			<h2 class="itemTitle nwRecommendationShortListTitle nwEvIt">{$recom.name_reference}, {$recom._entry_date}</h2>
+			<div class="itemWord nwRecommendationShortListLocation nwEvIw">{$recom.recommendation}</div>
+			</div>
+		{/foreach}
+		</div>
+	</div>
+	{else}
+		<div>[t]There are no recommendations available yet.[/t]</div>
+	{/if}
+	
+	<div>
+	<input type="button" value="[th]Send recommendation[/th]"
+		onclick="window.location.href='http://{$uts.cursite}/index.php/page/recommendations/command/genericEntityRecommendations/subcommand/form/entity/3/id/{$relationId}/bb/1'">
+	</div>
+
+{else}
+
+	{* This is a different recommendations implementation, just for customers. *}
+
+	{if $recommendations}
+	<div class="nwPPrightCol nwRecommendationShortList">
+		<h2 class="subHeader nwSh nwDSh" >[t]Recommendations[/t]</h2>
+		
+		<div class="nwLw nwEventListWrapper">
+		{foreach from=$recommendations key=recomk item=recom}
+			<div class="itemContainer nwRecommendationShortListItem nwEvIc">
+			<h2 class="itemTitle nwRecommendationShortListTitle nwEvIt">{$recom.name_reference}</h2>
+			<div class="itemWord nwRecommendationShortListLocation nwEvIw">{$recom.recommendation}</div>
+			</div>
+		{/foreach}
+		</div>
+	</div>
+	{/if}
+
+{/if}
+         
+         
+
+<div class="buttonContainer nwBc nwDBc">
+
+  {if $saveNetworkPages}
+    <!--SAVE NETWORK ENABLED -->    
+    <input class="button nwDBut nwDButSave" type="button" value="[th]Save network page[/th]" onClick="saveNetworkPage('{$connectionId|escape:"javascript"}');" name="button">
+    <input class="button nwDBut nwDButSaved" type="button" value="[th]Go to saved network pages[/th]" onClick="goToSavedNetworkPages();" name="button">    
+  {else}
+    <!--SAVE NETWORK DISABLED -->
+  {/if}
+    
+  <input class="button nwDBut nwDButFriend" type="button" value="[th]Mail a Friend[/th]" onClick="mailAFriend('{$connectionId|escape:"javascript"}');" name="button">  
+  
+  <input class="button nwDBut nwDButBack" type="button" value="[th]Terug naar het overzicht[/th]" onClick="window.location.href='[website]/index.php/page/network/command/custlist/'" name="button">
+</div>
+</div>
+
+<div style="display: none;">
+[th]Deel dit bedrijf[/th]
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

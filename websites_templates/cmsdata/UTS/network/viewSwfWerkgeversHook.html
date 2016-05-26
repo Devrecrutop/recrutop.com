@@ -1,0 +1,39 @@
+<div class="hookOuter hContainer">
+<!-- /UTS/network/viewSwfWerkgeversHook.html -->
+<!-- Custom work for JOBNET -->
+	
+	<div class="hookTitle swfWghHeader">
+		<h1>[t]Enkele werkgevers[/t]</h1>
+	</div>			
+
+	<div class="hookDetailsContainer swfWghDetailsContainer">					  	
+	{*
+	<!--
+	Parameters:
+	
+	1. logosXML - URL encoded path to the location of the xml with the logos
+	2. logosDir - the location of the logo images (if the full path to the image is supplied in the XML this should be left empty)
+	3. logoHorizontalGap - the space in pixels between two adjacent image
+	4. scrollSpeed - the speed for scrolling the logos (if negative the logos scroll left to right)
+	-->
+	*}		
+	<object width="{$swfWidth}" height="{$swfHeight}">
+		<param name="movie" value="{$websiteUrl}/_flash/JobnetLogoScroller.swf">
+		<param name="scale" value="noscale">
+		<param name="salign" value="tl">
+		{if $transparent}<param name="wmode" value="transparent">{/if}
+		<param name="bgcolor" value="{$bgColor}">
+		<param name="FlashVars" value="logosXML={$websiteUrl}/_xml_global/youri2_1_logos.xml&logosDir={$websiteUrl}/_images_upload&logoHorizontalGap={$logoHorizontalGap}&scrollSpeed={$scrollSpeed}">
+		<embed src="{$websiteUrl}/_flash/JobnetLogoScroller.swf" 
+					 width="{$swfWidth}" 
+					 height="{$swfHeight}" 
+					 scale="noscale" 
+					 salign="tl" 
+					 {if $transparent}wmode="transparent"{/if}
+					 bgcolor="{$bgColor}"	
+					 FlashVars="logosXML={$websiteUrl}/_xml_global/{$xmlFileName}&logosDir={$websiteUrl}/_images_upload&logoHorizontalGap={$logoHorizontalGap}&scrollSpeed={$scrollSpeed}">
+		</embed>
+	</object>  	  	  	
+  </div>  
+		
+</div>

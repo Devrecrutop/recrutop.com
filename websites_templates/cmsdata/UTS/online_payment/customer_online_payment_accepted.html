@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>ONLINE PAYMENT</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+<!--
+function hidestatus(){
+window.status='Otys e-Recruiting Systems'
+return true
+}
+if (document.layers)
+document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+document.onmouseover=hidestatus
+document.onmouseout=hidestatus
+-->
+</SCRIPT>
+</head>
+<body>
+<!--uts:begin inner-->
+<script language="Javascript1.2">
+{literal}
+function check_formstate(tabcode){
+layerShow(tabcode);
+//switch_tab(tabcode);
+}
+function printWindow(){
+	browserVersion = parseInt(navigator.appVersion)
+	if (browserVersion >= 4) window.print()
+}
+function pay() {
+alert('PAY');
+}
+function continue_with(){
+{/literal}
+	location = '{$continueurl}';
+{literal}
+}
+function goto_vacancy_list(){
+{/literal}
+	location = '{$vacancylisturl}';
+{literal}
+}
+{/literal}
+// -->
+</script>
+
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<div class="outer">
+<h1 class="title">[t]Pay online[/t]:</h1>
+<!--END_PageTitle-->
+
+<!--START PAYMENT/OVERVIEW-->
+{if $validation_error == 1}
+<form method="post" action="">
+<div class="error">
+[t]Not expected transaction errors![/t]<br>
+[t]Data validation wasn't succesfull![/t]<br>
+	{if $orderID && $payid}
+		[t]If necessary, report this problem. Your Order #:[/t]{$orderID}
+	{/if}
+</div>
+</form>
+{else}
+<h2 class="subHeader">[t]Your payment was accepted[/t]</h2>
+<div class="text">
+<span>[t]Your Order number is:[/t]</span>{$orderID}
+<span>{if $payid}[t]Confirmation number is:[/t]</span>{$payid}{/if}
+<p>[t]Please click on 'Continue' in order to insert your vacancy in our database![/t]</p>
+</div>
+</form>
+{/if}
+<!--END STATUS CHANGE/OVERVIEW-->
+
+<div class="buttonContainer">
+{if $validation_error == 1}
+<input name="button" class="button" type="button" onClick="goto_vacancy_list();" value="[tb]Continue[/tb]">
+{else}
+<input name="button" class="button" type="button" onClick="continue_with();" value="[tb]Continue[/tb]">
+{/if}
+</div>
+
+<iframe name="actionframe" id="actionframe" width="1" height="1" border="0" frameborder="NO"></iframe>
+
+<!--uts:end inner-->
+</body>
+</html>

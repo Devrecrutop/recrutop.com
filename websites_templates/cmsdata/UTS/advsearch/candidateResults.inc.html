@@ -1,0 +1,467 @@
+{* candidate results include template *}
+<if $dbg_googlemaps && $gmicnt && $gmkey && ( [uts:show_googlemaps] || $requestOrigin == "googlemaps" ) >
+<script src="//maps.google.com/maps?file=api&amp;v=2&amp;key={$gmkey|escape}&sensor=false" type="text/javascript"></script>
+<script type="text/javascript">
+var map;
+var geocoder;
+var latlngbounds;
+var first=true;
+var baseIcon;
+var vUseGoogleMaps = true;
+var markerList=new Array();
+var pointsList = new Array();
+var zoomOnClick='[uts:zoom_on_click]';
+//{literal}
+$(document).ready(function() {
+  // initialize google maps here
+    if (GBrowserIsCompatible()) {
+        map=new GMap2(document.getElementById("map_canvas"));
+        map.setCenter(new GLatLng(37.4419, -122.1419), 4);
+        map.setUIToDefault();
+        geocoder = new GClientGeocoder();
+        latlngbounds = new GLatLngBounds();
+        baseIcon = new GIcon(G_DEFAULT_ICON);
+        //baseIcon.shadow = "//www.google.com/mapfiles/shadow50.png";
+        baseIcon.shadow = "//www.yourit.nl/_images_global/gm/shadow.png"
+        //baseIcon.iconSize = new GSize(20, 34);
+        baseIcon.iconSize = new GSize(21, 40);
+        //baseIcon.shadowSize = new GSize(37, 34);
+        baseIcon.shadowSize = new GSize(68, 42);
+        baseIcon.iconAnchor = new GPoint(9, 34);
+        baseIcon.infoWindowAnchor = new GPoint(9, 2);
+        displayMarkers();
+        center = latlngbounds.getCenter();
+        zoom = map.getBoundsZoomLevel(latlngbounds);
+        //map.setCenter(latlngbounds.getCenter(), map.getBoundsZoomLevel(latlngbounds));
+    }
+
+});
+
+
+function displayMarkers() {
+  //{/literal}
+  <foreach from=$results item=r>
+  <if $r.data._gmnumber>
+
+  var candidate=new Object();
+  candidate.gmnumber        = '{$r.data._gmnumber|escape:"javascript"}';
+  
+  <if $canWorkWithPersonalData  && $r.data.always_anonymous != 1>
+  candidate.name            = '{$r.data._name|escape:"javascript"}';
+  candidate.gmaddress       = '{$r.data._gmaddress|escape:"javascript"}';      
+  //*this was out of condition  Task #168244: CV Search on the website shows adress details in google map, whilst published ananymous*}
+  <else>  
+  //Task #174778: Building Jobs - Google Maps in CV search - stripping letters from zip so we wont get to street
+  var stripped_zip = new String('{$r.data.postcode|escape:"javascript"}'); 
+  stripped_zip = stripped_zip.replace(/[^0-9]/g, ''); 
+    
+   //{literal}
+    if(stripped_zip.length == 4){
+        stripped_zip += ", NL";
+    }    
+   //{/literal}
+  candidate.name             = '{$r.data.kb_uid|escape:"javascript"}';
+  candidate.gmaddress       = '{$r.data.woonplaats|escape:"javascript"}, ' + stripped_zip;
+  
+  
+  //{* this was out of condition  Task #168244: CV Search on the website shows adress details in google map, *} whilst published ananymous
+    
+  
+  </if>
+  candidate.location        = '{$r.data.woonplaats|escape:"javascript"}';
+  candidate.description     = '{$r.data.chapo|truncate:[uts:truncate_description]|escape:"javascript"}';
+  //candidate.detail_link     = '{$handler}/command/litedetail/id/{$r.recid}';
+  candidate.detail_link     = '/index.php/page/candetail/bb/1/command/start/id/{$r.recid}/origin/advsearchcvs';
+
+  //{literal}
+  if (candidate.gmnumber) {
+    if (candidate.gmaddress) {
+      showAddress(candidate);
+    } else {
+    //?
+    }
+  }
+  //{/literal}
+  </if>
+  </foreach>
+  //{literal}
+}
+function createMarker(point, candidate) {
+  // Create a lettered icon for this point using our icon class
+  var letter=candidate.gmnumber;
+  var letteredIcon = new GIcon(baseIcon);
+  letteredIcon.image = "//www.yourit.nl/_images_global/gm/image" + letter + ".png";
+  // Set up our GMarkerOptions object
+  markerOptions = { icon:letteredIcon };
+  var marker = new GMarker(point, markerOptions);
+  GEvent.addListener(marker, "click", function() {
+    if (zoomOnClick=='1') {
+      marker.showMapBlowup();
+    }else{
+      marker.openInfoWindowHtml('<p class="gmTitle">'+candidate.name+'</p><p class="gmLocation">'+candidate.location+'</p><p class="gmDescription">'+candidate.description+'</p><p><a href="'+candidate.detail_link+'" class="gmLink" target="_top">[th]Go to CV detail[/th]<'+'/a></p>', {maxWidth:200} );
+    }
+  });
+  return marker;
+}
+
+
+function showAddress(candidate) {
+  geocoder.getLatLng(
+  candidate.gmaddress,
+  function(point) {
+    if (!point) {
+      //alert(address + " not found");
+    } else {
+      if (first) {
+        //map.setCenter(point, 4);
+        if (first) first=false;
+      }
+      //var marker = new GMarker(point);
+      latlngbounds.extend(point);
+      map.setCenter(latlngbounds.getCenter(), map.getBoundsZoomLevel(latlngbounds));
+      pointsList.push(point);
+      var marker=createMarker(point, candidate);
+      markerList.push({point:point, gmnumber:candidate.gmnumber});
+      map.addOverlay(marker);
+    }
+  }
+);
+}
+//{/literal}
+</script>
+<else>
+<script type="text/javascript">
+var vUseGoogleMaps = false;
+</script>
+</if>
+
+<script type="text/javascript">
+var arIndexPhp='{$indexPhp|escape:javascript}';
+//{literal}
+
+function viewItemOnMap(itemchar) {
+    //alert(itemchar);
+    var divobj=document.getElementById('actGoogleMaps');
+	$.scrollTo('#aToggleMap', 500);
+    if (divobj.style.display=='none') {
+        //animatedcollapse.toggle('actGoogleMaps', '');
+        divobj.style.display='block';
+    }
+    //alert(markerList.length+' '+itemchar);
+    for(i=0;i<markerList.length;i++) {
+        if (markerList[i].gmnumber==itemchar) {
+            map.setCenter(markerList[i].point);
+            break;
+        }
+    }
+
+}
+
+function performAction() {
+    var action=$('#candAdvDetailActionSelect').val();
+    if (action=='') {
+        alert('[th]Please select a batch action[/th]');
+        return;
+    }
+    //alert(action);
+
+    var lst=$('input.chbBatchActions:checked');
+    var len=lst.length;
+    if (len==0) {
+        alert('[th]No results are selected[/th]');
+        return;
+    }
+    //alert('len='+len);
+    var aa=new Array();
+    var i;
+    for(i=0;i<len;i++) {
+        aa.push($(lst[i]).val());
+    }
+    var cids=aa.join('|');
+    //alert(cids);
+    $('#ppVirtualLink').attr('href', arIndexPhp+'page/canbactions/bb/1/command/showgui/action/'+action+'/cids/'+cids);
+    $('#ppVirtualLink').trigger('click');
+}
+//{/literal}
+</script>
+
+<!-- /UTS/advsearch/candidateResults.inc.html -->
+{* start googlemaps *}
+<!-- wessel googlemaps test: $dbg_googlemaps: {$dbg_googlemaps} / $gmicnt: {$gmicnt} / $gmkey: {$gmkey}   -->
+<if $dbg_googlemaps && $gmicnt && $gmkey && ( [uts:show_googlemaps] || $requestOrigin == "googlemaps" ) >
+<div class="actGm">
+	<if $requestOrigin != "googlemaps">	                                                                                           {*85-collapsed, 86-expanded*}
+	<script type="text/javascript" defer="true">animatedcollapse.addDiv('actGoogleMaps', 'fade=1,persist=0,hide={if [uts:collapse_googlemaps] == "86"}0{else}1{/if}')</script>
+	<div class="actEqueryTitle actGmTitle"><a href="javascript:animatedcollapse.toggle('actGoogleMaps', '')" id="aToggleMap">[t]Show results on a map[/t]</a></div>
+	</if>
+	<div class="text actText actTextGm Gm" id="actGoogleMaps">
+		<div id="map_canvas" style="width: 100%; height: 300px"></div>
+	</div>
+</div>
+</if>
+{* end googlemaps *}
+
+{* start batch actions *}
+<if $loggedInAsCP>                                                                                                                  {*87-collapsed, 88-expanded*}
+	<script type="text/javascript" defer="true">animatedcollapse.addDiv('actBatchActions', 'fade=1,persist=0,hide={if [uts:collapse_batchactions] == "88"}0{else}1{/if}')</script>
+<h2 class="subHeader actSh actShBa"><a href="javascript:animatedcollapse.toggle('actBatchActions', '')" id="aToggleBatchActions"><img src="/_images_global/expand_triangle.gif" border="0"> [t]Batch actions[/t]</a></h2>
+	<div class="text actText actTextBa Ba" id="actBatchActions">
+		[t]Perform a batch action on selected CVs[/t]:
+		<select name="batchAction" id="candAdvDetailActionSelect">
+			<option value="">[thn](select action)[/thn]</option>
+			{if $cp.allow_statuses_change}<option value="changeStatus">[thn]change status[/thn]</option>{/if}
+		</select>
+		<img style="cursor:pointer;" src="/_images_global/go.png" align="middle" alt="[thn]Perform the action selected[/thn]" onclick="performAction()">
+	</div>
+</if>
+{* end batch actions *}
+
+
+{* START SEARCH RESULTS *}
+
+{* No results *}
+<if !$resultCnt>
+	<h2 class="subHeader actSh actShNj">[th]No CVs found[/th]</h2>
+	<div class="text actText actTextNj">[th]No CVs were found. Please try to decrease the number of conditions in your query.[/th]</div>
+<else>
+
+	<div class="actSResContainer">
+	{* Results *}
+	<if $requestOrigin != "googlemaps">
+		{if $loggedInAsCP}
+			<div class="text actText actTextBa actTextBaSelectAll"><a href="#" onclick="$('input.chbBatchActions').attr('checked', true)">[thn]select all[/thn]</a></div>{/if}
+<div class="cleaner actSrCleaner"></div>
+				<foreach from=$results item=r>
+					<div class="itemContainer actIc actIcCvs">
+						<div class="itemTitleContainer actItc actItcCvs">
+							<div class="actCvsTools">
+								{if $loggedInAsCP}
+									<input type="checkbox" name="batchactions" class="chbBatchActions" value="{$r.recid}" title="[thn]Select for batch action[/thn]" style="margin-right:5px;margin-left:5px;">
+								{/if}
+								<div class="actCvsFlag">
+									{if $r._lastViewed}
+										<span class="csrFlagViewed" title="[thn]You have already inspected this CV.[/thn]">[t]viewed[/t]</span>
+									{/if}
+									{if $r.data._custApplCount gt 0}
+										<span class="csrFlagApplicant" title="[thn]This candidate applied for one or more jobs of your company.[/thn]">[t]appl[/t]</span>
+									{/if}
+									{if $r._isNew}
+										<span class="csrFlagNew" title="[thn]This candidate is new since your last login.[/thn]">[t]new[/t]</span>
+									{/if}
+								</div>
+							</div>
+							<if [uts:show_stars]>
+								<div class="actSResStars actSResStarsCvs"><img src="/_images_global/trans_stars/{$r.starsImg}" alt="{$r.scorep}%" title="[th]Score[/th]: {$r.scorep}%"></div>
+							<else>
+								<div class="actSResScore actSResScoreCvs"><img src="/_images_global/relevance/relevance-{$r.roundedScore}.png" alt="{$r.scorep}%" title="[th]Score[/th]: {$r.scorep}%"></div>
+							</if>
+							<h3 class="itemTitle actItemTitle actItCvs">				
+								<if $canWorkWithPersonalData && $r.data.always_anonymous != 1>
+{* 2011-06-08, task 137005, by Tomas - altered the A elements title and text to display title when 'allwaysUseCvTitle' is set
+									<a class="cluetips loggedInCvs" {if [uts:show_cluetip]}rel="{$handler}/command/cluetipdetail/id/{$r.recid}/"{/if} title="{$r.data._name|escape}" href="{$indexPhpRoot}page/candetail/bb/1/command/start/id/{$r.recid}/origin/advsearchcvs">{$r.data._name|escape}</a>
+*}
+									<a class="cluetips loggedInCvs" {if [uts:show_cluetip]}rel="{$handler}/command/cluetipdetail/id/{$r.recid}/"{/if} title="{if $allwaysUseCvTitle}{if $r.data.public_cv_title}{$r.data.public_cv_title|escape}{elseif $r.data.kb_uid}{$r.data.kb_uid|escape}{else}[t]Candidate[/t]{/if}{else}{$r.data._name|escape}{/if}" href="{$indexPhpRoot}page/candetail/bb/1/command/start/id/{$r.recid}/origin/advsearchcvs">{if $allwaysUseCvTitle}{if $r.data.public_cv_title}{$r.data.public_cv_title|escape}{elseif $r.data.kb_uid}{$r.data.kb_uid|escape}{else}[t]Candidate[/t]{/if}{else}{$r.data._name|escape}{/if}</a>
+								<else>
+{* 2011-06-08, task 137005, by Tomas - altered the A elements title and text to display title when 'allwaysUseCvTitle' is set
+									<a class="cluetips" {if [uts:show_cluetip]}rel="{$handler}/command/cluetipdetail/id/{$r.recid}/"{/if} title="{if $usePublicCvTitle && $r.data.public_cv_title}{$r.data.public_cv_title|escape}{else}{$r.data.kb_uid|escape}{/if}" href="{$indexPhpRoot}page/candetail/bb/1/command/start/id/{$r.recid}/origin/advsearchcvs">{if $usePublicCvTitle && $r.data.public_cv_title}{$r.data.public_cv_title|escape}{elseif $r.data.kb_uid}{$r.data.kb_uid|escape}{else}[t]Candidate[/t]{/if}</a>
+*}
+									<a class="cluetips" {if [uts:show_cluetip]}rel="{$handler}/command/cluetipdetail/id/{$r.recid}/"{/if} title="{if $allwaysUseCvTitle || ($usePublicCvTitle && $r.data.public_cv_title)}{$r.data.public_cv_title|escape}{else}{$r.data.kb_uid|escape}{/if}" href="{$indexPhpRoot}page/candetail/bb/1/command/start/id/{$r.recid}/origin/advsearchcvs">{if $allwaysUseCvTitle || ($usePublicCvTitle && $r.data.public_cv_title)}{$r.data.public_cv_title|escape}{elseif $r.data.kb_uid}{$r.data.kb_uid|escape}{else}[t]Candidate[/t]{/if}</a>
+								</if>
+							</h3>
+							<if [uts:show_public_cv_title]>
+							{if $r.data.public_cv_title}
+							<h3 class="itemTitle actItemTitle actItCvs">{$r.data.public_cv_title|escape}</h3>
+							{/if}							
+							</if>
+						<div class="cleaner actItcCvsCleaner"></div>
+						</div>
+						<table class="cvSearchResultsItemRightTable" cellpadding="0" cellspacing="0">
+							<if $r.data.ref_nr>
+								<tr class="{cycle name="rightTableLines" values="csrLineOdd,csrLineEven"}">
+									<td class="csrLeftCol">[t]ref. nr.[/t]</td>
+									<td>#{$r.data.ref_nr}</td>
+								</tr>
+							</if>
+							<if [uts:show_last_contact_date]>
+							<tr class="{cycle name="rightTableLines" values="csrLineOdd,csrLineEven"}">
+								<td class="csrLeftCol">[t]last contact date[/t]</td>
+								<td>{$r.data._lastContactDate|date_format:"%d-%m-%Y"|default:'[t]N/A[/t]'}</td>
+							</tr>
+							</if>
+							<if [uts:show_registered]>
+							<tr class="{cycle name="rightTableLines" values="csrLineOdd,csrLineEven"}">
+								<td class="csrLeftCol">[t]registered[/t]</td>
+								<td>
+									{* start registration date *}
+									{if $r.data._registered_days_ago == 0}
+									[th]today[/th]
+									{elseif $r.data._registered_days_ago == 1}
+									[th]yesterday[/th]
+									{elseif $r.data._registered_days_ago le 5}
+									{t 1=$r.data._registered_days_ago count=$r.data._registered_days_ago}[t]%1 days ago[/t]{/t}
+									{else}
+									{$r.data._registered|date_format:"%d-%m-%Y"|default:'[t]N/A[/t]'}
+									{/if}
+									{* end registration date *}
+								</td>
+							</tr>
+							</if>
+							<if [uts:show_available] && $availEnabled>
+								<tr class="{cycle name="rightTableLines" values="csrLineOdd,csrLineEven"}">
+									<td class="csrLeftCol">[t]available[/t]</td>
+									<td>{if $r.data.is_available}[t]Yes[/t]<img style="margin-left:10px;" src="/_images_global/led-green.png" alt="green" title="[thn]Available[/thn]">{else}[t]No[/t] <img style="margin-left:10px;" src="/_images_global/led-red.png" alt="red" title="[thn]Not available[/thn]">{/if}</td>
+								</tr>
+							</if>
+							<if [uts:show_available_from] && $availEnabled>
+							<tr class="{cycle name="rightTableLines" values="csrLineOdd,csrLineEven"}">
+								<td class="csrLeftCol">[t]available from[/t]</td>
+								<td>
+									{if $r.data.is_available_per_direct == "1" && $r.data.is_available}
+										[t]per direct[/t]
+									{else}
+										{if $r.data._availableFrom|date_format:"%d-%m-%Y" != '01-01-1970' && $r.data.is_available}
+                                                                			{$r.data._availableFrom|date_format:"%d-%m-%Y"}
+                                                                		{else}
+                                                                			[t]N/A[/t]
+                                                                		{/if}
+									{/if}
+                                                                </td>
+							</tr>
+							</if>
+
+							<if [uts:show_popularity]>
+							<tr class="{cycle name="rightTableLines" values="csrLineOdd,csrLineEven"}">
+								<td class="csrLeftCol">[t]popularity[/t]</td>
+								<td><img src="/_images_global/hot/{if $r.data._recount lt 5}hot-{$r.data._recount}.png{else}hot-5.png{/if}" alt="popularity" title="[t]Popularity[/t]: {$r.data._recount}"></td>
+							</tr>
+							</if>
+
+                            <if [uts:show_first_media_slider] && $r.data._slider_thumbnail>
+                            <tr class="{cycle name="rightTableLines" values="csrLineOdd,csrLineEven"}">
+                            <td class="csrLeftCol">[t]Picture[/t]</td>
+                            <td>
+                                <img src="[website]/_images_upload/{$r.data._slider_thumbnail|escape}" />
+                            </td>
+                            </tr>
+							<elseif [uts:show_picture] && $r.data.foto>
+							<tr class="{cycle name="rightTableLines" values="csrLineOdd,csrLineEven"}">
+								<td class="csrLeftCol">[t]Picture[/t]</td>
+								<td>
+									<img src="https://bo17.otys.nl/adm/hta/parseimage.php?filename=/opt/data/{$klantcode}/files/{$r.data.foto}" />
+								</td>
+							</tr>
+							</if>
+
+						</table>
+
+						<div class="cvSearchResultsItemLeftTable">
+
+<if $r.data._kb_uid>
+							<div class="itemLine actIl actIlCvs actIlCvsRef">
+								<label>[t]reference[/t]</label>
+								<span>{$r.data.kb_uid|escape}</span>
+								<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+							</div>
+
+
+</if>
+
+							<if [uts:show_location] && $r.data.woonplaats>
+								<div class="itemLine actIl actIlCvs actIlCvsCity">
+									<label>[t]city[/t]</label>
+									<span>{$r.data.woonplaats|escape}</span>
+									<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+								</div>
+							</if>
+							<if [uts:show_description] && $r.data.chapo>
+								<div class="itemLine actIl actIlCvs actIlCvsDescr">
+									<label>[t]description[/t]</label>
+									<span>{$r.data.chapo|strip_tags|truncate:[uts:truncate_description]}</span>
+									<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+								</div>
+							</if>
+							<if $r.data._gmnumber && $dbg_googlemaps && [uts:show_googlemaps]>
+								<div class="itemLine actIl actIlCvs actIlCvsMedia">
+									<label>[t]media[/t]</label>
+									<span><div class="itemFooterWord actIFw actIFwMap"><a href="javascript:viewItemOnMap('{$r.data._gmnumber|escape}')" title="[th]Show on map[/th]"><img src="//www.yourit.nl/_images_global/gm/image{$r.data._gmnumber|escape}.png" border="0" alt="{$r.data._gmnumber|escape}"></a></div></span>
+									<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+								</div>
+							</if>
+							<if $r.data._simpleOnt.FUNCTION && in_array("functions", $oclist) >
+								<div class="itemLine actIl actIlCvs actIlCvsFunct">
+									<label>[t]functions[/t]</label>
+									<span>{$r.data._simpleOnt.FUNCTION|escape|truncate:200}</span>
+									<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+								</div>
+							</if>
+							<if $r.data._simpleOnt.SECTOR && in_array("sectors", $oclist) >
+								<div class="itemLine actIl actIlCvs actIlCvsSect">
+									<label>[t]sectors[/t]</label>
+									<span>{$r.data._simpleOnt.SECTOR|escape|truncate:200}</span>
+									<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+								</div>
+							</if>
+							<if $r.data._simpleOnt.EDUCATION && in_array("education", $oclist) >
+								<div class="itemLine actIl actIlCvs actIlCvsEdu">
+									<label>[t]education[/t]</label>
+									<span>{$r.data._simpleOnt.EDUCATION|escape|truncate:200}</span>
+									<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+								</div>
+							</if>
+							<if $r.data._simpleOnt.COMPETENCE && in_array("competences", $oclist) >
+								<div class="itemLine actIl actIlCvs actIlCvsComp">
+									<label>[t]competences[/t]</label>
+									<span>{$r.data._simpleOnt.COMPETENCE|escape|truncate:200}</span>
+									<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+								</div>
+							</if>
+							<if $r.data._simpleOnt.SOFTCOMPETENCE && in_array("softcompetences", $oclist) >
+								<div class="itemLine actIl actIlCvs actIlCvsSoft">
+									<label>[t]soft competences[/t]</label>
+									<span>{$r.data._simpleOnt.SOFTCOMPETENCE|escape|truncate:200}</span>
+									<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+								</div>
+							</if>
+							<if $r.data._simpleOnt.LANGU0AGE && in_array("languages", $oclist) >
+								<div class="itemLine actIl actIlCvs actIlCvsLang">
+									<label>[t]languages[/t]</label>
+									<span>{$r.data._simpleOnt.LANGUAGE|escape|truncate:200}</span>
+									<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+								</div>
+							</if>
+
+<if $r.matchcriteria>
+  
+    <foreach from=$r.matchcriteria key=matchCriteriaTable item=matchCriteria>
+      
+        <div class="itemLine actIl actIlCvs actIlCvsRef">
+                <label>{$matchCriteria.mc_title}</label>
+                <span>
+                    <foreach from=$matchCriteria.values item=mcValue name=matchcrit>
+                            {if $smarty.foreach.matchcrit.iteration > 1},{/if} {$mcValue}
+                            
+                    </foreach>
+                </span>
+                <div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+        </div>
+    </foreach>
+</if>
+
+							<if $useTags && [uts:display_meta_tags] && count($r.tags)>
+								<div class="itemLine actIl actIlCvs actIlCvsDescr">
+									<label>[t]Tags[/t]</label>
+									<foreach from=$r.tags item=tag><span><a href="{$handler}/command/searchtag/tag/{$tag.name}">#{$tag.name}</a></span> </foreach>
+									<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+								</div>
+							</if>
+
+
+						</div>
+						<div class="cleaner actIcCleaner actIcCvsCleaner"></div>
+					</div>
+				</foreach>
+			</div>
+		</if>
+		{* end actual result list *}
+</if>
+<a href="" rel="prettyPopin" style="display:none;" id="ppVirtualLink"></a>

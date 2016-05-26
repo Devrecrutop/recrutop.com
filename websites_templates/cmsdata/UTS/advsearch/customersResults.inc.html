@@ -1,0 +1,61 @@
+{* vacancy results include template *}
+
+<div class="actSResContainer">
+ <!-- /UTS/advsearch/customersResults.inc.html standard -->
+
+<if !$resultCnt>
+<h2 class="subHeader actSh actShNj">[th]No customers found[/th]</h2>
+<div class="text actText actTextNj">[th]No customers were found. Please try to decrease the number of conditions in your query.[/th]</div>
+<else>
+    
+<div class="cleaner actSrCleaner"></div>
+{* actual result list *}
+
+<foreach from=$results item=r>
+<div class="itemContainer actIc{if $r.premium_network} actIcPremium{/if}">
+
+  <h3 class="itemTitle actItemTitle">
+  <a class="cluetips" {if [uts:show_cluetip]}rel="{$handler}/command/cluetipdetail/id/{$r.id}/"{/if} href="{$r.url}" title="{$r.werkgever|escape}">
+  {$r.werkgever|escape}
+  </a>
+	{if $r.premium_network}<span class="premiumText">[t]TOP bedrijf![/t]</span>{/if}
+  </h3>
+	{if $r.network_logo && [uts:show_logo]}
+		<a class="cluetips" {if [uts:show_cluetip]}rel="{$handler}/command/cluetipdetail/id/{$r.id}/"{/if} href="{$r.url}" title="{$r.werkgever|escape}">
+	    	<div class="actItemCustomerLogo"><div class="itemImage actItemImage{if $r.premium} actIImagePremium{/if}"><img src="/_images_upload/{$r.network_logo|escape}" alt="{$r.werkgever|escape}"></div></div>
+		</a>
+	{/if}
+  
+  {* NOT USED HERE
+  <div class="itemWord actIw">{$r.network_text|escape:"javascript"}</div>
+  *}
+ 
+  <div class="itemTextLogoContainer"> 
+    <div class="itemWord actIw">{$r.portfolio_text|strip_tags|truncate:[uts:truncate_description]}</div>
+  </div>
+  
+	<div class="cleaner"></div>
+  {*
+  <div class="itemWord actIw actCustIwRef">{$r.reference|escape:"javascript"}</div>
+  *}
+  
+  <if $r.__qa>
+    <foreach from=$r.__qa item=qca name=custQuestion>
+    <if $qca.customerAnswer>
+    <div class="itemWord actIw actIwQ{if $smarty.foreach.custQuestion.first} actIwQfirst{/if}{if $smarty.foreach.custQuestion.last} actIwQlast{/if}">
+      <div class="customerQuestion">{$qca.Question|escape}</div>
+      <div class="customerAnswer">{$qca.customerAnswer|strip_tags}</div>
+    </div>
+    </if>  
+    </foreach>
+  </if>    
+  
+<div class="cleaner"></div>
+</div>
+</foreach>
+
+{* end actual result list *}
+
+</if>
+
+</div>

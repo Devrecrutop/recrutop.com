@@ -1,0 +1,59 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Front Office Translation Service</title>
+</head><body>
+<!--uts:begin inner-->
+
+<div>
+
+<h2>[t]Client Translator Services[/t]</h2>
+<h3>[t]Translation for[/t] <strong>{$client}</strong></h3>
+
+<ul>
+<li><b>[t]On Website[/t]</b>: {$belong_site}</li>
+<li><b>[t]For page[/t]</b>: {$pagename}</li>
+<li><b>[t]Language[/t]</b>: to {$target_language}</li>
+</ul>
+
+<form method="post" action="{$handler}/command/edit_price">
+<ul>
+<li>[t]Word count[/t]: <span style="font-weight: bold;">{$word_count} [t]words[/t]</span></li>
+{if $estimated_price}
+<li>[t]Value accourding to "price/word"[/t]: <span style="font-weight: bold;">{$estimated_price} {$currency_name}</li>
+{/if}
+<li>
+[t]Actual price[/t]: <input type="text" name="actual_price" value="{$actual_price|escape}" size="6" style="text-align: right;" > {$actual_price_currency_name}
+<input type="hidden" name="actual_price_currency" value="{$actual_price_currency}" >
+<input type="submit" value="[t]Change price[/t]">
+</li>
+</form>
+
+</ul>
+
+<div style="margin-bottom: 0.8em;">
+
+{if $access_level >= 1}
+<input type="button" value="[t]Edit translation[/t]" onclick="window.location='{$handler}/command/edit/no_overview/1'">
+<input type="button" value="[t]Send translation[/t]" onclick="window.location='{$handler}/command/send'">
+{/if}
+
+{if $access_level >= 2 && !$is_live}
+<input type="button" value="[t]Put translation on live[/t]" onclick="window.location='{$handler}/command/publish'">
+{/if}
+
+{if $access_level >= 3 && $is_live}
+<input type="button" value="[t]Correct live translation[/t]" onclick="window.location='{$handler}/command/correct'">
+{/if}
+
+</div>
+
+<div>
+
+<input type="button" value="[t]View all translations[/t]" onclick="window.location='{$handler}/command/list'">
+
+</div>
+
+</div>
+
+<!--uts:end inner-->
+</body></html>

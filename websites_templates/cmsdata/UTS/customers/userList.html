@@ -1,0 +1,49 @@
+{* req. ext. javascript: JQueryBase,JQueryClueTip *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<style type="text/css">
+{literal}
+tr.sqlTblRowHovered {background-color:#e0e0e0;}
+{/literal}
+</style>
+
+
+
+<div class="outer aplOuter aplProfOuter">
+ <!-- /UTS/customers/usersList.html -->
+<h1 class="title aplTitle aplProfTitle">[t]User list[/t]</h1>
+{$menu}
+<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+    <tr>
+        <th class="aplTblHeader aplTblHeaderDate">[t]Firstname[/t]</th>
+        <th class="aplTblHeader aplTblHeaderDate">[t]Lastname[/t]</th>
+        <th class="aplTblHeader aplTblHeaderDate">[t]Email[/t]</th>
+        <th class="aplTblHeader aplTblHeaderDate">[t]Active[/t]</th>
+        <th class="aplTblHeader aplTblHeaderDate sqOutChan">[t]Edit[/t]</th>
+    </tr>
+    <foreach from=$userlist item=user>
+    <tr class="{cycle values='aplListItemOdd,aplListItemEven'} {if $smarty.foreach.aplList.last}aplListItemLast{else}{/if} sqTblRow" id="sqtr{$user.id}">
+        <td>{$user.wg_cp_voornaam}</td>
+        <td>{if $user.wg_cp_tussenvoegsel}{$user.wg_cp_tussenvoegsel} {/if}{$user.wg_cp_achtern}</td>
+        <td>{$user.wg_cp_email}</td>
+        <td>{if $user.allow_www_login && $user.is_webuser}[t]yes[/t]{else}[t]no[/t]{/if}</td>
+        <td><a href="{$urlroot}/index.php/page/customers_ext/command/editAddUsers/userid/{$user.id}/bb/1">[t]edit[/t]</a></td>
+    </tr>
+	<foreachelse>
+	<tr>
+		<td class="aplNoItems" colspan="6">[t]No items can be displayed[/t]</td>
+	</tr>
+	</foreach>
+</table>
+<input class="button" type="button" onclick="window.location='{$urlroot}/index.php/page/customers_ext/command/editAddUsers/bb/1'" value="Create new user" title="Sectors">
+
+
+</div>
+<!--uts:end inner-->    
+</body>
+</html>

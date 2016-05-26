@@ -1,0 +1,137 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!--uts:begin inner-->
+
+<!--START_9-->
+<!--UT: Startpage-->
+<div class="outer custOuter custStatsSXOuter">
+<!-- /UTS/customers/statisticsSX.div.html -->
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<h1 class="title custTitle">[t]Statistics[/t]</h1>
+<!--END_PageTitle-->
+[CustomersMenu]
+
+{if $isSupplier && $show_fin_info_fo}
+<h2 class="subHeader">[t]SX statistics[/t]</h2>
+<div id="t-sx-stats" class="t-sx-stats itemContainer">
+<div class="itemWord">
+<span>[t]Current balance[/t]:</span>
+{$sx.currentBallance|string_format:"%.4f"|regex_replace:"/\./":","}
+</div>
+<div class="itemWord">
+<span>[t]Default cost per click[/t]:</span>
+&nbsp;{$sx.costPerClick|string_format:"%.4f"|regex_replace:"/\./":","}
+</div>
+</div>
+{/if}
+
+{if $isClient && $show_credit_info_fo}
+<h2 class="subHeader">[t]Credit information[/t]</h2>
+<table cellspacing="0" cellpadding="0" border="0" class="hTbl">
+<tr>
+<th>[t]Date[/t]</th>
+<th>[t]Description[/t]</th>
+{if $type == 1}
+<th>[t]Views[/t]</th>
+{/if}
+<th>[t]Price[/t]</th>
+</tr>
+
+{foreach from=$credits item=c}
+<tr>
+<td>{$c.start_date|date_format:"%d/%m/%Y"}</td>
+<td>{$c.entity_name}&nbsp;[thg]Views credit[/thg]</td>
+{if $type == 1}<td>{$c.entity_clicks}</td>{/if}
+<td>{$c.entity_price_total}</td>
+</tr>
+{/foreach}
+</table>
+
+{if $type == 1}
+
+  {*TYPE 1 IS LIMIT*}
+  <table cellspacing="0" cellpadding="0" border="0" class="vTbl">
+  <tr>
+    <th>[th]Totaal clicks gekocht[/th]:</th><td>{$totals.clicks_boutht}</td>
+  </tr>
+  <tr>
+    <th>[th]Clicks verbruikt[/th]:</th><td>{$totals.clicks_used}</td>
+  </tr>
+  <tr>
+    <th>[th]Clicks tegoed[/th]:</th><td>{$totals.clicks_remaining}</td>
+  </tr>
+  <tr>
+    <th>[th]Clicks toegekend aan vacatures[/th]:</th><td>{$totals.clicks_jobs}</td>
+  </tr>
+  <tr>
+    <th>[th]Clicks nog toe te kennen aan vacatures[/th]:</th><td>{$totals.clicks_free}</td>
+  </tr>        
+  </table>
+  
+  {*  
+  old version as was before 09.03.2012
+  <table cellspacing="0" cellpadding="0" border="0" class="vTbl">
+  <tr>
+  <th>[th]Total views[/th]:</th><td>{$totals.views}</td>
+  </tr>
+  <tr>
+  <th>[th]Views credit[/th]:</th><td>{$totals.credit}</td>
+  </tr>
+  <tr>
+  <th>[th]Views balance[/th]:</th><td>{$totals.balance|string_format:"%.4f"|regex_replace:"/\./":","}</td>
+  </tr>
+  </table>
+  *}
+{else}
+<table cellspacing="0" cellpadding="0" border="0" class="vTbl">
+<tr>
+<th>[th]Total views[/th]</th><td>:{$totals.clicks}</td>
+</tr>
+<tr>
+<th>[th]Views amount[/th]:</th><td>{$totals.amount|string_format:"%.4f"|regex_replace:"/\./":","}</td>
+</tr>
+<tr>
+<th>[th]Current balance[/th]:</th><td>{$totals.balance|string_format:"%.4f"|regex_replace:"/\./":","}</td>
+</tr>
+</table>
+{/if}
+
+{/if}
+
+<h2 class="subHeader">[t]Current Jobs[/t]</h2>
+{foreach from=$curJobs item=j}
+<div class="itemContainer">
+<h3 class="itemTitle">{$j.job_name}</h3>
+<div class="itemWord">
+<span>[t]Clicks verbruikt voor deze vacature[/t]:</span>
+{if $j.totalViews}
+	{$j.totalViews}
+{else}
+	0
+{/if}
+</div>
+<div class="itemWord">
+<span>[t]views maximum[/t]:</span>
+{if $j.maxViews}
+	{$j.maxViews}
+{else}
+	[t]Undefined[/t]
+{/if}
+</div>
+<div class="itemWord">
+<span>[t]views remaining[/t]:</span>
+{if $j.remainingViews}
+	{$j.remainingViews}
+{else}
+	[t]Undefined[/t]
+{/if}
+</div>
+</div>
+{/foreach}
+
+</div>
+
+<!--END_9-->
+<!--uts:end inner-->

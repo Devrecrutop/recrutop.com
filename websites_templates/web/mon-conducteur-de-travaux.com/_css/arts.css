@@ -1,0 +1,107 @@
+body{
+background-color:#fff;
+}
+a{
+color:#dd9b00;
+}
+#menuCan,
+.hookHeader{
+background-image:url('../_images/monarts/menuCan.gif');
+}
+.button,
+.Searchbutton,
+.pageBody #t7o a{
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VkYjQwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjZjdiMGYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top, #edb400 0%, #cf7b0f 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#edb400), color-stop(100%,#cf7b0f)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #edb400 0%,#cf7b0f 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #edb400 0%,#cf7b0f 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #edb400 0%,#cf7b0f 100%); /* IE10+ */
+background: linear-gradient(to bottom, #edb400 0%,#cf7b0f 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#edb400', endColorstr='#cf7b0f',GradientType=0 ); /* IE6-8 */
+background-color: #edb400; /* Old browsers */
+}
+#logoLink strong{
+color:#181716;
+}
+.candidateItemForNr,
+#logoLink strong span{
+color:#dd9b00;
+}
+#CandidateLoginEmail{
+background-image:url("../_images/monarts/mail.gif");
+}
+#PassWord{
+background-image:url("../_images/monarts/key.gif");
+}
+.sssSearchButton input{
+background-image:url("../_images/monarts/search.gif");
+}
+.webUserHookButton input{
+background-color:#dd9b00;
+}
+#footCan{
+background-color:#ba8303;
+}
+.menulist a:hover, .menulist a.selected, .menulist a:focus, .menulist a.sactive{
+color:#fff;
+}
+#pageCan{
+background-image:url('../_images/monarts/pageCan.png');
+}
+#pageOut{
+background-image:url('../_images/monarts/pageOut.png');
+}
+#footLogo{
+margin-top:5px;
+}
+#t8o a{
+color:#dd9b00;
+}
+#t8o a:hover{
+color:#B78000;
+}
+.pageBody .t50{
+top:15px;
+left:10px;
+}
+.pageBody .t51{
+left:153px;
+top:35px;
+}
+.pageBody .t52{
+left:293px;
+top:5px;
+}
+.pageBody .t53{
+right:-20px;
+top:5px;
+}
+.pageBody #t7o h2{
+background-color:#798a93;
+}
+.pageBody #t7o{
+background-image:url('../_images/monarts/hardHead.png');
+background-position: 15px 0;
+}
+.optionListTitle a{
+background-image:url('../_images/monarts/plusMinus.png');
+}
+.pageBody #t6i > div strong em{
+color:#dd9b00;
+}
+.pageBody #t3o strong em{
+color:#dd9b00;
+}
+.pageBody .t5i h2{
+color:#dd9b00;
+}
+#logoLink, #logoLink:hover{
+width:650px;
+}
+
+#t4o img{
+position:relative;
+bottom:-16px;
+}

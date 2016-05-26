@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<if !empty($categories)>
+	<div class="hookOuter blogHookCategoriesOuter">
+	<!-- /UTS/blog/hookRssCategories.html -->
+	<div class="hookHeader blogHookCategoriesHeader"><div><h5>[t]Categories[/t]</h5></div></div>
+	<foreach from=$categories item=a>
+	<div class="hookItemContainer blogHookCategoriesContainer">
+	<div class="hookItemTitle blogHookCategoriesLink"><a href="{$a.category_link}">{$a.name|escape}</a></div>
+	</div>
+	</foreach>
+
+	<div class="hookItemContainer blogHookCategoriesRSSContainer">
+	<a href="/index.php/page/blog/bb/1/command/category_rss_list" border="0" title="[t]Blog RSS Categories[/t]"><img src="/_images_global/rssicon.gif" border="0" alt="{$a.name|escape}"><span style="text-decoration: none;"> </span><label>[t]RSS[/t]</label></a>
+	</div>
+	</div>
+</if>
+<!--uts:end inner-->
+</body>
+</html>

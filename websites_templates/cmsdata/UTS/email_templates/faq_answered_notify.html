@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+
+<p>[t]Dear visitor,[/t]</p>
+<p>[t]As you may remember, on {$asked_on} you asked a question on {$client_name} website. That question is now answered. We thank you for your contribution.[/t]</p>
+<p><b>[t]Question[/t]:</b> {$question}</p>
+<p><b>[t]Answer[/t]:</b> {$answer}</p>
+{if $publish == 1}
+<p>[t]Your question is also published on our website. Please follow the link to see it:[/t]</p>
+<a href="{$client_website}">[t]FAQ page[/t]</a>
+{/if}
+{if $publish == 0}
+<a href="{$client_website}">{$client_name}</a>
+{/if}
+
+<p class="utsSignature">
+[t]Regards.[/t]
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

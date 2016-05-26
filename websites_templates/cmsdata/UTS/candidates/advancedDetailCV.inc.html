@@ -1,0 +1,424 @@
+{* CV tab template. Fetched by AJAX only. *}
+<!-- /UTS/candidates/advancedDetailCV.inc.html -->
+<literal>
+<style type="text/css">
+  td.cadCVLeft {
+    font-weight:bold;
+    vertical-align:top;
+  }
+</style>
+</literal>
+
+<script type="text/javascript">
+
+var v_cid = '{$cid}';
+var v_handler = '{$handler}';
+var ext_candidate_contact = '{$ext_candidate_contact}';
+
+
+//<literal>
+
+  function printCv()
+  {      
+//     var w = document.getElementById('actionFrame').contentWindow.document;
+//     w.open();
+//             
+//     // html content
+//     w.write($('#printCv').html()); //set iframe content
+//     w.close();
+        
+    $('#actionFrame').contents().find('html').html($('#printCv').html());     
+      
+    try
+    {  
+       window.frames['actionFrame'].focus();
+       window.frames['actionFrame'].print();      
+    }
+    catch(e)
+    {
+    }       
+  }  
+    
+  
+  function contactCandidateFrm()
+  {    
+    $('#formContact').css("visiblity", "visible");
+    $('#formContact').css("display", "block");
+  }
+  
+  function contactCandidate()
+  {
+
+
+
+    var errMsg = '';
+    var em = $('#_ccf_sender').val();
+    var su = $('#_ccf_subject').val();
+    var msg = $('#_ccf_message').val();
+
+    if ( ext_candidate_contact ) {
+        var company = $('#_ccf_company').val();
+        var _ccf_ContactName = $('#_ccf_ContactName').val();
+        var _ccf_function = $('#_ccf_function').val();
+        var _ccf_phone = $('#_ccf_phone').val();
+        var _ccf_vacancyTitle = $('#_ccf_vacancyTitle').val();
+    }
+
+    
+    if(em.length == 0) errMsg = errMsg + '[th]Enter your e-mail address[/th]\n';       
+    if(su.length == 0) errMsg = errMsg + '[th]Enter subject[/th]\n'; 
+    if(msg.length == 0) errMsg = errMsg + '[th]Enter message[/th]\n';
+
+
+    if ( ext_candidate_contact ) {
+        if(company.length == 0) errMsg = errMsg + '[th]Enter company name[/th]\n';
+        if(_ccf_ContactName.length == 0) errMsg = errMsg + '[th]Enter contact name[/th]\n';
+        if(_ccf_function.length == 0) errMsg = errMsg + '[th]Enter function[/th]\n';
+        if(_ccf_phone.length == 0) errMsg = errMsg + '[th]Enter phone[/th]\n';
+        if(_ccf_vacancyTitle.length == 0) errMsg = errMsg + '[th]Enter vacancy title[/th]\n';
+    }
+    if(errMsg.length > 0)
+    {
+      alert(errMsg);
+      return false;
+    }
+
+    if ( ext_candidate_contact ) {
+	 $.post(v_handler, 		 				 				 
+		    {command: 'contact_candidate', id: v_cid, sender: em, subject: su, message: msg, company: company, _ccf_ContactName: _ccf_ContactName, _ccf_function: _ccf_function, _ccf_phone: _ccf_phone, _ccf_vacancyTitle: _ccf_vacancyTitle },
+        cbContactCandidate,
+        'json'        			
+		    );
+    } else {
+	 $.post(v_handler,
+		    {command: 'contact_candidate', id: v_cid, sender: em, subject: su, message: msg },
+        cbContactCandidate,
+        'json'
+		    );
+    }
+		
+    // clean message and close form            
+    $('#_ccf_message').val('');		    
+  
+    $('#formContact').css("visiblity", "hidden");
+    $('#formContact').css("display", "none");  
+  }
+  
+  function cbContactCandidate(data)
+  {
+    if(data.sent == 1)
+    {
+      alert('[tg]Your message was sent.[/tg]');
+    }
+    else
+    {   
+      alert('[tg]Error when sending message.[/tg]');
+    }
+  }
+
+//</literal>  
+</script>
+
+
+<if $c.main.cv && ($canShowPersonalContact || $showDownloadCv)>
+<div class="candAdvDetailCVdl">
+    {*<span style="font-weight:bold;">[t]download[/t]</span><br>*}
+    <a href="{$handler}/command/downloadcv/id/{$cid}/ctype/{$c.main._cvtype}" title="[th]Download[/th] {$c.main.cv|escape}"><img src="{$c.main._cvimage}" alt="{$c.main.cv|escape}"><!--<img src="/_images_global/dlArrow.png" class="dlArrow">--></a>
+</div>
+</if> 
+
+<div id="printCv">
+    <h2 class="subheader candAdvDetailSH cADTabHPers">[t]Personal details[/t]</h2>
+    <table class="candAdvDetailPersonalTable cADTabTPers" cellpadding="0" cellspacing="0" border="0">
+        <colgroup>
+            <col style="width:140px;">
+            <col>
+        </colgroup>
+
+{* 2011-06-08, task 137005, by Tomas - altered the following condition to display the name only if 'allwaysUseCvTitle' is NOT set *}
+        <if $canShowPersonal && !$allwaysUseCvTitle>
+{if $c.main.voornaam || $c.main.tussenvoegsel || $c.main.achtern}
+            <tr>
+                <td class="cadCVLeft">[t]name[/t]</td>
+                <td>{$c.main.voornaam|escape}{if $c.main.tussenvoegsel} {$c.main.tussenvoegsel|escape}{/if} {$c.main.achternaam|escape}</td>
+            </tr>
+{/if}
+        <else>
+            <tr>
+                <td class="cadCVLeft">[t]candidate[/t]</td>
+                <td>{$c.main._uid}</td>
+            </tr>
+        </if>
+
+        <if $canShowPersonalContact>
+{if $c.main.adres}
+            <tr>
+                <td class="cadCVLeft">[t]address[/t]</td>
+                <td>{$c.main.adres|escape}</td>
+            </tr>
+{/if}
+        </if>
+        <if $canShowPersonal>
+{if $c.main.woonplaats}
+            <tr>
+                <td class="cadCVLeft">[t]city[/t]</td>
+                <td>{$c.main.woonplaats|escape}</td>
+            </tr>
+{/if}
+        </if>
+{if $c.main._dateOfBirth}
+        <tr>
+            <td class="cadCVLeft cadCVdob">[t]date of birth[/t]</td>
+            <td class="cadCVdob">{$c.main._dateOfBirth|date_format:"%d-%m-%Y"}</td>
+        </tr>
+{/if}
+        <if $canShowPersonalContact>
+{if $c.main._phoneConsultant}
+            <tr>
+                <td class="cadCVLeft">[t]telephone[/t]</td>
+                <td>{$c.main._phoneConsultant|escape}</td>
+            </tr>
+{/if}
+        </if>
+    </table>
+
+{if $c.educationHistory}    
+    <h2  class="subheader candAdvDetailSH cADTabHEdu">[t]Education history[/t]</h2>
+    <table class="candAdvDetailPersonalTable cADTabTEdu" cellpadding="0" cellspacing="0" border="0">
+        <colgroup>
+            <col style="width:140px;">
+            <col>
+        </colgroup>
+        <foreach from=$c.educationHistory item=ehi>
+        <tr>
+            <td class="cadCVLeft">{if $ehi.StartDateOriginal}{$ehi.StartDateOriginal}{else}{$ehi._startDate}{/if} {if ($ehi.StartDateOriginal || $ehi._startDate) && ($ehi.EndDateOriginal || $ehi._endDate)}-{/if} {if $ehi.EndDateOriginal}{$ehi.EndDateOriginal}{else} {/if}</td>
+            <td>{$ehi.Degree|escape}{if $ehi.InstituteNameAndPlace && $canShowPersonal} [t]at[/t] {$ehi.InstituteNameAndPlace|escape}{/if}</td>
+	    <td>{if $ehi.itemMatchedWebSearch}<img style="margin-left:7px" src="http://www.jobtree.nl/_images_global/led-green.png" alt="Green" >{/if}</td>
+        </tr>
+        </foreach>
+    </table>
+{/if}
+{if $c.employmentHistory}   
+    <h2  class="subheader candAdvDetailSH cADTabHWork">[t]Employment history[/t]</h2>
+    <table class="candAdvDetailPersonalTable cADTabTWork" cellpadding="0" cellspacing="0" border="0">
+        <colgroup>
+            <col style="width:140px;">
+            <col>
+        </colgroup>
+        <foreach from=$c.employmentHistory item=ehi>
+        <tr>
+            <td class="cadCVLeft">
+                        
+            {if $ehi.StartDateOriginal}{$ehi.StartDateOriginal}{else}{$ehi._startDate}{/if}           
+            {if ($ehi.StartDateOriginal || $ehi._startDate) && ($ehi.EndDateOriginal || $ehi._endDate)}-{/if}             
+            {if $ehi.EndDateOriginal}{$ehi.EndDateOriginal}{else}{$ehi._endDate}{/if}                                                                    
+            
+            </td>
+            <td>
+		<span style="font-weight:bold;">{$ehi.Experience|escape}{if $ehi.EmployerNameAndPlace && $canShowPersonal} [t]at[/t] {$ehi.EmployerNameAndPlace|escape}{/if}</span>
+			<p>{$ehi.ExperienceDescription}</p>
+	    </td>
+	    <td>{if $ehi.itemMatchedWebSearch}<img style="margin-left:7px" src="http://www.jobtree.nl/_images_global/led-green.png" alt="Green" >{/if}</td>
+        </tr>
+        </foreach>
+    </table>
+{/if}   
+
+
+{if $show_overige_level_2 && $canShowPersonal}
+
+  {if $c.other.itemtypes.Reference && [uts:show_reference]}
+  <h2  class="subheader candAdvDetailSH cADTabHRefer">[t]Reference[/t]</h2>
+  <table class="candAdvDetailPersonalTable cADTabTRefer" cellpadding="2" cellspacing="0" border="0">
+  <foreach from=$c.other.itemtypes.Reference item=rfi>
+  <tr>
+    <td class="cadOther">{$rfi.data|escape}</td>
+  </tr>
+  </foreach>
+  </table>
+  {/if}
+  
+  {if $c.other.itemtypes.Hobbies && [uts:show_hobbies]}
+  <h2  class="subheader candAdvDetailSH cADTabHHobby">[t]Hobbies[/t]</h2>
+  <table class="candAdvDetailPersonalTable cADTabTHobby" cellpadding="2" cellspacing="0" border="0">
+  <foreach from=$c.other.itemtypes.Hobbies item=hbi>
+  <tr>
+    <td class="cadOther">{$hbi.data|escape}</td>
+  </tr>
+  </foreach>
+  </table>
+  {/if}  
+
+{/if} 
+
+
+{if $show_skills_level_2 && $canShowPersonal}
+
+  {if $c.skills.itemtypes.ComputerSkill && [uts:show_computerskill]}
+  <h2  class="subheader candAdvDetailSH cADTabHSkills">[t]Computer skills[/t]</h2>
+  <table class="candAdvDetailPersonalTable cADTabTSkills" cellpadding="2" cellspacing="0" border="0">
+  <foreach from=$c.skills.itemtypes.ComputerSkill item=csi>
+  <tr>
+    <td class="cadSkill">{$csi.skill|escape}</td>
+    <td class="cadProficiency">
+      {if $csi.proficiency == 1}[tg]excellent[/tg]
+      {elseif $csi.proficiency == 2}[tg]good[/tg]
+      {elseif $csi.proficiency == 3}[tg]average[/tg]
+      {elseif $csi.proficiency == 4}[tg]low[/tg]
+      {else}
+        &nbsp;
+      {/if}        
+    </td>
+  </tr>
+  </foreach>
+  </table>
+  {/if}
+  
+  {if $c.skills.itemtypes.LanguageSkill && [uts:show_languageskill]}
+  <h2  class="subheader candAdvDetailSH cADTabHLang">[t]Languages[/t]</h2>
+  <table class="candAdvDetailPersonalTable cADTabTLang cadSkillLangTable" cellpadding="2" cellspacing="0" border="0">
+  <tr>
+    <td class="cadSkillHead">&nbsp;</td>
+    <td class="cadProficiencyHead">[tg]Read[/tg]</td>
+    <td class="cadProficiencyHead">[tg]Write[/tg]</td>
+    <td class="cadProficiencyHead">[tg]Speak[/tg]</td>
+  </tr>  
+  <foreach from=$c.skills.itemtypes.LanguageSkill item=lgi>  
+  <tr>
+    <td class="cadSkill">{$lgi.skill|escape}</td>
+
+    <td class="cadProficiency">
+      {if $lgi.lezen == 1}[tg]excellent[/tg]
+      {elseif $lgi.lezen == 2}[tg]good[/tg]
+      {elseif $lgi.lezen == 3}[tg]average[/tg]
+      {elseif $lgi.lezen == 4}[tg]low[/tg]
+      {else}
+        &nbsp;
+      {/if}        
+    </td>
+    
+    <td class="cadProficiency">
+      {if $lgi.schrijven == 1}[tg]excellent[/tg]
+      {elseif $lgi.schrijven == 2}[tg]good[/tg]
+      {elseif $lgi.schrijven == 3}[tg]average[/tg]
+      {elseif $lgi.schrijven == 4}[tg]low[/tg]
+      {else}
+        &nbsp;
+      {/if}        
+    </td>
+    
+    <td class="cadProficiency">
+      {if $lgi.spreken == 1}[tg]excellent[/tg]
+      {elseif $lgi.spreken == 2}[tg]good[/tg]
+      {elseif $lgi.spreken == 3}[tg]average[/tg]
+      {elseif $lgi.spreken == 4}[tg]low[/tg]
+      {else}
+        &nbsp;
+      {/if}        
+    </td>           
+        
+  </tr>
+  </foreach>
+  </table>
+  {/if}  
+  
+  {if $c.skills.itemtypes.SoftSkill && [uts:show_softskill]}
+  <h2  class="subheader candAdvDetailSH cADTabHSoft">[t]Soft skills[/t]</h2>
+  <table class="candAdvDetailPersonalTable cADTabTSoft" cellpadding="2" cellspacing="0" border="0">
+  <foreach from=$c.skills.itemtypes.SoftSkill item=sfi>
+  <tr>
+    <td class="cadSkill">{$sfi.skill|escape}</td>
+    <td class="cadProficiency">
+      {if $sfi.proficiency == 1}[tg]excellent[/tg]
+      {elseif $sfi.proficiency == 2}[tg]good[/tg]
+      {elseif $sfi.proficiency == 3}[tg]average[/tg]
+      {elseif $sfi.proficiency == 4}[tg]low[/tg]
+      {else}
+        &nbsp;
+      {/if}        
+    </td>    
+  </tr>
+  </foreach>
+  </table>
+  {/if}    
+
+{/if}
+
+    
+{if $c.languages.itemMatchedWebSearch}
+    <h2  class="subheader candAdvDetailSH">[t]Languages[/t]</h2>
+    <p class="text candAdvDetailText">{if $c.languages.itemMatchedWebSearch}<img style="float:right" src="http://www.jobtree.nl/_images_global/led-green.png" alt="Green" >{/if}{$c.languages.imploded|escape}</p>
+ {/if}   
+{if $c.skills.itemMatchedWebSearch}
+    <h2  class="subheader candAdvDetailSH">[t]Skills[/t]</h2>
+    <p class="text candAdvDetailText">{if $c.skills.itemMatchedWebSearch}<img style="float:right" src="http://www.jobtree.nl/_images_global/led-green.png" alt="Green" >{/if}{$c.skills.imploded|escape}</p>
+{/if}
+</div>
+
+{if $bttnCvSearchPrint || $bttnCvSearchContact}
+<div id="buttons" class="canAdvDetailBttn">
+  {if $bttnCvSearchPrint}
+    <input type="button"  class="button" onClick="printCv();" id="bttnPrint" value="[t]Print[/t]">          
+  {/if}
+  
+  {if $bttnCvSearchContact}
+    <input type="button" class="button" onClick="contactCandidateFrm();" id="bttnContact" value="[t]Contact Candidate[/t]">
+  {/if}
+</div>
+
+{if $bttnCvSearchContact}
+
+<div id="formContact" class="canAdvDetailContactForm" style="visiblity: hidden; display: none;">
+	<div class="formInput canAdvDetailContactFormInput">
+		<label id="canAdvDetailContactFormEmail" for="_ccf_sender">[th]Your e-email[/th]</label>
+		<input type="text" name="_ccf_sender" id="_ccf_sender" value="{$ccfEmail|escape}">
+	</div>
+	<div class="formInput canAdvDetailContactFormInput">
+		<label id="canAdvDetailContactFormSubject" for="_ccf_subject">[th]Subject[/th]</label>
+		<input type="text" name="_ccf_subject" id="_ccf_subject" value="{$ccfSubject|escape}">
+	</div>
+    {if $ext_candidate_contact}
+	<div class="formInput canAdvDetailContactFormInput">
+		<label id="canAdvDetailContactFormSubject" for="_ccf_company">[th]Company name[/th]</label>
+		<input type="text" name="_ccf_company" id="_ccf_company" value="{$ccfCompany|escape}">
+	</div>
+
+	<div class="formInput canAdvDetailContactFormInput">
+		<label id="canAdvDetailContactFormSubject" for="_ccf_ContactName">[th]Contact name[/th]</label>
+		<input type="text" name="_ccf_ContactName" id="_ccf_ContactName" value="{$ccfContactName|escape}">
+	</div>
+
+	<div class="formInput canAdvDetailContactFormInput">
+		<label id="canAdvDetailContactFormSubject" for="_ccf_function">[th]Function[/th]</label>
+		<input type="text" name="_ccf_function" id="_ccf_function" value="{$ccfFunction|escape}">
+	</div>
+
+	<div class="formInput canAdvDetailContactFormInput">
+		<label id="canAdvDetailContactFormSubject" for="_ccf_phone">[th]Phone[/th]</label>
+		<input type="text" name="_ccf_phone" id="_ccf_phone" value="{$ccfPhone|escape}">
+	</div>
+
+	<div class="formInput canAdvDetailContactFormInput">
+		<label id="canAdvDetailContactFormSubject" for="_ccf_vacancyTitle">[th]Vacancy title[/th]</label>
+		<input type="text" name="_ccf_vacancyTitle" id="_ccf_vacancyTitle" value="{$ccfVacancyTitle|escape}">
+	</div>
+    {/if}
+
+
+	<div class="formInput canAdvDetailContactFormInput">
+		<label id="canAdvDetailContactFormMessage" for="_ccf_message">[th]Message[/th]</label>
+		<textarea name="_ccf_message" rows="6" id="_ccf_message"></textarea>
+	</div>
+	<div class="formButton canAdvDetailContactFormButton">
+		<input type="button" class="button" onClick="contactCandidate();" id="bttnContactSend" value="[th]Send Message[/th]">
+	</div>
+</div>
+{/if}
+
+{if $bttnCvSearchPrint}
+<iframe application="yes" name="actionFrame" id="actionFrame" width="0" height="0" scrolling="no" frameborder="no"></iframe>
+{/if}
+
+{/if}
+
+<div style="clear:both;"></div>

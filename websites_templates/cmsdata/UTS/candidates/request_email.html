@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]An information request has been made for:[/t]</p>
+
+[t]Candidate name:[/t] <strong>{$cand.voornaam} {$cand.tussenvoegsel} {$cand.achternaam}</strong><br>
+[t]Reference number:[/t] <strong>{$cand._uid}</strong><br>
+[t]Email:[/t] <strong>{$cand.email}</strong><br>
+[t]City:[/t] <strong>{$cand.woonplaats}</strong><br>
+[t]Phone:[/t] <strong>{$cand.phone_mobile}</strong><br>
+
+
+<p>[t]By[/t]</p>
+<p>
+[t]Name:[/t] {$form.name} <br>
+[t]Job Title:[/t] {$form.jobTitle} <br>
+[t]Company[/t] {$form.company} <br>
+[t]E-mail address:[/t] {$form.email} <br>
+[t]Phone Number:[/t] {$form.phone} <br>
+
+</p>
+{if [uts:display_cand_link]}
+<p>
+    [t]Candidate detail: [/t] <a href="{$canddetailLink|escape}">[t]Candidate detail[/t]</a>
+</p>
+{/if}
+{if $opmerkingen}
+[t]Jouw opmerkingen:[/t]<br>
+<div style="font-weight:bold;">
+    {$opmerkingen}
+</div>
+{/if}
+
+
+
+<!--uts:end inner-->
+</body>
+</html>

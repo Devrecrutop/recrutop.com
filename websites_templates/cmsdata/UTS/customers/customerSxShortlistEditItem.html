@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<div class="outer custOuter sxOuter sxEditOuter">
+	<!-- /UTS/customers/customerSxShortlistEditItem.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Shortlist SX[/t]</h1>
+	{$menu}
+	
+	<div class="text">[t]Shortlist SX intro[/t]</div>    
+
+	<form name="customerSxShortlist" action="{$handler}" method="post" class="qsPageOuter" >
+		<div class="formInput aplTextInput custSxFiJobDet">
+		    <label for="description">[t]Vacancy details:[/t]</label>
+		    <textarea  name="description" id="description" >{$sx_item.description}</textarea>
+		</div>
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput custSxFiLocation">
+		  <label>[t]Location:[/t]</label>
+			<label for="location" class="labelRadio aplRadioInput">
+				<input type="checkbox" id="location" name="location" value="1" class="radiobutton" {if $sx_item.location == 1}checked="checked"{/if} >
+			</label>
+			<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput custSxFiRegion">
+		  <label>[t]Region:[/t]</label>
+			<label for="region" class="labelRadio aplRadioInput">
+				<input type="checkbox" id="region" name="region" value="1" class="radiobutton" {if $sx_item.region == 1}checked="checked"{/if} >
+			</label>
+			<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput custSxFiLiType">
+		  <label>[t]List type:[/t]</label>
+			<label for="classicType" class="labelRadio aplRadioInput">
+				<select id="classicType" name="classicType" >
+		    <option {if $sx_item.classicType eq 'random'}selected{/if} value="random">[t]List random[/t]</option>
+		    <option {if $sx_item.classicType eq 'recent'}selected{/if} value="recent">[t]List recent[/t]</option>
+		    </select>
+			</label>
+			<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput custSxFiNumb">
+		  <label>[t]Number of jobs:[/t]</label>
+			<label for="numberOfRecords" class="labelRadio aplRadioInput">
+				<select id="numberOfRecords" name="numberOfRecords" >
+		    {section name=number_of_jobs start=1 loop=500 step=1}
+		     <option value="{$smarty.section.number_of_jobs.index}" {if $sx_item.numberOfRecords eq $smarty.section.number_of_jobs.index}selected{/if}>{$smarty.section.number_of_jobs.index}</option>
+		    {/section}
+		    </select>
+			</label>
+			<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput custSxFiActive">
+		  <label>[t]Active:[/t]</label>
+			<label for="active" class="labelRadio aplRadioInput">
+				<input type="checkbox" id="active" name="active" value="1" class="radiobutton" {if $sx_item.active == 1}checked="checked"{/if} >
+			</label>
+			<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		
+		{if $sx_item.id}
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput custSxFiSnippet">
+		  <label>[t]Snippet:[/t]</label>
+		  <textarea rows="3" class="deeptabletextbox" readonly="readonly" onclick="javascript:this.select();">{$sx_item.link}</textarea>
+		</div>
+		{/if}
+		
+		
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[tb]Save[/tb]" name="sSubmit">
+		</div>
+		
+		<input type="hidden" name="command" value="saveItem">
+		<input type="hidden" name="id" value="{$sx_item.id}">
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

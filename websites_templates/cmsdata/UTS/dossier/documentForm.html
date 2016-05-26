@@ -1,0 +1,95 @@
+
+<script language="javascript" type="text/javascript" src="/_javascript_global/jquery.form.js"></script>
+
+<script type="text/javascript">
+var return_url = '{$handler}/command_dossier/list';
+//{literal}
+
+
+$(document).ready(function() {
+   var options = { success: handleResponse, url: $("#documentForm").attr('action'), dataType: 'json', iframe: true }; 
+ 	$("#documentForm").ajaxForm(options);	
+});
+
+//function handleResponse(data, statusText, xhr, $form) {
+function handleResponse(data) {
+	
+// 		if (statusText != 'success') {
+// 			alert('[th]Submit failed.[/th]');
+// 			return;
+// 		}
+		
+			if (data.status=='ERROR') {
+                if (data.errorDescription=='ERR_MISSING_SUBJECT') {
+                    showError('[th]Please fill the subject.[/th]');
+				}
+				else if (data.errorDescription=='ERR_MISSING_TYPE') {
+                    showError('[th]Please select the file type.[/th]');
+                }
+				else if (data.errorDescription=='ERR_NO_FILE_UPLOADED') {
+                    showError('[th]No file uploaded.[/th]');
+                }
+				else if (data.errorDescription=='ERR_FILE_TOO_LARGE') {
+                    showError('[th]File is too large.[/th]');
+                }
+				else {
+                    showError('[th]Error occurred:[/th] '+data.errorDescription);
+                }
+            }
+			else {
+                window.location = return_url;
+            }
+}
+
+function showError(msg) {
+	$('#error').html(msg);
+	$('#error').css('display', 'block');
+}
+
+
+//{/literal}
+</script>
+<div id="output"></div>
+<div>
+{literal}
+<!-- style="width:350px;" {webdev facepalm} -->
+{/literal}
+<!-- /UTS/dossier/documentForm.frag.html -->
+    <form class="internal" id="documentForm" name="documentForm" action="{$handler}/command_dossier/submitajax/entity/document" method="post" enctype="multipart/form-data">
+
+ 
+<h2>[t]Add a document[/t]</h2>
+<div class="formInput aplTextInput">
+<label>[t]Name[/t]</label>
+<input type="text" name="subject" value="" >
+</div>
+{if $settings.document_types}
+<div class="formInput aplTextInput">
+<label>[t]Type[/t]</label>
+<select name="id_document_type"><option value="0">-- [t]please select[/t]</option>{html_options options=$settings.document_types}</select>
+</div>
+{/if}
+<div class="formInput aplTextInput">
+<label>[t]File[/t]</label>
+<input type="file" name="document" >
+</div>
+<div class="formInput aplTextInput">
+<label>[t]Remark[/t]</label>
+<textarea name="remark"></textarea>
+{literal}
+<!--  style="width: 40em;height:6em; {webdev facepalm} -->
+{/literal}
+</div>
+		
+<div class="error" id="error" style="display: none;"></div>
+<div class="buttonContainer"><input type="submit" name="bSubmit2" value="[tb]Submit[/tb]" class="button"></div>
+
+{if !$settings.document_types}
+<input type="hidden" name="no_document_types" value="1">
+{/if}
+<input type="hidden" name="command" value="dossier">
+<input type="hidden" name="command_dossier" value="submitajax">
+<input type="hidden" name="entity" value="document">
+<input type="hidden" name="kid" value="{$kid}">
+</form>
+</div>

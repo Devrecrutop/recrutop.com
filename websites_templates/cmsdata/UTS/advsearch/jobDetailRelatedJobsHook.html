@@ -1,0 +1,26 @@
+<!-- /UTS/advsearch/jobDetailRelatedJobsHook.html -->
+<if !empty($list1) && [uts:show_visitors_section]>
+<div class="hookOuter rJhVOut">
+	<div class="hookHeader rJhVT">[t]Visitors of this page also checked out these jobs:[/t]</div>
+	<foreach from=$list1 item=r>
+	<div class="hookItemContainer rJhVIc rJhVIc{cycle values='Odd,Even'}">
+	<div class="hookItemTitle rJhVIt"><a title="{$r.vcnt} [th]visitors checked this job as well[/th]" href="/index.php/page/JobsRemote/command/detail/vid/{$r.id_vacancy}/bb/1">{$r._title|escape}</a></div>
+		<if [uts:checked_list_employer]><div class="hookItemWord rJhVKeyword rJhVEmployee">{$r.employer|escape}</div></if>
+		<if [uts:checked_list_location]><div class="hookItemWord rJhVKeyword rJhVRegion"><span>[t]in[/t] </span>{$r.location|escape}</div></if>
+	</div>
+	</foreach>
+</div>
+</if>
+
+<if !empty($list2) && [uts:show_applicants_section]>
+<div class="hookOuter rJhAOut">
+	<div class="hookHeader rJhAT rJhAT{cycle values='Odd,Even'}">[t]Visitors who applied for this job also applied for these jobs:[/t]</div>
+	<foreach from=$list2 item=r>
+	<div class="hookItemContainer rJhAIc">
+	<div class="hookItemTitle rJhAIt"><a title="{$r.vcnt} [th]visitors applied this job as well[/th]" href="/index.php/page/JobsRemote/command/detail/vid/{$r.id_vacancy}/bb/1">{$r._title|escape}</a></div>
+		<if [uts:applied_list_employer]><div class="hookItemWord rJhAKeyword rJhAEmployee">{$r.employer|escape}</div></if>
+		<if [uts:applied_list_location]><div class="hookItemWord rJhAKeyword rJhARegion"><span>[t]in[/t] </span>{$r.location|escape}</div></if>
+	</div>
+	</foreach>
+</div>
+</if>

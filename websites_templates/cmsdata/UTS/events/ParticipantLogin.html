@@ -1,0 +1,195 @@
+﻿<html>
+<head>
+<title>Deelnemer Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->  
+<!-- /UTS/events/ParticipantLogin.html -->
+<table border="0" cellpadding="0" cellspacing="0" class="vacstable">
+<tr> 
+<td valign="top">
+	
+<form name="partLoginForm" method="post" action="{$website}/index.php/page/participantsfo/command/myprofile/code/[code]/bb/1">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" class="formheadercontainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Gebruiker login[/t]</td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+
+<tr> 
+<td colspan="2" class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Log in[/t]</td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+
+<tr> 
+<td colspan="2" class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTexTbl">
+<tr>
+<td class="formText">
+[t]Hebt u al eerder uw gegevens ingevoerd, of ingeschreven op een evenement
+via deze website? Vul dan hieronder uw e-mailadres en wachtwoord 
+in. U kunt dan direct uw gegevens wijzigen of inschrijven op een evenement.[/t]
+</td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+
+<tr> 
+<td class="itemContainer">
+
+<table border="0" cellpadding="0"  cellspacing="0" class="itemHolder">
+<tr>
+<td class="itemTblContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="itemTbl">
+<tr>
+<td class="HQuestion">[t]E-mailadres[/t]:</td>
+<td class="FieldContainer"><input type="text" name="Eemail" id="tPartEmail"></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="itemTblContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="itemTbl">
+<tr>
+<td class="HQuestion">[t]Wachtwoord[/t]:</td>
+<td class="fieldContainer"><input type="password" name="Epassword"></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--uts:begin button login-->
+<tr>
+<td class="formTblButtonCell"><input type="submit" name="Submit" value="[tb]Log in[/tb]" class="button"></td>
+</tr>
+<!--uts:end button login-->
+<tr>
+<td class="error"><!--ERROR-->&nbsp;</td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+</table>
+</form>
+	  
+</td>
+</tr>
+
+
+<!--START_8-->
+<tr> 
+<td valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%">
+<form name="form" method="post" action="/index.php/page/participantsfo/command/myprofile/client_session/[client_session]/code/[code]/bb/1">
+<input type="hidden" name="klantid" value="[klantid]">
+
+<tr> 
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Inschrijven[/t]</td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+
+<tr> 
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">
+[t]Bent u nog niet bij ons bekend? Klik dan hieronder op de knop 'inschrijven' 
+en vul uw gegevens zo compleet mogelijk in. Wij nemen binnen 
+enkele dagen telefonisch of per e-mail contact met u op.[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<!--uts:begin button apply-->
+<tr>
+<td class="formTblButtonCell"><input type="button" name="Inschrijven" value="[tb]Inschrijven[/tb]" onClick="location='/index.php/page/participantsfo/command/enroll/ConsultantId/[ConsultantId]/client_session/[client_session]/code/[code]/bb/1';" class="button"></td>
+</tr>
+<!--uts:end button apply-->
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+</form>
+</table>
+
+</td>
+</tr>
+<!--END_8-->
+<!--uts:begin block forgotten_password-->
+<tr> 
+<td valign="top">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr> 
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Wachtwoord vergeten?[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr> 
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">
+[t]Wanneer u al eerder hebt ingeschreven, maar uw wachtwoord niet meer weet, kunt u hieronder op de button 'Vraag een nieuw wachtwoord aan' klikken. U dient dan het e-mailadres waarmee u heeft ingeschreven in te voeren, waarna automatisch een nieuw wachtwoord wordt aangemaakt. U krijgt dit via e-mail toegestuurd.[/t]</td>
+</tr>
+<tr><td class="formTblButtonCell"><input type="button" class="button" value="[tb]Vraag een nieuw wachtwoord aan[/tb]" onclick="{literal}if (document.forms.partLoginForm.Eemail.value.indexOf('@')>0) {document.forms.partLoginForm.action='/index.php/page/participantsfo/command/forgotpassword/code/[code]/bb/1';document.forms.partLoginForm.submit()} else alert('[th]Please fill your valid e-mail address first![/th]');{/literal}"></td></tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--uts:end block forgotten_password-->
+</table>
+<!--uts:end inner-->
+</body>
+</html>

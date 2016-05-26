@@ -1,0 +1,25 @@
+{* required ext.JS: JQueryBase,JQueryRaty *}
+<script type="text/javascript">
+//{literal}
+$(document).ready( function() {
+    $('div.ratydiv').raty({
+		half: true,
+		path: '/_images_global/raty/',
+		space : false,
+		hints: ['[th]bad[/th]', '[th]poor[/th]', '[th]regular[/th]', '[th]good[/th]', '[th]excellent[/th]'],
+		width: 90,
+		readOnly : true,
+		noRatedMsg : '[th]not rated yet[/th]',
+		score: function() {
+			return $(this).attr('data-score');
+		}
+	}); 
+});
+//{/literal}
+</script>
+<div class="hookOuter custHOuter">
+	<!-- /UTS/customers/customer_rating_hook.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<div class="ratydiv" data-score="{$rating}"></div>
+	{$rcnt} [t]ratings given[/t]
+</div>

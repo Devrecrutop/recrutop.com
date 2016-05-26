@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+
+$(document).ready(function(){
+    $('#frmRefQuestions').validate();
+
+    // add rule required to each question
+	$('.refqs').each(function(){
+		$(this).rules('add', {
+			required: true,
+			messages: {
+				required: '[th]Answer question please.[/th] '
+			}
+  		});
+  	});
+});
+//{/literal}
+</script>
+
+<div class="outer refQOuter">
+<!-- /UTS/candidates/candidateReferencesQuestions.html STANDARD -->
+<!-- Template Webdevelopment validated 08-2013 -->
+	<form action="{$handler}" id="frmRefQuestions" name="frmRefQuestions" method="post">
+		<input type="hidden" name="command" value="setanswers">
+		<h1 class="title refQTitle">[t]Give a reference[/t]</h1>
+		<div class="intro refQIntro">[t]{$candidateName|escape} has asked you to fill in a reference. Please give the reference below.[/t]</div>
+		<div class="itemContainer referenceQuestions">
+			{*questions here*}
+			{foreach from=$htmlQsList item=q}
+			 {$q}
+			{/foreach}
+		</div>
+		<div class="itemContainer referenceQuestionsRelation">
+			<div class="formInput fiCompany">
+				<label>[t]Relation name[/t]:</label>
+				<input type="text" name="relation_name" class="refqs" value="">
+			</div>
+			<div class="formInput fiCity">
+				<label>[t]Relation city[/t]:</label>
+				<input type="text" name="relation_city" class="refqs" value="">
+			</div>
+			<div class="formInput fiFirstname">
+				<label>[t]First name[/t]:</label>
+				<input type="text" name="relation_cp_name" class="refqs" value="">
+			</div>
+			{if [uts:show_middle_name]}
+			<div class="formInput fiMiddlename">
+				<label>[t]Middle name[/t]:</label>
+				<input type="text" name="relation_cp_middle_name" value="">
+			</div>
+			{/if}
+			<div class="formInput fiLastname">
+				<label>[t]Last name[/t]:</label>
+				<input type="text" name="relation_cp_last_name" class="refqs" value="">
+			</div>
+			<div class="formInput fiEmail">
+				<label>[t]Contact e-mail[/t]:</label>
+				<input type="text" name="relation_cp_email" class="refqs" value="">
+			</div>
+			<div class="formInput fiPhone">
+				<label>[t]Contact phone[/t]:</label>
+				<input type="text" name="relation_cp_phone" class="refqs" value="">
+			</div>
+			<div class="formInput fiFunction">
+				<label>[t]Contact position[/t]:</label>
+				<input type="text" name="relation_cp_position" value="">
+			</div>
+		</div>
+		<div class="text refQDisclaimer">[t]By submitting this form you automaticly agree that {$clientName|escape} might contact you.[/t]</div>
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[tb]Save Answers[/tb]">
+		</div>
+	</form>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

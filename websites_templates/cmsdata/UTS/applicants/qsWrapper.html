@@ -1,0 +1,28 @@
+{* dummy template used to wrap the question set page fragment *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter qsOuter">
+<!-- /UTS/applicants/qsWrapper.html -->
+{if $applyForJobMode}
+<h1 class="title aplTitle aplEnrollTitle">[t]Job Application[/t]</h1>
+<div class="intro aplIntro aplEnrollIntro">[t]In order to apply for the job, you need to fill data in your profile. Please fill as much fields as you can.[/t]</div>
+{else}
+<h1 class="title aplTitle aplEnrollTitle">[t]Sign up[/t]</h1>
+<div class="intro aplIntro aplEnrollIntro">[t]In order to sign up as an applicant, you need to fill data in your profile. Please fill as much fields as you can.[/t]</div>
+{/if}
+
+<div class="aplEnrollLookup">
+[candidateEmailLookup]
+</div>
+
+{$questionSet}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

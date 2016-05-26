@@ -1,0 +1,226 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>[thg]Content manager[/thg]</title>
+<!--snippet:INBOX_JS-->
+<!--snippet:MAIN_CSS-->
+<!--snippet:KEYSOTE_JS-->
+<!--snippet:GLOBAL_HTA_SUPPORT_SECTION-->
+</head>
+
+<body>
+<!--uts:begin inner-->
+
+<script type="text/javascript">
+var netImgs = new Array();
+
+{if $NLImg}
+netImgs[netImgs.length] = "NetworkLogo";
+{/if}
+{if $NPImg}
+netImgs[netImgs.length] = "NetworkPicture";
+{/if}
+
+// {literal}
+/** Images readable format.
+ **/
+var imgNames = {
+NetworkLogo: "logo",
+NetworkPicture: "screenshot"
+}
+
+function wopen_modal_with_iframe(url, t, w, h, r) {
+r = (r) ? ';resizable:yes;' : ';';
+w = 'dialogWidth=' + w + 'px;';
+h = 'dialogHeight=' + h + 'px;';
+features = 'status:no;scroll:no' + r + w + h;
+top.closeflag = false;
+var modal = '/adm/hta/modal.php?titel=' + t;
+args.url = url;
+args.window = window;
+var d = window.showModalDialog(modal, args, features);
+top.closeflag = true;
+
+if (args.refresh == 1) {
+window.location = window.document.URL;
+}
+
+return args;
+}
+
+function delImage(image) {
+imageExist = false;
+image = image == undefined ? "Logo" : image;
+message = '[th]You have only [pict] set for this website.\nIf you delete it, website will be temporarily removed from network.\n\nDo you really want to delete it?[/th]';
+message = message.replace(/\[pict\]/g, imgNames[image]);
+
+for (var i = 0; i < netImgs.length; ++i) {
+if (netImgs[i] == image) {
+imageExist = true;
+}
+}
+
+if(imageExist && (netImgs.length > 1 || confirm(message))) {
+ok = confirm("[th]Weet u zeker dat u dit logo wilt verwijderen ?[/th]\n\n");
+
+if (ok) {
+document.edit_websites.command.value = "do_del" + image;
+document.edit_websites.submit();
+}
+}
+}
+
+function delNetLogo() {
+delImage("NetworkLogo");
+}
+
+function delNetPicture() {
+delImage("NetworkPicture");
+}
+
+function actionConnection(action, id) {
+var url;
+var title;
+
+switch (action) {
+case "cancel":
+url = "/adm/hta/CMS/network-connection-disconnect.php?id=" + id;
+title = "[th]Connection cancelling[/th]";
+break;
+case "detail":
+url = "/adm/hta/CMS/network-connection-detail.php?id=" + id;
+title = "[th]Connection detail[/th]";
+break;
+}
+
+wopen_modal_with_iframe(url, title, 450, 240, false);
+}
+
+function connectionCancel(id) {
+actionConnection("cancel", id);
+}
+
+function connectionDetail(id) {
+actionConnection("detail", id);
+}
+// {/literal}
+</script>
+
+<!-- /UTS/network/customer_detail_edit.div.html -->
+<table border="0" cellpadding="0" cellspacing="0" class="vacsTable">
+<tr>
+<form name="edit_websites" action="{$website}/index.php" method="post" enctype="multipart/form-data">
+<input type="hidden" name="page" value="network">
+<input type="hidden" name="command" value="do_edit">
+<input type="hidden" name="customerConnectionId" value="{$customerConnectionId}">
+<input type="hidden" name="current_network_logo_JobsImg" value="{$r.network_logo_JobsImg}">
+<input type="hidden" name="current_network_logo_JobsThumb" value="{$r.network_logo_JobsThumb}">
+
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader"><H1>[t]Add Your Link to our Network[/t]</H1></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]You can upload your company logo and a screenshot of your website below. Without both of them your link is not going to be included in our network directory.[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td>
+
+
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<tr>
+<td class="HQuestion">[tg]Screenshot[/tg]:</td>
+<td class="FieldContainer"><input type="hidden" name="current_network_picture" value="{$r.network_picture}"><input type="file" name="network_picture" size="25" class="bestandselect"></td>
+<td><input class="button" style="margin:0px;" type="button" value="[tb]Del[/tb]" onclick="delNetPicture();"></td>
+</tr>
+<tr>
+<td class="HQuestion">[tg]Logo[/tg]:</td>
+<td class="FieldContainer"><input type="hidden" name="current_network_logo" value="{$r.network_logo}"><input type="file" name="network_logo" size="25"></td>
+<td><input class="button" style="margin:0px;" type="button" value="[tb]Del[/tb]" onclick="delNetLogo();"></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Next, please enter a short description, a detailed description and -if applicable- a reference about our website or services in the fields below.[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<tr>
+<td class="HQuestion">[tg]Description[/tg]:</td>
+<td class="FieldContainer"><textarea name="portfolio_text" cols="40" rows="4">{$r.portfolio_text}</textarea></td>
+</tr>
+<tr>
+<td class="HQuestion">[tb]Network Text[/tb]</td>
+<td class="FieldContainer"><textarea name="network_text" cols="40" rows="4">{$r.network_text}</textarea></td>
+</tr>
+<tr>
+<td class="HQuestion">[tg]Reference[/tg]</td>
+<td class="FieldContainer"><textarea name="reference" cols="40" rows="4">{$r.reference}</textarea></td>
+</tr>
+</table>
+
+
+{if $NPImg || $NLImg}
+
+<table border="1">
+<tr>
+<td>{$NPImg}</td>
+<td>{$NLImg}</td>
+</tr>
+{if $NPImg && $NLImg}
+<tr>
+<td><input type="radio" name="network_image" value="Picture" class="radiobuttons"{if $r.network_image == "Picture" || !isset($r.network_image)} checked="checked"{/if}><label>[t]Use Screenshot[/t]</td>
+<td><input type="radio" name="network_image" value="Logo"    class="radiobuttons"{if $r.network_image == "Logo"} checked="checked"{/if}><label>[t]Use Logo[/t]</td>
+</tr>
+{/if}
+</table>
+{/if} 
+
+</td>
+</tr>
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Did you fill out the form correctly? Did you upload both images? Please press "Save" when you are done.[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="formTblButtonContainer"><input class="button" type="submit" value="[tbi]B_SAVE[/tbi]"></td>
+</tr>
+</form>
+</table>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer corgOuter">
+ <!-- /UTS/content_organizer/articles_list.html -->
+	<h1 class="title corgTitle">[t]Articles list[/t]</h1>
+	<div class="intro corgIntro">[t]Click on an article to see detail of it.[/t]</div>
+
+	{if $list}
+		<ol class="itemWrapper corgIwr">
+			{foreach from=$list item=art}
+			{if $art.cat_id != ''}
+				<div class="category corgCat">{$art.category_name|escape}</div>
+			{/if}
+				<li class="itemContainer corgIc {cycle values='odd,even'}Ic">
+					{if $art.thumbnail_filename}
+						<div class="itemImage corgIimage"><a href="{$handler}/command/detail/artid/{$art.id|escape}" title="{$art.title|escape}"><img src="{$art.thumbnail_filename}" border="0" alt=""></a></div>
+					{/if}
+					<h3 class="itemTitle corgIt"><a href="{$handler}/command/detail/artid/{$art.id|escape}" title="{$art.title|escape}">{$art.title|escape}</a></h3>
+					<div class="itemDescription corgIdesc">{$art.content|truncate:200}</div>
+					<div class="cleaner"></div>
+				</li>
+			{/foreach}
+			<div class="cleaner"></div>
+		</ol>
+	{else}
+		<div class="text">[t]There are no articles found in this category.[/t]</div>
+	{/if}
+
+	{*PAGING BEGIN*}
+	<div class="pageNav corgPageNav">
+		{if $is_prev}
+			<a href="{$handler}?command=setpage&amp;pageno=1&amp;catid={$catId}" class="pnFirst custLinFirst">[t]&lt;&lt;&nbsp;First[/t]</a>
+			<a href="{$handler}?command=prevpage&amp;catid={$catId}" class="pnPrev custLinPrev">[t]&lt;&nbsp;Previous[/t]</a>
+		{/if}
+
+		<foreach from=$page_array item=p key=k>
+			<a href="{$handler}?command=setpage&amp;pageno={$k}&amp;catid={$catId}" {if $p}class="pnActive custLinActive"{/if}>{$k}</a>
+		</foreach>
+
+		{if $is_next}
+			<a href="{$handler}?command=nextpage&amp;catid={$catId}" class="pnNext custLinNext">[t]Next&nbsp;&gt;[/t]</a>
+			<a href="{$handler}?command=setpage&amp;pageno={$lastpage}&amp;catid={$catId}" class="pnLast custLinLast">[t]Last&nbsp;&gt;&gt;[/t]</a>
+		{/if}
+	</div>
+	{*PAGING END*}
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

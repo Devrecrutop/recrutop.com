@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+{literal}
+<script type="text/javascript">
+function checkform() {
+	form=document.processform;
+	form.submit();
+	return true ;
+}
+</script>
+{/literal}
+
+<div class="outer custOuter recommendOuter rcmdDefaultOuter">
+	<!-- /UTS/customers/recommendationsDefault.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Recommendations[/t]</h1>
+	{$CustomersMenu}
+	
+	<div class="intro">[t]On this page you can create and maintain your recommendations.[/t]</div>
+	
+	<form action="{$handler}/command/batchUpdateStatus/bb/1" name="processform" id="processform" method="POST">
+		<div class="buttonContainer"><a class="button" href="{$handler}/command/prepareRecommendationRequest/bb/1">[t]Click here to request a recommendation[/t]</a></div>
+		{if $recommendations}
+		<div class="formInput">
+			<label>[t]Action[/t]</label>
+			<select name="recom_action">
+				<option value="">---</option>
+				<option value="publish">[t]Publish[/t]</option>
+				<option value="unpublish">[t]Unpublish[/t]</option>
+			</select>
+		</div>
+		<div class="buttonContainer">
+			<input class="button" type="button" name="Button4" value="[th]Process[/th]" onClick="return checkform();">    
+		</div>
+		{/if}
+	
+        <table class="custLinTbl recomTbl" cellpadding="0" cellspacing="0" border="0" width="100%">
+            <thead>
+			<tr>
+				<th>[t]Select[/t]</th>
+				<th>[t]Date requested[/t]</th>
+				<th>[t]Name[/t]</th>
+				<th>[t]Type[/t]</th>
+				<th>[t]Status[/t]</th>
+			</tr>
+            </thead>
+            <tbody>
+			{foreach from=$recommendations item=r}
+			<tr>
+				<td><input type="checkbox" name="publishchecks[]" value="{$r.id}" {if !$r.is_answered}disabled{/if}></td>
+				<td>{$r.request_datetime|date_format:"%d-%m-%Y"}</td>
+				<td>{if $r.is_answered}<a href="{$handler}/command/recommendationPublish/recfor/{$r.hash_code}/bb/1/">{$r.name_reference}</a>{else}{$r.name_reference}{/if}</td>
+				<td>{if $r.relation_type eq "client"}[t]Client[/t]{else}[t]Candidate[/t]{/if}</td>
+				<td>{if $r.is_answered}
+                              {if $r.publish}[t]Published[/t]{else}[t]Unpublished[/t]{/if}
+                            {else}
+                              [t]Pending[/t]
+                            {/if}</td>
+			</tr>
+			{foreachelse}
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="3">[t]No recommendations[/t]</td>
+				<td>&nbsp;</td>
+			</tr>
+			{/foreach}
+			</tbody>
+		</table>
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

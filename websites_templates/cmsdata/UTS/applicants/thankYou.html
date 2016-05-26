@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- "[uts:metatime]" -->
+<!-- {$redirecturl} -->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+<if $alreadyAppliedJobs>
+<script type="text/javascript">
+<!--
+// {literal}
+function showAlreadyAppliedMessage() {
+	// {/literal}
+	alert('[t]You have already applied to the following jobs:[/t] ' + '{$alreadyAppliedJobs|escape}');	
+	// {literal}
+}                                     
+
+function redirectToLogout(){
+    fsurl = "/index.php/page/applicants/command/logout/gohome/1/bb/1/";
+    window.location= fsurl;
+}
+  
+
+window.onload = showAlreadyAppliedMessage;
+// {/literal}
+//-->
+</script>
+</if>
+<div class="outer aplOuter aplTyOuter">
+<!-- /UTS/applicants/thankYou.html -->
+
+<if $ingoedebanen_tracker>
+<script src="https://beheer.ingoedebanen.nl/js/tracker.js" type="text/javascript"></script>
+<input type="hidden" name="igb_reference" id="igb_reference" value="{$ref_nr_varchar}">
+<script type="text/javascript">
+InGoedeBanenTracker.end(document.getElementById('igb_reference').value);
+</script>
+</if>
+
+<if $messageId == "CANNOT_APPLY">
+<meta name="robots" content="noindex,follow" >
+<elseif $messageId == "LINKEDIN_LINKING_GRANTED" || $messageId == "LINKEDIN_LINKING_REJECTED">
+<h1 class="title apltitle aplTyTitle">[t]Linking to LinkedIn[/t]</h1>
+<else>
+<h1 class="title apltitle aplTyTitle">[t]Thank you![/t]</h1>
+</if>
+
+<if $messageId>
+<div class="intro aplIntro aplTyIntro">
+<if $messageId == "ENROLLED_OK">
+[t]Thank you, the sign up process finished succesfully. Please check your e-mail, you should receive a password for your account soon. Use it to login to your account.[/t]
+<elseif $messageId == "APPLIED_ENROLLED_OK">
+[t]Thank you! Your account was created successfully and you have applied for a job. Please check your e-mail for more informations and for your access password.[/t]
+<elseif $messageId == "APPLIED_ENROLLED_OK_MULTIPLE">
+[t]Thank you! Your account was created successfully and you have applied for the jobs. Please check your e-mail for more informations and for your access password.[/t]
+<elseif $messageId == "EVENT_APPLIED_ENROLLED_OK">
+[t]Thank you! Your account was created successfully and you have applied for an event. Please check your e-mail for more informations and for your access password.[/t]
+<elseif $messageId == "APPLIED_REFERER_OK">
+[t]Thank you! You have successfully supplied a candidate for a job.[/t]
+<elseif $messageId == "APPLIED_OK">
+[t]Thank you! You have applied for the job.[/t]
+<elseif $messageId == "APPLIED_OK_MULTIPLE">
+[t]Thank you! You have applied for the jobs.[/t]
+<elseif $messageId == "EVENT_APPLIED_OK">
+[t]Thank you! You have applied for the event.[/t]
+<elseif $messageId == "CANNOT_APPLY">
+[t]We are sorry, but the vacancy you requested is not available.[/t]
+<elseif $messageId == "EVENT_CANNOT_APPLY">
+[t]We are sorry, but the event you requested is not available.[/t]
+<elseif $messageId == "SUBSCRIPTION_OK">
+[t]Thank you! You have subscribed to the newsletter.[/t]
+<elseif $messageId == "UNSUBSCRIPTION_OK">
+[t]Thank you! You have unsubscribed from the newsletter.[/t]
+<elseif $messageId == "LINKEDIN_UPDATE_OK">
+[t]Thank you! You have connected your LinkedIn account.[/t]
+<elseif $messageId == "LINKEDIN_LINKING_GRANTED">
+[t]Thank you for linking your LinkedIn account.[/t]
+<elseif $messageId == "LINKEDIN_LINKING_REJECTED">
+[t]Your decision not to link with LinkedIn has been noted.[/t]
+<elseif $messageId == "PLANNING_FINISHED">
+[t]Thank you for providing us with your schedule details.[/t]
+<elseif $messageId == "PROFISCAN_SENT">
+[t]Your motivation text has been sent to Profiscan.[/t]
+<elseif $messageId == "LEAVECV_OK">
+[t]Your contact details have been succesfully sent.[/t]
+<elseif $messageId == "JOB_SUPPLIED_OK">
+[t]Thank you! You have successfull added the vacancy.[/t]
+</if>
+</div>
+</if>
+
+<if $saveAndMatchPressed>
+<div class="intro aplIntro aplTyIntro">
+    [t]Please wait until your profile is matched to our vacancy database...[/t]
+</div>
+</if>
+
+
+{* insert custom client's measuring snippets *}
+<if $snippets>
+{$snippets}
+</if>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

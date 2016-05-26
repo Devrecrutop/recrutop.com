@@ -1,0 +1,73 @@
+<!--uts:begin inner-->
+ <!-- /UTS/dossier/dossierList.html -->
+ 
+<script type="text/javascript" src="[website]/_javascript_global/jquery.fancybox.js"></script>
+<script type="text/javascript">
+//{literal}
+$(document).ready(function() {
+  // fancybox
+	$(document).ready(function() {
+		$("a[rel=fancyBox]").fancybox({
+			fitToView: false,
+			type: 'ajax'
+		});
+		$("head").append("<link rel='stylesheet' href='[website]/_css_global/fancybox/jquery.fancybox.css' type='text/css'>");
+	});
+  
+});
+//{/literal}
+</script>
+
+<div class="outer dossier dossierList">
+	{if !$skipMenu}
+		<div class="intro">
+			<ul>
+				<li class="fileWidget"><img src="{$site}/_images_global/dossier/asset.gif" > <a href="{$handler}/command_dossier/add/entity/asset">[t]Add video, photo, etc.[/t]</a></li>
+				<li class="fileNote"><img src="{$site}/_images_global/dossier/note.gif" > <a href="{$handler}/command_dossier/add/entity/note">[t]Add note[/t]</a></li>
+				<li class="fileDocument"><img src="{$site}/_images_global/dossier/document.gif" > <a href="{$handler}/command_dossier/add/entity/document">[t]Add document[/t]</a></li>
+			</ul>
+		</div>
+	{/if}
+
+	<table cellspacing="0" cellpadding="0" border="0" class="hqTbl">
+		<thead>
+			<tr>
+				<th>[t]Type[/t]</th>
+				<th>[t]Date[/t]</th>
+				<th>[t]Title[/t]</th>
+				<th>[t]Action[/t]</th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach from=$data item=d}
+				<tr>
+					<td class="{$d.DossierType|lower}">
+						{if $d.DossierType == 'Asset'}
+							<img src="{$site}/_images_global/dossier/asset.gif" >
+						{elseif $d.DossierType == 'Document'}
+							<img src="{$site}/_images_global/dossier/document.gif" >
+						{elseif $d.DossierType == 'Note'}
+							<img src="{$site}/_images_global/dossier/note.gif" >
+						{/if}
+					</td>
+					<td>{$d.created_date}</td>
+					<td>{$d.subject|escape}</td>
+					<td>
+						<a rel="fancyBox" href="{$handler}/command_dossier/detail/entity/{$d.DossierType}/id/{$d.id}">[t]Detail[/t]</a>
+						{if $allowDelete}
+							{if $d.owner_type == 'candidate'}
+								| <a href="{$handler}/command_dossier/delete/entity/{$d.DossierType}/id/{$d.id}">[t]Delete[/t]</a>
+							{/if}
+						{/if}
+					</td>
+				</tr>
+			{foreachelse}
+				<tr>
+					<td class="hqNoItems" colspan="5">[t]No items.[/t]</td>
+				</tr>
+			{/foreach}
+		</tbody>
+	</table>
+
+</div>
+<!--uts:end inner-->

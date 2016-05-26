@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/eventMessages.html -->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+
+<if $messageId>	
+<if $messageId == "MISSING_EVENT_ID">
+<div class="outer">
+<h1 class="title">[t]Event is not defined[/t]</h1>
+<div class="intro">[t]Event is not defined[/t]</div>
+</div>
+<elseif $messageId == "SOME_ERROR_MESSAGE">
+<div class="outer">
+<h1 class="title">[t]error message[/t]</h1>
+<div class="intro">[t]error message.[/t]</div>
+</div>
+</if>
+
+</if>
+
+<!--uts:end inner-->
+</body>
+</html>

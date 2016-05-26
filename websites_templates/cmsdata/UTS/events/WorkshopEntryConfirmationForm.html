@@ -1,0 +1,324 @@
+<html>
+<head>
+<title>questionsform</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/WorkshopEntryConfirmationForm.html -->
+<script>
+//{literal}
+function cancel() {
+ ok = confirm('[th]Weet u zeker dat u deze inschrijving wilt annuleren ?\nAls u op OK klikt, wordt u teruggeleid naar de lijst met workshops.[/th]');
+ if(ok) window.location='/index.php/page/eventsfo/command/clearsession/code/[code]/bb/1';
+}
+//{/literal}
+</script>
+<form name="form" method="post" action="/index.php/page/participantsfo/type/workshop/code/[code]/bb/1">
+<input type="hidden" name="command" value="participate">
+<input type="hidden" name="Answers[Step]" value="finalize">
+
+<table border="0" cellpadding="0" cellspacing="0" class="vacstable">
+<tr> 
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Inschrijving[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Hieronder vindt u de details van uw inschrijving. Als alle gegevens kloppen, drukt u op bevestigen.[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<!--START-->
+
+<!--HORIZONTAL-->
+
+<!--START_H_Vast-->
+<tr>
+<td>
+<table border="0" id="H_Vast">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td align="left">[AnswerValue]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_Vast-->
+
+<!--START_H_DateSelect-->
+<tr>
+<td>
+<table border="0" id="H_DateSelect">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td align="left">[AnswerValue]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_DateSelect-->
+
+<!--START_H_Textfield-->
+<tr>
+<td>
+<table border="0" id="H_Textfield">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td align="left">[AnswerValue]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_Textfield-->
+
+<!--START_H_Textarea-->
+<tr>
+<td>
+<table border="0" id="H_Textarea">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td align="left">[AnswerValue]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_Textarea-->
+
+<!--START_H_Select-->
+<tr>
+<td>
+<table border="0" id="H_Select">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td>
+<!--START_H_Select_Answers-->
+[Answer]
+<!--END_H_Select_Answers-->
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_Select-->
+
+
+<!--START_H_Checkbox-->
+<tr>
+<td>
+<table border="0" id="H_Checkbox">
+<tr>
+<td class="HQuestion">[Question]</td>
+<!--START_H_Checkbox_Answers-->
+<td>
+<table border="0" id="H_Checkbox_Answers">
+<tr>
+<td class="Hanswer">[Answer]</td>
+</tr>
+</table>
+</td>
+<!--END_H_Checkbox_Answers-->
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_Checkbox-->
+
+
+<!--START_H_Radio-->
+<tr>
+<td>
+<table border="0" id="H_Radio">
+<tr>
+<td class="HQuestion">[Question]</td>
+<!--START_H_Radio_Answers-->
+<td align="left">
+
+<table border="0" id="H_Radio_Answers">
+<tr>
+<td class="Hanswer">[Answer]</td>
+</tr>
+</table>
+</td>
+<!--END_H_Radio_Answers-->
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_Radio-->
+
+
+<!--VERTICAL-->
+
+<!--START_V_Vast-->
+<tr>
+<td>
+<table border="0" id="V_Vast">
+<tr>
+<td class="VQuestion">[Question]</td>
+</tr>
+<tr>
+<td>[AnswerValue]></td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Vast-->
+
+
+<!--START_V_DateSelect-->
+<tr>
+<td>
+<table border="0" id="V_DateSelect">
+<tr>
+<td class="VQuestion">[Question]</td>
+</tr>
+<tr>
+<td>[AnswerValue]></td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_DateSelect-->
+
+<!--START_V_Textfield-->
+<tr>
+<td>
+<table border="0" id="V_Textfield">
+<tr>
+<td class="VQuestion">[Question]</td>
+</tr>
+<tr>
+<td>[AnswerValue]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Textfield-->
+
+<!--START_V_Textarea-->
+<tr>
+<td>
+<table border="0" id="V_Textarea">
+<tr>
+<td class="VQuestion">[Question]</td>
+</tr>
+<tr>
+<td>[AnswerValue]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Textarea-->
+
+<!--START_V_Select-->
+<tr>
+<td>
+<table border="0" id="H_Select">
+<tr>
+<td class="VQuestion">[Question]</td>
+</tr>
+<tr>
+<td>
+<!--START_V_Select_Answers-->
+[Answer]
+<!--END_V_Select_Answers-->
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Select-->
+
+
+<!--START_V_Checkbox-->
+<tr>
+<td>
+<table border="0" id="V_Checkbox">
+<tr>
+<td class="VQuestion">[Question]</td>
+</tr>
+<!--START_V_Checkbox_Answers-->
+<tr>
+<td>
+<table border="0" id="V_Checkbox_Answers">
+<tr>
+<td class="Vanswer">[Answer]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Checkbox_Answers-->
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Checkbox-->
+
+
+<!--START_V_Radio-->
+<tr>
+<td>
+<table border="0" id="V_Radio">
+<tr>
+<td class="VQuestion">[Question]</td>
+</tr>
+<!--START_V_Radio_Answers-->
+<tr>
+<td>
+<table border="0" id="V_Radio_Answers">
+<tr>
+<td class="VAnswer">[Answer]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Radio_Answers-->
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Radio-->
+
+<!--END-->
+<tr>
+<td class="vacatureButtonContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="vacatureButtonTbl">
+<tr>
+<!--uts:begin button confirm-->
+<td class="vacatureButton"><input type="submit" value="[tb]Bevestigen[/tb]" class="button"></td>
+<td>&nbsp;</td>
+<!--uts:end button confirm-->
+<!--uts:begin button edit-->
+<td class="vacatureButton"><input class="button" type="button" value="[tb]Wijzigen[/tb]" onclick="window.location='/index.php/page/participantsfo/command/participate/type/workshop/evid/[evid]/code/[code]/resume/1/bb/1'"></td>
+<td>&nbsp;</td>
+<!--uts:end button edit-->
+<!--uts:begin button cancel-->
+<td class="vacatureButton"><input class="button" type="button" value="[tb]Annuleren[/tb]" onclick="cancel()"></td>
+<td>&nbsp;</td>
+<!--uts:end button confirm-->
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+</form>
+<!--uts:end inner-->
+</body>
+</html>

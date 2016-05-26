@@ -1,0 +1,244 @@
+{* advanced candidate detail personal section *}
+<!-- /UTS/candidates/advDetailPersonal.inc.html - CUSTOM -->
+{if $loggedInAsCP}
+<!-- LOGGED IN -->
+{else}
+<!-- NOT LOGGED IN -->
+{/if}
+{if $mergMatchCriteria}
+<!-- cristinamatchcriterias-->
+{else}
+<!-- cristinaNOmatchcriterias-->
+{/if}
+
+<if $c.main.foto>
+<div class="candAdvDetailPersonalPhoto">
+<img src="{$handler}/command/displayphoto/cid/{$cid}" alt="[th]Candidate's photo[/th]">
+</div>
+</if>
+<div class="candAdvDetailPersonalTableSection">
+    <div class="candAdvDetailPersonalTable">
+		{*
+        <div class="itemLine actIl actIlCvs actIlCad canPersFlags {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+            <label>[t]flags[/t]</label>
+		    <span>
+				<div class="actCvsFlag">
+				{if !($flagViewed || $flagAppl || $flagNew)}[t]none[/t]{/if}
+                {if $flagViewed}<span class="csrFlagViewed" title="[thn]You have already inspected this CV.[/thn]">[t]viewed[/t]</span>{/if}
+                {if $flagAppl}<span class="csrFlagApplicant" title="[thn]This candidate applied for one or more jobs of your company.[/thn]">[t]appl[/t]</span>{/if}
+                {if $flagNew}<span class="csrFlagNew" title="[thn]This candidate is new since your last login.[/thn]">[t]new[/t]</span>{/if}
+				</div>
+            </span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+        </div>
+		*}
+		{if $c.main.DriversLicence}
+			<div class="itemLine actIl actIlCvs actIlCad {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+				<label>Drivers Licence</label>
+				<span>{$c.main.DriversLicence}</span>
+				<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+			</div>
+		{/if}
+		
+        <if $showReference>
+		<div class="itemLine actIl actIlCvs actIlCad {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+			<label>[t]Show reference[/t]</label>
+			<span>{$referenceNumber}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+		</div>
+        </if>
+        <if $matchScore>
+		{*
+		<div class="itemLine actIl actIlCvs actIlCad canPersScore {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+			<label>[t]match score[/t]</label>
+			<span><img src="/_images_global/relevance/relevance-{$matchScoreRounded}.png" alt="{$matchScore}%" title="[th]Score[/th]: {$matchScore}%"></span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+		</div>
+		*}
+        </if>
+        <div class="itemLine actIl actIlCvs actIlCad canPersPopul {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+            <label>[t]popularity[/t]</label>
+			<span><img src="/_images_global/hot/hot-{$popularity}.png" alt="popularity" title="[t]Popularity[/t]: {$popularity}"></span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+        </div>
+		{*
+        <div class="itemLine actIl actIlCvs actIlCad canPersGende {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+            <label>[t]gender[/t]</label>
+		    <span>{if $c.main.geslacht == 0}[t]Female[/t]{elseif $c.main.geslacht == 1}[t]Male[/t]{else}[t]Not specified[/t]{/if} {if isset($genderMatch)}{if $genderMatch}<img style="margin-left:10px;" src="/_images_global/led-green.png" alt="green" title="[thn]Gender is matched by your search[/thn]">{else}<img style="margin-left:10px;" src="/_images_global/led-red.png" alt="red" title="[thn]Gender is not matched by your search[/thn]">{/if}{/if}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+        </div>
+		*}
+        <if $canShowPersonalContact>
+		<div class="itemLine actIl actIlCvs actIlCad canPersAddres {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+		    <label>[t]address[/t]</label>
+		    <span>{$c.main.adres|escape|default:'[t]N/A[/t]'}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+		</div>
+        </if>
+		{*
+		<div class="itemLine actIl actIlCvs actIlCad canPersCity {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+		    <label>[t]city[/t]</label>
+		    <span>{if $canShowPersonalContact}{$c.main.postcode|escape} {/if}{$c.main.woonplaats|escape} {if !$c.main.woonplaats  && (!$c.main.postcode || !$canShowPersonalContact)}[t]N/A[/t]{/if} {if isset($locationMatch)}{if $locationMatch}<img style="margin-left:10px;" src="/_images_global/led-green.png" alt="green" title="[thn]City is matched by your location search[/thn]">{else}<img style="margin-left:10px;" src="/_images_global/led-red.png" alt="red" title="[thn]City is not matched by your location search[/thn]">{/if}{/if}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+		</div>
+		*}
+        <if $canShowPersonalContact>
+		<div class="itemLine actIl actIlCvs actIlCad canPersEmail {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+		    <label>[t]e-mail[/t]</label>
+		    <span>{if $c.main.email}<a href="mailto:{$c.main.email|escape}">{$c.main.email|escape}</a>{else}[t]N/A[/t]{/if} {if isset($hasEmailMatch)}{if $hasEmailMatch}<img style="margin-left:10px;" src="/_images_global/led-green.png" alt="green" title="[thn]The candidate has an e-mail address[/thn]">{else}<img style="margin-left:10px;" src="/_images_global/led-red.png" alt="red" title="[thn]The e-mail address is not known[/thn]">{/if}{/if}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+		</div>
+		<div class="itemLine actIl actIlCvs actIlCad canPersMobile {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+		    <label>[t]mobile[/t]</label>
+		    <span>{$c.main._phoneMobile|escape|default:'[t]N/A[/t]'} {if isset($hasMobileNrMatch)}{if $hasMobileNrMatch}<img style="margin-left:10px;" src="/_images_global/led-green.png" alt="green" title="[thn]The candidate has mobile phone number[/thn]">{else}<img style="margin-left:10px;" src="/_images_global/led-red.png" alt="red" title="[thn]The mobile phone number is not known[/thn]">{/if}{/if}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+		</div>
+{if $c.main._phoneConsultant}
+		<div class="itemLine actIl actIlCvs actIlCad canPersPhone {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+		    <label>[t]telephone[/t]</label>
+		    <span>{$c.main._phoneConsultant|escape|default:'[t]N/A[/t]'}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+		</div>
+{/if}
+        </if>
+{if $c.LWE.Experience}
+        <div class="itemLine actIl actIlCvs actIlCad canPersJobti {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+            <label>[t]current jobtitle[/t]</label>
+            <!-- jajaja -->
+			<span>{if $c.LWE}{$c.LWE.Experience|default:'[t]N/A[/t]'}{if $lweMatch || $lweMatch===false}{if $lweMatch}<img style="margin-left:10px;" src="/_images_global/led-green.png" alt="green" title="[thn]Last working experience is matched by your keyword search[/thn]">{else}<img style="margin-left:10px;" src="/_images_global/led-red.png" alt="red" title="[thn]Last working experience is not matched by your keyword search[/thn]">{/if}{/if}{else}[t]N/A[/t]{/if}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+        </div>
+{/if}
+{if $c.LWE._yearsInThisJob}
+        <div class="itemLine actIl actIlCvs actIlCad canPersJobYe {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+            <label>[t]years in this job[/t]</label>
+			<span>{if $c.LWE}{$c.LWE._yearsInThisJob|escape|default:'[t]N/A[/t]'}{else}[t]N/A[/t]{/if}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+        </div>
+{/if}
+{if $c.extended.will_relocate}
+        <div class="itemLine actIl actIlCvs actIlCad CvDrelocate canPersReloc {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+            <label>[t]will relocate[/t]</label>
+			<span>{if $c.extended.will_relocate == 1}[t]yes[/t]{elseif $c.extended.will_relocate === "0"}[t]no[/t]{else}[t]N/A[/t]{/if}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+        </div>
+ {/if}
+       <div class="itemLine actIl actIlCvs actIlCad canPersUpdate {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+            <label>[t]last profile update[/t]</label>
+			<span>{$c.main._dtLastUpdated|escape|default:'[t]N/A[/t]'} {if isset($wijzigingsdatumMatch)}{if $wijzigingsdatumMatch}<img style="margin-left:10px;" src="/_images_global/led-green.png" alt="green" title="[thn]Profile was updated within the selected range[/thn]">{else}<img style="margin-left:10px;" src="/_images_global/led-red.png" alt="red" title="[thn]Profile was not updated within the selected range[/thn]">{/if}{/if}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+        </div>
+{if $mergMatchCriteria}
+        <div class="itemLine actIl actIlCvs actIlCad canPersCrite {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+            <label>[t]matchcriteria[/t]</label>
+			<span><!--{$mergMatchCriteria|escape}--><!--bug #196397-->
+			{foreach from=$matchCriteria item=cr name=matchCriteriaLoop}
+				{$cr.name|escape}{if $cr.match}<img style="margin-left:5px;" src="/_images_global/led-green.png" alt="green" title="[thn]Match criterium was matched[/thn]">{/if}{if !$smarty.foreach.matchCriteriaLoop.last},{/if}
+			{foreachelse}
+				[t]N/A[/t]
+			{/foreach}
+			</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+        </div>
+{/if}
+        <if $availabilityEnabled>
+		<div class="itemLine actIl actIlCvs actIlCad canPersAvail {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+		    <label>[t]available[/t]</label>
+			<span>{if $c.main.is_available}[t]yes[/t]<img style="margin-left:10px;" src="/_images_global/led-green.png" alt="green" title="[thn]Available[/thn]">{else}[t]no[/t] <img style="margin-left:10px;" src="/_images_global/led-red.png" alt="red" title="[thn]Not available[/thn]">{/if}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+		</div>
+            <if !$c.main.is_available>
+			<div class="itemLine actIl actIlCvs actIlCad canPersReaso {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+			    <label>[t]reason[/t]</label>
+				<span>
+                        {if $c.availability.na_reason == "have_new_job"}
+                        [t]has a new job[/t]
+                        {elseif $c.availability.na_reason == "content_with_current_job"}
+                        [t]content with current job[/t]
+                        {elseif $c.availability.na_reason == "applied_for_new_job"}
+                        [t]applied for new job[/t]
+                        {elseif $c.availability.na_reason == "school"}
+                        [t]studying[/t]
+                        {elseif $c.availability.na_reason == "sabbatical"}
+                        [t]sabbatical[/t]
+                        {elseif $c.availability.na_reason == "kids"}
+                        [t]taking care of kids[/t]
+                        {elseif $c.availability.na_reason == "not_working_temporarily"}
+                        [t]not working temporarily[/t]
+                        {elseif $c.availability.na_reason == "on_project"}
+                        [t]currently on project[/t]
+                        {elseif $c.availability.na_reason == "avail_for_topjob_only"}
+                        [t]available for tob job only[/t]
+                        {elseif $c.availability.na_reason == "other"}
+                        [t]other[/t]
+						{else}
+						[t]N/A[/t]
+                        {/if}
+						{if isset($na_reasonMatch)}{if $na_reasonMatch}<img style="margin-left:10px;" src="/_images_global/led-green.png" alt="green" title="[thn]N/A reason is matched by your search[/thn]">{else}<img style="margin-left:10px;" src="/_images_global/led-red.png" alt="red" title="[thn]N/A reason is not matched by your search[/thn]">{/if}{/if}
+                    </span>
+				<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+                </div>
+            </if>
+		<div class="itemLine actIl actIlCvs actIlCad canPersAvailFr {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+		    <label>[t]available from[/t]</label>
+		    <span>
+			{if $c.main.is_available_per_direct == 1 && $c.main.is_available}
+				[t]per direct[/t]
+			{else}
+				{if $c.main._dateAvailableBy != '1-1-1970' && $c.main.is_available}
+					{$c.main._dateAvailableBy|escape|default:'[t]N/A[/t]'} {if isset($datum_beschikbaarMatch)}{if $datum_beschikbaarMatch}<img style="margin-left:10px;" src="/_images_global/led-green.png" alt="green" title="[thn]The candidate is available on selected date[/thn]">{else}<img style="margin-left:10px;" src="/_images_global/led-red.png" alt="red" title="[thn]The candidate is not available on selected date[/thn]">{/if}{/if}
+				{else}
+					[t]N/A[/t]
+				{/if}
+			{/if}
+			</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+		</div>
+		{*
+		<div class="itemLine actIl actIlCvs actIlCad canPersRatin {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+		    <label>[t]avail. rating[/t]</label>
+			<span>{if $availRelRatingImg}<img src="/_images_global/trans_stars/{$availRelRatingImg}" alt="{$availRelRating}" title="[th]Rating[/th]: {$availRelRating}">{else}[t]N/A[/t]{/if}</span>
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+		</div>
+		*}
+        </if>
+	<if [uts:show_description] && $c.main.chapo>
+		<div class="itemLine actIl actIlCvs actIlCvsDescr {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+			<label>[t]description[/t]</label>
+			<span>{$c.main.chapo}</span>
+			<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+		</div>
+	</if>
+	<if [uts:show_personal_message] && $c.main.promotekst>
+		<div class="itemLine actIl actIlCvs actIlCvsDescr {cycle name="persLines" values="cadPersLineOdd,cadPersLineEven"}">
+			<label>[t]personal message[/t]</label>
+			<span>{$c.main.promotekst|strip_tags}</span>
+			<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+		</div>
+	</if>
+	
+	<!-- Variable check:
+	    loggedInAsCP: {$loggedInAsCP}
+	    showContactButton : {$showContactButton}
+	    showHireButton : {$showHireButton}
+	    OTYSCZ: {$OTYSCZ}
+	-->
+		{* start contact candidate button *}
+		<if $loggedInAsCP>
+		<div class="buttonContainer">
+			<if $showContactButton>
+			<input type="button" class="button" name="contactCand" value="[tb]Contact this candidate[/tb]" onclick="window.location='{$indexPhp}page/candetail/bb/1/command/contactform/id/{$cid}/origin/advsearchcvs'">
+			</if>
+			<if $showHireButton>
+			<input type="button" class="button" name="hireCand" value="[tb]Hire candidate[/tb]" onclick="window.location='{$indexPhp}page/candetail/bb/1/command/hireform/id/{$cid}/origin/advsearchcvs'">
+			</if>
+			{* SET ACTIVE/PASSIVE BUTTON FOR CLINETS WHICH HAS ADD FO CANDIDATES AS PASSIVE ON *}
+			<if $foCndAP>
+			<input type="button" class="button" name="setCandStatus" value="[tb]Set status[/tb] {if $c.main.passive == 'Y'}[th]Active[/th]{else}[th]Passive[/th]{/if}" onclick="window.location='{$indexPhp}page/candetail/bb/1/command/setpassive/id/{$cid}/origin/advsearchcvs'">
+			</if>  	
+			<div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+		</div>
+		</if>
+		{* end contact candidate button *}
+    </div>
+</div>

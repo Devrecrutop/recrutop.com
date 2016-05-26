@@ -1,0 +1,23 @@
+<!-- /UTS/invoicing/invoice_all.html -->
+{include file="inv_html_begin.inc.html"}
+{foreach from=$alldata item=invoice name=allInvoices}
+    {if $smarty.foreach.allInvoices.iteration > 1} 
+        <div style="page-break-before: always;"></div>
+    {/if}
+    {assign var="data" value=$invoice.data}
+    {assign var="extraData" value=$invoice.extraData}
+    {assign var="invoiceType" value=$invoice.invoiceType}
+    {if $invoiceType == 'candidate'}
+        {include file="inv_header_candidate.inc.html"}
+        {include file="inv_items.inc.html"}
+    {elseif $invoiceType == 'assignment'}
+        {include file="inv_header.inc.html"}
+        {include file="inv_assignment.inc.html"}
+        {include file="inv_items.inc.html"}
+    {else}
+        {include file="inv_header.inc.html"}
+        {include file="inv_items.inc.html"}
+    {/if}
+    
+{/foreach}
+{include file="inv_html_end.inc.html"}

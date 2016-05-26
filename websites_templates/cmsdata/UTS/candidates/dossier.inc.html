@@ -1,0 +1,90 @@
+<literal>
+<style type="text/css">
+  tr.dossierLineOdd {
+  }
+  
+  tr.dossierLineEven {
+    background-color:#f2f2f2;
+  }
+  
+  a.cluetipsDossier {
+    cursor:hand;
+  }
+  
+  
+</style>
+</literal>
+<if $cpinfo>
+<script type="text/javascript">
+var handler = '{$handler}';
+//{literal}
+function deleteNote(id) {
+    $.get(handler + '/command/ajaxdeletenote/id/' + id,
+        function(data){
+            if (data.status=='ERROR') {
+                alert('[th]Error occurred:[/th] '+data.errorDescription);
+            } else {
+                //alert(data.data);
+                var seltab=$('#candAdvDetailTabs').tabs( "option", "selected" );
+                //alert('submit form ajax '+seltab);
+                $('#candAdvDetailTabs').tabs('load', seltab);  
+            }
+       }, "json");
+    
+}
+//{/literal}
+</script>
+</if>
+<!-- /UTS/candidates/dossier.inc.html -->
+<!--<h2>[t]File[/t]</h2>-->
+<if $cpinfo>
+    <div class="menuContainer aplMc">
+        <div class="menuLink aplMlink MenuLinkFirstChild aplMlinkFc MenuLinkLastChild aplMlinkLc"><a class="internal" href="{$handler}/command/makenote/cid/{$cid}"><!--<img src="/_images_global/notitie.gif" style="vertical-align:middle;">-->[t]Make a note[/t]</a></div>
+        <div class="cleaner menuLinkCleaner aplLinkCleaner"></div>
+    </div>
+
+<table border="0" cellpadding="0" cellspacing="0" class="hqTbl candAdvDetailDossierTbl">
+<tr>
+<th nowrap width="5%">[t]Type[/t]</th>
+<th nowrap width="5%">[t]Date[/t]</th>
+<th>[t]Subject[/t]</th>
+<th nowrap width="5%">[t]Actions[/t]</th>
+</tr>
+<foreach from=$dossier item=d>
+<tr id="{cycle values="hqFlip,hqFlop"}">
+<td><img src="{$d.icon}"></td>
+<td>{$d.date}</td>
+<td>{$d.subject|escape}</td>
+<td nowrap>
+{if $d.link}<a class="dLnk" href="{$d.link|escape}">{$d.linkTitle|escape|default:"[thn]View[/thn]"}</a>
+{elseif $d.linkClueTip}<a class="cluetipsDossier" title="{$d.subject|escape}" rel="{$d.linkClueTip|escape}">{$d.linkTitle|escape|default:"[thn]View[/thn]"}</a>
+{/if}
+{if $d.type == 'notitie' && $d.allow_delete} | <a class="dLnk" onclick="deleteNote({$d.id});">[t]Delete[/t]</a>{/if}
+</td>
+</tr>
+</foreach>
+<if $dossier|@count == 0>
+<tr>
+<td colspan="4" class="hqNoItems noItemsToDisplay">[t]There are no items to display...[/t]</td>
+</tr>                
+</if>
+</table>
+<else>
+    <p>[t]In order to see candidate's file, you have to be logged in as a customer.[/t]</p>
+<script type="text/javascript">
+//{literal} MEk 2010: disabled the script below because its main purpose seems to alert "huh" and "ready" (please remove or finish the script if you know what it is for)
+/* alert('huh');
+$('a.cluetipsDossier').cluetip({
+        activation:       'click',
+        width:            400,
+        sticky:           true,
+        ajaxCache:        false,  
+        closeText:        '[th]Close[/th]'
+    });
+
+$(document).ready(function() {
+    alert('ready');
+}); */
+//{/literal}
+</script>
+</if>

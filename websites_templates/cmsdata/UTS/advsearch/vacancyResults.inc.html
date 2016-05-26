@@ -1,0 +1,301 @@
+{* vacancy results include template *}
+
+<if $dbg_googlemaps && $gmicnt && ( [uts:show_googlemaps] || $requestOrigin == "googlemaps" ) >
+	<script type="text/javascript">
+	//{literal}
+	function actInitGMSection(divobj, centeritem) {
+	    var ifo=document.getElementById('gmIFrame');
+	    
+	    if (ifo) {
+	        //alert(ifo+centeritem);
+	        //{/literal}
+	        var iframeURL='//www.yourit.nl/_gmactonomy/jobresults.php?pof={$poffset|escape:"javascript"}&pli={$plimit|escape:"javascript"}&hsuserid={$hsuserid|escape:"javascript"}&clientid={$uts.clientid}&siteid={$uts.siteid}&language={$language}&sort={$ctrl.sortby|escape:"javascript"}&ascdesc={$ctrl.sortascdesc|escape:"javascript"}&rand={$rnd}';
+	        if (centeritem) iframeURL=iframeURL+'&centeritem='+centeritem;
+	        //{literal}
+	        //alert(iframeURL);
+	        ifo.src=iframeURL;
+	    } else {
+	        //{/literal}
+	        var iframeURL='//www.yourit.nl/_gmactonomy/jobresults.php?pof={$poffset|escape:"javascript"}&amp;pli={$plimit|escape:"javascript"}&amp;hsuserid={$hsuserid|escape:"javascript"}&amp;clientid={$uts.clientid}&amp;siteid={$uts.siteid}&amp;language={$language}&amp;sort={$ctrl.sortby|escape:"javascript"}&ascdesc={$ctrl.sortascdesc|escape:"javascript"}&rand={$rnd}';
+	        if (centeritem) iframeURL=iframeURL+'&amp;centeritem='+centeritem;
+	        //{literal}
+	        divobj.innerHTML='<iframe id="gmIFrame" src="'+iframeURL+'" width="100%" height="310" frameborder="NO" border="0"></iframe>';
+	    }
+	}
+	
+	function viewItemOnMap(itemchar) {
+	    //alert(itemchar);
+	    var divobj=document.getElementById('actGoogleMaps');
+		$.scrollTo('#aToggleMap', 500);
+	    if (divobj.style.display=='none') {
+	        //animatedcollapse.toggle('actGoogleMaps', '');
+	        divobj.style.display='block';
+	    }
+	    actInitGMSection(divobj, itemchar);
+	}
+	//{/literal}
+	</script>
+</if>
+
+<if $displayIndeedJobs>
+<script type="text/javascript" src="//gdc.indeed.com/ads/apiresults.js"></script>
+</if>
+
+<div class="actSResContainer">
+ <!-- /UTS/advsearch/vacancyResults.inc.html STANDARD# -->
+ 
+<if !$resultCnt>
+
+<h2 class="subHeader actSh actShNj">[th]No jobs found[/th]</h2>
+<div class="text actText actTextNj">[th]No jobs were found. Please try to decrease the number of conditions in your query.[/th]</div>
+
+{* NOTE INDEED JOBS SECTIONS TOP/BOTTOM ARE TWICE HERE ONCE WHEN WE DO NOT HAVE ACTONOMY RESULTS AND ONCE WHEN WE HAVE SOME *}
+{* INDEED TOP/BOTTOM JOBS BEGIN *}
+<if $displayIndeedJobs && ($indeedJobs.top || $indeedJobs.bottom)>
+{*<span id=indeed_at><a href="//www.indeed.com/">jobs</a> by <a href="//www.indeed.com/" title="Job Search"><img src="//www.indeed.com/p/jobsearch.gif" style="border: 0;vertical-align: middle;" alt="Indeed job search"></a></span>*}
+<span id=indeed_at><a href="//www.indeed.nl/">[t]Vacatures[/t]</a> [t]van[/t] <a href="//www.indeed.nl/" title="Vacatures zoeken"><img src="//www.indeed.com/p/jobsearch.gif" style="border: 0; vertical-align: middle;" alt="[t]Vacatures zoeken Indeed[/t]"></a></span>
+<div class="indeedSResContainer indeedTop">
+
+<if $indeedJobs.top>
+<foreach from=$indeedJobs.top item=indJb>
+  <div class="itemContainer actIc indeedJobContainer indeedTop">
+    <h3 class="itemTitle actItemTitle indeedJobTitle"><a href="{$indJb.url|escape}" target="_blank" onMouseDown="{$indJb.onmousedown}">{$indJb.jobtitle|escape}</a></h3>    
+    <div class="itemWord actIw indeedJobText"><span>[t]Company[/t]</span> {$indJb.company|escape}</div>
+    <div class="itemWord actIw indeedJobText"><span>[t]Source[/t]</span> {$indJb.source|escape}</div>
+    <div class="itemWord actIw indeedJobText"><span>[t]Description[/t]</span> {$indJb.snippet}</div>    
+  </div>
+</foreach>
+</if>
+
+<if $indeedJobs.bottom>
+<foreach from=$indeedJobs.bottom item=indJb>
+  <div class="itemContainer actIc indeedJobContainer indeedBottom">
+    <h3 class="itemTitle actItemTitle indeedJobTitle"><a href="{$indJb.url|escape}" target="_blank" onMouseDown="{$indJb.onmousedown}">{$indJb.jobtitle|escape}</a></h3>    
+    <div class="itemWord actIw indeedJobText"><span>[t]Company[/t]</span> {$indJb.company|escape}</div>
+    <div class="itemWord actIw indeedJobText"><span>[t]Source[/t]</span> {$indJb.source|escape}</div>
+    <div class="itemWord actIw indeedJobText"><span>[t]Description[/t]</span> {$indJb.snippet}</div>    
+  </div>
+</foreach>
+</if>
+  
+</div>
+<div class="cleaner actSrCleaner"></div>  
+</if>
+{* INDEED TOP/BOTTOM JOBS END *}
+
+<else>
+    
+{* start tag cloud *}
+
+<if [uts:show_tagcloud] && $tagcloud && $requestOrigin != "googlemaps">                                                             {*79-collapsed, 80-expanded*}
+<!-- [uts:show_tagcloud] lol {$tagcloud}   --->
+
+<div class="actTc">
+	<script type="text/javascript" defer="true">animatedcollapse.addDiv('actResultsTagCloud', 'fade=1,persist=0,hide={if [uts:collapse_tagcloud] == "80"}0{else}1{/if}')</script>
+	<div class="actEqueryTitle actTcTitle"><a href="javascript:animatedcollapse.toggle('actResultsTagCloud', '')">[t]Tag cloud[/t]</a></div>
+	<div class="text actText actTextTc" id="actResultsTagCloud">{$tagcloud}</div>
+</div>
+</if>
+{* end tag cloud *}
+
+{* start googlemaps *}
+<!-- {$dbg_googlemaps} - {$gmicnt} - [uts:show_googlemaps] - {$requestOrigin} -->
+<if $dbg_googlemaps && $gmicnt && ( [uts:show_googlemaps] || $requestOrigin == "googlemaps" ) >
+<div class="actGm">
+	<if $requestOrigin != "googlemaps">                                                                                                 {*81-collapsed, 82-expanded*}
+	<script type="text/javascript" defer="true">animatedcollapse.addDiv('actGoogleMaps', 'fade=1,persist=0,hide={if [uts:collapse_googlemaps] == "82"}0{else}1{/if}')</script>
+	<div class="actEqueryTitle actGmTitle"><a href="javascript:animatedcollapse.toggle('actGoogleMaps', '')" id="aToggleMap">[t]Show results on a map[/t]</a></div>
+	</if>
+	<div class="text actText actTextGm Gm" id="actGoogleMaps">
+		<if $requestOrigin == "googlemaps">
+		<iframe id="gmIFrame" src="//www.yourit.nl/_gmactonomy/jobresults.php?pof={$poffset|escape:"javascript"}&amp;pli={$plimit|escape:"javascript"}&amp;hsuserid={$hsuserid|escape:"javascript"}&amp;clientid={$uts.clientid}&amp;siteid={$uts.siteid}&amp;language={$language}&amp;sort={$ctrl.sortby|escape:"javascript"}&amp;ascdesc={$ctrl.sortascdesc|escape:"javascript"}&amp;rand={$rnd}&amp;gmmode=1" width="100%" height="310" frameborder="NO" border="0"></iframe>
+		</if>
+	</div>
+</div>
+</if>
+{* end googlemaps *}
+<div class="cleaner actSrCleaner"></div>
+
+{* INDEED TOP JOBS BEGIN *}
+<if $displayIndeedJobs && $indeedJobs.top>
+<span id=indeed_at><a href="//www.indeed.com/">jobs</a> by <a href="//www.indeed.com/" title="Job Search"><img src="//www.indeed.com/p/jobsearch.gif" style="border: 0;vertical-align: middle;" alt="Indeed job search"></a></span>
+<div class="indeedSResContainer indeedTop">
+<foreach from=$indeedJobs.top item=indJb>
+  <div class="itemContainer actIc indeedJobContainer indeedTop">
+    <h3 class="itemTitle actItemTitle indeedJobTitle"><a href="{$indJb.url|escape}" target="_blank" onMouseDown="{$indJb.onmousedown}">{$indJb.jobtitle|escape}</a></h3>    
+    <div class="itemWord actIw indeedJobText"><span>[t]Company[/t]</span> {$indJb.company|escape}</div>
+    <div class="itemWord actIw indeedJobText"><span>[t]Source[/t]</span> {$indJb.source|escape}</div>
+    <div class="itemWord actIw indeedJobText"><span>[t]Description[/t]</span> {$indJb.snippet}</div>    
+  </div>
+</foreach>
+  
+</div>
+<div class="cleaner actSrCleaner"></div>
+</if>
+{* INDEED TOP JOBS END *}
+
+{* actual result list *}
+<if true>
+<foreach from=$results item=r name=actIc>
+{* main job category id *}<!--CAT ID: {$r.data.vacancy_main_category_id}-->
+<div class="itemContainer actIc{if $r.premium} actIcPremium{/if}{cycle values=" actIcOdd, actIcEven"}{if $smarty.foreach.actIc.first} actIcFirst{/if}{if $smarty.foreach.actIc.last} actIcLast{/if}">
+{* BKo: show logo *}
+<if [uts:show_logo] && !$r.hide_logo>
+	{if '' != $r.data.Thumbnail}
+	<div class="actItemImagePhoto1"><div class="itemImage actItemImage{if $r.premium} actIImagePremium{/if}"><a class="cluetips"
+      {if [uts:show_cluetip]}{if $mobile_enabled}rel="external"{else}rel="{$handler}/command/cluetipdetail/id/{$r.recid}/"{/if}{/if} 
+      title="{if $r.data._name}{$r.data._name|escape:"javascript"}{else}{$r.data._name_nolng|escape:"javascript"}{/if} - {$r.data.locatie|escape:"javascript"}" 
+      href="{$r.data.JobUrl}">
+        {if [uts:show_first_media_slider] && $r.data._slider_thumbnail != ''}
+        <img src="[website]/_images_upload/{$r.data._slider_thumbnail|escape}" alt="{if $rewrite_keyword}{$rewrite_keyword} {$r.data.locatie}{else}Vacature {$r.data.locatie}{/if}" border="0" {$widthlimit} {$heightlimit}>
+        {else}
+        <img src="[website]/_images_upload/{$r.data.Thumbnail|escape}" alt="{if $rewrite_keyword}{$rewrite_keyword} {$r.data.locatie}{else}Vacature {$r.data.locatie}{/if}" border="0" {$widthlimit} {$heightlimit}>
+        {/if}</a></div></div>
+	{/if} {*end of vacancy logo*}
+	{*fallback when no vacancy logo is found, use the _wg_logo from the relation *}
+	
+	{if '' != $r.data._wg_logo && '' == $r.data.Thumbnail}
+	<div class="actItemImagePhoto1"><div class="itemImage actItemImage{if $r.premium} actIImagePremium{/if}"><a class="cluetips"
+      {if [uts:show_cluetip]}{if $mobile_enabled}rel="external"{else}rel="{$handler}/command/cluetipdetail/id/{$r.recid}/"{/if}{/if} 
+      title="{if $r.data._name}{$r.data._name|escape:"javascript"}{else}{$r.data._name_nolng|escape:"javascript"}{/if} - {$r.data.locatie|escape:"javascript"}" 
+      href="{$r.data.JobUrl}">
+        {if [uts:show_first_media_slider] && $r.data._slider_thumbnail != ''}
+        <img src="[website]/_images_upload/{$r.data._slider_thumbnail|escape}" alt="{if $rewrite_keyword}{$rewrite_keyword} {$r.data.locatie}{else}Vacature {$r.data.locatie}{/if}" border="0" {$widthlimit} {$heightlimit}>
+        {else}
+        <img src="[website]/_images_upload/{$r.data._wg_logo|escape}" alt="{if $rewrite_keyword}{$rewrite_keyword} {$r.data.locatie}{else}Vacature {$r.data.locatie}{/if}" border="0" {$widthlimit} {$heightlimit}>
+        {/if}</a></div></div>
+	{/if} {*end of relation logo*}
+<elseif [uts:show_first_media_slider] && $r.data._slider_thumbnail != ''>
+    <div class="actItemImagePhoto1"><div class="itemImage actItemImage{if $r.premium} actIImagePremium{/if}"><a class="cluetips"
+        {if [uts:show_cluetip]}{if $mobile_enabled}rel="external"{else}rel="{$handler}/command/cluetipdetail/id/{$r.recid}/"{/if}{/if}
+        title="{if $r.data._name}{$r.data._name|escape:"javascript"}{else}{$r.data._name_nolng|escape:"javascript"}{/if} - {$r.data.locatie|escape:"javascript"}"
+        href="{$r.data.JobUrl}">
+        <img src="[website]/_images_upload/{$r.data._slider_thumbnail|escape}" alt="{if $rewrite_keyword}{$rewrite_keyword} {$r.data.locatie}{else}Vacature {$r.data.locatie}{/if}" border="0" {$widthlimit} {$heightlimit}>
+        </a></div></div>
+</if>
+
+
+{* MBL added _name_nolng because if job is posted by OMP and there is no suitable language then field without language nr is should be used, in actonomyMatchServicesVacanciesFO::resolveFields() *}
+<h3 class="itemTitle actItemTitle{if $r.premium} actITitlePremium{/if}"><a class="cluetips"  {if [uts:show_cluetip]}rel="{$handler}/command/cluetipdetail/id/{$r.recid}/"{/if} title="{if $r.data._name}{$r.data._name|escape:"javascript"}{else}{$r.data._name_nolng|escape:"javascript"}{/if} - {$r.data.locatie|escape:"javascript"}" href="{$r.data.JobUrl}">{if $r.data._name}{$r.data._name}{else}{$r.data._name_nolng}{/if} - {$r.data.locatie}</a></h3>
+
+{* BKo: show werkgever *}
+<if [uts:show_werkgever] && !$hide_employer_job_results_wb>
+	{if $r.data._relation_show || $toon_opdrachtgever}
+		{if '' != $r.data._relation}
+			<div class="itemWord actIw actIwCompany{if $r.premium} actIwPremium{/if}"><span>[th]Werkgever[/th]:</span>{if $r.data.network_link}<a href="{$r.data.network_link}">{/if}{$r.data._relation|escape}{if $r.data.network_link}</a>{/if}</div>
+		{/if}	
+	{else}
+		<div class="itemWord actIw actIwCompany{if $r.premium} actIwPremium{/if}"><span>[th]Werkgever[/th]:</span>[th]Anonymous[/th]</div>
+	{/if}
+	<div class="itemWord actIw{if $r.premium} actIwPremium{/if}"><span>[th]Locatie[/th]:</span>{$r.data.locatie|escape}</div>
+</if>
+
+
+<if $UseLastApplicationDateEnabled && [uts:show_last_application_date]>
+  <if $r.data.first_application_date>
+  	<div class="itemWord actIw actIwDate{if $r.premium} actIwPremium{/if}"><span>[th]First application date[/th]:</span>{$r.data.first_application_date|date_format:"%d-%m-%Y"}</div>
+	</if>
+  <if $r.data.last_application_date>
+  	<div class="itemWord actIw actIwDate{if $r.premium} actIwPremium{/if}"><span>[th]Last application date[/th]:</span>{$r.data.last_application_date|date_format:"%d-%m-%Y"}</div>
+	</if>
+</if>
+
+<div class="itemDescription actItemDescr{if $r.premium} actIDescrPremium{/if}">{$r.data._description|strip_tags|truncate:[uts:truncate_description]}</div>
+
+<div class="itemFooter actIf{if $r.premium} actIfPremium{/if}">
+<if [uts:show_relevance]>	
+<div class="itemFooterWord actIFw actIFwS{if $r.premium} actIFwSPremium{/if}"><img src="/_images_global/trans_stars/{$r.starsImg}" alt="{$r.scorep}%" title="[th]Score[/th]: {$r.scorep}%"></div>
+</if>
+<if [uts:show_persons_bar]>
+<div class="itemFooterWord actIFw actIFwM{if $r.premium} actIFwMPremium{/if}"><img src="/_images_global/men/{$r.pbarImg}" alt="{$r.data._rea_count} [th]applications[/th]" title="{$r.data._rea_count} [th]applications[/th]"></div>
+</if>
+
+{* start publication date *}
+{if $r.data._published}
+<div class="itemFooterWord actIFw actIFwPd{if $r.premium} actIFwPdPremium{/if}">
+<span>[th]Published:[/th]</span>
+{if $r.data._published_days_ago == 0}
+	[th]today[/th]
+{elseif $r.data._published_days_ago == 1}
+	[th]yesterday[/th]
+{elseif $r.data._published_days_ago le 5}
+	{assign var='xdays' value='[t]%1 days ago[/t]'}
+	{$xdays|regex_replace:"/\%1/":$r.data._published_days_ago}
+	{* this is the old one, which doesnt work because*}
+	{* uts cannot translate words in t-tags in a fragment type file, if the fgragment type file is included in the parent file like this - include file=- *}
+	{*{t 1=$r.data._published_days_ago count=$r.data._published_days_ago}%1 days ago{/t}*}
+{else}
+	{$r.data._published|date_format:"%d-%m-%Y"}
+{/if}
+</div>
+{/if}
+{* end publication date *}
+
+{if [uts:show_pub_satus] && $r.data._pubstatus}
+  <div class="itemFooterWord actIFw actIFwPub{if $r.premium} actIFwPubPremium{/if}"><span>[th]Publication status:[/th]</span>{$r.data._pubstatus}</div>
+{/if}
+
+{if $r.data.ref_nr || $r.data.ref_nr_varchar}
+    <div class="itemFooterWord actIFw actIFwRef{if $r.premium} actIFwRefPremium{/if}"><span>[th]Reference:[/th]</span>#{$r.data.ref_nr}</div>
+{/if}
+{if $rewrite_keyword}<div class="itemFooterWord actIFw actIFwKw{if $r.premium} actIFwKwPremium{/if}">{$rewrite_keyword}</div>{/if}
+
+{* start icons *}
+{if $r.data._gmnumber && $dbg_googlemaps && [uts:show_googlemaps]}
+<div class="itemFooterWord actIFw actIFwMap{if $r.premium} actIFwMapPremium{/if}"><a href="javascript:viewItemOnMap('{$r.data._gmnumber|escape}')" title="[th]Show on map[/th]{if $r.data.geo_longitude} | [th]lng:[/th]{$r.data.geo_longitude|escape}{/if}{if $r.data.geo_latitude} | [th]lat:[/th]{$r.data.geo_latitude|escape}{/if}{if $r.data.address} | [th]address:[/th]{$r.data.address|escape}{/if}{if $r.data.city} | [th]city:[/th]{$r.data.city|escape}{/if}{if $r.data._country_name} | [th]country:[/th]{$r.data._country_name|escape}{/if}{if $r.data.zipcode} | [th]zipcode:[/th]{$r.data.zipcode|escape}{/if}"><img src="//www.yourit.nl/_images_global/gm/image{$r.data._gmnumber|escape}.png" border="0" alt="{$r.data._gmnumber|escape}"></a></div>
+{/if}
+{if $r.data._doc_count gt 0}
+<!-- Hidden globally because it doesn't work. Check need to be changed to CV only -->
+{* <div class="itemFooterWord actIFw actIFwDoc{if $r.premium} actIFwDocPremium{/if}"><img src="/_images_global/pdf.gif" alt="[th]This vacancy has documents attached[/th]"></div> *}
+{/if}
+{if $r.data._wiqet_count gt 0}
+<div class="itemFooterWord actIFw actIFwWiq{if $r.premium} actIFwWiqPremium{/if}"><img src="/_images_global/wiqet.gif" alt="[th]This vacancy has a wiqets attached[/th]"></div>
+{/if}
+{if $r.data._video_count gt 0}
+<div class="itemFooterWord actIFw actIFVid{if $r.premium} actIFVidPremium{/if}"><img src="/_images_global/videosmall.png" alt="[th]This vacancy has videos attached[/th]"></div>
+{/if}
+{* end icons *}
+{* start widget *}
+<if $r.data._cpwidget && [uts:show_widgets]>
+<div class="itemFooterWord actIFw actIFWid{if $r.premium} actIFWidPremium{/if}">{$r.data._cpwidget}</div>
+</if>
+{* end widget *}
+
+{* display tags *}
+<if $useTags && [uts:display_meta_tags] && count($r.tags)>
+<div class="itemFooterWord actIFw actIFWid{if $r.premium} actIFWidPremium{/if}">
+<foreach from=$r.tags item=tag><span><a href="{$handler}/command/searchtag/tag/{$tag.name}/noredirectdetail/1">#{$tag.name}</a></span> </foreach>
+</div>
+</if>
+{* end display tags *}
+
+</div>
+</div>
+</foreach>
+
+{* INDEED BOTTOM JOBS BEGIN *}
+<if $displayIndeedJobs && $indeedJobs.bottom>
+<div class="cleaner actSrCleaner"></div>
+{*<span id=indeed_at><a href="//www.indeed.com/">jobs</a> by <a href="//www.indeed.com/" title="Job Search"><img src="//www.indeed.com/p/jobsearch.gif" style="border: 0;vertical-align: middle;" alt="Indeed job search"></a></span>*}
+<span id=indeed_at><a href="//www.indeed.nl/">[t]Vacatures[/t]</a> [t]van[/t] <a href="//www.indeed.nl/" title="Vacatures zoeken"><img src="//www.indeed.com/p/jobsearch.gif" style="border: 0; vertical-align: middle;" alt="[t]Vacatures zoeken Indeed[/t]"></a></span>
+  
+<div class="indeedSResContainer indeedBottom">
+
+<foreach from=$indeedJobs.bottom item=indJb>
+  <div class="itemContainer actIc indeedJobContainer indeedBottom">
+    <h3 class="itemTitle actItemTitle indeedJobTitle"><a href="{$indJb.url|escape}" target="_blank" onMouseDown="{$indJb.onmousedown}">{$indJb.jobtitle|escape}</a></h3>    
+    <div class="itemWord actIw indeedJobText"><span>[t]Company[/t]</span> {$indJb.company|escape}</div>
+    <div class="itemWord actIw indeedJobText"><span>[t]Source[/t]</span> {$indJb.source|escape}</div>
+    <div class="itemWord actIw indeedJobText"><span>[t]Description[/t]</span> {$indJb.snippet}</div>    
+  </div>
+</foreach>
+  
+</div>
+</if>
+{* INDEED BOTTOM JOBS END *}
+
+</if>
+{* end actual result list *}
+
+</if>
+</div>

@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>WebUserForm2</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/agents/webUserProfilePage0.html -->
+
+<table class="vacstable" cellpadding="0" cellspacing="0" border="00">
+
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]PageTitle[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+
+<!--START_Block1-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<!--START_Title1-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title1-->
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<!--START_Text1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Text1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+
+
+<!--START_JOB_SEARCH_AGENT-->
+<!--START_Block2-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<!--START_Title2-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title2[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title2-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text2-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Text2[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text2-->
+</table>
+
+</td>
+</tr>
+
+<!--START_MENUBAR-->
+<tr>
+<td class="pageLinkContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="pageLinkTbl">
+<tr>
+<td class="pageLink"><a href="/index.php/page/webuser/command/myprofile/WUpage/1/bb/1">[t]SingleWord1[/t]<!--SingleWordLink1--></a> | </td>
+<!--<td class="pageLink"><a href="/index.php/page/webuser/command/myprofile/WUpage/2/bb/1">[t]SingleWord 2[/t]SingleWordLink2</a></td>-->
+<!--START_AGENTS_STUFF-->
+<td class="pageLink"><a href="/index.php/page/agents/command/myprofile/WUpage/3/bb/1">[t]SingleWord3[/t]<!--SingleWordLink3--></a> | </td>
+<!--END_AGENTS_STUFF-->
+<td class="pageLink"><a href="/index.php/page/webuser/command/logout/bb/1">[t]SingleWord4[/t]<!--SingleWordLink4--></a></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_MENUBAR-->
+
+</table>
+
+</td>
+</tr>
+<!--END_Block2-->
+<!--END_JOB_SEARCH_AGENT-->
+
+{if $isCandidateLogged}
+<!--START_CANDIDATE-->
+<!--START_Block3-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<!--START_Title3-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title3[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title3-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text3-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Text3[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text3-->
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="pageLinkContainer">
+
+<!--START_OLD_CANDIDATE_LINKS-->
+<table border="0" cellpadding="0" cellspacing="0" class="pageLinkTbl">
+<tr>
+
+{foreach key=page item=pageName from=$pageLinks}
+<!--START_PAGELINKS-->
+<td class="pageLink"><a href="/index.php/page/CandidatesRemote/command/myprofile/cpage/2/subpage/{$page}/bb/1">{$pageName}</a> | </td>
+<!--END_PAGELINKS-->
+{/foreach}
+
+<td class="pageLink">| <a href="/index.php/page/CandidatesRemote/command/myprofile/cpage/3/bb/1">[t]SingleWord10[/t]<!--SingleWordLink10--></a></td>
+
+<!--START_VIDEOBOARD-->
+<td class="pageLink">| <a href="/index.php/page/CandidatesRemote/command/myprofile/cpage/5/bb/1">[t]SingleWord9[/t]<!--SingleWordLink9--></a></td>
+<!--END_VIDEOBOARD-->
+
+<!--START_A-->
+<td class="pageLink"> | <a href="/index.php/bb/1/page/CandidatesAgenda">[t]SingleWord6[/t]<!--SingleWordLink6--></a></td>
+<!--END_A-->
+
+{if $wmlink}
+<!--START_WMLINK-->
+<td class="pageLink"> | <a href="{$wmlink}">[t]SingleWord7[/t]<!--SingleWordLink7--></a></td>
+<!--END_WMLINK-->
+{/if}
+</tr>
+</table>
+<!--END_OLD_CANDIDATE_LINKS-->
+<!--START_NEW_CANDIDATE_LINKS-->
+{$ApplicantsMenu}
+<!--END_NEW_CANDIDATE_LINKS-->
+
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+<!--END_Block3-->
+<!--END_CANDIDATE-->
+{/if}
+{if $isCustomerLogged}
+<!--START_CUSTOMER-->
+<!--START_Block4-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<!--START_Title4-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title4[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title4-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text4-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Text4[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text4-->
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="pageLinkContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="pageLinkTbl">
+<tr>
+<td class="pageLink"><a href="/index.php/page/CustomersRemote/command/clientlogin/bb/1/option/start/level/customer">[t]SingleWord5[/t]<!--SingleWordLink5--></a></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+<!--END_Block4-->
+<!--END_CUSTOMER-->
+{/if}
+<!--START_SUPPLIER-->
+<!--START_Block5-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<!--START_Title5-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title5[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title5-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text5-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Text5[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text5-->
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="pageLinkContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="pageLinkTbl">
+<tr>
+<td class="pageLink"><a href="/index.php/page/CustomersRemote/command/clientlogin/bb/1/option/start/level/supplier">[t]SingleWord8[/t]<!--SingleWordLink8--></a></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+<!--END_Block5-->
+<!--END_SUPPLIER-->
+
+
+</table>
+
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- "[uts:metatime]" -->
+<!-- {$redirecturl} -->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if> 
+
+<div class="outer custOuter recrowdOuter rcwdDatModThankOuter">
+	<!-- /UTS/customers/recrowdDataModeThankYou.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+    <h1 class="title">[t]Thank You[/t]</h1>
+    {if $confirm_mode == "remove_data"}
+    <div class="intro">[t]We will remove your data shortly[/t]</div>
+    {else}
+    <div class="intro">[t]We will be storing your data for 1 year.[/t]</div>
+    {/if}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

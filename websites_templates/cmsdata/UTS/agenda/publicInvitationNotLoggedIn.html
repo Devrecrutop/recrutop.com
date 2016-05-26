@@ -1,0 +1,55 @@
+{* req.ext.js: JQueryBase,JQueryUI *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Public Invitation - Login</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!--/UTS/AGENDA/publicInvitationNotLoggedIn.html-->
+
+<div class="outer pInNlOuter">
+<h1 class="title pInNlTitle">[t]Plan an appointment[/t]</h1>
+<div class="text pInNlText">[t]Please fill in your contact details.[/t]</div>
+
+<div class="pInNlItem">
+
+<form name="searchsuggestionsf" action="{$handler}/command/proceedfromhook/bb/1" method="post">
+<div class="formInput">
+<label>[t]Name[/t]</label>
+<input id="public_invitation_name" type="text" name="name" value="{$name}">
+</div>
+<if $nameError>
+<div class="error">[t]Please fill your name![/t]</div>
+</if>
+<div class="formInput">
+<label>[t]E-mail[/t]</label>
+<input id="public_invitation_email" type="text" name="email" value="{$email}">
+</div>
+<if $emailError>
+<div class="error">[t]Please fill your e-mail address![/t]</div>
+</if>
+<div class="formInput">
+<label>[t]Code[/t]</label>
+<img id="captcha" src="/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image">
+<a href="#" onclick="document.getElementById('captcha').src = '/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0"></a>
+<a href="/_javascript_global/securimage/securimage_play.php"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0"></a>
+</div>
+<div class="formInput formSmallInput">
+<label for="captchafield">[t]Code:[/t]</label>
+<input type="text" name="captchafield" id="captchafield" size="10">
+</div>
+<if $captchaError>
+<div class="error">[t]Please enter the right security code![/t]</div>
+</if>
+<div class="pInNlButton"><input type="submit" value="[tb]Search for suggestions[/tb]" class="button"></div>
+
+</form>
+</div>
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

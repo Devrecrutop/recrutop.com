@@ -1,0 +1,175 @@
+{* req.ext.js: JQueryBase,JQueryUI,jQueryValidation *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Public Invitation - Step 2</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/agenda/publicInvitationSuggestions.html -->
+
+<script language="javascript" type="text/javascript">
+{literal}
+$(document).ready(function() {
+	
+		$( "#public_invitation_datepicker" ).datepicker({
+	
+			dateFormat: 'dd-mm-yy',
+			firstDay: 1,		
+			minDate: 0,
+			dayNames: ['[thg]Sunday[/thg]', '[thg]Monday[/thg]', '[thg]Tuesday[/thg]', '[thg]Wednesday[/thg]', '[thg]Thursday[/thg]', '[thg]Friday[/thg]', '[thg]Saturday[/thg]'],
+			dayNamesMin: ['[thg]Su[/thg]', '[thg]Mo[/thg]', '[thg]Tu[/thg]', '[thg]We[/thg]', '[thg]Th[/thg]', '[thg]Fr[/thg]', '[thg]Sa[/thg]'],
+			dayNameShort: ['[thg]Sun[/thg]', '[thg]Mon[/thg]', '[thg]Tue[/thg]', '[thg]Wed[/thg]', '[thg]Thu[/thg]', '[thg]Fri[/thg]', '[thg]Sat[/thg]'],
+			monthNames: ['[thg]January[/thg]', '[thg]February[/thg]', '[thg]March[/thg]', '[thg]April[/thg]', '[thg]May[/thg]', '[thg]June[/thg]', '[thg]July[/thg]', '[thg]August[/thg]', '[thg]September[/thg]', '[thg]October[/thg]', '[thg]November[/thg]', '[thg]December[/thg]'],			
+			monthNamesShort: ['[thg]Jan[/thg]', '[thg]Feb[/thg]', '[thg]Mar[/thg]', '[thg]Apr[/thg]', '[thg]May[/thg]', '[thg]Jun[/thg]', '[thg]Jul[/thg]', '[thg]Aug[/thg]', '[thg]Sep[/thg]', '[thg]Oct[/thg]', '[thg]Nov[/thg]', '[thg]Dec[/thg]']
+		
+		});
+		
+		// Validate form
+		$('#pubInvSugForm').validationEngine();
+		
+		//add phone number submit button
+		$('#phone_number_submit').click(function() {
+		      var phone = $('input[name=phone_number_radio]:checked').val();
+		      
+		      //check if custom number radio button selected
+		      if(phone == "nonSelected"){
+             phone = $("#phone_number_input").val();
+          }
+                             
+          $("#phone_number").val(phone);    
+          document.forms["pubInvSugForm"].submit(); 
+      });
+
+  
+});
+
+
+function submitForm(){
+  var phone_meeting = $("#phone_meeting").val();
+  var more_sugg = $('input[id=public_invitation_more_suggestions]:checked').val();
+  
+  //we have a phone meeting so we should get the phone number
+  if(phone_meeting == 1 && more_sugg != "more"){
+    //lets show the insert phone div
+    $("#hiddenPhoneDiv").css("display", "block");    
+  }
+  else{
+    document.forms["pubInvSugForm"].submit();
+  }
+}
+
+{/literal}
+</script>
+
+
+<div id="hiddenPhoneDiv" 
+style="display:none;
+ background: none repeat scroll 0 0 white;
+    border: 2px solid black; 
+    padding: 10px;
+    position: absolute;
+    margin-top:150px">
+    
+    <h1>[th]Please enter your phone number[/th]</h1>
+     {foreach from=$candidate_phone_numbers item=s}        
+        <input type="radio" value="{$s}" name="phone_number_radio">
+        <label>{$s}</label>   
+        <br />
+     {/foreach}
+        <input type="radio" value="nonSelected" name="phone_number_radio" checked="checked">                       
+        <label>[th]Custom Phone Number[/th]</label>       
+        <input type="text" id="phone_number_input">
+         <br />
+        <input type="button" id="phone_number_submit" value="[th]Submit[/th]">
+</div>
+
+
+<div class="outer pInSgOuter">
+	{if $suggestions}
+	<h1 class="title pInSgTitle">[t]Plan an appointment[/t]</h1>
+	<div class="text pInSgText">
+		[t]Select your appointment details.[/t]
+	</div>
+	
+
+<div class="pInSgItem">
+	<form id="pubInvSugForm" name="searchsuggestionsf" action="{$handler}" method="post">
+	 
+   <input type="hidden" name="phone_number" id="phone_number" value="">
+   <input type="hidden" name="phone_meeting" id="phone_meeting" value="{$phone_meeting}">
+	
+		<input type="hidden" name="command" value="book">
+		{if $usesInvitedWgcpList}
+		<input type="hidden" name="uses_invited_wgcp_list" value="1">
+		{foreach from=$wgcpIds item=wgcpId}
+		<input type="hidden" name="id_wgcp_{$wgcpId}" value="1">
+		{/foreach}
+		{/if}
+		
+{foreach from=$suggestions item=s}
+
+<div class="pInSgChoiceItem">
+<div class="pInSgChoiceRadio"><input type="radio" name="suggestion" class="validate[required]" 
+value="{$s.id_consultant}_{$s.ts_start}_{if $s.open_spot}{$s.open_spot_agendaitem_id}{else}0{/if}_{if $s.assets}{foreach from=$s.assets item=assetId name=assets_loop_id}{$assetId}{if !$smarty.foreach.assets_loop_id.last},
+{/if}{/foreach}{/if}" onclick="this.form.command.value='book';" ></div>			
+<div class="pInSgChoiceDetails">
+<div><span>[t]Date[/t]:</span> {$s._date}</div>
+<div><span>[t]Time[/t]:</span> {$s._time_start} - {$s._time_end}</div>
+<div><span>[t]Consultant[/t]:</span> {$s._consultant_name}</div>
+{if $s.assets && !$hideAssets}
+<div><span>[t]Assets[/t]:</span> {foreach from=$s.assets item=assetId name=assets_loop}{$assets[$assetId].name|escape}{if !$smarty.foreach.assets_loop.last}, {/if}{/foreach}</div>
+{/if}
+</div>
+<div class="cleaner"></div>
+</div>
+
+{/foreach}
+
+
+
+
+
+<div class="pInSgMoreItem">
+<div class="pInSgMoreRadio">
+	<input type="radio" class="validate[required]" name="suggestion" value="more" onclick="this.form.command.value='search';" id="public_invitation_more_suggestions">
+</div>
+
+<div class="pInSgMoreDetails">
+<div class="pInSgMoreDetailsL"><span>[t]Get more suggestions[/t]</span> 
+<span>[t]starting[/t]&nbsp;</span><input id="public_invitation_datepicker" type="text" name="date" value="{$next_date}" 
+onchange="document.getElementById('public_invitation_more_suggestions').checked='checked';this.form.command.value='search';" >
+
+{if [uts:show_from_time]}
+    [t]at[/t] <input type="text" name="time" value="{$next_time}"
+onchange="document.getElementById('public_invitation_more_suggestions').checked='checked';this.form.command.value='search';" />
+{/if}
+</div>
+		<input type="hidden" name="id_itemtype" value="{$id_itemtype}" >
+		<input type="hidden" name="id_consultant_{$id_itemtype}" value="{$id_consultant}" >
+		<input type="hidden" name="duration" value="{$duration}" >
+		<input type="hidden" name="description" value="{$description|escape}" >
+		{if $uid}
+		<input type="hidden" name="uid" value="{$uid}" >
+		{/if}
+		{if $remoteid}
+		<input type="hidden" name="remoteid" value="{$remoteid}" >
+		{/if}
+</div>
+<div class="cleaner"></div>
+</div>
+<div class="pInSgButton"><input type="button" value="[tb]Process[/tb]" onclick="submitForm();" class="button"></div>
+</form>
+
+{else}
+	<h1 class="title">[t]No suitable spots found[/t]</h1>
+	<div class="text pInSgText">
+		[t]No suitable spot for the appointment has been found.[/t]
+	</div>
+	{/if}
+</div>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

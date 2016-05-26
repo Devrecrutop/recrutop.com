@@ -1,0 +1,21 @@
+{* this email is sent to the customer contact after an applicant applied for his job *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/applicants/recrowdApplicationNotifEmailToRecruiter.html -->
+<!-- Template Webdevelopment validated 04-2013 -->
+
+<p>[t]Dear {$customerName|escape},[/t]</p> 
+<p>[t]A new applicant has applied for your job: {$jobTitle|escape}[/t]</p>
+<p><strong>[t]Candidate details:[/t]</strong></p>
+<p>{$candidateDetails}</p> 
+<p>[t]Find attached the CV of the candidate.[/t]</p>
+<p>[t]Kind regards,[/t]</p>
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<!--uts:end inner-->
+</body>
+</html>

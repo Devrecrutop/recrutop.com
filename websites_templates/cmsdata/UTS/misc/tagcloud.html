@@ -1,0 +1,15 @@
+<script type="text/javascript" src="{$website}/_javascript_global/swfobject2.js"></script>
+<div id="flashcontent"></div>
+<script type="text/javascript">
+	var so = new SWFObject("{$website}/_javascript_global/tagcloud.swf", "tagcloud", "{$width}", "{$height}", "7", "#ffffff");
+	// uncomment next line to enable transparency
+	so.addParam("wmode", "transparent");
+	so.addParam("allowScriptAccess", "always");
+	so.addVariable("distr", "true");
+	so.addVariable("tcolor", "0x333333");
+	so.addVariable("tcolor2", "0x009900");
+	so.addVariable("hicolor", "0x000000");
+	so.addVariable("tspeed", "100");
+	so.addVariable("xmlpath", "{$xmlpath}");
+	so.write("flashcontent");
+</script>

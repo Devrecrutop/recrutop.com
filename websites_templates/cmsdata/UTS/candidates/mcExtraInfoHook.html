@@ -1,0 +1,10 @@
+{if $matchcriterias_related_information}
+    <div>
+        {foreach from=$matchcriterias_related_information item=related_info}
+            {if $related_info.related_text}
+                <a href="{$related_info.related_link}">{$related_info.related_text}</a>
+                <br>
+            {/if}
+        {/foreach}
+    </div>
+{/if}

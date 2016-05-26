@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>REACTIEFORMULIER BISJAB</title>
+<link rel="stylesheet" type="text/css" href="http://www.otys.nl/_css_global/globalStyling.css">
+<link rel="stylesheet" type="text/css" href="http://www.yourit.nl/insta6/_css/style2.css">
+<!-- FORM SENDER CHANGE CODES AND HIDDEN FIELDS FOR EACH CUSTOMER -->
+</head>
+<style>
+body{
+background:none;
+margin:10px;
+}
+</style>
+<body>
+
+<!--START_9-->
+<!--START-->
+<div class="outer contentContactOuter">
+<h1 class="title contentContactHeader">[titel]</h1>
+
+<!--START_1-->
+<div class="intro contentContactIntro">[introfoto][introtekst]<!--INTROLINKS--></div>
+<!--END_1-->
+
+<!--COL1-->
+<div class="contentContactItemContainer">
+<h2 class="subHeader contentContactSubHeader">[kop]</h2>
+<div class="text contentContactText">{foto}[body]</div>
+<!--LINKS-->
+</div>
+<!--ENDCOL1-->
+
+<!-- these fields are free, except Email -->
+<form class="moduleForm contentContactForm" action="[website]/index.php/page/root_mailer_fl2/bb/1/command/mail" method="post" enctype="multipart/form-data">
+<input type="hidden" name="code" value="[code]">
+<input type="hidden" name="thankyoupage" value="info_form_thankyou.html">
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden;"><label>Leave this field EMPTY!<input type="text" name="email" /></label></div>
+<input type="hidden" name="to_email" value="info@recrutop.com">
+<input type="hidden" name="to_naam" value="[klantnaam]">
+<input type="hidden" name="email_onderwerp" value="">
+<input type="hidden" name="header_consultant" value="Information request">
+<input type="hidden" name="footer_consultant" value=" ">
+<input type="hidden" name="header_customer" value="<p>Dear Sir/Madam,</p><p>We have recieved you information request and we will contact you as soon as possible.</p><p>&nbsp;</p>">
+<input type="hidden" name="footer_customer" value="Yours faithfully,<br><br>[klantnaam]">
+<input type="hidden" name="notify_subject_consultant" value="Information request from the website.">
+<input type="hidden" name="notify_subject_customer" value="Your request at [klantnaam]">
+
+<div class="formInput contentContactFormInput"><label class="contactName" for="Name">Name</label><input type="text" name="Name" id="Name"></div>
+<div class="formInput contentContactFormInput"><label class="contactFunction" for="Function">Function</label><input type="text" name="Function" id="Function"></div>
+<div class="formInput contentContactFormInput"><label class="contactOrganistation" for="Organisatie">Organization</label><input type="text" name="Organisatie" id="Organisatie"></div>
+<div class="formInput contentContactFormInput"><label class="contactAddress" for="Postal address">Postal address</label><input type="text" name="Postal address" id="Postal address"></div>
+<div class="formInput contentContactFormInput"><label class="contactZipCode" for="Postal code">Postal code</label><input type="text" name="Postal code" id="Postcode"></div>
+<div class="formInput contentContactFormInput"><label class="contactCity" for="City">City</label><input type="text" name="City" id="City"></div>
+<div class="formInput contentContactFormInput"><label class="contactPhone" for="Phone number">Phone number</label><input type="text" name="Phone number" id="Phone number"></div>
+<div class="formInput contentContactFormInput"><label class="contactMobile" for="Mobile number">Mobile number</label><input type="text" name="Mobile number" id="Mobile number"></div>
+<div class="formInput contentContactFormInput"><label class="contactEmail" for="Email">E-Mail</label><input type="text" name="Email" id="Email"></div>
+<div class="formInput contentContactFormInput"><label class="contactRemarks" for="Remarks">Remarks</label><textarea name="Remarks" rows="6" id="Remarks"></textarea></div>
+<div class="formButton contentContactButton"><input class="button" type="submit" name="Submit" value="Send"></div>
+</form>
+
+</div>
+<!--END-->
+<!--END_9-->
+</body>
+</html>

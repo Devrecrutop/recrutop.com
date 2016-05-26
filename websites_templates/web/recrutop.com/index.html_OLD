@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>INSTALL OTYS 4</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META name="AUTHOR"	content="Mr. Fahrenheit InterActive, powered by OTYS e-Recruiting Systems">
+<META name="LOCALE" content="NL">
+<META name="DESCRIPTION" content="">
+</head>
+
+<frameset rows="0,*" frameborder="NO" border="0" framespacing="0">
+
+<noframes>
+<body></body>
+</noframes>  
+
+<frame src="leeg.html" scrolling="NO" name="leeg" marginwidth="0" marginheight="0" noresize frameborder="NO">
+<frame src="http://213.206.122.4/cms/index.php?code=otys_install" name="MainFrame" scrolling="AUTO" marginwidth="0" marginheight="0" noresize frameborder="NO">
+</frameset>
+</html>

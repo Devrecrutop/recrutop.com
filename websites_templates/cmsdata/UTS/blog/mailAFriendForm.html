@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer">
+<!-- /UTS/blog/mailAFriendForm.html -->
+	<h1 class="title">[t]Mail a friend[/t]</h1>
+	<h2 class="subHeader">{$a.title|escape}</h2>
+	<div class="text">[t]In order to send the article to your friend by e-mail, please fill all required form fields:[/t]</div>
+
+<form name="mfform" action="/index.php/page/blog/command/mailafriendexec/bb/1" method="post">
+<input name="uid" type="hidden" value="{$uid}">
+<input name="cms_categorie" type="hidden" value="{$cmsCategory}">
+<input name="CurrentLanguage" type="hidden" value="{$language}">
+	<div class="formInput">
+	<label>[t]Your name[/t]</label>
+	<input type="text" name="mf_name" value="{if $redata}{$redata.name|escape}{/if}">
+	</div>
+	<if $errors && $errors.name>
+		<div class="error">[t]Please enter your name![/t]</div>
+	</if>
+	<div class="formInput">
+	<label>[t]Your e-mail[/t]</label>
+	<input type="text" name="mf_semail" value="{if $redata}{$redata.semail|escape}{/if}">
+	</div>
+	<if $errors && $errors.semail>
+		<div class="error">[t]Please enter your valid e-mail address![/t]</div>
+	</if>
+	<div class="formInput">
+	<label>[t]Your friend's e-mail[/t]</label>
+	<input type="text" name="mf_remail" value="{if $redata}{$redata.remail|escape}{/if}">
+	</div>
+	<if $errors && $errors.remail>
+		<div class="error">[t]Please enter your friend's valid e-mail address![/t]</div>
+	</if>
+	<div class="formInput">
+	<label>[t]Note[/t]</label>
+	<textarea name="mf_note" rows="6">{if $redata}{$redata.note|escape}{/if}</textarea>
+	</div>
+{* antispam_method *}
+<if $settings.antispam_method == "captcha">
+	<div class="formInput">
+		<label>[t]Please enter the security code exactly as shown[/t]:</label>
+		<img id="captcha" src="http://{$url}/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image" /><a href="#" onclick="document.getElementById('captcha').src = 'http://{$url}/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="http://{$url}/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0" /></a><a href="http://{$url}/_javascript_global/securimage/securimage_play.php"><img src="http://{$url}/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0" /></a>
+	</div>
+	<div class="formInput">
+		<label>[t]Code[/t]:</label>
+		<input type="text" name="captcha" value="">
+	</div>
+	<if $errors && $errors.captcha>
+		<div class="moduleError blogMafError">[t]Please enter the right security code![/t]</div>
+	</if>
+</if>
+<div class="moduleFormButton blogMafFormButton"><input type="submit" value="[tb]Submit[/tb]" class="button"></div>
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

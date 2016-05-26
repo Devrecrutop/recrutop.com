@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>                
+</head>
+<body>
+<!--uts:begin inner-->
+
+{literal}
+<script type="text/javascript">
+<!--
+
+function cancelEdit()
+{
+$('#addCommand').val('calendar');
+$('#csc_add_schedule').submit();
+}
+
+// switch recurrence type in adhoc planning
+function switchRecurr(recurrType)
+{								
+if(recurrType == 'recurr')
+{
+$('.overPeriodFields').attr('disabled', 'disabled');
+$('.recurringFields').removeAttr('disabled');
+
+// disable to date because reccurrence is from start date			 	
+}
+else if(type = 'period')
+{
+$('.recurringFields').attr('disabled', 'disabled');
+$('.overPeriodFields').removeAttr('disabled');
+
+// reset recurrence values
+$('#recurrence').attr('selectedIndex', 0);
+$('#recurrence_type').attr('selectedIndex', 0);									 			 		 	
+}		
+}
+
+// initialize document	
+$(document).ready(function () {
+
+$("#bttnCancel").bind('click', cancelEdit);
+
+/*      
+RECURRENCE IS DISABLED 2011-07-28
+// switch type of recurrence plannig in adhoc style planning
+$("input[name='recurr']").bind('click', function() {	 	  
+switchRecurr($(this).attr('value'));			 			 			 		 		 
+});
+
+
+switchRecurr('period');
+*/ 	
+
+// on click on availability type, set up required field status if needed
+$("input[name='status']").bind('click', function() {	 	  
+
+if($(this).attr('value') == 'notavailable') 
+{		 	
+$('#substatus').removeAttr('disabled');
+
+$("#substatus").rules('add', {
+required: true,			 
+messages: {
+required: '[th]Select reason your nonavailability.[/th]'			   
+}
+});						 			 		 	
+}
+else 
+{		 	
+$('#substatus').attr('disabled', 'disabled');
+$('#substatus').attr('selectedIndex', 0);
+$("#substatus").rules('remove', 'required');
+}
+
+}); 	    
+
+}); // ready end
+
+function candidateScheduleUpdateToTimeSelect(value) {  
+if (value == '24') {
+$('select[name=to_time_Minute]').val('00');
+$('select[name=to_time_Minute] option:not(:selected)').attr('disabled', 'disabled');
+}
+else {
+$('select[name=to_time_Minute] option').removeAttr("disabled", "disabled");
+}
+}
+
+//-->
+</script>
+{/literal}
+
+
+<div class="outer aplOuter aplProfOuter">
+<!-- /UTS/applicants/candidateScheduleAddDlg.html -->
+	<h1 class="title aplTitle aplProfTitle">[t]Add Candidate Schedule[/t]</h1>
+	{$menu}
+
+	
+	
+	<div class="form aplScCalForm">
+			<form name="csc_add_schedule" id="csc_add_schedule" action="{$handler}" method="post">      
+				<input type="hidden" name="command" id="addCommand" value="insertschedule">             
+				{*ALWAYS AD-HOC, ACCEPTED, SHIFT*}
+				<input type="hidden" name="week_year" id="addWeekYear" value="{$weekYear}">
+				<input type="hidden" name="week_nr" id="addWeekNr" value="{$weekNr}">
+
+				<div class="formGroup">
+					<div class="formInput aplScCalInput">
+						<label>[t]Date From[/t]:</label>
+						{html_uts_select_date prefix="from_date_" start_year=-5 end_year=+5 time=$presetFromTs}
+					</div>
+					<div class="formInput aplScCalInput">
+						<label>[t]To[/t]:</label>
+						{html_uts_select_date prefix="to_date_" start_year=-5 end_year=+5  time=$presetToTs all_extra='class="overPeriodFields"'} 
+					</div>
+				</div>
+				<div class="formGroup">
+					<div class="formInput aplScCalInput">
+						<label>[t]Time From[/t]:</label>
+						{if true}
+							{html_select_time use_24_hours=true display_seconds=false minute_interval=15 prefix="from_time_" time=$presetFromTime}			
+						{else}
+							{html_select_time use_24_hours=true display_seconds=false minute_interval=15 prefix="from_time_" time=$presetFromTime}
+						{/if}
+					</div>
+					<div class="formInput aplScCalInput">
+						<label>[t]To[/t]:</label>
+						{if true}
+							{* BKo: we need to allow to select 24:00 also, so html_select_time cannot be used *}
+							<select name="to_time_Hour" onchange="candidateScheduleUpdateToTimeSelect(this.value);">	
+								{section name=toTimeHourLoop start=0 loop=25 step=1}
+									<option label="{"%02d"|sprintf:$smarty.section.toTimeHourLoop.index}" value="{"%02d"|sprintf:$smarty.section.toTimeHourLoop.index}" {if (((int)($presetToTime / 3600)) + 1) == $smarty.section.toTimeHourLoop.index}selected="selected"{/if}>{"%02d"|sprintf:$smarty.section.toTimeHourLoop.index}</option>
+								{/section}		
+							</select>
+							<select name="to_time_Minute">
+								<option label="00" value="00" {if ((int)(($presetToTime % 3600) / 900)) == 0}selected="selected"{/if}>00</option>
+								<option label="15" value="15" {if ((int)(($presetToTime % 3600) / 900)) == 1}selected="selected"{/if} {if ((int)($presetToTime / 3600) + 1) == 24}disabled="disabled"{/if}>15</option>
+								<option label="30" value="30" {if ((int)(($presetToTime % 3600) / 900)) == 2}selected="selected"{/if} {if ((int)($presetToTime / 3600) + 1) == 24}disabled="disabled"{/if}>30</option>
+								<option label="45" value="45" {if ((int)(($presetToTime % 3600) / 900)) == 3}selected="selected"{/if} {if ((int)($presetToTime / 3600) + 1) == 24}disabled="disabled"{/if}>45</option>
+							</select>
+						{else}
+							{html_select_time use_24_hours=true display_seconds=false minute_interval=15 prefix="to_time_" time=$presetToTime}
+						{/if}
+					</div>
+					{* MD: Didnt have time to fix this yet *}
+					<table width="100%" border="0" cellpadding="5" cellspacing="0"> 
+					<tr>
+					<td nowrap="nowrap">
+					{* RECURRENCE IS DISABLED 2011-07-28
+					<input type="radio" name="recurr" id="recurr_p" checked="checked" value="period">
+					NOTE: HIDDEN FIELD 'RECURR' BELOW IS MUST, BECAUSE NOW WE USE ALWAYS TYPE PERIOD! (IT MEANS PATTERN)
+					*}
+					<input type="hidden" name="recurr" value="period">      
+					[t]Pattern[/t]:</td>
+					<td nowrap="nowrap">
+					<input type="checkbox" name="pattern[mo]"  class="overPeriodFields" value="1" {if $presetDay == 1 || $presetWdPattern}checked="checked"{/if}>[tg]Mon[/tg]&nbsp;
+					<input type="checkbox" name="pattern[`tue]" class="overPeriodFields" value="1" {if $presetDay == 2 || $presetWdPattern}checked="checked"{/if}>[tg]Tue[/tg]&nbsp;
+					<input type="checkbox" name="pattern[wed]" class="overPeriodFields" value="1" {if $presetDay == 3  || $presetWdPattern}checked="checked"{/if}>[tg]Wed[/tg]&nbsp;
+					<input type="checkbox" name="pattern[`thu]" class="overPeriodFields" value="1" {if $presetDay == 4  || $presetWdPattern}checked="checked"{/if}>[tg]Thu[/tg]&nbsp;
+					<input type="checkbox" name="pattern[fri]" class="overPeriodFields" value="1" {if $presetDay == 5  || $presetWdPattern}checked="checked"{/if}>[tg]Fri[/tg]&nbsp;
+					<input type="checkbox" name="pattern[sat]" class="overPeriodFields" value="1" {if $presetDay == 6}checked="checked"{/if}>[tg]Sat[/tg]&nbsp;
+					<input type="checkbox" name="pattern[sun]" class="overPeriodFields" value="1" {if $presetDay == 7}checked="checked"{/if}>[tg]Sun[/tg]&nbsp;    
+					</td>
+					</tr>
+
+					{* RECURRENCE IS DISABLED 2011-07-28
+					<tr>
+					<td nowrap="nowrap">      
+					<input type="radio" name="recurr" id="recurr_r" value="recurr">
+					[t]Recuring[/t]:</td>
+					<td nowrap="nowrap">
+					<select name="recurrence" id="recurrence" class="recurringFields" style="width: 40px;">
+					{html_options options=$recurrence}
+					</select>&nbsp;
+					<select name="recurrence_type" id="recurrence_type" class="recurringFields" style="width: 140px;">     		 
+					<option value="1">[t]Each workday[/t]</option>
+					<option value="2">[t]Each day[/t]</option>
+					<option value="3">[t]Each week (same day)[/t]</option>
+					<option value="4">[t]Each fornight (same day)[/t]</option>
+					<option value="5">[t]Every 4 weeks (same day)[/t]</option>
+					<option value="6">[t]Each month (same date)[/t]</option>
+					<option value="7">[t]Every year (same date)[/t]</option>				 				 	
+					</select>    
+					</td>
+					</tr>
+					*}
+
+					<tr>
+					<td nowrap="nowrap">[t]Available[/t]:</td>
+					<td nowrap="nowrap">
+					<input type="radio" name="status" value="available" checked="checked">[t]Yes[/t]&nbsp;			
+					<input type="radio" name="status" value="maybeavailable">[t]Maybe[/t]&nbsp;    
+					<input type="radio" name="status" value="notavailable">[t]Not[/t]&nbsp;
+					<select name="substatus" id="substatus" style="width: 100px;" disabled="disabled">
+					<option value="">---</option>			 	
+					<option value="holidays">[t]Holiday[/t]</option>
+					<option value="sick">[t]Sick[/t]</option>
+					<option value="other">[t]Other[/t]</option>			 			 			 			 
+					</select>			
+					</td>
+					</tr>
+
+					<tr>
+					<td valign="top" nowrap="nowrap">[t]Note[/t]:</td>
+					<td nowrap="nowrap"><textarea name="note" id="note" rows="4" cols="40"></textarea></td>
+					</tr>          
+
+					<tr>
+					<td>&nbsp;</td>
+					<td align="right">      
+					<input type="submit" name="bttnSave" id="bttnSave" value="[th]Save Schedule[/th]">
+					<input type="button" name="bttnCancel" id="bttnCancel" value="[th]Cancel[/th]">
+					</td>
+					</tr>
+					</table>
+
+				</div>
+			</form>
+		</div>     
+
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

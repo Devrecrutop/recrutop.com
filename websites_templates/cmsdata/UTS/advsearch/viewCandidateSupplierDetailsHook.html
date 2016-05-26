@@ -1,0 +1,79 @@
+
+<div class="hookOuter CandidateSupplierDetailsHookOut" id="CandidateSupplierDetailsHook">
+  <!-- /UTS/advsearch/viewCandidateSupplierDetailsHook.html -->
+  <div class="hookHeader CandidateSupplierDetailsHookHeader">[t]Supplier[/t]</div>
+  <div id="CandidateSupplierDetailsHookContent">
+  
+  {if $data.customer_name} 
+  <div class="CandidateSupIC CandidateSupCustName">
+  	<label>[t]Company[/t]:</label>
+    <span>{$data.customer_name|escape}</span>
+  </div>
+  {/if}
+  
+  {if $data.customer_contact_name}
+  <div class="CandidateSupIC CandidateSupContName">
+  	<label>[t]Contact[/t]:</label>
+    <span>{$data.customer_contact_name|escape}</span>
+  </div>
+  {/if}  
+  
+   {if $data.customer_address}
+   <div class="CandidateSupIC CandidateSupCustAddr">
+      <label>[t]Address[/t]:</label>
+      <span>{$data.customer_address|escape}</span>
+   </div>
+   {/if}
+    
+   {if $data.customer_postal_code} 
+   <div class="CandidateSupIC CandidateSupCustPostal">
+      <label>[t]Postalcode[/t]:</label>
+      <span>{$data.customer_postal_code|escape}</span>
+   </div>
+   {/if}
+    
+   {if $data.customer_city} 
+   <div class="CandidateSupIC CandidateSupCustCity">
+      <label>[t]City[/t]:</label>
+      <span>{$data.customer_city|escape}</span>
+   </div>
+   {/if}
+    
+   {if $data.customer_phone}
+   <div class="CandidateSupIC CandidateSupCustPhone">
+      <label>[t]Company phone[/t]:</label>
+      {if $mobile_enabled}
+      	<span><a href="tel:{$data.customer_phone|escape}">{$data.customer_phone|escape}</a></span>
+      {else}
+      	{$data.customer_phone|escape}
+      {/if}
+   </div>
+   {/if}
+    
+   {if $data.customer_email}
+   <div class="CandidateSupIC CandidateSupCustEmail">
+      <label>[t]Company e-mail[/t]:</label>
+      <span><a href="mailto:{$data.customer_email|escape}">{$data.customer_email|escape}</a></span>
+   </div>
+   {/if}
+    
+   {if $data.customer_contact_phone}
+   <div class="CandidateSupIC CandidateSupContPhone">
+      <label>[t]Contact phone[/t]:</label>
+      {if $mobile_enabled}
+      	<span><a href="tel:{$data.customer_contact_phone|escape}">{$data.customer_contact_phone|escape}</a></span>
+      {else}
+      	<span>{$data.customer_contact_phone|escape}</span>
+      {/if}
+   </div>
+   {/if}      
+    
+   {if $data.customer_contact_email}
+   <div class="CandidateSupIC CandidateSupContEmail">
+      <label>[t]Contact e-mail[/t]:</label>
+      <span><a href="mailto:{$data.customer_contact_email|escape}">{$data.customer_contact_email|escape}</a></span>
+   </div>
+   {/if}                                      
+  
+  </div>
+</div>

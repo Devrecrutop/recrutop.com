@@ -1,0 +1,139 @@
+{* this is the vacancy results template version 2, with facets on the right side *}
+{* Styles moved to global styling CSS *}
+<div class="outer actouter actOuter vacRes1Outer">
+<!-- /UTS/advsearch/vacancyResults1.html DEFAULT -->
+<!--LEFT PANEL 11-->
+
+	<div class="actSResultsCont">
+  
+    {if $mcUrlRewriteSeo && $mcUrlHeader}
+    <h1 class="title actTitle actRewriteTitle">{$mcUrlHeader|escape}</h1>
+      {if $mcUrlDescr}<div>{$mcUrlDescr|escape}</div>{/if}  
+		{elseif $rewrite_header}
+			<h1 class="title actTitle actRewriteTitle">{$rewrite_header}</h1>
+		{else}
+			<h1 class="title actTitle">[t]Search results[/t]</h1>
+		{/if}
+		{if $customrewrite.introtext}<div class="intro custRewriteIntro">[IntroTextHook]</div>{/if}
+		<if $requestOrigin == "matchapplicant" && $resultCnt gt 0>
+		<div>
+			<p>[t]You profile has been successfuly matched against our vacancy database, you can see results below.[/t]</p>
+			<if $lastAutoMatchSQName && $useocd>
+			<p>[t]The search query for matching your profile has been stored under name {$lastAutoMatchSQName|escape} for future use.[/t] <a href="{$handler}/command/sqlist">[t]Stored query list[/t]</a></p>	
+			</if>
+		</div>
+		</if>
+
+		<div class="menuContainer actMc actTopMenu">
+			<div class="menuLink menuLinkFirstChild actMl actMlFc actMlJc">{t 1=$totalCnt count=$resultCnt}<if $totalCnt ge "500">[th]%1 vacatures gevonden, waarvan[/th] {$resultCnt} [th]getoond[/th]<else>[th]%1 jobs found[/th]</if>{/t}</div>
+				<!-- text0="[th]No jobs found[/th]" text1="[th]One job found[/th]" text2="[th]Two jobs found[/th]" -->
+			<if [uts:show_edit_query_link]>
+			<div class="menuLink actMl actMlEq"><a href="{$handler}/command/editrequest">[t]Edit query[/t]</a></div>
+			</if>
+			<if [uts:show_new_search_link]>
+			<div class="menuLink actMl actMlNs"><a href="{$handler}/command/clearrequest">[t]New search[/t]</a></div>
+			</if>
+			<if $requestOrigin != "googlemaps">
+			<div class="menuLink menuLinkLastChild actMl actMlLc actMlSb">
+				<label for="actvChangeSortBy">[t]Sort by:[/t]</label>
+				
+				<select id="actvChangeSortBy" name="ctrl_sortby" onchange="actvChangeSortBy(this.value)" class="relevance">
+				    <option value="score" {if $ctrl.sortby == "score"}selected{/if}>[th]relevance[/th]</option>
+				    <option value="title" {if $ctrl.sortby == "title"}selected{/if}>[th]title[/th]</option>
+				    <option value="location" {if $ctrl.sortby == "location"}selected{/if}>[th]location[/th]</option>
+				    <option value="publication" {if $ctrl.sortby == "publication"}selected{/if}>[th]publication[/th]</option>
+	        		
+				    <if [uts:sort_by_werkgever]>
+				    <option value="werkgever" {if $ctrl.sortby == "werkgever"}selected{/if}>[th]werkgever[/th]</option>
+				    </if>
+    					
+				    <if $UseLastApplicationDateEnabled && [uts:sort_by_application_date]>
+				    <option value="first_application_date" {if $ctrl.sortby == "first_application_date"}selected{/if}>[th]First application date[/th]</option>
+				    <option value="last_application_date" {if $ctrl.sortby == "last_application_date"}selected{/if}>[th]Last application date[/th]</option>
+				    </if>
+				</select>
+				
+				<select id="actvChangeSortByAscDesc" name="ctrl_sortascdesc" onchange="actvChangeSortAscDesc(this.value)" class="order">
+				    <option value="asc" {if $ctrl.sortascdesc == "asc"}selected{/if}>[th]asc.[/th]</option>
+				    <option value="desc" {if $ctrl.sortascdesc == "desc"}selected{/if}>[th]desc.[/th]</option>
+				</select>
+				
+				<div class="cleaner menuCleaner actMCleaner"></div>
+			</div>
+			</if>
+			<div class="cleaner menuCleaner actMCleaner"></div>
+		</div>
+	    {* start query editor *}
+	    <if [uts:show_query_editor]>
+	    <include file="queryEditor.inc.html">
+	    </if>
+	    {* end query editor *}
+	    
+      <if $mcUrlRewriteSeo>
+        <include file="vacancyResultsMc.inc.html">
+      <else>
+        <include file="vacancyResults.inc.html">
+      </if>    	    
+	    
+	    
+	    <if $requestOrigin != "googlemaps">
+	    <include file="pagingControls.inc.html">
+	    </if>
+
+		<div class="menuContainer actMc actBottomMenu">
+			<div class="menuLink menuLinkFirstChild actMl actMlFc actMlCrss"><a href="{$handler}/command/request2rss">[t]RSS feed[/t]</a></div>
+			<div class="menuLink menuLinkLastChild actMl actMlLc actMlCJsa"><a href="{$handler}/command/showemailform" rel="prettyPopin">[t]Results by e-mail[/t]</a></div>
+			
+			<if $useocd>
+			<div class="menuLink actMl actMlCsms"><a href="{$handler}/command/showsmsform" rel="prettyPopin">[t]Results by SMS[/t]</a></div>
+			<div class="menuLink menuLinkLastChild actMl actMlLc actMlCsvq"><a href="{$handler}/command/newsqform" rel="prettyPopin">[t]Store query[/t]</a></div>
+			<else>
+			<div class="menuLink menuLinkLastChild actMl actMlFc actMlCsms"><a href="{$handler}/command/showsmsform" rel="prettyPopin">[t]Results by SMS[/t]</a></div>	
+			</if>
+			<div class="cleaner menuCleaner actMCleaner actBottomMCleaner"></div>
+		</div>
+
+
+{* start timinginfo *}
+<if $OTYSCZ || $VITH || $JBITH >
+<div class="actTiming" style="font-size:8px;">
+[t]Search results acquired in[/t] <strong>{$lastTimingActonomy}</strong> [t]seconds.[/t] [t]Processing took[/t] <strong>{$lastTimingProcess}</strong> [t]seconds.[/t]
+</div>
+</if>
+{* end timinginfo *}
+
+{if $rewrite_description}
+<div class="cleaner"></div>
+<div class="actRewriteDescr">
+	<h2 class="subHeader">{$rewrite_keyword}</h2>
+	<div class="text">{$rewrite_description}</div>
+</div>
+<div class="cleaner"></div>
+{/if}
+{if $customrewrite.footertext}<div class="text custRewriteFooter">[FooterTextHook]</div>{/if}
+
+</div>
+<!--END LEFT PANEL-->
+
+<!--RIGHT PANEL 11-->
+<div class="actSRFacetCont actSRFacetContJobs">
+	<div class="actSRCf">
+    {* information box / SECTION A *}
+    {* search request box / SECTION B *}
+    <include file="sectionBVacancies.inc.html">
+	</div>
+	<div class="actKeySug">
+    {* actonomy suggestions / SECTION C *}
+    <if $expcnt gt 0 && [uts:show_expansions]>
+    <include file="sectionC.inc.html">
+    </if>
+	</div>
+	<div class="actSROf">
+    {* actonomy facets / all instances of SECTION D *}
+    <include file="facets.inc.html">
+	</div>
+</div>
+<!--END RIGHT PANEL-->
+<div class="cleaner"></div>
+
+</div>

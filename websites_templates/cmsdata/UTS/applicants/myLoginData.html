@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplLdOuter">
+<!-- /UTS/applicants/myLoginData.html -->
+<h1 class="title aplTitle aplLdTitle">[t]Change login data[/t]</h1>
+{$menu}
+<div class="text aplText aplLdText">[t]You can use this form to change your password.[/t]</div>
+
+<form name="mainfrm" action="{$handler}" method="post">
+<div class="formInput aplInput aplLdOpwd">
+<label for="emailaddress">[t]Old password:[/t]</label>
+<input type="password" name="oldPassword" id="oldPassword">
+</div>
+<div class="formInput aplInput aplLdNpwd1">
+<label for="emailaddress">[t]New password:[/t]</label>
+<input type="password" name="newPassword1" id="newPassword1" maxlength="10">
+</div>
+<div class="formInput aplInput aplLdNpwd2">
+<label for="userpassword">[t]Confirm password:[/t]</label>
+<input type="password" name="newPassword2" id="newPassword2" maxlength="10">
+</div>
+<if $error>
+<div class="error aplError aplLdError">{$error}</div>
+</if>
+<div class="buttonContainer aplBc aplLdBc"><input type="submit" name="bApplSubmit" value="[tb]Submit[/tb]" class="button"></div>
+<input type="hidden" name="command" value="mychangepassword">
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

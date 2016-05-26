@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/email_templates/BOTimeSlotNotificationEmailToConsultant.html -->
+<p>
+        [t]Dear {$contact_fullname|escape},[/t] 
+</p>
+
+{if $mode == "book_ok"}
+<p>[t]Candidate {$applicant_name|escape} has booked an appointment for a timeslot on {$timeslot.start_date} {$timeslot.start_time} for vacancy {$vacancy.JobTitle|escape}.[/t]</p>
+{/if} 
+
+{if $mode == "book_error"}
+<p>[t]Candidate {$applicant_name|escape} was unable to plan an appointment for vacancy {$vacancy.JobTitle|escape}. Please take action to update the status of the candidate and/or contact the candidate personally to schedule a meeting.[/t]</p>
+{/if} 
+
+<p class="utsSignature">
+[t]Regards,[/t]<br>
+{$regadmin_fullname}<br>
+{$client}<br>
+{$website}
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

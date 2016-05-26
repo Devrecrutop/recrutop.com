@@ -1,0 +1,44 @@
+<html>
+<head> 
+<title>User login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body bgcolor="#FFFFFF" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0"> 
+
+<!--uts:begin inner-->
+<div class="outer">
+<!-- UTS/misc/cms_aluser_login.html -->
+<h1 class="formInput">[t]User login[/t]</h1>
+<div class="intro">
+<p>[t]Access to this page is restricted.[/t]</p>
+<p>[t]To continue, enter your username and password. Use your email address and the password you entered when you registered. This information was e-mailed to you after your registration.[/t]</p>
+</div>
+<form name="form2" method="post" action="/index.php/command/ulogin">
+{if $error_code == 'access_denied'}
+<div class="error">[t]You are not known in this system, or you don't have the necessary rights.[/t]</div>
+{elseif $error_code == 'no_rights'}
+<div class="error">[t]Sorry, you don't have the rights necessary to access this page.[/t]</div>
+{elseif $error_code == 'no_credentials'}
+<div class="error">[t]Please enter your username and password.[/t]</div>
+{else}
+<div class="error">{$error}</div>
+{/if}
+<div class="formInput">
+<label>[t]Username:[/t]</label>
+<input type="text" name="al_user" class="logintblinput">
+</div>
+<div class="formInput">
+<label>[t]Password:[/t]</label>
+<input type="password" name="al_pass" class="logintblinput">
+</div>
+<div class="buttonContainer">
+	<input type="submit" name="Submit" value="[th]Login[/th]" class="button">
+</div>
+<input type="HIDDEN" name="al_login" value="1" >
+<input type="HIDDEN" name="cms_categorie" value="{$cms_categorie}" >
+</form>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

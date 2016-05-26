@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>[t]Network Connection Proposal[/t]</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/network/connection_answer.html -->
+<div class="formheadercontainer">
+<h1 class="formheader">[t]OTYS Network[/t]</h1>
+</div>
+
+{if $answer == "reject"}
+	{if $reason}
+		{assign var=ansverLocalized value="[th]rejected[/th]"}
+		<p>[t]You have <strong>{$ansverLocalized}</strong> the connection with {$fullLinkClient}.[/t]</p>
+		<h4>[t]Your reason[/t]:</h4>
+		<p>{$reason}</p>
+	{else}
+		{assign var=ansverLocalized value="[th]reject[/th]"}
+		<p>[t]You want to <strong>{$ansverLocalized}</strong> the connection with {$fullLinkClient}.[/t]</p>
+		
+		<form action="{$website}/index.php" method="get">
+		<input type="hidden" name="page" value="network">
+		<input type="hidden" name="connection" value="reject">
+		<input type="hidden" name="connectionId" value="{$connectionId}">
+		
+		<table>
+		<tr>
+			<td valign="top">[t]Reason to decline[/t]:</td>
+			<td><textarea name="reason" cols="40" rows="7"></textarea></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="[t]Decline[/t]"></td>
+		</tr>
+		</table>
+		</form>
+	{/if}
+
+{else}
+	{assign var=ansverLocalized value="[th]accepted[/th]"}
+<div class="tekstblokje">
+<p>[t]You have accepted the connection with {$fullLinkClient}[/t]</p>
+<p>[t]This means, that your website will be shown in the Network page within the website of {$fullLinkClient}, if this client has the Network module assigned and published.[/t]</p><p>[t]Also, if you assign and publish your own Network module, the website of {$fullLinkClient} will be shown withing your Network page. 
+Please allow for a little bit of time, because in some cases {$fullLinkClient} would want to create a list of connections before actually publishing the list.[/t]</p>
+<p>[t]OTYS customers can manage their own profiles centrally, which means that it is possible that the text or images that are part of the profile will change. Also, automatically the profile will be updated with
+ new jobs evertime a new job is added.[/t]</p>
+<p>[t]We are certain that connecting your website to {$fullLinkClient} will bring extra traffic to your website and will create add value to your employer brand. Of course we hope, that this virtual connection
+ will inspire you to make a physical connection to {$fullLinkClient}, if you have not done so today.[/t]</p>
+<p>[t]Kind regards,<br><b>The OTYS Team</b>[/t]</p>
+</div>
+{/if}
+<!--uts:end inner-->
+</body>
+</html>

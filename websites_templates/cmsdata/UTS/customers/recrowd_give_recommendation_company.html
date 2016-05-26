@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+function checkform() {
+	form=document.processform;
+	if (form.recommendation.value == "") {
+		alert( "[t]Please enter a message[/t]" );
+		form.recommendation.focus();
+		return false ;
+	}
+	else {
+		form.submit();
+	}
+	return true ;
+}
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdRecmCompOuter">
+	<!-- /UTS/customers/recrowd_give_recommendation_company.html -->
+	<!-- IS THIS ONE NEEDED? /mnt/share/UTS/customers/recommendationsFillAnswer.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Recommendation for[/t] {$recruiterName|escape}</h1>
+	<div class="intro">[t]On this page you can add a recommendation.[/t]</div>
+	
+	<form action="{$handler}" name="processform" id="processform" method="POST">
+		<div class="formInput">
+			<label>[t]Message[/t]:</label>
+			<textarea name="recommendation" id="recommendation" nowrap></textarea>
+		</div>
+		<div class="buttonContainer">
+			<input class="button" type="button" name="Button4" value="[tb]Submit[/tb]" onClick="return checkform();">    
+		</div>
+		<input type="hidden" name="command" value="rating">
+		<input type="hidden" name="subcmd" value="saveRecommendation">
+		<input type="hidden" name="ref" value="{$ref|escape}">
+		<input type="hidden" name="vacid" value="{$vacid|escape}">
+		<input type="hidden" name="cpid" value="{$cpid|escape}">
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

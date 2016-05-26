@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplListOuter">
+<!-- /UTS/applicants/subscriptionList.html -->
+<h1 class="title aplTitle aplListTitle">[t]Subscription list[/t]1</h1>
+{$menu}
+<div class="text aplText aplListText">[t]If you are subscribed to one or more newsletters, you can find the details regarding your registration below.[/t]</div>
+<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+<tr>
+<td class="aplTblHeader aplTblHeaderDate">[t]Newsletter[/t]</th>
+<td class="aplTblHeader aplTblHeaderJob">[t]Status[/t]</th>
+<td class="aplTblHeader aplTblHeaderLocation">[t]Action[/t]</th>
+</tr>
+<foreach from=$newsletters key=id item=newsletter>
+<tr>
+<td class="aplListDateTime">{$newsletter.subject}</td>
+<td class="aplListLink">
+{if $newsletter.status == 1}[t]Subscribed[/t]{/if}
+{if $newsletter.status != 1}-{/if}
+</td>
+<td class="aplListLocation">
+{if $newsletter.status == 1}<a href="/index.php/page/applicants/bb/1/command/unsubscribe/id/{$id}" onClick="if(confirm('[th]Are you sure?[/th]') == 1) return true; else return false;">[t]Unsubscribe[/t]</a>{/if}
+{if $newsletter.status != 1}<a href="/index.php/page/applicants/bb/1/command/subscribe/id/{$id}">[t]Subscribe[/t]</a>{/if}
+</td>
+</tr>
+<foreachelse>
+<tr>
+<td colspan="3" class="hqNoItems">[t]There are no groups published[/t]</td>
+</tr>
+</foreach>
+</table>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

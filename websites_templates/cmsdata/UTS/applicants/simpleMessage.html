@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+
+<if $messageId>	
+<if $messageId == "EMAIL_PWD_SENT">
+<div class="outer aplOuter aplSimplMessOuter">
+<!-- /UTS/applicants/simpleMessage.html ja -->
+<h1 class="title">[t]Password sent[/t]</h1>
+<div class="intro">[t]Your password has been sent to your e-mail address[/t]</div>
+</div>
+<elseif $messageId == "EMAIL_CHANGED_PWD_SENT">
+<div class="outer">
+<h1 class="title">[t]Your password has been changed.[/t]</h1>
+<div class="intro"><p>[t]You will receive a confirmation email with your new password.[/t]</p></div>
+</div>
+<elseif $messageId == "EMAIL_ALREADY_IN_USE">
+<div class="outer">
+<h1 class="title">[t]Already registered[/t]</h1>
+<div class="intro">[t]There is already an applicant registered under this e-mail address. Please choose a different e-mail address, or use this e-mail address to log in.[/t]</div>
+</div>
+<elseif $messageId == "SOFI_ALREADY_IN_USE">
+<div class="outer">
+<h1 class="title">[t]Social Security Tax Number already registered![/t]</h1>
+<div class="intro">[t]We are sorry but there is already a candidate linked to this job with this Social Security Tax Number[/t]</div>
+</div>
+<elseif $messageId == "ALREADY_APPLIED">
+<div class="outer">
+<h1 class="title">[t]Already applied[/t]</h1>
+<div class="intro">[t]You have already applied for this job before.[/t]</div>
+</div>
+<elseif $messageId == "ALREADY_APPLIED_MULTIPLE">
+<div class="outer">
+<h1 class="title">[t]Already applied[/t]</h1>
+<div class="intro">[t]You have already applied for these jobs before.[/t]</div>
+</div>
+<elseif $messageId == "EVENT_ALREADY_APPLIED">
+<div class="outer">
+<h1 class="title">[t]Already applied[/t]</h1>
+<div class="intro">[t]You have already applied for this event before.[/t]</div>
+</div>
+<elseif $messageId == "MSG_SP_EMPTY_EMAIL">
+<div class="outer">
+<h1 class="title">[t]Enter address[/t]</h1>
+<div class="intro">[t]Please enter applicant's e-mail address.[/t]</div>
+</div>
+<elseif $messageId == "MSG_SP_PROVIDE_CV">
+<div class="outer">
+<h1 class="title">[t]Provide CV[/t]</h1>
+<div class="intro">[t]Please provide applicant's CV.[/t]</div>
+</div>
+<elseif $messageId == "MSG_SP_INVALID_FORMAT">
+<div class="outer">
+<h1 class="title">[t]Unsupported CV format.[/t]</h1>
+<div class="intro">[t]You provided a unsupported CV format.[/t]</div>
+</div>
+<elseif $messageId == "MSG_QH_PROVIDE_CV">
+<div class="outer">
+<h1 class="title">[t]Please provice a CV[/t]</h1>
+<div class="intro">[t]Please provide a CV.[/t]</div>
+</div>
+<elseif $messageId == "MSG_QH_INVALID_EMAIL">
+<div class="outer">
+<h1 class="title">[t]Invalid email address[/t]</h1>
+<div class="intro">[t]The e-mail address entered is empty or invalid.[/t]</div>
+</div>
+<elseif $messageId == "MSG_QH_EMAIL_EXISTS">
+<div class="outer">
+<h1 class="title">[t]Already registered[/t]</h1>
+<div class="intro">[t]There is already an applicant registered under this e-mail address. Redirecting to the apply/login page...[/t]</div>
+</div>
+<elseif $messageId == "MSG_WRONG_CAPTCHA">
+<div class="outer">
+<h1 class="title">[t]Invalid code[/t]</h1>
+<div class="intro">[t]Invalid security code.[/t]</div>
+</div>
+<elseif $messageId == "MSG_IP_BANNED">
+<div class="outer">
+<h1 class="title">[t]IP address banned[/t]</h1>
+<div class="intro">[t]There were too many login attempts from your IP address. Please try again later.[/t]</div>
+</div>
+<elseif $messageId == "MSG_USER_LOCKED_OUT">
+<div class="outer">
+<h1 class="title">[t]Account blocked[/t]</h1>
+<div class="intro">[t]Your account is blocked, please contact us to unlock your account.[/t]</div>
+</div>
+<elseif $messageId == "MSG_WRONG_UID">
+<div class="outer">
+<h1 class="title">[t]Invalid UID[/t]</h1>
+<div class="intro">[t]UID you have provided is invalid.[/t]</div>
+</div>
+<elseif $messageId == "MSG_EMPTY_JOBBASKET">
+<div class="outer">
+<h1 class="title">[t]Job application[/t]</h1>
+<div class="intro">[t]Your job shopping basket is empty.[/t]</div>
+</div>
+<elseif $messageId == "MSG_SECURED_PAGE_DISABLED">
+<div class="outer">
+<h1 class="title">[t]Secured page[/t]</h1>
+<div class="intro">[t]Your are not allowed see content on this page.[/t]</div>
+</div>
+</if>
+
+</if>
+
+
+<if $redirectbutton>
+	<input value="[t]Back[/t]" class="button" type="button" onClick="window.location.href='{$redirectbutton}'">
+</if>  
+
+{* insert custom client's measuring snippets *}
+<if $snippets>
+{$snippets}
+</if>
+<!--uts:end inner-->
+</body>
+</html>

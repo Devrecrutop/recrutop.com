@@ -1,0 +1,314 @@
+<!--uts:begin inner-->
+{literal}
+<script>
+
+var require_comment = [uts:require_comment];
+{/literal}
+var fim_after_online_jobpresentation = '{$fim_after_online_jobpresentation}';
+{literal}
+
+function showprompt(choice)
+{
+	if(choice == 'yes'){
+
+            if (fim_after_online_jobpresentation == '1') {
+                document.getElementById('fimKillOptions').style.display='block';
+
+                fimkillbox('[th]Fill the form[/th]', 0);
+            }
+            else{
+                document.getElementById('availabilityOptions').style.display='block';
+                document.getElementById('mark').value = 'yes';
+                openbox('[th]When are you available?[/th]', 0);
+            }
+	}
+	else {
+            document.getElementById('mark').value = choice;
+            document.getElementById('available').checked = 0;
+            if ( require_comment == 1 ) {
+                document.getElementById('availabilityOptions').style.display='none';
+                openbox('[th]Comment[/th]', 0);
+            } else {
+		        document.getElementById('processform').submit();
+            }
+	}
+}
+	
+function realsubmit(){
+	if(document.getElementById('available').checked){
+		document.getElementById('isAvailable').value = 1;
+	}else {
+		document.getElementById('isAvailable').value = 0;
+	}
+
+        if ( require_comment ) {
+            document.getElementById('commentInForm').value = document.getElementById('commentArea').value;
+        }
+
+        if ( document.getElementById('mark').value == 'yes' ) {            
+            var d = document.getElementsByName('available_fromDay')[0].value;
+            var m = document.getElementsByName('available_fromMonth')[0].value;
+            var y = document.getElementsByName('available_fromYear')[0].value;
+            document.getElementById('availableFrom').value = y+'-'+m+'-'+d;           
+        }
+    document.getElementById('processform').submit();
+}
+</script>
+<script>
+// Open the lightbox
+function openbox(formtitle, fadin)
+{
+	var box = document.getElementById('box'); 
+	document.getElementById('shadowing').style.display='block';
+	
+	var btitle = document.getElementById('boxtitle');
+	btitle.innerHTML = formtitle;
+	
+	if(fadin) {
+		gradient("box", 0);
+		fadein("box");
+	} else {
+		box.style.display='block';
+	}  	
+}
+
+// Close the lightbox
+function closebox()
+{
+	document.getElementById('box').style.display='none';
+	document.getElementById('shadowing').style.display='none';
+}
+
+
+// Open the lightbox
+function fimkillbox(formtitle, fadin)
+{
+    var fimbox = document.getElementById('fimkillbox');
+    document.getElementById('fimkillshadowing').style.display='block';
+
+    //var btitle = document.getElementById('fimkillboxtitle');
+    //btitle.innerHTML = formtitle;
+
+    if(fadin) {
+        gradient("fimkillbox", 0);
+        fadein("fimkillbox");
+    } else {
+        fimbox.style.display='block';
+    }
+}
+
+function fillnow(){
+    document.getElementById('applicantAction').value = "fillNow";
+    document.getElementById('processfimkillform').submit();
+}
+
+
+function filllater(){
+    document.getElementById('applicantAction').value = "fillLater";
+    document.getElementById('processfimkillform').submit();
+}
+
+
+// Print button
+function printFrame(url)
+{
+    // Set URL for print
+    var iframe = document.getElementById('printframe');
+    iframe.src = url;
+
+    // Send print function
+    window.setTimeout(printNow,3000);
+}
+function printNow()
+{
+    // Print frame
+    window.frames['printframe'].focus(); // Set focus for IE
+    window.frames['printframe'].print(); // Send PRINT command
+}
+</script>
+
+{/literal}
+<form action="{$indexPhpRoot}page/customvacancy/command/setReactionMark/bb/1" name="processform" id="processform" method="POST">
+	<input type="hidden" name="candid" value="{$candidate.id}">
+        {if $cowtoken}
+	<input type="hidden" name="cowtoken" value="{$cowtoken}">
+        {/if}
+	<input type="hidden" name="jobid" value="{$job.id}">  
+	<input type="hidden" name="matchid" value="{$match.id}">
+	<input type="hidden" name="mark" id="mark" value="">
+	<input type="hidden" name="isAvailable" id="isAvailable" value="">
+	<input type="hidden" name="availableFrom" id="availableFrom" value="">
+	<input type="hidden" name="comment" id="commentInForm" value="">
+</form>
+
+<form action="{$indexPhpRoot}page/customvacancy/command/fimAppAction/bb/1" name="processfimkillform" id="processfimkillform" method="POST">
+    <input type="hidden" name="candid" value="{$candidate.id}">
+    <input type="hidden" name="jobid" value="{$job.id}">
+    <input type="hidden" name="matchid" value="{$match.id}">
+    <input type="hidden" name="applicantAction"  id="applicantAction" value="fillLater">
+</form>
+
+<div class="outer ojbOuter ojbDetail">
+<!-- /UTS/customvacancy/customvacancy.html -->
+
+	<h1 class="title ojbTitle">{$job.JobTitle}</h1>
+	{if $job.toon_opdrachtgever}<div class="ojpSubtitle">{$job.JobCompany.JobCompanyName}</div>{/if}
+    <div class="ojpContactCon">
+    	<div class="itemContainer ojpIc ojpContact">
+			<h3 class="itemTitle ojpIt">[t]Contact gegevens[/t]</h3>
+			<div class="itemWord ojpIw">
+				{if $job.JobContact.JobContactName}<div class="ojpContactName"><span>[t]Consultant[/t]</span>{$job.JobContact.JobContactName}</div>{/if}
+				{if $job.JobContact.JobContactPhone}<div class="ojpContactPhone"><span>[t]Telefoonnummer[/t]</span>{$job.JobContact.JobContactPhone}</div>{/if}
+				{if $job.JobContact.JobContactEmail}<div class="ojpContactEmail"><span>[t]E-mail[/t]</span>{$job.JobContact.JobContactEmail}</div>{/if}
+				{if $job.JobId}<div class="ojpContactId"><span>[t]Referentie[/t]</span>{$job.JobId}</div>{/if}
+			</div>
+		</div>
+	</div>
+	{if !$job.Processed}
+	<div class="ojpButtonContainer">
+		<input class="ojpButton ojpAccept" type="button" value="[th]Ik ben ge&iuml;nteresseerd[/th]" onClick="showprompt('yes')">
+		<input class="ojpButton ojpDenied" type="button" value="[th]Ik ben niet ge&iuml;nteresseerd[/th]" onClick="showprompt('no')">
+		<div style="text-align: center;margin-top: 10px;">
+			<input class="ojpButton ojpSend" type="button" value="[th]Stel aan vriend voor[/th]" onclick="window.location= '/index.php/page/JobsRemote/command/mailfriend/vid/{$job.id}/bb/1'">
+		</div>
+        {if $show_print_button}
+            <input class="ojpButton ojpAccept" type="button" value="[th]Print[/th]" onClick="javascript:printFrame('/index.php/page/customvacancy/command/print/vid/{$job.id}');">
+            <iframe title="printframe" id="printframe" name="printframe" width="0" height="0" frameborder="0" scrolling="NO"></iframe>
+        {/if}
+
+	</div>
+	<div class="cleaner"></div>
+    {/if}	
+	
+    {if $job.JobDescription.Chapo}
+        <div class="itemContainer ojpIc ojpChapo">
+        	<h3 class="itemTitle ojpIt">{$job.JobDescription.ChapoTitle}</h3>
+			<div class="itemDescr ojpIDescr">{$job.JobDescription.Chapo}</div>
+        </div>
+    {/if}
+    
+    <div class="ojpLeft">
+        {if $job.JobDescription.FunctieEo}
+            <div class="itemContainer ojpIc ojpFeo">
+                <h3 class="itemTitle ojpIt">{$job.JobDescription.FunctieEoTitle}</h3>
+				<div class="itemDescr ojpIDescr">{$job.JobDescription.FunctieEo}</div>
+            </div>
+        {/if}
+		
+		{if $job.JobDescription.FunctieEe}
+            <div class="itemContainer ojpIc ojpFee">
+                <h3 class="itemTitle ojpIt">{$job.JobDescription.FunctieEeTitle}</h3>
+				<div class="itemDescr ojpIDescr">{$job.JobDescription.FunctieEe}</div>
+            </div>
+		{/if}
+    </div>
+
+    <div class="ojpRight">
+        {if $job.JobDescription.CompanyProfile}
+            <div class="itemContainer ojpIc ojpCompProf">
+                <h3 class="itemTitle ojpIt">{$job.JobDescription.CompanyProfileTitle}</h3>
+				<div class="itemDescr ojpIDescr">{$job.JobDescription.CompanyProfile}</div>
+            </div>
+        {/if}
+		
+		{if $job.JobDescription.SalO}
+            <div class="itemContainer ojpIc ojpCompSalO">
+                <h3 class="itemTitle ojpIt">{$job.JobDescription.SalOTitle}</h3>
+				<div class="itemDescr ojpIDescr">{$job.JobDescription.SalO}</div>
+            </div>
+		{/if}
+		
+		{if $job.JobDescription.CompanyCulture}
+            <div class="itemContainer ojpIc ojpCompCul">
+                <h3 class="itemTitle ojpIt">{$job.JobDescription.CompanyCultureTitle}</h3>
+				<div class="itemDescr ojpIDescr">{$job.JobDescription.CompanyCulture}</div>
+            </div>
+		{/if}
+
+		{if $job.JobLocationAddress && $show_addres == 1}
+            <div class="itemContainer ojpIc ojpCompCul">
+                <h3 class="itemTitle ojpIt">[t]Adresgegevens[/t]</h3>
+				<div class="itemWord ojpIw">
+					{if $job.JobLocationAddress}<div class="ojpAddrStreet"><span>[t]Straat[/t]</span>{$job.JobLocationAddress}</div>{/if}
+					{if $job.JobLocationCity}<div class="ojpAddrCity"><span>[t]Stad[/t]</span>{$job.JobLocationCity}</div>{/if}
+					{if $job.JobLocationZipCode}<div class="ojpAddrZipCode"><span>[t]Postcode[/t]</span>{$job.JobLocationZipCode}</div>{/if}
+					{if $job.JobLocationCountry}<div class="ojpAddrCountry"><span>[t]Land[/t]</span>{$job.JobLocationCountry}</div>{/if}
+				</div>
+            </div>
+		{/if}
+    </div>
+
+
+	<div class="cleaner"></div>
+
+    {if !$job.Processed}
+	<div id="shadowing"></div>
+	<div id="box">
+		<span id="boxtitle"></span>
+		<form method="GET" action="lightbox-form-test.html" target="_parent">
+			<div id="availabilityOptions">
+				<div class="formInput formSmallInput ojpFiAvailNow">
+					<label>[th]Available now[/th]</label>
+					<input type="checkbox" name="available" id="available" value="1" maxlength="60" size="60">
+				</div>
+	
+				<div class="formInput formSmallInput apllDate ojpFiAvailDate">
+					<label>[th]Available from:[/th]</label>
+					<html_uts_select_date time=$currentValue field_order="DMY" month_format="%m" prefix=available_from day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year=$smarty.now|date_format:"%Y" end_year=$smarty.now+800*24*60*60|date_format:"%Y" reverse_years=true>
+				</div>
+ 			</div>
+			{if '[uts:require_comment]'}
+			<div id="comment">
+				<div class="formInput formSmallInput ojpFiAvailComment">
+					<label>[t]Comment[/t]</label>
+					<textarea id="commentArea" name="comment"></textarea>
+				</div>
+			</div>
+			{/if}
+
+			<div class="buttonContainer ojpButtonContainer">
+				<input class="ojpButton ojpAccept" type="button" value="[th]Verwerken[/th]" onclick="realsubmit()">
+				<input class="ojpButton ojpDenied" type="button" value="[th]Annuleren[/th]" onclick="closebox()"> 
+			</div>
+
+		</form>
+	</div>
+    {/if}
+
+    <div class="cleaner"></div>
+    {if !$job.Processed}
+    <div id="fimkillshadowing"></div>
+    <div id="fimkillbox" style="display:none">
+        <span id="fimkillboxtitle"></span>
+        <form method="GET" action="lightbox-form-test.html" target="_parent">
+            <div id="fimKillOptions">
+                <div class="formInput formSmallInput ojpFiAvailNow">
+                    <label>[th]Do you want to fill in the form now or later?[/th]</label>
+                </div>
+
+            </div>
+
+            <div class="buttonContainer ojpButtonContainer">
+                <input class="ojpButton ojpAccept" type="button" value="[th]Now[/th]" onclick="fillnow()">
+                <input class="ojpButton ojpDenied" type="button" value="[th]Later[/th]" onclick="filllater()">
+            </div>
+
+        </form>
+    </div>
+    {/if}
+
+
+</div>
+
+<!--[if IE]>
+{literal}
+<script type="text/javascript">
+if(document.compatMode != 'CSS1Compat'){
+	/* Detect Quirks Mode */	
+	jQuery("head").append("<link rel='stylesheet' href='/_css_global/globalQuirksStyling.css' type='text/css'>");
+}
+</script>
+{/literal}
+<![endif]-->
+
+<!--uts:end inner-->

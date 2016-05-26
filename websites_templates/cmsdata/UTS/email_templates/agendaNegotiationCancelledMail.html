@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+<!-- /UTS/email_templates/agendaNegotationCancelledMail.html -->
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Dear[/t] {$consultantName},</p>
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]The appointment has been cancelled as no suitable term could be negotiatied.[/t]</p>
+
+<table style="font-family: verdana, arial, sans-serif; font-size:12px;">
+<tr>
+<td>[t]Type[/t]:</td><td>{$itemTypeName|escape}</td>
+</tr>
+<tr>
+<td>[t]Subject[/t]:</td><td>{$subject|escape}</td>
+</tr>
+{if $location}
+<tr>
+<td>[t]Location[/t]:</td><td>{$location|escape}</td>
+</tr>
+{/if}
+{if $description}
+<tr>
+<td>[t]Description[/t]:</td><td>{$description|escape}</td>
+</tr>
+{/if}
+<tr>
+<td>[t]Participants[/t]:</td><td>{$participants}</td>
+</tr>
+</table>
+
+{if $owner}
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Responses overview:[/t]</p>
+
+<table style="font-family: verdana, arial, sans-serif; font-size:12px;">
+<tr>
+<th>[t]Consultant[/t]</th>
+<th>[t]Date and time[/t]</th>
+<th>[t]Response[/t]</th>
+</tr>
+
+{foreach from=$responses item=r}
+{foreach from=$r.suggestions item=s name=suggestions_loop}
+<tr>
+<td>{if $smarty.foreach.suggestions_loop.first}{$r.consultantName|escape}{else}&nbsp;{/if}</td>
+<td>{$s._date}, {$s._timeStart} - {$s._timeEnd}</td>
+<td>
+{if $s.status == 'accepted'}[t]Yes[/t]
+{elseif $s.status == 'rejected'}[t]No[/t]
+{else}[t]None[/t]
+{/if}
+</td>
+</tr>
+{/foreach}
+{/foreach}
+</table>
+{/if}
+
+<!--uts:end inner-->
+</body>
+</html>

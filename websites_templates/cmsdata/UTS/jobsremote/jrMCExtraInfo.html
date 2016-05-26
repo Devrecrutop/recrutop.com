@@ -1,0 +1,14 @@
+<div class="hookOuter actFo actFoJobsHook">
+<!-- /UTS/jobsremote/jrMCExtraInfo.html STANDARD -->
+<!-- Template Webdevelopment validated 10-2013 -->
+	<div class="hookHeader actFh">Relevante links</div>
+	<div class="hookIntro hookText"></div>
+	<ul>
+	{foreach from=$relevantExtraInfo item=mc}
+		{if $mc.relevant_link_text}
+		<li id="{$mc.name}"><span class="facetHookMC">{$mc.name}{if $mc.relevant_link_url}</span> <span class="facetHookFreq"><a href="{$mc.relevant_link_url}">{$mc.relevant_link_text}</a></span>{/if}</li>
+		{/if}
+	{/foreach}
+	</ul>
+	<div class="cleaner"></div>
+</div>

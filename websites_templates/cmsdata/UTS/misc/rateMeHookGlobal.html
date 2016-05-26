@@ -1,0 +1,20 @@
+<!-- rate me list hook start -->
+
+<div class="hookOuter rmhHOuter">
+<!-- UTS/misc/rateMeHookGlobal.html -->
+	<div class="hookHeader rmhHeader">[t]RateMeHook[/t]</div>
+        <div class="hookIntroText rmhIntroText">[t]IntroText[/t]</div>
+            {foreach from=$recruiters key=k item=r}
+                <div class="hookItemContainer rmhContainer">
+                {if $k == 0}
+                <div class="hookItemTitle rmhTitle rmhTitleFirst">
+                {else}
+                <div class="hookItemTitle rmhTitle">
+                {/if}
+                [t]{$r.Recruiter} - {$r.Rating|string_format:"%.2f"}[/t]</div>
+                </div>
+            {/foreach}
+        <div class="hookFooter rmhFooter">[t]Bottom text with different style[/t]</div>
+</div>
+
+<!-- rate me list end -->

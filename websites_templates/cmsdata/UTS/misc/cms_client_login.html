@@ -1,0 +1,47 @@
+{* used when user doesn't have "client" permissions to view current page *}
+<html>
+<head>
+<title>CustomersLogin</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<div class="outer custOuter custLoginOuter cmsClientSecureOuter">
+<!-- /UTS/misc/cms_client_login.html -->
+<h1 class="title">[t]Client login[/t]</h1>
+
+<div class="intro">
+<p>[t]Access to this page is restricted.[/t]</p>
+<p>[t]To continue, enter your username and password.[/t]</p>
+</div>
+
+<form name="form2" method="post" action="/index.php/command/klantlogin">
+{if $error_code == 'access_denied'}
+<div class="error">[t]You are not known in this system, or you don't have the necessary rights.[/t]</div>
+{elseif $error_code == 'no_rights'}
+<div class="error">[t]Sorry, you don't have the rights necessary to access this page.[/t]</div>
+{elseif $error_code == 'no_credentials'}
+<div class="error">[t]Please enter your username and password.[/t]</div>
+{else}
+	{$error}
+{/if}
+<div class="formInput">
+<label>[t]Username:[/t]</label>
+<input type="text" name="wg_username">
+</div>
+<div class="formInput">
+<label>[t]Password:[/t]</label>
+<input type="password" name="wg_password">
+</div>
+<div class="buttonContainer">
+	<input type="submit" name="Submit" value="[th]Login[/th]" class="button">
+</div>
+</form>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+
+<p>[t]Dear[/t] {$recipientName},</p>
+
+{if $status == 'approved'}
+<p>[t]Your request to add the portal[/t] {$portalName|escape} [t]has been approved.[/t]</p>
+{/if}
+
+{if $status == 'cancelled'}
+<p>[t]Your request to add the portal[/t] {$portalName|escape} [t]has been declined.[/t]</p>
+{if $reason}
+<p>[t]Reason:[/t] {$reason|escape}</p>
+{/if}
+{/if}
+
+<p class="utsSignature">
+[t]Kind regards[/t],<br>
+[t]OTYS[/t]
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

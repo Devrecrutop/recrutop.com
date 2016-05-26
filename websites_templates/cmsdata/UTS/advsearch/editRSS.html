@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+function advsearchform_check_form(frm) {
+    //{/literal}
+    <if [uts:show_distance_matching]>
+    //{literal}
+    if (frm.proximity_preferredDistance.value && !isFinite(parseInt(frm.proximity_preferredDistance.value))) {
+        alert('[th]Preferred distance must be a number.[/th]');
+        return(false);
+    }
+    if (frm.proximity_maxDistance.value && !isFinite(parseInt(frm.proximity_maxDistance.value))) {
+        alert('[th]Maximal distance must be a number.[/th]');
+        return(false);
+    }
+    if (frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value && parseInt(frm.proximity_preferredDistance.value)>parseInt(frm.proximity_maxDistance.value)) {
+        alert('[th]Maximal distance must be lower than preferred distance.[/th]');
+        return(false);
+    }
+    //{/literal}
+    </if>
+    //{literal}
+    return(true);
+}
+//{/literal}
+</script>
+<form name="advsearchform" method="post" action="{$handler}" onsubmit="return(advsearchform_check_form(this))">
+<div class="outer actOuter">
+<h1 class="title actTitle">[t]P
+ <!-- /UTS/advsearch/editRSS.html -->ersonal RSS feed[/t]</h1>
+<div class="intro actIntro">
+	<p>[t]This is the URL of your personal feed. Click on the icon, or copy/paste the URL to your favourite RSS reader.[/t]</p>
+	<ul>
+	<li>[t]The icon with link to click:[/t] <a href="{$feedurl|escape}"><img src="/_images_global/rssicon.gif" border="0"></a></li>
+	<li>[t]The link to copy/paste:[/t]<br><textarea rows="3" cols="70" readonly>{$feedurl|escape}</textarea></li>
+	</ul>
+</div>
+<h2 class="subHeader actSh">[t]Query[/t]</h2>
+<div class="text">[t]You can also use fields below to modify the query used to generate your RSS feed.[/t]</div>
+{* keyword field *}
+<if [uts:show_keyword_options]>
+<div class="formInput actFormInput">
+<label>[t]Keywords[/t]</label>
+<input type="text" name="main_keywords" value="{$keywordsValue|escape}">
+</div>
+</if>
+{* publication options *}
+<if [uts:show_publication_options]>
+<div class="formInput actFormInput">
+<label>[t]Show[/t]</label>
+<select name="main_pubdate">
+    <option value="">---</option>
+    <html_options options=$pubOpts selected=$pubOption>
+</select>
+</div>
+</if>
+{* distance options *}
+<if [uts:show_distance_matching]>
+<hr>
+<div class="formInput actFormInput">
+<label for="idCountryCode">[t]Country[/t]</label>
+<select id="idCountryCode" name="proximity_countryCode">
+<html_options options=$proximityCountries selected=$proximity.countryCode>
+</select>
+
+</div>
+<div class="formInput actFormInput">
+<label for="idZipcode">[t]Zipcode[/t]</label>
+<input type="text" id="idZipcode" name="proximity_zipCode" value="{$proximity.zipCode|escape}">
+</div>
+<div class="formInput">
+<label for="idPrefDist">[t]Preferred distance [km][/t]</label>
+<input type="text" id="idPrefDist" name="proximity_preferredDistance" value="{$proximity.preferredDistance|escape}">
+</div>
+<div class="formInput">
+<label for="idMaxDist">[t]Maximum distance [km][/t]</label>
+<input type="text" id="idMaxDist" name="proximity_maxDistance" value="{$proximity.maxDistance|escape}">
+</div>
+<hr>
+</if>
+{* criteria fields *}
+<foreach from=$critList item=crit>
+<div class="formInput actFormInput">
+<label>{$crit.name}</label>
+<if $crit.sm == "M">
+    {* multiselect *}
+    <select name="matchcriteria_{$crit.field}[]" multiple="multiple">
+        <html_options options=$crit.options selected=$crit.curValues>
+    </select>
+<else>
+    {* single select *}
+    <select name="matchcriteria_{$crit.field}">
+        <option value="NULL">---</option>
+        <html_options options=$crit.options selected=$crit.curValue>
+    </select>
+</if>
+</div>
+</foreach>
+<div class="buttonContainer actBc"><input type="submit" name="bApplSubmit" value="[tb]Save[/tb]" class="button"></div>
+</div>
+<input type="hidden" name="command" value="save">
+<input type="hidden" name="feed" value="{$feed|escape}">
+</form>
+<!--uts:end inner-->
+</body>
+</html>

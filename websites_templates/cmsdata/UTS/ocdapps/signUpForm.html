@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/ocdapps/signUpForm.html -->
+<div class="outer aplOuter aplLdOuter">
+<h1 class="title aplTitle aplLdTitle">[t]Sign up[/t]</h1>
+<div class="text aplText aplLdText">[t]Please fill these fields to sign up. The username should have at least 5 characters, and it may contain only letters, numbers and these characters:[/t] -_+&amp;@.</div>
+
+<form name="mainfrm" action="{$handler}" method="post">
+
+<div class="formInput aplInput aplLdOpwd">
+<label for="inUserName">* [t]User name:[/t]</label>
+<input type="text" name="username" id="inUserName" value="{$username|escape}">
+</div>
+
+<div class="formInput aplInput aplLdOpwd">
+<label for="inFirstName">[t]First name:[/t]</label>
+<input type="text" name="firstname" id="inFirstname" value="{$firstname|escape}">
+</div>
+
+<div class="formInput aplInput aplLdOpwd">
+<label for="inInfix">[t]Infix:[/t]</label>
+<input type="text" name="infix" id="inInfix" value="{$infix|escape}">
+</div>
+
+<div class="formInput aplInput aplLdOpwd">
+<label for="inLastName">[t]Last name:[/t]</label>
+<input type="text" name="lastname" id="inLastName" value="{$lastname|escape}">
+</div>
+
+<div class="formInput aplInput aplLdOpwd">
+<label for="inEmail">* [t]E-mail:[/t]</label>
+<input type="text" name="email" id="inEmail" value="{$email|escape}">
+</div>
+
+
+<div class="formInput aplInput aplLdNpwd1">
+<label for="newPassword1">* [t]Password:[/t]</label>
+<input type="password" name="newPassword1" id="newPassword1">
+</div>
+
+<div class="formInput aplInput aplLdNpwd2">
+<label for="newPassword2">* [t]Confirm password:[/t]</label>
+<input type="password" name="newPassword2" id="newPassword2">
+</div>
+
+<div class="formInput aplCsc aplStkCsc">
+<label>* [t]Code[/t]</label>
+<img id="captcha" src="/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image" >
+<a href="#" onclick="document.getElementById('captcha').src = '/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0" ></a>
+<a href="/_javascript_global/securimage/securimage_play.php"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0" ></a>
+</div>
+<div class="formInput formSmallInput aplCic aplStkCic">
+<label for="captchafield">[t]Code:[/t]</label>
+<input type="text" name="captchafield" id="captchafield" size="10">
+</div>
+
+
+<if $error>
+<div class="error aplError aplLdError">
+<if $error == "ERR_EMAIL_EMPTY">
+    [t]Please enter an e-mail[/t]
+<elseif $error == "ERR_EMAIL_INVALID">
+    [t]Invalid e-mail[/t]
+<elseif $error == "ERR_PASSWORDS_DONT_MATCH">
+    [t]Passwords don't match[/t]
+<elseif $error == "ERR_INVALID_USERNAME">
+    [t]Invalid user name[/t]
+<elseif $error == "ERR_PASSWORD_TOO_SHORT">
+    [t]Password too short (please type at least 6 characters)[/t]
+<elseif $error == "ERR_USERNAME_IN_USE">
+    [t]Username already in use; please choose another one[/t]
+<elseif $error == "ERR_CAPTCHA">
+    [t]Invalid security code[/t]
+<else>
+    {$error}
+</if>
+</div>
+</if>
+<div class="buttonContainer aplBc aplLdBc"><input type="submit" name="bApplSubmit" value="[tb]Submit[/tb]" class="button"></div>
+<input type="hidden" name="command" value="signupsubmit">
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

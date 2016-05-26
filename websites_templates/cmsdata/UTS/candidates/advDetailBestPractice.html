@@ -1,0 +1,19 @@
+<!-- /UTS/candidates/advDetailBestPractice -->
+<!--uts:begin inner-->
+<h2>[t]Best Practice[/t]</h2>
+<br >
+<table class="candAdvDetailPersonalTable">
+        <colgroup>
+            <col style="width:140px;">
+            <col>
+        </colgroup>
+{foreach from=$fields item=field}
+
+    <tr>
+        <td class="cadCVLeft">{$field.label}</td>
+        <td>{$field.value|escape}</td>
+    </tr>
+
+{/foreach}
+</table>
+<!--uts:end inner-->

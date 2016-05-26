@@ -1,0 +1,28 @@
+<!--radio view V-->
+<div class="formInput formRadio aplRadioInput aplRadioViewV aplRadioInput{$elementName}" id="KQDIV_{$qd.id}">
+	<label for="{$elementName}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+	<foreach from=$options item=opt key=optkey>
+	<label for="{$elementName}_{$optkey}" class="labelRadio aplRadioInput{$optkey}">
+		<input type="radio" id="{$elementName}_{$optkey}" name="{$elementName}" value="{$optkey}" {if $currentValue == $optkey}checked{/if} class="radiobutton" 
+    
+      {if $qd.killerFieldMaster && $question_show_based_on_answers}
+      onChange="processFieldValueChange('{$elementName}');killerQHandler('{$qd.id}','{$optkey}','radio');"
+      {else} 
+      onChange="processFieldValueChange('{$elementName}');"
+      {/if}
+    >
+		{$opt|escape}	
+	</label>
+	</foreach>
+	<div class="cleaner aplCleaner aplBooleanVCleaner"></div>
+</div>
+<if $qd.explanation>
+<div class="explain aplRadioExplain">
+    {$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplRadioError">
+    {$currentErrorMessage}    
+</div>
+</if>

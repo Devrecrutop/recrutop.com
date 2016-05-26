@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+
+</head>
+<body>
+<!--uts:begin inner-->
+
+<p>
+        [t]Dear {$toname|escape},[/t]
+</p>
+
+<p>
+    [t]Thank you for taking time and completing the interview[/t]<br>  
+</p>
+
+{if $movie_url_with_layout}
+<p>[t]You can open your interview by clicking[/t]&nbsp;<a href="{$movie_url_with_layout}" target="_blank">[t]here[/t]</a></p>
+{/if}
+   
+<p>
+[t]Kind regards,[/t]<br>
+[t]{$contactPerson}[/t]<br>
+[t]{$client}[/t]<br>
+[t]URL:[/t] <a href="{$website}/" target="_blank">{$website}</a>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

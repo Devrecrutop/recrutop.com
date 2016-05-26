@@ -1,0 +1,75 @@
+{* req.ext.js: JQueryBase *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Public Invitation - Step 2</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!--/UTS/AGENDA/negotiation.html-->
+
+<div class="outer pInNeOuter">
+
+{if $responseSaved}
+<h1 class="title pInNeTitle">[t]Thank you for your response[/t]</h1>
+<div class="text pInNeText">[t]Your response has been saved.[/t]</div>
+
+
+{elseif $negotiation.status == "cancelled"}
+<h1 class="title pInNeTitle">[t]The negotiations are not longer available[/t]</h1>
+<div class="text pInNeText">[t]The negotiation and appointment was cancelled by the owner. It is not possible to respond.[/t]</div>
+
+{elseif $allSuggestionsInPast}
+<h1 class="title pInNeTitle">[t]All suggestions are already in past[/t]</h1>
+<div class="text pInNeText">[t]All suggestions are already in past. No more suggestions can be chosen.[/t]</div>
+
+{elseif $responsesClosed}
+<h1 class="title pInNeTitle">[t]The deadline for collecting responses has already passed[/t]</h1>
+<div class="text pInNeText">[t]The deadline for collecting responses has already passed. No more suggestions can be made.[/t]</div>
+
+{elseif $negotiationClosed}
+<h1 class="title pInNeTitle">[t]The negotiation already closed[/t]</h1>
+<div class="text pInNeText">[t]The negotiation is already closed.[/t]</div>
+
+
+{else}
+<h1 class="title pInNeTitle">[t]Calendar Appointment Options[/t]</h1>
+<div class="text pInNeText">[t]Choose an option from the list, to be able to attend the meeting that is mentioned below.[/t]</div>
+
+
+
+<div class="pInNeItem">
+
+<div class="text pInNeText">
+{*[t]Type[/t]: <strong>{$negotiation.item_type|escape}</strong><br>*}
+[t]Subject[/t]: <strong>{$negotiation.subject|escape}</strong><br>
+[t]Location[/t]: <strong>{$negotiation.location|escape}</strong><br>
+[t]Description[/t]: <strong>{$negotiation.description|escape}</strong><br>
+[t]Participants[/t]: <strong>{$participants|escape}</strong>
+</div>
+
+<div class="text pInNeText">
+[t]Choose your preferred dates and times for the appointment:[/t]
+</div>
+
+<form name="selectsuggestionsf" action="http://{$uts.cursite}/index.php/page/AgendaNegotiation/bb/1" method="post">
+<input type="hidden" name="command" value="saveresponse">
+<input type="hidden" name="uid" value="{$uid}">
+
+{foreach from=$suggestions item=s}
+{if !$s._past}
+<div><input type="hidden" name="response_{$s.id_suggestion}" value="0" ><input type="checkbox" name="response_{$s.id_suggestion}" value="1" {if $s.status == 'accepted'}checked="checked"{/if} >
+{$s._date}, {$s._timeStart} - {$s._timeEnd}</div>
+{/if}
+{/foreach}
+<div class="pInNeButton"><input type="button" value="[tb]Save responses[/tb]" class="button" onclick="document.forms['selectsuggestionsf'].submit();"></div>
+</form>
+{/if}
+</div>
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

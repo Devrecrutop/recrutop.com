@@ -1,0 +1,15 @@
+<!--uts:begin inner-->
+<div class="hookOuter RecommendShortlist">
+	<!-- UTS/customers/recommendationsHook.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+  {if $recommendations}
+    <div class="hookHeader">[t]Recommendations[/t]</div>
+	{foreach from=$recommendations key="recommendationKey" item=recommendationItem}
+	<div class="hookItemContainer recommHookIc">
+		<div class="hookItemTitle">{$recommendationItem.name_reference}</div>
+		<div class="hookItemWord">{$recommendationItem.recommendation}</div>
+	</div>
+    {/foreach}
+  {/if}  
+</div>
+<!--uts:end inner-->

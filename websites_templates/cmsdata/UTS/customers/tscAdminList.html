@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>                
+</head>
+<body>
+<!--uts:begin inner-->
+<link type="text/css" href="/_css_global/tscAdmin.css" rel="stylesheet" media="all">
+{literal}
+<script type="text/javascript">
+<!--
+{/literal}
+{* JS VARIABLES BEGIN *}  
+var appHandler = '{$handler}';  
+
+{* JS VARIABLES END *}  
+{literal}
+function detailTs(tscId, prevId, nextId)
+{
+	document.location = appHandler + '/command/detail/tscid/' + tscId + (prevId ? '/previd/' + prevId : '' ) + (nextId ? '/nextid/' + nextId : '' ) ;
+}
+
+//-->
+</script>
+{/literal}
+<div class="outer aplOuter aplProfOuter">
+	<!-- /UTS/customers/tscAdminList.html -->
+	<!-- HTML VALID by Maikel Doeze -->
+	<h1 class="title aplTitle aplProfTitle">[t]Timesheets Candidates[/t]</h1>
+	{$menu}	
+	<div class="tscFilterDiv">
+		<form action="{$handler}" id="frm_flt" name="frm_flt" method="POST">
+			<input type="hidden" name="command" value="setfilter">  
+			<div class="formInput formSmallInput apllDate inputMultiDate">
+				<label>[t]From[/t]</label>
+				<div>
+                    {html_uts_select_date field_array="flt[from_date]" start_year=$start_year end_year=+5 time=$flt.from_ts field_order='DMY'}
+				</div>
+			</div>
+			<div class="formInput formSmallInput apllDate inputMultiDate">
+				<label>[t]To[/t]</label>
+				<div>
+				{html_uts_select_date field_array="flt[`to_date]" start_year=$start_year end_year=+5 time=$flt.to_ts}
+				</div>
+			</div>
+			<div class="formInput">
+				<label>[t]Status[/t]</label>
+				<select name="flt[status]">
+					<option value="">---</option>
+					{html_options options=$filterData.status selected=$flt.status}
+				</select> 
+			</div>
+			<div class="formInput">
+				<label>[t]Candidate[/t]</label>
+				<select name="flt[candidate_id]">
+					<option value="">---</option>
+					{html_options options=$filterData.candidates selected=$flt.candidate_id}
+				</select>     
+			</div>
+			<div class="buttonContainer">
+				<input type="submit" class="button" name="flt_bttn" value="[t]Filter[/t]">
+			</div>
+		</form>
+	</div>
+	<div class="cleaner"></div>
+	<div class="tscListDiv">
+		<table border="0" cellpadding="0" cellspacing="0" class="hqTbl tscListTbl" width="100%">
+			<tr class="tscListTblHeader">
+				<th nowrap="nowrap">[t]Start Date[/t]</th>
+				<th nowrap="nowrap">[t]End Date[/t]</th>
+				<th nowrap="nowrap">[t]Employee[/t]</th>    
+				<th nowrap="nowrap">[t]Period[/t]</th>
+				<th nowrap="nowrap">[t]Status[/t]</th>  
+			</tr>
+			{foreach from=$tscList item=ts}
+				<tr class="{cycle values='rowflip,rowflop'} tscListTblRow" onDblClick="detailTs('{$ts.id}','{$ts.prev_id}','{$ts.next_id}')">
+					<td nowrap="nowrap">{$ts.start_date|date_format:$smartyDateFormat}</td>
+					<td nowrap="nowrap">{$ts.end_date|date_format:$smartyDateFormat}</td>  
+					<td nowrap="nowrap">{$ts.candidate_name|escape}</td>      
+					<td nowrap="nowrap">{$filterData.period[$ts.period]|escape}</td>
+					<td nowrap="nowrap">{$filterData.status[$ts.status]|escape}</td>  
+				</tr>
+			{foreachelse}
+				<tr>
+					<td nowrap="nowrap" colspan="5">[t]No Timesheets Available[/t]</td>
+				</tr>
+			{/foreach}
+		</table>
+	</div>
+	{*PAGING BEGIN*}
+	<div class="pageNav actPageNav">
+		{if $is_prev}
+			<a href="{$handler}?command=setpage&amp;pageno=1" class="pnFirst actFirst">[t]&lt;&lt;&nbsp;First[/t]</a>
+			<a href="{$handler}?command=prevpage" class="pnPrev actPrev">[t]&lt;&nbsp;Previous[/t]</a>
+		{/if}
+		<foreach from=$page_array item=p key=k>
+			<a href="{$handler}?command=setpage&amp;pageno={$k}" {if $p}class="pnActive actActive"{/if}>{$k}</a>
+		</foreach>
+		{if $is_next}
+			<a href="{$handler}?command=nextpage" class="pnNext actNext">[t]Next&nbsp;&gt;[/t]</a>
+			<a href="{$handler}?command=setpage&amp;pageno={$lastpage}" class="pnLast actLast">[t]Last&nbsp;&gt;&gt;[/t]</a>
+		{/if}
+	</div>
+	{*PAGING END*}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

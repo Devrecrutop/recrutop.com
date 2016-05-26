@@ -1,0 +1,118 @@
+<div class="ajaxWindow newsSQFormFrag">
+	<script>
+	{literal}
+		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		} else {
+			if(jQuery().magicSelect) {
+				$('select').magicSelect();
+			}
+		}
+	{/literal}
+	</script>
+	<!-- /UTS/advsearch/newSQForm.frag.html -->
+	<!-- Template Webdevelopment validated 05-2013 -->
+	<h1 class="title">[t]Store query[/t]</h1>
+	<if $ocdmLoggedIn && $sqCnt>
+	<div class="intro"><a href="{$handler}/command/sqlist">{t 1=$sqCnt count=$sqCnt text1="You have one saved search query already" text2="You have already two saved search queries"}You already have %1 saved search queries{/t}</a></div>
+	</if>
+	<div class="intro">
+	<if $mode == "email">
+		<if $ocdmLoggedIn>
+		[t]Please specify an e-mail address and the desired evaluation period. Search results will be sent to the e-mail address specified on regular basis. The owner of the e-mail address still needs to activate the service based on instruction in the confirmation e-mail.[/t]
+		<else>
+		[t]Please specify your e-mail address and desired evaluation period. You will keep receiving search results into the e-mail address you specify on regular basis. You can deactivate this service anytime by clicking a link inside the e-mail.[/t]
+		</if>
+	<elseif $mode == "sq">
+	[t]Please specify the desired evaluation period and output channels to use. You can also change these settings later. If you specify output channels now, the recipient needs to activate the query based on instructions in e-mail/SMS he receives.[/t]
+	<elseif $mode == "sms">
+		<if $ocdmLoggedIn>
+		[t]Please specify a mobile phone number and a desired evaluation period. The owner of the mobile phone number still needs to activate the service based on instruction in the confirmation SMS.[/t]
+		<else>
+		[t]Please specify your desired evaluation period and your mobile phone number. Your will first get a confirmation SMS with instruction how to activate your stored query.[/t]
+		</if>
+	</if>
+	</div>
+
+	<form name="srbefrm" action="{$print_handler}/command/newsqsubmit" method="post">
+		<input type="hidden" name="sq_out_email" value="{if $mode == "email"}1{else}0{/if}">
+		<input type="hidden" name="sq_out_sms" value="{if $mode == "sms"}1{else}0{/if}">
+		<input type="hidden" name="sq_out_twitter" value="0">
+		<if !$ocdmLoggedIn>
+		<input type="hidden" name="sq_name" value="{$sq.name|escape}">
+		</if>
+
+		<if $ocdmLoggedIn>
+		<div class="formInput actEqueryInput">
+			<label for="iSrbeName">[t]Query name[/t]</label>
+			<input type="text" id="iSrbeName" name="sq_name" value="{$sq.name|escape}">
+		</div>
+		</if>
+		<div class="formInput actEqueryInput">
+			<label for="iSrbeFrequency">[t]Period[/t]</label>
+			<select id="iSrbeFrequency" name="sq_period">
+				<option value="daily">[th]Daily[/th]</option>
+				<option value="weekly" {if $sq.period == "weekly"}selected{/if}>[th]Weekly[/th]</option>
+				<option value="monthly" {if $sq.period == "monthly"}selected{/if}>[th]Monthly[/th]</option>
+			</select>
+		</div>
+        {* captcha *}
+        <if !$ocdmLoggedIn>
+		<div class="formInput actEqueryInput">
+			<label>[t]Code[/t]</label>
+			<img id="newsqcaptcha" src="/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image">
+			<a href="#" onclick="document.getElementById('newsqcaptcha').src = '/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0" /></a>
+			<a href="/_javascript_global/securimage/securimage_play.php"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0" /></a>
+		</div>
+		<div class="formInput actEqueryInput">
+			<label for="newsqcaptchafield">[t]Code:[/t]</label>
+			<input type="text" name="captchafield" id="newsqcaptchafield" size="10">
+		</div>
+        </if>
+        <h2 class="subHeader">
+			[t]Output channels[/t]
+		</h2>
+		<if $dispEmailControls>
+		<div class="formInput newSQFormEmail" id="dispEmailControls">
+			<label for="sq_out_email"><img src="/_images_global/email.gif" style="vertical-align:middle;"> [t]E-mail[/t]</label>
+			<input type="text" name="sq_email" value="{$sq.email|escape}"> <input type="checkbox" name="sq_out_email" value="1" {if $sq.out_email}checked{/if} {if $mode == "email"}disabled{/if}>
+		</div>
+		</if>
+		<if $dispSMSControls>
+		<div class="formInput newSQFormSMS" id="dispSMSControls">
+			<label for="sq_out_sms"><img src="/_images_global/sms.png" style="vertical-align:middle;"> [t]SMS[/t]</label>
+			<input type="text" name="sq_sms_mobile_number" value="{$sq.sms_mobile_number|escape}"> <input type="checkbox" name="sq_out_sms" value="1" {if $sq.out_sms}checked{/if} {if $mode == "sms"}disabled{/if}>
+		</div>
+		</if>
+		<if $dispTwitterControls>
+		<div class="formInput newSQFormSMS" id="dispSMSControls">
+			<label for="sq_out_sms">[t]Twitter[/t]</label>
+			<input type="checkbox" name="sq_out_twitter" value="1" {if $sq.out_twitter}checked{/if} disabled>
+		</div>
+		</if>
+        <if $error>
+		<div class="error">
+			<if $error == "ERR_EMAIL_EMPTY">
+			[t]No e-mail specified[/t]
+			<elseif $error == "ERR_EMAIL_INVALID">
+			[t]Invalid e-mail[/t]
+			<elseif $error == "ERR_EMAIL_POLICY">
+			[t]Denied by policy[/t]
+			<elseif $error == "ERR_DUPE">
+			[t]Duplicate request[/t]
+			<elseif $error == "ERR_LIMIT_EXCEEDED">
+			[t]Limit exceeded for your IP[/t]
+			<elseif $error == "ERR_INVALID_PHONE">
+			[t]Invalid phone number[/t]
+			<elseif $error == "ERR_INVALID_CAPTCHA">
+			[t]Invalid security code[/t]    
+			<elseif $error == "ERR_TOO_MANY_INACTIVE_SMS_SQS">
+			[t]There are more SMS queries awaiting activation.[/t]
+			</if>
+		</div>
+        </if>
+        <div class="buttonContainer actEqueryBc">
+            <input class="button" type="submit" name="bSubmit" value="[tb]Submit[/tb]">
+        </div>
+        <input type="hidden" name="originCmd" value="{$originCmd|escape}">
+    </form>
+</div>

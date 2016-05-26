@@ -1,0 +1,161 @@
+<!-- UTS/questionsets/qMultiFileViewH.html STANDARD -->
+<div class="formInput aplMFileInput">
+    <label>{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+    <input id="{$elementIdPrefix}_NEW" type="file" name="{$elementNamePrefix}_NEW">
+</div>
+<foreach from=$items item=item key=key>
+    <div class="formInput formSmallInput aplMFileLink aplFileButton">
+        <label class="labelFile">
+            <a href="{$item._displayLink}" target="_blank" title="{$item.mime_type}">{$item.filename}</a>
+            {if $useDocTypes}
+                {if $item.document_type}{$item.document_type|escape}{/if}{if $item.expiration_number},
+                    [t]expiration number[/t] {$item.expiration_number|escape}{/if}{if $item.expiration_date},
+                    [t]expiration date[/t] {$item.expiration_date|date_format:'%d.%m.%Y'}{/if}{if $item.issue_date},
+                    [t]issue date[/t] {$item.issue_date|date_format:'%d.%m.%Y'}{/if}
+            {/if}
+        </label>
+        <input class="smallButton aplSB aplFileSb" type="button" value="[th]X[/th]" onclick="qsDeleteFile('{$qd.id}', '{$key}')">
+    </div>
+</foreach>
+
+{if $useDocTypes}
+
+    <script type="text/javascript">
+
+        var qsMultiFileDocTypes = {$docTypes|@json_encode};
+
+        {literal}
+
+        function qsUpdateDocType() {
+
+            $('div.docTypeExpiration').css('display', 'none');
+            $('div.docTypeIssue').css('display', 'none');
+            $('div.docTypeNationality').css('display', 'none');
+            $('div.docTypeDoctor').css('display', 'none');
+
+            var categoryId = $('#docTypeCategoryId').val();
+            if (!categoryId) {
+                categoryId = 0;
+            }
+            var docTypeId = $('#docTypeCategory_' + categoryId + ' select').val();
+            if (docTypeId > 0) {
+                if (qsMultiFileDocTypes[docTypeId].use_expire_date > 0) {
+                    $('div.docTypeExpiration').css('display', 'block');
+                }
+                if (qsMultiFileDocTypes[docTypeId].use_issue_date > 0) {
+                    $('div.docTypeIssue').css('display', 'block');
+                }
+                if (qsMultiFileDocTypes[docTypeId].is_passport > 0 || qsMultiFileDocTypes[docTypeId].is_id_card > 0) {
+                    $('div.docTypeNationality').css('display', 'block');
+                }
+                if (qsMultiFileDocTypes[docTypeId].is_medical_clearance > 0) {
+                    $('div.docTypeDoctor').css('display', 'block');
+                }
+            }
+        }
+
+        {/literal}
+
+    </script>
+
+    {if $useDocTypeCategories}
+        <div class="formInput" onchange="$('div.docTypeCategory').css('display','none');$('div#docTypeCategory_' +  $('select#docTypeCategoryId').val()).css('display','block');qsUpdateDocType();">
+            <label>&nbsp;</label>
+            <div>[t]Document type category[/t]</div>
+            <select id="docTypeCategoryId" name="{$elementNamePrefix}_docTypeCategoryId">
+                <option value="0">---</option>                
+                {html_options options=$docTypeCategories}
+            </select>
+        </div>
+    {/if}
+
+    {if $hasUncategorizedDocType}
+        <div class="formInput docTypeCategory" id="docTypeCategory_0">
+            <label>&nbsp;</label>
+            <div>[t]Document type[/t]</div>
+            <select name="{$elementNamePrefix}_docTypeId_0" onchange="qsUpdateDocType();">
+                <option value="0">---</option>                
+                {foreach from=$docTypes item=docType key=docTypeId}
+                    {if $docType.id_category == 0}
+                        <option value="{$docTypeId}">{$docType.name|escape}</option>
+                    {/if}
+                {/foreach}
+            </select>
+        </div>
+    {/if}
+
+    {if $useDocTypeCategories}
+        {foreach from=$docTypeCategories item=docTypeCategory key=docTypeCategoryId}
+            <div class="formInput docTypeCategory" id="docTypeCategory_{$docTypeCategoryId}" style="display:none;"> 
+                <label>&nbsp;</label>
+                <div>[t]Document type[/t]</div>
+                <select name="{$elementNamePrefix}_docTypeId_{$docTypeCategoryId}" onchange="qsUpdateDocType();">
+                    <option value="0">---</option>
+                    {foreach from=$docTypes item=docType key=docTypeId}
+                        {if $docType.id_category == $docTypeCategoryId}
+                            <option value="{$docTypeId}">{$docType.name|escape}</option>
+                        {/if}
+                    {/foreach}
+                </select>
+            </div>
+        {/foreach}
+    {/if}
+
+    <div class="formInput docTypeExpiration" style="display:none;">
+        <label>&nbsp;</label>
+        <div>[t]Expiration number[/t]</div>
+        <input type="text" name="{$elementNamePrefix}_expirationNumber" />
+    </div>
+
+    <div class="formInput formSmallInput docTypeExpiration" style="display:none;">
+        <label>&nbsp;</label>
+        <div>[t]Expiration date[/t]</div>
+        <html_uts_select_date time=$currentValue field_order="DMY" month_format="%B" prefix="$elementNamePrefix expirationDate_" day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year=$startYear end_year=$endYear reverse_years=true>
+    </div>
+
+    <div class="formInput formSmallInput docTypeIssue" style="display:none;">
+        <label>&nbsp;</label>
+        <div>[t]Issue date[/t]</div>
+        <html_uts_select_date time=$currentValue field_order="DMY" month_format="%B" prefix="$elementNamePrefix issueDate_" day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year=$startYear end_year=$endYear reverse_years=true>
+    </div>
+
+    {if $useDocTypeNationality}
+        <div class="formInput docTypeNationality" style="display:none;">
+            <label>&nbsp;</label>
+            <div>[t]Nationality[/t]</div>
+            <select name="{$elementNamePrefix}_nationality">
+                <option value="">---</option>
+                {html_options options=$nationalities}
+            </select>
+        </div>
+    {/if}
+
+    {if $doctors}
+        <div class="formInput docTypeDoctor" style="display:none;">
+            <label>&nbsp;</label>
+            <div>[t]Doctor[/t]</div>
+            <select name="{$elementNamePrefix}_id_doctor">
+                <option value="">---</option>
+                {html_options options=$doctors}
+            </select>
+        </div>
+    {/if}
+
+{/if}
+
+<div class="formInput formSmallInput aplMFileButton">
+    <label>&nbsp;</label>
+    <input class="button" type="button" value="[tb]Upload[/tb]" onclick="qsUploadFile('{$qd.id}')">
+</div>
+
+<if $qd.explanation>
+    <div class="explain aplMFileExplain error_{$elementName} explain_{$elementName}">
+        {$qd.explanation|escape}
+    </div>
+</if>
+
+<if $currentErrorMessage>
+    <div class="error aplTextError error_{$elementName}">
+        {$currentErrorMessage}    
+    </div>
+</if>

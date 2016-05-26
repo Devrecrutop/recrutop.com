@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- /UTS/ocdapps/loginData.html -->
+<div class="outer aplOuter aplLdOuter" id="test">
+<h1 class="title aplTitle aplLdTitle">[t]Login data[/t]</h1>
+{$CustomersMenu}
+
+{if $redirectback == 2 || $redirectback == 1}
+{* <div class="menuContainer aplMc"> *}
+{* <div class="menuLink aplMlink MenuLinkFirstChild aplMlinkFc"><a href="/index.php/page/CustomersRemote/bb/1/command/start">[t]Back to the profile[/t]</a></div> *}
+{* <div class="cleaner menuLinkCleaner aplLinkCleaner"></div> *}
+{* </div> *}
+{elseif $redirectback}
+<div class="menuContainer aplMc">
+<div class="menuLink aplMlink MenuLinkFirstChild aplMlinkFc"><a href="/index.php/page/applicants/bb/1/command/start">[t]Back to the profile[/t]</a></div>
+<div class="cleaner menuLinkCleaner aplLinkCleaner"></div>
+</div>
+{else}
+<div class="menuContainer aplMc">
+<div class="menuLink aplMlink MenuLinkFirstChild aplMlinkFc"><a href="{$handler}/command/profile">[t]Back to the profile[/t]</a></div>
+<div class="cleaner menuLinkCleaner aplLinkCleaner"></div>
+</div>
+{/if}
+
+<div class="intro aplIntro lgDataText">[t]You can use this form to change your main personal account data (name, email, password). Your other accounts (applicant's accounts, ...) are not changed![/t]</div>
+
+<form name="mainfrm" action="{$handler}" method="post">
+    <if $redirectback>
+        <input type="hidden" name="redirectback" value="{$redirectback}" >
+    </if>
+<div class="formInput aplFi aplFiUsername">
+<label for="inUserName">[t]User name:[/t]</label>
+<input type="text" name="username" id="inUserName" value="{$ocdm->username|escape}" disabled>
+</div>
+
+
+<div class="formInput aplFi aplFiUsername">
+<label for="inFirstName">[t]First name:[/t]</label>
+<input type="text" name="firstname" id="inFirstname" value="{$ocdm->firstname|escape}">
+</div>
+
+<div class="formInput aplFi aplFiInfix">
+<label for="inInfix">[t]Infix:[/t]</label>
+<input type="text" name="infix" id="inInfix" value="{$ocdm->infix|escape}">
+</div>
+
+<div class="formInput aplFi aplFiLastName">
+<label for="inLastName">[t]Last name:[/t]</label>
+<input type="text" name="lastname" id="inLastName" value="{$ocdm->lastname|escape}">
+</div>
+
+<div class="formInput aplFi aplFiEmail">
+<label for="inEmail">[t]E-mail:[/t]</label>
+<input type="text" name="email" id="inEmail" value="{$ocdm->email|escape}" readonly="readonly">
+</div>
+
+<div class="formInput aplFi aplFiPassword">
+<label for="oldPassword">[t]Old password:[/t]</label>
+<input type="password" name="oldPassword" id="oldPassword">
+</div>
+<div class="formInput aplFi aplFiPassword1">
+<label for="newPassword1">[t]New password:[/t]</label>
+<input type="password" name="newPassword1" id="newPassword1" maxlength="20">
+</div>
+<div class="formInput aplFi aplFiPassword2">
+<label for="newPassword2">[t]Confirm password:[/t]</label>
+<input type="password" name="newPassword2" id="newPassword2" maxlength="20">
+</div>
+<if $error>
+<div class="error">
+<if $error == "ERR_EMAIL_EMPTY">
+    [t]Please enter an e-mail[/t]
+<elseif $error == "ERR_EMAIL_INVALID">
+    [t]Invalid e-mail[/t]
+<elseif $error == "ERR_PASSWORDS_DONT_MATCH">
+    [t]Passwords don't match[/t]
+<elseif $error == "ERR_OLD_PASSWORD_DOES_NOT_MATCH">
+    [t]The old password doesn't match the current password[/t]
+<elseif $error == "ERR_PASSWORDS_WEAK">
+    [t]Your password is too weak. It should contain letters and numbers and have at least one lower and one upper case character[/t]
+<else>
+    {$error}
+</if>
+</div>
+</if>
+<div class="buttonContainer">
+<input type="submit" name="bApplSubmit" value="[tb]Submit[/tb]" class="button">
+</div>
+<input type="hidden" name="command" value="logindatasubmit">
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

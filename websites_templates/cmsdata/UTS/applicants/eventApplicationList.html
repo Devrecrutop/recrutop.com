@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplListOuter">
+<!-- /UTS/applicants/eventApplicationList.html -->
+<h1 class="title aplTitle aplListTitle">[t]Event application list[/t]</h1>
+{$menu}
+<div class="text aplText aplListText">[t]Here you can find a list of events you applied for.[/t]</div>
+<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+<tr>
+<td class="aplTblHeader aplTblHeaderDate">[t]Description[/t]</th>
+<td class="aplTblHeader aplTblHeaderJob">[t]Date, time[/t]</th>
+{if $show_items.display_status}
+<td class="aplTblHeader aplTblHeaderLocation">[t]Status[/t]</th>
+{/if}
+{if $show_items.display_location}
+<td class="aplTblHeader aplTblHeaderLocation">[t]Location[/t]</th>
+{/if}
+</tr>
+<foreach from=$applist item=app>
+<if !$app._invisible>
+<tr>
+<td class="aplListDateTime">{$app.Title}</td>
+<td class="aplListLink">{$app.P_EntryDate}</td>
+{if $show_items.display_status}
+<td class="aplListLocation">{$app.Confirmed}</td>
+{/if}
+{if $show_items.display_location}
+<td class="aplListLocation">{$app.Location}</td>
+{/if}
+</tr>
+</if>
+<foreachelse>
+<tr>
+<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="3">[t]There are no events you applied for...[/t]</td>
+</tr>
+</foreach>
+</table>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

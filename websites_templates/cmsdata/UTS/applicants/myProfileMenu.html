@@ -1,0 +1,131 @@
+<div class="menuContainer aplMc myProfileMenu">
+<!-- /UTS/applicants/myProfileMenu.html. -->
+<!-- <div class="menuLink aplMlink MenuLinkFirstChild aplMlinkFc"><a href="{$handler}/command/myprofile">[t]Home[/t]</a></div> -->
+<div class="menuLink aplMlink MenuLinkFirstChild aplMlinkFc"><a href="{$indexPhpRoot}page/applicants/bb/1/command/myprofile">[t]Home[/t]</a></div>
+
+<if $useocd>
+<if !$remove_myprofile_link>
+<div class="menuLink aplMlink aplMCProfile"><a href="{$indexPhpRoot}page/ocdapp/bb/1/command/profile">[t]Main profile[/t]</a></div>
+<else>
+<div class="menuLink aplMlink aplMCLoginData"><a href="{$indexPhpRoot}page/ocdapp/bb/1/command/logindata/redirectback/1">[t]Login data[/t]</a></div>
+</if>
+
+<else>
+<div class="menuLink aplMlink aplMCLoginData"><a href="{$indexPhpRoot}page/applicants/command/mylogindata/bb/1">[t]Login data[/t]</a></div>
+</if>
+
+{* BKo: dossier has to be placed between CV and Social networks question set pages, splitting foreach into two *}
+<foreach from=$pages item=pagetitle key=pageno>
+<if ($pageno <= 3)>
+<div class="menuLink aplMlink aplMCEditPrfl{$pageno|escape}"><a href="{$indexPhpRoot}page/applicants/command/myprofilechange/bb/1/pageno/{$pageno}">{$pagetitle|escape}</a></div>
+</if>
+</foreach>
+<if $assetsForDossierEnabled>
+<div class="menuLink aplMlink aplMCDossier"><a href="{$indexPhpRoot}page/applicants/command/dossier/command_dossier/list">[t]Dossier[/t]</a></div>
+</if>
+<foreach from=$pages item=pagetitle key=pageno>
+<if (!($pageno <= 3))>
+<div class="menuLink aplMlink aplMCEditPrfl{$pageno|escape}"><a href="{$indexPhpRoot}page/applicants/command/myprofilechange/pageno/{$pageno}">{$pagetitle|escape}</a></div>
+</if>
+</foreach>
+
+
+<if $availabilityEnabled>
+<div class="menuLink aplMlink aplMCAvail"><a href="{$indexPhpRoot}page/applicants/command/myavailability">[t]Availability[/t]</a></div>
+</if>
+<if $mfSettings.mfs>
+<div class="menuLink aplMlink aplMCAgenda"><a href="/index.php/bb/1/page/CandidatesAgenda" title="[th]Match'n'fetch[/th]">[t]M&F[/t]</a></div>
+</if>
+<if $videoboardEnabled>
+<div class="menuLink aplMlink aplMCVideo"><a href="{$indexPhpRoot}page/applicants/command/myvideoboard">[t]Videoboard[/t]</a></div>
+</if>
+<if $agentsEnabled>
+    {if $foAconomyEnabled}
+    {* <div class="menuLink aplMlink aplMCAgents"><a href="/index.php/page/advsearchvacs/bb/1/command/sqlist" title="[th]Job search agents[/th]">[t]Agents[/t]</a></div> *}
+    {else}
+    <div class="menuLink aplMlink aplMCAgents"><a href="/index.php/page/agents/command/myprofile/WUpage/3/bb/1" title="[th]Job search agents[/th]">[t]Agents[/t]</a></div>
+    {/if}
+</if>
+<if $applicationsEnabled>
+<div class="menuLink aplMlink aplMCApplic"><a href="{$indexPhpRoot}page/applicants/command/myapplications">[t]Applications[/t]</a></div>
+</if>
+<if $useocd && $foAconomyEnabled>
+<div class="menuLink aplMlink aplMCStored"><a rel="external" href="{$indexPhpRoot}page/advsearchvacs/bb/1/command/sqlist">[t]Stored queries[/t]</a></div>
+</if>
+<if $subscriptions>
+<div class="menuLink aplMlink aplMCSubcr"><a href="{$indexPhpRoot}page/applicants/command/mysubscriptions">[t]Subscriptions[/t]</a></div>
+</if>
+<if $newEventsEnrollEnabled>
+<div class="menuLink aplMlink aplMCEvents"><a href="/index.php/page/eventsapplicants/command/myevents/bb/1">[t]Events[/t]</a></div>
+</if>
+<if $timeSheetsEnabled>
+<div class="menuLink aplMlink aplMCTimeSh"><a href="/index.php/page/timesheet/command/startup/bb/1">[t]Timesheet[/t]</a></div>
+</if>
+<if $planningEnabled && [uts:show_schedule]>
+<div class="menuLink aplMlink aplMCAgenda"><a href="/index.php/page/candidateschedule/command/startup/bb/1">[t]Schedule[/t]</a></div>
+</if>
+<if $sourcelab_module>
+<div class="menuLink aplMlink aplMCSlPic"><a href="/index.php/page/sourcelab/command/candidate_picture/bb/1">[t]Group picture[/t]</a></div>
+<div class="menuLink aplMlink aplMCSlPic"><a href="/index.php/page/sourcelab/command/test_panel/bb/1">[t]Test Panel[/t]</a></div>
+</if>
+<if $web_shop_my_products>
+<div class="menuLink aplMlink aplMCProd"><a href="/index.php/page/webshop/bb/1/command/myProducts">[t]My products[/t]</a></div>
+</if>
+<if !$isCandidate>
+<!-- <div class="menuLink aplMlink aplMCNewCand"><a href="{$handler}/command/createcandidate">[t]Create a candidate for this user[/t]</a></div>-->
+</if>
+<if $saveNetworkPages>
+<div class="menuLink aplSnp savedNetworkPages"><a href="/index.php/page/savednetworkpages/command/list/bb/1">[t]Saved network pages[/t]</a></div>
+</if>
+<if $fo_referral_system>
+<div class="menuLink aplSnp supplyJob"><a href="/index.php/page/applicantsjobsupply/command/start/bb/1">[t]Supply job[/t]</a></div>
+<div class="menuLink aplSnp referCandidate"><a href="/index.php/page/applicantsreferapplicants/command/start/bb/1">[t]Refer a candidate[/t]</a></div>
+<div class="menuLink aplSnp referBalance"><a href="/index.php/page/portal_referral/command/balance/bb/1">[t]Referral balance[/t]</a></div>
+<div class="menuLink aplSnp cashInCredits"><a href="/index.php/page/portal_referral/command/cash_in_credits/bb/1">[t]Cash in credits[/t]</a></div>
+<div class="menuLink aplSnp ranking"><a href="/index.php/page/portal_referral/command/ranking/bb/1">[t]Ranking[/t]</a></div>
+</if>
+
+
+<if $candidate_visibility_fo>
+<div class="menuLink aplMlink aplMCApplic"><a href="{$indexPhpRoot}page/applicants/command/hideforemployer">[t]Hide for employer[/t]</a></div>
+</if>
+
+{if $candidatePermissions.cand_search}
+<div class="menuLink aplSnp"><a href="/index.php/page/advsearchcvs/bb/1/command/start">[t]Candidate search[/t]</a></div>
+{/if}
+
+{if $candidatePermissions.newnerds}
+<div class="menuLink aplSnp"><a href="/index.php/page/newnerds/bb/1/command/request">[t]Online assessment[/t]</a> {* to be implemented *}</div>
+{/if}
+
+{if $candidatePermissions.online_cv}
+<div class="menuLink aplSnp"><u>[t]Online CV check[/t]</u> {* to be implemented *}</div>
+{/if}
+
+{if $enable_buckaroo_payment}
+<div class="menuLink aplSnp"><a href="/index.php/page/buckaroo/bb/1/command/payment_settings_setup">[t]Make a payment[/t]</a></div>
+{/if}
+
+
+{if $useRecommendations}
+<div class="menuLink aplMlink aplMCRecomm"><a href="/index.php/page/recommendations/command/genericEntityRecommendations/subcommand/start/bb/1">[t]Recommendations[/t]</a></div>
+{/if}
+
+{if $lineman_timeslots_and_invites || $bo_timeslots}
+<div class="menuLink aplMlink aplMCTimeSc"><a href="/index.php/page/lm_timeslots/command/candidateAppointments/bb/1">[t]Appointments[/t]</a></div>
+{/if}
+
+
+{if $foHolidayOverviewEnabled}
+<div class="menuLink aplMlink aplMCHolid"><a href="/index.php/page/holiday_overview/command/detail/bb/1">[t]Holiday overview[/t]</a></div>
+{/if}
+
+{if $cand_portal_enable_wall}
+<div class="menuLink aplMlink aplMCWall"><a href="{$indexPhpRoot}page/applicants/command/vacancyWall">[t]Wall[/t]</a></div>
+{/if}
+
+<div class="menuLink aplMlink MenuLinkLastChild aplMlinkLc"><a href="{$indexPhpRoot}page/applicants/command/logout/bb/1">[t]Logout[/t]</a></div>
+<div class="cleaner menuLinkCleaner aplLinkCleaner"></div>
+</div>
+[Profile_completeness]
+<div class="cleaner"></div>

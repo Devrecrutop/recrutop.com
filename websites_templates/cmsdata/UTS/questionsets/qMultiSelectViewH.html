@@ -1,0 +1,20 @@
+<!--multiselect view H-->
+<div class="formInput aplMSelInput">
+<label for="{$elementIdPrefix}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+<if $qd.explanation>
+<div class="explain small aplMSelExplain explain_{$elementName}">
+    {$qd.explanation|escape}
+</div>
+</if>
+<select name="{$elementName}[]" id="{$elementIdPrefix}" onChange="qsLimitMultiSelect('{$elementIdPrefix}', '{$maxValues}');" multiple="multiple">
+<foreach from=$options item=opt>
+<option value="{$opt.value}" {if $opt.selected}selected{/if}>{$opt.text|escape}</option>
+</foreach>
+</select>
+</div>
+
+<if $currentErrorMessage>
+<div class="error aplMSelError error_{$elementName}">
+    {$currentErrorMessage}    
+</div>
+</if>

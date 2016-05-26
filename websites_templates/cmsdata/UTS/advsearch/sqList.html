@@ -1,0 +1,235 @@
+<!--uts:begin inner-->
+<style type="text/css">
+{literal}
+tr.sqlTblRowHovered {background-color:#e0e0e0;}
+{/literal}
+</style>
+
+<script type="text/javascript">
+var vHandler='{$handler|escape:"javascript"}';
+//{literal}
+// jquery ready function
+$(document).ready(function() {
+    /*$('tr.sqTblRow').hover(
+      function () {
+        $(this).addClass('sqlTblRowHovered');
+      }, 
+      function () {
+        $(this).removeClass('sqlTblRowHovered');
+      }
+    );*/
+    
+    /*$('tr.sqTblRow').click(
+        function () {
+            //alert('nameLink'+$(this).attr('id').substr(4));
+            $('#nameLink'+$(this).attr('id').substr(4)).trigger('click');
+        }
+    );*/
+  
+});
+
+function sqSave() {
+    // lets save this for using ajax
+    sqDisableButtons()
+    $('#iCommand').val('ajaxsavesqdetail');
+    $.post(vHandler, $('#fsq').serialize(),
+        function(data){
+            //alert('ajax callback');
+            if (data.status=='ERROR') {
+                sqEnableButtons();
+                if (data.errorDescription=='ERR_INVALID_EMAIL') {
+                    alert('[th]Please specify a valid e-mail address.[/th]');
+                } else if (data.errorDescription=='ERR_INVALID_PHONE') {
+                    alert('[th]Please specify a valid phone number.[/th]');
+                } else {
+                    alert('[th]Error occurred:[/th] '+data.errorDescription);
+                }
+            } else if (data.status=='WARNING') {
+                if (data.errorDescription=='WARN_EMAIL_DEACTIVATED') {
+                    alert('[th]Because you have changed the e-mail address, the stored query has been deactivated for the e-mail channel. A new activation e-mail has been sent to the address you have specified.[/th]');
+                } else if (data.errorDescription=='WARN_SMS_DEACTIVATED') {
+                    var erroralert= "[th]Because you have changed the phone number, the stored query has been deactivated for the SMS channel. A new activation SMS has been sent to the phone number you have specified.[/th]";
+                    alert(erroralert);
+                } else {
+                    alert('[th]Warning:[/th] '+data.errorDescription);
+                }
+                // reload whole page
+                window.location.reload();
+            } else {
+                // reload whole page
+                window.location.reload();
+            }
+        }, "json"
+    );
+}
+
+function sqDelete() {
+    // lets save this for using ajax
+    if (!confirm('[th]Are you sure to delete this stored query?[/th]')) return;
+    sqDisableButtons()
+    $('#iCommand').val('ajaxdeletesq');
+    $.post(vHandler, $('#fsq').serialize(),
+        function(data){
+            //alert('ajax callback');
+            if (data.status=='ERROR') {
+                sqEnableButtons();
+                alert('[th]Error occurred:[/th] '+data.errorDescription);
+            } else {
+                // reload whole page
+                window.location.reload();
+            }
+        }, "json"
+    );
+}
+
+function sqUse(uid) {
+    sqDisableButtons();
+    window.location=vHandler+'/command/usesq/uid/'+uid;
+    
+}
+
+function sqRSS() {
+    // lets request a RSS feed using AJAX
+    sqDisableButtons()
+    $('#iCommand').val('ajaxsq2rss');
+    $.post(vHandler, $('#fsq').serialize(),
+        function(data){
+            //alert('ajax callback');
+            if (data.status=='ERROR') {
+                sqEnableButtons();
+                alert('[th]Error occurred:[/th] '+data.errorDescription);
+            } else {
+                sqEnableButtons();
+                //alert(data.data);
+                window.open(data.data);
+            }
+        }, "json"
+    );
+}
+
+function sqDisableButtons() {
+    $('input:button:enabled').addClass('_disabled');
+    $('input._disabled').attr('disabled', true);
+}
+
+function sqEnableButtons() {
+    $('input._disabled').attr('disabled', false);
+    $('input._disabled').removeClass('_disabled');
+}
+//{/literal}
+</script>
+
+<script type="text/javascript" src="[website]/_javascript_global/jquery.fancybox.js"></script>
+	<script type="text/javascript">
+	//{literal}
+	// define ready function
+	
+	// fancybox, used for send results by email for instance
+	$(document).ready(function() {
+		$("a[rel=fancyBox]").fancybox({
+			fitToView: false,
+			type: 'ajax'
+		});
+		$("head").append("<link rel='stylesheet' href='[website]/_css_global/fancybox/jquery.fancybox.css' type='text/css'>");
+	});
+	//{/literal}
+	</script>	
+
+
+<div class="outer aplOuter aplProfOuter">
+ <!-- /UTS/advsearch/sqList.html -->
+<h1 class="title aplTitle aplProfTitle">[t]My stored queries[/t]{if $asrClass == "vacancyAdvancedSearchRequest"} [t]jobs[/t]{elseif $asrClass == "candidateAdvancedSearchRequest"} [t]CVs[/t]{/if}</h1>
+{$menu}
+<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+	<thead>
+		<tr>
+			<th class="aplTblHeader aplTblHeaderDate">[t]Name[/t]</th>
+			<th class="aplTblHeader aplTblHeaderDate">[t]Created[/t]</th>
+			<th class="aplTblHeader aplTblHeaderDate">[t]Period[/t]</th>
+			<th class="aplTblHeader aplTblHeaderDate">[t]Activated (e-mail)[/t]</th>
+	<!-- SMS not ready yet - 20130221 -->
+	<!--         {if $isSMSEnabled}
+			<th class="aplTblHeader aplTblHeaderDate sqActSMS">[t]Activated (SMS)[/t]</th>
+			{/if} -->
+			<th class="aplTblHeader aplTblHeaderDate sqOutChan">[t]Output channels[/t]</th>
+		</tr>
+	</thead>
+	<tbody>
+		<foreach from=$sqlist item=sq>
+		<tr class="{cycle values='aplListItemOdd,aplListItemEven'} {if $smarty.foreach.aplList.last}aplListItemLast{else}{/if} sqTblRow" id="sqtr{$sq.id}">
+			<td><a rel="fancyBox" href="{$handler}/command/sqtipdetail/id/{$sq.id}/" id="nameLink{$sq.id}">{$sq.name|escape}</a></td>
+			<td>{$sq._fmt_created|escape}</td>
+			<td>
+				{if $sq.period == "daily"}[t]daily[/t]
+				{elseif $sq.period == "weekly"}[t]weekly[/t]
+				{elseif $sq.period == "monthly"}[t]monthly[/t]
+				{/if}
+			</td>
+			<td><input type="checkbox" name="active[{$sq.id}]" {if $sq.active}checked{/if} disabled></td>
+	<!-- SMS not ready yet - 20130221 -->
+	<!--         {if $isSMSEnabled}
+			<td class="sqActSMS"><input type="checkbox" name="active_sms[{$sq.id}]" {if $sq.active_sms}checked{/if} disabled></td>
+			{/if} -->
+			<td>
+				{if $sq.out_email}<img src="/_images_global/email.gif" alt="[th]e-mail[/th]">{/if}
+	<!-- SMS not ready yet - 20130221 -->
+	<!--             {if $sq.out_sms}<img src="/_images_global/sms.png" alt="[th]SMS[/th]">{/if} -->
+				&nbsp;
+			</td>
+		</tr>
+		<foreachelse>
+		<tr>
+			<td class="aplNoItems" colspan="6">[t]No items can be displayed[/t]</td>
+		</tr>
+		</foreach>
+	</tbody>
+</table>
+
+{if $asrClass == "vacancyAdvancedSearchRequest"}
+	<div class="buttonContainer">
+		<a class="button" href="{$websiteurl}/index.php/page/advsearchvacs/command/showagentform" rel="fancyBox" style="display:inline-block;">[t]Create job agent[/t]</a>
+	</div>
+
+
+	{if $jsa_semantic_enable}
+		<div class="jsaSemantic">
+			<h1 class="title aplTitle aplProfTitle">[t]Semantical search agent[/t]</h1>
+
+			<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+				{if $semanticSearch}
+					<tr class="sqTblRow">                    
+						<td>[t]Period[/t]</td>
+						<td>{$semanticSearch.period}</td>
+					</tr>
+					<tr class="sqTblRow">
+						<td>[t]Min. score[/t]</td>
+						<td>{$semanticSearch.min_score}%</td>
+					</tr>
+					<tr class="sqTblRow">
+						<td>[t]Max. vacancies[/t]</td>
+						<td>{$semanticSearch.max_vacancies}</td>
+					</tr>
+					<tr class="sqTblRow">
+						<td>[t]Channels[/t]</td>
+						<td>
+						{if $semanticSearch.output_email}[t]email[/t] ({$semanticSearch.email_address}){/if}
+						<br>{if $semanticSearch.output_wall}[t]wall[/t]{/if}
+						</td>
+					</tr>
+				{else}
+					<tr class="{cycle values='aplListItemOdd,aplListItemEven'} {if $smarty.foreach.aplList.last}aplListItemLast{else}{/if} sqTblRow" id="sqtr{$sq.id}">
+						<td>[t]No semantic search agent set up.[/t]</td>
+					</tr>
+				{/if}
+			</table>
+
+			<div class="buttonContainer">
+				<a class="button" href="{$websiteurl}/index.php/page/advsearchvacs/command/showsemanticagentform" rel="fancyBox" style="display:inline-block;">[t]Change semantical search agent[/t]</a>
+			</div>
+		</div>
+	{/if}
+
+{/if}
+
+</div>
+<!--uts:end inner-->    

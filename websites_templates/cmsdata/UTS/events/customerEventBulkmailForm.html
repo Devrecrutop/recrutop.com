@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/customerEventBulkmailForm.html -->
+
+<script type="text/javascript">
+
+var evid = '{$evid}';
+{literal}
+<!--
+
+function goBack()
+{	
+	document.forms.bulkamilform.action = '/index.php/page/foevents/command/eventapplicants/evid/'+evid+'/bb/1';
+	document.forms.bulkamilform.submit();
+}
+
+function checkForm()
+{	
+	if(document.forms.bulkamilform.emailsubject.value == '')
+	{
+		alert('[th]Fill in e-mail subject[/th]');
+		document.forms.bulkamilform.emailsubject.focus();
+		return false;
+	}
+	
+	if(document.forms.bulkamilform.emailtext.value == '')
+	{
+		alert('[th]Fill in e-mail text[/th]');
+		document.forms.bulkamilform.emailtext.focus();
+		return false;
+	}	
+	
+	return true;
+}
+  
+//-->
+
+{/literal}
+</script>
+
+
+<form action="/index.php/page/foevents/command/bulkmailsend/bb/1/" method="post" name="bulkamilform" onSubmit="return(checkForm());">
+<input type="hidden" name="evid" value="{$evid}">
+<input type="hidden" name="cid" value="{$cid}">
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="bulkamilForm">
+<tr>
+	<td>[t]Subject[/t]</td>
+  <td><input type="text" name="emailsubject"></td>
+</tr>
+<tr>
+	<td>[t]Text[/t]</td>
+  <td><textarea name="emailtext" rows="3" ></textarea></td>
+</tr>
+
+<!--uts:begin button send-->
+<tr> 
+<td class="formTblButtonCell" colspan="2"> <input type="submit" name="send" value="[tb]Send[/tb]" class="button"> <input type="button" name="send" value="[tb]Back[/tb]" class="button" onClick="goBack();"> </td>
+</tr>
+<!--uts:end button send-->
+</table>
+
+</form>
+
+<!--uts:end inner-->
+</body>
+</html>

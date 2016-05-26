@@ -1,0 +1,39 @@
+{* this template is used for displaying form for email reminder on mobile website *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer actouter candAdvDetailOuter">
+<!-- /UTS/applicants/candidateApplicationReminderPageOnApply.html -->
+<!-- Template Webdevelopment validated 10-2013 -->
+	<h1 class="title">[t]Please do not apply via mobile website[/t]</h1>
+	<div class="intro">[t]Please provide us with you email address so we can send you an email with the details of the job and a link to apply with your cv document.[/t]</div>
+
+	<form name="reminderform" action="{$handler}" method="post">
+		<input type="hidden" name="vid" value="{$vacid}">
+		<input type="hidden" name="command" value="sendmobilereminder">
+		<input type="hidden" name="origin" value="{$origin|escape}">
+      {if $mobilereminderinvalidmail == 1}
+	<div class="error">
+		[t]Invalid email![/t]    
+	</div>
+  {/if}
+  
+		<div class="formInput">
+		    <label>[t]Your email:[/t]</label>
+		    <input name="myEmail" type="text" size="40">
+		    <div class="cleaner"></div>
+		</div>
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[tb]Send reminder[/tb]">
+		</div>
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

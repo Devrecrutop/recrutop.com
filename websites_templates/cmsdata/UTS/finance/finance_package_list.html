@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+
+</head>
+<body>
+<!--uts:begin inner-->
+<!--system part-->
+
+<script type="text/javascript">
+// {literal}
+
+// {/literal}
+</script>
+
+<style type="text/css" media="screen">
+{literal}
+.creditItem{width:150px;float:left;}
+.creditItemVal{width:60px;float:left;text-align:right;}
+.creditLineSeparate{border-bottom:1px solid gray;}
+
+.creditItemAlignRight{ text-align:right;}
+.creditItemAlignLeft{ text-align:left;}
+{/literal}
+</style>
+
+<!--display part-->
+<div class="outer custOuter custFinOuter custFinPackOuter">
+<!-- UTS/finance/finance_package_list.html -->
+	<h1 class="title">[t]Choose your package[/t]</h1>
+
+	<!--START_CAT_TBL-->
+	{$CustomersMenu}
+	<!--END_CAT_TBL-->
+		
+	<h2 class="subHeader">[t]Details[/t]</h2>
+    <div class="text">[t]Welcome to choose your package.[/t]</div>
+
+
+    {* JOBANGELS CREDIT SYSTEM *}
+    {if $credit_system eq 'jobangels'}
+
+    	<div class="itemContainer custIc custFinIc custFinPackHeader">
+    		<div class="itemWord creditItem creditProduct"><strong>[t]Product[/t]</strong></div>
+    		<div class="itemWord creditItem creditViews"><strong>[t]Views[/t]</strong></div>
+    		<div class="itemWord creditItem creditDate"><strong>[t]Date limit[/t]</strong></div>
+    		<div class="itemWord creditItem creditCosts"><strong>[t]Costs[/t]</strong></div>
+    		<div class="itemWord creditItem creditsNbsp">&nbsp;</div>
+    	<div class="cleaner custCleaner custFinCleaner"></div>
+    	</div>    
+    	{foreach from=$packages item=r}
+    	<div class="itemContainer custIc custFinIc custFinPackIc">
+    		<div class="itemWord creditItem creditDataProduct">{$r.product_name}</div>
+    		<div class="itemWord creditItem creditDataNumb">{if $r.cv_number_type eq 'limited'}{$r.cv_number} [t]Views[/t]{else}[t]Unlimited[/t]{/if}</div>
+    		<div class="itemWord creditItem creditDataDuration">{if $r.use_duration_limit eq '1'}{$r.duration}
+             
+                {if $r.duration_unit eq 'day'}[t]Day(s)[/t]{/if}
+                {if $r.duration_unit eq 'week'}[t]Week(s)[/t]{/if}
+                {if $r.duration_unit eq 'month'}[t]Month(s)[/t]{/if}
+                {if $r.duration_unit eq 'year'}[t]Year(s)[/t]{/if}
+                {else}
+                &nbsp;
+                {/if}
+            </div>
+    		<div class="itemWord creditItem creditDataCost">{$r.currency_data.symbol} {$r.cost}</div>
+    		<div class="itemWord creditItem creditOrderButton">
+    			<input type="button" value="[t]Order[/t]" onClick="location='/index.php/page/finance/bb/1/command/buy_package/packageid/{$r.id}'" class="button custButton custFinOrderButton">
+    		</div>
+    	<div class="cleaner custCleaner custFinCleaner"></div>
+            <div class="custFinPackageDescription">{$r.package_description}</div>
+    	</div>
+    	{/foreach}    
+    {/if}
+    
+    
+    {* FO CREDIT SYSTEM *}        	
+    {if $credit_system eq 'fo_credits'}
+
+    	<div class="itemContainer custIc custFinIc custFinPackHeader">
+    		<div class="itemWord creditItem creditPackage"><strong>[t]Package[/t]</strong></div>
+    		<div class="itemWord creditItem creditCredits"><strong>[t]Credits[/t]</strong></div>
+    		<div class="itemWord creditItem creditCosts"><strong>[t]Costs[/t]</strong></div>
+    		<div class="itemWord creditItem creditsNbsp">&nbsp;</div>
+            <div class="cleaner custCleaner custFinCleaner"></div>
+    	</div>
+
+
+    	{foreach from=$packages item=r}
+            <div class="itemContainer custIc custFinIc custFinPackIc">
+                    <div class="itemWord creditItem creditPackage">{$r.package_name}</div>
+                    <div class="itemWord creditItem creditDataCredits">{$r.credits}</div>
+                    <div class="itemWord creditItem creditDataCosts">{$r.currency_data.symbol} {$r.cost}</div>
+                    <div class="itemWord creditItem creditOrderButton">
+                    {if $enable_payment_and_invoice}
+                    <input type="button" value="[t]Order[/t]" onClick="location='/index.php/page/finance/bb/1/command/select_payment/packageid/{$r.id}'" class="button custButton custFinOrderButton">
+                    {else}
+                    <input type="button" value="[t]Order[/t]" onClick="location='/index.php/page/finance/bb/1/command/buy_package/packageid/{$r.id}'" class="button custButton custFinOrderButton">
+                    {/if}
+                    </div>
+            <div class="cleaner custCleaner custFinCleaner"></div>
+                <div class="custFinPackageDescription">{$r.package_description}</div>
+            </div>
+    	{/foreach}
+    <div class="text">[t]Outro text.[/t]</div>
+
+        {if $unlimited_packages}
+            <br>
+            <h2 class="subHeader">[t]Unlimited packages[/t]</h2>
+            <div class="text">[t]Choose an unlimited package[/t]</div>
+
+            <div class="itemContainer custIc custFinIc custFinPackHeader">
+                <div class="itemWord creditItem creditPackage"><strong>[t]Package[/t]</strong></div>
+                <div class="itemWord creditItem creditCredits"><strong>[t]Number of slots[/t]</strong></div>
+                <div class="itemWord creditItem creditCredits"><strong>[t]Days valid[/t]</strong></div>
+                <div class="itemWord creditItem creditCosts"><strong>[t]Costs[/t]</strong></div>
+                <div class="itemWord creditItem creditsNbsp">&nbsp;</div>
+                <div class="cleaner custCleaner custFinCleaner"></div>
+            </div>
+            {foreach from=$unlimited_packages item=r}
+                <div class="itemContainer custIc custFinIc custFinPackIc">
+                        <div class="itemWord creditItem creditPackage">{$r.package_name}</div>
+                        <div class="itemWord creditItem creditDataCredits">{if $r.number_of_slots}{$r.number_of_slots}{else}[t]Unlimited[/t]{/if}</div>
+                        <div class="itemWord creditItem creditDataCredits">{if $r.days_valid}{$r.days_valid}{else}[t]Unlimited[/t]{/if}</div>
+                        <div class="itemWord creditItem creditDataCosts">{$r.currency_data.symbol} {$r.cost}</div>
+                        <div class="itemWord creditItem creditOrderButton">
+                        {if $enable_payment_and_invoice}
+                        <input type="button" value="[t]Order[/t]" onClick="location='/index.php/page/finance/bb/1/command/select_payment/unlimitedpackageid/{$r.id}'" class="button custButton custFinOrderButton">
+                        {else}
+                        <input type="button" value="[t]Order[/t]" onClick="location='/index.php/page/finance/bb/1/command/buy_package/unlimitedpackageid/{$r.id}'" class="button custButton custFinOrderButton">
+                        {/if}
+                        </div>
+                <div class="cleaner custCleaner custFinCleaner"></div>
+                    <div class="custFinPackageDescription">{$r.package_description}</div>
+                </div>
+            {/foreach}
+        {/if}
+    {/if}
+
+    <div class="text">[t]Outro text.[/t]</div>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!-- UTS/network/viewPcpHook.html -->
+
+<!--BEGIN viewPcpHook-->
+<div class="hookOuter wSpHouter wSpOVHouter">
+	<div class="hookHeader wSpHheader wSpOVHheader">[t]Related products[/t]</div>
+	
+  <div class="hookItemWrapper wSpHiwr wSpOVHiwr">
+	{foreach from=$wgProducts item=p}
+      <div class="hookItemContainer wSpHic wSpOVHic">
+			
+        {if [uts:show_img]}
+        <div class="hookItemImage wSpHii wSpOVHimage">
+  			{if $p.thumbnail_filename}
+  				<a href="/index.php/page/webshop/bb/1/command/catalogDetail/productId/{$p.id}"><img src="/_images_upload/{$p.thumbnail_filename}"></a>	
+        {/if}    		
+  			</div>
+  			{/if}
+  			
+  			<div class="hookItemTitle wSpHit wSpOVHit"><a href="/index.php/page/webshop/bb/1/command/catalogDetail/productId/{$p.id}">{$p.product_name|escape}</a></div>
+  			
+  			{if [uts:show_descr]}
+    			{if $p.description}
+    			<div class="hookItemWord wSpHiw wSpOVHiw">{$p.description|escape}</div>
+    			{/if}
+  			{/if}
+  			
+  			<div class="cleaner wSpCleaner wSpOVCleaner"></div>
+  			
+      </div>
+	{/foreach}
+	</div>
+</div>
+<!--END viewPcpHook-->

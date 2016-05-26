@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/blog/reactionEmail.html -->
+<p>
+[t]Hello[/t] {$name},
+</p>
+<p>
+    [t]There is a new reaction on article[/t] &quot;{$a.title|escape}&quot;:
+</p>
+<table>
+    <tr>
+        <td>[t]Subject[/t]:</td>
+        <td>{$rea.subject|escape}</td>
+    </tr>
+    <tr>
+        <td>[t]Date, time[/t]:</td>
+        <td>{$rea.ts_entered|escape}</td>
+    </tr>
+    <tr>
+        <td>[t]Website[/t]:</td>
+        <td><a href="http://{$website}" target="_blank">{$website}</a></td>
+    </tr>
+</table>
+<div>
+{$rea.body}
+</div>
+<p>
+[t]If you don't want to receive further reactions by email, please click on the unsubscribe link[/t]:
+<a href="{$unsublink}">[t]unsubscribe[/t]</a>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>
+

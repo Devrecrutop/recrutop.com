@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/email_templates/fimOnlineJobPresentationDecline.html -->
+
+<p>
+        [t]Dear {$applicant_name|escape},[/t] 
+</p>
+
+<p>
+[t]You have been declined for job {$job_title}. We have declined your application because of the answers given in the form you have filled in. These are the answers you have given:[/t]
+</p>
+
+<p>
+<table class="table" cellpadding="10" cellspacing="0" border="1"> 
+    <thead>
+    <tr>
+        <th style="font-weight:normal">[th]Question[/th]</th>
+        <th style="font-weight:normal">[th]Description[/th]</th>
+		<th style="font-weight:normal">&nbsp;</th>
+        <th style="font-weight:normal">[th]Answer[/th]</th>
+        <th style="font-weight:normal">[th]Highest possible points[/th]</th>
+        <th style="font-weight:normal">[th]Points scored[/th]</th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach from=$fimanswers item=r}
+    <tr>
+
+        <td>
+            {$r.field}
+        </td>
+        <td>
+            {$r.description}
+        </td>
+        
+        {if $r.typeUi == 'Select' || $r.typeUi == 'Multiselect' || $r.typeUi == 'Radio' || $r.typeUi == 'Checkbox'}
+        <td>
+            {foreach from=$r.answer item=ra}
+            <div>
+                {$ra.text}
+            </div>
+            {/foreach}
+
+        </td>
+        {/if}
+        {if $r.typeUi != 'Select' && $r.typeUi != 'Multiselect' && $r.typeUi != 'Radio' && $r.typeUi != 'Checkbox'}
+        <td>
+            {$r.answer}
+        </td>
+        {/if}
+
+        <td>
+            {$r.highestPossiblePoints}
+        </td>
+        <td>
+            {$r.scoredPoints}
+        </td>
+
+
+    </tr>
+    {/foreach}
+    </tbody>
+</table>
+</p>
+
+
+
+<p class="utsSignature">
+[t]Regards,[/t]<br>
+{$sender_name}<br>
+{$client}<br>
+{$website}
+</p>
+
+
+
+<!--uts:end inner-->
+</body>
+</html>

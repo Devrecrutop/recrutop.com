@@ -1,0 +1,153 @@
+{* req. ext. javascript: JQueryBase *}
+
+<script type="text/javascript">
+
+//{literal}
+
+  /**
+   * calculate geos salary
+   */     
+  function calcGeosSalary()
+  {   
+    var errCnt = 0;     
+    var userSalary = $('#monthSalary').val();
+    var userTariff = $('#hrsTariff').val();  
+    
+    $('#geosSalary').val('');
+    $('#errSalary').html('');
+    $('#errTariff').html('');
+    
+    userSalary = parseFloat(userSalary.replace(/\,/g,'.'));
+    userTariff = parseFloat(userTariff.replace(/\,/g,'.'));
+    
+    if(isNaN(userSalary) || (userSalary < 2000 || userSalary > 6000))
+    {
+      $('#errSalary').html('[th]Je salaris ligt buiten de toegestane range (2000-6000).[/th]');
+      errCnt++; 
+    }        
+    
+    if(isNaN(userTariff) || (userTariff < 50 || userTariff > 300))
+    {
+      $('#errTariff').html('Je uurtarief ligt buiten de toegestane range (50-300).');
+      errCnt++;
+    }
+    
+    if(errCnt > 0)
+    {
+      return false;
+    }
+          
+    var geosTariff = 0;
+    var geosSalary = 0;
+    
+    var gt = getGeosTariffs();        
+    for(i=0; i<gt.length; i++)
+    {      
+      //alert(gt[i].gSal + ', '+ gt[i].gTar);
+      geosTariff = gt[i].gTar;              
+  	  if(gt[i].gSal >= userSalary)
+  	  {
+  	     break;
+  	  }            
+    }        
+      
+    geosSalary = parseInt(((userTariff - geosTariff) * 0.7 * 168) + userSalary);
+    
+    //alert('gt: ' + geosTariff + ' | gs: ' + geosSalary);
+    $('#geosSalary').val(geosSalary);           
+  }
+  
+  /**
+   * geos tariffs definition
+   */     
+  function getGeosTariffs()
+  {
+    var gt = [{gSal:2000, gTar:46},
+              {gSal:2100, gTar:47.5},
+              {gSal:2200, gTar:49},
+              {gSal:2300, gTar:50.5},
+              {gSal:2400, gTar:52},
+              {gSal:2500, gTar:53},
+              {gSal:2600, gTar:54.5},
+              {gSal:2700, gTar:56},
+              {gSal:2800, gTar:57.5},
+              {gSal:2900, gTar:59},
+              {gSal:3000, gTar:60},
+              {gSal:3100, gTar:61},
+              {gSal:3200, gTar:62.5},
+              {gSal:3300, gTar:64},
+              {gSal:3400, gTar:65.5},
+              {gSal:3500, gTar:67},
+              {gSal:3600, gTar:68},
+              {gSal:3700, gTar:69.5},
+              {gSal:3800, gTar:71},
+              {gSal:3900, gTar:72.5},
+              {gSal:4000, gTar:74},
+              {gSal:4100, gTar:75},
+              {gSal:4200, gTar:76.5},
+              {gSal:4300, gTar:78},
+              {gSal:4400, gTar:79.5},
+              {gSal:4500, gTar:81},
+              {gSal:4600, gTar:82.5},
+              {gSal:4700, gTar:84},
+              {gSal:4800, gTar:90},
+              {gSal:4900, gTar:91.5},
+              {gSal:5000, gTar:93},
+              {gSal:5100, gTar:94.5},
+              {gSal:5200, gTar:96},
+              {gSal:5300, gTar:97.5},
+              {gSal:5400, gTar:99},
+              {gSal:5500, gTar:100.5},
+              {gSal:5600, gTar:102},
+              {gSal:5700, gTar:103.5},
+              {gSal:5800, gTar:105},
+              {gSal:5900, gTar:106.5},
+              {gSal:6000, gTar:108}];
+              
+    return gt;
+  }  
+  
+//{/literal}
+</script> 
+
+<div class="hookOuter geosCalcOut">
+<!-- /UTS/misc/viewGeosCalculatorHook.html -->
+  <div class="hookHeader geosCalcTHeader">[t]Geos Calculator[/t]</div>
+  <div class="hookText geosCalcText">
+  [t]Bij GEOS heb je een inkomen op basis van een marktconform basissalaris plus 70% over het verschil tussen je interne tarief en het aan de klant gefactureerde (externe) tarief. Bereken je maandsalaris bij GEOS met de onderstaande rekenmodule. Het resultaat is nog exclusief:[/t]
+  </div>
+
+  <div class="hookText geosCalcText">
+  [t]Tip: Kijk ook eens wat je maandsalaris bij GEOS wordt, als je kiest voor een lager basissalaris (in te vullen bij "Huidige maandsalaris"). Men gaat hier uit van een volledig gewerkte maand.[/t]
+  </div>
+
+	<div class="hookWord geosCalcWord">
+    	<label for="hrsTariff">[t]Uurtarief bij klant[/t]:</label>
+  	</div>
+	<div class="hookInput geosCalcInput">
+    	<input type="text" id="hrsTariff" name="hrs_tariff" value="">
+    	<span id="errTariff" style="color: red;"></span>		 					
+	</div>
+
+	<div class="hookWord geosCalcWord">
+    	<label for="monthSalary">[t]Huidige maandsalaris[/t]:</label>
+  	</div>
+	<div class="hookInput geosCalcInput">
+    	<input type="text" id="monthSalary" name="month_salary" value="">		 					
+    	<span id="errSalary" style="color: red;"></span>
+	</div>
+    
+    <div class="hookInput geosCalcInput">
+    	<input type="button" name="bttnGeosCalc" value="[t]Bereken[/t]" onclick="calcGeosSalary()" class="button">    		 					
+	</div>
+
+	<div class="hookWord geosCalcWord">
+    	<label for="geosSalary">[t]Maandsalaris GEOS[/t]:</label>    
+	</div>
+	<div class="hookInput geosCalcInput">
+    	<input type="text" id="geosSalary" name="geos_salary" value="" readonly="readonly">    		 					
+	</div>  
+
+	
+
+</div>

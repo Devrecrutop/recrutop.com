@@ -1,0 +1,34 @@
+<!-- /UTS/events/eventRssDescription.html -->
+
+{$introduction}<br><br>
+
+<a href="{$event_link|escape}">[tg]Read more here...[/tg]</a><br><br>
+
+{if '' != $location}
+<b>[tg]Location[/tg]:</b> {$location|escape}<br>
+{/if}
+{if '' != $start_date}
+<b>[tg]Event start[/tg]:</b> {$start_date|escape}<br>
+{/if}
+{if '' != $end_date}
+<b>[tg]Event end[/tg]:</b> {$end_date|escape}<br>
+{/if}
+{if '' != $expiration_date}
+<b>[tg]Expiration date[/tg]:</b> {$expiration_date|escape}<br>
+{/if}
+{if '' != $event_status}
+<b>[tg]Event status[/tg]:</b> {$event_status|escape}<br>
+{/if}
+{if '' != $publish_status}
+<b>[tg]Publish status[/tg]:</b> {$publish_status|escape}<br>
+{/if}
+<br>
+{if '' != $consultant}
+<b>[tg]Consultant[/tg]:</b> {$consultant|escape}<br>
+{/if}
+{if '' != $customer}
+<b>[tg]Customer[/tg]:</b> {$customer|escape}<br>
+{/if}
+{if '' != $customer_contact}
+<b>[tg]Customer contact[/tg]:</b> {$customer_contact|escape}<br>
+{/if}

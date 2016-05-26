@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Jobs LIST
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="formstyles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <!--uts:begin inner-->
+<!-- /UTS/candidates/candidateMailFriendForm.html -->
+
+<script language="JavaScript" type="text/javascript">
+<!--
+{literal}
+focus();
+function checkForm(theForm)
+{
+blnResult=true;
+//strAlert='De volgende zaken zijn niet correct: \n\n';
+strAlert='[th]De volgende zaken zijn niet correct:[/th] \n\n';
+var objFocus;
+var blnFocusSet=false;
+
+var strFromName=theForm.elements['naam'].value;
+var strFromAddress=theForm.elements['email'].value;
+if(strFromName == '' || strFromAddress == '')
+{
+blnResult=false;
+//strAlert+="U heeft uw eigen naam of emailadres niet ingevuld.\n";
+strAlert+="[th]U heeft uw eigen naam of emailadres niet ingevuld[/th]\n";
+}
+colInputs=theForm.getElementsByTagName("INPUT");
+for(var i=0;i<colInputs.length;i++)
+{
+theInput=colInputs[i];
+if(theInput.className.indexOf("clsEmail") == 0)
+{
+if(theInput.value == '')
+ {
+if(theInput.className.indexOf("clsEmailTo") == 0)
+ {
+if(theInput.className.indexOf("Name") != -1)
+ {
+	//strMissing='naam';
+ strMissing='[th]naam[/th]';
+	}
+	else if(theInput.className.indexOf("Adres") != -1)
+					{
+		//strMissing='emailadres';
+		strMissing='[th]emailadres[/th]';
+					}
+					blnResult=false;
+					if(blnFocusSet == false)
+					{
+						objFocus=theInput;
+					}
+					//strAlert+="Bij de geadresseerde ontbreekt een "+strMissing+".\n";
+					strAlert+="[th]Bij de geadresseerde ontbreekt een[/th] "+strMissing+".\n";
+				}
+			}
+		}
+	}
+	if(blnResult == false)
+	{
+		alert(strAlert);
+		if(blnFocusSet == true)
+		{
+			objFocus.focus();
+		}
+	}
+		return blnResult;
+}
+//-->
+{/literal}
+</script>
+
+<div class="outer jbMafOuter">
+<!--/UTS/candidates/candidateMailFriendForm.html-->
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<h1 class="title jbMafTitle">[t]E-mail a CV[/t]</h1>
+<!--END_PageTitle-->
+
+<!--START_Block1-->
+<!--START_Title1-->
+<h2 class="subHeader jbMafSh">[t]Title1[/t]</h2>
+<!--END_Title1-->
+
+<!--START_Text1-->
+<div class="text jbMafText">[t]In the form below, please enter the name and e-mail address of the person you want to send this CV to. Please also enter your own details, so we can send you confirmation.[/t]</div>
+<!--END_Text1-->
+
+<!--END_Block1-->
+
+<!--START_Block2-->
+<!--START_Title2-->
+<h2 class="subHeader jbMafSh">[t]Sender (your information)[/t]</h2>
+<!--END_Title2-->
+
+<!--START_Text2-->
+<div class="text jbMafText">[t]Text2[/t]</div>
+<!--END_Text2-->
+
+<!--END_Block2-->
+<form onsubmit="return checkForm(this);" action="/index.php/page/candetail/id/{$cid}" method="POST">
+<input type="hidden" name="command" value="mailfriend">
+<input type="hidden" name="send" value="1">
+<input type="hidden" name="code" value="{$code}">
+<input type="hidden" name="cid" value="{$cid}">
+<input type="hidden" name="max_words" value="50">
+
+<div class="formInput jbMafFi">
+<label>[t]Your name[/t]<!--SingleWordLink2--></label>
+<input type="text" name="naam" size=35 value="{$data.naam}">
+</div>
+
+<div class="formInput jbMafFi">
+<label>[t]Your e-mail address[/t]<!--SingleWordLink3--></label>
+<input type="text" name="email" size=35 value="{$data.email}">
+</div>
+
+<!--START_Block3-->
+<!--START_Title3-->
+<h2 class="subHeader jbMafSh">[t]Send to[/t]</h2>
+<!--END_Title3-->
+
+<!--START_Text3-->
+<div class="text jbMafText">[t]Text3[/t]</div>
+<!--END_Text3-->
+
+<!--END_Block3-->
+
+<div class="formInput jbMafFi">
+<label>[t]Name[/t]<!--SingleWordLink5--></label>
+<input type="text" name="to_naam[]" size="35" class="clsEmailToName" value="">
+</div>
+
+<div class="formInput jbMafFi">
+<label>[t]E-mail address[/t]<!--SingleWordLink6--></label>
+<input type="text" name="to_adres[]" size=35 value="">
+</div>
+
+<div class="formInput jbMafFi">
+<label>[t]Subject[/t]<!--SingleWordLink6--></label>
+<input type="text" name="subject" size=35 value="">
+</div>
+
+<!--START_Block4-->
+<!--START_Title4-->
+<h2 class="subHeader jbMafSh">[t]Remarks[/t]</h2>
+<!--END_Title4-->
+<!--START_Text4-->
+<div class="text jbMafText">[t]Text4[/t]</div>
+<!--END_Text4-->
+<!--END_Block4-->
+
+<div class="formInput jbMafFi">
+<textarea rows=5 style="width: 100%;" name="opmerkingen"></textarea>
+</div>
+
+
+{if "[uts:enableCaptcha]"}
+{if $data.error == 'captcha' || $smarty.get.error == 'captcha'}
+<div class="formText" style="color:red">[t]De captcha is incorrect ingevoerd![/t]</div>
+{/if}
+<div class="formInput jbMafFi">
+<img id="captcha" src="/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image" />
+<a href="#" onclick="document.getElementById('captcha').src = '/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[t]Reload captcha[/t]" border="0" /></a><a href="/_javascript_global/securimage/securimage_play.php"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[t]Play captcha[/t]" border="0" /></a>
+</div>
+<div class="formInput jbMafFi">
+<label>[t]Vul de captcha in:[/t]<!--SingleWordLink6--></label>
+<input type="text" name="captcha" size="20">
+</div>
+{/if}
+
+<div class="buttonContainer jbMafBc">
+<input name="Submit" type="Submit" value="[t]Send[/t]" class="button"><!--ButtonLink1-->
+</div>
+
+<!--START_Block5-->
+<!--START_Title5-->
+<h2 class="subHeader jbMafSh">[t]Title5[/t]</h2>
+<!--END_Title5-->
+
+<!--START_Text5-->
+<div class="text jbMafText">[t]Text5[/t]</div>
+<!--END_Text5-->
+
+<!--END_Block5-->
+</form>
+</div>
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+
+
+    <!--uts:end inner-->
+  </body>
+</html>

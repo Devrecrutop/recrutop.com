@@ -1,0 +1,25 @@
+ <!-- START /UTS/candidates/asCandDetailMatchCriteriaHook.html -->
+
+<if $mcTextValues>
+<div class="hookSubHeader mDhSh">[t]Match criteria[/t]</div>
+<foreach from=$mcTextValues key="mcName" item=crit>
+<if !empty($mcDisplayNames[$mcName])>
+<div class="hookItemContainer mDhItC">
+        <div class="hookItemTitle mDhItT">{$mcDisplayNames[$mcName]|escape}</div>
+        <div class="hookItemWord mDhIw">
+                <ul>
+                <foreach from=$crit item=crval>
+                    {if $crval.translated_value}
+                        <li>{$crval.translated_value|escape}</li>
+                    {else}
+                        <li>{$crval.value|escape}</li>
+                    {/if}
+                </foreach>
+                </ul>
+        </div>
+</div>
+</if>
+</foreach>
+</if>
+
+  <!-- END /UTS/candidates/asCandDetailMatchCriteriaHook.html -->

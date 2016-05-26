@@ -1,0 +1,89 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>[t]Mail A Friend[/t]</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- /UTS/network/ntwMailAFriendForm.html -->
+{* req.ext.js: JQueryBase,JQueryUI,JQueryValidate *}
+
+
+{* FOR DEVELOPMENT ONLY BECAUSE THERE IS PROBABLY SOME CACHING *}
+{*<script src="/_javascript_global/jquery.validate.min.js" type="text/javascript"></script>*}
+
+
+{literal}
+<script type="text/javascript">
+<!--
+    
+  $(document).ready(function(){  
+    
+    $('#frmMAF').validate();
+                        
+    //add rule required to fields
+    $('.rqInputMAF').each(function(){      
+      $(this).rules('add', {
+  			 	 required: true,			 
+  			 	 messages: {
+  			     required: '[th]Enter required field.[/th]'			   
+  			 }
+  		});
+    
+    });                        
+                
+    
+  });  
+  
+//-->
+</script>
+{/literal}
+
+
+<div class="outer nwOuter nwMAFOuter">
+
+<h1 class="title nwTitle nwMAFTitle">[t]Mail a Friend[/t]</h1>
+
+<p>[t]Introtext[/t]</p>
+
+<form action="/index.php/page/network/bb/1" method="POST" name="frmMAF" id="frmMAF">
+  <input type="hidden" name="command" value="mafsend">
+  <input type="hidden" name="connectionId" value="{$uid}">
+
+	<div class="formInput nwInputMAF">
+		<label>[t]From Name[/t]:</label>
+		<input type="text" name="from_name" id="from_name" class="rqInputMAF">  
+	</div>
+	
+	<div class="formInput nwInputMAF">
+		<label>[t]From E-mail[/t]:</label>
+		<input type="text" name="from_email" id="from_email" class="rqInputMAF">  
+	</div>
+  
+	<div class="formInput nwInputMAF">
+		<label>[t]To Name[/t]:</label>
+		<input type="text" name="to_name" id="to_name" class="rqInputMAF">  
+	</div>
+	
+	<div class="formInput nwInputMAF">
+		<label>[t]To E-mail[/t]:</label>
+		<input type="text" name="to_email" id="to_email" class="rqInputMAF">  
+	</div>	  	
+  
+	<div class="formInput nwInputMAF">
+		<label>[t]Message[/t]:</label>
+		<textarea name="message" cols="40" rows="4"></textarea>
+	</div>
+  
+  
+	<div class="buttonContainer formButtonContainer">
+		<input class="button" type="submit" value="[tb]Send[/tb]">
+	</div>    
+		
+</form>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

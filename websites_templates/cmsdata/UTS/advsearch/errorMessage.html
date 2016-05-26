@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer actOuter">
+ <!-- /UTS/advsearch/errorMessage.html -->
+<h1 class="title actTitle">[t]Error occurred![/t]</h1>
+<div class="intro actIntro">
+<if $messageId>
+<if $messageId == "ACTONOMY_GENERAL">
+<p>[t]We are sorry, but the matching service is not functional at the moment. Please try again later.[/t]</p>
+<p>[t]Server returned exception:[/t] <strong>{$data.exception|escape}: {$data.excMessage|escape}</strong></p>
+<elseif $messageId == "ACTONOMY_SYNTAX">
+[t]Your query cannot be processed due to syntax errors in the Keywords field.[/t]
+<elseif $messageId == "ACTONOMY_LOCATION">
+[t]Your query cannot be processed because the postal code is not known in actonomy.[/t]
+</if>
+</if>
+<a href="{$handler}/command/editrequest">[t]Return to query editor[/t]</a>
+</div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

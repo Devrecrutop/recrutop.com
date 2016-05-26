@@ -1,0 +1,43 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="PSPad editor, www.pspad.com">
+<title>RSS article
+</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer rssOuter">
+<!-- /UTS/feedreader/article.html -->
+{if $article_not_found}
+	<h1 class="title rssTitle">[t]404: Not Found[/t]</h1>
+	<div class="text rssText">[t]We are sorry, but we didn't find the article you are looking for.[/t]</div>
+{else}
+	<h1 class="title rssTitle">{$article.title}</h1>
+
+	{if $publish_with_detail && $article.content}
+	<div class="intro">{$article.content}</div>
+	
+  {foreach from=$article.mediaLinks item=ml}
+	 <div class="mediaLink"><img src="{$ml}" border="0"></div>
+	{/foreach}	
+	
+	{else}
+	<div class="intro">{$article.summary}</div>
+	{/if}
+
+	<h2 class="subheader rssSubHeader">[t]Source[/t]</h2>
+	<div class="text rssText">
+	<p class="rssTitle">[t]Title[/t]: {$channel.title}</p>
+	<p class="rssLink">[t]Link[/t]: <a href="{$article.link}" target="_blank">{$article.link}</a></p>
+	</div>
+{/if}
+
+
+<p class="rssLink"><a href="javascript:history.go(-1)" class="button">[t]Back[/t]</a></p>
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

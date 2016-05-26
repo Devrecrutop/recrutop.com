@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+var vInterviewEmailSent='{$interviewEmailSent}';
+var vRejectionEmailSent='{$rejectionEmailSent}';
+var vRejectedStatusId = '{$rejectedStatusId}';
+var vInterviewStatusId = '{$interviewStatusId}';
+var vHiredStatusId = '{$hiredStatusId}';
+var vRevokedStatusId = '{$revokedStatusId}';
+var vPendingStatusId = '{$pendingStatusId}';
+var vStoredStatusId = '{$storedStatusId}';
+//{literal}
+$(document).ready(function() {
+	$( "#dialog-form-email" ).dialog({
+		modal: true,
+		autoOpen: false,
+		height: 300,
+		width: 450,
+		resizable: false,
+		buttons: {
+			"[th]Proceed[/th]": function() {
+				
+				//$('#frmEmailRejection').submit();
+				$('#statEmailSubjectOverride').val($('#inEmailSubject').val());
+				$('#statEmailBodyOverride').val($('#taEmailBody').val());
+				$('#fStatusSelect').submit();
+				
+		  
+			},
+			"[th]Cancel[/th]": function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+    
+});
+
+
+
+function sendRejectionEmail() {
+    //code
+	//alert('send rejection');
+	$('#inEmailSubject').val($('#viRejectionSubject').val());
+	$('#taEmailBody').val($('#viRejectionBody').val());
+    $( "#dialog-form-email" ).dialog('open');
+}
+
+function sendInterviewEmail() {
+    //code
+	//alert('send interview');
+	$('#inEmailSubject').val($('#viInterviewSubject').val());
+	$('#taEmailBody').val($('#viInterviewBody').val());
+    $( "#dialog-form-email" ).dialog('open');
+}
+
+function sendHiredEmail() {
+    //code
+	//alert('send hired');
+	$('#inEmailSubject').val($('#viHiredSubject').val());
+	$('#taEmailBody').val($('#viHiredBody').val());
+    $( "#dialog-form-email" ).dialog('open');
+}
+
+function sendRevokedEmail() {
+    //code
+	//alert('send revoked');
+	$('#inEmailSubject').val($('#viRevokedSubject').val());
+	$('#taEmailBody').val($('#viRevokedBody').val());
+    $( "#dialog-form-email" ).dialog('open');
+}
+
+function sendPendingEmail() {
+    //code
+	//alert('send pending');
+	$('#inEmailSubject').val($('#viPendingSubject').val());
+	$('#taEmailBody').val($('#viPendingBody').val());
+    $( "#dialog-form-email" ).dialog('open');
+}
+
+function sendStoredEmail() {
+    //code
+	//alert('send stored');
+	$('#inEmailSubject').val($('#viStoredSubject').val());
+	$('#taEmailBody').val($('#viStoredBody').val());
+    $( "#dialog-form-email" ).dialog('open');
+}
+
+function checkLength( o, n, min ) {
+  if ( o.val().length < min ) {
+    alert("[t]Please fill in the reason[/t]");
+    return false;
+  } else {
+    return true;
+  }
+}
+
+$(function() {
+  var revoked_reason = $( "#revoked_reason" );
+  $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 300,
+      width: 350,
+      modal: true,
+      buttons: {
+        "[th]Save[/th]": function() {
+          var bValid = true;
+          bValid = bValid && checkLength( revoked_reason, "revoked_reason", 3);
+          if ( bValid ) {
+            //save
+            $.post("/index.php/page/recrowd/bb/1/command/joinedCandidates/subcmd/revoked_submit/",
+            {
+              canid: "{/literal}{$canid}{literal}", vacid: "{/literal}{$vacid}{literal}", "revoked_reason": revoked_reason.val()
+            },
+            function(data,status){
+                $( this ).dialog( "close" );
+                redirect_co_candidates_list();
+            });                 
+          }
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      },
+      close: function() {
+      }
+  });
+
+$( "#revoke-candidate" )
+	.button()
+	.click(function() {
+		$( "#dialog-form" ).dialog( "open" );
+	});
+});
+
+function redirect_co_candidates_list(){
+  redurl = "/index.php/page/recrowd_my_candidates/command/listCandidates/bb/1";
+  document.location = redurl;
+}
+
+function doSave() {
+	var cstat = $('#cStatusSelect').val();
+	if (cstat == vRejectedStatusId) {
+		sendRejectionEmail();
+	} else if (cstat == vInterviewStatusId) {
+		sendInterviewEmail();
+	} else if (cstat == vHiredStatusId) {
+		sendHiredEmail();
+	} else if (cstat == vRevokedStatusId) {
+		sendRevokedEmail();
+	} else if (cstat == vPendingStatusId) {
+		sendPendingEmail();
+	} else if (cstat == vStoredStatusId) {
+		sendStoredEmail();
+	} else {
+		$('#statEmailSubjectOverride').val('');
+		$('#statEmailBodyOverride').val('');
+		$('#fStatusSelect').submit();
+	}
+}
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdJndCndDetOuter">
+	<!-- /UTS/customers/recrowd_joined_candidates_detail.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+    <h1 class="title">[t]Candidate Details for[/t] {$cdata.kname|escape}</h1>
+	{$CustomersMenu}
+	{$CustomersSubMenu}
+	
+	<if $vacid>
+	<div class="itemWord recrowdCandidateOrigin"><span>[t]Origin:[/t]</span> {if $cdata.recruiters}[t]Via Recruiter[/t]/ {$cdata.recruiters|escape}{else}[t]Direct[/t]{/if}</div>
+	</if>
+	<div class="itemImage recrowdCandidatePhoto">{if $cdata.foto}<img src="{$handler}/command/joinedCandidates/subcmd/photo/canid/{$cdata.id}" alt="photo">{/if}</div>
+	<div class="text recrowdCandidateDetail">
+	{if $cdata.adres}
+        <div class="itemWord rcwdCndiWAddress">
+			<span>[t]Address:[/t]</span>
+			{$cdata.adres|escape}
+        </div>
+	{/if}
+	{if $cdata.postcode}
+        <div class="itemWord rcwdCndiWPostalcode">
+			<span>[t]Postal code:[/t]</span>
+			{$cdata.postcode|escape}
+        </div>
+	{/if}
+	{if $cdata.woonplaats}
+	    <div class="itemWord rcwdCndiWCity">
+			<span>[t]City:[/t]</span>
+			{$cdata.woonplaats|escape}
+        </div>
+	{/if}
+    <div class="itemWord rcwdCndiWMobile">
+        <span>[t]Phone number:[/t]</span>
+        {$cdata.phone_consultant|escape}
+    </div>
+    <div class="itemWord rcwdCndiWMobile">
+        <span>[t]Mobile phone:[/t]</span>
+        {$cdata.phone_mobile|escape}
+    </div>
+        <div class="itemWord rcwdCndiWEmail">
+            <span>[t]E-mail#:[/t]</span>
+			{$cdata.email|escape}
+        </div>
+        {if $cdata.cv}
+        <div class="itemWord rcwdCndiWCv">
+            <span>[t]CV:[/t]</span>
+            <a href="{$handler}/command/joinedCandidates/subcmd/cv/canid/{$cdata.id}">{$cdata.cv|escape}</a>
+        </div>
+        {/if}
+		{if !empty($cdata.SocialSecurityTaxNumber) }
+        <div class="itemWord rcwdCndiWSofi">
+			<span>[t]SOFI#:[/t]</span>
+			{$cdata.SocialSecurityTaxNumber|escape}
+        </div>
+		{/if}
+		</div>
+	{if !empty($cdata.chapo) }
+    <h2 class="subHeader">[t]Short Description[/t]</h2>
+    <div class="text rcwdCndDescr">{$cdata.chapo}</div>
+	{/if}	
+	{if !empty($cdata.promotekst) }
+    <h2 class="subHeader">[t]Motivation[/t]</h2>
+    <div class="text rcwdCndMotiv">{$cdata.promotekst}</div>
+	{/if}
+	{if !empty($cdata.job_spec_motivation) }
+    <h2 class="subHeader">[t]Job-specific Motivation[/t]</h2>
+    <div class="text rcwdCndMotiv">{$cdata.job_spec_motivation|escape}</div>
+	{/if}
+	
+    <h2 class="subHeader">[t]Matchcriteria[/t]</h2>
+    <div class="text rcwdCndMatchcr">
+	    <ul>
+	        {foreach from=$cdata.matchcriteria item=mc}
+	        {if !empty($mc.values) }
+	        <li class="recrowdMcName">
+	            {$mc.name|escape}
+	            <ul>
+	            {foreach from=$mc.values item=mv}
+	            <li class="recrowdMcValue">{$mv|escape}</li>
+	            {/foreach}
+	            </ul>
+	        </li>
+	        {/if}
+	        {/foreach}
+	    </ul>
+	</div>
+	
+	{*{if ($openfrom eq "mycandidates" && $vacid)}*}
+  {if ($vacid)}
+	    {if ($application_status neq "hired"  && $application_status neq "rejected" && $application_status neq "revoked")}
+		<div class="buttonContainer">
+		    <input class="button" type="button" value="[tb]Revoke[/tb]" id="revoke-candidate">
+		</div>
+	    <input type="hidden" value="{$application_status}">
+	    {/if}
+	{/if}
+
+<if $vacid>
+	<form id="fStatusSelect" action="{$handler}" method="post">
+		<div class="formInput">
+			<label>[t]Status:[/t]</label>
+			<select name="join_status" id="cStatusSelect">
+			    <option value="">---</option>
+			    {html_options options=$joinStatusOptions selected=$currJoinStatus}
+			</select>
+		</div>
+		<div class="buttonContainer">
+		    <input class="button" type="button" value="[tb]Save[/tb]" onclick="doSave()">
+        {*
+		    <input class="button" type="button" value="[tb]Inteview E-mail[/tb]" onclick="sendInterviewEmail()">
+		    <input class="button" type="button" value="[tb]Rejection E-mail[/tb]" onclick="sendRejectionEmail()">
+        *}
+		</div>
+		<input type="hidden" name="command" value="joinedCandidates">
+		<input type="hidden" name="subcmd" value="save">
+		<input type="hidden" name="vacid" value="{$vacid}">
+		<input type="hidden" name="canid" value="{$canid}">
+		<input type="hidden" name="email_subject_override" value="" id="statEmailSubjectOverride">
+		<input type="hidden" name="email_body_override" value="" id="statEmailBodyOverride">
+    <input type="hidden" name="old_join_status" value="{$currJoinStatus}">
+	</form>
+<else>
+	<form id="fCandidateStatusSelect" action="{$handler}" method="post">
+		<div class="formInput">
+			<label>[t]Candidate Status:[/t]</label>
+			<select name="candidate_status">
+			    <option value="">---</option>
+			    <option value="rejected" {if $currCandidateStatus == "rejected"}selected{/if}>[t]Rejected[/t]</option>
+			    <option value="interview" {if $currCandidateStatus == "interview"}selected{/if}>[t]Interview[/t]</option>
+			    <option value="hired" {if $currCandidateStatus == "hired"}selected{/if}>[t]Hired[/t]</option>
+			    <option value="stored" {if $currCandidateStatus == "stored"}selected{/if}>[t]Stored[/t]</option>
+			</select>
+		</div>		    
+		<div class="buttonContainer">
+		    <input class="button" type="submit" value="[tb]Save[/tb]">
+		</div>
+		<input type="hidden" name="command" value="joinedCandidates">
+		<input type="hidden" name="subcmd" value="saveCandidateStatus">
+		<input type="hidden" name="canid" value="{$canid}">
+		<input type="hidden" name="update_candidate_status" value="1">
+	</form>
+</if>
+	
+	{* dialogs *}
+	<div id="dialog-form-email" title="[thn]Edit e-mail before sending[/thn]" style="display:none;">
+	  <form id="frmEmail" action="{$handler}" method="post">
+	  <fieldset style="border: none;">
+		<div class="formInput">
+			<label for="inEmailSubjectRejection">[t]Subject[/t]:</label>
+			<input type="text" name="email_subject" value="" size="30" id="inEmailSubject"><br>
+		</div>
+		<div class="formInput">
+			<label for="taEmailBodyRejection">[t]Message[/t]:</label>
+			<textarea rows="8" cols="50" id="taEmailBody" name="email_body"></textarea>
+		</div>
+	  </fieldset>
+	  {* <div class="error">[t]You have already sent this email at: [/t] {$rejectionEmailSent}</div> *}
+	  </form>
+	</div>
+
+	<div id="dialog-form" title="[t]Revoke[/t]">
+		<form>
+			<div class="formInput">
+				<label for="revoked_reason">[t]Reason[/t]</label>
+				<textarea  name="revoked_reason" id="revoked_reason"></textarea>
+			</div>
+		</form>
+	</div>
+	<form name="virtual" method="post" action="" style="display: none;">
+		<input type="hidden" id="viRejectionSubject" value="{$rejectionSubject|escape}">
+		<input type="hidden" id="viRejectionBody" value="{$rejectionBody|escape}">
+		<input type="hidden" id="viInterviewSubject" value="{$interviewSubject|escape}">
+		<input type="hidden" id="viInterviewBody" value="{$interviewBody|escape}">
+		<input type="hidden" id="viHiredSubject" value="{$hiredSubject|escape}">
+		<input type="hidden" id="viHiredBody" value="{$hiredBody|escape}">
+		<input type="hidden" id="viRevokedSubject" value="{$revokedSubject|escape}">
+		<input type="hidden" id="viRevokedBody" value="{$revokedBody|escape}">
+		<input type="hidden" id="viPendingSubject" value="{$pendingSubject|escape}">
+		<input type="hidden" id="viPendingBody" value="{$pendingBody|escape}">
+		<input type="hidden" id="viStoredSubject" value="{$storedSubject|escape}">
+		<input type="hidden" id="viStoredBody" value="{$storedBody|escape}">
+	</form>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

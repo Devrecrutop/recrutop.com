@@ -1,0 +1,38 @@
+{* use %s in subject to insert vacancy title *}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<p>
+[t]Dear[/t] {$recipientName|escape}[t],[/t]
+</p>
+
+<p>
+[t]We have found suitable candidates for the open position[/t] {$vacancyTitle}:
+</p>
+
+<p>
+[t]Click on the link below to review the candidates details:[/t]<br>
+<a href="{$url|escape}">{$urlDescription|escape}</a>
+</p>
+
+<p>
+[t]Regards,[/t]
+</p>
+
+<p>
+{$userName}<br>
+{$clientName}
+</p>
+
+{if $userSignature}
+<p>{$userSignature}</p>
+{/if}
+
+<!--uts:end inner-->
+</body>
+</html>

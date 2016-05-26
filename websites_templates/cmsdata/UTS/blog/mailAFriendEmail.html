@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/blog/mailAFriendEmail.html -->
+<p>
+<a href="mailto:{$data.semail}">{$data.name}</a> [t]has sent you an interesting article.[/t]
+</p>
+
+<table cellspacing="10">
+    <tr>
+        <td>[t]Title[/t]:</td>
+        <td>{$a.title|escape}</td>
+    </tr>
+    <tr>
+        <td>[t]Permanent link[/t]:</td>
+        <td><a href="{$url}">{$url}</a></td>
+    </tr>
+    <tr>
+        <td>[t]Notes[/t]:</td>
+        <td><pre>{$data.note|escape}</pre></td>
+    </tr>
+</table>
+<!--uts:end inner-->
+</body>
+</html>
+

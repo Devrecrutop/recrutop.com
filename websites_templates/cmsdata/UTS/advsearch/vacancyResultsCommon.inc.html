@@ -1,0 +1,11 @@
+<script type="text/javascript">
+var actvHandler='{$handler|escape:"javascript"}';
+//{literal}
+function actvChangeSortBy(val) {	
+    window.location=actvHandler+'/command/setsortby/param/'+val;
+}
+function actvChangeSortAscDesc(val) {
+    window.location=actvHandler+'/command/setsortascdesc/param/'+val;
+}
+//{/literal}
+</script>

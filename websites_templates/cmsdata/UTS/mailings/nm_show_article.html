@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>FAQ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- UTS/mailings/nm_show_article.html -->
+
+<if $metarefresh>
+<meta http-equiv="refresh" content="{$metarefresh};URL={$metaurl}">
+</if>
+<table border="0" cellspacing="0" cellpadding="0" class="vacsTable">
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]PageTitle[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+<!--START_Block1-->
+
+<!--START_Title1-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title1-->
+<tr>
+<td class="formTextContainer">
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Text1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+
+<tr>
+<td><if $published>{$abody}<else><br><br>[t]System1[/t]<!--SystemLink1--></if></td>
+</tr>
+
+<if $published>
+<tr>
+<td class="nmButtonsContainer">
+
+<table class="nmButtonsTbl">
+<tr>
+<td class="nmPrintButton"><input name="Submit1" type="button" value="[t]Button1[/t]" class="button" onclick="print_article()"><!--ButtonLink1--></td>
+<td class="nmMailFriendButton"><input name="Submit2" type="button" value="[t]Button2[/t]" class="button" onclick="document.forms.maf.submit()"><!--ButtonLink2--></td>
+<td class="nmAbbonereButton"><input name="Submit3" type="button" value="[t]Button3[/t]" class="button" onclick="document.forms.subfrm.submit()"><!--ButtonLink3--></td>
+
+
+<if $backlink>
+<if !$catid>
+<td class="nmOvervieuwButton"><input name="Submit4" type="button" value="[t]Button4[/t]" class="button" onClick="history.go(-1)"><!--ButtonLink4--></td>
+<else>
+<td class="nmOvervieuwButton"><input name="Submit4" type="button" value="[t]Button4[/t]" class="button" onclick="window.location='{$backlink}'"><!--ButtonLink4--></td>
+</if>
+</if>
+
+</tr>
+</table>
+
+</td>
+</tr>
+</if>
+
+</table>
+
+<script language="Javascript" type="text/javascript">
+var url = 'index.php?page=mailings&code={$code}&command=print&artid={$a.id}&catid={$catid}';
+
+{literal}
+function print_article() {
+	document.getElementById('actionframe').src = url;
+}
+{/literal}
+</script>
+
+
+<form name="maf" action="/index.php/page/mailings/bb/1" method="post">
+	<input type="hidden" name="command" value="mailafriend" >
+	<input type="hidden" name="artid" value="{$a.id}" >
+	<input type="hidden" name="catid" value="{$catid}" >
+	<input type="hidden" name="mtype" value="nmarticle" >
+	<input type="hidden" name="register_get" value="1" >
+</form>
+
+<form name="subfrm" action="/index.php/page/mailings/bb/1" method="post">
+	<input type="hidden" name="command" value="subform" >
+	<input type="hidden" name="preselect" value="{$catid}" >
+	<input type="hidden" name="register_get" value="1" >
+</form>
+
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+<iframe name="actionframe" id="actionframe" width="1" height="1" border="0" frameborder="NO"></iframe>
+<!--uts:end inner-->
+
+</body>
+</html>

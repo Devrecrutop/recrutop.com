@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Jobs LIST
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="formstyles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <!--uts:begin inner-->
+<script language="JavaScript" type="text/javascript">
+{literal}
+{/literal}
+</script>
+
+<div class="outer jblOuter">
+<!-- /UTS/jobsremote/jrList.html -->
+
+<h1 class="title jblTitle">
+{if $smarthead_title}
+{$smarthead_title}
+{else}
+[t]PageTitle[/t]
+{/if}
+</h1>
+
+{if $jobsLastUpdate}
+<div class="intro jblIntro">[t]Laatste wijziging:[/t] {$jobsLastUpdate|date_format:"%d-%m-%Y"}</div>
+{/if}
+
+<h2 class="subHeader jblSh jblTopSh">[t]Title1[/t]</h2>
+<div class="text jblText jblTopText">[t]Text1[/t]</div>
+
+<!--<div class="categorytext">[catdescr]</div>-->
+
+{foreach from=$list item=jobs key=catid}
+{assign var='categorie' value=$cats[$catid]}
+ {if $categorie}
+<div class="category jblCat">{$categorie.name}<div class="itemImage jblCatItemImage" >{if $categorie.icon}<img src="/_images_upload/{$categorie.icon}" width="40" border="0">{/if}</div></div>
+            {if "[uts:job_cat_descr]" && "[uts:job_cat_descr_intro]"}
+<!--<div class="categorytext">{$categorie.description}</div>-->
+            {/if}
+ {/if}
+ {foreach from=$jobs item=job}
+    <div class="itemContainer jblItemContainer">
+
+    {if $job.Thumbnail && $templateSettings.Thumbnail}
+    {if $templateSettings.ThumbnailPosition=='L'}
+    <div class="itemImage jblItemImage jblLeftImage" onClick="location={$job.detailURL}"><img width="{$job.ThumbnailWidth}" src="/_images_upload/{$job.Thumbnail}"></div>
+    {elseif $templateSettings.ThumbnailPosition=='R'}
+    <div class="itemImage jblItemImage jblRightImage" onClick="location={$job.detailURL}"><img width="{$job.ThumbnailWidth}" src="/_images_upload/{$job.Thumbnail}"></div>
+    {/if}
+    
+    {/if}
+
+<div class="jblWrapper">
+
+    <h3 class="itemTitle jblItemTitle"><a href="{$job.detailURL}">{$job.jobname}&nbsp;</a></h3>
+
+    {if "[uts:ReferenceNr]"}
+    <div class="itemWord jblItemWord jblWordRef">{$job.referenceNr}</div>
+    {/if}
+
+    {if "uts:ShowLastApplicationDate" && $job.last_application_date}
+    <div class="itemWord jblItemWord jblWordLad"><span>[t]SingleWord10[/t]</span>{$job.last_application_date|date_format:"%d:%m:%Y"}</div>
+    {/if}
+
+    {if "[uts:JobListStatusPublicatie]"}
+    <div class="itemWord jblItemWord jblWordStatus">{$job.status_publicatie}</div>
+    {/if}
+
+	<div class="jblCleaner"></div>
+
+    {if "[uts:Location]"}
+    <div class="itemWord jblItemWord jblWordLoc"><span>[t]SingleWord1[/t]</span>{$job.locatie}</div>
+    {/if}
+
+    {if "[uts:Region]"}
+    <div class="itemWord jblItemWord jblWordReg"><span>[t]SingleWord2[/t]</span>{$job.regio}</div>
+    {/if}
+
+    {if "[uts:Company]"}
+    <div class="itemWord jblItemWord jblWordEmpl"><span>[t]SingleWord3[/t]</span>{$job.werkgeverid}</div>
+    {/if}
+
+    {if "[uts:ShortDescription]"}
+    <div class="itemDescription jblItemDescr">{$job.ShortDescription}</div>
+    {/if}
+    <div class="jblCleaner"></div>
+
+</div>
+    <div class="cleaner"></div>
+
+    </div>
+ {/foreach}
+{/foreach}
+
+
+
+{if ($templateSettings.JobsListPageNav) && $lastpage>1}
+<table cellspacing="0" cellpadding="0" border="0" class="navTbl jblNavTbl">
+<tr>
+<td class="navPrevious jblNavPrev">
+
+{if $is_prev}
+<a href="{$pagingUrl}JobsListPage={$pageno-1}">[t]SingleWord4[/t]</a>
+{/if}
+
+</td>
+<td class="navNumber jblNavNumb">
+
+{foreach from=$page_array item=p key=k}
+<a class="jblpagenav{if $p}active{/if}" href="{$pagingUrl}JobsListPage={$k}">{$k}</a>
+{/foreach}
+
+</td>
+<td class="navNext jblNavNext">
+
+{if $is_next}
+<a href="{$pagingUrl}JobsListPage={$pageno+1}">[t]SingleWord5[/t]</a>
+{/if}
+
+</td>
+</tr>
+</table>
+{/if}
+
+</div>
+
+<!--uts:end inner-->
+  </body>
+</html>

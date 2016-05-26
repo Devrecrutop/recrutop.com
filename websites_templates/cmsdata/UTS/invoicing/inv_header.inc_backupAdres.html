@@ -1,0 +1,171 @@
+{*INVOICE ADDRESS AND DETAILS*}
+<div id="inv-header">
+  
+  {*
+    because this is in one custom template
+    <!--[th]Cost Allocation[/th]-->
+  *}
+  
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tbl-header">
+  <colgroup>
+    <col width="30%">
+    <col width="70%">
+  </colgroup>  
+  <tr>
+	<td valign="top" align="left">
+      <if [uts:show_invoice_nr]>
+      <h2>[t]Invoice Nr.[/t]:&nbsp;{$data.invoice.invoice_nr|escape}<h2>
+      </if>
+    </td>  
+    <td valign="top" align="right">
+      <if [uts:show_logo]>
+      {if $clientsLogoUrl}<img src="{$clientsLogoUrl}" border="0">{/if}
+      </if>
+      &nbsp;
+    </td>    
+    
+  
+  </tr>
+  </table>
+    
+  </div>  
+  <hr>
+  
+  <div id="inv-address">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tbl-address">
+  <colgroup>
+    <col width="50%">
+    <col width="50%">
+  </colgroup>  
+  <tr>
+    <td valign="top">
+    
+      <table width="100%" border="0" cellspacing="0" cellpadding="4" id="tbl-customer">    
+      <tr>
+        <td>[t]Consignee[/t]:</td>
+        <td>{$data.customer.name|escape}</td>
+      </tr>
+      <tr>
+        <td>[t]Attention of[/t]:</td>
+        <td>{$data.customer.attention_of|escape}</td>
+      </tr>
+      <tr>
+        <td>[t]Address[/t]:</td>
+        <td>{$data.customer.address|escape}</td>
+      </tr>      
+      <tr>
+        <td>[t]City[/t]:</td>
+        <td>{$data.customer.postal_code|escape} {$data.customer.city|escape}</td>
+      </tr>
+      
+      <if [uts:show_country]>
+      {if $data.customer.country}
+      <tr>
+        <td>[t]Country[/t]:</td>
+        <td>{$data.customer.country|escape}</td>
+      </tr>
+      {/if}
+      </if>
+            
+      {if $data.customer.vat_nr}           
+      <tr>
+        <td>[t]VAT Nr.[/t]:</td>
+        <td>{$data.customer.vat_nr|escape}</td>
+      </tr>
+      {/if}
+                           
+      </table>
+    
+    </td>
+    <td valign="top">
+    
+      <table width="100%" border="0" cellspacing="0" cellpadding="4" id="tbl-customer">    
+      <tr>
+        <td>[t]Supplier[/t]:</td>
+        <td>{$data.supplier.name|escape}</td>
+      </tr>
+      <tr>
+        <td>[t]Address[/t]:</td>
+        <td>{$data.supplier.address|escape}</td>
+      </tr>      
+      <tr>
+        <td>[t]City[/t]:</td>
+        <td>{$data.supplier.postal_code|escape} {$data.supplier.city|escape}</td>
+      </tr>
+      
+      <if [uts:show_country]>
+      {if $data.supplier.country}
+      <tr>
+        <td>[t]Country[/t]:</td>
+        <td>{$data.supplier.country|escape}</td>
+      </tr>
+      {/if}
+      </if>
+      
+      {if $data.supplier.vat_nr}                 
+      <tr>
+        <td>[t]VAT Nr.[/t]:</td>
+        <td>{$data.supplier.vat_nr|escape}</td>
+      </tr>
+      {/if}
+                               
+      </table>
+    
+    </td>    
+  </tr>  
+  </table>
+  </div>  
+  <hr>
+  
+  <div id="inv-data">
+  
+    <table width="100%" border="0" cellspacing="0" cellpadding="4" id="tbl-data">           
+    <tr>
+      <td style="width: 160px;">[t]Subject[/t]:</td>
+      <td>        
+        {if $invoiceType == 'assignment'}
+                
+          {if $extraData.assignment_name}{$extraData.assignment_name|escape}{/if}
+          {if $extraData.assignment_nr} - {$extraData.assignment_nr|escape}{/if}
+          
+        {else}
+          {$data.invoice.subject|escape}
+        {/if} 
+      </td>
+    </tr>
+    <tr>
+      <td>[t]Invoice Nr.[/t]:</td>
+      <td>{$data.invoice.invoice_nr|escape}</td>
+    </tr>
+
+    {if $invoiceType == 'assignment'}
+    <tr>
+      <td>[t]Payment conditions[/t]:</td>
+      <td>{$extraData.payment_condition|escape}</td>
+    </tr>    
+    {/if}    
+    
+    <tr>
+      <td>[t]Invoice Date[/t]:</td>
+      <td>{if $data.invoice.invoice_date == "0000-00-00"}[t]dagtekening factuur[/t]{else}{$data.invoice.invoice_date|date_format:$localeDateFormatSmarty}{/if}</td>
+    </tr>
+    <tr>
+      <td>[t]Invoice Due Days[/t]:</td>
+      <td>{$data.invoice.invoice_due_days|escape}</td>
+    </tr>
+    <tr>
+      <td>[t]Invoice Due Date[/t]:</td>
+      <td>{if $data.invoice.invoice_due_date == "0000-00-00"}[t]niet gespecificeerd[/t]{else}{$data.invoice.invoice_due_date|date_format:$localeDateFormatSmarty}{/if}</td>
+    </tr>
+     
+    {if $data.invoice.your_ref_nr}  
+    <tr>
+      <td>{if $data.invoice.your_ref_name}{$data.invoice.your_ref_name|escape}{else}[t]Your Ref.[/t]{/if}:</td>
+      <td>{$data.invoice.your_ref_nr|escape}</td>
+    </tr>
+    {/if}   
+                                                              
+    </table>      
+  
+  </div>  
+  <hr id="inv-data-hr">

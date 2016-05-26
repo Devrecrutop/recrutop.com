@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+   
+String.prototype.trim = function() {
+  return this.replace(/^\s+|\s+$/g,"");
+}   
+   
+function buckarooSubmitHandler(){
+  if (!document.getElementById("fixed_payment").value && !isNumericPrice()) {
+    alert("[t]Price must be a numeric value[/t]");
+    document.getElementById("other_payment").focus();
+    return false;  
+  }
+  else if (!document.getElementById("fixed_payment").value && document.forms.buckarooForm.payment_description.value.trim() == ''){
+    alert("[t]Please fill in the description[/t]");
+    document.getElementById("payment_description").focus();
+    return false;
+  }
+  else{
+    return true;
+  }
+  
+}
+
+function checkNumericPrice(){
+  if ((!document.getElementById("fixed_payment").value && document.forms.buckarooForm.other_payment.value.length > 0) && !isNumericPrice()) {
+    alert("[t]Price must be a numeric value[/t]");
+    document.getElementById("other_payment").focus();  
+  }
+  else{
+     
+     document.getElementById("fixed_payment").value=null;
+  }
+}
+
+function isNumericPrice(){
+  return isNumericValue(document.forms.buckarooForm.other_payment.value) && parseFloat(document.forms.buckarooForm.other_payment.value) > 0;
+}
+   
+function isNumericValue(mixed_var) {
+    return (typeof(mixed_var) === 'number' || typeof(mixed_var) === 'string') && mixed_var !== '' && !isNaN(mixed_var);
+}   
+   
+function selectPaymentPrice(deposit){
+     document.getElementById("other_payment").value="";
+}   
+
+function selectPaymentPriceMod(){
+
+     document.getElementById("other_payment").value="";
+     
+    var selected_item_id  = document.getElementById("fixed_payment").value;
+    var is_deposit =  document.getElementById("deposit_"+selected_item_id).value;
+ 
+    console.log("deposit:"+is_deposit);
+    
+     if (is_deposit == 1){
+                             
+        document.getElementById("payment_service_div").style.visibility='visible';
+        document.getElementById("payment_service_div").removeAttribute("disabled");
+        //document.getElementById("payment_service").disabled=false;  
+        document.getElementById('payment_service').removeAttribute("disabled");                        
+     }
+     else{
+        document.getElementById("payment_service_div").style.visibility='hidden';       
+       // document.getElementById("payment_service").disabled=true;  
+        document.getElementById('payment_service_div').setAttribute('disabled', 'disabled');   
+        document.getElementById('payment_service').setAttribute('disabled', 'disabled');                             
+     
+     }
+}   
+
+
+   
+$(document).ready(function() {        
+});
+
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdRecrSetOuter">
+	<!-- /UTS/applicants/buckaroo_candidate_payment_initialize.html STANDARD -->
+	<h1 class="title">[t]Payment[/t]</h1>
+	{$menu}
+	<div class="intro">[t]This page allows you to arrange your payment to HRC International via credit card. Please select any of the regular fixed payments according to your program type and placement status.[/t]</div>
+
+	<form name="buckarooForm" action="{$handler}" method="post"  onsubmit="return buckarooSubmitHandler()">
+   		<input type="hidden" name="currency_id" value="1" id="currency_id">
+	    <input type="hidden" name="command" value="initialize_single_payment" >
+  
+  {if $clientId == 1053 || 1==1}
+		<div class="formInput aplTextInput">
+			<label>[t]Fixed payments[/t]</label>
+			<select name="fixed_payment" id="fixed_payment" onChange="selectPaymentPriceMod()">        
+         <option value="" >---</option>
+				{foreach from=$fixed_payments item=cv key=cvk}
+				<option value="{$cvk}" >{$cv.name} - € {$cv.price}</option>
+				{/foreach}
+        
+			</select>    
+      
+      {foreach from=$fixed_payments item=cv key=cvk}
+      <input type="hidden" name="deposit_{$cvk}"  id="deposit_{$cvk}" value="{$cv.def_as_deposit}">
+      {/foreach}
+		</div>
+    
+
+    {else}
+		<div class="formInput aplTextInput">
+			<label>[t]Fixed payments[/t]</label>
+			<select name="fixed_payment" id="fixed_payment" onChange="selectPaymentPrice()">
+         
+         <option value="" >---</option>
+				{foreach from=$fixed_payments item=cv key=cvk}
+				<option value="{$cvk}" >{$cv.name} - € {$cv.price}</option>
+				{/foreach}
+        
+			</select>    
+		</div>
+    {/if}
+  
+		<div class="formInput aplTextInput">
+			<label for="other_payment">[t]Other payment:[/t]</label>
+			<input type="text" name="other_payment" value="" id="other_payment" size="10" onBlur="checkNumericPrice()" >
+		</div>
+
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerName">[t]Payment description:[/t]</label>
+			<textarea name="payment_description" id="payment_description" size="10"></textarea>
+		</div>                   		
+    
+  {if $clientId == 1053 || 1==1}    
+    <div class="formInput aplTextInput" id="payment_service_div" style="visibility:hidden" disabled>
+			<label>[t]Payment service[/t]</label>
+			<select name="payment_service" id="payment_service" >
+        
+				<option value="amex" >[t]American Express[/t]</option>
+				<option value="maestro" >[t]Maestro credit[/t]</option>
+        <option value="mastercard" >[t]Mastercard[/t]</option>
+        <option value="visa" selected>[t]Visa[/t]</option>
+        {*<option value="visaelectron" >[t]Visa Electron[/t]</option>   *}     
+			</select>    
+		</div>    
+    {/if}
+    
+    
+    
+
+
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[tb]Click here to continue[/tb]" name="sSubmit" >
+		</div>
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

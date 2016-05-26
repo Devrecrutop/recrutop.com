@@ -1,0 +1,198 @@
+<!-- /UTS/customers/MenuForLoggedInWebUser.html STANDARD -->
+{if !$traceAndTrack}
+{if $supplier_portal}
+
+	<div class="menuContainer mCCustomer mCCustomerSp">
+	
+	<div class="menuLink mLhome"><a href="/index.php/page/CustomersRemote/bb/1/command/clientlogin/bb/1/option/start/level/supplier">[t]Home[/t]</a></div>
+	<div class="menuLink mLjbl"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/list">[t]Jobs List[/t]</a></div>
+	{*MBL*}
+{if $linemanag_cand_update}
+	<div class="menuLink mLmng mblA"><a href="/index.php/page/linemanager/bb/1/command/appstart/">[t]Updates[/t]</a></div>
+{/if}
+	<div class="menuLink mLcandList"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/c_list">[t]Candidates[/t]</a></div>
+{if $show_ocd_logindata}
+	<div class="menuLink aplMlink aplMCLoginData"><a href="/index.php/page/ocdapp/bb/1/command/logindata/redirectback/2">[t]Login data[/t]</a></div>
+{/if}
+{if $procReports}
+	<div class="menuLink mLprocReport"><a href="/index.php/page/procReports/bb/1/command/start/portalType/{$procReportsPortalType}">[t]Procedure reports[/t]</a></div>
+{/if}
+
+	<div class="menuLink menuLinkLastChild mLlogout"><a href="[website]/index.php/page/customers_ext/command/logout/bb/1">[t]Logout[/t]</a></div>
+	</div>
+	
+{else}
+
+	<div class="menuContainer mCCustomer DIVCustomerMenu {if $loggedinuser}mCCustomerLoggedIn{else}mCCustomerLoggedOut{/if}">
+{if $allow_search_cand}
+	{if $enable_cv_search}
+		<div class="menuLink menuLinkFirstChild mLcandSearch"><a href="/index.php/page/advsearchcvs/bb/1/command/editrequest">[t]Search[/t]</a></div>
+		{if $loggedinuser}<div class="menuLink mLcandSavedq"><a href="/index.php/page/advsearchcvs/bb/1/command/sqlist">[t]Saved queries[/t]</a></div>{/if}
+	{else}
+		<div class="menuLink menuLinkFirstChild mLcandSearch"><a href="[website]/index.php/page/CustomersRemote/command/buildform/bb/1">[t]Search[/t]</a></div>
+	{/if}
+{/if}
+{if $show_job_list}
+	<div class="menuLink mLjbl"><a href="[website]/index.php/page/customers_ext/bb/1">[t]Jobs list[/t]</a></div>
+	{*MBL*}
+	{if $linemanag_cand_update}
+		<div class="menuLink mLmng mblB"><a href="/index.php/page/linemanager/bb/1/command/appstart/">[t]Updates[/t]</a></div>
+	{/if}
+{/if}
+{if $direct_vacancy_adding}
+	<div class="menuLink mLaddavacancy"><a href="{if $recrowd_mode}[website]/index.php/page/recrowd/bb/1/command/addVacancy{else}[website]/index.php/page/customers_ext/command/addavacancy/bb/1{/if}">[t]Add vacancy[/t]</a></div>
+{/if}
+
+{if $allow_timeslots && $lineman_timeslots_and_invites}
+	<div class="menuLink mLTimeslots"><a href="[website]/index.php/page/lm_timeslots/bb/1/command/appstart">[t]Timeslots[/t]</a></div>
+	<div class="menuLink mLInvites"><a href="[website]/index.php/page/lm_timeslots/bb/1/command/invitesstart">[t]Invites[/t]</a></div>
+{/if}
+
+
+{if $jobboards_allowed}
+	<div class="menuLink mLjbmanager"><a href="[website]/index.php/page/customers_ext/command/jbmanager/bb/1">[t]Job boards[/t]</a></div>
+{/if}
+{if $auto_agents_customers && !$ocd_block}
+	{if $enable_cv_search}
+		<div class="menuLink mLagents"><a href="/index.php/page/advsearchcvs/bb/1/command/sqlist">[t]Agents[/t]</a></div>
+	{else}
+		<div class="menuLink mLagents"><a href="/index.php/page/agentsCustomers/bb/1">[t]Agents[/t]</a></div>
+	{/if}
+{/if}
+{if $use_banner_manager && !$ocd_block}
+	<div class="menuLink mLbanner"><a href="/index.php/page/banner_engine/bb/1">[t]Banners[/t]</a></div>
+{/if}
+{if $allow_add_wiqet_to_job}
+	<div class="menuLink mLwiqets"><a href="/index.php/page/wiqets/bb/1">[t]Wiqets[/t]</a></div>
+{/if}
+{if $fin_info}
+  {* disabled and replaced 
+	<div class="menuLink mLfininfo"><a href="[website]/index.php/page/customers_ext/command/fininfo/bb/1">[t]Financial Statistics[/t]</a></div>
+	*}
+{/if}
+
+{if $fin_info || $allow_statistics}  
+  <div class="menuLink mLfininfo"><a href="/index.php/page/custstats/command/start/bb/1/">[t]Financial Statistics[/t]</a></div>
+{/if}
+
+{if $show_subscriptions}
+	<div class="menuLink mLsubscriptions"><a href="[website]/index.php/page/customers_ext/command/subscriptions/bb/1">[t]Subscriptions[/t]</a></div>
+{/if}
+{if $use_new_event_applicant_module}
+	<div class="menuLink mLevents"><a href="/index.php/page/foevents/command/customerevents/bb/1/">[t]Events[/t]</a></div>
+{/if}
+{if $enable_network_edit}
+	<div class="menuLink mLnetwork"><a href="/index.php/page/network/command/editCustomerDetails/bb/1/">[t]Network[/t]</a></div>
+{/if}
+{if $enable_network_edit && $networkstyling}
+	<div class="menuLink mLnetworkStyling"><a href="/index.php/page/networkstyling/bb/1/">[t]Customers Network Styling[/t]</a></div>
+{/if}
+{if $show_financial_page}
+	<div class="menuLink mLfinancial"><a href="/index.php/page/finance/command/startup/bb/1/">[t]Financial information[/t]</a></div>
+{/if}
+{if $allow_statistics}
+  {* disabled and replaced
+	<div class="menuLink mLnetwork"><a href="/index.php/page/custstats/command/start/bb/1/">[t]Statistics[/t]</a></div>
+	*}
+{/if}
+{if $tsc && $tsc_list}
+	<div class="menuLink mTscList"><a href="/index.php/page/tscadmin/command/appstart/bb/1/">[t]Timesheets Candidates[/t]</a></div>
+{/if}
+{if $show_ocd_logindata}
+	<div class="menuLink aplMlink aplMCLoginData"><a href="/index.php/page/ocdapp/bb/1/command/logindata/redirectback/2">[t]Login data[/t]</a></div>
+{/if}
+{if $customer_portal_show_tasks}
+	<div class="menuLink mLTasks"><a href="/index.php/page/trackandtrace/bb/1/command/list">[t]Tasks[/t]</a></div>
+{/if}
+{if $web_shop_my_products}
+	<div class="menuLink mLproducts"><a href="/index.php/page/webshop/bb/1/command/myProducts">[t]My products[/t]</a></div>
+{/if}
+<if [uts:show_create_candidate_link]>
+{if $show_ocd_candidate_create}
+        <div class="menuLink aplMlink mLaddCand"><a href="/index.php/page/ocdapp/command/createcandidate">[t]Create a candidate for this user[/t]</a></div>
+{/if}
+</if>
+{if $procReports}
+	<div class="menuLink mLprocReport"><a href="/index.php/page/procReports/bb/1/command/start/portalType/{$procReportsPortalType}">[t]Procedure reports[/t]</a></div>
+{/if}
+{if $show_join_status_overview}
+	<div class="menuLink mLoverview"><a href="/index.php/page/joinStatusOverview/bb/1/command/start">[t]Join statusses[/t]</a></div>
+{/if}
+
+{if $allow_supplied_candidates}
+  {* task id 190293 - Supplier functionality in customer portal (Werkdesk) *}
+  {* if wgcp has Customer portal AND Allow loging as supplier CHECKED ,otherwise client has to be supplier_portal to see this *}
+  <div class="menuLink mLcandList"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/c_list">[t]Candidates[/t]</a></div>
+{/if}
+
+{if $allow_shortlist_sx}
+	<div class="menuLink"><a href="[website]/index.php/page/customer_sx_shortlist/command/editItem/bb/1">[t]Shortlist SX[/t]</a></div>
+{/if}
+
+{if $allow_recommendations}
+	<div class="menuLink"><a href="[website]/index.php/page/recommendations/command/default/bb/1">[t]Recommendations[/t]</a></div>
+{/if}
+
+{if $allow_linkedin_groups}
+	<div class="menuLink"><a href="[website]/index.php/page/linkedin_groups/command/default/bb/1">[t]LinkedIn groups[/t]</a></div>
+{/if}
+
+{if $allow_recrowd_trajectories}
+	<div class="menuLink"><a href="[website]/index.php/page/recrowd_trajectories/command/active_trajectories/bb/1">[t]Active trajectories[/t]</a></div>
+{/if}
+
+{if $allow_recrowd_trajectories}
+	<div class="menuLink"><a href="[website]/index.php/page/recrowd_trajectories/command/archived_trajectories/bb/1">[t]Archived trajectories[/t]</a></div>
+{/if}
+
+{if $allow_recrowd_settings}
+	<div class="menuLink"><a href="[website]/index.php/page/recrowd/bb/1/command/recruiterSettings">[t]Recruiter Settings[/t]</a></div>
+{/if}
+
+{if $allow_recrowd_customer_settings}
+	<div class="menuLink"><a href="[website]/index.php/page/recrowd/bb/1/command/customerSettings">[t]Customer Settings[/t]</a></div>
+{/if}
+
+
+{if $allow_recrowd_candidates_list}
+	<div class="menuLink"><a href="[website]/index.php/page/recrowd_my_candidates/command/listCandidates/bb/1">[t]My candidates[/t]</a></div>
+{/if}
+
+{if $allow_recrowd_statistics}
+	<div class="menuLink"><a href="[website]/index.php/page/recrowd_statistics/command/recruiter_statistics/bb/1">[t]Recruiter statistics[/t]</a></div>
+{/if}
+
+
+{if $allow_recrowd_recruiter_ratings}
+	<div class="menuLink"><a href="[website]/index.php/page/recrowd_statistics/command/recruiter_ratings/bb/1">[t]Ratings[/t]</a></div>
+{/if}
+
+
+{if $useRecommendations}
+	<div class="menuLink"><a href="/index.php/page/recommendations/command/genericEntityRecommendations/subcommand/start/bb/1">[t]Recommendations[/t]</a></div>
+{/if}
+
+
+
+{if !$ocd_block}
+	<div class="menuLink menuLinkLastChild mLlogout"><a href="[website]/index.php/page/customers_ext/command/logout/bb/1">[t]Logout[/t]</a></div>
+{/if}
+
+
+
+</div>
+	
+{/if}
+{/if} {* !$traceAndTrack *}
+
+
+
+
+<!-- {if $view_jt_profiles}
+<div class="menuLink mLnetwork"><a href="/index.php/page/jtprofiles/command/list/bb/1/">[t]Profiles[/t]</a></div>
+{/if}
+{if $add_jt_profiles}
+<div class="menuLink mLnetwork"><a href="/index.php/page/jtprofiles/command/add/bb/1/">[t]New Profile[/t]</a></div>
+<br > <br >
+{/if} -->
+

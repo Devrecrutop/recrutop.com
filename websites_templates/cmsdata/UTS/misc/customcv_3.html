@@ -1,0 +1,366 @@
+<!--uts:begin inner-->
+{literal}
+<style type="text/css" media="print">
+.ocpButtonContainer {
+	display: none;
+}
+.ocpPersonalCon .ocpIw span {
+	float: left;
+	padding-top: 2px;
+	width: 140px;
+}
+.ocpDate {
+	float: left;
+	font-size: 0.75em;
+	padding-top: 2px;
+	width: 140px;
+}
+.ocpDegree {
+	float: left;
+	font-weight: bold;
+}
+.ocpIDescr {
+	margin-bottom: 1em;
+	margin-left: 140px;
+}
+.ocpDescEmplo {
+	font-style: italic;
+}
+.ocpSubtitle {
+	margin-bottom: 1em;
+	font-style: italic;
+}
+.ocpIt, .ojpIt {
+	font-size: 1.5em;
+	margin: 0 0 0.5em;
+	clear: both;
+}
+.ocpComp .itemWord {
+    background: #F1F1F1;
+    float: left;
+    margin: 0 1em 1em 0;
+    padding: 5px;
+    width: 40%;
+}
+.cleaner {
+	clear: both;
+	float: none;
+}
+.ocpPhoto, .ocpPersonalTxt {
+	float: left;
+}
+.ocpRight .itemWord {
+    background: #F1F1F1;
+    margin: 0 1em 1em 0;
+    padding: 5px;
+}
+.ocpRight .itemWord span, .ojpRight .itemWord span {
+    display: block;
+    width: auto;
+	font-weight: bold
+}
+</style>
+{/literal}
+
+{* req. ext. javascript: JQueryBase,JQueryFancyBox *}
+<!--jsrepository:require(JQueryBase,JQueryFancyBox)-->
+
+<div class="outer ocpOuter ocpDetail">
+<!-- /UTS/misc/customcv_3.html standard -->
+    <h1 class="title ocpTitle">{$job._title}</h1>
+    <div class="ocpSubtitle">{$job._werkgever}</div>
+    <div class="ocpPersonalCon">
+    	<div class="itemContainer ocpIc ocpPersonal">
+            {if $candidate.foto}<div class="itemImage ocpItemImage ocpPhoto"><img src="{$candidate.foto}" /></div>{/if}
+			<h3 class="itemTitle ocpIt">[t]Persoonlijke gegevens[/t]</h3>
+            <div class="itemWord ocpIw ocpPersonalTxt">
+                <div class="ocpPersonalName">
+					<span>[t]Naam[/t]</span>{$candidate.voornaam} {$candidate.tussenvoegsel} {$candidate.achternaam}
+				</div>
+				{if $candidate.geslacht == 1 || $candidate.geslacht == 0}<div class="ocpPersonalGender"><span>[t]Geslacht[/t]</span>{if $candidate.geslacht == 1}[t]Man[/t]{elseif $candidate.geslacht == 0}[t]Woman[/t]{/if}</div>{/if}
+                {if $candidate.geboortedatum}<div class="ocpPersonalDate"><span>[t]Geboortedatum[/t]</span>{$candidate.geboortedatum|date_format:"%e-%m-%Y"}</div>{/if}
+                {if $candidate.woonplaats}<div class="ocpPersonalLocation"><span>[t]Woonplaats[/t]</span>{$candidate.woonplaats}</div>{/if}
+                {if $candidate_folder_files}<div class="ocpPersonalFile"><span>[t]Document[/t]</span><div style="display:inline-block">
+					{foreach from=$candidate_folder_files item=doc}
+						<a href="{$doc.link_to_download}" title="{$doc.document_name}"><img src="[website]{$doc.icon}"> {$doc.file_name}</a><br>
+					{/foreach}</div></div>{/if}
+            </div>
+    		<div class="cleaner"></div>
+    	</div>
+    </div>
+	<div class="ocpButtonContainer">
+		<a class="ocpButton ocpAccept" href="#ocpChoiceOuter">[th]Uitnodigen[/th]</a>
+		<a class="ocpButton ocpDenied" href="#ocpChoiceOuter">[th]Niet uitnodigen[/th]</a>
+		{if $show_print_button}
+    	<a class="ocpButton ocpPrint" href="#" onClick="javascript:printFrame('/index.php/page/customcv/command/print/cid/{$candidate.id}/vid/{$job.id}/cp/{$cp}');">[th]Print[/th]</a>
+		<iframe title="printframe" id="printframe" name="printframe" width="0" height="0" frameborder="0" scrolling="NO"></iframe> 
+    	{/if}
+	</div>
+	<div id="ocpChoiceOuter" style="display:none;">
+		<form action="{$indexPhpRoot}page/customcv/command/setReactionMark" name="processform" id="processform" method="POST">
+			<input type="hidden" name="candid" value="{$candidate.id}">
+			<input type="hidden" name="jobid" value="{$job.id}">
+			<input type="hidden" name="mark" id="mark" value="">
+			<input type="hidden" name="cp" value="{$cp}">
+			<input type="hidden" name="taskid" value="{$task}">
+			<div class="itemWord ocpItemWord">
+				<label for="ocpReaction">[th]Please state why u choose for : [/th]</label>
+			</div>
+			<div class="itemInput ocpItemInput">
+				<textarea name="reaction" id="ocpReaction"></textarea>	
+			</div>
+			<div class="buttonContainer">
+				<input type="submit" name="submit" value="Verzenden"> {* MD: Not multi ling compatible let needs to be added to UTS *}
+			</div>
+		</form>
+	</div>
+	<div class="cleaner"></div>
+    {if $candidate.chapo}
+        <div class="itemContainer ocpIc ocpChapo">
+        	<h3 class="itemTitle ocpIt">[t]Persoonsbeschrijving (chapo)[/t]</h3>
+			<div class="itemWord ocpIw">{$candidate.chapo}</div>
+        </div>
+    {/if}
+    
+    {if $candidate.promotekst}
+        <div class="itemContainer ocpIc ocpPromo">
+            <h3 class="itemTitle ocpIt">[t]Toelichting CV en ambities[/t]</h3>
+			<div class="itemWord ocpIw">{$candidate.promotekst}</div>
+        </div>
+    {/if}
+    
+    <div class="ocpLeft">
+        {if $education}
+            <div class="itemContainer ocpIc ocpEdu">
+                <h3 class="itemTitle ocpIt">[t]Opleidingen[/t]</h3>
+                {foreach from=$education item=edu}
+					<div class="ocpDate">
+						{if $edu.StartDateParsed != "0000-00-00" && $edu.StartDateParsed|count_characters != "4"}{$edu.StartDateParsed|date_format:"%Y"}{else}{$edu.StartDateParsed}{/if}
+						{if $edu.StartDateParsed && $edu.StartDateParsed != "0000-00-00" && $edu.EndDateParsed && $edu.EndDateParsed != "0000-00-00"} - {/if}
+						{if $edu.EndDateParsed != "0000-00-00" && $edu.EndDateParsed|count_characters != "4"}{$edu.EndDateParsed|date_format:"%Y"}{else}{$edu.EndDateParsed}{/if}
+					</div>
+                    {if $edu.Degree}<div class="ocpDegree">{$edu.Degree}</div>{/if}
+					<div class="cleaner"></div>
+                    <div class="itemDescr ocpIDescr">
+                        {if $edu.DegreeDirection}<div class="opcDescDegree">{$edu.DegreeDirection}</div>{/if}
+                        {if $edu.InstituteNameAndPlace}<div class="opcDescInsti">{$edu.InstituteNameAndPlace}</div>{/if}
+                        {if $edu.Diploma}<div class="opcDescDiplo">{$edu.Diploma}</div>{/if}
+                    </div>
+                {/foreach}
+            </div>
+        {/if}
+        
+        {if $workexperience}
+            <div class="itemContainer ocpIc ocpExp">
+            	<h3 class="itemTitle ocpIt">[t]Werkervaring[/t]</h3>
+	            {foreach from=$workexperience item=work}
+					<div class="ocpDate">
+						{if $work.StartDateParsed != "0000-00-00" && $work.StartDateParsed|count_characters != "4"}{$work.StartDateParsed|date_format:"%Y"}{else}{$work.StartDateParsed}{/if}
+						{if $work.StartDateParsed && $work.StartDateParsed != "0000-00-00" && $work.EndDateParsed && $work.EndDateParsed != "0000-00-00"} - {/if}
+						{if $work.EndDateParsed != "0000-00-00" && $work.EndDateParsed|count_characters != "4"}{$work.EndDateParsed|date_format:"%Y"}{else}{$work.EndDateParsed}{/if}
+					</div>
+	                {if $work.Experience}<div class="ocpDegree">{$work.Experience}</div>{/if}
+					<div class="cleaner"></div>
+	                <div class="itemDescr ocpIDescr">
+	                    {if $work.EmployerNameAndPlace}<div class="ocpDescEmplo">{$work.EmployerNameAndPlace}</div>{/if}
+	                    {if $work.ExperienceDescription}<div class="ocpDescExper">{$work.ExperienceDescription}</div>{/if}
+	                    {if $work.Termination}<div class="ocpDescTermi">{$work.Termination}</div>{/if}
+	                </div>
+	            {/foreach}
+            </div>
+        {/if}
+		
+		{if $candidate.portfolio_url}
+			<div class="itemContainer ocpIc">
+            	<h3 class="itemTitle ocpIt">[t]Portfolio URL[/t]</h3>	            
+				<div class="">
+					<a href="{$candidate.portfolio_url}">[t]Portfolio[/t]</a>
+				</div>	                	            
+            </div>
+		{/if}
+    </div>
+    
+    <div class="ocpRight">
+    
+	
+	{*
+        <!-- <div class="itemContainer ocpIc ocpRemove" style="background:#f8f8f8;width:100%;clear:both;border:1px solid #eee;margin:20px 0px 20px 0px;padding:10px;">
+            <h3 class="itemTitle ocpIt">[t]Arbeidsvoorwaarden[/t]</h3>
+            Salarisindicatie    : ("gewenst salaris" uit kandidaat manager)<br>
+            Auto van de zaak   : (uit kandidaat manager)<br>
+            13e maand    : (uit kandidaat manager)<br>
+            Beschikbaar  : {$candidate.is_available}<br>
+            Opzegtermijn   : {$candidate.notice_term}<br>
+            Concurrentiebeding   : (vrij in te vullen)<br>
+        </div> -->
+<!-- Deleted as discussed by Winston/Jorrit 20120111 -->
+
+	*}
+    
+        {if $candidate_criterias}
+        	<div class="itemContainer ocpIc ocpCrit">
+            <h3 class="itemTitle ocpIt">[t]Matchcriteria[/t]</h3>
+            	{foreach from=$candidate_criterias item=criteriagroup}
+            		{if $criteriagroup.criteria}
+					<div class="itemWord ocpIw">
+					<span>{$criteriagroup.naam}</span>
+                        {foreach from=$criteriagroup.criteria item=criteria}
+                            {$criteria.fieldname} <!-- ({$criteria.fieldid}) WV:Waarom dit ID tonen? 20120124 -->
+                        {/foreach}
+					</div>
+					{/if}
+        		{/foreach}
+    		</div>
+    	{/if}
+
+        {if $others.Hobbies}
+            <div class="itemContainer ocpIc opcHob">
+                <h3 class="itemTitle ocpIt">[t]Hobbies[/t]</h3>
+                {foreach from=$others.Hobbies item=other}
+				<div class="itemWord ocpIw">
+					{$other.data}
+				</div>
+                {/foreach}
+            </div>
+        {/if}
+        
+        {if $others.Reference}
+            <div class="itemContainer ocpIc ocpRef">
+                <h3 class="itemTitle ocpIt">[t]Referenties[/t]</h3>
+                {foreach from=$others.Reference item=other}
+				<div class="itemWord ocpIw">
+					{$other.data}
+				</div>
+                {/foreach}
+
+            </div>
+        {/if}
+        
+            {if $skills.LanguageSkill}
+                <div class="itemContainer ocpIc ocpLang">
+                    <h3 class="itemTitle ocpIt">[t]Talenkennis[/t]</h3>
+				<!--LANGUAGE SKILLS-->
+                    {foreach from=$skills.LanguageSkill item=skill}
+				<div class="itemWord ocpIw">
+                        {if $skill.skill}
+                        <span {if $skill.proficiency==''}style="font-weight:normal;"{/if}>{$skill.skill}</span>
+                        {/if}
+            
+                        {if $skill.proficiency}
+                            {$skill.proficiency}
+                        {/if}
+                        {if $skill.lezen > 0}
+                            <div class="ocpLangLezen">
+                                Lezen:
+                                {if $skill.lezen == '1'}[t]Uitstekend[/t]{/if}
+                                {if $skill.lezen == '2'}[t]Goed[/t]{/if}
+                                {if $skill.lezen == '3'}[t]Redelijk[/t]{/if}
+                                {if $skill.lezen == '4'}[t]Matig[/t]{/if}
+                            </div>
+                        {/if}
+                        {if $skill.spreken > 0}
+                            <div class="ocpLangSprek">
+                                Spreken:
+                                {if $skill.spreken == '1'}[t]Uitstekend[/t]{/if}
+                                {if $skill.spreken == '2'}[t]Goed[/t]{/if}
+                                {if $skill.spreken == '3'}[t]Redelijk[/t]{/if}
+                                {if $skill.spreken == '4'}[t]Matig[/t]{/if}
+                            </div>
+                        {/if}
+				</div>
+                    {/foreach}
+                </div>
+            {/if}
+    
+            {if $skills.ComputerSkill}
+                <div class="itemContainer ocpIc ocpComp">
+                    <h3 class="itemTitle ocpIt">[t]Computervaardigheden[/t]</h3>
+                    {foreach from=$skills.ComputerSkill item=skill}
+				<div class="itemWord ocpIw">
+                        <span {if $skill.proficiency==''}style="font-weight:normal;"{/if}>{$skill.skill}</span>
+					{if $skill.proficiency > 0}
+						{if $skill.proficiency == '1'}[t]Uitstekend[/t]{/if}
+						{if $skill.proficiency == '2'}[t]Goed[/t]{/if}
+						{if $skill.proficiency == '3'}[t]redelijk[/t]{/if}
+						{if $skill.proficiency == '4'}[t]matig[/t]{/if}
+                        {/if}
+				</div>
+                    {/foreach}
+                </div>
+            {/if}
+    
+            {if $skills.SoftSkill}
+                <div class="itemContainer ocpIc ocpSoft">
+                    <h3 class="itemTitle ocpIt">[t]Persoonlijke vaardigheden[/t]</h3>
+                    {foreach from=$skills.SoftSkill item=skill}
+				<div class="itemWord ocpIw">
+                        <span {if $skill.proficiency==''}style="font-weight:normal;"class="ocpSoftLabel"{/if}>{$skill.skill}</span>
+					{if $skill.proficiency > 0}
+						{if $skill.proficiency == '1'}[t]Uitstekend[/t]{/if}
+						{if $skill.proficiency == '2'}[t]Goed[/t]{/if}
+						{if $skill.proficiency == '3'}[t]redelijk[/t]{/if}
+						{if $skill.proficiency == '4'}[t]matig[/t]{/if}
+                        {/if}
+				</div>
+                    {/foreach}
+                </div>
+            {/if}
+    
+    </div>
+    <div class="cleaner"></div>
+    
+    {if $opmerkingen.opmerking}
+        <div class="itemContainer ocpIc ocpOpmer">
+            <h3 class="itemTitle ocpIt">[t]Opmerkingen[/t]</h3>
+            {foreach from=$opmerkingen item=opmerking}
+				<div class="itemWord ocpIw">
+            	{if $opmerking.value}
+                    <span>{$opmerking.naam}</span>
+                    {$opmerking.value}
+            	{/if}
+		        </div>
+            {/foreach}
+        </div>
+    {/if}
+</div>
+{literal}
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".ocpAccept").fancybox({
+		beforeLoad		:	function() {
+			// $('#mark').val('yes');
+		}
+	});	
+	$(".ocpDenied").fancybox({
+		beforeLoad		:	function() {
+			$('#mark').val('no');
+		}
+	});
+		// Print button
+	function printFrame(url)
+	{
+	    // Set URL for print
+	    var iframe = document.getElementById('printframe');
+	    iframe.src = url;
+	
+	    // Send print function
+	    window.setTimeout(printNow,3000);
+	}
+	function printNow()
+	{
+	    // Print frame
+	    window.frames['printframe'].focus(); // Set focus for IE
+	    window.frames['printframe'].print(); // Send PRINT command
+	} 
+});
+	
+function printFrameContent(cid, vid, cp) {
+	
+	var pf = document.getElementById('printFrame');	
+	var url = '/index.php/page/customcv/command/print/cid/' + cid + '/vid/' + vid + '/cp/' + cp; 
+	pf.src = url; 
+	// console.log(url)	
+}
+</script>
+{/literal}
+<!--uts:end inner-->

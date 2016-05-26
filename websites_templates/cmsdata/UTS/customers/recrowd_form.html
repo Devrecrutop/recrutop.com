@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+var recrowdInterimFactor = {$factor};
+var vtype ="{$data.type}";
+    
+//{literal}
+// functions here
+
+function recrowdChange(value) {
+    var floatv = parseFloat(value);
+    if (isNaN(floatv)) document.getElementById('iFee').value='';
+    else document.getElementById('iFee').value = floatv*recrowdInterimFactor;
+}
+
+function recrowdSubmitHandler() {
+    if (!document.forms['recrowdForm'].ve_salary_to.disabled && isNaN(parseFloat(document.forms['recrowdForm'].ve_salary_to.value))) {
+        alert('[th]Please enter valid max salary.[/th]');
+        return false;
+    }
+    if (!document.forms['recrowdForm'].ve_fee_percentage.disabled) {
+        var ffee = parseFloat(document.forms['recrowdForm'].ve_fee_percentage.value);
+        if (isNaN(ffee) || ffee<0 || ffee>100) {
+            alert('[th]Please enter valid fee percentage.[/th]');
+            return false;
+        }
+    }
+    if (!document.getElementById('iFee').disabled && !document.getElementById('iFee').value) {
+        alert('[th]Please enter some number into tariff so fee can be calculated.[/th]');
+        return false;
+    }
+    return true;
+}
+
+function onTypeChange(val) {
+	//alert(val+' '+vtype);
+	if (val=='regular') {
+		//we have to disable all splitz fields
+		document.forms['recrowdForm'].ve_fee_percentage.disabled=true;
+		document.forms['recrowdForm'].ve_salary_to.disabled=true;
+		
+		document.getElementById('iTariffTo').disabled=true;
+		document.getElementById('iFee').disabled=true;
+		document.getElementById('chPaidByCustomer').disabled=true;
+		document.getElementById('chPaidByAssignee').disabled=true;
+		
+	} else if (val=='splitz') {
+		//we have to enable some splitz fields, depends on vtype
+		if (vtype=='recruitment') {
+			document.forms['recrowdForm'].ve_fee_percentage.disabled=false;
+			document.forms['recrowdForm'].ve_salary_to.disabled=false;
+		} else {
+			// interim
+			document.getElementById('iTariffTo').disabled=false;
+			document.getElementById('iFee').disabled=false;
+			document.getElementById('chPaidByCustomer').disabled=false;
+			document.getElementById('chPaidByAssignee').disabled=false;
+		}
+	}
+}
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdFormOuter">
+	<!-- /UTS/customers/recrowd_form.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->       
+	<h1 class="title">[t]Type, Salary &amp; Tariff[/t]</h1>
+	<!-- $CustomersMenu
+	$CustomersSubMenu -->
+
+	<form name="recrowdForm" action="{$handler}" method="post" class="qsPageOuter" onsubmit="return recrowdSubmitHandler()">
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+		    <label>[t]Job Type:[/t]</label>
+			<label for="chbJobTypeRegular" class="labelRadio aplRadioInput">
+				<input type="radio" id="chbJobTypeRegular" name="r_type" value="regular" class="radiobutton" {if $data2.type == "regular"}checked="checked"{/if} onchange="onTypeChange(this.value)">
+				<span title="[thn]Choose the regular type[/thn]">[t]Regular[/t]</span>
+			</label>
+		    <label for="chbJobTypeSplitz" class="labelRadio aplRadioInput">
+				<input type="radio" id="chbJobTypeSplitz" name="r_type" value="splitz" class="radiobutton" {if $data2.type == "splitz"}checked="checked"{/if} onchange="onTypeChange(this.value)">
+				<span title="[thn]Choose the spl!tz type[/thn]">[t]Spl!tz[/t]</span>
+			</label>
+			<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		<hr>
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+		    <label>[t]Recruitment Type:[/t]</label>
+			<label for="chbRecruitment" class="labelRadio aplRadioInput{$optkey}">
+				<input type="radio" id="chbRecruitment" name="ve_type" value="recruitment" class="radiobutton" {if $data.type == "recruitment"}checked="checked"{/if} disabled="disabled">
+				[t]Recruitment[/t]
+			</label>
+		</div>
+		<div class="formInput aplTextInput">
+		    <label for="iSalaryTo">[t]Maximum Gross Salary:[/t]</label>
+		    <input class="splitzField recruitmentField" type="text" name="ve_salary_to" value="{$data.salary_to|escape}" id="iSalaryTo" style="text-align: right; width: 100px;" size="10" {if $data2.type == "regular" || $data.type != "recruitment"}disabled="disabled"{/if}> [t]/ year[/t]
+		</div>
+		<div class="formInput aplTextInput">
+		    <label for="iFeePercentage">[t]Fee Percentage:[/t]</label>
+		    <input class="splitzField recruitmentField" type="text" name="ve_fee_percentage" value="{$data.fee_percentage|escape}" id="iFeePercentage" style="text-align: right; width: 100px;" size="10" {if $data2.type == "regular" || $data.type != "recruitment"}disabled="disabled"{/if}>
+				[t](percentage of yearly salary)[/t]
+		</div>
+		<if $err == "FEE_TOO_LOW">
+			<div class="error recrowdError">
+				[t]No recruiters found matching your criteria and fee percentage. The minimum fee percentage matching your criteria is:[/t] {$minFee} %
+			</div>
+		<elseif $err == "NO_RECRUITERS">
+			<div class="error recrowdError">
+				[t]No recruiters found matching your criteria.[/t]
+			</div>
+		</if>
+		<hr>
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+		    <label>[t]Recruitment Type:[/t]</label>
+			<label for="chbInterim" class="labelRadio aplRadioInput{$optkey}">
+				<input type="radio" id="chbInterim" name="ve_type" value="interim" class="radiobutton" {if $data.type == "interim"}checked="checked"{/if} disabled="disabled">
+				[t]Interim[/t]
+			</label>
+		   <div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		<div class="formInput aplTextInput">
+		    <label for="iTariffTo">[t]Maximum Tariff:[/t]</label>
+		    <input class="splitzField interimField" type="text" name="ve_tariff_to" value="{$data.tariff_to|escape}" id="iTariffTo" style="text-align: right; width: 100px;" size="10" {if $data2.type == "regular" || $data.type != "interim"}disabled="disabled"{/if} onkeyup="recrowdChange(this.value)"> [t]/ hour[/t]
+		</div>
+		<div class="formInput aplTextInput">
+		    <label for="iFee">[t]Fee:[/t]</label>
+		    <input class="splitzField interimField" type="text" name="ve_fee" value="" id="iFee" style="text-align: right; width: 100px;" size="10" readonly="readonly" {if $data2.type == "regular" || $data.type != "interim"}disabled="disabled"{/if}>
+		</div>
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+		    <label>[t]Fee Payment:[/t]</label>
+			<label for="chPaidByCustomer" class="labelRadio aplRadioInput">
+				<input type="radio" id="chPaidByCustomer" name="ve_fee_to_be_paid_by" value="customer" class="radiobutton splitzField interimField" {if $data.fee_to_be_paid_by == "customer"}checked="checked"{/if} {if $data2.type == "regular" || $data.type != "interim"}disabled="disabled"{/if}>
+				[t]Paid by us[/t]
+			</label>
+		    <label for="chPaidByAssignee" class="labelRadio aplRadioInput">
+				<input type="radio" id="chPaidByAssignee" name="ve_fee_to_be_paid_by" value="assignee" class="radiobutton splitzField interimField" {if $data.fee_to_be_paid_by == "assignee"}checked="checked"{/if} {if $data2.type == "regular" || $data.type != "interim"}disabled="disabled"{/if}>
+				[t]Paid by Interim[/t]
+			</label>
+			<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		<div class="buttonContainer">
+			<input type="submit" value="[tb]Continue[/tb]" class="button" name="sSubmit">
+		</div>
+		<input type="hidden" name="command" value="saveVacForm">
+		<input type="hidden" name="vacid" value="{$vacid|escape}">
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

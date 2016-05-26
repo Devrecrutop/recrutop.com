@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if $autoRefresh>
+<meta http-equiv="refresh" content="5;URL={$refreshURL}">
+</if>
+<div class="outer aplOuter AplTksOuter">
+<!-- /UTS/applicants/tkStatus.html -->
+<h1 class="title aplTitle aplTksTitle">[t]Automatic document processing[/t]</h1>
+<if $running>
+<div class="intro aplIntro aplTksBi">
+    <img src="/_images_global/busy_bar[CurrentLanguage].gif">
+</div>
+</if>
+<h2 class="subHeader aplSh aplTksSh">[t]Proces[/t]</h2>
+<div class="text aplText aplTkText">
+<if $msg == "MSG_TK_RUNNING">
+[t]The document is being processed. Please wait...[/t]
+<elseif $msg == "MSG_TK_NOT_RUNNING">
+[t]The document is about to be processed. Please wait...[/t]
+<elseif $msg == "MSG_TK_ERR_PROCESSING">
+[t]Error: Unfortunately we were not able to parse CV you provided.[/t]
+<elseif $msg == "MSG_TK_ERR_CONNECT">
+[t]Error: We are not able connect to our partner's webservice in order to process your document automatically. Please try again later or fill all the info manually.[/t]
+<elseif $msg == "MSG_TK_ERR_INIT">
+[t]Error: Unable to initialize parsing service.[/t]
+<elseif $msg == "MSG_TK_TIMEOUT">
+[t]Error: The process is taking too long - timeout limit reached. Please try again later.[/t]
+</if>
+</div>
+<if $error && $backURL>
+<div class="buttonContainer aplBc aplTksBc"><input type="button" value="[tb]Back[/tb]" class="button" onclick="window.location='{$backURL|escape:"javascript"}'"></div>
+</if>
+<if $error && $continueAnywayURL>
+<div class="buttonContainer aplBc aplTksBc"><input type="button" value="[tb]Proceed without automatic parsing[/tb]" class="button" onclick="window.location='{$continueAnywayURL|escape:"javascript"}'"></div>
+</if>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- Template Webdevelopment validated 07-2013 -->
+<p>[t]Dear[/t] {$_ccf_ContactName|escape},</p>
+<p>[t]You have send a contact request to {$applicant_name|escape} via our website. Underneath you find a copy:[/t]</p>
+{if $ext_candidate_contact}
+<table border="0" cellpadding="0" cellspacing="0" style="font-size:12px;">
+	<colgroup>
+		<col width="150">
+		<col>
+	</colgroup>
+	<tr>
+		<td>[t]Company name[/t]:</td>
+		<td>{$company}</td>
+	</tr>
+	<tr>
+		<td>[t]Contact person[/t]:</td>
+		<td>{$_ccf_ContactName}</td>
+	</tr>
+	<tr>
+		<td>[t]Function[/t]:</td>
+		<td>{$_ccf_function}</td>
+	</tr>
+	<tr>
+		<td>[t]Phone[/t]:</td>
+		<td>{$_ccf_phone}</td>
+	</tr>
+	<tr>
+		<td>[t]E-mail address[/t]:</td>
+		<td>{$sender}</td>
+	</tr>
+	<tr>
+		<td>[t]Subject[/t]:</td>
+		<td>{$subject}</td>
+	</tr>
+	<tr>
+		<td>[t]Vacancy title[/t]:</td>
+		<td>{$_ccf_vacancyTitle}</td>
+	</tr>
+	<tr>
+		<td colspan="2">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="2">[t]Message[/t]:<br>
+		{$msg|escape}</td>
+	</tr>
+</table>
+{else}
+	<p>{$msg|escape}</p>
+{/if}
+
+<!--uts:end inner-->
+</body>
+</html>

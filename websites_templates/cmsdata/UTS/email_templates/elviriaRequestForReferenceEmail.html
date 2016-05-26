@@ -1,0 +1,22 @@
+<!-- TPL: /UTS/email_templates/elviriaRequestForReferenceEmail.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- TPL: /UTS/email_templates/elviriaRequestForReferenceEmail.html -->
+<p>[t]Dear {$name|escape},[/t]</p>
+<p>[t]Your friend {$member_name} is registered on Elviria. He has requested you to leave him a reference and added the following personal remark:[/t]</p>
+{$message_request}
+
+<p>[t]Please give your reference using the following link:[/t]
+    <a href="[uts:elviriabaseurl]/index.php/elviria/FriendsReferences/GiveAReference/{$reference_id}">[t]Click here[/t]</a>
+
+<p>[t]Thanks for your time.[/t]
+
+<p>[t]Best regards[/t],<br />Elviria</p>
+<!--uts:end inner-->
+</body>
+</html>

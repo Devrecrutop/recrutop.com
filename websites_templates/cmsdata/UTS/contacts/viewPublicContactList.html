@@ -1,0 +1,147 @@
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/contacts/viewPublicContactList.html -->
+     <table border="0">
+     <tr>
+     <td colspan="2">[t]Contact list[/t]</td>
+     </tr>
+	 <tr>
+     <td colspan="2">[t]Contact list introduction text...[/t]</td>
+     </tr>
+     <tr>
+     <td colspan="2">&nbsp;</td>
+     </tr>
+
+    {assign var='columns_to_display' value=$multicolumn_settings.set_display_columns}
+    {assign var='set_display_text' value=$multicolumn_settings.set_display_text}
+    {assign var='set_display_mode' value=$multicolumn_settings.set_display_mode}
+    {assign var='set_display_description' value=$multicolumn_settings.set_display_description}
+
+
+    {foreach  from=$cp_list_data item=cp_item name=cpd}
+        {if $set_display_mode == 'columns'}
+
+            {if  $smarty.foreach.cpd.iteration==1 ||  $smarty.foreach.cpd.iteration == $columns_to_display+1}
+            <tr>
+            {/if}
+
+            <td>
+            <table>
+            <tr>
+            <td>
+    		{if $cp_item.cp_photo.photo !="" }
+    		<a href="http://{$cp_item.consultant_detail_link}" title="
+			{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+			{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+			{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+			[t]Details...[/t]"><img src="http://{$cp_item.cp_photo_link}" border="0" alt="
+			{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+			{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+			{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+			" {$cp_item.cp_photo_size}></a>
+    		{else}
+    		<!--<a href="http://{$cp_item.consultant_detail_link}" title="[t]Details...[/t]"><img src="/_images_global/nophoto.gif" border="0" alt="Photo is not available...{$cp_item.cp_full_name|escape}" {$cp_item.cp_photo_size}></a>-->
+            <a href="http://{$cp_item.consultant_detail_link}" title="
+			{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+			{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+			{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+			[t]Details...[/t]">
+			{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+			{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+			{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+			</a>
+    		{/if}
+    		</td>
+    		</tr>
+    		{if $set_display_text == 'y'}
+    		{* we dont have this field *}
+    		{*
+    		<tr>
+    		<td><a href="http://{$cp_item.consultant_detail_link}" title="[t]Details...[/t]">{$cp_item.consultant_job_title}</a></td>
+    		</tr>
+    		*}
+    		<tr>
+    		<td><a href="http://{$cp_item.consultant_detail_link}" title="[t]Details...[/t]">{$cp_item.cp_clean_name}</a></td>
+    		</tr>
+    		{/if}
+
+   		    {if $set_display_description}
+   		    <tr>
+            <td>{$cp_item.short_descr|truncate:$short_description_char_limit:"..."}</td>
+            </tr>
+            {/if}
+
+
+    		</table>
+    		</td>
+
+            {if $smarty.foreach.cpd.iteration == $columns_to_display || $smarty.foreach.cpd.last || $smarty.foreach.cpd.iteration % $columns_to_display == 0}
+            </tr>
+            {/if}
+
+
+        {else}
+
+            <tr>
+            <td>
+    		{if $cp_item.cp_photo.photo !="" }
+    		<a href="http://{$cp_item.consultant_detail_link}" title="
+			{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+			{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+			{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+			[t]Details...[/t]"><img src="http://{$cp_item.cp_photo_link}" border="0" alt="
+			{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+			{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+			{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+			" {$cp_item.cp_photo_size}></a>
+    		{else}
+    		<!--<a href="http://{$cp_item.consultant_detail_link}" title="[t]Details...[/t]"><img src="/_images_global/nophoto.gif" border="0" alt="Photo is not available...{$cp_item.cp_full_name|escape}" {$cp_item.cp_photo_size}></a>-->
+            <a href="http://{$cp_item.consultant_detail_link}" title="
+			{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+			{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+			{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+			[t]Details...[/t]">
+			{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+			{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+			{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+			</a>
+
+    		{/if}
+    		</td>
+
+    		<td valign="top">
+    		<table>
+    		<tr>
+    		<td>
+            <a href="http://{$cp_item.consultant_detail_link}" title="[t]Details...[/t]">{$cp_item.cp_clean_name}</a>
+            </td>
+            </tr>
+            {if $cp_item.short_descr neq ""}
+            <tr>
+            <td>
+            {$cp_item.short_descr|truncate:$short_description_char_limit:"..."}
+            </td>
+            </tr>
+            {/if}
+            </table>
+            </td>
+
+            </tr>
+
+
+
+    	{/if}
+    {foreachelse}
+		<tr><td>[t]Contact list is empty...[/t]</td></tr>
+	{/foreach}
+
+	</table>
+
+<!--uts:end inner-->
+</body>
+</html>

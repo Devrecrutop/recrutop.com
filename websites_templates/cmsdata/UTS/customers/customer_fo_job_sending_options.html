@@ -1,0 +1,37 @@
+<!--uts:begin inner-->
+
+<!--start customers/customer_fo_job_sending_options-->
+<script type="text/javascript">
+//{literal}
+
+function setAppMailExtraInputDisabled() {
+  var k =  document.getElementById('send_app_mail_to_other');
+  var ks = document.getElementById('send_app_mail_to_email');  
+  if (k != null) {
+    if (k.checked) {
+      ks.disabled = false;
+    } else {
+      ks.disabled = true;
+      ks.value = "";
+    }
+  }
+}
+
+//{/literal}
+</script>
+
+<div class="formInput" id="formInputForApplicationMailOptionsCheckbox">
+   <label>[t]Application mail options[/t]</label>
+		<input type="checkbox" class="radiobutton" name="send_app_mail_to_customer" id="send_app_mail_to_customer" value="to_customer" {if $appl_options.to_customer}checked{/if}>[t]Mail to owner[/t]
+		<input type="checkbox" class="radiobutton" name="send_app_mail_to_other" id="send_app_mail_to_other" value="to_other" onclick="setAppMailExtraInputDisabled()" {if $appl_options.to_other}checked{/if}>[t]Mail to different contact[/t]
+    
+</div>
+
+<div class="formInput" id="formInputForApplicationMailOptionsInput">
+  <label>[t]Send to address[/t]</label>
+  <input type="text" name="send_app_mail_to_email" id="send_app_mail_to_email" size="35" value="{$appl_options.to_email}" {if !$appl_options.to_other}disabled{/if}>
+</div>
+<!--end customers/customer_fo_job_sending_options-->
+
+
+<!--uts:end inner-->

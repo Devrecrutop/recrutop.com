@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/email_templates/hrm_intergation_script_problem.html -->
+
+<p>[t]HRM integration for {$clientName}[/t]</p>
+
+{if $vacancy_import_error}
+<p>[t]Vacancy import:[/t]</p>
+<p>[t]The HRM integration CRON script finished with errors or did not run.[/t]</p>
+<br>
+{/if}
+
+{if $status_import_error}
+<p>[t]Status import:[/t]</p>
+<p>[t]The HRM integration CRON script finished with errors or did not run.[/t]</p>
+<br>
+{/if}
+
+{if $candidate_export_error}
+<p>[t]Candidate export:[/t]</p>
+<p>[t]The HRM integration CRON script finished with errors or did not run.[/t]</p>
+<br>
+{/if}
+
+
+<p>
+[t]Regards,[/t]<br>
+OTYS INTERACTIVE CLERQ<br>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

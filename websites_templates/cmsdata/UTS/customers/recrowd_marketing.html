@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<link href="/_css_global/jquery.popbox.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/_javascript_global/jquery.popbox.js"></script>
+<script type="text/javascript">
+//{literal}
+
+    $(document).ready(function(){
+      //$('.popbox').popbox();
+      
+      
+        $("#dialog-form-extra-remarks").dialog({
+            modal: true,
+            autoOpen: false,
+            height: 700,
+            width: 600,
+            resizable: false,
+            buttons: [{ text: "[th]Send[/th]", 
+                        click: function() {
+
+                          sendMarketingMail();       
+                        }
+                      },
+                      { text: "[th]Cancel[/th]", 
+                        click: function() {
+                          $( this ).dialog( "close" );
+                        }
+                      }]
+    	   });      
+      
+    });
+
+ function validateEmail($email) {
+  var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  if( !emailReg.test( $email ) ) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+ function sendMarketingMail(){
+        $.ajax({
+            url: '/index.php/page/recrowd/bb/1/command/marketing/selectCommand/marketingEmailPrepare/triggerSend/1',
+            type: "POST",
+            data: $("#recrowdForm").serialize(),
+            dataType: "json",
+            timeout: 15000,
+            async: true,
+            beforeSend: function() {
+            },
+            success: function(msg) {
+  
+                  if (msg.result == "OK") {
+                    window.location.href = "/index.php/page/recrowd/bb/1/command/marketing/selectCommand/marketingThankYou/"
+                      
+                  }
+                  else{
+                      alert("[t]Error occured: [/t]"+msg.description);
+                  }
+            },
+            error: function(msg) {
+  
+                  alert("[t]Error occured[/t]");
+            }
+  
+          });
+  
+        
+
+ 
+ }
+
+ function recrowdSubmitHandler()
+ {
+
+
+     if($("#recrowdMaxBudget").val() == '') {
+         alert("[t]Please fill in the max. budget[/t]");
+         $("#recrowdMaxBudget").addClass('highlight');
+         return false;
+     }
+     else if( $.isNumeric(  $("#recrowdMaxBudget").val() ) == false) {
+         alert("[t]Max. budget must be a numeric value[/t]");
+         $("#recrowdMaxBudget").addClass('highlight');
+         return false;
+     }
+     else if($("#recrowdReturnContactName").val() == '') {
+         alert("[t]Please fill in the return contact name[/t]");
+         $("#recrowdReturnContactName").addClass('highlight');
+         return false;
+     }
+     else if($("#recrowdReturnEmailAddress").val() == '' ) {
+         alert("[t]Please fill in the return email address[/t]");
+         $("#recrowdReturnEmailAddress").addClass('highlight');
+         return false;
+     }
+     
+     else if(validateEmail($("#recrowdReturnEmailAddress").val()) == false) {
+         alert("[t]Please fill in a valid email address[/t]");
+         $("#recrowdReturnEmailAddress").addClass('highlight');
+         return false;
+     }
+     
+     else{
+
+       $.ajax({
+            url: '/index.php/page/recrowd/bb/1/command/marketing/selectCommand/marketingEmailPrepare',
+            type: "POST",
+            data: $("#recrowdForm").serialize(),
+            dataType: "json",
+            timeout: 15000,
+            async: true,
+            beforeSend: function() {
+            },
+            success: function(msg) {
+  
+                  if (msg.result == "OK") {
+                      
+                      $("#rcMailBody").html(msg.emailView);
+                      $('#dialog-form-extra-remarks').dialog('open');
+                  }
+                  else{
+                      alert("[t]Error occured: [/t]"+msg.description);
+                  }
+            },
+            error: function(msg) {
+  
+                  alert("[t]Error occured[/t]");
+            }
+  
+          });
+  
+        }
+
+        return false;
+ }
+
+
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdRecrSetOuter">
+	<!-- /UTS/customers/recrowd_marketing.html -->
+	<h1 class="title">[t]Marketing[/t]</h1>
+	{$CustomersMenu}
+	{$CustomersSubMenu}
+
+	<form name="recrowdForm" id="recrowdForm" action="{$handler}" method="post" class="qsPageOuter" onsubmit="return recrowdSubmitHandler()">
+  <input type="hidden" name="vacid" value="{$vacid}" id="vacid" >
+  <input type="hidden" name="selectCommand" value="marketingEmailPrepare">
+  
+
+  <p>&nbsp;</p>
+		<div class="formInput aplTextInput">
+		    <label><strong>{$jobtitle}</strong></label>
+		</div>
+
+		<div class="formInput aplTextInput">
+		    <label>[t]Max. budget for marketing:[/t]</label>
+  			<input type="text" name="max_budget" value="" id="recrowdMaxBudget" size="10">[t]EUR[/t]
+		</div>
+
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerAddress">[t]Return contact name:[/t]</label>
+			<input type="text" name="return_contact_name" value="{$return_contact_name|escape}" id="recrowdReturnContactName" >
+		</div>
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerPostcode">[t]Return email address:[/t]</label>
+			<input type="text" name="return_email_address" value="{$return_email_address|escape}" id="recrowdReturnEmailAddress" >
+		</div>
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerPhone">[t]Comments:[/t]</label>
+			<textarea  name="comments" id="recrowdComments" rows="10" cols="20"></textarea>
+		</div>
+    
+    
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[tb]Submit[/tb]" name="sSubmit">
+		</div>
+		
+	</form>
+  
+
+<div id="dialog-form-extra-remarks" title="[thn]Add a remark[/thn]" style="display:none;">
+  <form id="frmExtraRemark">
+  <fieldset style="border: none;">
+    <p class="validateTenTips" style="background:light-gray;">[thn]Recipient name:[/thn]{$RecipientName}</p>
+    <p class="validateTenTips" style="background:light-gray;">[thn]Recipient email:[/thn]{$RecipientEmail}</p>
+    <hr>
+    <div id="rcMailBody"></div>
+    
+  </fieldset>
+    <input type="hidden" name="command" value="sendMarketingMail">
+  </form>
+</div>
+
+  
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!-- /UTS/advsearch/simpleMessage.frag.html -->
+<div class="ajaxWindow simpleMessageFrag">
+	<if $type == "THANK_YOU">
+		<h1 class="title">[t]Thank you![/t]</h1>
+	</if>
+	<if $message == "SQ_SUCCESS">
+		<p>[t]Your query has been saved successfully. You might receive a confirmation e-mail/SMS with instructions how to activate the query soon.[/t]</p>
+		<if $ocdmLoggedIn>
+			<p><a href="{$handler}/command/sqlist">[t]Go to stored query list[/t]</a></p>
+		</if>
+	</if>
+</div>

@@ -1,0 +1,145 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!--uts:begin inner-->
+<!--START_9-->
+
+<!-- /UTS/customers/statisticsSX.html -->
+
+<!--UT: Startpage-->
+<table class="vacstable" cellpadding="0" cellspacing="0" border="0">
+
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Statistics[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+<tr>
+<td class="pageLinkContainer">
+[CustomersMenu]
+</td>
+</tr>
+
+</table>
+
+<div id="d-sx-stats" class="d-sx-stats">
+
+	{if $isSupplier && $show_fin_info_fo}
+	<h2>[t]SX statistics[/t]</h2>
+	
+	<table id="t-sx-stats" class="t-sx-stats" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>[t]Current balance[/t]:</td>
+			<td>&nbsp;{$sx.currentBallance|string_format:"%.4f"|regex_replace:"/\./":","}</td>
+		</tr>
+		<tr>
+			<td>[t]Default cost per click[/t]:</td>
+			<td>&nbsp;{$sx.costPerClick|string_format:"%.4f"|regex_replace:"/\./":","}</td>
+		</tr>
+	</table>
+	{/if}
+	
+	{if $isClient && $show_credit_info_fo}	
+	<h2>[t]Credit information[/t]</h2>
+	
+	<table id="t-credit-stats" class="t-credit-stats" border="0" cellspacing="0" cellpadding="0">
+			
+		<tr>
+			<td>[t]Date[/t]</td>
+			<td>[t]Description[/t]</td>
+			{if $type == 1}<td>[t]Views[/t]</td>{/if}
+			<td>[t]Price[/t]</td>
+		</tr>		
+		
+		{foreach from=$credits item=c}
+		<tr>
+			<td>{$c.start_date|date_format:"%d/%m/%Y"}</td>
+			<td>{$c.entity_name}&nbsp;[thg]Views credit[/thg]</td>			
+			{if $type == 1}<td>{$c.entity_clicks}</td>{/if}						
+			<td>{$c.entity_price_total}</td>			
+		</tr>
+		{/foreach}		
+
+		<tr>
+			{if $type == 1}
+			{*TYPE 1 IS LIMIT*}
+			
+			{*
+			old version as was before 09.03.2012
+      <td colspan="4" align="center">[th]Total views[/th]:&nbsp;{$totals.views}&nbsp;[th]Views credit[/th]:&nbsp;{$totals.credit}&nbsp;[th]Views balance[/th]:&nbsp;{$totals.balance|string_format:"%.4f"|regex_replace:"/\./":","}</td>
+			*}
+			
+			<td colspan="4" align="center">
+			
+        <table cellspacing="0" cellpadding="0" border="0" class="vTbl">
+        <tr>
+          <th>[th]Totaal clicks gekocht[/th]:</th><td>{$totals.clicks_boutht}</td>
+        </tr>
+        <tr>
+          <th>[th]Clicks verbruikt[/th]:</th><td>{$totals.clicks_used}</td>
+        </tr>
+        <tr>
+          <th>[th]Clicks tegoed[/th]:</th><td>{$totals.clicks_remaining}</td>
+        </tr>
+        <tr>
+          <th>[th]Clicks toegekend aan vacatures[/th]:</th><td>{$totals.clicks_jobs}</td>
+        </tr>
+        <tr>
+          <th>[th]Clicks nog toe te kennen aan vacatures[/th]:</th><td>{$totals.clicks_free}</td>
+        </tr>        
+        </table>			
+			
+			</td>
+			      			
+						
+			{else}
+			<td colspan="3" align="center">[th]Total views[/th]:&nbsp;{$totals.clicks}&nbsp;[th]Views amount[/th]:&nbsp;{$totals.amount|string_format:"%.4f"|regex_replace:"/\./":","}&nbsp;[th]Current balance[/th]:&nbsp;{$totals.balance|string_format:"%.4f"|regex_replace:"/\./":","}</td>
+			{/if}			
+		</tr>								
+	</table>	
+	{/if}				
+	
+</div>
+
+<div id="d-cur-jobs" class="d-cur-jobs">
+	<h2>[t]Current Jobs[/t]</h2>
+	
+	{foreach from=$curJobs item=j}
+	
+		<div class="d-cur-job">
+		
+			<h3>{$j.job_name}</h3>
+			<table class="t-cur-job" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>{if $j.totalViews}{$j.totalViews}{else}0{/if}&nbsp;</td>
+					<td>[t]views[/t]</td>					
+				</tr>
+				<tr>
+					<td>{if $j.maxViews}{$j.maxViews}{else}[t]Undefined[/t]{/if}&nbsp;</td>
+					<td>[t]views maximum[/t]</td>					
+				</tr>
+				<tr>
+					<td>{if $j.remainingViews}{$j.remainingViews}{else}[t]Undefined[/t]{/if}&nbsp;</td>
+					<td>[t]views remaining[/t]</td>					
+				</tr>															
+			</table>
+									        
+		</div>
+		
+	{/foreach}
+			
+</div>
+
+
+<!--END_9-->
+<!--uts:end inner-->

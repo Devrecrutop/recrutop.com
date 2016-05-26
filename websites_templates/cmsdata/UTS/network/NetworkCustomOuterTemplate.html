@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+        <title>[t]Network Detail[/t]</title>
+<base href="{$clientsite}/_customerdata/customer{$customer_id}/network/">
+{$headelements}
+<link href="{$clientsite}/_css_global/globalFlatNavigationStyling.css" rel="stylesheet" type="text/css">
+</head>
+<body{$bodyattributes}>
+
+<div id="page"> 
+
+<div id="navigation">
+<a href="{$clientsite}"><img src="{$logosrc}" alt="{$logoalt}"></a>
+<ul>
+{foreach from=$flatnav item=link}
+<li><a href="{$link.link}">{$link.label}</a></li>
+{/foreach}
+</ul>
+</div>
+
+<div id="customer">
+
+<div id="detail">
+{$custtmpl}
+</div>
+
+{if $shortlist}
+<div class="nwJobShortList">
+<H2>[t]Recente vacatures van[/t] {$website.name}</H2>
+<p>[t]Hieronder vindt u een aantal van de meest recente vacatures die door dit bedrijf zijn gepubliceerd. Klik op de vacaturetitel om een uitgebreide beschri
+jving van de vacature te bekijken.[/t]</p>
+
+{foreach from=$shortlist key=i item=s}
+<div class="nwJobShortListItem">
+<div class="nwJobShortListTitle"><a href="{$s.link}">{$s.name}</a></div>
+{if $s.location}
+<div class="nwJobShortListLocation">{$s.location}</div>
+{/if}
+<div class="nwJobShortListClear"></div>
+</div>
+{/foreach}
+</div>
+{/if}
+
+
+{if $eventShortlist}
+<div class="nwEventShortList">
+<h2>[t]Recent events from [/t] {$website.name}</h2>
+
+{foreach from=$eventShortlist key=i item=e}
+        <div class="nwEventShortListItem">
+        <div class="nwEventShortListTitle"><a href="{$e.link}">{$e.Title}</a></div>
+        {if $e.Location}
+        <div class="nwEventShortListLocation">[t]Location[/t]: {$e.Location}</div>
+        {/if}
+        {if $e.StartDate}
+        <div class="nwEventShortListLocation">[t]Start[/t]: {$e.StartDate} {if $e.StartTime != "00:00:00"}[t]at[/t] {$e.StartTime|date_format:"%H:%M"}{/if}</
+div>
+        {/if}
+        </div>
+{/foreach}
+
+</div>
+{/if}
+
+<div class="nwBackButton"><input type="button" value="[th]Terug naar het overzicht[/th]" onclick="history.back();" name="button" class="button"></div>
+
+</div>
+
+</div>
+</div>
+</body>
+</html>
+

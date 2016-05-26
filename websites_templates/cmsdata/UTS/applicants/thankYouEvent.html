@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+<div class="outer aplOuter aplTyOuter">
+<!-- /UTS/applicants/thankYouEvent.html -->
+<if $messageId == "CANNOT_APPLY">
+<meta name="robots" content="noindex,follow" >
+<else>
+<h1 class="title apltitle aplTyTitle">[t]Thank you![/t]</h1>
+</if>
+
+<if $messageId>
+<div class="intro aplIntro aplTyIntro">
+<if $messageId == "ENROLLED_OK">
+[t]Thank you, the sign up process finished succesfully. Please check your e-mail, you should receive a password for your account soon. Use it to login to your account.[/t]
+<elseif $messageId == "APPLIED_ENROLLED_OK">
+[t]Thank you! Your account was created successfully and you have applied for an Event. Please check your e-mail for more informations and for your access password.[/t]
+<elseif $messageId == "APPLIED_OK">
+[t]Thank you! You have applied for the event.[/t]
+<elseif $messageId == "CANNOT_APPLY">
+[t]We are sorry, but the event you requested is not available.[/t]
+<elseif $messageId == "SUBSCRIPTION_OK">
+[t]Thank you! You have subscribed to the newsletter.[/t]
+<elseif $messageId == "UNSUBSCRIPTION_OK">
+[t]Thank you! You have unsubscribed from the newsletter.[/t]
+</if>
+</div>
+</if>
+
+{* insert custom client's measuring snippets *}
+<if $snippets>
+{$snippets}
+</if>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,72 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>[t]Network Detail[/t]</title>
+	<style type="text/css">
+		/* {literal} */
+		a img
+		{
+			border: none;
+		}
+		
+		.marginTop
+		{
+			margin-top: 1em;
+		}
+		
+		.center
+		{
+			text-align: center; /* Only for IE */
+			margin: 0px auto; /* Other browsers */
+		}
+		
+		*>.center /* Other browsers */
+		{
+			display: table; /* Allow resizing */
+			text-align: inherit; /* Disable IE centering */
+		}
+		
+		ul.horizontalMenu,
+		.horizontalMenu ul
+		{
+			margin: 0em;
+			padding: 0em;
+		}
+		
+		.horizontalMenu li
+		{
+			list-style: none;
+			display: inline;
+			margin: 0em;
+			padding: 0em 1em;
+		}
+		/* {/literal} */
+	</style>
+</head>
+<body>
+<!--uts:begin inner-->
+{assign var='websiteId' value=$website.id}
+{assign var='klantid' value=$website.klantid}
+<table class="standardTable">
+<tr>
+	<td style="vertical-align: top;"><a href="{$website.website}" title="{$website.name}">{$website.name}</a></td>
+	<td><a href="{$website.website}" title="{$website.name}"><img src="/_images_upload/{if $website.network_image == "Picture" && $website.network_picture}{$website.network_picture}{else}{$website.network_logo}{/if}" alt="{$website.name}" ></a></td>
+</tr>
+{if $websitesType.$websiteId}
+<tr>
+	<td style="vertical-align: top;">[t]Category[/t]:</td>
+	<td>{foreach from=$websitesType.$websiteId key=i item=websiteType}{if $i}, {/if}{$websiteTypes.$websiteType}{/foreach}</td>
+</tr>
+{/if}
+<tr>
+	<td style="vertical-align: top;">[t]Description[/t]:</td>
+	<td>{$website.network_text}</td>
+</tr>
+<tr>
+	<td></td>
+	<td><a href="{$website.website}" title="{$website.name}">{$website.website}</a></td>
+</tr>
+</table>
+<!--uts:end inner-->
+</body>
+</html>

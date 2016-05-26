@@ -1,0 +1,30 @@
+{* req. ext. javascript: JQueryFancyBox *}
+
+
+{* Md temp add because Ext. JS in UTS doesnt work *}
+<div class="hookOuter agentsSubscribeOuter actHOuter">
+<!-- /UTS/advsearch/jobAgentHook.frag.html standard -->
+
+<script type="text/javascript" src="[website]/_javascript_global/jquery.fancybox.js"></script>
+<script type="text/javascript">
+//{literal}
+// define ready function
+
+// fancybox, used for send results by email for instance
+$(document).ready(function() {
+	$(".actHOuter a[rel=fancyBox]").fancybox({
+		autoScale: true,
+		type: 'ajax'
+	});
+	$("head").append("<link rel='stylesheet' href='[website]/_css_global/fancybox/jquery.fancybox.css' type='text/css'>");
+});
+//{/literal}
+</script>
+
+<div class="hookHeader agentsSubscribeHeader actHHeader">[t]Job agents[/t]</div>
+<div class="hookText agentsSubscribeText actHText">[t]Create a job agent and receive new jobs by e-mail or SMS.[/t] </div>
+<div class="buttonContainer">
+	<a class="button" href="{$websiteurl}/index.php/page/advsearchvacs/command/showagentform" rel="fancyBox">[t]Create job agent[/t]</a>
+</div>
+<div class="cleaner actHCleaner"></div>
+</div>

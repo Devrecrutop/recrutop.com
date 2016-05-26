@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>Procedures Reports</title>
+    
+</head>
+<body>
+<!--uts:begin inner-->
+<!--/UTS/customers/procReportsGraphsPrint.html STANDARD-->
+<style type="text/css">
+{literal}
+	body, td {
+		font-family:calibri;
+		font-size:12pt;
+		text-align:left;
+	}
+	h1 {
+		font-size:20pt;
+		text-align:center;
+		margin:0;
+		line-height:20pt;
+		font-family:calibri;
+	}
+	h2 {
+		font-size:14pt;
+		font-weight:normal;
+		text-align:center;
+	}
+	h3 {
+		font-weight:normal;
+		text-decoration:underline;
+		text-align:left;
+		font-size:16pt;
+	}
+	.item-outer {
+		margin:0 0 1rem 0;
+	}
+{/literal}
+</style>
+<h1>{$Title|escape}</h1>
+<h2>{$user|escape} - {$period}</h1>
+
+{foreach from=$report item=item}
+	<table autosize="1" class="item-outer">
+    	<tr>
+        	<td>
+                {if $item.title}
+                    <h3 class="subHeader prSh">{$item.title|escape}</h3>
+                {/if}
+                
+                {if $item.text}
+                    <div class="text prText">
+                        {$item.text}
+                    </div>
+                {/if}
+                
+                {if $item.item_type == 'grid'}
+                <div class="text prText">
+                    {if $item.exportData.data}
+                
+                    {if $item.sum_all == 1}
+                    <table border="0" cellpadding="0" cellspacing="2" class="prTbl">
+                
+                        {foreach from=$item.exportData.header key=dataKey item=columnName}
+                        <tr>
+                            <td>{$columnName|replace:'PROCREPORT_COL_':''|escape} :</td>
+                            <td>{if substr($item.exportData.data[0][$dataKey], 0, 12) == '[FORMAT:RED]'}{$item.exportData.data[0][$dataKey]|substr:12|escape}{else}{$item.exportData.data[0][$dataKey]|escape}{/if}</td>
+                        </tr>
+                        {/foreach}
+                
+                    </table>
+                    {else}
+                    {*STANDARD*}
+                    <table border="0" cellpadding="0" cellspacing="2" class="prTbl">
+                        <tr>
+                            {foreach from=$item.exportData.header item=columnName}
+                            <th>{$columnName|replace:'PROCREPORT_COL_':''|escape}</th>
+                            {/foreach}
+                        </tr>
+                        {foreach from=$item.exportData.data item=dataRow}
+                        <tr>
+                            {foreach from=$dataRow item=dataCell}
+                            <td style="{if !$interactiveMode}padding: 0.1em 0.2em;border: 0.03em solid #000;{/if}{if is_numeric($dataCell)}text-align: right;{/if}{if substr($dataCell, 0, 12) == '[FORMAT:RED]'}color: #b00;{/if}">
+                                {if substr($dataCell, 0, 12) == '[FORMAT:RED]'}{$dataCell|substr:12}{else}{$dataCell|escape}{/if}
+                            </td>
+                            {/foreach}
+                        </tr>
+                        {/foreach}
+                    </table>
+                    {/if}
+                
+                    {else}
+                    <div>[t]No data.[/t]</div>
+                    {/if}
+                </div>
+                {/if}
+                
+                
+                {if ($item.item_type == 'bar' || $item.item_type == 'column' || $item.item_type == 'pie' || $item.item_type == 'area' || $item.item_type == 'line'  || $item.item_type == 'gauge')}
+                <div id="graph{$item.id}" class="prGraphContainer">
+                    <img src="{$graphFiles[$item.id]}"  />
+                </div>
+                {/if}
+            </td>
+        </tr>
+    </table>
+{/foreach}
+
+<!--uts:end inner-->
+</body>
+</html>

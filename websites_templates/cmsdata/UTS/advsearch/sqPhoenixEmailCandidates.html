@@ -1,0 +1,77 @@
+{* this email is sent to the to the stored query victim *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<style type="text/css">
+<literal>
+.itemContainer{
+clear:both;
+margin-bottom:10px;
+}
+.itemImage{
+float:right;
+}
+.itemImage a{}
+.itemImage img{
+margin-left:15px;
+margin-bottom:15px;
+}
+.itemTitle{}
+.itemWord{}
+.itemWord span{
+padding-right:2px;
+}
+.itemDescription{
+padding-bottom:15px;
+}
+.itemFooter{
+padding-bottom:15px;
+}
+.itemFooterWord{
+display:inline;
+padding-right:4px;
+margin-right:4px;
+border-right:1px solid;
+}
+.itemFooterWord span{
+padding-right:2px;
+}
+.iFoFirstChild{}
+.iFoChild{}
+.iFoLastChild{
+border-right:none;
+}
+</literal>
+</style>
+<p>[t]Dear Madam / Sir,[/t]</p>
+<p>[t]this is the list of results currently matching your stored query <b>{$storedQueryName} </b>:[/t]</p>
+<div>
+   <!-- /UTS/advsearch/sqPhoenixEmailCandidates.html -->  
+{* actual result list *}
+<foreach from=$items item=r>
+<div class="itemContainer">
+
+<p class="itemTitle">
+<a title="{$r._name}" href="{$r.detail_link}">
+{$r._name}
+</a>
+</p>
+
+</div>
+</foreach>
+
+</div>
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+
+<p>[t]Regards,[/t]</p>
+<p>
+{$client.klant}<br />
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

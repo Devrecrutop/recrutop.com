@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>CustomersCandidatesDetail</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+<!--
+function hidestatus(){
+window.status='Otys e-Recruiting Systems'
+return true
+}
+if (document.layers)
+document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+document.onmouseover=hidestatus
+document.onmouseout=hidestatus
+-->
+</SCRIPT>
+</head>
+<body>
+<!--uts:begin inner-->
+<script language="Javascript1.2">
+
+{literal}
+function check_formstate(tabcode){
+layerShow(tabcode);
+//switch_tab(tabcode);
+}
+
+function printWindow(){
+	browserVersion = parseInt(navigator.appVersion)
+	if (browserVersion >= 4) window.print()
+}
+
+function request() {
+{/literal}
+	//Mitch, 2012-11-08, removed yourit.nl from URL See #190245 2ND: 6915. Contact button issue
+	//location = 'http://www.youreit.nl/index.php/page/CustomersRemote/bb/1/exp//command/prerequest/kid/{$kid}';
+	location = '/index.php/page/CustomersRemote/bb/1/exp//command/prerequest/kid/{$kid}';
+{literal}
+}
+
+function respond() {
+  {/literal}
+  //location = 'http://www.youreit.nl/index.php/page/customers_ext/bb/1/exp//command/reaction/kid/{$kid}/terug/customers/terug_cmd/candjob_list/vid/{$vid}';
+  location = '/index.php/page/customers_ext/bb/1/exp//command/reaction/kid/{$kid}/terug/customers/terug_cmd/candjob_list/vid/{$vid}';
+  {literal}
+}
+
+function print_it() {
+{/literal}
+//	document.frames.actionframe.location = '/index.php/page/CustomersRemote/bb/1/exp//command/detail/kid/{$kid}/option/print&amp;vid={$vid}';
+f = document.getElementById("actionframe");
+
+f.src = "/index.php/page/CustomersRemote/bb/1/exp//command/detail/kid/{$kid}/option/print&amp;vid={$vid}";
+{literal}
+}
+
+
+
+{/literal}
+// -->
+</script>
+
+<!--UT: Candidate_matched-->
+<!-- /UTS/customers/candidate_matched.html -->
+<table border="0" cellspacing="0" cellpadding="0" class="vacsTable" height="100%">
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Candidate[/t]: </td>
+<td class="formHeader">{$candidate.voornaam} {$candidate.tussenvoegsel} {$candidate.achternaam}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+<tr>
+<td class="pageLinkContainer">{$customer_menu}</td>
+</tr>
+
+<tr>
+<td>
+
+
+
+</td>
+</tr>
+
+
+<tr>
+<td class="shCDstatusContainer">
+
+<!--START CV-->
+{if !$nodata}
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="shCDstatusTbl">
+<tr>
+<td class="shCDtblHeader">[t]Resume[/t]: {$candidate.voornaam} {$candidate.tussenvoegsel} {$candidate.achternaam} - {$candidate.woonplaats}</td>
+<tr>
+<td>
+
+<div style="height:300px;width;100%;overflow:auto;">
+
+<table border="0" width="100%">
+{foreach from=$data item=record}
+{if $record.value}
+<!--START_RECORD-->
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0"  cellspacing="0"  class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">{$record.name}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+{if $record.part=="TXT"}
+<!--START_TEXT_PART-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">{$data.value}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_TEXT_PART-->
+{/if}
+
+{if $record.part=="SKI" || $record.part=="OTH"}
+<!--START_ITEM_PART-->
+<tr>
+<td class="formText">
+
+<table cellpadding="0" cellspacing="0">
+
+{foreach from=$record.value key=subkey item=subvalue}
+<!--START_SUBITEM-->
+<tr>
+<td valign="top" class="HQuestion"><i>{if $fieldnames.subkey}{$fieldnames.subkey}{else}{$subkey}{/if}</i></td>
+<td valign="top" class="CCSubItem">
+
+{if is_array($subvalue) && count($subvalue) > 0}
+{foreach from=$subvalue item=subv}
+{$subv}
+<br>
+{/foreach}
+{else}
+{$subvalue}
+{/if}
+
+</td>
+</tr>
+<!--END_SUBITEM-->
+{/foreach}
+</table>
+
+</td>
+</tr>
+<!--END_ITEM_PART-->
+{/if}
+
+{if $record.part=="OPL" || $record.part=="WER"}
+{foreach from=$record.value key=subkey item=item}
+<!--START_HISTORY_ITEM-->
+<tr>
+<td class="formText">
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td>
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td style="font-size:10px;color:#666666;">[t]Van/tot[/t]<!--SingleWordLink2--></td>
+<td>{$item.StartDate} - {$item.EndDate}</td>
+</tr>
+{foreach from=$item key=subkey item=subvalue}
+{if ($subkey!="StartDate" && $subkey!="EndDate") && $subvalue}
+<!--START_SUBITEM-->
+<tr>
+<td class="HQuestion">{if $fieldnames.$subkey}{$fieldnames.$subkey}{else}{$subkey}{/if}</td>
+<td>{$subvalue}</td>
+</tr>
+<!--END_SUBITEM-->
+{/if}
+{/foreach}
+</table>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_HISTORY_ITEM-->
+{/foreach}
+{/if}
+</table>
+
+</td>
+</tr>
+<!--END_RECORD-->
+{/if}
+{/foreach}
+</table>
+</div>
+
+</td>
+</tr>
+</table>
+{/if}
+<!--END CV-->
+
+</td>
+</tr>
+
+<!--ORIGINAL_CV-->
+{if $nr}
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="shCDstatusTbl">
+<tr>
+<td colspan="2" class="shCDtblHeader">[t]Original CV[/t]</td>
+</tr>
+<tr>
+<td class="shCDactionContainer">
+<a href = "/index.php/page/viewcv/bypass_smartlink/1/nr/{$nr}/bb/1" target="actionframe">{$cv}</a>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+{/if}
+<!--END_ORIGINAL_CV-->
+
+
+<tr>
+<td class="formButton">
+
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td><input name="button" class="button shCDbContact" type="button" onClick="request();" value="[t]Contact this candidate[/t]"></td>
+<td>&nbsp;</td>
+<td><input name="button2"class="button shCDbPrint" type="button" onClick="print_it();" value="[t]Print Resume[/t]"> </td>
+<td>&nbsp;</td>
+<td><input type="button" class="button shCDbBack" name="form" value="[th]Terug[/th]" onClick="document.location='/index.php/page/customers_ext/command/cand_matches/bb/1/vid/{$vid}';"><!--ButtonLink3--></td>
+<td>&nbsp;</td>
+<td><input type="button" class="button shCDbRespond" name="form" value="[t]Respond[/t]" onClick="respond();"></td>
+
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+<iframe name="actionframe" id="actionframe" width="1" height="1" border="0" frameborder="NO"></iframe>
+
+<!--uts:end inner-->
+</body>
+</html>

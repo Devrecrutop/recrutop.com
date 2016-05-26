@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+
+<div class="outer aplOuter aplTyOuter">
+<!-- /UTS/finance/select_payment.html -->
+<h1 class="title apltitle aplTyTitle">[t]Payment[/t]</h1>
+
+<div class="intro aplIntro aplTyIntro">
+<p>[t]Please select payment method:[/t]</p>
+
+    {if $packageid}
+    <input type="button" value="[th]Pay online[/th]" onClick="location='/index.php/page/finance/bb/1/command/buy_package/packageid/{$packageid}'" class="button custButton custFinOrderButton">
+    <input type="button" value="[th]Pay via invoice[/th]" onClick="location='/index.php/page/finance/bb/1/command/buy_package_via_invoice/packageid/{$packageid}'" class="button custButton custFinOrderButton">
+    {/if}
+
+    {if $unlimitedpackageid}
+    <input type="button" value="[th]Pay online[/th]" onClick="location='/index.php/page/finance/bb/1/command/buy_package/unlimitedpackageid/{$unlimitedpackageid}'" class="button custButton custFinOrderButton">
+    <input type="button" value="[th]Pay via invoice[/th]" onClick="location='/index.php/page/finance/bb/1/command/buy_package_via_invoice/unlimitedpackageid/{$unlimitedpackageid}'" class="button custButton custFinOrderButton">
+    {/if}
+
+</div>
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

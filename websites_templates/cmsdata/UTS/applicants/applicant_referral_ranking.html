@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+
+
+
+</head>
+<body>
+<!--uts:begin inner-->
+<!--system part-->
+
+{* MUST REFRESH EVERY 20 min*}
+<meta http-equiv="refresh" content="1200">
+
+<script type="text/javascript">
+// {literal}
+
+// {/literal}
+</script>
+
+<!--display part-->
+<div class="outer custOuter custFinOuter custFinDetOuter">
+<!-- UTS/applicants/applicant_referral_ranking.html -->
+	<h1 class="title">[t]Candidate ranking[/t]</h1>
+	
+	{$menu}
+   		
+  <div class="text">[t]Below you will find a list of the best performing candidates.[/t]</div>
+  
+  	
+  <table class="rankingTbl" cellspacing="0" cellpadding="0"  border="0">
+    <tr class="rankingHeaderRow">
+    <th class="rank">[t]Rank[/t]</th>
+    <th class="fullName">[t]Name[/t]</th>
+    <th class="points">[t]Total referral points[/t]</th>
+    </tr>      
+      
+	{foreach from=$ranking item=r name=ranking}
+    <tr>  
+      <td class="rankTd">{$smarty.foreach.ranking.iteration}</td> 
+  		<td class="fullNameTd">{$r.fullname}</td>
+  		<td class="pointsTd" align="right">{$r.points}</td>
+    </tr>
+	{/foreach}
+  </table>
+
+
+    
+</div>
+<!--uts:end inner-->
+</body>
+</html>

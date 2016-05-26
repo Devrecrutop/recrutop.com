@@ -1,0 +1,139 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>[t]Customer Network Styling[/t]</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/network/customerNetworkStylingDlg.html -->
+{* req.ext.js: JQueryBase,JQueryFarbtastic *}
+
+{literal}
+<script type="text/javascript" language="JavaScript">
+<!--
+//{/literal}
+
+  var handler = '{$handler}'
+  
+//{literal}
+
+function submitCNSForm()
+{
+
+  // to be sure that values are set
+  $('#tab_bg').val($.farbtastic('#colorpicker1').color);
+  $('#tab_link').val($.farbtastic('#colorpicker2').color);
+  $('#hdr_h1').val($.farbtastic('#colorpicker3').color);
+  $('#hdr_h2').val($.farbtastic('#colorpicker4').color);
+  $('#hook_bg').val($.farbtastic('#colorpicker5').color);  
+  $('#hook_font').val($.farbtastic('#colorpicker6').color);
+  $('#link_font').val($.farbtastic('#colorpicker7').color);
+
+  $('#frm_cns').submit();
+}
+			
+// initialize document	
+$(document).ready(function () {
+
+  $('#colorpicker1').farbtastic('#tab_bg');
+  $('#colorpicker2').farbtastic('#tab_link');
+  $('#colorpicker3').farbtastic('#hdr_h1');		
+  $('#colorpicker4').farbtastic('#hdr_h2');		
+  $('#colorpicker5').farbtastic('#hook_bg');										 
+  $('#colorpicker6').farbtastic('#hook_font');
+  $('#colorpicker7').farbtastic('#link_font');
+  
+  $('#cnsBttnSave').click(submitCNSForm);    	 	 	 	 	
+}); 
+
+//-->
+</script>
+{/literal}
+
+<div class="outer custOuter csnBody">
+<h1 class="title csnTitle">[t]Customer Network Styling[/t]</h1>
+{$menu}
+
+<div class="text custNetwEditText">
+	<p>[t]You can setup your company color theme of your website below.[/t]</p>
+	{if $customerConnectionId}
+		<p>[t]You can open your profile by clicking[/t]&nbsp;<span class="customQsProfileViewLink"><a href="/index.php/page/network/command/custdetail/connectionId/{$customerConnectionId}/bb/1/" target="_blank">[t]here[/t]</a></span></p>
+	{/if}
+</div>
+
+<form action="{$handler}" method="post" name="frm_cns" id="frm_cns" enctype="multipart/form-data">
+<input type="hidden" name="command" value="save">
+
+  <div class="cnsImage">
+    <h2>[t]Header Image[/t]</h2>
+	<div id="nwPPheader">{if $data.hdr_img}<img class="nwPPheaderImg" src="/_images_upload/{$data.hdr_img|escape}" border="0">{/if}</div>
+	<div class="formInput">
+ 		<label>[t]Upload Header image[/t]:</label>    
+	    <input type="file" name="hdr_img" id="hdr_img">
+	</div>
+	<div class="formInput">
+ 		<label>[t]Show Header image[/t]:</label>    
+		<select name="hdr_img_display" id="hdr_img_display">
+			<option value="1" {if $data.hdr_img_display == 1}selected="selected"{/if}>[thg]Yes[/thg]</option>
+			<option value="0" {if $data.hdr_img_display == 0}selected="selected"{/if}>[thg]No[/thg]</option>
+		</select>
+	</div>
+  </div>
+
+<div class="csnFarbWrapper">
+	<h2>[t]Theme colors[/t]</h2>
+  <div class="cnsColorPicker cnsCPfirst">
+    <label>[t]Tab background color[/t]</label>
+    <div id="colorpicker1"></div>
+    <input type="text" id="tab_bg" name="tab_bg" value="{$data.tab_bg|escape}" />  
+  </div>
+  
+  <div class="cnsColorPicker">
+    <label>[t]Tab link font color[/t]</label>      	  
+    <div id="colorpicker2"></div>
+    <input type="text" id="tab_link" name="tab_link" value="{$data.tab_link|escape}" />  
+  </div>
+  
+  <div class="cnsColorPicker">
+    <label>[t]Header (H1) font color[/t]</label>      	  
+    <div id="colorpicker3"></div>
+    <input type="text" id="hdr_h1" name="hdr_h1" value="{$data.hdr_h1|escape}" />  
+  </div>
+  
+  <div class="cnsColorPicker">
+    <label>[t]Header (H2) font color[/t]</label>      	  
+    <div id="colorpicker4"></div>
+    <input type="text" id="hdr_h2" name="hdr_h2" value="{$data.hdr_h2|escape}" />  
+  </div>
+  
+  <div class="cnsColorPicker">
+    <label>[t]Hook background color[/t]</label>      	  
+    <div id="colorpicker5"></div>
+    <input type="text" id="hook_bg" name="hook_bg" value="{$data.hook_bg|escape}" />  
+  </div>
+  
+  <div class="cnsColorPicker">
+    <label>[t]Hook header font color[/t]</label>      	  
+    <div id="colorpicker6"></div>
+    <input type="text" id="hook_font" name="hook_font" value="{$data.hook_font|escape}" />  
+  </div>
+  
+  <div class="cnsColorPicker cnsCPlast">
+    <label>[t]Link font color[/t]</label>      	  
+    <div id="colorpicker7"></div>
+    <input type="text" id="link_font" name="link_font" value="{$data.link_font|escape}" />  
+  </div>
+</div>
+  
+  <div class="cleaner"></div>
+
+  <div class="buttonContainer csnButtons">
+    <input class="button" type="button" name="cnsBttnSave" id="cnsBttnSave" value="[t]Save[/t]">    
+  </div>            
+
+</form>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

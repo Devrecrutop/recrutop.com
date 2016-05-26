@@ -1,0 +1,38 @@
+<div class="hookOuter hContainer">
+	<!-- /UTS/network/viewNetworkSearchHook.html -->
+	<div class="hookTitle nshHeader">
+		<h1>[t]Werkges zoeken[/t]</h1>
+	</div>
+		
+	<div class="hookDetailsContainer nshDetailsContainer">
+		
+		{if $settings.descr}
+		<div class="hookDesciption">{$settings.descr}</div>
+		{/if}
+		
+		{*<!--<form action="/index.php/page/network/bb/1/command/custlist/cms_categorie/{$cmsCategory}" method="post" name="nshFrm">-->*}
+		<form action="/index.php/page/searchnetwork/bb/1" method="post" name="nshFrm">		
+				
+		<table width="100%" class="nshTable" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>[t]Name[/t]:</td>			
+			<td><input type="text" name="name" value="{$name}"></td>			
+		</tr>
+		<tr>
+			<td>[t]Branch[/t]:</td>
+			<td><select name="branch_id"><option value="">---</option>{html_options options=$branchList selected=$branchId}</select></td>			
+		</tr>
+		<tr>
+			<td>[t]Search word[/t]:</td>
+			<td><input type="text" name="search_word" value="{$searchWord}"></td>			
+		</tr>		
+		<tr>
+			<td colspan="2"><input type="submit" name="bttnSub" value="[tg]Search[/tg]"></td>                                       				
+		</tr>								
+	  </table>
+	  
+	  </form>
+		
+	</div>
+
+</div>

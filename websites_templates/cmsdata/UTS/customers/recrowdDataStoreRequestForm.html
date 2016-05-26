@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer custOuter recrowdOuter rcwdDatStoRqstOuter">
+	<!-- /UTS/customers/recrowdDataStoreRequestForm.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<form name="recrowdForm" action="{$handler}" method="post" class="qsPageOuter">
+		<input type="hidden" value="saveConfirmDataMode" name="command">
+		
+		{if $is_removed}
+		<h1 class="title">[t]Store my data[/t]</h1>
+		<div class="intro">[t]Your data was already removed.[/t]</div>
+		{else}
+			{if $mode=="store"}
+			<h1 class="title">[t]Store my data[/t]</h1>
+			<div class="intro">[t]Please confirm that you want us to store your data.[/t]</div>
+			<input type="hidden" value="store_data" class="button" name="confirm_mode">
+			{else}
+			<h1 class="title">[t]Remove my data[/t]</h1>
+			<div class="intro">[t]Please confirm that you want to remove your data.[/t]</div>
+			<input type="hidden" value="remove_data" class="button" name="confirm_mode">
+			{/if}
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[tb]Submit[/tb]" name="sSubmit">
+		</div>
+		{/if}
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

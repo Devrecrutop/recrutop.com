@@ -1,0 +1,126 @@
+{* this is the customers results template version , with facets on the right side *}
+{* Styles moved to global styling CSS *}
+
+<div class="outer actOuter actCustOuter">
+<!-- /UTS/advsearch/customersResults2.html STANDARD - Actonomy Facets on the right -->
+<!-- Template Webdevelopment validated 07-2013 -->
+
+<!--LEFT PANEL 22-->
+	<div class="actSResultsCont">
+		{if $rewrite_header}
+		<h1 class="title actTitle actRewriteTitle">{$rewrite_header}</h1>
+		{else}
+		<h1 class="title actTitle">[t]Search results[/t]</h1>
+		{/if}
+		<if $requestOrigin == "matchapplicant" && $resultCnt gt 0>
+		<div>
+			<p>[t]You profile has been successfuly matched against our customers database, you can see results below.[/t]</p>
+			<if $lastAutoMatchSQName && $useocd>
+			<p>[t]The search query for matching your profile has been stored under name {$lastAutoMatchSQName|escape} for future use.[/t] <a href="{$handler}/command/sqlist">[t]Stored query list[/t]</a></p>	
+			</if>
+		</div>
+		</if>
+		
+		<div class="menuContainer actMc actTopMenu">
+			<div class="menuLink menuLinkFirstChild actMl actMlFc actMlJc">{t 1=$totalCnt count=$resultCnt}<if $totalCnt ge "500">[th]%1 klanten gevonden, waarvan[/th] {$resultCnt} [th]getoond[/th]<else>[th]%1 customers found[/th]</if>{/t}</div>
+			<if [uts:show_edit_query_link]>
+			<div class="menuLink actMl actMlEq"><a href="{$handler}/command/editrequest">[t]Edit query[/t]</a></div>
+			</if>
+			<if [uts:show_new_search_link]>
+			<div class="menuLink actMl actMlNs"><a href="{$handler}/command/clearrequest">[t]New search[/t]</a></div>
+			</if>
+			<if $requestOrigin != "googlemaps">
+			<div class="menuLink menuLinkLastChild actMl actMlLc actMlSb">
+				<label for="actCstChangeSortBy">[t]Sort by:[/t]</label>
+				
+				<select id="actCstChangeSortBy" name="ctrl_sortby" onchange="actCstChangeSortBy(this.value)" class="relevance">
+				    <option value="score" {if $ctrl.sortby == "score"}selected{/if}>[th]relevance[/th]</option>
+				    <option value="werkgever" {if $ctrl.sortby == "werkgever"}selected{/if}>[th]werkgever[/th]</option>
+				</select>
+				
+				<select id="actCstChangeSortByAscDesc" name="ctrl_sortascdesc" onchange="actCstChangeSortAscDesc(this.value)" class="order">
+				    <option value="asc" {if $ctrl.sortascdesc == "asc"}selected{/if}>[th]asc.[/th]</option>
+				    <option value="desc" {if $ctrl.sortascdesc == "desc"}selected{/if}>[th]desc.[/th]</option>
+				</select>
+
+				<div class="cleaner menuCleaner actMCleaner"></div>
+			</div>
+			<div class="menuLink menuLinkLastChild actMl actMlLc actMlSb">
+				<label for="actCstSetPageLimit">[t]Results per page:[/t]</label>
+				<select id="actCstSetPageLimit" name="ctrl_setpagelimit" onchange="actCstChangePageLimit(this.value)" class="limit">
+				    <option value="5" {if $ctrl.resultsperpage == 5}selected{/if}>5</option>
+				    <option value="10" {if $ctrl.resultsperpage == 10}selected{/if}>10</option>
+				    <option value="25" {if $ctrl.resultsperpage == 25}selected{/if}>25</option>
+				    <option value="50" {if $ctrl.resultsperpage == 50}selected{/if}>50</option>
+				    <option value="1000000" {if $ctrl.resultsperpage == 1000000}selected{/if}>[th]All[/th]</option>
+				</select>
+			
+				<div class="cleaner menuCleaner actMCleaner"></div>
+			</div>
+			</if>
+		</div>
+	    {* start query editor *}
+	    <if [uts:show_query_editor]>
+	    <include file="queryEditorCustomers.inc.html">
+	    </if>
+	    {* end query editor *}
+	    <include file="customersResults.inc.html">
+	    <if $requestOrigin != "googlemaps">
+	    <include file="pagingControls.inc.html">
+	    </if>
+		<!-- Commented out by BB 05-12-2013
+		<div class="menuContainer actMc actBottomMenu">
+			{* NOT IMPLEMENTED
+			<div class="menuLink menuLinkFirstChild actMl actMlFc actMlCrss"><a href="{$handler}/command/request2rss">[t]RSS feed[/t]</a></div>
+			<div class="menuLink menuLinkLastChild actMl actMlLc actMlCJsa"><a href="{$handler}/command/showemailform" rel="prettyPopin">[t]Results by e-mail[/t]</a></div>
+			*}
+			
+			<if $useocd>
+			<div class="menuLink actMl actMlCsms"><a href="{$handler}/command/showsmsform" rel="prettyPopin">[t]Results by SMS[/t]</a></div>
+			<div class="menuLink menuLinkLastChild actMl actMlLc actMlCsvq"><a href="{$handler}/command/newsqform" rel="prettyPopin">[t]Store query[/t]</a></div>
+			<else>
+			<div class="menuLink menuLinkLastChild actMl actMlFc actMlCsms"><a href="{$handler}/command/showsmsform" rel="prettyPopin">[t]Results by SMS[/t]</a></div>	
+			</if>
+			<div class="cleaner menuCleaner actMCleaner actBottomMCleaner"></div>
+		</div>		
+		-->
+		{* start timinginfo *}
+		<if $OTYSCZ || $VITH || $JBITH >
+		<div style="font-size:8px;">
+		[t]Search results acquired in[/t] <strong>{$lastTimingActonomy}</strong> [t]seconds.[/t] [t]Processing took[/t] <strong>{$lastTimingProcess}</strong> [t]seconds.[/t]
+		</div>
+		</if>
+		{* end timinginfo *}
+		{if $rewrite_description}
+		<div class="cleaner"></div>
+		<div class="actRewriteDescr">
+		<h2 class="subHeader">{$rewrite_keyword}</h2>
+		<div class="text">{$rewrite_description}</div>
+		</div>
+		<div class="cleaner"></div>
+		{/if}
+	</div>
+<!--END LEFT PANEL-->
+
+<!--RIGHT PANEL 22-->
+<div class="actSRFacetCont actSRFacetContCust">
+	<div class="actSRCf">
+    {* information box / SECTION A *}
+    {* search request box / SECTION B *}
+    <include file="sectionBCustomers.inc.html">    
+	</div>
+	<div class="actKeySug">
+    {* actonomy suggestions / SECTION C *}
+    <if $expcnt gt 0 && [uts:show_expansions]>
+    <include file="sectionC.inc.html">
+    </if>
+	</div>
+	<div class="actSROf">
+    {* actonomy facets / all instances of SECTION D *}
+    <include file="facets.inc.html">
+	</div>
+</div>
+<!--END RIGHT PANEL-->
+<div class="cleaner"></div>
+
+</div>

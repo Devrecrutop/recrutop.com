@@ -1,0 +1,208 @@
+<!--<script type="text/javascript" src="/_javascript_global/ui/jquery.ui.js">
+<link rel="stylesheet" href="/_javascript_global/ui/css/ui-lightness/jquery.ui.css" type="text/css">-->
+<script type="text/javascript">
+
+var qsDocTypes = {$docTypes|@json_encode};
+
+{literal}
+
+var qsMandatoryDocTypeLastMetaId = 0;
+
+function qsEditMandatoryDocTypes() {
+    qsMandatoryDocTypesDialog.dialog( "open" );
+}
+
+function qsAddDocumentType() {
+
+    var categoryId = $('#docTypeCategoryId').val();
+    if (!categoryId) {
+        categoryId = 0;
+    }
+
+    var docTypeId = $('#docTypeCategory_' + categoryId + ' select').val();
+
+    if (docTypeId == 0) {
+        return;
+    }
+
+    qsRenderAddDocumentType(docTypeId, 'and');
+
+}
+
+function qsRenderAddDocumentType(docTypeId, relation) {
+
+    var metaId = 'ADD' + qsMandatoryDocTypeLastMetaId;
+
+    var html = $('#mandatoryDocTypesTemplate')[0].innerHTML;
+    var docTypeName = qsDocTypes[docTypeId].name;      
+    html = html.replace(/\[\[documentType\]\]/g, docTypeName);
+    html = html.replace(/\[\[documentTypeId\]\]/g, docTypeId);
+    html = html.replace(/\[\[itemId\]\]/g, metaId);    
+    var el = $('#mandatoryDocTypes').append(html);
+    $('input[name=' + metaId + '][value=' + relation + ']').attr('checked', 'checked');
+    
+    qsMandatoryDocTypeLastMetaId++;
+}
+
+function qsMandatoryDocTypeSave() {
+
+    var out = '';
+
+    var docTypes = $('#mandatoryDocTypes').children();
+    var inputValue = '';
+
+    docTypes.each(function(id, el) {
+        out += $('.documentType', el).html();
+
+        inputValue += $('input[name=docTypeId]', el).val();;
+
+        if (id == docTypes.length - 1) {
+            return;
+        }
+
+        var relation = $('input[type=radio]:checked', el).val();
+        if (relation == 'and') {
+            out += ') [th]and[/th] (';
+            inputValue += ';';
+        }
+        if (relation == 'or') {
+            out += ' [th]or[/th] ';
+            inputValue += ',';
+        }
+    });
+
+    if (out.length > 0) {
+        out = '(' + out + ')';
+    }
+
+    $('#qsMandatoryTypeValue').text(out);
+    $('#qsMandatoryTypeInput').val(inputValue);
+
+}
+
+$(function() {
+
+    qsMandatoryDocTypesDialog = $("#qsMandatoryDocTypesDialog").dialog({
+        autoOpen: false,
+        height: 500,
+        width: 550,
+        modal: true,
+        buttons: {
+            "[th]Close[/th]": function() {
+                qsMandatoryDocTypesDialog.dialog("close");
+                qsMandatoryDocTypeSave();
+            }
+        },
+        close: function() {
+            qsMandatoryDocTypeSave();
+        }
+    });
+
+    $("#mandatoryDocTypes").sortable();
+
+    var initialValue = $('#qsMandatoryTypeInput').val();
+
+    if (initialValue.length > 0) {
+
+        var groups = initialValue.split(';');
+
+        for (var i in groups) {
+            var docTypeIds = groups[i].split(',');
+            for (var j in docTypeIds) {
+                var docTypeId = docTypeIds[j];
+                qsRenderAddDocumentType(docTypeId, (j == (docTypeIds.length - 1)) ? 'and' : 'or');
+            }
+        }
+
+        qsMandatoryDocTypeSave();
+
+    }
+
+});
+
+{/literal}
+
+</script>
+
+<style>
+{literal}
+.mandatoryDocType input.magicSelect {
+    width:100px;
+}
+
+#mandatoryDocTypes .mandatoryDocType:last-child .documentRelationSelect {
+    display:none !important;
+}
+{/literal}
+</style>
+
+<div>
+
+    <div id="qsMandatoryTypeValue"></div>
+
+    <input type="hidden" value="{$answer|escape}" name="Answers[{$questionId}]" id="qsMandatoryTypeInput" />
+    <input type="button" onclick="qsEditMandatoryDocTypes();" value="[th]Select mandatory documents[/th]" class="button">
+
+</div>
+
+<div id="qsMandatoryDocTypesDialog" title="[th]Select mandatory documents[/th]">
+
+    {if $useDocTypeCategories}
+        <div class="formInput" onchange="$('div.docTypeCategory').css('display','none');$('div#docTypeCategory_' +  $('select#docTypeCategoryId').val()).css('display','block');">
+            <label>[t]Document category[/t]</label>
+            <select id="docTypeCategoryId" name="{$elementNamePrefix}_docTypeCategoryId">
+                <option value="0">---</option>                
+                {html_options options=$docTypeCategories}
+            </select>
+        </div>
+    {/if}
+    
+    <div class="formInput docTypeCategory" id="docTypeCategory_0">
+        <label>[t]Document type[/t]</label>
+        <select name="{$elementNamePrefix}_docTypeId_0">
+            <option value="0">---</option>               
+             {foreach from=$docTypes item=docType key=docTypeId}
+                {if $docType.id_category == 0}
+                    <option value="{$docTypeId}">{$docType.name|escape}</option>
+                {/if}
+            {/foreach}
+        </select>
+    </div>        
+
+    {if $useDocTypeCategories}
+        {foreach from=$docTypeCategories item=docTypeCategory key=docTypeCategoryId}
+            <div class="formInput docTypeCategory" id="docTypeCategory_{$docTypeCategoryId}" style="display:none;"> 
+                <label>[t]Document type[/t]</label>
+                <select name="{$elementNamePrefix}_docTypeId_{$docTypeCategoryId}">
+                    <option value="0">---</option>
+                    {foreach from=$docTypes item=docType key=docTypeId}
+                        {if $docType.id_category == $docTypeCategoryId}
+                            <option value="{$docTypeId}">{$docType.name|escape}</option>
+                        {/if}
+                    {/foreach}
+                </select>
+            </div>
+        {/foreach}
+    {/if}
+
+    <div style="margin-top:1em;" class="formInput">
+        <label>&nbsp;</label>
+        <input type="button" class="button" value="[th]Add[/th]" onclick="qsAddDocumentType();" />
+    </div>
+
+    <div id="mandatoryDocTypes">
+    </div>
+
+    <div style="display:none;" id="mandatoryDocTypesTemplate">
+        <div class="mandatoryDocType" style="cursor:move;">
+            <input type="hidden" name="docTypeId" value="[[documentTypeId]]" />
+            <div style="display:inline-block;cursor:pointer;" onclick="$(this).parent().remove();">X</div>
+            <div style="display:inline-block;width:300px;" class="documentType">[[documentType]]</div>
+            <div style="display:inline-block;" class="documentRelationSelect">
+                <input type="radio" value="and" name="[[itemId]]" />[th]And[/th]
+                <input type="radio" value="or" name="[[itemId]]" />[th]Or[/th]
+            </div>
+        </div>
+    </div>
+
+</div>

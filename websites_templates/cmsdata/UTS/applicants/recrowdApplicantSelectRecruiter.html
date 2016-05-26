@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+var vhandler = '{$handler}';
+var vmodel = new ViewModel()
+
+$(document).ready( function() {
+    $(".multiSelect").multiSelect({ selectAllText: '[th]Select All[/th]', noneSelected: '[th]Select match criteria[/th]', oneOrMoreSelected: '*', xSelected: '[th]% selected[/th]'}, function(el) { });
+	$('#datepickerDeadline').datepicker({
+		dateFormat : 'dd-mm-yy',
+		changeMonth: true,
+		changeYear: true,
+		minDate: 0,
+		maxDate: '+1y',
+		constrainInput: true,
+		inline: true
+	});
+	$('a.ajaxLink').on('click', function(e) {
+		e.preventDefault();
+	});
+	ko.bindingHandlers.ratyScore = {
+		init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+			// This will be called when the binding is first applied to an element
+			// Set up any initial state, event handlers, etc. here
+			var value = ko.utils.unwrapObservable(valueAccessor());
+			$(element).raty({
+				half  : true,
+				path : '/_images_global/raty/',
+				space : false,
+				hints: ['[th]bad[/th]', '[th]poor[/th]', '[th]regular[/th]', '[th]good[/th]', '[th]excellent[/th]'],
+				width: 90,
+				readOnly : true,
+				noRatedMsg : '[th]not rated yet[/th]',
+				score: value
+			});
+			//ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+				//$(element).raty("destroy");
+			//});
+		},
+		update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+			// This will be called once when the binding is first applied to an element,
+			// and again whenever the associated observable changes value.
+			// Update the DOM element based on the supplied values here.
+            // not implemented, no updates needed
+		}
+	};
+	ko.applyBindings(vmodel);
+	vmodel.doLoadMore();
+});
+
+function Recruiter(id, name, employer, city, rating, reviews,network_url) {
+    var self = this;
+	self.selected = ko.observable(false);
+	self.id = ko.observable(id);
+	self.name = ko.observable(name);
+	self.employer = ko.observable(employer);
+	self.city = ko.observable(city);
+	self.rating = ko.observable(rating);
+	self.reviews = ko.observable(reviews);
+	self.network_url  = ko.observable(network_url);
+}
+
+function ViewModel() {
+	var self = this;
+	self.busy = ko.observable(false);
+	self.offset = ko.observable(0);
+	self.totalFound = ko.observable(0);
+	self.recruiters = ko.observableArray([]);
+	self.totalFoundText = ko.computed(function() {return '[th]There are %d recruiters matching your filter.[/th]'.replace('%d', self.totalFound());}, self);
+	self.enableMore = ko.computed(function() {return (self.totalFound()-self.offset())>0;}, self);
+    self.loadMore = function() {self.doLoadMore();}
+	self.doLoadMore = function() {
+		self.busy(true);
+		$.getJSON(vhandler+"/command/selectRecruiter/selectCommand/loadRecruiters/offset/"+self.offset(), function(data) {
+			self.busy(false);
+			self.totalFound(data.totalFound);
+            for (var k in data.recruiters) {
+				var c=new Recruiter(data.recruiters[k].id, data.recruiters[k].name, data.recruiters[k].company, data.recruiters[k].location, data.recruiters[k].rating, data.recruiters[k].reviews, data.recruiters[k].network_url);
+				self.recruiters.push(c);
+			}
+			self.offset(self.offset()+data.recruiters.length);
+		});
+	};
+	self.searchAgain = function() {
+		// we have to update current filter in session by posting the form in ajax way
+		self.busy(true);
+		$.post(vhandler, $('#fRecrowdFilter').serialize(),
+			function(data){
+				self.busy(false);
+				if (data=='OK') {
+					self.offset(0);
+					self.recruiters.removeAll();
+					self.doLoadMore();
+                } else {
+					alert('[th]Unexpected response:[/th] '+data);
+				}
+			}
+		);
+	}
+}
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdSelRecrOuter">
+	<!-- /UTS/applicants/recrowdApplicantSelectRecruiter.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->       
+	<h1 class="title">[t]Select Recruiters[/t]</h1>
+
+	
+<div class="leftCol" style="float:left;width:67%;">
+
+    <div class="intro">[t]Select recruiters below. You may use filters to narrow down search results.[/t]
+		<input class="button" type="button" value="[tb]Search again[/tb]" data-bind="click: searchAgain" style="text-align: right;float:right;">
+	</div>
+	<div class="text" data-bind="text: totalFoundText"></div>
+	
+    <form name="recrowdSelectForm" method="post" action="{$handler}">
+        <table class="custLinTbl recrowdRecruiters" cellpadding="0" cellspacing="0" border="0" width="100%">
+            <thead>
+			<tr>
+				<th>&nbsp;</th>
+				<th>[t]Recruiter name[/t]</th>
+				<th>[t]Employer[/t]</th>
+				<th>[t]City[/t]</th>
+				<th>[t]Rating[/t]</th>
+				<th>[t]Reviews[/t]</th>
+			</tr>
+            </thead>
+            <tbody data-bind="foreach: recruiters">
+			<tr>
+				<td><input type="checkbox" name="selected[]" data-bind="checked: selected, value: id"></td>
+				<!-- ko if: network_url -->
+					<td><a data-bind="text: name, attr: {literal}{ 'href': network_url}{/literal}" target="_blank"></a></td>
+				<!-- /ko -->
+				<!-- ko ifnot: network_url -->
+					<td data-bind="text: name"></td>
+				<!-- /ko -->
+				<td data-bind="text: employer"></td>
+				<td data-bind="text: city"></td>
+				<td><div data-bind="ratyScore: rating"></div></td>
+				<td data-bind="text: reviews"></td>
+			</tr>
+			</tbody>
+		</table>
+		<div class="text" data-bind="visible: enableMore"><a href="#" data-bind="click: loadMore">[t]Show 5 more recruiters[/t]</a></div>
+		<if $error>
+            <div class="error recrowdError">
+                {if $error == "ERR_NO_RECRUITERS_SELECTED"}[t]Please select at least one recruiter.[/t]
+                {elseif $error == "ERR_SEL_MAX_3_RECRUITERS"}[t]You can select only 3 recruiters max.[/t]
+                {elseif $error == "ERR_NO_DEADLINE_SPECIFIED"}[t]Please enter the deadline.[/t]
+                {elseif $error == "ERR_SEL_MAX_RECRUITERS"}[t]You cannot select more recruiters than you specified.[/t]
+                {else}[t]Unspecified error[/t]
+                {/if}
+            </div>
+        </if>
+        <div class="buttonContainer">
+            <input class="button" type="button" name="bSelectRecruitment" value="[t]Send my profile[/t]" onclick="this.form.selectCommand.value='selRecruitment'; this.form.submit();">
+        </div>
+        <input type="hidden" name="command" value="selectRecruiter">
+        <input type="hidden" name="selectCommand" value="">
+        <input type="hidden" name="offset" value="{$offset}">
+        <input type="hidden" name="candidate_id" value="{$candidate_id}">
+        <input type="hidden" name="candidate_code" value="{$candidate_code}">
+    </form>
+</div>
+
+<div class="rightCol" style="float: left; margin-left: 10px;margin-right: -11px;padding-left: 10px;width: 30%;">
+    <form name="recrowdFilterForm" method="post" action="{$handler}" id="fRecrowdFilter">
+		
+        <div class="pushRight"><img src="[website]/_images_global/busy_ts.gif" alt="busy" data-bind="visible: busy"></div> {* webdevelopers: make styling so the busy image is pushed to the side *}
+
+        {if !$critListEmpty}
+        <fieldset class="recrowdFieldSet">
+            <legend>[t]Search filter - hard criteria:[/t]</legend>
+            {foreach from=$critList item=c key=cf}
+            <div class="formInput filterCriteria">
+                <label>{$c.name|escape}</label>
+                <select name="f_crit_{$cf}[]" multiple="multiple" size="5" class="multiSelect">
+                {html_options options=$c.options selected=$f.criteria.$cf}
+                </select>
+            </div>
+            {/foreach}
+        </fieldset>
+        {/if}
+        <fieldset class="recrowdFieldSet">
+            <legend>[t]Search filter - ratings:[/t]</legend>
+            <div class="formInput filterRatings">
+                <label>[t]Minimum rating[/t]</label>
+                <select name="f_minRating">
+                    {html_options options=$ratOpts selected=$f.minRating}
+                </select>
+            </div>
+            <div class="formInput filterReviews">
+                <label>[t]Minimum reviews[/t]</label>
+                <select name="f_minReviews">
+                    {html_options options=$reviewsOpts selected=$f.minReviews}
+                </select>
+            </div>
+            <div class="formInput filterSubRatings">
+                <label>[t]Minimum speed rating[/t]</label>
+                <select name="f_minSubRatingSpeed">
+                    {html_options options=$ratOpts selected=$f.minSubRatingSpeed}
+                </select>
+            </div>
+            <div class="formInput filterSubRatings">
+                <label>[t]Minimum communication rating[/t]</label>
+                <select name="f_minSubRatingCommunication">
+                    {html_options options=$ratOpts selected=$f.minSubRatingCommunication}
+                </select>
+            </div>
+            <div class="formInput filterSubRatings">
+                <label>[t]Minimum accessibility rating[/t]</label>
+                <select name="f_minSubRatingAccessibility">
+                    {html_options options=$ratOpts selected=$f.minSubRatingAccessibility}
+                </select>
+            </div>
+            <div class="formInput filterSubRatings">
+                <label>[t]Minimum quality rating[/t]</label>
+                <select name="f_minSubRatingQuality">
+                    {html_options options=$ratOpts selected=$f.minSubRatingQuality}
+                </select>
+            </div>
+            <div class="formInput filterSubRatings">
+                <label>[t]Minimum refusals rating[/t]</label>
+                <select name="f_minSubRatingRefusals">
+                    {html_options options=$ratOpts selected=$f.minSubRatingRefusals}
+                </select>
+            </div>
+        </fieldset>
+        <fieldset class="recrowdFieldSet">
+            <legend>[t]Search filter - ratings:[/t]</legend>
+            <div class="formInput filterSubRatingWeights">
+                <label>[t]Speed weight %[/t]</label>
+                <select name="f_subRatingSpeedPerc">
+                    {html_options options=$weightOpts selected=$f.subRatingSpeedPerc}
+                </select>
+            </div>
+            <div class="formInput filterSubRatingWeights">
+                <label>[t]Communication weight %[/t]</label>
+                <select name="f_subRatingCommunicationPerc">
+                    {html_options options=$weightOpts selected=$f.subRatingCommunicationPerc}
+                </select>
+            </div>
+            <div class="formInput filterSubRatingWeights">
+                <label>[t]Accessibility weight %[/t]</label>
+                <select name="f_subRatingAccessibilityPerc">
+                    {html_options options=$weightOpts selected=$f.subRatingAccessibilityPerc}
+                </select>
+            </div>
+            <div class="formInput filterSubRatingWeights">
+                <label>[t]Quality weight %[/t]</label>
+                <select name="f_subRatingQualityPerc">
+                    {html_options options=$weightOpts selected=$f.subRatingQualityPerc}
+                </select>
+            </div>
+            {*
+            <div class="formInput filterFeePerc">
+                <label>[t]Fee Percentage[/t]</label>
+                <input type="text" name="f_feePercentage" value="{$f.feePercentage|escape}" style="text-align: right;" size="4">
+            </div>
+            *}
+        </fieldset>
+
+        <input type="hidden" name="command" value="selectRecruiter">
+        <input type="hidden" name="selectCommand" value="updateFilter">
+        <input type="hidden" name="candidate_id" value="{$candidate_id}">
+        <input type="hidden" name="candidate_code" value="{$candidate_code}">
+    </form>
+</div>
+<div class="cleaner"></div>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

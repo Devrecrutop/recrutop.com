@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+    <if $tpl_salutation == "informal">
+        [t]Dear {$informalname|escape},[/t]  {*informal*}
+    <else>
+        [t]Dear {$formalname|escape},[/t]    {*formal*}
+    </if>
+</p>
+<p>
+    [t]We would like to inform you that you can unpublish you profile.
+    Please click {$hereLinkStart}here{$hereLinkEnd} to go to your publication settings.[/t]
+</p>
+<p>
+    [t]Or you can copy and paste the following link into your browser:[/t]<br>
+    {$loginLink}
+</p>
+<p class="utsSignature">
+[t]Kind regards,[/t]<br>
+[t]{$contactPerson}[/t]<br>
+[t]{$client}[/t]<br>
+[t]URL:[/t] <a href="{$website}/" target="_blank">{$website}</a>
+</p>
+<!--uts:end inner-->
+</body>
+</html>

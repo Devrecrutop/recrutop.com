@@ -1,0 +1,3 @@
+[t]A new job opportunity has been created by[/t] {$clientName} [t]with the job title[/t] {$vacancyTitle} [t]and the following details:[/t] {$vacancyDescription}
+[t]Click on the link below if you are intersted in the job:[/t]
+{$url}

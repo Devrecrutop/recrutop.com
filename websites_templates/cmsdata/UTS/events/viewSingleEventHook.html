@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/viewSingleEventHook.html STANDARD -->
+<!-- VALID MD -->
+<div class="hookOuter eventHookContainer">
+	<div class="hookHeader eventHookHeader">[t]event hook title[/t]</div>
+	<div class="hookText eventHookText">[t]event hook text[/t]</div>
+	{foreach from=$events key=k item=event}
+		<div class="hookHeader eventHookTitle"><a href="{$event.url}">{$event.Title}</a></div>
+		{if $display_elements.show_start_date && $display_elements.show_end_date && $event.StartDate == $event.EndDate}
+			<div class="hookItemContainer eventHookItem">
+				<div class="hookKeyWord eventHookKeyWord">[t]date:[/t]</div>
+				<div class="hookKeyValue eventHookData">{$event.StartDate}</div>
+			</div>
+		{else}
+			{if $display_elements.show_start_date}
+				<div class="hookItemContainer eventHookItem">
+					<div class="hookKeyWord eventHookKeyWord">[t]start date:[/t]</div>
+					<div class="hookKeyValue eventHookData">{$event.StartDate}</div>
+				</div>
+			{/if}
+			{if $display_elements.show_end_date}
+				<div class="hookItemContainer eventHookItem">
+					<div class="hookKeyWord eventHookKeyWord">[t]end date:[/t]</div>
+					<div class="hookKeyValue eventHookData">{$event.EndDate}</div>
+				</div>
+			{/if}
+		{/if}
+		{if $display_elements.show_last_subscription_date}
+			<div class="hookItemContainer eventHookItem">
+				<div class="hookKeyWord eventHookKeyWord">[t]last subscription date:[/t]</div>
+				<div class="hookKeyValue eventHookData">{$event.ExpirationDate}</div>
+			</div>
+		{/if}
+		{if $display_elements.show_location}
+			<div class="hookItemContainer eventHookItem">
+				<div class="hookKeyWord eventHookKeyWord">[t]location:[/t]</div>
+				<div class="hookKeyValue eventHookData">{$event.Location}</div>
+			</div>
+		{/if}
+		{if $display_elements.show_selected_image && $event.Thumbnail != ""}
+			<div class="hookItemContainer eventHookItem">
+				<div class="hookKeyWord eventHookKeyWord">[t]image:[/t]</div>
+				<div class="hookKeyValue eventHookData"><img src="{$event.Thumbnail}"></div>
+			</div>
+		{/if}
+		{if $display_elements.show_contactperson}
+			<div class="hookItemContainer eventHookItem">
+				<div class="hookKeyWord eventHookKeyWord">[t]contactperson:[/t]</div>
+				<div class="hookKeyValue eventHookData">{$event.contactperson}</div>
+			</div>
+		{/if}
+		{if $display_elements.show_description_short}
+			<div class="hookItemContainer eventHookItem">
+				<div class="hookKeyWord eventHookKeyWord">[t]short description:[/t]</div>
+				<div class="hookKeyValue eventHookData">{$event.ShortDescription}</div>
+			</div>
+		{/if}
+	{/foreach}
+	<div class="cleaner"></div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

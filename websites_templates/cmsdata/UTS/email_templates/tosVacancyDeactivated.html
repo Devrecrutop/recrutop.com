@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+    [t]Dear[/t] {$name|escape},
+</p>
+<p>
+    [t]your vacancy has been deactivated due to issues with its application URL.[/t]
+</p>
+<p>
+    [t]Vacancy:[/t] {$v.functie_o|escape}<br>
+    [t]Reason:[/t] {if $reason == "INVALID_URL"}The URL is invalid{elseif $reason == "HTTP_STATUS_FAIL"}Incorrect HTTP status code while accessing the URL{/if}<br>
+    [t]URL:[/t] <a href="{$v.application_url|escape}" target="_blank">{$v.application_url|escape}</a><br>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

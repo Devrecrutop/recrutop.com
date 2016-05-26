@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+var vhandler = '{$handler}';
+//{literal}
+
+$(document).ready( function() {
+    
+    $('.datePick').datepicker({
+        dateFormat : 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true,
+        minDate: '-2y',
+        maxDate: '+2y',
+        constrainInput: true,
+        inline: true
+    });
+    
+});
+
+function calcToBePaid() {
+	var salary = parseFloat($('#salaryInput').val());
+	var fee = parseFloat($('#feeInput').val());
+	if (isNaN(salary) || isNaN(fee)) {
+		$('#toBePaidInput').val('');
+		return;
+	}
+	var out = Math.round(salary*fee)/100;
+	$('#toBePaidInput').val(out);
+}
+
+function submitValidator() {
+	var tmp;
+	if ($('#salaryInput').val()) {
+		tmp = parseFloat($('#salaryInput').val());
+		if (isNaN(tmp)) {
+			alert('[th]Salary must be a valid number[/th]');
+			return false;
+		}
+	}
+	if ($('#feeInput').val()) {
+		tmp = parseFloat($('#feeInput').val());
+		if (isNaN(tmp)) {
+			alert('[th]Fee must be a valid number[/th]');
+			return false;
+		}
+	}
+	return true;
+}
+
+
+//{/literal}
+</script>
+<div class="outer custOuter recrowdOuter rcwdUnpublOuter">
+	<!-- /UTS/customers/recrowd_unpublish.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Unpublish vacancy[/t] {$title|escape}</h1>
+	{$CustomersMenu}
+
+	<form name="recrowdUnpublish" action="{$handler}" method="post" onsubmit="return submitValidator()">
+		<div class="formInput rcwdFi">
+			<label>[t]Reason[/t]</label>
+			<select name="reason">
+			    {html_options options=$reasons}
+			</select>
+		</div>
+		<div class="formInput rcwdFi">
+			<label>[t]Remarks[/t]</label>
+			<textarea name="remarks" cols="45" rows="5"></textarea>
+		</div>
+		<div class="formInput rcwdFi">
+			<label>[t]Filled by[/t]</label>
+			<select name="ex_filled_by">
+			    {html_options options=$recruiters}
+				<option value="revoked">[th]Revoked[/th]</option>
+			</select>
+		</div>
+		<div class="formInput rcwdFi">
+			<label>[t]Start date of hired candidate[/t]</label>
+			<input type="text" name="ex_startdate" size="10" class="datePick">
+		</div>
+		<div class="formInput rcwdFi">
+			<label>[t]Agreed gross salary[/t]</label>
+			<input type="text" name="ex_agreed_gross_salary" id="salaryInput" size="10" onkeyup="calcToBePaid()">
+			[t](per year)[/t]
+		</div>
+		<div class="formInput rcwdFi">
+			<label>[t]Agreed fee[/t]</label>
+			<input type="text" name="ex_agreed_fee" size="10" id="feeInput" onkeyup="calcToBePaid()">
+		</div>
+		<div class="formInput rcwdFi">
+			<label>[t]To be paid[/t]</label>
+			<input type="text" size="10" readonly="readonly" style="text-align: right;" id="toBePaidInput">
+		</div>
+		<div class="buttonContainer">
+			<input type="submit" value="[tb]Submit[/tb]">
+		</div>
+		<input type="hidden" name="command" value="saveUnpublishForm">
+		<input type="hidden" name="vacid" value="{$vacid}">
+		<input type="hidden" name="ref" value="{$ref}">
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>NM_Unsubscribe</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- UTS/mailings/nm_unsubscribe.html -->
+
+<form name="f" action="/index.php/page/mailings/bb/1" method="post">
+
+<table border="0" cellspacing="0" cellpadding="0" class="maintable">
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]PageTitle[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+<tr>
+<td><hr>
+
+<table witdh="100%">
+<foreach from=$clist item=c>
+<tr>
+<td>
+<input type="hidden" name="sbs[{$c.id}]" value="{$c.subscribed}" >
+<input type="checkbox" name="grplist[]" value="{$c.id}" {if $c._preselect2}checked{/if}></td>
+<td>{$c.mg_public_subject}</td>
+</tr>
+</foreach>
+</table>
+
+</td>
+</tr>
+<tr>
+<td><hr>[t]SingleWord1[/t]<!--SingleWordLink1-->
+</td>
+</tr>
+<tr>
+<td><input name="Submit" type="Submit" value="[t]Button1[/t]" class="button"><!--ButtonLink1--></td>
+</tr>
+</table>
+
+<input type="hidden" name="command" value="subman_save" >
+<input type="hidden" name="email" value="{$email}" >
+<input type="hidden" name="name" value="{$name}" >
+<input type="hidden" name="surname" value="{$surname}" >
+<input type="hidden" name="gender" value="{$gender}" >
+<input type="hidden" name="prefix" value="{$prefix}" >
+<input type="hidden" name="unsubmode" value="1" >
+{if $cms_categorie}
+<input type="hidden" name="cms_categorie" value="{$cms_categorie}" >
+{/if}
+</form>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<form name="qsForm" enctype="multipart/form-data" action="{$handler}" method="post">
+<div class="outer aplOuter aplCvTkOuter">
+<!-- /UTS/applicants/uploadCVForTK.html -->
+<h1 class="title aplTitle aplCvTkTitle">[t]Apply for a job[/t]</h1>
+<div class="intro aplIntro aplCvTkIntro">
+	<p>[t]Please upload here your CV. It will be automatically parsed and the information will be used to prefill the question set. You can still edit/ append more data to the question set afterwards.[/t]</p>
+	<p>[t]CVs in .DOC, .DOCX, .ODT, .RTF and .PDF formats are accepted.[/t]</p>
+</div>
+<div class="formInput aplFormInput aplCvTkInput">
+<label for="cv_file">[t]CV:[/t]</label>
+<input type="file" name="cv_file" id="cv_file">
+</div>
+<if $error>
+<div class="error aplError aplCvTkError">{$error}</div>
+</if>
+<div class="formInput aplInput aplCvTkInput">
+<label for="selExtrLng">[t]CV language:[/t]</label>
+<select name="extrLng" id="selExtrLng">
+<html_options options=$extrLanguages selected=$prefillExtrLng>
+</select>
+</div>
+<div class="formInput aplCsc">
+<label>[t]Security code:[/t]<span>*</span></label>
+<img id="captcha" src="/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image" >
+<a href="#" onclick="document.getElementById('captcha').src = '/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0" ></a>
+<a href="/_javascript_global/securimage/securimage_play.php"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0" ></a>
+</div>
+<div class="formInput formSmallInput aplCic">
+<label>[t]Code[/t]</label>
+<input type="text" name="captchafield">
+</div>
+<if $captchaError>
+<div class="error aplCaptchaError">[t]Please enter the right security code![/t]</div>
+</if>
+<div class="buttonContainer aplBc aplCvTkBcSubmit">
+	<input type="button" name="bBack" value="[tb]Back[/tb]" class="button" onclick="window.location='{$handler}/command/applyforjobfull/vid/{$vid}'">
+	<input type="submit" name="Submit" value="[tb]Submit[/tb]" class="button">
+</div>
+</div>
+<input type="hidden" name="MAX_FILE_SIZE" value="5000000" >
+<input type="hidden" name="command" value="applyuploadcvtk">
+<input type="hidden" name="vid" value="{$vid}">
+<input type="hidden" name="qsuid" value="{$qsuid}">
+</form>
+<!--uts:end inner-->
+</body>
+</html>
+
+{*[th]By filling this form you agree that our company can work with your personal data[/th]*}
+{*[th]You need to agree with processing your personal data[/th]*}
+

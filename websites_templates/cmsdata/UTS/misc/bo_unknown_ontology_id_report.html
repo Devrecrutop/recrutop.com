@@ -1,0 +1,63 @@
+<html>
+<head> 
+<title>Unknown Ontology IDs Report</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body bgcolor="#FFFFFF" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0"> 
+
+<!--uts:begin inner-->
+
+<h1>[tg]Unknown Ontology IDs Report for[/tg] {$period}</h1>
+
+<p>
+[tg]Following terms could not be mapped to Ontology IDs:[/tg]
+</p>
+
+<table cellspacing="0" cellpadding="2" border="1">
+
+<tr>
+
+<th>[tg]Term[/tg]</th>
+<th>[tg]Category[/tg]</th>
+<th>[tg]Language[/tg]</th>
+<th>[tg]Table[/tg]</th>
+<th>[tg]Trigger[/tg]</th>
+<th>[tg]Client[/tg]</th>
+{if $suggest_category}
+<th>[tg]Suggested category[/tg]</th>
+{/if}
+
+</tr>
+
+<tr>
+
+{foreach from=$result item=i}
+<tr>
+<td>{$i.criterium|escape}</td>
+<td>{$i.categories|escape}&nbsp;</td>
+<td>{$i.language|escape}</td>
+<td>{$i.criterium_table|escape}</td>
+<td>{$i.source|escape}</td>
+<td>{$i.client|escape}</td>
+{if $suggest_category}
+<td>{$i.suggested_category|escape}</td>
+{/if}
+</tr>
+{/foreach}
+
+</tr>
+
+</table>
+
+<p>[tg]Explanation:[/tg]</p>
+
+<ul>
+<li><b>[tg]Categories[/tg]</b> - Ontology categories that client set to be mapped for the given table.</li>
+<li><b>[tg]Table[/tg]</b> - OTYS database table name.</li>
+<li><b>[tg]Trigger[/tg]</b> - <i>cron</i> - if the ontology service was called from the cron script, <i>manual</i> - if via 'Map Ontology' button in backoffice, <i>insert</i> - if the service was called on inserting new term, <i>update</i> - if the service was called on updating existing term</li>
+<li><b>[tg]Suggested Category[/tg]</b> - sometimes Ontology ID cannot be found if the client sets too limiting set of ontology categories for the match criteria table. This column indicated in which ontology category the term would be found if it is present in Ontology database.</li>
+</ul>
+
+<!--uts:end inner-->
+</body>
+</html>

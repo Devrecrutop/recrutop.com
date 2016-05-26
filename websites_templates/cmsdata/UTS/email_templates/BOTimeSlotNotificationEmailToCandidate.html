@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/email_templates/BOTimeSlotNotificationEmailToCandidate.html -->
+
+<p>
+        [t]Dear {$applicant_name|escape},[/t] 
+</p>
+<!--START_USED_IN_MAIL-->
+{if $mode == "invited"}                                               
+<p>[t]We would like to invite you to plan an interview[/t] {if $timeslot.title}&nbsp;[t]for the vacancy({$timeslot.title})[/t]&nbsp;{/if}[t]at our office[/t] {if $timeslot.location}&nbsp;[t]({$timeslot.location})[/t]&nbsp;{/if}[t]using the link below.[/t]</p>
+<p><a href="{$hashlink}" target="_blank">[t]Click here[/t]</a></p>
+<p>[t]Or paste this link to your browser:[/t]<a href="{$hashlink}" target="_blank">{$hashlink}</a></p>
+{/if}
+
+{if $mode == "edited"}
+<p>[t]You have an appointment on {$timeslot.start_date} for the vacancy {$vacancy.JobTitle|escape}. 
+The timeslot has been modified and might no longer fit you agenda. 
+We therefor cancelled your reservation and would like to invite you to reserve a new date for your interview.[/t]</p>
+<p><a href="{$hashlink}" target="_blank">[t]Click here[/t]</a></p>
+<p>[t]Or paste this link to your browser:[/t]<a href="{$hashlink}" target="_blank">{$hashlink}</a></p>
+{/if}
+
+{*
+{if $mode == "deleted"}
+<p>[t]You had an appointment on {$timeslot.start_date} for the vacancy {$vacancy.JobTitle|escape}. 
+Unfortunately, we had to cancel the appointment and want to ask you to plan a new appointment.[/t]</p>
+<p><a href="{$hashlink}" target="_blank">[t]Click here[/t]</a></p>
+<p>[t]Or paste this link to your browser:[/t]<a href="{$hashlink}" target="_blank">{$hashlink}</a></p>
+
+{/if}
+*}
+
+{if $mode == "deleted"}
+<p>[t]You had an appointment on {$timeslot.start_date} for the vacancy {$vacancy.JobTitle|escape}. 
+Unfortunately, we had to cancel the appointment.[/t]</p>
+{/if}
+
+
+{if $mode == "confirmed"}
+<p>[t]Thank you for booking an appointment[/t] {if $timeslot.title}&nbsp;[t]for the vacancy ({$timeslot.title})[/t]{/if}[t]. This email confirms that we will meet at {$timeslot.start_time} on 
+{$timeslot.start_date} at our office[/t] {if $timeslot.location}[t]({$timeslot.location})[/t]{/if}[t]. Your meeting will be with {$contact_fullname|escape}[/t]</p>
+{/if}
+
+{if $mode == "reconsidered"}
+<p>[t]You have informed us that you were unable to plan an appointment of any of the given moments. 
+We will now reconsider your application and contact you about the further process.[/t]</p>
+{/if}
+<!--END_USED_IN_MAIL-->
+{if $sent_from_fo}
+<p class="utsSignature">
+[t]Regards,[/t]<br>
+{$regadmin_fullname}<br>
+{$client}<br>
+{$website}
+</p>
+{/if}
+
+
+
+<!--uts:end inner-->
+</body>
+</html>

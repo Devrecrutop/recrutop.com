@@ -1,0 +1,303 @@
+{* required ext.JS: JQueryBase,JQueryAutocomplete,JQueryMultiSelect *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+
+</head>
+<body>
+<!--uts:begin inner-->
+
+<script type="text/javascript">
+
+    var handler = '{$handler}';
+
+//{literal}
+
+    function criteriaAutocomplete(element, e) {
+
+        if (e.keyCode == 13) {
+            return;
+        }
+
+        if ( element.value.length ) {
+            //  Wait with triggering the AJAX call. Call it when user stops typing
+            if (typeof(timer) != "undefined") {
+                clearTimeout(timer);
+            }
+            timer = setTimeout("callAjax('"+element.value+"')", 500);
+        }
+    }
+
+
+    var conceptLookup = new Array();
+    var autoCompleteValues = new Array();
+    
+    function callAjax(value) {
+        
+
+        var request = $.ajax({
+            url: handler+'/lookupvalue/'+value+'/command/autocompleteConcepts',
+            type: "GET",
+            dataType: "html"
+        });
+        request.done(function(msg) {
+          
+            suggestions = JSON && JSON.parse(msg) || $.parseJSON(msg);
+            
+            $.each(suggestions, function(group, valueObj){
+                //console.log('group: '+group);
+                conceptLookup[group] = new Array();
+                $.each(valueObj, function(id, valueText){
+                    //console.log('id: '+id);
+                    //console.log('valueText: '+valueText);
+                    autoCompleteValues[id] = valueText;
+                    conceptLookup[group][valueText] = id;
+
+                });
+            });
+
+            //console.log(autoCompleteValues);
+            //console.log(conceptLookup);
+
+            return autoCompleteValues;
+
+            //$("#relationResults").html(msg);
+        });
+        request.fail(function(jqXHR, textStatus) {
+            alert( "Request failed: " + textStatus );
+        });
+    }
+
+
+    var conceptData;
+    function rememberData(data) {
+        conceptData = data;        
+    }
+
+    function addToConcepts(concept, selectedValue) {
+        console.log('addToConcepts: ');
+        console.log(concept);
+
+        conceptContainer = document.getElementById('conceptContainer');
+
+        htmlToAdd = '';
+        $.each(concept, function(group, id){
+
+           hiddenId = 'hidden_'+id+'_'+group;
+           if ( !document.getElementById(hiddenId) ) {
+                console.log('group: '+group);
+                console.log('id: '+id);
+                htmlToAdd = htmlToAdd + '<li class="active" id="'+id+'_'+group+'" onclick="toggleConcept(\''+id+'\', \''+group+'\', 1)">\n';
+                htmlToAdd = htmlToAdd + selectedValue+'\n';
+                htmlToAdd = htmlToAdd + '<input type="hidden" name="semanticConcept['+group+']['+id+']" id="hidden_'+id+'_'+group+'" value="1" />\n';
+                htmlToAdd = htmlToAdd + '</li>\n\n';
+           } else {
+               console.log('Element already exists: ' + hiddenId);
+               return;
+           }
+        });
+        conceptContainer.innerHTML = conceptContainer.innerHTML + htmlToAdd;
+    }
+
+    function addToFreeText(text) {
+
+        console.log('addToFreeText: ');
+        console.log(text);
+
+        identifier = text.replace(" ", "_");
+
+        conceptContainer = document.getElementById('conceptContainer');
+
+        htmlToAdd = '';
+
+           hiddenId = 'hidden_'+identifier+'_'+identifier;
+           if ( !document.getElementById(hiddenId) ) {
+                htmlToAdd = htmlToAdd + '<li class="active" style="float:left;" id="'+identifier+'_'+identifier+'" onclick="toggleConcept(\''+identifier+'\', \''+identifier+'\', 0)">\n';
+                htmlToAdd = htmlToAdd + text+'\n';
+                htmlToAdd = htmlToAdd + '<input type="hidden" name="freeText['+text+']" id="hidden_'+identifier+'_'+identifier+'" value="1" />\n';
+                htmlToAdd = htmlToAdd + '</li>\n\n';
+           } else {
+               console.log('Element already exists: ' + hiddenId);
+               return;
+           }
+        conceptContainer.innerHTML = conceptContainer.innerHTML + htmlToAdd;
+
+    }
+
+    function addCriteria() {
+        selectedValue = document.getElementById("add_criteria_value").value;
+
+        if ( typeof(conceptData) != "undefined" && conceptData.fullinfo[selectedValue] )  {
+            addToConcepts(conceptData.fullinfo[selectedValue], selectedValue);
+
+        } else {
+            addToFreeText(selectedValue);
+        }
+    }
+
+
+    function toggleConcept(conceptId, conceptGroup, changeValue ) {
+
+       hiddenId = 'hidden_'+conceptId+'_'+conceptGroup;
+
+
+       if ( document.getElementById(conceptId+'_'+conceptGroup).className == 'active' ) {           
+           newValue     = 0;          
+           classname    = 'inactive';
+       } else {           
+           newValue     = 1;          
+           classname    = 'active';
+       }
+
+       document.getElementById(conceptId+'_'+conceptGroup).className = classname;       
+       document.getElementById(hiddenId).value = newValue;      
+    }
+
+
+
+$(function() {
+    function log( message ) {
+        $( "<div>" ).text( message ).prependTo( "#log" );
+        $( "#log" ).scrollTop( 0 );
+    }
+    $( "#add_criteria_value" ).autocomplete({
+        source: function( request, response ) {
+            //console.log(request.term);
+
+            $.ajax({
+                url: handler+'/lookupvalue/'+request.term+'/command/autocompleteConcepts/',
+                dataType: "json",
+                data: {
+                    q: request.term
+                },
+                success: function( data ) {
+                    rememberData(data);
+                    response( data.suggestionlist );                    
+                }
+            });
+        },
+        minLength: 2
+        /*,
+        select: function( event, ui ) {
+            log( ui.item ?
+            "Selected: " + ui.item.label :
+            "Nothing selected, input was " + this.value);
+        }
+        ,
+        open: function() {
+            $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        },
+        close: function() {
+            $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+        }
+        */
+
+    });
+});
+
+
+
+//{/literal}
+</script>
+
+<!-- /UTS/advsearch/semanticSearch.htm; STANDARD -->
+<div class="outer actOuter semanticSearch">
+
+<div class="aplMc">
+{$menu}
+</div>
+
+	<form id="searchSematic" name="advsearchform" method="post" action="{$handler}" {* onsubmit="return(advsearchform_check_form(this))" *}>
+		<h1>[t]Semantic match[/t]</h1>
+		<div class="intro">[t]Use fields below to assemble your search query.[/t]</div>
+
+		<ul id="conceptContainer">
+			{foreach from=$semanticResult item=semanticItem}
+				{if $semanticItem.concepts}
+					{foreach from=$semanticItem.concepts item=concept}
+					
+					<li class="active" id="{$concept.label.id}_{$semanticItem.id}" onclick="toggleConcept('{$concept.label.id}', '{$semanticItem.id}', 1)">
+						{$concept.label.languageLabel}
+						<input type="hidden" name="semanticConcept[{$semanticItem.id}][{$concept.label.id}]" id="hidden_{$concept.label.id}_{$semanticItem.id}" value="1" />
+					</li>
+					
+					{/foreach}
+				{/if}
+			{/foreach}
+		</ul>
+		<div class="buttonContainer">
+			<input type="submit" name="bApplSubmit" value="[tb]Continue[/tb]" class="button">
+			<input type="hidden" name="command" value="matchapplicant">
+
+                        {if $smarty.get.skipresults}
+                        <input type="hidden" name="skipresults" value="1">
+                        {/if}
+
+			<input type="hidden" name="candidate_id" value="{$candidate}">
+			<input type="hidden" name="client_id" value="{$client}">
+			<input type="hidden" name="skipsemantic" value="1">
+		</div>
+	</form>
+	<form id="addCriteria" method="post" action="">
+		<h2>[t]Add criteria[/t]</h2>
+		<div class="formInput">
+			<label>Criteria</label>
+			<input type="text" name="add_criteria_value" id="add_criteria_value">
+		</div>
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[th]Add[/th]">
+		</div>
+	</form>
+</div>
+
+<!-- MD: GOOD & NEW STUFF BELOW -->
+<script>
+	{literal}
+	$('form#searchSematic').submit
+	(
+		function()
+		{
+			//advsearchform_check_form();
+			
+			//return false;
+		}
+	);
+	
+	$('form#addCriteria').submit
+	(
+		function()
+		{
+			addCriteria();
+			$(this).find('input#add_criteria_value').val('');
+			return false;
+		}
+	);
+
+	{/literal}
+
+       
+        {foreach from=$savedSemantics item=savedValue}
+            {if $savedValue.freetext}
+                freeText    = '{$savedValue.freetext}';
+                identifier  = freeText.replace(" ", "_");
+                addToFreeText(freeText);
+                {if !$savedValue.active}
+                    toggleConcept(identifier, identifier, 0 );
+                {/if}
+            {else}                
+                {if !$savedValue.active}
+                    toggleConcept('{$savedValue.value}', '{$savedValue.group}', 1 );
+                {/if}
+            {/if}
+        {/foreach}
+
+</script>
+
+
+
+
+
+<!--uts:end inner-->
+</body>
+</html>

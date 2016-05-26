@@ -1,0 +1,109 @@
+<!-- This is candidate presentation template for mPDF HTML->PDF converter. -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>[t]Candidate presentation[/t]</title>
+	<style>
+	</style>
+</head>
+<body>
+
+<h1>{$candidate.Person.firstName|escape} {$candidate.Person.infix} {$candidate.Person.lastName}</h1>
+
+<table style="width:100%;">
+	<tr>
+		<td style="vertical-align:top;">
+
+			<table>
+				{if $candidate.Person.firstName}
+					<tr>
+						<td>[t]First name[/t]:</td>
+						<td>{$candidate.Person.firstName|escape}</td>
+					</tr>
+				{/if}
+				{if $candidate.Person.infix}
+					<tr>
+						<td>[t]Middle name[/t]:</td>
+						<td>{$candidate.Person.infix|escape}</td>
+					</tr>
+				{/if}
+				{if $candidate.Person.lastName}
+					<tr>
+						<td>[t]Last name[/t]:</td>
+						<td>{$candidate.Person.lastName|escape}</td>
+					</tr>
+				{/if}
+				{if $candidate.Person.birthdate}
+					<tr>
+						<td>[t]Birth date[/t]:</td>
+						<td>{$candidate.Person.birthdate|substr:6:2}-{$candidate.Person.birthdate|substr:4:2}-{$candidate.Person.birthdate|substr:0:4}</td>
+					</tr>
+				{/if}
+				{if $candidate.Person.AddressPrimary.city}
+					<tr>
+						<td>[t]City[/t]:</td>
+						<td>{$candidate.Person.AddressPrimary.city|escape}</td>
+					</tr>
+				{/if}
+			</table>
+			
+		</td>
+		<td style="text-align:right;vertical-align:top;">
+			{if $candidate.Person.photoFileName}
+				<img src="{$photoPath}{$candidate.Person.photoFileName}">
+			{/if}
+		</td>
+	</tr>
+</table>
+
+
+{if $candidate.shortDescription}
+	<p>{$candidate.shortDescription|escape}</p>
+{/if}
+
+{if $candidate.extraInfo1}
+	<p>{$candidate.extraInfo1}</p>
+{/if}
+
+{foreach from=$competenciesByCategory item=competencies key=categoryId} 
+	<h2>{$competencyCategories[$categoryId].category|escape}</h2>
+	<ul>
+	{foreach from=$competencies item=competency}
+		<li>{$competency.competency|escape}{if $competency.level}, [t]level[/t] {$competency.level|escape}{/if}{if $competency.certificate}, [t]certificate[/t]{$competency.certificate|escape}{/if}</li>
+	{/foreach}
+	</ul>
+{/foreach}
+
+{if $presentation.Fields.EmploymentHistory}
+
+	<h2>[t]Work experience[/t]</h2>
+
+	{foreach from=$candidate.EmploymentHistory key=itemId item=item}
+	
+		{if $presentation.Fields.EmploymentHistory[$itemId]}
+	
+			<div>
+				
+				<h3>{$item.experience|escape}</h3>
+		
+				<div>
+					{if $item.startDate}{$item.startDate|substr:0:4}{/if}{if $item.endDate} &ndash; {$item.endDate|substr:0:4}{/if}{if $item.employerNameAndPlace && ($item.startDate || $item.endDate)},{/if}
+					{if $item.employerNameAndPlace}
+						{$item.employerNameAndPlace|escape}
+					{/if}
+				</div>
+		
+				{if $item.description}
+					<div>{$item.description|escape}</div>
+				{/if}
+		
+			</div>
+		
+		{/if}
+	
+	{/foreach}
+
+{/if}
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear {$data.cpName|escape},[/t]</p>
+<p>[t]A new reference have been submitted for {$data.candidateName|escape} by {$reference.referentName|escape} from {$reference.relation_name|escape}[/t]</p>
+<p>[t]The average score is {$reference.averageScore} points. See the details below:[/t]</p>
+
+{foreach from=$reference.answers item=q}
+<p>
+[t]Question:[/t]{$q.question|escape}<br>
+[t]Answer:[/t]{$q.answer|escape}<br>
+{if !$q.disable_vote && !$reference_disable_vote}
+[t]Score:[/t]{$q.score|escape}<br>
+{/if}
+</p>
+{/foreach}
+
+<p>[t]Please make sure you contact this relation/contact if needed.[/t]</p>
+
+<p>[t]Kind regards,<br>
+{$data.cpName|escape}<br>
+{$data.clientName|escape}<br>
+{$data.siteUrl|escape}[/t]</p> {*OR siteName*}
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<!--uts:end inner-->
+</body>
+</html>

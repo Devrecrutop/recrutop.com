@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>[klantnaam]</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta http-equiv="Content-Script-Type" content="text/Javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta content="width=device-width, initial-scale=1" id="viewport" name="viewport">
+<link type="text/css" href="http://www.otys.nl/_css_global/globalStyling.css" rel="stylesheet">
+<link type="text/css" href="http://www.otys.nl/_css/style2013.css" rel="stylesheet">
+<link rel="stylesheet" href="http://www.otys.nl/_css/font-awesome.min.css">
+<link rel="shortcut icon" href="http://www.otys.nl/_images/otys.ico">
+<!--jsrepository:require(JQueryBase,JQuerySmoothMenu,JQueryMagicSelect,JQueryFileInput, JQueryCycleAll)-->
+<!-- NON-WEBDEV<pubadm/win/uitnodig_bevestig.php> / <[klantnaam] - [code] - FullWidth> -->
+</head>
+<body>
+<div id="o">
+	<div id="top">
+		<div id="head">
+			<div class="sw">
+				<a title="[klantnaam]" href="http://www.otys.nl/"><img id="logo" alt="[klantnaam]" src="http://www.otys.nl/_images/r2013/logo.png"><img id="logoSmall" alt="[klantnaam]" src="http://www.otys.nl/_images/r2013/logo2.png"></a>
+                <div class="toggleMenu">
+					<div class="clear"></div>
+				</div>
+		    	<div id="smoothmenu" class="jssmoothmenu-h"></div>
+				<div class="cleaner"></div>
+			</div>
+		</div>
+    </div>
+	<div id="content" class="sw fw">
+		<div class="outer pInStOuter">
+		<!--/UTS/agenda/inv_confirm.html-->
+			<form name=opmerking action="uitnodig_bevestig.php" method=post>
+				<input type=hidden name=action value="update">
+				<input type=hidden name=remote_id value="{$remote_id}">
+				<input type=hidden name=reactie value="{$reactie}">
+				<input type="hidden" name="target_client_id" value="{$targetClientId}">
+
+				{if $alert}
+				<h2>
+					{if $reactie eq 'accepteren'}[t]Accepting invitation[/t]: {/if}
+					{if $reactie eq 'weigeren'}[t]Declining invitation[/t]: {/if}
+					{if $reactie eq 'ander_voorstel'}[t]Other proposal for invitation[/t]: {/if}
+				</h2>
+				<fieldset>
+					{if $alert eq 'expired'}[t]This invitation has expired.[/t]{/if}
+					{if $alert eq 'cancelled'}[t]This invitation has been cancelled.[/t]{/if}
+					{if $alert eq 'accepted'}[t]You have accepted this invitation.[/t]{/if}
+					{if $alert eq 'declined'}[t]You have declined this invitation.[/t]{/if}
+					{if $alert eq 'other proposal'}[t]You have a different proposal for this invitation.[/t]{/if}
+				</fieldset>
+				{/if}
+
+			{if $agenda_details}
+				<h1 class="title">
+					{if $reactie eq 'accepteren'}[t]Accepting invitation[/t]: {/if}
+					{if $reactie eq 'weigeren'}[t]Declining invitation[/t]: {/if}
+					{if $reactie eq 'ander_voorstel'}[t]Other proposal for invitation[/t]: {/if}
+				</h2>
+				<div class="formInput">
+					<label>[t]Invitation[/t]:</label>
+					<span>{$titel}</span>
+				</div>
+				<div class="formInput"> 
+					<label>[t]Location[/t]:</label>
+					<span>{$locatie}</span>
+				</div>
+				<div class="formInput"> 
+					<label>[t]Date[/t]:</label>
+					<span>{$datum}</span>
+				</div>
+				<div class="formInput"> 
+					<label>[t]Start time[/t]:</label>
+					<span>{$begintijd}</span>
+				</div>
+				<div class="formInput"> 
+					<label>[t]End time[/t]:</label>
+					<span>{$eindtijd}</span>
+				</div>
+				<div class="formInput"> 
+					<label>[t]Description[/t]:</label>
+					<span>{$omschrijving}</span>
+				</div>
+				<div class="formInput">
+					<label>[t]Write your remark here[/t]</label>
+					<textarea name="remark"></textarea>
+				</div>
+			{/if}
+
+			{if $agenda_details}
+				<div class="buttonContainer">
+					{if $reactie eq 'accepteren'}<input class="button" type="button" onClick="this.form.submit();" name="versturen" value="[th]Accept[/th]">{/if}
+					{if $reactie eq 'weigeren'}<input class="button" type="button" onClick="this.form.submit();" name="versturen" value="[th]Decline[/th]">{/if}
+					{if $reactie eq 'ander_voorstel'}<input class="button" type="button" onClick="this.form.submit();" name="versturen" value="[th]Propose other date[/th]">{/if}
+					<input class="button" type="button" name="annuleren" value="[th]Cancel[/th]" onClick="javascript:window.close();">
+				</div>
+			{/if}
+				
+			</form>
+		<div class="cleaner"></div>
+	</div>
+</div>
+<div class="cleaner"></div>
+<div id="footer2" style="height:56px !important;">
+	<div id="copy" class="sw" style="top:7px;"><img alt="OTYS e-Recruiting Systems" src="http://www.otys.nl/_images/r2013/flogo.png"> <span>&copy; [yearnow] [klantnaam]</span></div>
+</div>
+</body>
+</html>

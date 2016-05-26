@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+</head>
+<body>
+<!--uts:begin inner-->
+<script>
+//{literal}
+//{/literal}
+</script>
+
+<!--display part-->
+
+<div class="outer custOuter custFinOuter custFinDetOuter">
+<!-- /UTS/candidates/timesheets_history.html -->
+<h1 class="title">[tg]Timesheets[/tg]</h1>
+
+{$CustomersMenu}
+
+<h2 class="subHeader">[t]Overview of past timesheets[/t]</h2>
+<div class="text TsIntro">[t]In the table below, the past timesheets you have entered are shown.[/t]</div>
+
+    <div class="timesheetMainContainer" style="clear:both; margin-top:10px;" id="timesheetMainContainer">
+    
+        <div id="timesheetMenu">
+        <ul>
+    	{if $timesheetMenu != "timesheet_edit"}<li id="timesheetEdit"><a href="{$handler}/command/show_timesheet/bb/1" >[t]Edit timesheet[/t]</a></li>{/if}
+    	{if $timesheetMenu != "timesheet_history"}<li id="timesheetHistory"><a href="{$handler}/command/show_timesheet_history/bb/1" >[t]Timesheet history[/t]</a></li>{/if}
+    </ul>
+    </div>   
+
+<div id="timesheetTable" style="overflow:auto;" >        
+<table cellspacing="0" cellpadding="0" border="0"  class="hqTbl" >
+<tr>
+<th rowspan="2">[t]Status[/t]</th>
+<th rowspan="2">[t]Start Date[/t] [t]Week[/t]</th>
+<th rowspan="2">[t]End Date[/t] [t]Week[/t]</th>
+<th colspan="5" style="background: #0066CC">[t]Hours[/t]</th>
+<th colspan="3" style="background:#008800">[th]Declaration[/th]</th>
+<th colspan="3" style="background:#FF6633">[th]Deduction[/th]</th>
+</tr>
+<tr>
+<th>[t]Working[/t]</th><th>[t]Holiday[/t]</th><th>[t]Sick[/t]</th><th>[t]Other[/t]</th><th>[t]Totals[/t]</th>
+<th>[t]Clients[/t]</th><th>[t]Internal[/t]</th><th>[t]Total[/t]</th>
+<th>[t]Clients[/t]</th><th>[t]Internal[/t]</th><th>[t]Total[/t]</th>
+</tr>
+{foreach from=$history item=d}
+<tr>
+<td>{$filterData.status[$d.status]|escape}</td>
+<td>{$d.period_start}<br >({$d.weekofday_start})</td>
+<td>{$d.period_end}<br >({$d.weekofday_end})</td>
+<td>{$d.calc_working_hours|string_format:"%.2f"}</td>
+<td>{$d.calc_holidays|string_format:"%.2f"}</td>
+<td>{$d.calc_sick|string_format:"%.2f"}</td>
+<td>{$d.calc_internal_hours|string_format:"%.2f"}</td>
+<td>{$d.calc_subtotal_hours|string_format:"%.2f"}</td>
+<td>{$currency_symbol}{$d.calc_declaration_working_value|string_format:"%.2f"}</td>
+<td>{$currency_symbol}{$d.calc_declaration_internal_value|string_format:"%.2f"}</td>
+<td>{$currency_symbol}{$d.calc_declaration_subtotal|string_format:"%.2f"}</td>
+<td>{$currency_symbol}{$d.calc_deduction_working_value|string_format:"%.2f"}</td>
+<td>{$currency_symbol}{$d.calc_deduction_internal_value|string_format:"%.2f"}</td>
+<td>{$currency_symbol}{$d.calc_deduction_subtotal|string_format:"%.2f"}</td>
+</tr>
+{/foreach}
+</table>
+</div>
+ 
+<div>&nbsp;</div>   
+
+</div>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

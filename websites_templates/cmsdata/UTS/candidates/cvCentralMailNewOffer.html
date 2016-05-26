@@ -1,0 +1,134 @@
+<!--START-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8;">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--END-->
+<!--uts:begin inner-->
+<!-- /UTS/candidates/cvCentralMailNewOffer.html -->
+<!--START_Block1-->
+
+<!--START_Title1-->
+
+<!--END_Title1-->
+<!--START_Text1-->
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;"></p>
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;"><b>
+{if ('' !== $name)}
+	[t]Dear {$name}[/t]
+{else}
+	[t]Dear Sir or Madam[/t]
+{/if}
+</b></p>
+{if $accept_offer}
+	{if $initiated_by == 'seller'}
+	<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Buyer <b>{$sender_consultant_name}</b> from <b>{$r.buyer_name}</b> has accepted your former offer to sell the candidate <b>{$r.candidate_uid}.</b>[/t]</p>
+	{else}
+	<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Seller <b>{$sender_consultant_name}</b> from <b>{$r.seller_name}</b> has accepted your former offer to buy the candidate <b>{$r.candidate_uid}.</b>[/t]</p>
+	{/if}
+	<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]This is the offer that was accepted:[/t]</p>
+{elseif $reject_offer}
+	{if $initiated_by == 'seller'}
+	<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Buyer <b>{$sender_consultant_name}</b> from <b>{$r.buyer_name}</b> has rejected your former offer to sell the candidate <b>{$r.candidate_uid}.</b>[/t]</p>
+	{else}
+	<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Seller <b>{$sender_consultant_name}</b> from <b>{$r.seller_name}</b> has rejected your former offer to buy the candidate <b>{$r.candidate_uid}.</b>[/t]</p>
+	{/if}
+	{if $r.status == 'negotiation_rejected'}
+	[t]The request has been closed for further negotiation.[/t]
+	{else}
+	[t]The request is still open for further negotiation as not all offers within this request have been rejected yet. Use Mail history in cvCentral application to display the list of offers which are still open for negotiation.[/t]
+	{/if}
+	<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]This is the offer which was rejected:[/t]</p>
+{elseif $counteroffer}
+	{if $initiated_by == 'seller'}
+	<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Seller <b>{$sender_consultant_name}</b> from <b>{$r.seller_name}</b> proposes a counteroffer to your former offer to buy the candidate <b>{$r.candidate_uid}.</b>[/t]</p>
+	{else}
+	<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Buyer <b>{$sender_consultant_name}</b> from <b>{$r.buyer_name}</b> proposes a counteroffer to your former offer to sell the candidate <b>{$r.candidate_uid}.</b>[/t]</p>
+	{/if}
+{else}
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]<b>{$buyer_consultant_name}</b> from <b>{$r.buyer_name}</b> wants to buy details of the candidate <b>{$r.candidate_uid}.</b>[/t]</p>
+{/if}
+
+{if (!$accept_offer && !$reject_offer)}
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">
+	{if $initiated_by == 'seller'}
+		[t]The seller proposes following offer:[/t]
+	{else}
+		[t]The buyer proposes following offer:[/t]
+	{/if}
+</p>
+{/if}
+
+<table style="background: white; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc;" cellpadding="5" cellspacing="0" width="500">
+<tr>
+	<td style="background: #eee; border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;"><b>[t]Candidate nr.[/t]:</b></td>
+	<td style="border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;">{$r.candidate_uid}</td>
+</tr>
+<tr>
+	<td style="background: #eee; border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;"><b>[t]Payment scheme[/t]:</b></td>
+	<td style="border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;">
+		{if $o.payment_type == 'direct'}[t]direct payment[/t]{/if}
+		{if $o.payment_type == 'fee'}[t]percentage fee[/t]{/if}
+	</td>
+</tr>
+<tr>
+	<td style="background: #eee; border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;"><b>[t]Payment amount[/t]:</b></td>
+	<td style="border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;">
+		{if $o.payment_type == 'direct'}
+			&euro;{$o.payment_amount}
+		{/if}
+		{if $o.payment_type == 'fee'}
+			{$o.payment_fee_percentage}%
+			{if $o.payment_amount}([t]from expected fee[/t] &euro;{$o.payment_amount}){/if}
+		{/if}
+	</td>
+</tr>
+{if ($accept_offer || $reject_offer) && $o.message_reply != ''}
+<tr>
+	<td style="background: #eee; border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;">
+		<b>
+		{if $initiated_by == 'seller'}
+		[t]Message from the buyer[/t]:
+		{else}
+		[t]Message from the seller[/t]:
+		{/if}
+		</b>
+	</td>
+	<td style="border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;">
+		"{$o.message_reply|escape}"
+	</td>
+</tr>
+{elseif '' != $o.message}
+<tr>
+	<td style="background: #eee; border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;">
+		<b>
+		{if $initiated_by == 'seller'}
+		[t]Message from the seller[/t]:
+		{else}
+		[t]Message from the buyer[/t]:
+		{/if}
+		</b>
+	</td>
+	<td style="border-top: 1px solid #ccc; border-left: 1px solid #ccc; font-family: verdana, arial, sans-serif; font-size:12px;">
+		"{$o.message|escape}"
+	</td>
+</tr>
+{/if}
+</table>
+
+{if (!$accept_offer && !$reject_offer)}
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Please use cvCentral application to accept or reject the offer or to propose a counteroffer.[/t]</p>
+{/if}
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Kind regards[/t]<br></p>
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;"><b>[t]cvCentral Team[/t]</b></p>
+
+<!--END_Text1-->
+
+<!--END_Block1-->
+
+<!--uts:end inner-->
+</body>
+</html>

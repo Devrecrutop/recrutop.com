@@ -1,0 +1,19 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/misc/custom_cv_confirm_email.html -->
+<p>[t]Beste {$contactpersoon},[/t]</p>
+<p>[t]Er is gereageerd op de custom CV van kandidaat "{$candidate}" op vacature "{$vacancy}."[/t]</p>
+
+{if "[uts:Add_decision_details]"}
+    <p>[t]Uitnodigen[/t]: {if $mark=='yes'} [t]ja[/t] {else} [t]nee[/t] {/if} </p>
+    <p>[t]Opmerkingen[/t]: {$reaction} </p>
+{/if}
+
+<!--uts:end inner-->
+</body>
+</html>

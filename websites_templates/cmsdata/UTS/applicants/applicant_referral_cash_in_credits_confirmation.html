@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+
+</head>
+<body>
+<!--uts:begin inner-->
+<!--system part-->
+
+
+
+<script type="text/javascript">
+var show_limit_exceed = '{$show_limit_exceed}';
+var show_no_products_selected = '{$show_no_products_selected}';
+// {literal}
+
+if (show_limit_exceed == '1') {
+  alert("[th]You don't have enough credits to buy these products![/th]");
+}
+
+if (show_no_products_selected == '1') {
+  alert("[th]You didn't select any products![/th]");
+}
+
+
+
+function cancelOrder(){
+    
+    window.location = "/index.php/page/portal_referral/command/cash_in_credits/bb/1";
+}
+
+
+function submitOrder(){
+    document.cash_credits.submit();
+}
+
+// {/literal}
+</script>
+
+<!--display part-->
+<div class="outer custOuter custFinOuter custFinDetOuter">
+<!-- UTS/applicants/applicant_referral_cash_in_credits_confirmation.html -->
+	<h1 class="title">[t]Order confirmation[/t]</h1>
+	
+	{$menu}
+  
+  
+   		
+  <div class="text">[t]You are about to buy the following products using your credit balance.[/t]</div>
+    	
+  <form name="cash_credits" action="/index.php/page/portal_referral/command/cash_in_credits_confirmation/bb/1/" method="POST">
+  <input type="hidden" name="command" value="cash_in_credits_confirmation">    
+  <input type="hidden" name="action" value="submit_order">
+  {* css is not defined*}    
+  <table border="0" class="cashInTbl" cellspacing="0" cellpadding="0" >
+    <tr class="cashInHeaderRow">
+    <th class="number">[t]Number[/t]</th>
+    <th class="product">[t]Product[/t]</th>
+    <th class="credits">[t]Total credits[/t]</th>
+    </tr>
+	{foreach from=$product_order_list item=r}
+    <tr>  
+  		<td class="number"><input type="hidden" name="amount_products[{$r.id}]" id="amount_products" value="{$r.product_cnt|default:0}">{$r.product_cnt|default:0}</td>
+  		<td class="product">{$r.product_name}</td>
+  		<td class="credits">{$r.total_product_credits}</td>
+  	</tr>
+  {foreachelse}
+    <tr>  
+  		<td align="right" colspan="3">[t]You don't have any products to order.[/t]</td>
+  	</tr>
+  
+	{/foreach}
+  
+  {if $cnt_products > 0}
+  <tr>  
+		<td class="number">&nbsp;</td>
+		<td class="product"><strong>[t]Total:[/t]</strong></td>
+		<td class="credits" ><strong>{$total_credits}</strong></td>
+	</tr>
+  
+  <tr>
+    <td colspan="2" class="cancelOrder"><input class="button" type="button" onClick="cancelOrder();" value="[th]Cancel[/th]" ></td>
+    <td class="subOrder"><input class="button" type="button" onClick="submitOrder();" value="[th]Finalize order[/th]" ></td>
+  </tr>  
+  {/if}
+  </table>
+  </form>
+
+    
+</div>
+<!--uts:end inner-->
+</body>
+</html>

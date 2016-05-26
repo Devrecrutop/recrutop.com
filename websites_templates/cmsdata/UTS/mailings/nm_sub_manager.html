@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>Subscription manager</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- UTS/mailings/nm_sub_manager.html -->
+
+<form name="f" action="/index.php/page/mailings/bb/1" method="post">
+
+<table border="0" cellspacing="0" cellpadding="0" class="vacsTable">
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]PageTitle[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+<!--START_Block1-->
+<tr>
+<td>
+
+
+<!--START_Title1-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text1-->
+<tr>
+<td class="formText">[t]Text1[/t]</td>
+</tr>
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText"><a href="javascript:document.forms.fprofile.submit();void(0)">[t]SingleWord1[/t]<!--SingleWordLink1--></a></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="formTextContainer">
+
+<table witdh="100%" cellpadding="0" cellspacing="0" class="formTextTbl">
+<foreach from=$clist item=c>
+<tr>
+<td class="radiobuttons"><input type="hidden" name="sbs[{$c.id}]" value="{$c.subscribed}" ><input type="checkbox" name="grplist[]" value="{$c.id}" {if $c._preselect}checked{/if}></td>
+<td class="">{$c.ml_mg_public_subject}</td>
+<td class="">{if $c.subscribed}[t]SingleWord3[/t]<!--SingleWordLink3-->{else}[t]SingleWord4[/t]<!--SingleWordLink4-->{/if}</td>
+</tr>
+</foreach>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">{$rcnt} [t]SingleWord2[/t]<!--SingleWordLink2--></td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+
+<tr>
+<td class="formButton"><input name="Submit" type="Submit" value="[t]Button1[/t]" class="button"><!--ButtonLink1--></td>
+</tr>
+
+</table>
+<input type="hidden" name="command" value="subman_save" >
+<input type="hidden" name="email" value="{$email}" >
+<input type="hidden" name="name" value="{$name}" >
+<input type="hidden" name="surname" value="{$surname}" >
+<input type="hidden" name="gender" value="{$gender}" >
+<input type="hidden" name="prefix" value="{$prefix}" >
+{if $cms_categorie}
+<input type="hidden" name="cms_categorie" value="{$cms_categorie}" >
+{/if}
+<input type="hidden" name="preferred_language" value="{$preferred_language}" >
+</form>
+
+<form name="fprofile" action="/index.php/page/mailings/bb/1" method="post">
+<input type="hidden" name="command" value="subprofile" >
+<input type="hidden" name="email" value="{$email}" >
+{if $cms_categorie}
+<input type="hidden" name="cms_categorie" value="{$cms_categorie}" >
+{/if}
+</form>
+<!--uts:end inner-->
+</body>
+</html>

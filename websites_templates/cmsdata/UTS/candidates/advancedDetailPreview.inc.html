@@ -1,0 +1,70 @@
+{* Preview tab template. Fetched by AJAX only. *}
+<!-- /UTS/candidates/advancedDetailPreview.inc.html -->
+<literal>
+<style type="text/css">
+  td.cadCVLeft {
+    vertical-align:top;
+  }
+</style>
+</literal>
+    
+{if $c.educationHistory}
+    <h2 class="subheader candAdvDetailSH">[t]Education history[/t]</h2>
+    <table class="candAdvDetailPersonalTable">
+        <colgroup>
+            <col style="width:140px;">
+            <col>
+        </colgroup>
+        <foreach from=$c.educationHistory item=ehi>
+        <tr>
+            <td class="cadCVLeft">{if $ehi.StartDateOriginal}{$ehi.StartDateOriginal}{else}{$ehi._startDate}{/if} {if ($ehi.StartDateOriginal || $ehi._startDate) && ($ehi.EndDateOriginal || $ehi._endDate != '---')}-{/if} {if $ehi.EndDateOriginal}{$ehi.EndDateOriginal}{else}{if $ehi._endDate != '---'}{$ehi._endDate}{/if}{/if}</td>
+            <td>{$ehi.Degree|escape}{if $ehi.InstituteNameAndPlace && $canShowPersonal} [t]at[/t] {$ehi.InstituteNameAndPlace|escape}{/if}</td>
+	    <td>{if $ehi.itemMatchedWebSearch}<img style="margin-left:7px" src="http://www.jobtree.nl/_images_global/led-green.png" alt="Green" >{/if}</td>
+        </tr>
+        <foreachelse>
+        <if $c.educationHistory|@count == 0>
+        <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div class="noItemsToDisplay">
+                [t]There are no items to display...[/t]
+            </div>
+        </td>    
+        </tr>                    
+        </if>        
+        </foreach>
+      </table>
+{/if}
+
+{if $c.employmentHistory}    
+    <h2 class="subheader candAdvDetailSH">[t]Employment history[/t]</h2>
+    <table class="candAdvDetailPersonalTable">
+        <colgroup>
+            <col style="width:140px;">
+            <col>
+        </colgroup>
+        <foreach from=$c.employmentHistory item=ehi>
+        <tr>
+            <td class="cadCVLeft">{if $ehi.StartDateOriginal}{$ehi.StartDateOriginal}{else}{$ehi._startDate}{/if} {if ($ehi.StartDateOriginal || $ehi._startDate) && ($ehi.EndDateOriginal || $ehi._endDate)}-{/if} {if $ehi.EndDateOriginal}{$ehi.EndDateOriginal}{else}{$ehi._endDate}{/if}</td>
+            <td>{$ehi.Experience|escape}{if $ehi.EmployerNameAndPlace && $canShowPersonal} [t]at[/t] {$ehi.EmployerNameAndPlace|escape}{/if}</td>
+	    <td>{if $ehi.itemMatchedWebSearch}<img style="margin-left:7px" src="http://www.jobtree.nl/_images_global/led-green.png" alt="Green" >{/if}</td>
+        </tr>
+        <foreachelse>
+        <if $c.employmentHistory|@count == 0>
+        <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div class="noItemsToDisplay">
+                [t]There are no items to display...[/t]
+            </div>
+        </td>    
+        </tr>                    
+        </if>        
+        </foreach>
+    </table>
+{/if}
+
+<if [uts:short_description] && $c.main.chapo>
+  <h2 class="subheader candAdvDetailSH">[t]Short Description[/t]</h2>
+  <div>{$c.main.chapo|escape}</div>  
+</if>

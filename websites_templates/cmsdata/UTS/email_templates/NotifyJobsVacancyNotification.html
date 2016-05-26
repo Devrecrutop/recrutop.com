@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>             
+    <br>
+    
+    {foreach from=$flow_items item=c  key=ckey}
+        <p>
+            <b>[t]Workflow name:[/t] {$c.flow_name|escape:'htmlall'}</b>
+        </p>
+        <p>
+            [t]Workflow description:[/t] {$c.flow_description|escape:'htmlall'}
+        </p>
+         
+         <br><br>
+         
+        {foreach from=$vacancies[$ckey] item=d}
+         <p>   
+            {if $d.about_name}  [t]Vacancy[/t]: {$d.about_name|escape:'quotes'} {if $d.reference}({$d.reference}){/if}<br>{/if} 
+            {if $d.invoerdatum}  [t]Entry date[/t]: {$d.invoerdatum} <br>{/if} 
+            {if $d.status_last_changed}  [t]Status last changed(days)[/t]: {$d.status_last_changed} <br>{/if} 
+            {if $d.vacancy_status}  [t]Vacancy status[/t]: {$d.vacancy_status|escape:'htmlall'} <br>{/if} 
+            {if $d.chapo}  [t]Description[/t]: {$d.chapo|escape:'htmlall'|truncate:100} <br>{/if} 
+         </p>   
+         <br><br>
+        {/foreach}        
+        <br><br>
+    {/foreach}    
+    
+</p>
+   
+<p>[t]OTYS INTERACTIVE CLERQ[/t]</p>
+
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer actOuter cdsOuter">
+<!-- /UTS/advsearch/candidateDemographicStatistics.html -->
+<h1 class="title actTitle cdsTitle">[t]Bedrijfspresentaties[/t]</h1>
+
+<div class="intro actIntro cdsIntro">[t]Below we give you an indication of what our candidates database consists of[/t]</div>
+<foreach from=$results item=r>
+  <div class="itemContainer actIc cdsIc">
+    <h3 class="itemTitle actItemTitle cdsItemTitle">{if $r.title}{$r.title|escape}{else}{$r.name|escape}{/if}</h3>
+    <ul>
+    <foreach from=$r.flist item=f>
+      {*f is stdObject*}
+      <li>
+        <a href="[website]/index.php/page/advsearchcvs/bb/1/command/startsearchdisp/container/matchcriteria/field/{$r.fld|escape:"url"}/query/{$f->value}/new/vacatures-{$f->name2|escape:"url"}.html">
+        {$f->name|escape}&nbsp;<if [uts:frequency_percentage]>({$f->frequencyPercentage|escape}%)<else>({$f->frequency|escape})</if> {*<!--MBL-FP:{$f->frequencyPercentage} OF {$f->totalFrequency}-->*}</a>
+      </li>
+    </foreach>
+    </ul>
+	<div class="cleaner actCleaner cdsCleaner"></div>
+  </div>
+</foreach>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

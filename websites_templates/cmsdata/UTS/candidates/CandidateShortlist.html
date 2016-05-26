@@ -1,0 +1,24 @@
+
+{if $shortlistCandidates}
+<div class="candidateShortListHook hookOuter">
+
+    <div class="hookHeader">[t]KANDIDATEN[/t]</div>
+
+    {foreach from=$shortlistCandidates item=slCandidate}
+        <div class="hookItemContainer ">
+                <p>
+                    <a href="/index.php/page/candidate_detail/bb/1/command/candidate_detail/id/{$slCandidate.id}/" target="_self">{$slCandidate.voornaam} {$slCandidate.tussenvoegsel} {$slCandidate.achternaam}</a>
+                    <br> {$slCandidate.short_descr}
+                </p>
+            <!--LINKS-->
+        </div>
+    {/foreach}
+
+</div>
+
+{*
+<div class="rightMenu">
+    <a href="http://www.hebbizzconsulting.nl/index.php/page/candidate_detail/bb/1/command/candidate_list/cms_categorie/65620" title="Kandidaten &gt;">[t]Kandidaten &gt;[/t]</a>
+</div>
+*}
+{/if}

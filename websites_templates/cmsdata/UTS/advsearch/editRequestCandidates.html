@@ -1,0 +1,546 @@
+{* required ext.JS: JQueryBase,JQueryAutocomplete,JQueryMultiSelect *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+
+<script type="text/javascript">
+//{literal}
+function advsearchform_check_form(frm) {
+    //{/literal}
+    <if [uts:show_distance_matching]>
+    //{literal}
+    if (frm.proximity_preferredDistance.value && !frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value!='0') {
+        alert('[th]Set also the maximal distance.[/th]');
+        return(false);
+    }
+    
+    if (frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value && parseInt(frm.proximity_preferredDistance.value)>parseInt(frm.proximity_maxDistance.value)) {
+        alert('[th]Maximal distance must be lower than preferred distance.[/th]');
+        return(false);
+    }
+    //{/literal}
+    </if>
+    //{literal}
+    return(true);
+}
+//{/literal}
+</script>
+
+<div class="outer actOuter candActO">
+ <!-- /UTS/advsearch/editRequestCandidates.html --><!-- TEST -->
+<h1 class="title actTitle candActTitle">[t]Advanced search[/t]</h1>
+
+{$CustomersMenu}
+
+<div class="intro actIntro candActIntro">[t]Use fields below to assemble your search query.[/t]</div>
+
+<form name="advsearchform" method="post" action="{$handler}" onsubmit="return(advsearchform_check_form(this))">
+{* keyword field *}
+<if [uts:show_keyword_options]>
+<div class="formInput actFi actFIkeyword">
+<label>[t]Keywords[/t]</label>
+<input id="actQueryCandKeywords" type="text" name="main_keywords" value="{$keywordsValue|escape}">
+</div>
+<div class="formInput actFi actFiSelect actFiSelectKeywo">
+<label></label>
+<select id="multisel_kw_options" name="main_keywords_options[]" multiple="multiple" size="5">
+    <html_options options=$kwOptions selected=$kwOptionsSelected>
+</select>
+</div>
+</if>
+
+{* location field *}
+<if [uts:show_location]>
+<div class="formInput actFi actFIlocation">
+<label>[t]Location[/t]</label>
+<input id="actQueryLocation" type="text" name="main_location" value="{$locationValue|escape}">
+</div>
+</if>
+
+{* start gender field *}
+<if [uts:show_gender]>
+<div class="formInput actFi actFiSelect actFigender">
+<label>[t]Gender[/t]</label>
+<select name="main_geslacht" id="main_geslacht">
+    <option value="">---</option>
+    <html_options options=$genderOptions selected=$genderValue>
+</select>
+</div>
+</if>
+{* end gender field *}
+
+{* start age field *}
+<if [uts:show_age]>
+<div class="formInput actFi actFiSelect actFiAgeFrom">
+<label>[t]Age search (from)[/t]</label>
+<select name="main_age_year_from" id="main_age_year_from">
+    <option value="">---</option>
+    <html_options options=$yearOptions selected=$ageYearFrom>
+</select>
+</div>
+<div class="formInput actFi actFiSelect actFiAgeTo">
+<label>[t]Age search (to)[/t]</label>
+<select name="main_age_year_to" id="main_age_year_to">
+    <option value="">---</option>
+    <html_options options=$yearOptions selected=$ageYearTo>
+</select>
+</div>
+</if>
+{* end age field *}
+
+
+{* start avdate field *}
+<if [uts:show_avdate]>
+<div class="formInput actFi formSmallInput actSfi">
+<label>[t]Available from[/t]</label>
+	<html_select_date time=$avDateVal field_order="DMY" month_format="%m" prefix="main_avdatefrom_" day_value_format="%02d" start_year="-1" end_year="+5" day_extra="class='actSearchAvailDate'" month_extra="class='actSearchAvailMonth'" year_extra="class='actSearchAvailYear'" day_empty="--" month_empty="--" year_empty="----">
+</div>
+</if>
+{* end avdate field *}
+
+{* start avdateto field *}
+<if [uts:show_avdateuntil]>
+<div class="formInput actFi formSmallInput actSfun">
+<label>[t]Available until[/t]</label>
+	<html_select_date time=$avDateValTo field_order="DMY" month_format="%m" prefix="main_avdateto_" day_value_format="%02d" start_year="-1" end_year="+5" day_extra="class='actSearchAvailDate'" month_extra="class='actSearchAvailMonth'" year_extra="class='actSearchAvailYear'" day_empty="--" month_empty="--" year_empty="----">
+</div>
+</if>
+{* end avdateuntil field *}
+
+{* start na_reason field *}
+<if [uts:show_na_reason]>
+<div class="formInput actFi actFiSelect actFiReason">
+<label>[t]N/A reason[/t]</label>
+<select name="main_na_reason" id="main_na_reason">
+    <option value="">---</option>
+    <html_options options=$naReasonOpts selected=$naReasonVal>
+</select>
+</div>
+</if>
+{* end na_reason field *}
+
+{* distance options *}
+<if [uts:show_distance_matching]>
+<div class="formInput actFi actFiSelect actFICountryCode">
+<label for="idCountryCode">[t]Country[/t]</label>
+<select id="idCountryCode" name="proximity_countryCode">
+	<option value="">---</option>
+	<html_options options=$proximityCountries selected=$proximity.countryCode>
+</select>
+</div>
+
+<div class="formInput actFi actFIZipcode">
+<label for="idZipcode">[t]Zipcode[/t]</label>
+<input type="text" id="idZipcode" name="proximity_zipCode" value="{$proximity.zipCode|escape}">
+</div>
+
+
+<input type="hidden" name="proximity_preferredDistance" value="0">
+	
+
+<div class="formInput actFi actFiSelect actFIMaxDist">
+<label for="idMaxDist">[t]Maximum distance [km][/t]</label>
+<select id="idMaxDist" name="proximity_maxDistance">
+	<option value="">---</option>
+	<html_options options=$distOpts selected=$proximity.maxDistance>
+</select>
+</div>
+</if>
+
+{* criteria fields *}
+<if [uts:mc_and_or_switch]>
+<!-- MC AND OR SWITCH -->
+<div class="formInput actFi actFiSelect actFIAndOrSw">
+  <label for="mc_and_or_switch">[t]Search criteria:[/t]</label>
+  <select id="mc_and_or_switch" name="mc_and_or_switch">    
+    <option value="or" {if $mcAndOrSwitch == "or"}selected="selected"{/if}>[th]Using OR[/th]</option>
+    <option value="and" {if $mcAndOrSwitch == "and"}selected="selected"{/if}>[th]Using AND[/th]</option>
+  </select>
+</div>
+</if>
+<foreach from=$critList item=crit>
+<div class="formInput actFi actFiSelect actFiSelect">
+<label>{$crit.name}</label>
+<if $crit.sm == "M">
+    {* multiselect *}
+    {*<select name="matchcriteria_{$crit.field}[]" multiple="multiple">*}
+    <select id="multisel_mc_{$crit.field}" name="matchcriteria_{$crit.field}[]" multiple="multiple" size="5">
+        <html_options options=$crit.options selected=$crit.curValues>
+    </select>
+<else>
+    {* single select *}
+    <select name="matchcriteria_{$crit.field}" id="matchcriteria_{$crit.field}">
+        <option value="NULL">---</option>
+        <html_options options=$crit.options selected=$crit.curValue>
+    </select>
+</if>
+</div>
+</foreach>
+
+{* start boolean fields *}
+{* start hasPhoto field *}
+<if [uts:show_has_photo]>
+<div class="formInput actFi actFiSelect actFiPhoto">
+<label>[t]Has photo[/t]</label>
+<select name="main_hasPhoto" id="main_hasPhoto">
+    <option value="">---</option>
+    <html_options options=$hasPhotoOptions selected=$hasPhotoValue>
+</select>
+</div>
+</if>
+{* end hasPhoto field *}
+{* start hasOriginalCV field *}
+<if [uts:show_has_original_cv]>
+<div class="formInput actFi actFiSelect actFiCV">
+<label>[t]Has original CV[/t]</label>
+<select name="main_hasOriginalCV" id="main_hasOriginalCV">
+    <option value="">---</option>
+    <html_options options=$hasOriginalCVOptions selected=$hasOriginalCVValue>
+</select>
+</div>
+</if>
+{* end hasOriginalCV field *}
+
+{* start isPublic field NOT USED FINALLY
+<if [uts:show_is_public]>
+<div class="formInput actFi actFiSelect actFiPublic">
+<label>[t]Public[/t]</label>
+<select name="main_isPublic">
+    <option value="">---</option>
+    <html_options options=$isPublicOptions selected=$isPublicValue>
+</select>
+</div>
+</if>
+{* NOT USED: end isPublic field *}
+
+{* start hasEmail field *}
+<if [uts:show_has_email]>
+<div class="formInput actFi actFiSelect actFiEmail">
+<label>[t]Has e-mail[/t]</label>
+<select name="main_hasEmail" id="main_hasEmail">
+    <option value="">---</option>
+    <html_options options=$hasEmailOptions selected=$hasEmailValue>
+</select>
+</div>
+</if>
+{* end hasEmail field *}
+{* start hasMobileNr field *}
+<if [uts:show_has_mobile_nr]>
+<div class="formInput actFi actFiSelect actFiMobile">
+<label>[t]Has mobile nr.[/t]</label>
+<select name="main_hasMobileNr" id="main_hasMobileNr">
+    <option value="">---</option>
+    <html_options options=$hasMobileNrOptions selected=$hasMobileNrValue>
+</select>
+</div>
+</if>
+{* end hasMobileNr field *}
+{* start published_not_anonymous field *}
+<if [uts:show_publish_not_anonymous]>
+<div class="formInput actFi actFiSelect actFiAnon">
+<label>[t]Published (not anonymous)[/t]</label>
+<select name="main_published_not_anonymous" id="main_published_not_anonymous">
+    <option value="">---</option>
+    <html_options options=$published_not_anonymousOptions selected=$published_not_anonymousValue>
+</select>
+</div>
+</if>
+{* end published_not_anonymous field *}
+
+
+{* start cv_flag field *}
+<if [uts:show_cv_flag]>
+<div class="formInput actFi actFiSelect actFiCvFlag">
+<label>[t]CV Present[/t]</label>
+<select name="main_cv_flag" id="main_cv_flag">
+    <option value="">---</option>
+    <html_options options=$cv_flagOptions selected=$cv_flagValue>
+</select>
+</div>
+</if>
+{* end cv_flag field *}
+
+
+{* end boolean fields *}
+
+{* registration date *}
+<if [uts:show_reg_date]>
+<div class="formInput actFi actFiSelect actFiRegDate">
+<label>[t]Registered within[/t]</label>
+<select name="main_invoerdatum" id="main_invoerdatum">
+    <option value="">---</option>
+    <html_options options=$regDateOpts selected=$regDateVal>
+</select>
+</div>
+</if>
+
+<if [uts:show_last_update]>
+<div class="formInput actFi actFiSelect actFiLastUpdate">
+<label>[t]Last update within[/t]</label>
+<select name="main_wijzigingsdatum" id="main_wijzigingsdatum">
+    <option value="">---</option>
+    <html_options options=$lastUpdateOpts selected=$lastUpdateVal>
+</select>
+</div>
+</if>
+
+<if [uts:show_last_contact]>
+<div class="formInput actFi actFiSelect actFiLastContact">
+<label>[t]Last contact within[/t]</label>
+<select name="main_last_contact_datetime" id="main_last_contact_datetime">
+    <option value="">---</option>
+    <html_options options=$lastContactOpts selected=$lastContactVal>
+</select>
+</div>
+</if>
+
+<if [uts:show_applied_for_cur_customer] && $cpid>
+<div class="formInput actFi actFiSelect actFiApplFor">
+<label>[t]Applied to jobs of my company[/t]</label>
+<select name="main_appliedForJobsOf" id="main_appliedForJobsOf">
+    <option value="">---</option>
+    <html_options options=$appliedForJobsOfModeOptions selected=$appliedForJobsOfValue>
+</select>
+</div>
+</if>
+
+
+<if [uts:show_nationality]>
+<div class="formInput actFi actFiSelect actFiNationality">
+<label>[t]Nationality[/t]</label>    
+  <select name="main_nationality_code" id="main_nationality_code">
+    <option value="">---</option>    
+    <html_options options=$nationalityOpts selected=$nationalityValue>
+  </select>
+</div>
+{*
+PREPARED FO MULTISELECT 
+<div class="formInput actFi actFiSelect actFiNationality">
+<label>[t]Nationality[/t]</label>    
+  <select name="main_nationality_code[]" id="main_nationality_code" multiple="multiple" size="5">    
+    <html_options options=$nationalityOpts selected=$nationalityValues>
+  </select>
+</div>
+*}
+</if>
+
+{* start competencies *}
+<if [uts:show_competencies]>
+<!-- ORIGINAL HR WAS HERE -->
+<input type="hidden" name="cmpsPresent" value="1">
+
+<div class="formInput actFi actFiCompetence">
+
+<if [uts:text_input_for_competences]>
+
+<label for="idComp">[t]Add a competence (type at least 3 letters)[/t]</label>
+<input type="text" id="idComp" value="" onkeypress="return(!(window.event && window.event.keyCode == 13))">
+<input id='competence_id_field' type='hidden' name='competence_id'>
+
+<else>
+
+<label for="competence_id_field">[t]Add a competence[/t]</label>
+<input type="hidden" id="idComp" value="">
+<select id='competence_id_field' type='hidden' name="competence_id" onchange="$('#idComp').val($('#competence_id_field option:selected').text());">
+<option value="">---</option>
+{html_options options=$cmpList}
+</select>
+
+</if>
+
+<a href="javascript:addCompetenceToSearch()" title="[th]Add this competence to the search[/th]">[t]Add[/t]</a>
+    
+<script defer="true" type="text/javascript">
+var cmpAskURL='{$handler}/command/cmpautocomplete/arg/';
+//{literal}
+/* remark: quickselect not used anymore, we use the autocomplete plugin instead now $('#idComp').quickselect({ url:cmpAskURL, minChars:3, match:'substring',autoSelectFirst:false,mustMatch:true,additional_fields:$('#competence_id_field'),formatItem:function(data, index, total){return(data[0])}});*/
+function addCompetenceToSearch() {
+  var cmpId=$('#competence_id_field').val();
+  var cmpName=$('#idComp').val();
+  if (!cmpId) return;
+  if ($('#cmpTR_'+cmpId).length) return;
+  $('#competence_id_field').val('');
+  $('#idComp').val('');
+  $('#cmpList').each(function(){
+    var $table = $(this);
+    // Number of td's in the last table row
+    var n = $('tr:last td', this).length;
+    var tds = '<tr id="cmpTR_'+cmpId+'">';
+    tds+='<td>'+cmpName+'</td>';
+    tds+='<td>'+$('#invisibleMinLevelSelect').html().replace('SELECTNAME', 'cmpMinLevel_'+cmpId)+'</td>';
+    tds+='<td>'+$('#invisibleMaxLevelSelect').html().replace('SELECTNAME', 'cmpMaxLevel_'+cmpId)+'</td>';
+    tds+='<td>'+$('#invisibleCertificateSelect').html().replace('SELECTNAME', 'cmpCertificate_'+cmpId)+'</td>';
+    tds+='<td><input type="button" title="[th]Remove item[/th]" value="[tb]X[/tb]" onclick="removeCompetenceItem(\''+cmpId+'\')"><input type="hidden" value="'+cmpId+'" name="cmps[]"></td>';
+    tds += '</tr>';
+    if($('tbody', this).length > 0){
+      $('tbody', this).append(tds);
+    }else {
+      $(this).append(tds);
+    }
+  });
+}
+function removeCompetenceItem(cmpid) {
+  if (!$('#cmpTR_'+cmpid).length) return;
+    $('#cmpTR_'+cmpid).remove();
+}
+//{/literal}
+</script>
+</div>
+
+{* active competency table *}
+<table cellspacing="0" cellpadding="0" border="0" class="actCompTbl" id="cmpList">
+<tr>
+<td class="actComp">[t]Competency[/t]</td>
+<td class="actMinLvl">[t]Min level[/t]</td>
+<td class="actMaxLvl">[t]Max level[/t]</td>
+<td class="actCert">[t]Certificate[/t]</td>
+</tr>
+<!--current competencies-->
+<foreach from=$competencies item=comp>
+<tr id="cmpTR_{$comp.id}">
+<td>{$comp._name|escape}</td>
+<td>
+<select name="cmpMinLevel_{$comp.id}">
+	<option value="">---</option>
+	<html_options options=$cmpLevels selected=$comp.minLevel>
+</select>
+</td>
+<td>
+<select name="cmpMaxLevel_{$comp.id}">
+	<option value="">---</option>
+	<html_options options=$cmpLevels selected=$comp.maxLevel>
+</select>
+</td>
+<td>
+<select name="cmpCertificate_{$comp.id}">
+	<option value="">---</option>
+	<html_options options=$cmpCertificates selected=$comp.certificate>
+</select>
+</td>
+<td>
+<input type="button" title="[th]Remove item[/th]" value="[tb]X[/tb]" onclick="removeCompetenceItem('{$comp.id|escape:"javascript"}')">
+<input type="hidden" value="{$comp.id}" name="cmps[]">
+</td>
+</tr>
+</foreach>
+</table>
+
+{* invisible stuff *}
+<div id="invisibleMinLevelSelect" style="display:none;">
+<select name="SELECTNAME"><option value="">---</option><html_options options=$cmpLevels></select>
+</div>
+<div id="invisibleMaxLevelSelect" style="display:none;">
+<select name="SELECTNAME"><option value="">---</option><html_options options=$cmpLevels></select>
+</div>
+<div id="invisibleCertificateSelect" style="display:none;">
+<select name="SELECTNAME"><option value="">---</option><html_options options=$cmpCertificates></select>
+</div>
+</if>
+<div class="buttonContainer"><input type="submit" name="bApplSubmit" value="[tb]Search[/tb]" class="button"></div>
+<input type="hidden" name="command" value="submitrequest">
+<input type="hidden" name="origin" value="module">
+</form>
+
+</div>
+<script type="text/javascript" defer="true">
+var kwAskURL='{$handler}/command/kwautocomplete/arg/';
+var locaAskURL='{$handler}/command/locautocomplete/arg/';
+var cmpAskURL='{$handler}/command/cmpautocomplete/arg/';
+
+//{literal}
+
+// define ready function
+$(document).ready(function() {
+  // setup autocomplete for keyword
+  if ($('#actQueryCandKeywords').length) {
+    $('#actQueryCandKeywords').autocomplete({ 
+      serviceUrl:kwAskURL,
+      minChars:3, 
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:200
+      //deferRequestBy: 0, //miliseconds
+      // callback function:
+      //onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+    });
+  }
+  // setup autocomplete for competencies
+  if ($('#idComp').length) {
+    $('#idComp').autocomplete({ 
+      serviceUrl:cmpAskURL,
+      minChars:3,
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:300,
+      deferRequestBy: 100, //miliseconds
+      // callback function:
+      onSelect: function(value, data){ $('#competence_id_field').val(data); addCompetenceToSearch();}
+    });
+  }
+  if ($('#actQueryLocation').length) {
+    $('#actQueryLocation').autocomplete({ 
+      serviceUrl:locaAskURL,
+      minChars:3, 
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:200
+      //deferRequestBy: 0, //miliseconds
+      // callback function:
+      //onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+    });
+  }
+  
+  var reqScripts = "[uts:ext_javascripts]";
+  if(reqScripts.indexOf('JQueryMultiSelect') > -1 && !$.fn.magicSelect){
+  {
+    // setup match criteria multiselects
+    //{/literal}
+    <foreach from=$critList item=crit>
+    <if $crit.sm == "M">
+        var critf='{$crit.field}';
+        //{literal}
+        if ($('#multisel_mc_'+critf).length) $('#multisel_mc_'+critf).multiSelect({
+            selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select criteria...[/th]',
+            oneOrMoreSelected: '[th]Select criteria (% selected)...[/th]'
+            });
+
+        //{/literal}
+    </if>
+    </foreach>
+    //{literal}
+    
+    // setup jquery multiselect for keyword options
+    if ($('#multisel_kw_options').length) $('#multisel_kw_options').multiSelect({
+        selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select fields...[/th]',
+            oneOrMoreSelected: '[th]Select fields (% selected)...[/th]'
+    });
+    
+    
+    // setup jquery multiselect for naitionality
+    /*
+    PREPARED FOR MULTISELECT
+    if ($('#main_nationality_code').length)
+    { 
+      $('#main_nationality_code').multiSelect({
+              selectAllText: '[th]Select all[/th]',
+              noneSelected: '[th]Select fields...[/th]',
+              oneOrMoreSelected: '[th]Select fields (% selected)...[/th]'
+      });
+    }
+    */
+    
+  }
+  
+});
+//{/literal}
+</script>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/hookEventsRssCategories.html -->
+
+<div class="hookOuter blogHookCategoriesOuter">
+<h1 class="hookHeader blogHookCategoriesHeader">[t]Event Categories[/t]</h1>
+
+<foreach from=$categories item=a>
+<div class="hookItemContainer blogHookCategoriesContainer">
+<div class="hookItemTitle blogHookCategoriesLink"><a href="/index.php/page/rss_events/cat/{$a.id}">{$a.name|escape}</a></div>
+</div>
+</foreach>
+
+<div class="hookItemContainer blogHookCategoriesContainer">
+<div class="hookItemTitle blogHookCategoriesLink"><a href="/index.php/page/rss_events/">[t]Global (all categories)[/t]</a></div>
+</div>
+
+<div class="hookItemContainer blogHookCategoriesRSSContainer">
+<a href="/index.php/page/blog/bb/1/command/category_rss_list" border="0" title="[t]RSS Categories[/t]"><img src="/_images_global/rssicon.gif" border="0" alt="{$a.name|escape}"><label>[t]RSS[/t]</label></a>
+</div>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

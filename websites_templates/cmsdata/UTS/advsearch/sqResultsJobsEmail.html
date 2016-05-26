@@ -1,0 +1,76 @@
+{* this email is sent to the to the stored query victim *}
+<!--uts:begin inner-->
+<style type="text/css">
+    <literal>
+    .itemContainer{
+        clear:both;
+        margin-bottom:10px;
+    }
+    .itemImage{
+        float:right;
+    }
+    .itemImage a{}
+    .itemImage img{
+        margin-left:15px;
+        margin-bottom:15px;
+    }
+    .itemTitle{}
+    .itemWord{}
+    .itemWord span{
+        padding-right:2px;
+    }
+    .itemDescription{
+        padding-bottom:15px;
+    }
+    .itemFooter{
+        padding-bottom:15px;
+    }
+    .itemFooterWord{
+        display:inline;
+        padding-right:4px;
+        margin-right:4px;
+        border-right:1px solid;
+    }
+    .itemFooterWord span{
+        padding-right:2px;
+    }
+    .iFoFirstChild{}
+    .iFoChild{}
+    .iFoLastChild{
+        border-right:none;
+    }
+    </literal>
+</style>
+<div>
+    <!-- /UTS/advsearch/sqResultsJobsEmail.html -->
+    {* actual result list *}
+    <foreach from=$items item=r>
+        <div class="itemContainer">
+            <h3 class="itemTitle"><a title="{$r.data._name|escape:"javascript"} - {$r.data.locatie|escape:"javascript"}" href="{$r._detail_link}">{$r.data._name} - {$r.data.locatie}</a></h3>
+            <div class="itemDescription">{$r.data._description|strip_tags|truncate:200}</div>
+
+            <div class="itemFooter">
+                <div class="itemFooterWord"><img src="{$site}/_images_global/stars/{$r.starsImg}" alt="{$r.scorep}%" title="[th]Score[/th]: {$r.scorep}%"></div>
+                <div class="itemFooterWord"><img src="{$site}/_images_global/men/{$r.pbarImg}" alt="{$r.data._rea_count} [th]applications[/th]" title="{$r.data._rea_count} [th]applications[/th]"></div>
+                <div class="itemFooterWord">
+                    <span>[t]Published:[/t]</span>
+                    {* start publication date *}
+                    {if $r.data._published_days_ago == 0}
+                    [t]today[/t]
+                    {elseif $r.data._published_days_ago == 1}
+                    [t]yesterday[/t]
+                    {elseif $r.data._published_days_ago le 5}
+                    {t 1=$r.data._published_days_ago count=$r.data._published_days_ago}%1 days ago{/t}
+                    {else}
+                    {$r.data._published}
+                    {/if}
+                    {* end publication date *}
+                </div>
+                {if $r.data.ref_nr}
+                <div class="itemFooterWord"><span>[t]Reference:[/t]</span>#{$r.data.ref_nr}</div>
+                {/if}
+
+            </div>
+        </div>
+    </foreach>
+</div>

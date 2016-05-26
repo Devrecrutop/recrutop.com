@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+    <if $tpl_salutation == "informal">
+        [t]Dear {$informalname|escape},[/t]  {*informal*}
+    <else>
+        [t]Dear {$formalname|escape},[/t]    {*formal*}
+    </if>        
+</p>
+<p>
+    [t]We would like to inform you that the vacancy '{$jobTitle|escape}' has been closed and unfortunately we have chosen to not continue on your application. [/t]
+</p>
+<p>
+    [t]Thank you for your interest and we wish you best of luck in your future career.[/t]
+</p>
+   
+<p class="utsSignature">
+[t]Regards,[/t]<br>
+[t]{$regAdminName}[/t]<br>
+[t]{$werkgever}[/t]<br>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,29 @@
+<div class="hookOuter nwHookOuter rChVOut">
+<!-- /UTS/advsearch/jobDetailRelatedCustomerHook.html -->
+	<div class="hookHeader nwHookHeader rChVHeader">[t]Related company[/t]</div>
+
+	<div class="hookItemTitle rChVIt"><a href="{$cd.networkProfile}">{$cd.werkgever}</a></div>
+	<div class="itemImage hookImage nwHookLogo">
+		<a href="{$cd.networkProfile}" title="[t]See the companyprofile of[/t] {$cd.werkgever|escape}"><img src='[website]/_images_upload/{if $cd.network_image == "Picture" && $cd.network_picture}{$cd.network_picture}{else}{$cd.network_logo}{/if}' alt="[t]See the companyprofile of[/t] {$cd.werkgever|escape}" border="0" ></a>
+	</div>
+
+<!-- 	<div class="hookText nwHookText">{$cd.portfolio_text}</div>
+
+	<div class="hookText nwHookText">{$cd.reference}</div>
+
+	<div class="hookText nwHookText">{$cd.network_text}</div> -->
+
+	{* start matchcriteria *}
+	{if $cd.criteria}
+	{foreach from=$cd.criteria item=crit}
+	<div class="hookItemContainer nwBhItC">
+		<div class="hookItemTitle nwBhItT">{$crit.naam}</div>
+		<div class="hookItemWord nwBhIw">{$crit.crits}</div>
+	</div>
+	{/foreach}
+	{/if}
+	{* end matchcriteria *}
+	
+	<div class="hookText nwHookTextExtra"><a href="{$cd.networkProfile}">[t]More information about {$cd.werkgever}[/t]</a></div>
+	<div class="cleaner"></div>
+</div>

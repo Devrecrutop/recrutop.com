@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>JobsMailFriendForm</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+{literal}
+<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+<!--
+function hidestatus(){
+window.status='Otys e-Recruiting Systems'
+return true
+}
+if (document.layers)
+document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+document.onmouseover=hidestatus
+document.onmouseout=hidestatus
+-->
+</SCRIPT>
+{/literal}
+</head>
+
+<body>
+<!--uts:begin inner-->
+
+<!-- UTS/mailings/nm_sub_form_2.html -->
+{literal}
+<script language="JavaScript" type="text/javascript">
+<!--
+focus();
+function checkForm(f)
+{
+	if (!f.name.value) {alert('Please fill the name.');return false;}
+	if (!f.surname.value) {alert('Please fill the surname.');return false;}
+}
+//-->
+</script>
+{/literal}
+<form onsubmit="return checkForm(this);" action="/index.php/page/mailings/bb/1" method="POST">
+<input type="hidden" name="command" value="{$nextcommand}" >
+<input type="hidden" name="email" value="{$email}" >
+<input type="hidden" name="preselect" value="{$preselect}" >
+<input type="hidden" name="flag_form2" value="1" >
+{if $cms_categorie}
+<input type="hidden" name="cms_categorie" value="{$cms_categorie}" >
+{/if}
+<if !$enable_languages>
+<input type="hidden" name="preferred_language" value="{$preferred_language}" >
+</if>
+<input type="hidden" name="register_get" value="1" >
+
+<table class="vacsTable" cellpadding="0" cellspacing="0" border="0">
+
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]PageTitle[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<!--START_Block1-->
+<!--START_Title1-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Text1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<td class="HQuestion">[t]SingleWord1[/t]:<!--SingleWordLink1--></td>
+<td class="FieldContainer"><input type="Text" name="name" size=35 value="{$r.voornaam}"></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<td class="HQuestion">[t]SingleWord3[/t]:<!--SingleWordLink3--></td>
+<td class="FieldContainer"><input type="Text" name="prefix" size=10 value="{$r.tussenvoegsel}"></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<td class="HQuestion">[t]SingleWord2[/t]:<!--SingleWordLink2--></td>
+<td class="FieldContainer"><input type="Text" name="surname" size=35 value="{$r.achternaam}"></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<td class="HQuestion">[t]SingleWord4[/t]:<!--SingleWordLink4--></td>
+<!-- {$r.geslacht} {$r.geslacht}-->
+<td class="FieldContainer"><select name="gender"><option value="M">[t]SingleWord6[/t]<!--SingleWordLink6--></option><option value="V" {if $r.geslacht == "V"}selected{/if}>[t]SingleWord7[/t]<!--SingleWordLink7--></option></select></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<if $enable_languages>
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<td class="HQuestion">[t]SingleWord5[/t]:<!--SingleWordLink5--></td>
+<td class="FieldContainer"><select name="preferred_language">{html_options options=$langnames selected=$preferred_language}</select></td>
+</tr>
+</table>
+
+</td>
+</tr>
+</if>
+
+<tr>
+<td class="formTblButtonCell"> <input name="Submit" type="Submit" value="[t]Button1[/t]" class="button"><!--ButtonLink1--></td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+</form>
+<!--uts:end inner-->
+</body>
+</html>

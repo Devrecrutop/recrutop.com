@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Participant Enroll Page 1a</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/WorkshopParticipantEnrollPage1a.html -->
+<SCRIPT>
+//{literal}
+function check()
+{	
+var d = document.form
+if (d.email.value == "")
+	{
+		show("\n\n[th]U heeft nog geen E-mail adres ingevuld.[/th]\n\n")
+		setTimeout("document.form.email.focus()", 100)
+		return false
+	}
+	if (d.password.value == "")
+	{
+		show("\n\n[th]U heeft geen password ingevoerd.[/th]\n\n")
+		setTimeout("document.form.password.focus()", 100)
+		return false
+	}
+	if (d.password_check.value == "")
+	{
+		show("\n\n[th]Vul ter controle 2 maal uw wachtwoord in.[/th]\n\n")
+		setTimeout("document.form.password_check.focus()", 100)
+		return false
+	}
+if (d.password.value != d.password_check.value)
+	{
+		show("\n\n[th]Wachtwoorden komen niet overeen.[/th]\n\n")
+		d.password.value = "";
+		d.password_check.value = "";
+		setTimeout("document.form.password.focus()", 100)
+		return false
+	}
+
+	return true
+}
+
+function show(m)
+{
+	setTimeout("alert(unescape(\"" + escape(m) + "\"))", 100)
+}
+//{/literal}
+</SCRIPT>
+      
+<table class="vacstable" style="width: 80%">
+  <form name="form" method="post" action="/index.php/page/participantsfo/command/enroll/type/workshop/code/[code]/bb/1" onsubmit="return check();">
+    <tr> 
+      <td colspan="2" class="kop">[t]Inschrijfformulier[/t]</td>
+    </tr>
+    <tr>
+      <td colspan="2" align="left" valign="top"> 
+        <p>[t]Dit e-mailadres bestaat al. U kunt het wachtwoord vinden in de eerste 
+          e-mail die u van ons hebt ontvangen na de inschrijving.[/t]</p>
+        </td>
+    </tr>
+    <tr>
+      <td colspan=2><table border=0>
+          <tr> 
+            <td width="171">[t]E-mailadres[/t]</td>
+            <td> <div align="right"> 
+                <input type="text" name="email">
+              </div></td>
+          </tr>
+          <tr> 
+            <td width="171">[t]Wachtwoord[/t]</td>
+            <td> <div align="right"> 
+                <input type="password" name="password">
+              </div></td>
+          </tr>
+          <tr> 
+            <td width="171">[t]Bevestig wachtwoord[/t]</td>
+            <td> <div align="right"> 
+                <input type="password" name="password_check">
+              </div></td>
+          </tr>
+          <tr> 
+            <input type="hidden" name="ConsultantId" value="[ConsultantId]">
+          </tr>
+          <tr> 
+            <td colspan="2" height="40"> <input type="submit" name="Submit" value="[tb]Inschrijven[/tb]" class="button"> 
+            </td>
+          </tr>
+        </table></td>
+    </tr>
+    <input type="hidden" name="step" value="2">
+  </form>
+</table>
+<!--uts:end inner-->
+</body>
+</html>

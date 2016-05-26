@@ -1,0 +1,29 @@
+<!--uts:begin inner-->
+
+<div class="pcOuter"><!-- hookOuter -->
+<!-- /UTS/candidates/profile_completeness.div.html -->
+<div class="pcHeader">[t]Profile completeness[/t]</div><!-- hookHeader -->
+<div class="pcIc"><!-- hookItemContainer -->
+	<div id="pb_bar" class="pcItem"></div><!-- hookItem -->
+	<div class="pcWord">{$PC}%</div><!-- hookWord -->
+</div>
+
+{if $nextQuestion && $PC<100}
+<div class="hookText pcText">[t]Adding {$nextQuestion} will bring you to {$NPC}%[/t]</div>
+{/if}
+
+{if $PC >= 100}
+<div class="hookText pcText">[t]Your profile is 100% complete[/t]</div>
+{/if}
+
+<div class="cleaner"></div>
+
+<script>
+var intPercent = {$PC};
+{literal}
+document.getElementById("pb_bar").style.width= ""+intPercent+"%";
+{/literal}
+</script>
+</div>
+
+<!--uts:end inner-->

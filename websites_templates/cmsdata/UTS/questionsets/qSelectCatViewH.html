@@ -1,0 +1,58 @@
+<!--select cat view h-->
+<script type="text/javascript">
+// initialize categories
+var cats{$elementId}=new Array();
+var opts{$elementId};
+
+<foreach from=$categories item=cat key=catid>
+	opts{$elementId}=new Array();
+	<foreach from=$options[$catid] item=opt key=optid>
+		opts{$elementId}.push(new Array({$optid|escape:"javascript"}, '{$opt|escape:"javascript"}'));
+	</foreach>
+	cats{$elementId}.push(new Array({$catid|escape:"javascript"}, '{$cat|escape:"javascript"}', opts{$elementId}));
+</foreach>
+
+opts{$elementId}=new Array();
+<foreach from=$options._UNSORTED item=opt key=optid>
+	opts{$elementId}.push(new Array({$optid|escape:"javascript"}, '{$opt|escape:"javascript"}'));
+</foreach>
+
+cats{$elementId}.push(new Array('_UNSORTED', '{$cat|escape:"javascript"}', opts{$elementId}));
+
+</script>
+
+<div class="formInput aplSelect aplSelFunction">
+	<label for="{$elementId}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+	<if $qd.explanation>
+	<div class="explain small explain_{$elementName}">
+		{$qd.explanation|escape}
+	</div>
+	</if>
+	<span class="aplCatSelWrapper">
+		<if !empty($categories)>
+			<select name="fs{$elementName}" id="fs{$elementId}" onchange="qsChangeFilterSelect(this, '{$elementId}', cats{$elementId}), '{$currentValue|escape:'javascript'}';">
+				<html_options options=$categories selected=$currentCategory>
+				<if !empty($options._UNSORTED)>
+					<option value="_UNSORTED" {if $currentCategory == "_UNSORTED"}selected{/if}>[th]Unsorted[/th]</option>
+				</if>
+			</select>
+	
+			<select name="{$elementName}" id="{$elementId}" onChange="processFieldValueChange('{$elementName}')">
+				<option value="NULL">---</option>
+				<html_options options=$options[$currentCategory] selected=$currentValue>
+			</select>
+		<else>
+			<select name="{$elementName}" id="{$elementId}" onChange="processFieldValueChange('{$elementName}')">
+				<option value="NULL">---</option>
+				<html_options options=$options._ALL selected=$currentValue>
+			</select>
+		</if>
+	</span>
+	<div class="cleaner"></div>
+</div>
+
+<if $currentErrorMessage>
+<div class="error error_{$elementName}">
+    {$currentErrorMessage}    
+</div>
+</if>

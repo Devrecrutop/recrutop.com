@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+[t]Dear Sir/Madam[/t],
+</p>
+<p>
+[t]We are sorry to inform you that we have blocked the mail you sent us recently. In order for us to  protect ourselves from viruses and spam, we have to take these measurements because your mail address is not listed in our files.[/t]
+</p>
+<p>
+[t]If you reply this message without editing, it will automatically be released to the addressee in the message. Your mail address is then automatically registered and in the future the addressee will receive your mail directly. If you do not reply, the message will be automatically deleted after 5 days.[/t]
+</p>
+ 
+<p>
+[tg]From[/tg]: <strong>{$fromEmail|escape}</strong><br>
+[tg]To[/tg]: <strong>{$toEmail|escape}</strong><br>
+[tg]Subject[/tg]: <strong>{$subject|escape}</strong><br>
+</p>
+<p>
+[t]We apologize for the inconvenience.[/t]
+</p>
+<p class="utsSignature">
+[t]Best regards,[/t]<br>
+{$client|escape}
+</p>
+<!--uts:end inner-->
+</body>
+</html>

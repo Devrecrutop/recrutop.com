@@ -1,0 +1,13 @@
+<!-- /UTS/candidates/recommendationsList.html -->
+<!-- Template Webdevelopment validated 06-2013 -->
+{if $recommendations}
+	{foreach from=$recommendations key=recomk item=recom}
+    <h2 class="subheader candAdvDetailSH">{$recom.name_reference}{if $recom._entry_date}, {$recom._entry_date}{/if}</h2>
+	<div class="text">{$recom.recommendation}</div>
+	{/foreach}
+{else}
+	<div class="text">[t]There are no recommendations available yet.[/t]</div>
+{/if}
+<div class="buttonContainer">
+	<input class="button" type="button" value="[th]Send recommendation[/th]" onclick="window.location.href='http://{$uts.cursite}/index.php/page/recommendations/command/genericEntityRecommendations/subcommand/form/entity/2/id/{$candidateId}/bb/1'">
+</div>

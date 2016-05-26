@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer aplOuter aplTyOuter">
+<!-- /UTS/applicants/applyDenied.html -->
+{literal}
+<script type="text/javascript" language="JavaScript">
+    window.setTimeout(function(){
+        window.location = "/index.php/page/advsearchvacs/bb/1/command/startupresults/";
+    },15000);
+</script>
+{/literal}
+<h1 class="title apltitle aplTyTitle">[t]Application denied.[/t]</h1>
+
+<div class="intro aplIntro aplTyIntro">[t]Unfortunately your application was denied because of the following reasons.[/t]</div>
+
+{if $notEnoughPoints}
+<div class="intro aplIntro aplTyIntro">[t]You did not have enough points to fill in the application.[/t]</div>
+{/if}
+
+
+{if $errors}<ul>{/if}
+{foreach from=$errors item=msg}
+<li class="aplTyReason">{$msg|escape}</li>
+{/foreach}
+{if $errors}</ul>{/if}
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

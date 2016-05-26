@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="moduleOuter consDetailOuter">
+<!-- /UTS/consultant/viewSingleConsultantDetail.html not div -->
+{if $cp_info.cp_displayed_name || $cp_info.cp_full_name}
+<h1 class="moduleHeader consDetailHeader">
+{if $cp_info.cp_displayed_name}
+	{$cp_info.cp_displayed_name|escape}
+{else}
+	{if $display_elements2.show_first_name}{$consultant_name.first_name|escape}{/if}
+	{if $display_elements2.show_middle_name} {$consultant_name.middle_name|escape}{/if}
+	{if $display_elements2.show_last_name} {$consultant_name.last_name|escape}{/if}
+{/if}
+</h1>
+{/if}
+
+<div class="moduleItemContainer consItemContainer">
+
+{if $cp_photo !="" && $display_elements.show_photo}
+	<div class="cvdPhotoContainer modulePhoto consDetailPhoto"><div class="cvdPhotoContainer2 modulePhoto2 consDetailPhoto2"><img src="http://{$cp_photo_link}" alt="
+		{if $display_elements2.show_first_name}{$consultant_name.first_name|escape}{/if}
+		{if $display_elements2.show_middle_name} {$consultant_name.middle_name|escape}{/if}
+		{if $display_elements2.show_last_name} {$consultant_name.last_name|escape}{/if}
+	" {$cp_photo_size}></div></div>
+{/if}
+
+{if $cp_info.cp_displayed_name || $cp_info.cp_full_name}
+	<div class="moduleKeyWord consDetailKeyWord consNameKey">[t]Name:[/t]</div>
+	<div class="moduleKeyValue consDetailsValue consNameValue">
+	{if $cp_info.cp_displayed_name}
+		{$cp_info.cp_displayed_name|escape}
+	{else}
+		{if $display_elements2.show_first_name}{$consultant_name.first_name|escape}{/if}
+		{if $display_elements2.show_middle_name} {$consultant_name.middle_name|escape}{/if}
+		{if $display_elements2.show_last_name} {$consultant_name.last_name|escape}{/if}
+	{/if}
+	</div>
+{/if}
+
+{if $organisation_units_cnt > 0 && $display_elements.show_orgunit}
+	<div class="moduleKeyWord consDetailKeyWord consOrganisationKey">[t]Organisation units:[/t]</div>
+	<div class="moduleKeyValue consDetailsValue consOrganisationValue">
+	{foreach from=$organisation_units item=unit name=ou}
+		{$unit.item_name|escape}
+			{if !$smarty.foreach.ou.last}
+				,&nbsp;
+			{/if}
+	{/foreach}
+	</div>
+{/if}
+
+{if $roles_cnt > 0 && $display_elements.show_roles}
+	<div class="moduleKeyWord consDetailKeyWord consRolesKey">[t]Roles:[/t]</div>
+	<div class="moduleKeyValue consDetailsValue consRolesValue">
+	{foreach from=$roles item=rl name=roles}
+		{$rl.name|escape}
+		{if !$smarty.foreach.roles.last},&nbsp;{/if}
+	{/foreach}
+	</div>
+{/if}
+
+{if   $display_elements.show_address  && ($cp_info.cp_adres || $cp_info.cp_pc || $cp_info.cp_plaats)}
+	<div class="moduleKeyWord consDetailKeyWord consAddressKey">[t]Address:[/t]</div>
+	<div class="moduleKeyValue consDetailsValue consAddressValue">
+	{if $cp_info.cp_adres}
+		{$cp_info.cp_adres|escape},&nbsp;
+	{/if}
+	{if $cp_info.cp_pc}
+		{$cp_info.cp_pc|escape}&nbsp;
+	{/if}
+	{if $cp_info.cp_plaats}
+		{$cp_info.cp_plaats|escape}
+	{/if}
+	</div>
+{/if}
+
+{if $cp_info.cp_email && $display_elements.show_email}
+	<div class="moduleKeyWord consDetailKeyWord consEmailKey">[t]E-mail:[/t]</div>
+	<div class="moduleKeyValue consDetailsValue consEmailValue"><a href="mailto:{$cp_info.cp_email}" title="{$cp_info.cp_email}  ">{$cp_info.cp_email}</a></div>
+{/if}
+
+{if $cp_info.phone_home && $display_elements.show_home_phone}
+	<div class="moduleKeyWord consDetailKeyWord consHomeKey">[t]Phone home:[/t]</div>
+	<div class="moduleKeyValue consDetailsValue consHomeValue">{$cp_info.phone_home}</div>
+{/if}
+
+{if $cp_info.phone_mobile && $display_elements.show_cell_phone}
+	<div class="moduleKeyWord consDetailKeyWord consCellKey">[t]Cell phone:[/t]</div>
+	<div class="moduleKeyValue consDetailsValue consCellValue">{$cp_info.phone_mobile}</div>
+{/if}
+
+{if $cp_info.phone_work && $display_elements.show_work_phone}
+	<div class="moduleKeyWord consDetailKeyWord consWorkKey">[t]Work phone:[/t]</div>
+	<div class="moduleKeyValue consDetailsValue consCellValue">{$cp_info.phone_work}</div>
+{/if}
+
+{if $cp_info.phone_fax && $display_elements.show_fax}
+	<div class="moduleKeyWord consDetailKeyWord consFaxKey">[t]Fax:[/t]</div>
+	<div class="moduleKeyValue consDetailKeyValue consFaxValue">{$cp_info.phone_fax}</div>
+{/if}
+
+{if $cp_info.phone_skype && $display_elements.show_skype}
+	<div class="moduleKeyWord consDetailKeyWord consSkypeKey">[t]Skype:[/t]</div>
+	<div class="moduleKeyValue consDetailKeyValue consSkypeValue">{$cp_info.phone_skype}</div>
+{/if}
+	<div class="cleaner consItemContCleaner"></div>
+</div>
+<div class="consCvContainer">
+{if $long_descr !="" && $display_elements.show_text}
+	<div class="moduleKeyWord consDetailKeyWord consCvKey"><h2>[t]CV:[/t]</h2></div>
+	<div class="moduleKeyValue consDetailKeyValue consCvValue">{$long_descr}</div>
+{/if}
+
+{if $cp_media && $display_elements.show_wiqet}
+	<div class="moduleKeyWord consDetailKeyWord consWiqetKey"><h2>[t]Wiqet/Video:[/t]</h2></div>
+	<div class="moduleKeyValue consDetailKeyValue consWiqetValue">{$cp_media}</div>
+{/if}
+
+{if $cp_widget && $display_elements.show_widget}
+	<div class="moduleKeyWord consDetailKeyWord consWidgetKey"><h2>[t]Widget:[/t]</h2></div>
+	<div class="moduleKeyValue consDetailKeyValue consWidgetValue">{$cp_widget}</div>
+{/if}
+
+{if $cp_documents_cnt > 0 && $display_elements.show_documents}
+	<div class="moduleKeyWord consDetailKeyWord consDocumentsKey"><h2>[t]Documents:[/t]</h2></div>
+	{foreach from=$cp_documents item=i}
+		<div class="moduleKeyValue consDetailKeyValue consDocumentsValue">{$i.document_download_link}</div>
+	{foreachelse}
+		<div class="moduleKeyValue consDetailKeyValue consDocumentsValue">&nbsp;</div>
+	{/foreach}
+{/if}
+
+{if $cp_active_jobs_cnt > 0 && $display_elements.show_active_jobs}
+	<div class="moduleKeyWord consDetailKeyWord consActiveJobsKey"><h2>[t]Active jobs:[/t]</h2></div>
+	{foreach from=$cp_active_jobs item=i}
+		<div class="moduleKeyValue consDetailKeyValue consActiveJobsValue"><a href="{$i.url}">{$i.desc}</a></div>
+	{foreachelse}
+		<div class="moduleKeyValue consDetailKeyValue consActiveJobsValue">&nbsp;</div>
+	{/foreach}
+{/if}
+
+{if $cp_inactive_jobs_cnt > 0 && $display_elements.show_inactive_jobs}
+	<div class="moduleKeyWord consDetailKeyWord consInactiveJobsKey"><h2>[t]Inactive jobs:[/t]</h2></div>
+	{foreach from=$cp_inactive_jobs item=i}
+		<div class="moduleKeyValue consDetailKeyValue consInactiveJobsValue"><a href="{$i.url}">{$i.desc}</a></div>
+	{foreachelse}
+		<div class="moduleKeyValue consDetailKeyValue consInactiveJobsValue">&nbsp;</div>
+	{/foreach}
+{/if}
+
+{if $cp_blog_articles_cnt > 0 && $display_elements.show_blog_articles}
+	<div class="moduleKeyWord consDetailKeyWord consBlogArticlesKey"><h2>[t]Blog articles:[/t]</h2>
+	{foreach from=$cp_blog_articles item=i}
+		<div class="moduleKeyValue consDetailKeyValue consBlodActiclesValue">
+			<div class="cvdBlogTitle"><a href="{$i._linkurl}">{$i.title|escape}</a></div>
+			<div class="cvdBlogArticleTeaser">{$i._teaser}</div>
+			<div class="cvdBlogTime">[t]at[/t] {$i._datetime_published}</div>
+		</div>
+	{/foreach}
+	</div>
+{/if}
+
+{if $cp_blog_reactions_cnt > 0 && $display_elements.show_blog_reactions}
+	<div class="moduleKeyWord consDetailKeyWord consBlogReactionsKey"><h2>[t]Blog reactions:[/t]</h2>
+	{foreach from=$cp_blog_reactions item=i}
+		<div class="moduleKeyValue consDetailKeyValue consBlogReactionsValue">
+			<div class="cvdBlogTitle"><a href="{$i._linkurl}">{$i.title|escape}</a></div>
+			<div class="cvdBlogArticleTeaser">{$i._teaser}</div>
+			<div class="cvdBlogTime">[t]at[/t] {$i._datetime_reaction}</div>
+		</div>
+	{/foreach}
+	</div>
+{/if}
+
+{if $cp_events_cnt > 0 && $display_elements.show_events}
+	<div class="moduleKeyWord consDetailKeyWord consEventsKey"><h2>[t]Events:[/t]</h2></div>
+	{foreach from=$cp_events item=i}
+		<div class="cvdEventsItemTitle"><a href="{$i.url}">{$i.Title}</a></div>
+		{if $i.Photo}
+			<div class="cvdEventsPhoto"><a href="{$i.url}" title="{$i.Title}"><img src="{$i.photo_url}" alt="{$i.Title}" border="0"></a></div>
+		{/if}
+		{foreachelse}
+			<div class="moduleKeyValue">&nbsp;</div>
+		{/foreach}
+{/if}
+</div>
+
+</div>
+<iframe name="actionframe" width="0" height="0" frameborder="0" scrolling="No" contentEditable=false></iframe>
+<!--uts:end inner-->
+</body>
+</html>

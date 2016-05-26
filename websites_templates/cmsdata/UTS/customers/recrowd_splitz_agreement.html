@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+// functions here
+function recrowdSubmitHandler() {
+    if (!document.getElementById('radAgr1').checked) {
+        alert('[th]You must agree with these conditions to continue.[/th]');
+        return false;
+    }
+    return true;
+}
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdSplitzAgreeOuter">
+	<!-- /UTS/customers/recrowd_splitz_agreement.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Spl!tz Jobs[/t]</h1>
+	<!-- $CustomersMenu
+	$CustomersSubMenu -->
+	
+	<form name="recrowdForm" action="{$handler}" method="post" onsubmit="return recrowdSubmitHandler()">
+		<table class="custLinTbl" cellpadding="0" cellspacing="0" border="0" width="100%">
+		<tr>
+			<th colspan="1">
+				[t]I hereby declare that I agree placing a Spl!tz job and paying for the fee of:[/t] <strong>{$fee|escape} EUR</strong>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+				    <label for="radAgr1" class="labelRadio">[t]I agree[/t]</label>
+				    <input id="radAgr1" type="checkbox" name="agreement" value="1">
+				</div>
+			</td>
+<!-- 			<td>
+				<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+					<label for="radAgr2" class="labelRadio">[t]I don't agree[/t]</label>
+					<input id="radAgr2" type="radio" name="agreement" value="0" class="radiobutton" checked="checked">
+				</div>
+			</td> -->
+		</tr>
+		</table>
+
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+		    <label>[t]The job is going to be:[/t]</label>
+			<label for="chbJobTypeRegular" class="labelRadio aplRadioInput">
+				<input type="radio" name="ptype" value="public" class="radiobutton" checked="checked">
+				<span title="[thn]Choose the regular type[/thn]">[t]Public[/t]</span>
+			</label>
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+			<label></label>
+		    <label for="chbJobTypeSplitz" class="labelRadio aplRadioInput">
+				<input type="radio" name="ptype" value="private" class="radiobutton">
+				<span title="[thn]Choose the spl!tz type[/thn]">[t]Private[/t]</span>
+			</label>
+			<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		<div class="buttonContainer">
+		    <input class="button" type="submit" value="[tb]Continue[/tb]" name="sSubmit">
+		</div>
+		<input type="hidden" name="command" value="saveSplitzAgreement">
+		<input type="hidden" name="vacid" value="{$vacid|escape}">
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

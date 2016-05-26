@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>                
+</head>
+<body>
+<!--uts:begin inner-->
+
+{literal}
+<script type="text/javascript">
+<!--
+
+  function cancelEdit()
+  {
+    // first remove rules to be able to submit form
+    $('#shift').rules('remove', 'required');
+    $('#shift_name').rules('remove', 'required');
+    $('#candidates_required').rules('remove', 'required');        
+    
+    $('#addCommand').val('calendar');
+    $('#jsc_add_schedule').submit();
+  }
+
+	// switch planning type between adhoc and predefined, set up rules and accessiblilty of elements
+	function switchPlanning(type)
+	{
+				
+		if(type == 'adhoc')
+		{						
+			$('.predefFields').attr('disabled', 'disabled');
+			$('.adhocFields').removeAttr('disabled');
+			
+			$('#shift').attr('selectedIndex', 0);
+      			
+			$('#shift').rules('remove', 'required');
+       		
+			$('#shift_name').rules('add', {
+			 	required: true,			 
+			 	messages: {required: '[th]Enter shift name.[/th]'}
+			});			
+			
+							 
+		}
+		else if(type = 'predef')
+		{						
+			$('.adhocFields').attr('disabled', 'disabled');
+			$('.predefFields').removeAttr('disabled');	
+			
+			$('#shift_name').rules('remove', 'required');
+			
+			$('#shift').rules('add', {
+			 	required: true,			 
+			 	messages: {required: '[th]Select shift to add.[/th]'}
+			});						 			
+ 			
+			$('#shift_name').val('');									
+		}
+				
+	}
+
+  // initialize document	
+  $(document).ready(function () {
+    
+    $("#bttnCancel").bind('click', cancelEdit);
+    
+    // initially all is requiret, and then it is changed by switchPlanning function      
+  	$('#jsc_add_schedule').validate({
+  		rules: {					
+        'shift' : {required: true},
+        'shift_name' : {required: true},		
+  			'candidates_required': {required: true, number: true}								
+  		},					
+  		messages: {
+        'shift': {required: '[th]Select shift to add.[/th]'},
+        'shift_name': {required: '[th]Enter shift name.[/th]'},		 	
+  			'candidates_required': {required: '[th]Fill the number of required candidates.[/th] ', number: '[th]Fill the correct number of required candidates.[/th] ' }			
+  		}		
+  	});
+  	
+  	//initial disable adhoc
+  	switchPlanning('predef');
+  	
+  	// switch planning by checkbox
+   	$("input[name='pt']").bind('click', function() {	 	  
+  		 switchPlanning($(this).attr('value'));			 			 			 		 		 
+   	});  	
+           
+   	           		 	 		       	   	   	
+  }); // ready end
+      
+//-->
+</script>
+{/literal}
+
+
+<div class="outer aplOuter aplProfOuter">
+<!-- /UTS/applicants/jobScheduleAddDlg.html -->
+
+<h1 class="title aplTitle aplProfTitle">[t]Add Job Schedule[/t]</h1>
+
+  <div>  
+  <form name="jsc_add_schedule" id="jsc_add_schedule" action="{$handler}" method="post">      
+  <input type="hidden" name="command" id="addCommand" value="insertschedule">
+  <input type="hidden" name="vid" value="{$jobId}">             
+  {*ALWAYS ACCEPTED, SHIFT *}
+  <input type="hidden" name="week_year" value="{$weekYear}">
+  <input type="hidden" name="week_nr" value="{$weekNr}">
+  
+  
+  <table width="100%" border="0" cellpadding="5" cellspacing="0">
+
+  <tr>
+    <td nowrap="nowrap">[t]Candidates[/t]:</td>
+    <td nowrap="nowrap"><input type="text" name="candidates_required" id="candidates_required" size="4" maxlength="4"></td>
+  </tr>
+    
+  <tr>
+    <td nowrap="nowrap">[t]From[/t]:</td>
+    <td nowrap="nowrap">
+      {html_uts_select_date prefix="from_date_" start_year=-5 end_year=+5 time=$presetFromTs} 
+    </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">[t]To[/t]:</td>
+    <td nowrap="nowrap">        
+      {html_uts_select_date prefix="to_date_" start_year=-5 end_year=+5  time=$presetToTs} 
+    </td>
+  </tr>
+  
+  <tr>
+    <td nowrap="nowrap">[t]Days[/t]:</td>
+    <td nowrap="nowrap">
+			<input type="checkbox" name="pattern[mo]"  class="overPeriodFields" value="1" checked="checked">[tg]Mon[/tg]&nbsp;
+			<input type="checkbox" name="pattern[`tue]" class="overPeriodFields" value="1" checked="checked">[tg]Tue[/tg]&nbsp;
+			<input type="checkbox" name="pattern[wed]" class="overPeriodFields" value="1" checked="checked">[tg]Wed[/tg]&nbsp;
+			<input type="checkbox" name="pattern[`thu]" class="overPeriodFields" value="1" checked="checked">[tg]Thu[/tg]&nbsp;
+			<input type="checkbox" name="pattern[fri]" class="overPeriodFields" value="1" checked="checked">[tg]Fri[/tg]&nbsp;
+			<input type="checkbox" name="pattern[sat]" class="overPeriodFields" value="1">[tg]Sat[/tg]&nbsp;
+			<input type="checkbox" name="pattern[sun]" class="overPeriodFields" value="1">[tg]Sun[/tg]&nbsp;    
+    </td>
+  </tr>
+    
+	<tr>
+		<td class="radiobuttons" nowrap="nowrap">
+      <input type="radio" name="pt" id="planningstyle_predef" value="predef" checked="checked">&nbsp;
+      [t]Shift[/t] {*PREDEFINED*}
+    </td>		
+		<td nowrap="nowrap">									
+			<select name="shift" id="shift" class="predefFields" style="width: 100px;">
+     		<option value="">---</option>
+     		{html_options options=$shifts}
+   		</select>      			
+		</td>			
+	</tr>
+	<tr>
+		<td class="radiobuttons" nowrap="nowrap">
+      <input type="radio" name="pt" id="planningstyle_adhoc" value="adhoc">&nbsp;
+      [t]Time[/t] {*ADHOC*}
+    </td>
+		<td nowrap="nowrap">			
+			{html_select_time use_24_hours=true display_seconds=false minute_interval=15 prefix="from_time_" all_extra="class=\"adhocFields\"" time=$presetFromTime} 
+			[t]to[/t]&nbsp;
+			{html_select_time use_24_hours=true display_seconds=false minute_interval=15 prefix="to_time_" all_extra="class=\"adhocFields\"" time=$presetToTime}
+		</td>
+	</tr>
+	<tr>
+		<td nowrap="nowrap">[t]Name[/t]</td>
+		<td nowrap="nowrap"><input type="text" name="shift_name" id="shift_name" size="15" maxlength="255" class="adhocFields"></td>		
+	</tr>		  
+  
+           
+  <tr>
+    <td>&nbsp;</td>
+    <td align="right">
+      <input type="submit" name="bttnSave" id="bttnSave" value="[t]Save Schedule[/t]">
+      <input type="button" name="bttnCancel" id="bttnCancel" value="[t]Cancel[/t]">
+    </td>
+  </tr>
+	</table>
+	
+	</form>
+  </div>	     
+
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

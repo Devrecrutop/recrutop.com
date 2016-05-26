@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>EVENT LIST</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/CalEventsList.div.html -->
+{literal}
+<script>
+    function sort_events(cms_cat, cl, sml, syl, sm, sy,year, month, day, newref) {
+
+        var sort_by = document.getElementById('events_sort_by');
+        var sort_by_desc = document.getElementById('events_sort_by_desc');
+        var sort_by_val = 0;
+        var sort_by_desc_val = 2;
+
+        if (sort_by)
+            sort_by_val = sort_by.options[sort_by.selectedIndex].value;
+        if (sort_by_desc)
+            sort_by_desc_val = sort_by_desc.options[sort_by_desc.selectedIndex].value ;
+
+        var rootloc =  "/index.php/page/eventsfo/command/list/bb/1/cms_categorie/"+cms_cat+"/CurrentLanguage/"+cl;
+
+        if (newref == 1){
+            document.location = rootloc+"/sm/"+sm+"/sy/"+sy+"/year/"+year+"/month/"+month+"/day/"+day+"/newref/"+newref+"/sortby/"+sort_by_val+"/sortbydesc/"+sort_by_desc_val;
+        }else if(syl && sml){
+            document.location = rootloc+"/sy/"+sy+"/sm/"+sm+"/sml/"+sml+"/syl/"+syl+"/sortby/"+sort_by_val+"/sortbydesc/"+sort_by_desc_val;
+        }
+        else if (sy && sm){
+            document.location = rootloc+"/sy/"+sy+"/sm/"+sm+"/sortby/"+sort_by_val+"/sortbydesc/"+sort_by_desc_val;
+        }
+          else{
+             document.location = rootloc+"/sortby/"+sort_by_val+"/sortbydesc/"+sort_by_desc_val;
+        }
+    }
+</script>
+{/literal}
+<div class="outer eveLOuter">
+	<h1 class="title">[t]Evenementen[/t]</h1>
+<!-- 	<div class="{if $cal_view_hlist}calendarContainerH{else}calenderContainerV{/if}"> -->
+	{$calendar}
+<!-- 	</div> -->
+    {if $displaySortByDate==1}
+    <div  class="itemContainer eveIc eveLIc">
+        [t]Sort[/t]:
+        <select id="events_sort_by" >
+            <option value="1" {if $sort_by == 1}selected="selected"{/if}>[t]By Date[/t]</option>
+        </select>
+        <select id="events_sort_by_desc"  onChange="sort_events('{$cms_categorie}', '{$cl}', '{$sml}', '{$syl}', '{$sm}', '{$sy}', '{$year}', '{$month}', '{$day}', '{$newref}');">
+            <option value="1" {if $sort_by_desc == 1}selected="selected"{/if}>[t]Ascending[/t]</option>
+            <option value="2" {if $sort_by_desc == 2}selected="selected"{/if}>[t]Descending[/t]</option>
+        </select>
+    </div>
+    {/if}
+
+	<div class="{if $cal_view_hlist}CalEventsListH{else}CalEventsListV{/if}">
+		{foreach from=$eventsList item=event}
+		<div class="itemContainer eveIc eveLIc">
+			<h3 class="itemTitle eveIt eveLIt"><a href="{$event.detailurl}">{$event.Title}<if "[uts:show_publication_status]">{if $event._publicationStatus}<span class="eveLWordStatus">{$event._publicationStatus|escape}</span>{/if}</if></a></h3>
+			{if $event.shortListText}
+			<div class="itemWord CalEventsListShort">{$event.shortListText}</div>
+			{else}					
+			<div class="itemWord CalEventsListDate">{if $event.StartDate}{$event.StartDate}{else}[t]Unknown[/t]{/if}&nbsp;-&nbsp;{if $event.EndDate}{$event.EndDate}{else}[t]Unknown[/t]{/if}</div>
+			{/if}		
+			<div class="itemWord CalEventsListLoc"><span>[t]Location[/t]:</span>{$event.Location}</div>
+			{*
+			{if $cat == "all" && $event.Category != "0"}
+			<div class="category">[t]Category[/t]:&nbsp;{$event.Category}</div>								
+			{/if}
+			*}
+			<div class="itemDescription">
+			{if $event.ShortDescription}
+				{$event.ShortDescription}
+			{/if}
+			</div>
+		</div>
+
+		{foreachelse}
+		<div class="AppRow">[t]No events found.[/t]</div>
+		{/foreach}
+	</div>
+</div>
+
+{$event_rss}
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,30 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Front Office Translation Service</title>
+</head><body>
+<!--uts:begin inner-->
+
+<div class="outer ctsOuter ctsTransOuter">
+
+<h1 class="title ctsTitle ctsTransTitle">[t]Client Translator Services[/t]</h1>
+<h2 class="subHeader ctsSh ctsTransSh">[t]All translations[/t]</h2>
+
+<table class="hTbl ctsHTbl ctsTransHTbl">
+<tr>
+<th>[t]Page[/t]</th>
+<th>[t]Estimated value[/t]</th>
+<th>[t]Actual value[/t]</th>
+</tr>
+{foreach from=$assignments item=a}
+<tr>
+<td><a href="/index.php/page/translator/command/edit/assignment/{$a.assignment}/bb/1">{if $a.name}{$a.name|escape}{else}([t]unnamed[/t]){/if}</a></td>
+<td>{if $a.estimated_price && $a.estimated_price != 0}{$a.estimated_price} {$a.currency_name}{/if}</td>
+<td>{if $a.actual_price && $a.actual_price != 0}{$a.actual_price} {$a.actual_price_currency_name}{/if}</td>
+</tr>
+{/foreach}
+</table>
+
+</div>
+
+<!--uts:end inner-->
+</body></html>

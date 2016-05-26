@@ -1,0 +1,55 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Front Office Translation Service</title>
+</head><body>
+<!--uts:begin inner-->
+<div id="translator">
+<h2>[t]Client Translator Services[/t]</h2>
+<h3>[t]Translation for[/t] <strong>{$client}</strong></h3>
+<ul>
+<li><b>[t]On Website[/t]</b>: {$belong_site}</li>
+<li><b>[t]For page[/t]</b>: {$pagename}</li>
+<li><b>[t]Language[/t]</b>: to {$target_language}</li>
+</ul>
+<form method="post" action="{$current_page_url}"><label for="source_lang">Source language</label><span>: </span>
+<select size="1" name="source_lang" onchange="this.parentNode.submit();">
+{foreach from=$source_languages item=alang}
+<option value="{$alang.code}"{if $alang.code==$source_lang_code} selected="selected"{/if}>{$alang.local_name}</option>
+{/foreach}
+</select></form>
+{if !$completed}
+<form method="post" action="{$current_page_url}">
+<div><h4>Page abstract</h4>
+<dl>
+<dt><dfn>[t]Original Page Name[/t]</dfn><span>: </span><q lang="{$source_lang_code}">{$pagename}</q></dt>
+<dd><label for="pagename">[tg]Translation to[/tg] {$target_language}</label><input type="text" name="pagename" value="{$pagename_translated}"></dd>
+<dt><dfn>[t]Original Page Title[/t]</dfn><span>: </span><q lang="{$source_lang_code}">{$pagetitle}</q></dt>
+<dd><label for="pagetitle">[tg]Translation to[/tg] {$target_language}</label><input type="text" name="pagetitle" value="{$pagetitle_translated}"></dd>
+<dt><dfn>[t]Original Page abstract[/t]</dfn><span>: </span><blockquote lang="{$source_lang_code}">{$pageintro}</blockquote></dt>
+<dd>
+<label for="pageintro">[tg]Translation to[/tg] {$target_language}</label>
+<textarea name="pageintro" cols="80" rows="3">{$pageintro_translated}</textarea></dd>
+</dl></div>
+<div><h4>[t]Page content[/t]</h4>
+<dl>
+{foreach from=$articles item=blk}
+<dt><dfn>[t]Original Section Title[/t]</dfn><span>: </span><q lang="{$source_lang_code}">{$blk.sectionlabel}</q></dt>
+<dd><label for="sectionlabel{$blk.section_id}">[tg]Translation to[/tg] {$target_language}</label><input type="text" name="sectionlabel{$blk.section_id}" value="{$blk.translated_label}"></dd>
+<dt><dfn>[t]Original Section Content[/t]</dfn><span>: </span><blockquote lang="{$source_lang_code}">{$blk.sectioncontent}</blockquote></dt>
+<dd><label for="sectioncontent{$blk.section_id}">[tg]Translation to[/tg] {$target_language}</label><textarea name="sectioncontent{$blk.section_id}" cols="80" rows="3">{$blk.translated_content}</textarea></dd>
+{/foreach}
+</dl></div>
+<div>
+<input type="submit" name="savetranslation" value="Save Current Data">
+<input type="button" name="submittranslation" value="Send translation" onclick="document.getElementsByName('sendtranslation')[0].value='yes';this.parentNode.parentNode.submit()">
+<input type="hidden" name="sendtranslation" value="no">
+<input type="hidden" name="source_lang" value="{$source_lang_code}">
+</div>
+</form>
+{else}
+<h5>[t]Translation completed[/t]</h5>
+<p>[t]This translation has been submitted to the requesting client and cannot be modified anymore.[/t]</p>
+{/if}
+</div>
+<!--uts:end inner-->
+</body></html>

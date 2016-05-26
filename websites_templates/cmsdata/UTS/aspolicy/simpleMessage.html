@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+<div class="outer aspOuter">
+<!-- /UTS/aspolicy/simpleMessage.html -->
+<h1 class="title aspTitle">[t]Sorry![/t]</h1>
+<if $messageId>
+<div class="intro aspIntro aspThankYou">
+<if $messageId == "ASPOLICY_DENIED">
+[t]Sorry, the policy settings of this e-mail address don't allow sending e-mails to this address from this website.[/t]
+</if>
+</div>
+</if>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

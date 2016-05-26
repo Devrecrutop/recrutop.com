@@ -1,0 +1,151 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Front Office Translation Service</title>
+</head><body>
+<!--uts:begin inner-->
+<script type="text/javascript" src="/_javascript_global/editor/TinyMCE/tiny_mce.js"></script>
+<script type="text/javascript">
+	var lang = "{$current_locale}";
+{literal}	
+	tinyMCE.init({
+		mode: "textareas",
+		theme: "advanced",
+		skin: "o2k7",
+		plugins: "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+		
+		// Theme options
+		theme_advanced_buttons1: "bold,italic,|,cut,copy,paste,|,bullist,numlist,|,link,|,undo,redo",
+		theme_advanced_buttons2: "",
+		theme_advanced_buttons3: "",
+		theme_advanced_buttons4: "",
+		theme_advanced_toolbar_location: "bottom",
+		theme_advanced_toolbar_align: "left",
+		//theme_advanced_statusbar_location: "bottom",
+		theme_advanced_resizing: true,
+		
+		// Example content CSS (should be your site CSS)
+		content_css: "/_css_global/globalTranslationModuleStyling.css",
+		
+		language: lang
+	}); {/literal}
+</script>
+<div class="outer ctsOuter">
+<h1 class="title ctsTitle">[t]Client Translator Services[/t]</h1>
+<h2 class="subHeader ctsSh">[t]Translation for[/t] {$client}</h2>
+<div class="intro ctsIntro">
+<ul>
+<li><span>[t]On Website[/t]:</span><a href="{$belong_site}">{$belong_site}</a></li>
+<li><span>[t]For page[/t]:</span>{$pagename}</li>
+<li><span>[t]Language[/t]:</span>[t]to[/t]&nbsp;{$target_language}</li>
+</ul>
+
+<form method="post" {if $improved_version}action="{$handler}"{else}action="{$current_page_url}"{/if}>
+<div class="formInput ctsFi">
+<label for="source_lang">Source language</label>
+<select size="1" name="source_lang" onchange="this.parentNode.submit();">
+{foreach from=$source_languages item=alang}
+<option value="{$alang.code}"{if $alang.code==$source_lang_code} selected="selected"{/if}>{$alang.local_name}</option>
+{/foreach}
+</select>
+<input type="hidden" name="command" value="setlanguage" >
+</div>
+</form>
+
+{if $word_count || $estimated_price}
+<div class="text ctsText">
+<ul>
+{/if}
+{if $word_count}
+<li>[t]Word count[/t]:{$word_count}&nbsp;[t]words[/t]</li>
+{/if}
+{if $estimated_price}
+<li>[t]Value accourding to "price/word"[/t]:{$estimated_price}&nbsp;{$currency_name}</li>
+{/if}
+{if $word_count || $estimated_price}
+</ul>
+</div>
+{/if}
+
+{if $improved_version}
+<div class="formInput ctsFi">
+<label for="actual_price">[t]Actual price[/t]:</label>
+<input type="text" name="actual_price" value="{$actual_price|escape}">{$actual_price_currency_name}
+<input type="hidden" name="actual_price_currency" value="{$actual_price_currency}" >
+</div>
+{/if}
+
+</div>
+
+{if !$completed || $improved_version}
+<h2 class="subHeader ctsSh">[t]Page[/t]</h2>
+<form method="post" {if $improved_version}action="{$handler}"{else}action="{$current_page_url}"{/if} name="translationForm">
+<div class="itemContainer ctsIc">
+<div class="itemTitle ctsIt">[t]Original Page Name[/t]&nbsp;<q lang="{$source_lang_code}">{$pagename}</q></div>
+<div class="formInput ctsFi">
+<label for="pagename">[tg]Translation to[/tg]&nbsp;{$target_language}</label>
+<input type="text" name="pagename" value="{$pagename_translated}">
+</div>
+</div>
+
+<div class="itemContainer ctsIc">
+<div class="itemTitle ctsIt">[t]Original Page Title[/t]&nbsp;<q lang="{$source_lang_code}">{$pagetitle}</q></div>
+<div class="formInput ctsFi">
+<label for="pagetitle">[tg]Translation to[/tg]&nbsp;{$target_language}</label>
+<input type="text" name="pagetitle" value="{$pagetitle_translated}">
+</div>
+</div>
+
+<h2 class="subHeader ctsSh">[t]Page content[/t]</h2>
+
+<div class="itemContainer ctsIc">
+<div class="itemTitle ctsIt">[t]Original Page abstract[/t]</div>
+<blockquote lang="{$source_lang_code}">{$pageintro}</blockquote>
+<div class="formInput ctsFi ctsFiItemText">
+<label for="pageintro">[tg]Translation to[/tg]&nbsp;{$target_language}</label>
+<textarea name="pageintro">{if $pageintro_translated}{$pageintro_translated}{else}{$pageintro}{/if}</textarea>
+</div>
+</div>
+
+{foreach from=$articles item=blk}
+<div class="itemContainer">
+<div class="itemTitle">[t]Original Section Title[/t]<q lang="{$source_lang_code}">{$blk.sectionlabel}</q></div>
+<div class="formInput ctsFi">
+<label for="sectionlabel{$blk.section_id}">[tg]Translation to[/tg] {$target_language}</label>
+<input type="text" name="sectionlabel{$blk.section_id}" value="{$blk.translated_label}">
+</div>
+<div class="itemWord ctsIw">[t]Original Section Content[/t]</div>
+<blockquote lang="{$source_lang_code}">{$blk.sectioncontent}</blockquote>
+<div class="formInput ctsFi ctsFiItemText">
+<label for="sectioncontent{$blk.section_id}">[tg]Translation to[/tg] {$target_language}</label>
+<textarea name="sectioncontent{$blk.section_id}">{if $blk.translated_content}{$blk.translated_content}{else}{$blk.sectioncontent}{/if}</textarea>
+</div>
+</div>
+{/foreach}
+
+<div class="buttonContainer ctsBc">
+{if $improved_version}
+<input class="button ctsButton" type="button" name="savetranslation" value="[t]Save[/t]" onclick="translationForm.submit();">
+<input class="button ctsButton" type="button" name="submittranslation" value="[t]Save &amp; Submit[/t]" onclick="translationForm.command.value='submit';translationForm.submit();">		{*<input type="button" name="exportButton" value="[t]Export to RTF[/t]" onclick="window.open('{$handler}/command/export','[t]Export to RTF[/t]')" >*}
+<input class="button ctsButton" type="button" name="exportButton" value="[t]Export to RTF[/t]" onclick="translationForm.command.value='export';translationForm.submit();">
+<input class="button ctsButton" type="button" value="[t]View all translations[/t]" onclick="window.location='{$handler}/command/list'">
+<input type="hidden" name="command" value="save" >
+{else}
+<input class="button ctsButton" type="submit" name="savetranslation" value="Save Current Data">
+<input class="button ctsButton" type="button" name="submittranslation" value="Send translation" onclick="document.getElementsByName('sendtranslation')[0].value='yes';this.parentNode.parentNode.submit()">
+<input type="hidden" name="sendtranslation" value="no">
+{/if}
+<input type="hidden" name="source_lang" value="{$source_lang_code}">
+</div>
+</form>
+
+{else}
+
+<h2 class="subHeader ctsSh">[t]Translation completed[/t]</h2>
+<div class="text ctsText"><p>[t]This translation has been submitted to the requesting client and cannot be modified anymore.[/t]</p></div>
+{/if}
+
+</div>
+<!--uts:end inner-->
+
+</body>
+</html>

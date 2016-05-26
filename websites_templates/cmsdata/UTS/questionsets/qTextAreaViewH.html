@@ -1,0 +1,15 @@
+<!--textarea view-->
+<div class="formInput aplTextAreaInput" id="KQDIV_{$qd.id}">
+<label for="{$elementId}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+<if $qd.explanation>
+<div class="explain small aplTextAreaExplain explain_{$elementName}">
+	{$qd.explanation|escape}
+</div>
+</if>
+<textarea name="{$elementName}" id="{$elementId}" class="fieldTxtArea" rows="{$numRows}" cols="20">{$currentValue|escape}</textarea>
+</div>
+<if $currentErrorMessage>
+<div class="error aplTextAreaError error_{$elementName}">
+	{$currentErrorMessage}
+</div>
+</if>

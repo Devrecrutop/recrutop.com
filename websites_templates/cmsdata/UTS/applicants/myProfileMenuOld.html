@@ -1,0 +1,18 @@
+<div class="pageLinkTbl myProfileMenuOld" style="clear:both;">
+<!-- /UTS/applicants/myProfileMenuOld.html -->
+
+<div class="pageLink"><a href="/index.php/page/CandidatesRemote/bb/1/command/myprofile/cpage/1">[t]Login info[/t]</a> |&nbsp;</div>
+<foreach from=$pages item=pagetitle key=pageno>
+<div class="pageLink"><a href="/index.php/page/CandidatesRemote/bb/1/command/myprofile/cpage/2/subpage/{$pageno}">{$pagetitle|escape}</a> |&nbsp;</div>
+</foreach>
+<if $availabilityEnabled>
+<div class="pageLink"><a href="/index.php/page/applicants/bb/1/command/myavailabilityold">[t]Availability[/t]</a> |&nbsp;</div>
+</if>
+<if $videoboardEnabled>
+<div class="pageLink"><a href="/index.php/page/CandidatesRemote/bb/1/command/myprofile/cpage/5">[t]Videoboard[/t]</a> |&nbsp;</div>
+</if>
+<div class="pageLink"><a href="/index.php/page/CandidatesRemote/bb/1/command/myprofile/cpage/3">[t]Applications[/t]</a> |&nbsp;</div>
+<div class="pageLink"><a href="/index.php/page/CandidatesRemote/bb/1/command/logout">[t]Logout[/t]</a></div>
+<div style="clear:both;"></div>
+
+</div>

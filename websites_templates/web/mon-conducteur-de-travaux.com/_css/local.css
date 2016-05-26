@@ -1,0 +1,110 @@
+body{
+background-color:#F2F9FC;
+}
+a{
+color:#009ee3;
+}
+#menuCan,
+.hookHeader{
+background-image:url('../_images/monadmin/menuCan.gif');
+}
+.button,
+.Searchbutton,
+.pageBody #t7o a{
+background: #0cb5e5; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzBjYjVlNSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDY5OTQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top, #0cb5e5 0%, #006994 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0cb5e5), color-stop(100%,#006994)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #0cb5e5 0%,#006994 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #0cb5e5 0%,#006994 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #0cb5e5 0%,#006994 100%); /* IE10+ */
+background: linear-gradient(to bottom, #0cb5e5 0%,#006994 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0cb5e5', endColorstr='#006994',GradientType=0 ); /* IE6-8 */
+}
+#logoLink strong{
+color:#7a8992;
+}
+.candidateItemForNr,
+#logoLink strong span{
+color:#009ee3;
+}
+#CandidateLoginEmail{
+background-image:url("../_images/monadmin/mail.gif");
+}
+#PassWord{
+background-image:url("../_images/monadmin/key.gif");
+}
+.sssSearchButton input{
+background-image:url("../_images/monadmin/search.gif");
+}
+.webUserHookButton input{
+background-color:#009ee0;
+}
+#footCan{
+background-color:#3a94c7;
+}
+.menulist a:hover, .menulist a.selected, .menulist a:focus, .menulist a.sactive{
+color:#fff;
+}
+#pageCan{
+background-image:url('../_images/monadmin/pageCan.png');
+}
+#pageOut{
+background-image:url('../_images/monadmin/pageOut.png');
+}
+#footLogo{
+margin-top:5px;
+}
+#t8o a{
+color:#009ee3;
+}
+#t8o a:hover{
+color:#0070A0;
+}
+.pageBody .t50{
+top:15px;
+left:10px;
+}
+.pageBody .t51{
+left:235px;
+top:35px;
+}
+.pageBody .t52{
+left:381px;
+}
+.pageBody .t53{
+right:-20px;
+}
+.pageBody #t7o h2{
+background-color:#798a93;
+}
+.pageBody #t7o{
+background-image:url('../_images/monadmin/hardHead.png');
+background-position: 15px 0;
+}
+.optionListTitle a{
+background-image:url('../_images/monadmin/plusMinus.png');
+}
+.pageBody #t6i > div strong em{
+color:#009EE3;
+}
+.pageBody #t3o strong em{
+color:#009EE3;
+}
+.pageBody .t5i h2{
+color:#009EE3;
+}
+#logoLink, #logoLink:hover{
+width:650px;
+}
+#logoLink strong{
+font-size:26px;
+}
+#logoLink em{
+font-size: 15px;
+}
+.menulist ul {
+background-color: #009EE3;
+}
+

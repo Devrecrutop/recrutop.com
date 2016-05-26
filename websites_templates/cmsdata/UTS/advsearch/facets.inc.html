@@ -1,0 +1,123 @@
+{* facets - zero or more instances of Section D here *}
+{* flash stuff *}
+<if [uts:show_region_map]>
+<script type="text/javascript" src="/_javascript_global/swfobject.js"></script>
+<script type="text/javascript">
+var vhandler='{$handler}';
+//{literal}
+var flashvars = {
+  page: ""
+};
+var params = {
+  allowscriptaccess: "always",
+  wmode: "transparent"
+};
+// this is a callback from flash
+function check_prov(region) {
+  //alert('clicked '+region);
+  window.location=vhandler+'/command/usemapregion/value/'+encodeURIComponent(region);
+}    
+//{/literal}
+</script>
+</if>
+<script type="text/javascript" defer="true">
+<foreach from=$facets item=facetfield>
+animatedcollapse.addDiv('facet_{$facetfield.field|escape:"javascript"}', 'fade=1,persist=0,hide={if [uts:collapse_facets] == "84"}0{else}1{/if}')
+</foreach>
+</script>
+ <!-- /UTS/advsearch/facets.inc.html standard -->
+<foreach from=$facets item=facetfield name=foo>
+<div class="optionListContainer facetListCon facetLc{$facetfield.field}{if $smarty.foreach.foo.first} facetLcFirst{elseif $smarty.foreach.foo.last} facetLcLast{/if}">
+	<div class="optionListTitle facetListTitle"><a href="javascript:animatedcollapse.toggle('facet_{$facetfield.field|escape:"javascript"}')" class="{if [uts:collapse_facets] == "84"}expanded{else}collapsed{/if}" rel="nofollow" title="[th]Expand/collapse[/th]">{$facetfield.name|escape}</a></div>
+	<div class="optionList facetList" id="facet_{$facetfield.field}">
+	<ul>  
+	<foreach from=$facetfield.facetlist item=facet>
+		<li><a title="{$facet->name|escape}" <if $mobile_enabled> rel="external"</if> rel="nofollow" href="{$handler}/command/usefacet/field/{$facetfield.field}/value/{$facet->value}/noredirectdetail/1{if $handle == 'CustomerSearchApp' && $keep_mc_facets}/keep/1{/if}">{$facet->name|escape|truncate:[uts:truncate_facets]}&nbsp;<span class="facetFreq">({$facet->frequency})</span></a></li>
+	</foreach>
+	<if $facetfield.facettotalcount gt $facetlimit>
+	<if $seeallfacets[$facetfield.field]>
+	    <li class="facetLess"><a {if $mobile_enabled} rel="external"{/if} rel="nofollow" href="{$handler}/command/seelessfacets/field/{$facetfield.field}">[t]Less...[/t]</a></li>
+	<else>
+		<li class="facetMore"><a {if $mobile_enabled} rel="external"{/if} rel="nofollow" href="{$handler}/command/seeallfacets/field/{$facetfield.field}">[t]More...[/t]</a></li>
+	</if>
+	</if>
+	</ul>
+
+	{* start facet region map *}
+	<if [uts:show_region_map] && $facetfield.field == "regio">
+	<!-- map here -->
+	<div class="facetMapContainer">
+		{* setup region numbers overlaying the facet map *}
+		<foreach from=$facetfield.facetlist item=facet>
+		{if $facet->fmregion == "noordholland"}
+		<div id="mapregion1" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/noordholland">{$facet->frequency}</a>
+		</div>
+		{/if}
+		{if $facet->fmregion == "zuidholland"}
+		<div id="mapregion2" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/zuidholland">{$facet->frequency}</a>
+		</div>
+		{/if}
+		{if $facet->fmregion == "utrecht"}
+		<div id="mapregion3" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/utrecht">{$facet->frequency}</a>
+		</div>
+		{/if}
+		{if $facet->fmregion == "gelderland"}
+		<div id="mapregion4" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/gelderland">{$facet->frequency}</a>
+		</div>
+		{/if}
+		{if $facet->fmregion == "noordbrabant"}
+		<div id="mapregion5" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/noordbrabant">{$facet->frequency}</a>
+		</div>
+		{/if}
+		{if $facet->fmregion == "zeeland"}
+		<div id="mapregion6" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/zeeland">{$facet->frequency}</a>
+		</div>
+		{/if}
+		{if $facet->fmregion == "limburg"}
+		<div id="mapregion7" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/limburg">{$facet->frequency}</a>
+		</div>
+		{/if}
+		{if $facet->fmregion == "flevoland"}
+		<div id="mapregion8" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/flevoland">{$facet->frequency}</a>
+		</div>
+		{/if}
+		{if $facet->fmregion == "overijssel"}
+		<div id="mapregion9" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/overijssel">{$facet->frequency}</a>
+		</div>
+		{/if}
+		{if $facet->fmregion == "drenthe"}
+		<div id="mapregion10" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/drenthe">{$facet->frequency}</a>
+		</div>
+		{/if}
+		{if $facet->fmregion == "groningen"}
+		<div id="mapregion11" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/groningen">{$facet->frequency}</a>
+		</div>
+		{/if}
+		{if $facet->fmregion == "friesland"}
+		<div id="mapregion12" class="mapregion">
+		  <a href="{$handler}/command/usemapregion/value/friesland">{$facet->frequency}</a>
+		</div>
+		{/if}
+		</foreach>
+		<div class="mapHolder">
+			<div id="kaart"><a href="http://www.adobe.com/go/getflashplayer" target="_blank"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player"></a></div>
+		</div>
+	</div> 
+	<!-- end map-->
+	</if>
+</div>
+</div>
+</foreach>
+
+{*    {t 1=$facetfield.facettotalcount count=$facetfield.facettotalcount}There are %1 suggestions in total. {/t}<br>*}

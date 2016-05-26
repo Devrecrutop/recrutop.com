@@ -1,0 +1,499 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>[thg]Content manager[/thg]</title>
+<!--snippet:INBOX_JS-->
+<!--snippet:MAIN_CSS-->
+<!--snippet:KEYSOTE_JS-->
+<!--snippet:GLOBAL_HTA_SUPPORT_SECTION-->
+</head>
+
+<body>
+<!--uts:begin inner-->
+
+<!--jsrepository:require(JQueryBase, JQueryMultiSelect)-->
+
+<script src="/_javascript_global/codemirror/codemirror.js"></script>
+<link rel="stylesheet" href="/_javascript_global/codemirror/codemirror.css">
+<script src="/_javascript_global/codemirror/mode/xml/xml.js"></script>
+<link rel="stylesheet" href="/_javascript_global/codemirror/mode/xml/xml.css">
+
+{foreach from=$questions key=_qqid item=rr}
+    {if $rr.Type == "Multiselect" }
+        <script type="text/javascript">
+        
+            {literal}
+            $(document).ready(function(){
+            if ($('#q_answer_{/literal}{$_qqid}{literal}').length) $('#q_answer_{/literal}{$_qqid}{literal}').multiSelect({
+                selectAllText: 'Select all',
+                noneSelected: 'Select fields...',
+                oneOrMoreSelected: 'Select fields (% selected)...'
+            });
+            });      
+            {/literal}  
+        </script>
+    {/if}
+{/foreach}
+
+<script type="text/javascript">
+//{literal}
+/*
+function submit_question_form(){
+            document.edit_customer.command.value = "saveQuestions";
+            document.edit_customer.submit();
+}
+*/
+function del_qs_image(qid) {
+     
+     document.getElementById("q_answer_"+qid).value="";
+     //document.getElementById("q_h_answer_"+qid).value="";
+     document.getElementById("q_dp_answer_"+qid).innerHTML="";
+     document.getElementById("q_bt_answer_"+qid).style.visibility='hidden';
+}
+//{/literal}
+</script>
+<script type="text/javascript">
+var netImgs = new Array();
+
+{if $NLImg}
+netImgs[netImgs.length] = "NetworkLogo";
+{/if}
+{if $NPImg}
+netImgs[netImgs.length] = "NetworkPicture";
+{/if}
+
+// {literal}
+/** Images readable format.
+ **/
+var imgNames = {
+NetworkLogo: "logo",
+NetworkPicture: "screenshot"
+}
+
+function delImage(image) {
+    imageExist = false;
+    image = image == undefined ? "Logo" : image;
+    message = '[th]You have only [pict] set for this website.\nIf you delete it, website will be temporarily removed from network.\n\nDo you really want to delete it?[/th]';
+    message = message.replace(/\[pict\]/g, imgNames[image]);
+    
+    for (var i = 0; i < netImgs.length; ++i) {
+        if (netImgs[i] == image) {
+            imageExist = true;
+        }
+    }
+    
+    if(imageExist && (netImgs.length > 1 || confirm(message))) {
+        ok = confirm("[th]Weet u zeker dat u dit logo wilt verwijderen ?[/th]\n\n");
+        
+        if (ok) {
+            document.edit_customer.command.value = "do_del" + image;
+            document.edit_customer.submit();
+        }
+    }
+}
+
+function delNetLogo() {
+delImage("NetworkLogo");
+}
+
+function delNetPicture() {
+delImage("NetworkPicture");
+}
+
+
+function submit_network_form(){
+            //document.edit_customer.command.value = "saveCustomerDetails";
+            document.edit_customer.submit();
+}
+
+// {/literal}
+</script>
+
+<div class="outer custOuter globalQsOuter gQsQuestions gQsNwAdditional">
+<!-- /UTS/global_questions/questions_network_additional.html -->
+
+<h1 class="title custTitle">[t]Network - customer details[/t]</h1>
+{$menu}
+
+<div class="text custText">[t]You can upload your company logo and a screenshot of your website below. Without both of them your link is not going to be included in our network directory.[/t]</div>
+
+<form name="edit_customer" action="{$handler}" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="page" value="network">
+    {if $pageid == 1}	
+	<input type="hidden" name="command" value="saveCustomerDetails">
+	{else}
+	<input type="hidden" name="command" value="saveQuestions">
+	{/if}
+	<input type="hidden" name="nextcommand" value="saveQuestions">
+	<input type="hidden" name="customerConnectionId" value="{$customerConnectionId}">
+	<input type="hidden" name="current_network_logo_JobsImg" value="{$r.network_logo_JobsImg}">
+	<input type="hidden" name="current_network_logo_JobsThumb" value="{$r.network_logo_JobsThumb}">
+
+{if $display_basic.screenshot_display == 109}	
+    <div class="formInput custFiNetwScreens">
+		<label>[tg]Screenshot[/tg]:</label>
+		<input type="hidden" name="current_network_picture" value="{$r.network_picture}"><input type="file" name="network_picture" size="25" class="bestandselect">
+		<span class="delButton"><input class="button" type="button" value="[tb]Del[/tb]" onclick="delNetPicture();"></span>
+	</div>
+{/if}
+	
+{if $display_basic.logo_display == 112}	
+	<div class="formInput custFiNetwLogo">
+		<label>[tg]Logo[/tg]:</label>
+		<input type="hidden" name="current_network_logo" value="{$r.network_logo}"><input type="file" name="network_logo" size="25">
+		<span class="delButton"><input class="button" style="margin:0px;" type="button" value="[tb]Del[/tb]" onclick="delNetLogo();"></span>
+	</div>
+{/if}
+	
+	<div class="text formText custFiNetwIntro">[t]Next, please enter a short description, a detailed description and -if applicable- a reference about our website or services in the fields below.[/t]</div>
+{if $display_basic.description_display == 115}
+	<div class="formInput custFiNetwDescr">
+		<label>[tg]Description[/tg]:</label>
+		<textarea name="portfolio_text" cols="40" rows="4">{$r.portfolio_text}</textarea>
+	</div>
+{/if}
+	
+{if $display_basic.network_text_display == 118}
+	<div class="formInput custFiNetwText">
+		<label>[tb]Network Text[/tb]:</label>
+		<textarea name="network_text" cols="40" rows="4">{$r.network_text}</textarea>
+	</div>
+{/if}	
+
+{if $display_basic.reference_display == 121}
+	<div class="formInput custFiNetwRef">
+		<label>[tg]Reference[/tg]:</label>
+		<textarea name="reference" cols="40" rows="4">{$r.reference}</textarea>
+	</div>
+{/if}
+
+{if $NPImg || $NLImg}
+	<div class="formInput custFiNetwText">
+		<label>&nbsp;</label></div>
+<div class="image formImage custFimageNetw">
+{if $NPImg}
+
+{if $display_basic.screenshot_display == 109}
+<div class="custFimageNetwScreens">
+<h3>[t]Screenshot[/t]</h3>{$NPImg}
+
+{if $NPImg && $NLImg}
+<br>
+<input type="radio" name="network_image" value="Picture" class="radiobuttons"{if $r.network_image == "Picture" || !isset($r.network_image)} checked="checked"{/if}><label>[t]Use Screenshot[/t]</label>
+{/if}
+</div>
+{/if}
+{/if}
+
+{if $display_basic.logo_display == 112}	
+{if $NLImg}
+<div class="custFimageNetwLogo">
+<h3>[t]Logo[/t]</h3>{$NLImg}
+{if $NPImg && $NLImg}
+<br>
+<input type="radio" name="network_image" value="Logo" class="radiobuttons"{if $r.network_image == "Logo"} checked="checked"{/if}><label>[t]Use Logo[/t]</label>
+{/if}
+</div>
+{/if}
+{/if}
+<div class="cleaner custCleaner custNetwCleaner"></div>
+</div>
+{/if}
+
+{if $display_basic.wiqet_display == 124}
+	<div class="formInput custFiNetwWiqet">
+		<label>[t]Wiqet[/t]</label>
+		<select id="wiqet_id" name="wiqet_id" >
+		    <option label="---" value="0">---</option>
+			<foreach from=$wiqet_list item=b>
+		    <option label="{$b.name}" value="{$b.id}" {if $b.id == $r.wiqet_id}selected="selected"{/if}>{$b.name}</option>
+			</foreach>
+		</select>
+	</div>
+	{$wiqet}
+{/if}
+
+
+
+
+
+	<input type="hidden" name="page" value="{$page}">
+	{*<input type="hidden" name="command" value="saveQuestions">*}
+	{*<input type="hidden" name="nextcommand" value="displayQuestions">*}
+	<input type="hidden" name="pageid" value="{$pageid}">
+	<input type="hidden" name="next_pageid" value="{$next_pageid}">
+
+    <foreach from=$hiddenParams key=hiddenName item=hidden >    	
+	<input type="hidden" name="{$hiddenName}" value="{$hidden}">
+	</foreach>
+
+    <foreach from=$questions key=_qid item=r>
+    
+    {if $r.Type eq "Radio"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    <div class="formInput formRadio">
+    <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label>
+    <div class="formCheckboxContainer aplMCheckContainer">
+    <input type="hidden" name="q_answer_{$_qid}" value="">
+    {assign var=rqs value="q_answer_`$_qid`"}    
+    <foreach from=$r.optionsAnswers key=answerId item=ar >
+    
+    <input type="radio" class="radiobutton" name="q_answer_{$_qid}" value="{$answerId}" 
+    {if isset($postdata.$rqs)} 
+        {if $postdata.$rqs == $answerId}
+        checked
+        {/if} 
+    {else}
+    {$ar.AnswerSelected}
+    {/if}>{$ar.AnswerOption|escape}<br >
+    </foreach>
+    </div>
+    </div>
+    <if $r.Explanation>
+    <div class="explain aplRadioExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+	{/if}
+
+
+    {if $r.Type eq "Checkbox"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    <div class="formInput formMultiCheckbox aplMCheckInput">
+    {assign var=cbqs value="q_answer_`$_qid`"}    
+    <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}
+    
+     </label>
+    <div class="formCheckboxContainer aplMCheckContainer">
+    <input type="hidden" name="q_answer_{$_qid}" value="">
+    <foreach from=$r.optionsAnswers key=answerId item=ar >
+    <span>
+    <input type="checkbox" class="radiobutton" id="q_answer_{$_qid}::{$answerId}" name="q_answer_{$_qid}[]" value="{$answerId}" 
+                    {if isset($postdata.$cbqs)}
+                        {if is_array($postdata.$cbqs)} 
+                        {if in_array($answerId,$postdata.$cbqs)}checked{/if}
+                        {/if} 
+                    {else}{$ar.AnswerSelected}
+                    {/if}>{$ar.AnswerOption|escape} <br >
+    </span>
+    </foreach>
+    </div>
+    </div>
+    <if $r.Explanation>
+    <div class="explain aplMCheckExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+	{/if}
+
+
+    {if $r.Type eq "Select"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    
+    <div class="formInput aplSelInput">
+    <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label>
+    <input type="hidden" name="q_answer_{$_qid}" value="">
+    <select name="q_answer_{$_qid}" id="q_answer_{$_qid}">
+    <option value="">---</option>
+    {assign var=sqs value="q_answer_`$_qid`"}    
+    
+    <foreach from=$r.optionsAnswers key=answerId item=ar >
+    <span>
+    <option id="q_answer_{$_qid}::{$answerId}" name="q_answer_{$_qid}" value="{$answerId}" 
+    {if isset($postdata.$sqs)} 
+        {if $postdata.$sqs == $answerId}
+        selected 
+        {/if}
+    {else}
+    {$ar.AnswerSelected}
+    {/if}>{$ar.AnswerOption|escape}</option> 
+    </span>
+    </foreach>
+    </select>
+    </div>
+    <if $r.Explanation>
+    <div class="explain aplSelExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+	{/if}
+
+
+    {if $r.Type eq "Multiselect"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    
+    <div class="formInput aplMSelInput">
+    <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label>
+    <input type="hidden" name="q_answer_{$_qid}" value="">
+    <select name="q_answer_{$_qid}[]" id="q_answer_{$_qid}" multiple="multiple">
+    <foreach from=$r.optionsAnswers key=answerId item=ar >
+    {assign var=msqs value="q_answer_`$_qid`"}    
+    <span>
+    <option value="{$answerId}" 
+    {if isset($postdata.$msqs)}
+        {if is_array($postdata.$msqs)} 
+        {if in_array($answerId,$postdata.$msqs)}selected{/if}
+        {/if} 
+    {else}{$ar.AnswerSelected}
+    {/if}>{$ar.AnswerOption|escape}</option> 
+    </span>
+    </foreach>
+    </select>
+    </div>
+    <if $r.Explanation>
+    <div class="explain aplMSelExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+	{/if}
+
+
+    
+    {if $r.Type eq "Textfield"}
+    
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}  
+    </div>
+    </if>
+	
+    <div class="formInput aplTextInput">
+    {assign var=tfqs value="q_answer_`$_qid`"}
+        
+    <label for="q_answer_{$_qid}">{$r.Question|escape}  {if $r.required}<span>*</span>{/if}</label>
+    <input type="text" value="{if isset($postdata.$tfqs)}{$postdata.$tfqs}{else}{$r.optionsAnswers.AnswerText|escape}{/if}" name="q_answer_{$_qid}" id="q_answer_{$_qid}">
+    </div>	
+    <if $r.Explanation>
+    <div class="explain aplTextExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>    
+	
+	{/if}
+
+    
+    {if $r.Type eq "Textarea"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    
+	<div class="formInput aplTextAreaInput">
+		<label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label> 
+        {assign var=taqs value="q_answer_`$_qid`"}		
+		<textarea name="q_answer_{$_qid}" id="q_answer_{$_qid}" class="fieldTxtArea"  rows="{$r.NumRows|default:2}">{if isset($postdata.$taqs)}{$postdata.$taqs}{else}{$r.optionsAnswers.AnswerText}{/if}</textarea>
+	</div>
+    <if $r.Explanation>
+    <div class="explain small aplTextAreaExplain">
+    	{$r.Explanation|escape}
+    </div>
+    </if>	
+	{/if}
+    
+    {if $r.Type eq "Code"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    
+	<div class="formInput aplTextAreaInput">
+		<label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label> 
+        {assign var=taqs value="q_answer_`$_qid`"}		
+		<textarea name="q_answer_{$_qid}" id="q_answer_{$_qid}" class="fieldTxtArea"  rows="{$r.NumRows|default:2}">{if isset($postdata.$taqs)}{$postdata.$taqs}{else}{$r.optionsAnswers.AnswerText}{/if}</textarea>
+	</div>
+    <if $r.Explanation>
+    <div class="explain small aplTextAreaExplain">
+    	{$r.Explanation|escape}
+    </div>
+    </if>
+    
+    <script type="text/javascript">
+    
+        {literal}
+
+        var editor = CodeMirror.fromTextArea(document.getElementById("q_answer_{/literal}{$_qid}{literal}"), {
+          mode: "application/xml",
+          lineNumbers: true,
+          onCursorActivity: function() {
+            editor.setLineClass(hlLine, null);
+            hlLine = editor.setLineClass(editor.getCursor().line, "activeline");
+          }
+        });
+        var hlLine = editor.setLineClass(0, "activeline");
+        
+        {/literal}  
+    </script>
+    	
+	{/if}    
+
+
+    {if $r.Type eq "Image"}
+    
+    
+        <if $errorMessage && $_qid == $errorQuestion >
+        <div class="error aplImageError">
+            {$errorMessage}  
+        </div>
+        </if>
+    	
+        <div class="formInput aplTextInput">
+        {assign var=iqs value="q_answer_`$_qid`"}
+            
+        <label for="q_answer_{$_qid}">{$r.Question|escape}  {if $r.required}<span>*</span>{/if}</label>
+        {*<input type="text" value="{if isset($postdata.$tfqs)}{$postdata.$tfqs}{else}{$r.optionsAnswers.AnswerText|escape}{/if}" name="q_answer_{$_qid}" id="q_answer_{$_qid}">*}
+        <input type="hidden" name="q_answer_{$_qid}" id="q_answer_{$_qid}" value="{$r.optionsAnswers.AnswerText}">
+        <input type="file" name="q_answer_{$_qid}" id="q_answer_{$_qid}">
+        </div>
+
+        <if $r.optionsAnswers.AnswerText>
+        <div class="formInput formSmallInput aplFileButton">
+        <label><a href="{$displayLink}" target="_blank" title="" id="q_dp_answer_{$_qid}">{$r.optionsAnswers.AnswerText}</a></label>
+	    <div class="buttonContainer formButtonContainer">        
+        <input class="button" type="button" value="[tb]Delete item[/tb]" onclick="del_qs_image('{$_qid}')" id="q_bt_answer_{$_qid}"></span>
+        </div>
+        </div>
+        
+        </if>
+        	
+        <if $r.Explanation>
+        <div class="explain aplTextExplain">
+            {$r.Explanation|escape}
+        </div>
+        </if>  
+            
+    {/if}
+    </foreach>	
+
+
+    <div style="clear:both;">&nbsp;</div>
+    
+	<div class="text formText custFiNetwText custFiNetwNotify">[t]Did you fill out the form correctly? Did you upload both images? Please press "Save" when you are done.[/t]</div>
+	<div class="buttonContainer formButtonContainer">
+		<input class="button" type="button" value="[tb]Save changes[/tb]" onclick="submit_network_form();">
+	</div>
+
+</form>
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

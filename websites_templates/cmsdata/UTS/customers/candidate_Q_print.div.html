@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title> CustomersCandidatesDetail
+		</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<!--<link href="formstyles.css" rel="stylesheet" type="text/css">-->
+		<script language="Javascript1.2">
+		//{literal}
+		function printWindow(){
+		browserVersion = parseInt(navigator.appVersion)
+		if (browserVersion >= 4) window.print()
+		}
+		//{/literal}
+		</script>
+	</head>
+	<body onload="printWindow();">
+		<!--uts:begin inner-->
+<!-- /UTS/customers/candidate_Q_Print.div.html -->
+<div>
+<div><img src="{$site_logo}"></div>
+<h3>[t]Candidate: {$candidate.name}[/t]</h3>
+
+{if $smarty.foreach.personal.first} 
+<div>{$picHtml}</div>
+{/if}
+
+<div>
+{foreach from=$data item=record name=personal}
+{if $record.part=="PER"}
+{* Honza M.: A quick fix for translating - added here so that the UTSMAN sees the names, but in a always-false condition so that they are not displayed; FIXME: implement some kind of PHP hook, if record.name can be known in advance *}
+{if 0}
+<h2>These fields are generated dynamically ($record.name) - to be recognized by UTS, they must be inserted into a never-executed block, such as this one</h2>
+[ti]Voornaam[/ti]<br >
+[ti]Tussenvoegsel[/ti]<br >
+[ti]Achternaam[/ti]<br >
+[ti]Adres[/ti]<br >
+[ti]Woonplaats[/ti]<br >
+[ti]Mobiel[/ti]<br >
+[ti]Email[/ti]<br >
+[ti]Opleidingen[/ti]<br >
+[ti]Werkervaring[/ti]<br >
+[ti]Geboortedatum[/ti]<br >
+{/if}
+
+{if $record.name != 'CV'}
+<div><span style="display:inline-block;width:200px;">{$record.name}:</span>{$record.value}</div>
+{/if}
+
+{/if}
+{/foreach}
+</div>
+
+<!--START CV-->
+{if !$nodata}
+
+{foreach from=$data item=record}
+
+{if $record.value && $record.part neq "PER"}
+
+{if $record.part=="TXT" || $record.part=="CRIT"}
+<h3 style="margin-bottom:0px">{$record.name}</h3>
+{else}
+<h3 style="margin-bottom:0px">{$record.name}</h3>
+{/if}
+
+{if $record.part=="TXT" || $record.part=="CRIT"}
+<div style="margin-bottom:20px">{$record.value}</div>
+{/if}
+
+{if $record.part=="OTH"}
+{foreach from=$record.value key=subkey item=subvalue}
+
+{$subkey}
+
+{if is_array($subvalue) && count($subvalue) > 0}
+	{foreach from=$subvalue item=subv}
+		{$subv.data}
+	{/foreach}
+{else}
+	{$subvalue}
+{/if}
+{/foreach}
+{/if}
+
+
+{if $record.part=="SKI"}
+{foreach from=$record.value key=subkey item=subvalue}
+<div>
+<h5>{$subkey}</h5>
+<div>
+
+	<table cellspacing="0"  cellpadding="0"  border="0">
+	{foreach from=$subvalue item=skill}
+	<tr>
+	<th>{$skill.skill}</th>
+		{if $skill.proficiency}
+			<td>{$skill.proficiency}</td>
+		{elseif $skill.lezen || $skill.schrijven || $skill.spreken}
+			<td>
+			{if $skill.lezen}
+				<span>[t]Read[/t]:</span>{$skill.lezen}<br>
+			{/if}
+			{if $skill.schrijven}
+				<span>[t]Write[/t]:</span>{$skill.schrijven}<br>
+			{/if}
+			{if $skill.spreken}
+				<span>[t]Speak[/t]:</span>{$skill.spreken}<br>
+			{/if}
+			</td>
+		{/if}
+	</tr>
+	{/foreach}
+	</table>
+	</div>
+</div>
+{/foreach}
+{/if}
+
+{if $record.part=="COM"}
+{foreach from=$record.value key=subkey item=item}
+<div>
+<h4>{$item._Name|escape}</h4>
+{if $item._Level}
+<div><span>[t]Level[/t]</span> {$item._Level|escape}</div>
+{/if}
+{if $item._Certificate}
+<div><span>[t]Certificate[/t]</span> {$item._Certificate|escape}</div>
+{/if}
+<div><span>[t]Category[/t]</span> {$item._Category|escape}</div>
+</div>
+<!--END_COMPETENCE_ITEM-->
+{/foreach}
+{/if}
+
+{* Sander van den Brink: This is about the candidates Work Experience *}
+{if $record.part=="WER"}
+{foreach from=$record.value key=subkey item=item}
+<div>
+<h4>{$item.EmployerNameAndPlace}</h4>
+<div>{$item.Experience}</div>
+<div><span>[t]Van/tot[/t]<!--SingleWordLink2--></span>{$item.StartDate} - {$item.EndDate}</div>
+<div>{$item.ExperienceDescription}</div>
+</div>
+<!--END_HISTORY_ITEM-->
+{/foreach}
+{/if}
+
+{* Sander van den Brink: This is about the candidates Education *}
+{if $record.part=="OPL"}
+{foreach from=$record.value key=subkey item=item}
+<div>
+<h4>{$item.Degree}</h4>
+<div><span>[t]Van/tot[/t]<!--SingleWordLink2--></span>{$item.StartDate} - {$item.EndDate}</div>
+<div><span>[t]Institute[/t]<!--SingleWordLink2--></span>{$item.InstituteNameAndPlace}</div>
+<div><span>[t]Diploma[/t]<!--SingleWordLink2--></span>{$item.Diploma}</div>
+<div><span>[t]Diploma date[/t]<!--SingleWordLink2--></span>{$item.DiplomaDate}</div>
+<div><span>[t]Subjects[/t]<!--SingleWordLink2--></span>{$item.Subjects}</div>
+<div></div>
+</div>
+{/foreach}
+{/if}
+
+
+{/if}
+{/foreach}
+
+{else}
+<div>[t]No data to display for this candidate.[/t]</div>
+{/if}
+
+<!--STATISTICS-->
+{if OTYSCZ == 1}
+<tr>
+<td>
+
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+	<td colspan="2">[t]Statistics[/t]</td>
+	</tr>
+	<tr>
+	<td>
+
+		<table border="0" width="100%">
+		<tr>
+		<td>[t]Time[/t]: {$stats.time}</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	<tr>
+	<td>
+
+		<table border="0" width="100%">
+		<tr>
+		<td>[t]Portal[/t]: {$stats.portal}</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+</td>
+</tr>
+{/if}
+<!--END_STATISTICS-->
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

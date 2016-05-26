@@ -1,0 +1,389 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+{literal}
+<script type="text/javascript">
+
+
+
+<!--
+{/literal}
+
+{* JS VARIABLES BEGIN *}  
+var trigger_timeslot_invite = '{$trigger_timeslot_invite}';  
+
+{* JS VARIABLES END *}  
+{literal}
+
+/**
+ * 
+ */ 
+function chStatuses()
+{
+  if(checkChbx())
+  {
+    //$('#frmChCh').submit();
+    candidate_form_submit();
+  }
+  else
+  {
+    alert('[th]You have to select at least one candidate![/th]');
+  }  
+}
+
+/**
+ * return true if there is at least one candidate checked
+ */ 
+function checkChbx()
+{
+  if($('input[name="lm_bs[]"]:checked').length > 0)
+  {
+    return true;
+  }
+  
+  return false;
+}
+
+/**
+ *
+ */ 
+function saveButtonEnable()
+{
+  $('#bttnChStatuses').attr('disabled', 'disabled');
+
+  var st0 = ($('select[name=status]').val() != '');
+  var st1 = ($('select[name=vb_procedures_status]').val() != '');
+  var st2 = ($('select[name=vb_procedures_status2]').val() != '');
+  var st3 = ($('select[name=vb_procedures_status3]').val() != '');
+  
+  if(st0 || st1 || st2 || st3)
+  {  
+    $('#bttnChStatuses').removeAttr('disabled');
+  }
+}
+
+// initialize document	
+$(document).ready(function () {
+  
+  saveButtonEnable();  
+           
+});  
+
+
+function candidate_form_submit(){
+  if (trigger_timeslot_invite == 1) {
+     timeslot_invite();
+  }
+  else{
+    $('#frmChCh').submit();
+  }
+}
+
+
+function timeslot_invite(){
+  if (trigger_timeslot_invite == 1) {
+      
+      $(document).ready(function() {
+         
+         var lmbsval = [];
+          
+         $('.lmbs_checkbox:checked').each(function(){
+               lmbsval.push(this.value);
+          });
+                    
+         
+         vb_procedures_status = document.frmChCh.vb_procedures_status.value; 
+         vb_procedures_status2 = document.frmChCh.vb_procedures_status2.value;
+         vb_procedures_status3 = document.frmChCh.vb_procedures_status3.value;
+         vid = document.frmChCh.this_vid.value;
+  
+        	$.post('/index.php/page/lm_timeslots/command/timeslotBatchCheck', 		   				   				   
+        	   {command:'timeslotBatchCheck',vid: vid, lmbs:lmbsval,vb_procedures_status:vb_procedures_status, vb_procedures_status2:vb_procedures_status2,vb_procedures_status3:vb_procedures_status3},
+             TimeslotFeedback,   			  
+        	   'json');
+         
+          
+        
+      });         
+    
+  }
+
+}
+
+
+function TimeslotFeedback(data){
+      
+     if (data.status=="OK" && data.popup=="show"){
+     
+         vid = document.frmChCh.this_vid.value;     
+        
+        var r=confirm("[th]Do you want to invite these candidates for an appointment?[/th]");
+        if (r==true){
+          // save invitation
+        	$.post('/index.php/page/lm_timeslots/command/timeslotBatchInvitationSaveInBackground', 		   				   				   
+        	   {command:'timeslotBatchInvitationSaveInBackground',invite_candidates: data.invite_candidates, 'vid':vid },
+             InvitationFeedback,
+             'html');
+          
+        }        
+        else{
+          /// dont save invitation only continue...
+          $('#frmChCh').submit();  
+        }
+        
+        
+        
+     }
+     else{
+      
+      $('#frmChCh').submit();
+     }       
+}
+
+function InvitationFeedback(data){
+  $('#frmChCh').submit();  
+}
+
+
+
+//-->
+</script>
+{/literal}
+
+<div class="outer custCandMultiple">
+<!-- UTS: Candidates (multiple) -->
+<!-- /UTS/customers/candidates.div.html custom -->
+<h1 class="title">[t]Candidates for[/t]&nbsp;{$vacancy}</h1>
+{$customer_menu}
+
+<h2 class="subHeader countCandSh">[t]Candidates in procedure[/t]: {$count_linked}</h2>
+  
+  {*FILTER FORM BEGIN*}
+<div class="tscFilterDiv">
+	<form action="/index.php/page/customers/command/candjob_list/bb/1/" id="frm_flt" name="frm_flt" method="post">
+	<input type="hidden" name="vid" value="{$vid}">
+	<div class="formInput">
+		<label>[t]Candidate[/t]</label>
+		<input type="text" name="flt[candidate]" value="{$flt.candidate|escape}">
+	</div>
+{if $stChangeAllowed}
+	{if $eStatuses.cs}
+	<div class="formInput">
+		<label>[t]Status[/t]</label>
+		<select name="flt[status]">
+	  		<option value="">---</option>
+	  		{html_options options=$stValues.cs selected=$flt.status}
+  		</select>
+	</div>
+	{/if}
+    {if $eStatuses.ps1}
+	<div class="formInput">
+		<label>{$sts.name1}</label>
+		<select name="flt[vb_procedures_status]">
+			<option value="">---</option>
+			{html_options options=$stValues.ps1 selected=$flt.vb_procedures_status}
+		</select>
+	</div>
+  	{/if}
+    {if $eStatuses.ps2}
+	<div class="formInput">
+		<label>{$sts.name2}</label>
+		<select name="flt[vb_procedures_status2]">
+			<option value="">---</option>
+			{html_options options=$stValues.ps2 selected=$flt.vb_procedures_status2}
+		</select>
+	</div>
+  	{/if}
+    {if $eStatuses.ps3}
+	<div class="formInput">
+		<label>{$sts.name3}</label>
+		<select name="flt[vb_procedures_status3]">
+			<option value="">---</option>
+			{html_options options=$stValues.ps3 selected=$flt.vb_procedures_status3}
+		</select>
+	</div>	
+  	{/if}
+{/if}
+	<div class="buttonContainer">
+		<input class="button" type="submit" name="flt_bttn" value="[t]Filter[/t]">
+	</div>
+	</form>
+</div>
+  {*FILTER FORM END*}	  
+
+{if $lmBatchSttatuses && $stChangeAllowed}
+	<!-- SET BATCH STATUSES SELECTS -->
+<form name="frmChCh" id="frmChCh" action="/index.php/page/lmbsreacties/bb/1" method="post">
+	<input type="hidden" name="command" value="setstatuses">
+	<input type="hidden" name="returnapp" value="customers">
+	<input type="hidden" name="returncmd" value="candjob_list">
+	<input type="hidden" name="returnparams" value="vid/{$vid}">
+  <input type="hidden" name="this_vid" value="{$vid}">
+	
+<div class="LMCandDetailStatus">
+	<h2 class="subHeader">[t]Change Status[/t]</h2>
+  	{if $eStatuses.cs}
+  	<div class="formInput fiStatus">
+		<label>[t]Status[/t]</label>
+		<select name="status" id="stSel0" onChange="saveButtonEnable()">
+	  		<option value="">---</option>
+	  		{html_options options=$stValues.cs}
+	  		<option value="empty">[t]Geen status[/t]</option>
+  		</select>
+  	</div>
+  	{/if}
+    
+    {if $eStatuses.ps1}
+  	<div class="formInput fiProcedures1">
+		<label>{$sts.name1}</label>
+		<select name="vb_procedures_status" id="stSel1" onChange="saveButtonEnable()">
+		<option value="">---</option>
+		{html_options options=$stValues.ps1}
+		</select>
+	</div>
+  	{/if}
+  	
+    {if $eStatuses.ps2}
+	<div class="formInput fiProcedures1">
+		<label>{$sts.name2}</label>
+		<select name="vb_procedures_status2" id="stSel2" onChange="saveButtonEnable()">
+			<option value="">---</option>
+			{html_options options=$stValues.ps2}
+		</select>
+	</div>
+  	{/if}
+	
+    {if $eStatuses.ps3}
+	<div class="formInput fiProcedures1">
+		<label>{$sts.name3}</label>
+		<select name="vb_procedures_status3" id="stSel3" onChange="saveButtonEnable()">
+			<option value="">---</option>
+			{html_options options=$stValues.ps3}
+		</select>
+	</div>
+  	{/if}
+    
+	<div class="buttonContainer">
+		<input class="button" type="button" name="bttnChStatuses" id="bttnChStatuses" value="[tb]Change Statuses[/tb]" onclick="chStatuses();" disabled="disabled" >
+	</div>
+</div>
+{/if}
+
+{foreach from=$candidates item=cand key=kid}
+
+  <div class="itemContainer custCandItemContainer statId{$cand.cand_status.id}">
+  {if $cand.foto}
+  <div class="itemImage" onClick="location='{$cand.fotolink}'"><img src="{$cand.foto}" border=0></div>
+  {/if}
+  {if $lmBatchSttatuses && $stChangeAllowed}    
+  <input type="checkbox" name="lm_bs[]" class="lmbs_checkbox" value="{$cand.reactieid}:{$cand.kandidaatid}">    
+  {/if}  
+  
+  {if $uts.siteid == 0001}
+  <h3 class="itemTitle"><a href="/index.php/page/customers/vid/{$vid}/bb/1/code/{$code}/command/cand_detail/kid/{$kid}" {if $cand.recently_changed}style="color:orange;"{/if}>{$cand.voornaam} {$cand.tussenvoegsel} {$cand.achternaam}</a></h3>
+  {else}
+  <!-- code normal here -->
+  <h3 class="itemTitle"><a href="{if $uses_cvsearch}/index.php/page/candetail/bb/1/command/start/id/{$kid}{else}/index.php/page/customers/vid/{$vid}/bb/1/code/{$code}/command/cand_detail/kid/{$kid}{/if}" {if $cand.recently_changed}style="color:orange;"{/if}>{$cand.voornaam} {$cand.tussenvoegsel} {$cand.achternaam}</a></h3>
+  {/if}
+
+  <div class="custCandListJobName">
+  <div class="itemWord custCandInsertDate">{$cand.invoerdatum|date_format:"%d.%m.%Y"}</div>
+  <div class="itemWord custCandFunction">{$cand.functie_o}</div>
+  </div>
+  {if $hiring_manager}
+  {if $cand.note}
+  	<div title="{$cand.note}"><img src="http://bo01.otys.nl/adm/hta/images/notitie_icoon.gif"></div>
+  {else}
+  	&nbsp;
+  {/if}
+  {/if}
+  
+  {if $cand.cand_status || $cand.status1 || $cand.status2 || $cand.status3 || $staffing }
+  <div class="custCandStatusCont">
+  
+  {if $cand.cand_status}
+  <span class="itemWord custCandStatus">
+  <span>[t]Status[/t]:</span>
+  {$cand.cand_status}
+  </span>
+  {/if}
+  
+  {if $cand.status1}
+  <span class="itemWord custCandStatus1Name">
+  <span>{$status1_name}:</span>
+  {$cand.status1}
+  </span>
+  {/if}
+  
+  {if $cand.status2}
+  <span class="itemWord custCandStatus2Name">
+  <span>{$status2_name}:</span>
+  {$cand.status2}
+  </span>
+  {/if}
+  
+  {if $cand.status3}
+  <span class="itemWord custCandStatus3Name">
+  <span>{$status3_name}:</span>
+  {$cand.status3}
+  </span>
+  {/if}
+  
+  {if $staffing}
+  <span class="itemWord custCandStaffingStatus">
+  <span>[t]Staffing[/t]:</span>
+  {$cand.staffing_status}
+  </span>
+  {/if}
+  <!-- MBL -->
+  <div class="itemFooter">
+  <div class="itemFooterWord custCandItemFooterWord" title="[th]Send e-mail to[/th] {$cand.contactpersoon}"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/mailform/id/{$cand.reactieid}/alt/1">[th]E-mail[/th] {$cand.contactpersoon}</a></div>
+  
+  {if $allow_passive_status_change}
+  <div class="itemFooterWord custCandItemFooterWord" title="[th]Set to[/th] {if $cand.passive=='N'}[th]Passive[/th]{/if} {if $cand.passive=='Y'}[th]Active[/th]{/if}"><a href="/index.php/page/customers/bb/1/command/candjob_list/option/change_status/kid/{$kid}/vid/{$vid}/">[th]Set to[/th] {if $cand.passive=='N'}[th]Passive[/th]{/if} {if $cand.passive=='Y'} [th]Active[/th]{/if}</a></div>
+  {/if}
+  
+  </div>
+  
+  <div class="cleaner cstIc"></div>
+  </div>
+  {/if}
+  </div>
+
+{/foreach}
+
+	{if $lmBatchSttatuses && $stChangeAllowed}
+	</form>
+	{/if}
+
+<table id="custCandStats">
+<tr>
+<td>[t]Active[/t]</td><td>:</td><td>{$count_active}</td>
+</tr>
+<tr>
+<td>[t]Passive[/t]</td><td>:</td><td>{$count_passive}</td>
+</tr>
+<tr>
+<td>[t]Visible[/t]</td><td>:</td><td>{$count_visible}</td>
+</tr>
+</table>
+
+<div class="buttonContainer">
+<!--START_BUTTON2-->
+<input type="button"  value="[th]Terug[/th]" onClick="window.location='/index.php/page/customers_ext/bb/1/exp//command/default/vid/{$vid}';" name="button" class="button"><!--ButtonLink2-->
+<!--END_BUTTON2-->
+</div>
+
+
+</div>
+
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,125 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>[t]Network Detail[/t]</title>
+	<style type="text/css">
+		/* {literal} */
+		a img
+		{
+			border: none;
+		}
+		
+		.marginTop
+		{
+			margin-top: 1em;
+		}
+		
+		.center
+		{
+			text-align: center; /* Only for IE */
+			margin: 0px auto; /* Other browsers */
+		}
+		
+		*>.center /* Other browsers */
+		{
+			display: table; /* Allow resizing */
+			text-align: inherit; /* Disable IE centering */
+		}
+		
+		ul.horizontalMenu,
+		.horizontalMenu ul
+		{
+			margin: 0em;
+			padding: 0em;
+		}
+		
+		.horizontalMenu li
+		{
+			list-style: none;
+			display: inline;
+			margin: 0em;
+			padding: 0em 1em;
+		}
+		/* {/literal} */
+	</style>
+</head>
+<body>
+<!--uts:begin inner-->
+{assign var='websiteId' value=$website.id}
+{assign var='klantid' value=$website.klantid}
+
+<table border="0" cellpadding="0" cellspacing="0" class="vacsTable">
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader"><H1>{$website.name}</H1></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td>
+
+<table>
+<tr>
+<td class="listImgSpace">
+
+<a style="float:left;clear:right;margin:3px 15px 10px 0px;" href="{$website.website}" title="{$website.name}" target="_blank"><img src="/_images_upload/{if $website.network_image == "Picture" && $website.network_picture}{$website.network_picture}{else}{$website.network_logo}{/if}" alt="{$website.name}" border="0" ></a>
+
+<table width="100%">
+<tr>
+<td>[t]Website[/t]:</td>
+<td><a href="{$website.website}" title="{$website.name}" target="_blank">{$website.name}</a></td>
+</tr>
+</table>
+<p>{$website.network_text}</p>
+<p>{$website.reference}</p>
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+{if $shortlist}
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader"><H2>[t]Recente vacatures van[/t] {$website.name}</H2></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Hieronder vindt u een aantal van de meest recente vacatures die door dit bedrijf zijn gepubliceerd. Klik op de vacaturetitel om een uitgebreide beschrijving van de vacature te bekijken.[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+{/if}
+
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="vacatureButton"><input type="button"  value="[t]Terug[/t]" onClick="location='{$referer}'" name="button" class="button"></td>
+</tr>
+</table>
+</td>
+</tr>
+
+</table>
+
+<!--uts:end inner-->
+</body>
+</html>

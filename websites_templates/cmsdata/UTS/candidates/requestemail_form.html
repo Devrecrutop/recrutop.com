@@ -1,0 +1,73 @@
+{* this template is used for displaying a contact form in CV Search *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- /UTS/candidates/requestemail_form.html -->
+<script type="text/javascript">
+//{literal}
+function changeContactSubject(){
+
+  how2contact = $('#how2contact').val();
+  if (how2contact == "directly") {
+    $('#subjectContact').val($('#candidate_subject').val());
+  }
+  if (how2contact == "consultant") {
+    $('#subjectContact').val($('#cp_subject').val());
+  }
+}
+//{/literal}
+</script>
+
+<div class="outer actouter candRequestMailOuter">
+<!-- /UTS/candidates/requestemail_form.html -->
+<h1 class="title">[t]E-mail about candidate {$refNumber}[/t]</h1>
+<div class="intro">[t]You are sending a request about the candidate with reference number: {$refNumber}[/t]</div>
+{if $error}
+<div class="error">
+  [t]Please fill in all fields.[/t]
+</div>
+{/if}
+
+<form name="form1" action="{$handler}" method="post">
+<input type="hidden" name="id" value="{$id}">
+<input type="hidden" name="command" value="sendrequestemail">
+<input type="hidden" name="origin" value="{$origin|escape}">
+
+<div class="formInput">
+    <label>[t]Name:[/t]</label>
+    <input name="name" type="text" size="40" value="{$formData.name}">
+</div>
+<div class="formInput">
+    <label>[t]Job title:[/t]</label>
+    <input name="jobTitle" size="40" type="text" value="{$formData.jobTitle}">
+</div>
+<div class="formInput">
+    <label>[t]Company:[/t]</label>
+    <input name="company" id="subjectContact" size="40" type="text" value="{$formData.company}">
+</div>
+<div class="formInput">
+    <label>[t]E-mail adres:[/t]</label>
+    <input name="email" id="subjectContact" size="40" type="text" value="{$formData.email}">
+</div>
+<div class="formInput">
+    <label>[t]Phone number:[/t]</label>
+    <input name="phone" id="subjectContact" size="40" type="text" value="{$formData.phone}">
+</div>
+
+<div class="buttonContainer jbdBc">
+<input type="submit" value="[tb]Send[/tb]" class="button">
+<input type="button" name="form" value="[tb]Back[/tb]" onClick="javascript:history.go(-1);" class="button">
+</div>
+
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>[t]Timesheet[/t]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!-- /UTS/candidates/timesheetAdmin2word.html -->
+
+{literal}
+<style type="text/css" media="all">
+
+  #dataTable {border-left: solid 1pt black; border-top: solid 1pt black;}
+  #dataTable td {border-right: solid 1pt black; border-bottom: solid 1pt black; padding: 2pt;}
+  
+  #notesTable {border-left: solid 1pt black; border-top: solid 1pt black;}
+  #notesTable td {border-right: solid 1pt black; border-bottom: solid 1pt black; padding: 2pt;}
+
+  #historyTable {border-left: solid 1pt black; border-top: solid 1pt black;}
+  #historyTable td {border-right: solid 1pt black; border-bottom: solid 1pt black; padding: 2pt;}      
+  
+</style>
+{/literal}
+
+<div id="header">
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <colgroup>
+    <col width="33%">
+    <col width="33%">
+    <col width="33%">
+  </colgroup>  
+  <tr valign="top">
+    <td id="logo">
+      {if $info.customerLogo}              
+      <img src="/_images_upload/{$info.customerLogo|escape}" height="40" border="0">                  
+      {else}
+      &nbsp;
+      {/if}                 
+    </td>
+    <td>
+      [t]Customer name[/t]: {$info.customerName|escape}<br>
+      [t]Assignment name[/t]: {$info.assgnName|escape}<br>
+      [t]Candidate name[/t]: {$info.candidateName|escape}      
+    </td>    
+    <td>
+      [t]Client name[/t]: {$info.clientName|escape}<br>
+      [t]Client address[/t]: {$info.clientAddress|escape}<br>
+      [t]Client city[/t]: {$info.clientCity|escape}
+    </td>        
+  </tr>
+  </table>
+  
+</div>
+
+<br>
+<br>
+
+{* HOURS BEGIN *}
+<div id="hours">
+
+<table cellpadding="0" cellspacing="0" width="100%" id="dataTable">
+    
+  {*CAPTIONS BEGIN*}
+  <tr valign="middle" class="dataGridRow" id='captions'>
+  
+    {*DATE*}
+    <td class="dataGridCell" width="150">[t]Date/Day[/t]</td>
+    
+    {*ASSIGNMENTS*}
+		{foreach from=$dataGridHeader.assignment item=h}
+            
+      {*CALCULATIONS*}
+      {foreach from=$h.flds.calculation item=fld}
+      
+        {if $fld.clc_hour_type_name == "Normal"}
+          {assign var="currentHeaderName" value="[thg]Normal[/thg]"}
+          {assign var="currentHeaderTitle" value="[thg]Normal[/thg]"}
+        {elseif $fld.clc_hour_type_name == "C-Hol"}
+          {assign var="currentHeaderName" value="[thg]C-Hol[/thg]"}
+          {assign var="currentHeaderTitle" value="[thg]C-Hol[/thg]"}
+        {elseif $fld.clc_hour_type_name == "P-Hol"}
+          {assign var="currentHeaderName" value="[thg]P-Hol[/thg]"}
+          {assign var="currentHeaderTitle" value="[thg]P-Hol[/thg]"}
+        {elseif $fld.clc_hour_type_name == "Sick"}
+          {assign var="currentHeaderName" value="[thg]Sick[/thg]"}
+          {assign var="currentHeaderTitle" value="[thg]Sick[/thg]"}
+        {else}  
+          {assign var="currentHeaderTitle" value=$fld.clc_name|escape}
+          {assign var="currentHeaderName" value=$fld.clc_hour_type_name|escape|truncate:20}
+        {/if}	         
+      
+      <td class="dataGridCell" title="{$currentHeaderTitle}{*$fld.clc_name|escape*}" width="120">{$currentHeaderName}{*$fld.clc_hour_type_name|escape*}</td>      
+      {/foreach}
+      
+      {*COMPENSATIONS*}
+      {foreach from=$h.flds.compensation item=fld}
+      <td class="dataGridCell" title="{$fld.dcm_description|escape}" width="120">{$fld.dcm_ded_com_type_name|escape}</td>
+      {/foreach}
+    
+      {*DEDUCTIONS*}
+      {foreach from=$h.flds.deduction item=fld}
+      <td class="dataGridCell" title="{$fld.dcm_description|escape}" width="120">{$fld.dcm_ded_com_type_name|escape}</td>
+      {/foreach}
+                       
+    {/foreach}
+    
+    {*INTERNAL*}
+		{foreach from=$dataGridHeader.internal item=h}
+      
+      {*CALCULATIONS (WORKING, SICK, OTHER, HOLIDAY)*}
+            
+      {foreach from=$h.flds.calculation item=fld}
+              
+        {if $fld.clc_hour_type_name == "Normal"}
+          {assign var="currentHeaderName" value="[thg]Normal[/thg]"}
+          {assign var="currentHeaderTitle" value="[thg]Normal[/thg]"}
+        {elseif $fld.clc_hour_type_name == "C-Hol"}
+          {assign var="currentHeaderName" value="[thg]C-Hol[/thg]"}
+          {assign var="currentHeaderTitle" value="[thg]C-Hol[/thg]"}
+        {elseif $fld.clc_hour_type_name == "P-Hol"}
+          {assign var="currentHeaderName" value="[thg]P-Hol[/thg]"}
+          {assign var="currentHeaderTitle" value="[thg]P-Hol[/thg]"}
+        {elseif $fld.clc_hour_type_name == "Sick"}
+          {assign var="currentHeaderName" value="[thg]Sick[/thg]"}
+          {assign var="currentHeaderTitle" value="[thg]Sick[/thg]"}
+        {else}  
+          {assign var="currentHeaderTitle" value=$fld.clc_name|escape}
+          {assign var="currentHeaderName" value=$fld.clc_hour_type_name|escape|truncate:20}
+        {/if}	                
+        
+        <td class="dataGridCell" title="{$currentHeaderTitle}{*$fld.clc_name|escape*}" width="120">{$currentHeaderName}{*$fld.clc_hour_type_name|escape*}</td>
+      
+      {/foreach}            
+      
+      {*COMPENSATIONS*}
+      {foreach from=$h.flds.compensation item=fld}
+      <td class="dataGridCell" title="{$fld.dcm_description|escape}" width="120">{$fld.dcm_ded_com_type_name|escape}</td>
+      {/foreach}
+    
+      {*DEDUCTIONS*}
+      {foreach from=$h.flds.deduction item=fld}
+      <td class="dataGridCell" title="{$fld.dcm_description|escape}" width="120">{$fld.dcm_ded_com_type_name|escape}</td>
+      {/foreach}                         
+                              
+    {/foreach}         
+    
+    {*INFO*}
+    <td class="dataGridCell">[t]Info[/t]</td>    
+  
+  </tr>
+  {*CAPTIONS END*}
+    
+  {* DATA BEGIN *}
+  {foreach from=$dataGrid item=ts key=rid}
+  <tr valign="middle" class="dataGridRow dataGridRowCountable" id='{$rid}'>
+    {*DATE*}
+    <td class="dataGridCell" nowrap="nowrap">{$ts.date|date_format:$smartyDateFormat}&nbsp;{$dayNames[$ts.d_nr]}</td>
+    
+    {*ASSIGNMENTS*}
+		{foreach from=$dataGridHeader.assignment item=h}			
+           
+      {*if $ts.assignment[$h.assignment_id]*}{*ONLY IF SUCH ASSIGNMENT RECORD EXISTS*}
+      
+        {*CALCULATIONS*}
+        {foreach from=$h.flds.calculation item=fld}      
+        {if $ts.assignment[$h.assignment_id][$fld.id]}                      
+          <td class="dataGridCell">{$ts.assignment[$h.assignment_id][$fld.id].val}</td>          
+        {else}
+          <td class="dataGridCell missingInput">&nbsp;</td>         
+        {/if}      
+        {/foreach}                
+                
+        {*COMPENSATIONS*}
+        {foreach from=$h.flds.compensation item=fld}
+        {if $ts.assignment[$h.assignment_id][$fld.id]}                            
+          <td class="dataGridCell">{$ts.assignment[$h.assignment_id][$fld.id].val}</td>                   
+        {else}
+          <td class="dataGridCell missingInput">&nbsp;</td>         
+        {/if}      
+        {/foreach}            
+        
+        {*DEDUCTIONS*}
+        {foreach from=$h.flds.deduction item=fld}       
+        {if $ts.assignment[$h.assignment_id][$fld.id]}            
+          <td class="dataGridCell">{$ts.assignment[$h.assignment_id][$fld.id].val}</td>          
+        {else}
+          <td class="dataGridCell missingInput">&nbsp;</td>
+        {/if}      
+        {/foreach}                           
+            
+      {*/if*}              
+     
+    {/foreach}
+    
+    {*INTERNAL*}
+		{foreach from=$dataGridHeader.internal item=h}
+      
+      {*if $ts.internal[0]*}{*ONLY IF SUCH ASSIGNMENT RECORD EXISTS*}
+            
+        {*CALCULATIONS *}
+        {foreach from=$h.flds.calculation item=fld}
+              
+          {if $ts.internal[0][$fld.id]}               
+            <td class="dataGridCell">{$ts.internal[0][$fld.id].val}</td>            
+          {else}
+            <td class="dataGridCell missingInput">&nbsp;</td>       
+          {/if}
+              
+        {/foreach}                                    
+                                           
+        {*COMPENSATIONS*}
+        {foreach from=$h.flds.compensation item=fld}
+        {if $ts.internal[0][$fld.id]}          
+          <td class="dataGridCell">{$ts.internal[0][$fld.id].val}</td>          
+        {else}
+          <td class="dataGridCell missingInput">&nbsp;</td>         
+        {/if}      
+        {/foreach}            
+        
+        {*DEDUCTIONS*}
+        {foreach from=$h.flds.deduction item=fld}       
+        {if $ts.internal[0][$fld.id]}   
+          <td class="dataGridCell">{$ts.internal[0][$fld.id].val}</td>          
+        {else}
+          <td class="dataGridCell missingInput">&nbsp;</td>
+        {/if}      
+        {/foreach}                           
+            
+      {*/if*}            
+        
+    {/foreach}         
+    
+    {*INFO*}
+    <td  class="dataGridCell">{$ts.total}</td>{*DAY TOTAL CALCUALTIONS*}
+      
+  </tr>    
+  {/foreach}  
+  {* DATA END *}  
+  
+  
+  {*TOTALS BEGIN*}
+  <tr valign="middle" class="dataGridRow" id='totals'>
+  
+    {*DATE*}
+    <td class="dataGridCell" width="150">[t]Total[/t]</td>
+    
+    {*ASSIGNMENTS*}
+		{foreach from=$dataGridHeader.assignment item=h}
+            
+      {*CALCULATIONS*}
+      {foreach from=$h.flds.calculation item=fld}
+      <td class="dataGridCell" width="120">{$gridTotals.assignment[$fld.id]}</td>      
+      {/foreach}
+      
+      {*COMPENSATIONS*}
+      {foreach from=$h.flds.compensation item=fld}
+      <td class="dataGridCell" width="120">{$gridTotals.assignment[$fld.id]}</td>
+      {/foreach}
+    
+      {*DEDUCTIONS*}
+      {foreach from=$h.flds.deduction item=fld}
+      <td class="dataGridCell" width="120">{$gridTotals.assignment[$fld.id]}</td>
+      {/foreach}
+                       
+    {/foreach}
+    
+    {*INTERNAL*}
+		{foreach from=$dataGridHeader.internal item=h}
+      
+      {*CALCULATIONS (WORKING, SICK, OTHER, HOLIDAY)*}
+      
+      {*CALCULATIONS*}
+      {foreach from=$h.flds.calculation item=fld}        
+        <td class="dataGridCell" width="120">{$gridTotals.internal[$fld.id]}</td>        
+      {/foreach}      
+      
+      {*COMPENSATIONS*}
+      {foreach from=$h.flds.compensation item=fld}
+      <td class="dataGridCell" width="120">{$gridTotals.internal[$fld.id]}</td>
+      {/foreach}
+    
+      {*DEDUCTIONS*}
+      {foreach from=$h.flds.deduction item=fld}
+      <td class="dataGridCell" width="120">{$gridTotals.internal[$fld.id]}</td>
+      {/foreach}                         
+                              
+    {/foreach}         
+    
+    {*INFO*}
+    <td class="dataGridCell">{$gridTotals.all}</td>    
+  
+  </tr>
+  {*TOTALS END*}    
+  
+</table>
+  
+</div>
+{* HOURS END *}
+<br>
+<br>
+
+{*NOTES BEGIN*}
+{if $printNotes && $tscNotes}
+<div id="notes">
+<table cellpadding="0" cellspacing="0" width="100%" id="notesTable">
+    
+  <tr valign="middle" class="dataGridRow">      
+    <td class="dataGridCell" width="140">[t]Date/Day[/t]</td>
+    <td class="dataGridCell">[t]Note[/t]</td>
+  </tr>
+ {foreach from=$tscNotes item=nt} 
+ <tr valign="middle" class="dataGridRow" >      
+    <td class="dataGridCell" width="140">{$nt.note_date|date_format:$smartyDateFormat}&nbsp;&nbsp;{$dayNames[$nt.day_of_week]}</td>
+    <td class="dataGridCell">{$nt.note_text|escape}</td> 
+ </tr>
+ {/foreach} 
+      
+</table>
+</div>
+<br>
+<br>
+{/if}
+{*NOTES END*}
+
+{*STATUS HISTORY BEGIN*}
+{if $printStatusHistory && $tscStatusHistory}
+<div id="status_history">
+<table cellpadding="0" cellspacing="0" width="100%" id="historyTable">
+    
+  <tr valign="middle" class="dataGridRow">      
+    <td class="dataGridCell" width="160">[t]Date/Time[/t]</td>
+    <td class="dataGridCell" width="140">[t]Status[/t]</td>
+    <td class="dataGridCell">[t]Changed by[/t]</td>
+  </tr>
+ {foreach from=$tscStatusHistory item=sh} 
+ <tr valign="middle" class="dataGridRow" >      
+    <td class="dataGridCell" width="160">{$sh.date|escape}</td>
+    <td class="dataGridCell" width="140">{$tscStatusList[$sh.status]|escape}</td>
+    <td class="dataGridCell">{if $sh.consultant_id}[t]CO[/t]&nbsp;-&nbsp;{$sh.consultant|escape}{elseif $sh.wg_cp_id}[t]CP[/t]&nbsp;-&nbsp;{$sh.wg_contact|escape}{elseif $sh.candidate_id}[t]C[/t]&nbsp;-&nbsp;{$sh.candidate|escape}{else}[th]SYSTEM[/th]{/if}</td> 
+ </tr>
+ {/foreach} 
+      
+</table>
+</div>
+<br>
+<br>
+{/if}
+{*STATUS HISTORY END END*}
+
+{if [uts:show_current_status]}
+  <div class="field show_current_status">
+    <label>[t]Status:[/t]</label>
+    {$status_translated}
+  </div>
+  <div class="field show_current_status_date">
+    <label>[t]Date:[/t]</label>
+    {$status_date}
+  </div>
+  <div class="show_current_status_cp"><label>[t]CP:[/t]</label>-
+    {if ($tscHeaders[$tscId].status != 'forapproval')}
+      {$status_cp}
+    {else}
+      -
+    {/if}
+  </div>
+{/if}
+
+<div id="footer">
+  
+  <div id="remarksTitle">[t]Remarks[/t]:</div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <colgroup>
+    <col width="50%">
+    <col width="50%">    
+  </colgroup>  
+  <tr valign="top">
+    <td>[t]Approved by[/t]</td>
+      {if 0}
+          [tg]booked[/tg]
+          [tg]forapproval[/tg]
+          [tg]approved[/tg]
+          [tg]correction[/tg]
+      {/if}
+      <td>{if $status}[t]Status[/t]: [tg]{$status}[/tg]{/if}</td>
+  </tr>
+  
+  <tr valign="top">
+    <td>[t]Customer[/t]:</td>
+    <td>[t]Candidate[/t]:</td>
+  </tr>
+  
+  <tr valign="top">
+    <td>
+      [t]name[/t]:<br>
+      [t]date[/t]:
+    </td>
+    <td>
+      [t]name[/t]:<br>
+      [t]date[/t]:
+    </td>
+  </tr>     
+  
+  <tr valign="top">
+    <td>[t]signature[/t]:</td>
+    <td>[t]signature[/t]:</td>
+  </tr>
+  
+  <tr valign="top">
+    <td class="dotsBottom"></td>
+    <td class="dotsBottom"></td>
+  </tr>          
+    
+  </table>
+  
+  {if $printAddrFooter}
+  <br>
+  <div id="addrFooter" style="text-align:center;">
+    {$addrFooter.klant|escape} | 
+    {$addrFooter.bezoekadres|escape} | 
+    {$addrFooter.pc_bezoekadres|escape} {$addrFooter.plaats_bezoekadres|escape} | 
+     [t]Phone:[/t] {$addrFooter.telefoon|escape} |
+     [t]Fax:[/t] {$addrFooter.fax|escape}                       
+  </div>
+  {/if}  
+
+</div>
+
+</body>
+</html>

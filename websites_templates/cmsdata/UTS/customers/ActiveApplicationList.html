@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html  lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/customers/ActiveApplicationList.html CUSTOM-->
+
+<div class="outer custOuter custOuterStart">
+    [CustomersMenu]
+    <h1 class="title custTitle">[t]Active application[/t]</h1>
+    <div class="">
+        [t]You will find below the list of the current open applications[/t]
+    </div>
+    {if $showSerchByKeyword}
+    <form name="searchhookform" method="post" action="{$handler}">
+        <div class="hookWord actHWord actHKw"><label for="asSearchHookKeyword">[t]Keyword[/t]</label></div>
+        <div>
+            <input type="text" id="asSearchHookKeyword" name="main_keyword" value="{$keywordValue|escape}">
+            <input type="submit" name="bApplSubmit" value="[tb]Search[/tb]" class="button">
+        </div>
+    </form>
+    {/if}
+    {if $countActiveApplications > 0}
+    <table border="0" cellpadding="0" cellspacing="0" class="custLinTbl" width="100%">
+        <tr>
+            <td>[t]Candidate name[/t]</td>
+            <td>[t]Job title[/t]</td>
+            <td>[t]Application date[/t]</td>
+            {if [uts:hide_joined_status1] == 0}
+            <td>[t]Joined status 1[/t]</td>
+            {/if}
+            {if [uts:hide_joined_status2] == 0}
+            <td>[t]Joined status 2[/t]</td>
+            {/if}
+            {if [uts:hide_joined_status3] == 0}
+            <td>[t]Joined status 3[/t]</td>
+            {/if}
+        </tr>
+        {foreach from=$activeAppList item=appl}
+        <tr>
+            <td>{$appl.candidate_name|escape}</td>
+            <td>{$appl.job_name|escape}</td>
+            <td>{$appl.appl_date|escape}</td>
+            {if [uts:hide_joined_status1] == 0}
+            <td>{$appl.joined_status_1|escape}</td>
+            {/if}
+            {if [uts:hide_joined_status2] == 0}
+            <td>{$appl.joined_status_2|escape}</td>
+            {/if}
+            {if [uts:hide_joined_status3] == 0}
+            <td>{$appl.joined_status_3|escape}</td>
+            {/if}
+        </tr>
+        {/foreach}
+    </table>
+    {*PAGING BEGIN*}
+    <div class="pageNav custLinPageNav">
+        {if $keywordDecoded}
+        {if $is_prev}
+        <a href="{$handler}/poption/setpage/pageno/1/keyword/{$keywordDecoded}" class="pnFirst custLinFirst">[t]&lt;&lt;&nbsp;First[/t]</a>
+        <a href="{$handler}/poption/prevpage/keyword/{$keywordDecoded}" class="pnPrev custLinPrev">[t]&lt;&nbsp;Previous[/t]</a>
+        {/if}
+
+        <foreach from=$page_array item=p key=k>
+            <a href="{$handler}/poption/setpage/pageno/{$k}/keyword/{$keywordDecoded}" {if $p}class="pnActive custLinActive"{/if}>{$k}</a>
+        </foreach>
+
+        {if $is_next}
+        <a href="{$handler}/poption/nextpage/keyword/{$keywordDecoded}" class="pnNext custLinNext">[t]Next&nbsp;&gt;[/t]</a>
+        <a href="{$handler}/poption/setpage/pageno/{$lastpage}/keyword/{$keywordDecoded}" class="pnLast custLinLast">[t]Last&nbsp;&gt;&gt;[/t]</a>
+        {/if}
+        {else}
+        {if $is_prev}
+        <a href="{$handler}/poption/setpage/pageno/1" class="pnFirst custLinFirst">[t]&lt;&lt;&nbsp;First[/t]</a>
+        <a href="{$handler}/poption/prevpage" class="pnPrev custLinPrev">[t]&lt;&nbsp;Previous[/t]</a>
+        {/if}
+
+        <foreach from=$page_array item=p key=k>
+            <a href="{$handler}/poption/setpage/pageno/{$k}" {if $p}class="pnActive custLinActive"{/if}>{$k}</a>
+        </foreach>
+
+        {if $is_next}
+        <a href="{$handler}/poption/nextpage" class="pnNext custLinNext">[t]Next&nbsp;&gt;[/t]</a>
+        <a href="{$handler}/poption/setpage/pageno/{$lastpage}" class="pnLast custLinLast">[t]Last&nbsp;&gt;&gt;[/t]</a>
+        {/if}
+
+        {/if}
+    </div>
+    {*PAGING END*}
+    {else}
+    <div >
+        [t]No active applications[/t]
+    </div>
+    {/if}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

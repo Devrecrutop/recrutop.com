@@ -1,0 +1,13 @@
+<div class="hookOuter oJhOut">
+ <!-- /UTS/advsearch/searchPhraserHook.frag.html -->
+<if !empty($wlist)>
+<div class="hookHeader oJhT">[t]Most used search phrases:[/t]</div>
+<div class="hookText oJhTx">
+<ul>
+<foreach from=$wlist item=w>
+	<li><a href="{$rootpath}/page/advsearchvacs/bb/1/command/startsearchdisp/field/keywords/query/{$w.keyword|escape:"url"}/x/{$w._keyword2|escape:"url"}.html">{$w.keyword|escape} ({$w.search_count}x)</a></li>
+</foreach>
+</ul>
+</div>
+</if>
+</div>

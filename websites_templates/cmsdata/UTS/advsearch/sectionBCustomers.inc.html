@@ -1,0 +1,93 @@
+ <!-- /UTS/advsearch/sectionBCustomers.inc.html -->
+
+<if $conlist.keywords>
+<div class="optionListContainer actLc actLcKeywords">
+<div class="optionListTitle">[t]Keywords[/t]</div>
+<div class="optionList">
+	<ul>
+    <li><a href="{$handler}/command/removeval/type/keywords" title="{$conlist.keywords.content|escape}">{$conlist.keywords.content|escape|truncate:20}</a></li>
+  </ul>
+</div>
+</div>
+</if>
+
+<if $conlist.location>
+<div class="optionListContainer actLc actLcKeywords">
+<div class="optionListTitle">[t]Location[/t]</div>
+<div class="optionList">
+	<ul>
+    <li><a href="{$handler}/command/removeval/type/location" title="{$conlist.location.content|escape}">{$conlist.location.content|escape|truncate:20}</a></li>
+  </ul>
+</div>
+</div>
+</if>
+
+
+<if $conlist.matchcriteria>
+<div class="optionListContainer actLc actLcMcrit">
+<div class="optionListTitle">[t]Match Criteria[/t]</div>
+	<div class="optionList">
+		<ul>
+		  <foreach from=$conlist.matchcriteria.content item=mc key=crit>
+		    {* required values *}
+		    <foreach from=$mc.content.required item=mcv key=mck>
+		      <li><a href="{$handler}/command/removeval/type/mcplus/crit/{$crit}/id/{$mck}" title="{$mc.name|escape} / {$mcv|escape}">{$mcv|escape|truncate:20}</a></li>
+		    </foreach>
+		    {* prohibited values *}
+		    <foreach from=$mc.content.prohibited item=mcv key=mck>
+		      <li><a href="{$handler}/command/removeval/type/mcminus/crit/{$crit}/id/{$mck}" title="{$mc.name|escape} / {$mcv|escape}">{$mcv|escape:truncate:20}</a></li>
+		    </foreach>
+		  </foreach>
+		  </ul>
+	</div>
+</div>
+</if>
+
+<if $conlist.proximity>
+<div class="optionListContainer actLc actLcDist">
+<div class="optionListTitle">[t]Distance:[/t]</div>
+	<div class="optionList">
+		<ul>
+	<li><a href="{$handler}/command/removeval/type/proximity" title="[th]Country/ Zipcode/ Preferred/ Max distance, click to remove[/th]">{$conlist.proximity.content.countryCode|escape}/ {$conlist.proximity.content.zipCode|escape}/ {$conlist.proximity.content.preferredDistance|escape} km/ {$conlist.proximity.content.maxDistance|escape} km</a></li>
+  </ul>
+</div>
+</div>
+</if>
+
+
+
+
+{* required values *}
+{* prohibited values *}
+{*
+<if $conlist.categorie>
+<div class="optionListContainer actLc actLcJobCat">
+<div class="optionListTitle">[t]Job Categories[/t]</div>
+<div class="optionList">
+	<ul>
+
+  <foreach from=$conlist.categorie.content.required item=mcv key=mck>
+    <li><a href="{$handler}/command/removeval/type/categoryplus/id/{$mck}" title="{$mcv|escape}">{$mcv|escape|truncate:20}</a></li>
+  </foreach>
+
+  <foreach from=$conlist.categorie.content.prohibited item=mcv key=mck>
+    <li><a href="{$handler}/command/removeval/type/categoryminus/id/{$mck}" title="{$mcv|escape}">{$mcv|escape:truncate:20}</a></li>
+  </foreach>
+  </ul>
+</div>
+</div>
+</if>
+*}
+
+{*
+<if $conlist.pubdate>
+<div class="optionListContainer actLc actLcPubl">
+<div class="optionListTitle">[t]Publication:[/t]</div>
+<div class="optionList">
+<ul>
+<li><a href="{$handler}/command/removeval/type/pubdate" title="[th]Click to remove the publication date condition[/th]">{$conlist.pubdate.content|escape}</a></li>
+</ul>
+</div>
+</div>
+</if>
+*}

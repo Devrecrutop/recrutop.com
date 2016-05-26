@@ -1,0 +1,26 @@
+{* this template is used when the simple_registration=yes *}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer aplOuter aplAplSOuter">
+<!-- /UTS/applicants/applyForJobSimpleLinkedIn.html -->
+	{if $showJobLogo}<div class="photo1 jbdPhoto1"><div class="photo2 jbdPhoto2"><img src="http://{$showJobLogo}" alt=""></div></div>{/if}
+	<h1 class="title aplTitle aplAplSTitle">[t]Job Application[/t]</h1>    
+	<div class="intro aplLink aplAplSLink">
+		<ul>
+			<if $linkedinEnabled>
+			<li class="aplAplyLi aplAplyLiJob"><a href="{$handler}/command/applylinkedinsimple/vid/{$vid}/qsuid/{$qsuid}">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
+			</if>
+		</ul>
+	</div>
+	<div class="appRow aplAr aplAplSAr">[t]Application for:[/t] {if $multiAppMode}{$applicationsList}{else}"{$jobtitle|escape}"{/if}</div>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

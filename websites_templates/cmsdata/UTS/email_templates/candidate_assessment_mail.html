@@ -1,0 +1,20 @@
+<!-- TPL: /UTS/email_templates/candidate_assessment_mail.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- TPL: /UTS/email_templates/candidate_assessment_mail.html -->
+<p>[t]Dear[/t] {$recipient_name|escape},</p>
+<p>[t]A new assessment request has been made for candidate {$candidate_name|escape}[/t]</p>
+<p>[t]Please fill in the assessment using the link below[/t]</p>
+<p><a href="{$assessment_link}" target="_blank">{$assessment_link}</a></p>
+<p>[t]Kind regards[/t]</p>
+<p>{$sender_name}</p>
+
+
+<!--uts:end inner-->
+</body>
+</html>

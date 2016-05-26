@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html lang="en">
+
+<head>
+
+    <title><!-- Insert your title here --></title>
+
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<div class="cvdContainer">
+<!-- /UTS/candidates/viewSingleCandidateDetail.html -->
+	{if $candidate_info.candidate_displayed_name || $candidate_info.candidate_full_name}
+
+	<div class="cvdformHeader"><h1>
+	{if $candidate_info.candidate_displayed_name}
+		{$candidate_info.candidate_displayed_name|escape}
+	{else}
+		{if $display_elements.show_first_name}{$candidate_name.first_name|escape}{/if}
+		{if $display_elements.show_middle_name} {$candidate_name.middle_name|escape}{/if}
+		{if $display_elements.show_last_name} {$candidate_name.last_name|escape}{/if}
+	{/if}
+	</h1></div>
+
+	{/if}
+
+	<div class="cvdNawContainer">
+		{if $candidate_l_photo !="" && $display_elements.show_large_photo}
+
+		<div class="cvdPhotoContainer"><div class="cvdPhotoContainer2"><img src="http://{$candidate_l_photo_link}" alt="
+			{if $display_elements.show_first_name}{$candidate_name.first_name|escape}{/if}
+			{if $display_elements.show_middle_name} {$candidate_name.middle_name|escape}{/if}
+			{if $display_elements.show_last_name} {$candidate_name.last_name|escape}{/if}
+		" {$candidate_l_photo_size}></div></div>
+
+		{/if}
+
+
+
+		{if $candidate_info.candidate_displayed_name || $candidate_info.candidate_full_name}
+
+		<div class="cvdNawWord name">[t]Name:[/t]</div>
+
+		<div class="cvdNawValue name">
+			{if $candidate_info.candidate_displayed_name}
+				{$candidate_info.candidate_displayed_name|escape}
+			{else}
+				{if $display_elements.show_first_name}{$candidate_name.first_name|escape}{/if}
+				{if $display_elements.show_middle_name} {$candidate_name.middle_name|escape}{/if}
+				{if $display_elements.show_last_name} {$candidate_name.last_name|escape}{/if}
+			{/if}
+		</div>
+
+		{/if}
+
+
+
+		{if   $display_elements.show_address  && ($candidate_info.adres || $candidate_info.postcode || $candidate_info.woonplaats)}
+
+		<div class="cvdNawWord address">[t]Address:[/t]</div>
+
+		<div class="cvdNawValue">
+
+		{if $candidate_info.adres}{$candidate_info.adres|escape},&nbsp;{/if}
+
+		{if $candidate_info.postcode}{$candidate_info.postcode|escape}&nbsp;{/if}
+
+		{if $candidate_info.woonplaats}{$candidate_info.woonplaats|escape}{/if}
+
+        {if $candidate_info.home_country}<br >{$candidate_info.home_country|escape}{/if}
+
+		</div>
+
+		{/if}
+
+
+
+		{if $candidate_info.email && $display_elements.show_email}
+
+		<div class="cvdNawWord email">[t]E-mail:[/t]</div>
+
+		<div class="cvdNawValue"><a href="mailto:{$candidate_info.email}" title="{$candidate_info.email}  ">{$candidate_info.email}</a></div>
+
+		{/if}
+
+
+
+		{if $candidate_info.phone_consultant && $display_elements.show_home_phone}
+
+		<div class="cvdNawWord home">[t]Phone primary:[/t]</div>
+
+		<div class="cvdNawValue">{$candidate_info.phone_consultant}</div>
+
+		{/if}
+
+
+
+		{if $candidate_info.phone_mobile && $display_elements.show_cell_phone}
+
+		<div class="cvdNawWord cell">[t]Cell phone:[/t]</div>
+
+		<div class="cvdNawValue">{$candidate_info.phone_mobile}</div>
+
+		{/if}
+
+
+
+		{if $candidate_info.phone_work && $display_elements.show_work_phone}
+
+		<div class="cvdNawWord work">[t]Work phone:[/t]</div>
+
+		<div class="cvdNawValue">{$candidate_info.phone_work}</div>
+
+		{/if}
+
+
+
+		{if $candidate_info.phone_fax && $display_elements.show_fax}
+
+		<div class="cvdNawWord fax">[t]Fax:[/t]</div>
+
+		<div class="cvdNawValue">{$candidate_info.phone_fax}</div>
+
+		{/if}
+
+
+
+		{if $candidate_info.phone_skype && $display_elements.show_skype}
+
+		<div class="cvdNawWord skype">[t]Skype:[/t]</div>
+
+		<div class="cvdNawValue">{$candidate_info.phone_skype}</div>
+
+		{/if}
+
+
+		<div class="cleaner cvdNawCleaner"></div>
+	</div>
+
+	<div class="cvdDescrContainer">
+
+
+
+		{if $long_descr !="" && $display_elements.show_text}
+
+		<div class="cvdDescrTitle cv"><h2>[t]CV:[/t]</h2></div>
+
+		<div class="cvdDescrValue">{$long_descr}</div>
+
+		{/if}
+
+
+
+		{if $candidate_media && $display_elements.show_wiqet}
+
+		<div class="cvdDescrTitle wiqet"><h2>[t]Wiqet/Video:[/t]</h2></div>
+
+		<div class="cvdDescrValue media">{$candidate_media}</div>
+
+		{/if}
+
+
+
+		{if $candidate_widget && $display_elements.show_widget}
+
+		<div class="cvdDescrTitle widget"><h2>[t]Widget:[/t]</h2></div>
+
+		<div class="cvdDescrValue widget">{$candidate_widget}</div>
+
+		{/if}
+
+
+
+		{if $candidate_documents_cnt > 0 && $display_elements.show_documents}
+
+		<div class="cvdDescrTitle documents"><h2>[t]Documents:[/t]</h2></div>
+
+		{foreach from=$candidate_documents item=i}
+
+		<div class="cvdDescrValue documents">{$i.document_download_link}</div>
+
+		{foreachelse}
+
+		<div class="cvdDescrValue">&nbsp;</div>
+
+		{/foreach}
+
+		{/if}
+
+
+
+		{if $candidate_active_jobs_cnt > 0 && $display_elements.show_active_jobs}
+
+		<div class="cvdDescrTitle activeJobs"><h2>[t]Active jobs:[/t]</h2></div>
+
+		{foreach from=$candidate_active_jobs item=i}
+
+		<div class="cvdDescrValue activeJobs"><a href="{$i.url}">{$i.desc}</a></div>
+
+		{foreachelse}
+
+		<div class="cvdDescrValue">&nbsp;</div>
+
+		{/foreach}
+
+		{/if}
+
+
+
+		{if $candidate_inactive_jobs_cnt > 0 && $display_elements.show_inactive_jobs}
+
+		<div class="cvdDescrTitle inactiveJobs"><h2>[t]Inactive jobs:[/t]</h2></div>
+
+		{foreach from=$candidate_inactive_jobs item=i}
+
+		<div class="cvdDescrValue inactiveJobs"><a href="{$i.url}">{$i.desc}</a></div>
+
+		{foreachelse}
+
+		<div class="cvdDescrValue">&nbsp;</div>
+
+		{/foreach}
+
+		{/if}
+
+        {*followings are not in use*}
+
+		{if $candidate_blog_articles_cnt > 0 && $display_elements.show_blog_articles}
+
+		<div class="cvdDescrTitle blogArticles"><h2>[t]Blog articles:[/t]</h2>
+
+		{foreach from=$candidate_blog_articles item=i}
+
+		<div class="cvdBlogItem">
+
+			<div class="cvdBlogTitle"><a href="{$i._linkurl}">{$i.title|escape}</a></div>
+
+			<div class="cvdBlogArticleTeaser">{$i._teaser}</div>
+
+			<div class="cvdBlogTime">[t]at[/t] {$i._datetime_published}</div>
+
+		</div>
+
+		{/foreach}
+
+		</div>
+
+		{/if}
+
+
+
+		{if $candidate_blog_reactions_cnt > 0 && $display_elements.show_blog_reactions}
+
+		<div class="cvdDescrTitle BlogReactions"><h2>[t]Blog reactions:[/t]</h2>
+
+		{foreach from=$candidate_blog_reactions item=i}
+
+		<div class="cvdBlogReactionItem">
+
+			<div class="cvdBlogTitle"><a href="{$i._linkurl}">{$i.title|escape}</a></div>
+
+			<div class="cvdBlogArticleTeaser">{$i._teaser}</div>
+
+			<div class="cvdBlogTime">[t]at[/t] {$i._datetime_reaction}</div>
+
+		</div>
+
+		{/foreach}
+
+		</div>
+
+		{/if}
+
+
+
+		{if $candidate_events_cnt > 0 && $display_elements.show_events}
+
+		<div class="cvdDescrTitle Events"><h2>[t]Events:[/t]</h2></div>
+
+		{foreach from=$candidate_events item=i}
+
+		<div class="cvdEventsItemTitle"><a href="{$i.url}">{$i.Title}</a></div>
+
+		{if $i.Photo}
+
+		<div class="cvdEventsItemValue"><a href="{$i.url}" title="{$i.Title}"><img src="{$i.photo_url}" alt="{$i.Title}" border="0"></a></div>
+
+		{/if}
+
+		{foreachelse}
+
+		<div class="cvdEventsItemValue">&nbsp;</div>
+
+		{/foreach}
+
+		{/if}
+
+	</div>
+
+</div>
+
+<iframe name="actionframe" width="0" height="0" frameborder="0" scrolling="No" contentEditable=false></iframe>
+
+<!--uts:end inner-->
+
+</body>
+
+</html>

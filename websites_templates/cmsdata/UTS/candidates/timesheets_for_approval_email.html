@@ -1,0 +1,21 @@
+{* this email is sent to the counsultats who has rights to approve tsc when candidate set status of tsc for approval *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear {$consultant.firstName|escape},[/t]</p>
+<p>[t]Candidate {$cndName|escape} set timesheet from {$h.period_start} to {$h.period_end} to status for approval.[/t]</p>
+<p>[t]You can check and approve this timesheet by clicking the link below:[/t]</p>
+<p>{$tscHashLink}</p>
+{if $h.assignment_id}
+<p>[t]You can check the assignment by clicking the link below:[/t]</p>
+<p>{$assHashLink}</p>
+{/if}
+
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<!--uts:end inner-->
+</body>
+</html>

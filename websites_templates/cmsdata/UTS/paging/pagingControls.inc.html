@@ -1,0 +1,16 @@
+<div class="pageNav actPageNav">
+ <!-- /UTS/paging/pagingControls.inc.html -->
+{if $is_prev}
+<a href="{$handler}option=setpage&amp;pageno=1" class="pnFirst actFirst">[t]&lt;&lt;&nbsp;First[/t]</a>
+<a href="{$handler}option=prevpage" class="pnPrev actPrev">[t]&lt;&nbsp;Previous[/t]</a>
+{/if}
+
+<foreach from=$page_array item=p key=k>
+<a href="{$handler}option=setpage&amp;pageno={$k}" {if $p}class="pnActive actActive"{/if}>{$k}</a>
+</foreach>
+
+{if $is_next}
+<a href="{$handler}option=nextpage" class="pnNext actNext">[t]Next&nbsp;&gt;[/t]</a>
+<a href="{$handler}option=setpage&amp;pageno={$lastpage}" class="pnLast actLast">[t]Last&nbsp;&gt;&gt;[/t]</a>
+{/if}
+</div>

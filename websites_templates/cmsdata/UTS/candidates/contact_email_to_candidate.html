@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear {$applicant_name|escape},[/t]</p>
+<p>&nbsp;</p>
+<p>[t]Contact reasons:[/t]</p>
+
+<p><div style="font-weight:bold;">{$opmerkingen}</div></p>
+
+<if $text1>
+[t]Text1:[/t] <strong>{$text1|escape}</strong><br>
+</if>
+<if $text2>
+[t]Text2:[/t] <strong>{$text2|escape}</strong><br>
+</if>
+<if $text3>
+[t]Text3:[/t] <strong>{$text3|escape}</strong><br>
+</if>
+<if $text4>
+[t]Text4:[/t] <strong>{$text4|escape}</strong><br>
+</if>
+
+
+<p>[t]Met vriendelijke groet,[/t]</p>
+{$wgcp.wg_cp_voornaam} {$wgcp.wg_cp_tussenvoegsel} {$wgcp.wg_cp_achtern}<br>
+{$werkgever}<br>
+<!--uts:end inner-->
+</body>
+</html>

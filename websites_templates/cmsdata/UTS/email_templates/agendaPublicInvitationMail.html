@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+<!-- /UTS/email_templates/agendaPublicInvitationMail.html -->
+
+<p>[t]Dear[/t] {$recipientName},</p>
+
+<p>[t]You have been invited to schedule an appointment. Please select preferred appointment date and time using the link below:[/t]</p>
+
+<p><a href="{if $proposalLink}{$proposalLink}{else}{$website}/index.php/page/AgendaPublicInvitation/command/starttoken/token/{$token}/bb/1/?mobile=0{/if}">[t]Select preferred appointment date a time[/t]</a></p>
+
+<p>[t]Regards,[/t]</p>
+
+<p class="utsSignature">
+{$consultantName}<br>
+{$clientName}
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

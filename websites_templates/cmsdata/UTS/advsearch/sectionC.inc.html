@@ -1,0 +1,18 @@
+ <!-- /UTS/advsearch/sectionC.inc.html -->
+<div class="optionListContainer actOlcKs">
+<div class="optionListTitle actOltKs">[t]Keyword suggestions[/t]</div>
+<div class="optionList actOlKs">
+	<ul>
+<foreach from=$expansions item=e key=k>
+    <li><a class="actFacetKey" title="{$e->expansion|escape} ([th]closeness[/th] = {$e->_closeness}%)" href="{$handler}/command/useexpansion/key/{$k}" {$e->expansion|escape}">{$e->expansion|escape|truncate:20|lower} ({$e->nrResultsAfterReplace})</a></li>
+</foreach>
+<if $expcnt gt $explimit>
+<li><strong><a class="actFlessMore" href="{$handler}/command/seeallexpansions">[t]More...[/t]</a></strong></li>
+</if>
+<if $expseeall>
+<li><strong><a class="actFlessMore" href="{$handler}/command/seelessexpansions">[t]Less...[/t]</a></strong></li>
+</if>
+</ul>
+</div>
+</div>
+{*{t 1=$expcnt count=$expcnt}There are %1 suggestions in total. {/t}<br>*}

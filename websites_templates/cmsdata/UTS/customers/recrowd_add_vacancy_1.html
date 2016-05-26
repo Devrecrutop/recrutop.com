@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+// functions here
+function recrowdSubmitHandler() {
+    if(!document.getElementById('chbRecruitment').checked && !document.getElementById('chbInterim').checked) {
+        alert('[th]Please select one of options presented.[/th]');
+        return false;
+    }
+    return true;
+}
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdAddVac1Outer">
+	<!-- /UTS/customers/recrowd_add_vacancy_1.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->       
+	<h1 class="title">{if $vacid}[t]Edit Vacancy[/t]{else}[t]Add a Vacancy[/t]{/if}</h1>
+	<!-- $ CustomersMenu
+	$CustomersSubMenu -->
+  
+	<div class="text">[t]Vacancy[/t]</div>  
+	
+	<form name="recrowdForm" action="{$handler}" method="post" class="qsPageOuter" onsubmit="return recrowdSubmitHandler()">
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+			<label for="chbRecruitment" class="labelRadio aplRadioInput{$optkey}">
+				<input type="radio" id="chbRecruitment" name="vacancyType" value="recruitment" class="radiobutton" {if $vactype == "recruitment"}checked="checked"{/if}>
+				<span title="[thn]Choose the recruitment type[/thn]">[t]Recruitment[/t]</span>
+			</label>
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+		</div>
+			<label for="chbInterim" class="labelRadio aplRadioInput{$optkey}">
+				<input type="radio" id="chbInterim" name="vacancyType" value="interim" class="radiobutton" {if $vactype == "interim"}checked="checked"{/if}>
+				<span title="[thn]Choose the interim type[/thn]">[t]Interim[/t]</span>
+			</label>
+			<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[tb]Continue[/tb]" name="sSubmit">
+		</div>
+		<input type="hidden" name="command" value="saveVacancyType">
+		<input type="hidden" name="vacid" value="{$vacid|escape}">
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

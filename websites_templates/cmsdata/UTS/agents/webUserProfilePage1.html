@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>WebUserForm2</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/agents/webUserProfilePage1.html -->
+
+{literal}
+<SCRIPT>
+function check()
+{
+	var d = document.form
+	if (d.PassWord_new.value || d.PassWord_check.value){
+		if (d.PassWord_old.value=="") {
+			show("\n\n[t]System1[/t]\n\n")
+			setTimeout("document.form.PassWord_old.focus()", 1)
+			return false
+		}
+		if (d.PassWord_new.value != d.PassWord_check.value) {
+			show("\n\n[t]System2[/t]\n\n")
+			d.PassWord_new.value = "";
+			d.PassWord_check.value = "";
+			setTimeout("document.form.PassWord_new.focus()", 1)
+			return false
+		}
+	}
+	return true
+}
+
+function show(m)
+{
+	setTimeout("alert(unescape(\"" + escape(m) + "\"))", 100)
+}
+</SCRIPT>
+{/literal}
+<table class="vacstable" cellpadding="0" cellspacing="0" border="0">
+<form name="form" method="post" action="/index.php/page/webuser/command/savewebuser/WUpage/1/bb/1" onsubmit="return check();">
+
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]PageTitle[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+<!--START_MENUBAR-->
+<tr>
+<td class="pageLinkContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="pageLinkTbl">
+<tr>
+<td class="pageLink"><a href="/index.php/page/webuser/command/myprofile/WUpage/1/bb/1">[t]SingleWord1[/t]<!--SingleWordLink1--></a> | </td>
+<!--<td class="pageLink"><a href="/index.php/page/agents/command/myprofile/WUpage/2/bb/1">[Single Word2]SingleWordLink2</a></td>-->
+<!--START_AGENTS_STUFF-->
+<td class="pageLink"><a href="/index.php/page/agents/command/myprofile/WUpage/3/bb/1">[t]SingleWord3[/t]<!--SingleWordLink3--></a> | </td>
+<!--END_AGENTS_STUFF-->
+<!--START_A-->
+<td class="pageLink"><a href="/index.php/bb/1/page/CandidatesAgenda">[t]SingleWord14[/t]</a><!--SingleWordLink14--> | </td>
+<!--END_A-->
+<td class="pageLink"><a href="/index.php/page/webuser/command/logout/bb/1">[t]SingleWord4[/t]<!--SingleWordLink4--></a></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_MENUBAR-->
+
+<!--START_Block1-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<!--START_Title1-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text1-->
+<tr>
+<td class="formText">[t]Text1[/t]</td>
+</tr>
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td class="itemContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="ItemTbl">
+<tr>
+<td class="HQuestion">[t]SingleWord5[/t]<!--SingleWordLink5--></td>
+<td class="FieldContainer"><input type="hidden" name="oldEmail" value="{$wum.Email}"><input type="text" name="Email" value="{$wum.Email}"></td>
+</tr>
+<if !$ocdmode>
+<tr>
+<td class="HQuestion">[t]SingleWord6[/t]<!--SingleWordLink6--></td>
+<td class="FieldContainer"><input type="password" name="PassWord_old" value=""></td>
+</tr>
+<tr>
+<td class="HQuestion">[t]SingleWord7[/t]<!--SingleWordLink7--></td>
+<td class="FieldContainer"><input type="password" name="PassWord_new"></td>
+</tr>
+<tr>
+<td class="HQuestion">[t]SingleWord8[/t]<!--SingleWordLink8--></td>
+<td class="FieldContainer"><input type="password" name="PassWord_check"></td>
+</tr>
+</if>
+<tr>
+<td class="HQuestion">[t]SingleWord9[/t]<!--SingleWordLink9--></td>
+<td class="FieldContainer"><input type="text" name="FirstName" value="{$wum.FirstName}"></td>
+</tr>
+<tr>
+<td class="HQuestion">[t]SingleWord10[/t]<!--SingleWordLink10--></td>
+<td class="FieldContainer"><input type="text" name="InFix" value="{$wum.InFix}"></td>
+</tr>
+<tr>
+<td class="HQuestion">[t]SingleWord11[/t]<!--SingleWordLink11--></td>
+<td class="FieldContainer"><input type="LastName" name="LastName" value="{$wum.LastName}"></td>
+</tr>
+<tr>
+<td class="HQuestion">[t]SingleWord12[/t]<!--SingleWordLink12--></td>
+<td class="FieldContainer">
+
+<select name="Gender">
+<option value="U">[t]System4[/t]</option>
+<option value="M" {if $wum.Gender == "M"}selected{/if}>[t]System5[/t]</option>
+<option value="F" {if $wum.Gender == "F"}selected{/if}>[t]System6[/t]</option>
+</select>
+
+</td>
+</tr>
+
+<if ($LangSelect == true)>
+<tr>
+<td class="HQuestion">[t]SingleWord13[/t]<!--SingleWordLink13--></td>
+<td class="FieldContainer">
+
+<select name="preferred_language">
+	 {html_options options=$langNames selected=$wum.preferred_language}
+</select>
+</td>
+</tr>
+</if>
+
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="error">{$error}</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td class="formButton"><input type="submit" name="Submit" value="[t]Button1[/t]" class="button"><!--ButtonLink1--></td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+
+</form>
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+</table>
+
+
+<!--uts:end inner-->
+</body>
+</html>

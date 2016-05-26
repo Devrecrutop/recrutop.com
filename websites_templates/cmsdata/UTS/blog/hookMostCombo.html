@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script>
+    {literal}
+    function switchHookBlogTabs(tabname){
+        switch(tabname){
+            case 'discussed':
+                document.getElementById('mostDiscussedTab').style.display = 'block';
+                document.getElementById('mostViewedTab').style.display = 'none';
+                break;
+            case 'viewed':
+                 document.getElementById('mostDiscussedTab').style.display = 'none';
+                document.getElementById('mostViewedTab').style.display = 'block';
+                break;
+        }
+    }
+    {/literal}
+</script>
+<div class="hookOuter blogHookArticleListOuter">
+<!-- /UTS/blog/hookMostCombo.html -->
+<div class="hookHeader blogHookArticleListHeader blogComboHeader"><div><a href="javascript:switchHookBlogTabs('discussed')">[t]Most Discussed[/t]</a> | <a href="javascript:switchHookBlogTabs('viewed')">[t]Most Read[/t]</a></div></div>
+
+<div id="mostDiscussedTab">
+    
+    <foreach from=$articlesReactions item=a>
+        <div class="hookItemContainer blogHookItemContainer">
+        <div class="hookItemTitle blogHookItemLink"><a href="{$a._linkurl}">{$a.title|escape}</a></div>
+        <div class="hookItemWord blogHookWord"><span>[t]at[/t]</span>{$a._datetime_published}</div>
+        <div class="hookItemFooter blogHookFooter">{$a.viewcount} [t]views[/t] | {$a._reacnt} [t]reactions[/t]</div>
+        </div>
+    </foreach>
+</div>
+    
+<div id="mostViewedTab" style="display:none">
+    
+    <foreach from=$articlesViews item=a>
+        <div class="hookItemContainer blogHookItemContainer">
+        <div class="hookItemTitle blogHookItemLink"><a href="{$a._linkurl}">{$a.title|escape}</a></div>
+        <div class="hookItemWord blogHookWord"><span>[t]at[/t]</span>{$a._datetime_published}</div>
+        <div class="hookItemFooter blogHookFooter">{$a.viewcount} [t]views[/t] | {$a._reacnt} [t]reactions[/t]</div>
+        </div>
+    </foreach>
+    
+</div>
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

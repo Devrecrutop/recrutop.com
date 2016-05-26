@@ -1,0 +1,52 @@
+<!-- rate me list hook start -->
+
+<div class="hookOuter rmhHOuter">
+<!-- UTS/misc/rateMeHook.html -->
+	<div class="hookHeader rmhHeader">[t]RateMeHook[/t]</div>
+        <div class="hookIntroText rmhIntroText">[t]IntroText[/t]</div>
+            {foreach from=$recruiters key=k item=r}
+
+                {if $k == 0}
+                <div class="hookItemContainer rmhContainer rmhContainerFirst">
+                {else}
+				<div class="hookItemContainer rmhContainer">
+                {/if}
+				
+                {if [uts:display_consultant_picture] && $r.thumbnail}
+					<div class="itemImage rmhPhoto">
+						{if [uts:link_to_facebook_consultant] && $r.facebook }
+	                    <a title="{$r.Recruiter}" href="{$r.facebook}"><img alt="{$r.Recruiter}" src="_images_upload/{$r.thumbnail}" /></a>
+						{else}
+						<img alt="{$r.Recruiter}" src="_images_upload/{$r.thumbnail}" />
+						{/if}
+					</div>
+                {/if}
+
+                <div class="hookItemTitle rmhTitle">
+                {if [uts:link_to_facebook_consultant] && $r.facebook }
+                    <a title="{$r.Recruiter}" href="{$r.facebook}">{$r.Recruiter}</a>
+                {else}
+                    {$r.Recruiter}
+                {/if}
+				</div>
+				
+                {if [uts:show_consultant_function] && $r.function}
+					<div class="hookItemWord rmhFunction">
+						 {$r.function}
+					 </div>
+                {/if}
+
+					<div class="hookItemWord rmhRating">
+					{if [uts:use_rating_stars]}
+						<img src="/_images_global/trans_stars/{$r.ratingStars}" alt="{$r.Rating|string_format:"%.2f"}" title="{$r.Rating|string_format:"%.2f"}">
+					{else}
+						- {$r.Rating|string_format:"%.2f"}
+					{/if}
+                	</div>
+					<div class="cleaner"></div>
+                </div>
+            {/foreach}
+        <div class="hookFooter rmhFooter">[t]Bottom text with different style[/t]</div>
+
+</div>
+<!-- rate me list end -->

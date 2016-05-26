@@ -1,0 +1,148 @@
+<style type="text/css">
+<literal>
+.autocomplete-w1 { background:url(/_images_global/shadow.png) no-repeat bottom right; position:absolute; top:0px; left:0px; margin:8px 0 0 6px; /* IE6 fix: */ _background:none; _margin:0; }
+.autocomplete { border:1px solid #999; background:#FFF; cursor:default; text-align:left; max-height:350px; overflow:auto; margin:-6px 6px 6px -6px; /* IE6 specific: */ _height:350px;  _margin:0; _overflow-x:hidden; }
+.autocomplete .selected { background:#F0F0F0; }
+.autocomplete div { padding:2px 5px; white-space:nowrap; }
+.autocomplete strong { font-weight:normal; color:#3399FF; }
+</literal>
+</style>
+<script type="text/javascript" defer="true">
+                                                                        {*93-collapsed,  94-expanded*}
+animatedcollapse.addDiv('actEqueryContainer', 'fade=1,persist=0,hide={if [uts:collapse_query_editor] == "94"}0{else}1{/if}');
+//{literal}
+function advdispqueryform_check_form(frm) {
+    //{/literal}
+    <if [uts:show_distance_matching]>
+    //{literal}
+    if (frm.proximity_preferredDistance.value && !frm.proximity_maxDistance.value) {
+        alert('[th]Set also the maximal distance.[/th]');
+        return(false);
+    }
+    
+    if (frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value && parseInt(frm.proximity_preferredDistance.value)>parseInt(frm.proximity_maxDistance.value)) {
+        alert('[th]Maximal distance must be lower than preferred distance.[/th]');
+        return(false);
+    }
+    //{/literal}
+    </if>
+    //{literal}
+    return(true);
+}
+//{/literal}
+</script>
+<div class="actEquery">
+ <!-- /UTS/advsearch/queryEditor.inc.html -->
+<if $mobile_enabled>
+	<div class="title actTitle">Zoekopdracht aanpassen</div>
+	<div class="actMobileHeader">
+		<a class="btnActShowSearch">Sluiten</a>
+	</div>
+</if>
+	<div class="actEqueryTitle"><a href="javascript:animatedcollapse.toggle('actEqueryContainer', '')">[t]Edit query[/t]</a></div>
+	<div id="actEqueryContainer">
+	    
+	{* editor content start *}
+		<form name="advdispqueryform" method="post" action="{$handler}" onsubmit="return(advdispqueryform_check_form(this))">
+			<if [uts:show_keyword_options]>
+				<div class="formInput actEqueryInput actEqIKeywords">
+					<label>[t]Keywords[/t]</label>
+					<input type="text" id="qeKeywords" name="main_keywords" value="{$keywordsValue|escape}">
+				</div>
+				<div class="formInput actEqueryInput actEqIMultisel">
+					<label></label>
+					<select id="qe_multisel_kw_options" name="main_keywords_options[]" multiple="multiple" size="5">
+					    <html_options options=$kwOptions selected=$kwOptionsSelected>
+					</select>
+				</div>
+				<if $splitLocation>
+				<div class="formInput actEqueryInput actEqILocation">
+					<label>[t]Location[/t]</label>
+					<input id="qeLocation" type="text" name="main_location" value="{$locationValue|escape}">
+				</div>
+				</if>
+				<if $intlSearchEnabled>
+				<div class="formInput formMultiCheckbox aplMCheckInput">
+					<label>[t]International search[/t]</label>
+				</div>
+				<div class="formCheckboxContainer aplMCheckContainer">
+					<input type="hidden" name="main_local_search" value="1">
+					<input type="checkbox" name="main_local_search" value="0" {if !$localSearch}checked{/if} >
+				</div>
+				</if>
+			</if>
+			{* publication options *}
+			<if [uts:show_publication_options]>
+			<div class="formInput actEqueryInput actEqIPublication">
+				<label>[t]Show[/t]</label>
+				<select name="main_pubdate">
+				    <option value="">---</option>
+				    <html_options options=$pubOpts selected=$pubOption>
+				</select>
+			</div>
+			</if>
+			{* distance options *}
+			<if [uts:show_distance_matching]>
+			<div class="formInput actEqueryInput actEqICountryCode">
+				<label for="idCountryCode">[t]Country[/t]</label>
+				<select id="idCountryCode" name="proximity_countryCode">
+					<option value="">---</option>
+					<html_options options=$proximityCountries selected=$proximity.countryCode>
+				</select>
+			</div>
+			<div class="formInput actEqueryInput actEqIZipcode">
+				<label for="idZipcode">[t]Zipcode[/t]</label>
+				<input type="text" id="idZipcode" name="proximity_zipCode" value="{$proximity.zipCode|escape}">
+			</div>
+			<div class="formInput actEqueryInput actEqIPrefDist">
+				<label for="idPrefDist">[t]Preferred distance [km][/t]</label>
+				<select id="idPrefDist" name="proximity_preferredDistance">
+					<option value="">---</option>
+					<html_options options=$distOpts selected=$proximity.preferredDistance>
+				</select>
+			</div>
+			<div class="formInput actEqueryInput actEqIMaxDist">
+				<label for="idMaxDist">[t]Maximum distance [km][/t]</label>
+				<select id="idMaxDist" name="proximity_maxDistance">
+					<option value="">---</option>
+					<html_options options=$distOpts selected=$proximity.maxDistance>
+				</select>
+			</div>
+			</if>
+			
+			{* start category *}
+			<if [uts:show_categories]>
+			<div class="formInput actEqueryInput actEqICat">
+				<label>[t]Categories[/t]</label>
+				<select id="multisel_categorie" name="categorie[]" multiple="multiple" size="5">
+					<html_options options=$catOpts selected=$catSelected>
+				</select>
+			</div>
+			</if>
+			{* end category *}
+			
+			{* schedule start/end date *}
+			<if [uts:show_schedule_search_dates] && $plnCandJobs && (OTYSCZ || VTTH)>
+			<div class="hookWord actHWord"><label>[t]Available[/t]</label></div>
+			<div class="hookInput actHInput">
+				<label>[t]From[/t]</label>
+				<html_select_date time=$schedule.fromDate field_order="DMY" month_format="%B" prefix="scheduleFromDate" day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" >
+				&nbsp;
+				<html_select_time time=$schedule.fromTime use_24_hours=true display_seconds=false minute_interval=15 prefix="scheduleFromTime" >
+			</div>
+			<div class="hookInput actHInput">
+				<label>[t]To[/t]</label>
+				<html_select_date time=$schedule.toDate field_order="DMY" month_format="%B" prefix="scheduleToDate" day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" >
+				&nbsp;
+				<html_select_time time=$schedule.toTime use_24_hours=true display_seconds=false minute_interval=15 prefix="scheduleToTime" >
+			</div>
+			</if>
+			
+			<div class="buttonContainer actEqueryBc">
+				<input type="submit" name="bApplSubmit" value="[tb]Search again[/tb]" class="button">
+			</div>
+			<input type="hidden" name="command" value="submitrequest">
+			<input type="hidden" name="origin" value="{$requestOrigin}">
+		</form>
+	</div>
+</div>

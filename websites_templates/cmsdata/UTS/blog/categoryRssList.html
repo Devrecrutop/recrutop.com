@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>
+<!-- Insert your title here -->
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer blgRssListOuter">
+<!-- /UTS/blog/categoryRssList.div.html -->
+
+<h1 class="title blgRssListTitle">[t]Blog RSS feeds[/t]</h1>
+<div class="intro blgRssListIntro">[t]Indroduction text[/t]</div>
+
+<div class="itemContainer blgRssListICall">
+<span>[t]RSS feed for all articles[/t]</span>
+<div class="itemLink"><a href="{$all_rss_link}" title="[t]RSS feed for all articles[/t]"><img src="/_images_global/rssicon.gif" border="0" alt="[t]RSS feed for all articles[/t]"></a>
+<a href="{$all_rss_link}" title="[t]RSS feed for all articles[/t]">{$all_rss_link}</a></div>
+</div>
+
+{foreach key=bn_key item=bn from=$RssCatList}
+<div class="itemContainer blgRssListIC">
+<span>{$bn.name|escape}</span>
+<div class="itemLink"><a href="{$bn.rss_link}">{$bn.rss_link}</a></div>
+</div>
+{foreachelse}
+<div class="text textContainer blgRssListNoCat">[t]There are no categories![/t]</div>
+{/foreach}
+</div>
+
+{if $enable_event_rss}
+<div class="outer">
+<h1 class="title">[t]Event RSS feeds[/t]</h1>
+<div class="intro">[t]Event Introduction text[/t]</div>
+
+{foreach item=i from=$event_categories}
+<div class="itemContainer">
+<span>{$i.name|escape}</span>
+<div class="itemLink"><a href="{$i.link}">{$i.link}</a></div>
+</div>
+{/foreach}
+<div class="itemContainer">
+<span>[t]Global (all categories)[/t]</span>
+<div class="itemLink"><a href="{$event_global_link}">{$event_global_link}</a></div>
+</div>
+</div>
+
+{/if}
+
+
+<!--uts:end inner-->
+</body>
+</html>

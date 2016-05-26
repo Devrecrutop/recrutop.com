@@ -1,0 +1,27 @@
+<!-- UTS/questionsets/qMaritalViewV.html STANDARD -->
+<div class="formInput formRadio aplMaritalInput">
+<label>{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+<span>
+	<input type="radio" name="{$elementName}" value="1" {if $currentValue == "1"}checked{/if} class="radiobutton">
+	[t]Married[/t]
+</span>
+<span>
+	<input type="radio" name="{$elementName}" value="0" {if $currentValue == "0"}checked{/if} class="radiobutton">
+	[t]Single[/t]
+</span>
+<if !$required>
+<div class="radioButtonHide">
+<input type="radio" name="{$elementName}" value="" {if $currentValue == ""}checked{/if} class="radiobutton">[t]Not specified[/t]
+</div>
+</if>
+</div>
+<if $qd.explanation>
+<div class="explain aplMaritalExplain">
+    {$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplMaritalError">
+    {$currentErrorMessage}    
+</div>
+</if>

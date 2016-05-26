@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer corgOuter corgCatListOuter">
+ <!-- /UTS/content_organizer/categories_list.html -->
+	<h1 class="title corgTitle">[t]Articles categories[/t]</h1>
+	<div class="intro corgIntro">[t]Click on an category to see list of articles.[/t]</div>
+	{if $list}
+		<ol class="itemWrapper corgIwr">
+			{foreach from=$list item=cat}
+				<li class="itemContainer corgIc {cycle values='odd,even'}Ic">
+					<h3 class="itemTitle corgIt"><a href="{$handler}/command/list/catid/{$cat.id|escape}" title="{$cat.category_name|escape}">{$cat.category_name|escape}</a></h3>
+				</li>
+			{/foreach}
+			<div class="cleaner"></div>
+		</ol>
+	{else}
+		<div class="text">[t]There are no catgories found.[/t]</div>
+	{/if}
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

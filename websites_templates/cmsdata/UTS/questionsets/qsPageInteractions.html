@@ -1,0 +1,436 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer qsPIOuter">
+
+{* this is a main template for interactions *}
+
+<!-- UTS/questionsets/qsPageInteractions.html -->
+
+<script src="/_javascript_global/json2.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+// javascript support functions for questionsets here
+var vQsHandler='{$handler|escape:javascript}';
+var vMicroCommand='{$microCommand|escape:javascript}'; // the qs micro controller command, default is qsmicrocall
+
+var qsessionuid='{$sessionUID}';
+var qsid='{$qsId}';
+var qspage='{$pageno}';
+
+var multiSelectStorage = new Array();
+
+//{literal}
+// functions here
+function qsDeleteFile(qid, subkey) {
+    if (!confirm('[th]Are you sure to delete this file?[/th]')) return;
+    //alert('delete file '+qid);
+    var f=document.forms['qsForm'];
+    f.command.value=vMicroCommand;
+    f.qsmicrocommand.value='deletefile';
+    f.param1.value=qid;
+    f.param2.value=subkey;
+    f.submit();
+}
+
+function qsUploadFile(qid) {
+    var f=document.forms['qsForm'];
+    f.command.value=vMicroCommand;
+    f.qsmicrocommand.value='uploadfile';
+    f.param1.value=qid;
+    f.submit();
+}
+
+function qsAddCVItem(qid, itemType) {
+    var f=document.forms['qsForm'];
+    f.command.value=vMicroCommand;
+    f.qsmicrocommand.value='addcvitem';
+    f.param1.value=qid;
+    f.param2.value=itemType;
+    f.submit();
+}
+function qsDeleteCVItem(qid, itemType, key) {
+    if (!confirm('[th]Are you sure to delete this item?[/th]')) return;
+    
+    var f=document.forms['qsForm'];
+    f.command.value=vMicroCommand;
+    f.qsmicrocommand.value='deletecvitem';
+    f.param1.value=qid;
+    f.param2.value=itemType;
+    f.param3.value=key;
+    f.submit();
+}
+
+function qsDeleteWiqet(qid, key) {
+    if (!confirm('[th]Are you sure to delete this Wiqet?[/th]')) return;
+    
+    var f=document.forms['qsForm'];
+    f.command.value=vMicroCommand;
+    f.qsmicrocommand.value='deletewiqet';
+    f.param1.value=qid;    
+    f.param2.value=key;
+    f.submit();
+}
+
+function qsChangeFilterSelect(masterSelect, slaveSelectId, data, currentVal) {
+    var slaveSelect=document.getElementById(slaveSelectId);
+    // kill all options inside
+    slaveSelect.options.length=0;
+    slaveSelect.options.add(new Option('---', 'NULL', false, false));
+    var len, i, optcnt, j;
+    // now, we need to search the category
+    var catid=masterSelect.value;
+    len=data.length; // number of categories
+    for(i=0;i<len;i++) {
+        if (data[i][0]==catid) {
+            optcnt=data[i][2].length;
+            for(j=0;j<optcnt;j++) {
+                slaveSelect.options.add(new Option(data[i][2][j][1], data[i][2][j][0], false, (data[i][2][j][0]==currentVal)));
+            }
+            break;
+        }
+    }
+}
+
+function qsLimitMultiSelect(selectId, maxValues) {
+	if (maxValues == '') maxValues = 0;
+	else maxValues = Number(maxValues);
+	
+	if (maxValues != 0) {
+		select = document.getElementById(selectId);
+		numValues = 0;
+		
+		values = '';
+		for (x = 0; x < select.length; x++) {
+			if (select[x].selected) {
+				numValues++;
+				if (values != '') values = values + ',';
+				values = values + select[x].value;
+			}
+		}
+		
+		if (numValues > maxValues) {
+			alert('[th]Maximum number of items you can select is [/th]' + maxValues);
+			loadMultiSelect(selectId);
+		}
+		else {
+			saveMultiSelect(selectId, values);
+		}
+	}
+}
+
+function saveMultiSelect(selectId, values) {
+	multiSelectStorage[selectId] = values;
+}
+
+function loadMultiSelect(selectId) {
+	select = document.getElementById(selectId);
+	saved = multiSelectStorage[selectId].split(',');
+	
+	for (x = 0; x < select.length; x++) {
+		if (in_array(select[x].value, saved)) select[x].selected = 1;
+		else select[x].selected = 0;
+	}
+}
+
+function processFieldValueChange(selectId){ }
+
+function in_array(what, where){
+	var a=false;
+	for(var i=0;i<where.length;i++){
+		if(what == where[i]){
+			a=true;
+			break;
+		}
+	}
+	return a;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+var xmlHttp = null;
+
+function GetXmlHttpObject() {
+    var xmlHttp = null;
+
+    try {
+        xmlHttp = new XMLHttpRequest();
+    }
+    catch (e) {
+        // IE
+        try {
+            xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+        }
+        catch (e) {
+            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }
+    return xmlHttp;
+}
+
+function clearCmpOptions(intLevel, intMaxLevel, intKey, prefix) {
+    var slaveSelect = null;
+    var cmpSelect = null;
+
+    // remove options from all slave subcategory selects
+    for (lv = intLevel + 1; lv <= intMaxLevel; lv++) {
+        slaveSelect = null;
+        try {
+            slaveSelect = document.getElementById(prefix + '_' + intKey + '_L' + lv + '_category_id')
+        }
+        catch (e) {
+        }
+
+        if (slaveSelect) {
+            slaveSelect.options.length = 0;
+            slaveSelect.options.add(new Option('---', '0', false, false));
+        }
+    }
+
+    // remove options from competence select
+    try {
+        cmpSelect = document.getElementById(prefix + '_' + intKey + '_competence_id');
+    }
+    catch (e) {
+    }
+
+    if (cmpSelect) {
+        cmpSelect.options.length = 0;
+        cmpSelect.options.add(new Option('---', '0', false, false));
+    }
+}
+
+function qsSetCmpSelect(level, maxLevel, prefix, key, value) {
+
+    var intLevel = parseInt(level, 10);
+    var intMaxLevel = parseInt(maxLevel, 10);
+    var intKey = parseInt(key, 10);
+    var intValue = parseInt(value, 10);
+
+    var searchType = 'tree';
+    var ajaxUrl = '';
+    var parsed = null;
+    var currentSelect = null;
+
+    // test
+//  	var id = prefix+'_'+intKey+'_L'+intLevel+'_category_id';	
+//  	alert("level: "+intLevel+"\nmaxLevel: "+intMaxLevel+"\nkey: "+intKey+"\nvalue: "+intValue+"\nprefix: "+prefix+"\nid: "+id+"\nqsessionuid: "+qsessionuid);	
+
+    if (intLevel == NaN || intMaxLevel == NaN || intKey == NaN || intValue == NaN || prefix == '') {
+        // throw exception or some kind of error here
+        return false;
+    }
+
+    if (intValue == 0) {
+        clearCmpOptions(intLevel, intMaxLevel, intKey, prefix);
+        return false;
+    }
+
+    // search for tree or competence
+    if (intLevel == intMaxLevel) {
+        searchType = 'cmp';
+    }
+
+    try {
+        xmlHttp = GetXmlHttpObject();
+    }
+    catch (e) {
+    }
+
+    if (xmlHttp != null) {
+        if (qsessionuid == '') {
+            // myProfile
+            ajaxUrl = '/index.php/page/applicants/bb/1/command/qsmicrocallmp/qsmicrocommand/ajaxmichal/';
+            ajaxUrl = ajaxUrl + 'qsid/' + qsid + '/';
+            ajaxUrl = ajaxUrl + 'qspage/' + qspage + '/';
+        }
+        else {
+            // questioset
+            ajaxUrl = '/index.php/page/applicants/bb/1/command/qsmicrocall/qsmicrocommand/ajaxmichal/';
+            ajaxUrl = ajaxUrl + 'qsessionuid/' + qsessionuid + '/';
+        }
+
+        ajaxUrl = ajaxUrl + 'type/' + searchType + '/';
+        ajaxUrl = ajaxUrl + 'id/' + intValue + '/';
+        ajaxUrl = ajaxUrl + 'rnd/' + Math.random() + '/'; // prevent caching
+
+        //alert(ajaxUrl);
+
+        xmlHttp.onreadystatechange = function () {
+
+            if (xmlHttp.readyState == 1) {
+                clearCmpOptions(intLevel, intMaxLevel, intKey, prefix);
+            }
+
+            if (xmlHttp.readyState == 4) {
+                //alert(xmlHttp.responseText);
+                try {
+                    parsed = JSON.parse(xmlHttp.responseText);
+                    //alert(parsed.status);
+
+                    currentSelect = null;
+                    if (searchType == 'tree') {
+                        var lv = intLevel + 1;
+                        currentSelect = document.getElementById(prefix + '_' + intKey + '_L' + lv + '_category_id')
+                    }
+
+                    if (searchType == 'cmp') {
+                        currentSelect = document.getElementById(prefix + '_' + intKey + '_competence_id');
+                    }
+
+                    if (currentSelect) {
+                        for (i in parsed.data) {
+                            currentSelect.options.add(new Option(parsed.data[i], i, false, false));
+                            //alert(i+', '+parsed.data[i]);
+                        }
+                    }
+
+                }
+                catch (e) {
+                    alert('[th]Invalid server response[/th]\n' + xmlHttp.responseText);
+                    return false;
+                }
+            }
+        }
+
+        xmlHttp.open('GET', ajaxUrl, true);
+        xmlHttp.send(null);
+    }
+    else {
+        alert('[th]AJAX ERROR[/th]');
+    }
+
+}
+
+function qsMultiSelectListValidateItem(questionId, maxValues, selectedValue) {
+
+	var validated = true;
+
+	if (selectedValue != '0' && maxValues != '') {
+		maxValues = Number(maxValues);		
+		if (maxValues != 0) {			
+			var numValues = $('#' + questionId + '_selectedContainer li').length;			
+			if (numValues > maxValues) {
+				alert('[th]Maximum number of items you can select is [/th]' + maxValues);
+				validated = false;
+			}			
+		}
+	}
+
+	if (selectedValue == '0' || validated == false) {
+		// remove last insterted element
+		$('#' + questionId + '_selectedContainer li').last().click();
+	}
+}
+
+function qsMultiSelectListCategoryShow(questionId, categoryId) {
+	$('.' + questionId + '_select').css('display', 'none');
+	$('.' + questionId + '_' + categoryId + '_select').last().css('display', 'inline');
+}
+
+//{/literal}
+</script>
+
+{if 1==0}
+<select onChange="document.location = '/index.php/page/sh_portal/bb/1/command/apply/vid/{$candidate_list_vid}/kid/'+this.options[this.selectedIndex].value;">
+<option value="">---</option>
+{foreach from=$candidates key=candidate_id item=candidate_name}
+<option value="{$candidate_id}">{$candidate_name}</option>
+{/foreach}
+</select>
+{/if}
+
+<form name="qsForm" enctype="multipart/form-data" action="{$handler}" method="post">
+<h1 class="title">{$title}</h1>
+<if $introText>
+    <div class="text">{$introText|nl2br}</div>
+</if>
+<if $errorsChecked && $numErrors>
+<div class="error">[t]Whoops, there are errors or missing data in the form submitted. Please correct.[/t]</div>
+</if>
+<div class="form">
+
+    {if $extra.tabs}
+    
+        {* BKo: @FIXME - add jquery UI to template dependencies *}
+        <script type="text/javascript" src="/_javascript_global/jquery.ui.js"></script>
+        <link rel="stylesheet" href="/_css_global/smoothness/jquery.ui.css" type="text/css">
+
+        <script>
+        // {literal}
+        $(function() {
+            $("#interactionsTabs").tabs({ selected: 0 });
+        });
+        // {/literal}
+        </script>
+    
+        <div id="interactionsTabs">
+    
+            <ul>
+                {foreach from=$extra.tabs key=tabId item=tab}
+                    <li><a href="#interactionsTab-{$tabId}">{$tab|escape}</a></li>
+                {/foreach}
+            </ul>
+    
+            {foreach from=$extra.tabs key=tabId item=tab}
+        
+                <div id="interactionsTab-{$tabId}">
+            
+                    <foreach from=$questions item=q>
+                        {if $q.tabId == $tabId}
+                            <input type="hidden" name="qPresent{$q.id}" value="1">
+                            {$q._html}
+                        {/if}
+                    </foreach>
+                
+                </div>
+        
+            {/foreach}
+        
+        </div>
+    
+    {else}
+    
+        <foreach from=$questions item=q>
+            <input type="hidden" name="qPresent{$q.id}" value="1">
+            {$q._html}
+        </foreach>
+    
+    {/if}
+
+	
+</div>
+<div class="buttonContainer">
+	<input type="submit" value="[tb]Submit[/tb]" class="button" name="sSubmit">
+	<if $isLastPage && $enableAutoMatching>
+		<input type="submit" value="[tb]Submit and match[/tb]" class="button" name="sSubmitMatch">
+	</if>
+</div>
+
+<input type="hidden" name="MAX_FILE_SIZE" value="5000000" >
+<input type="hidden" name="qsform" value="1">
+<input type="hidden" name="qspage" value="{$pageno}">
+<input type="hidden" name="qsessionuid" value="{$sessionUID}">
+<input type="hidden" name="qsmicrocommand" value="save">
+<input type="hidden" name="qsid" value="{$qsId}">
+<input type="hidden" name="command" value="{$microCommand}">
+<input type="hidden" name="param1" value="">
+<input type="hidden" name="param2" value="">
+<input type="hidden" name="param3" value="">
+<input type="hidden" name="hide_links" value="{$hide_links}">
+<input type="hidden" name="qserrorschecked" value="{if $errorsChecked}1{else}0{/if}">
+
+</form>
+
+{*[th]By filling this form you agree that our company can work with your personal data[/th]*}
+{*[th]You need to agree with processing your personal data[/th]*}
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

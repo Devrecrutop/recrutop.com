@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!--system part-->
+<script language="javascript" type="text/javascript" src="/_javascript_global/editor/TinyMCE/tiny_mce.js"></script>
+
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yahoo/yahoo-min.js"></script>
+<script language="javascript" type="text/javascript">
+//{literal}
+
+//{/literal}
+</script>
+
+<!--display part-->
+<div class="moduleOuter">
+<!-- /UTS/candidates/cvCentralCandidateResponse.html -->
+<h1 class="moduleHeader">[t]Confirm Copying Your Personal Details[/t]</h1>
+<div class="moduleItemContainer">
+
+{if $status == 'accepted'}
+
+<div class="moduleText">[t]You have accepted the offer. Your details were copied to the client <strong>{$buyer_name}.</strong>[/t]</div>
+
+{elseif $status == 'rejected'}
+
+<div class="moduleText">[t]The offer of the client <strong>{$buyer_name}</strong> was rejected.[/t]</div>
+
+{elseif $status == 'blocked'}
+
+<div class="moduleText">[t]The offer of the client <strong>{$buyer_name}</strong> was rejected. You will be removed from the CvCentral database, so you will not recieve any further offers from our clients.[/t]</div>
+
+{else}
+
+<div class="moduleText">[t]Dear <strong>{$candidate_name},</strong>[/t]</div>
+<div class="moduleText">[t]Your CV and registration is requested by <strong>{$buyer_name}.</strong> An interesting opportunity could be a possibility for yourself. If you agree
+and press register at the bottom of this screen, your CV contact details will be copied to <strong>{$buyer_name}.</strong> They will contact you shortly to discuss the
+opportunity. If you do not wish do disclose your details, you dan press cancel.[/t]</div>
+
+<div class="moduleText">
+<form method="post" action="/index.php/page/cvcentral_candidate_response/seller_id/{$seller_id}/buyer_id/{$buyer_id}/request_code/{$request_code}/request_uid/{$request_uid}/">
+
+<input type="radio" name="command" value="accept" > [t]Copy my details to <strong>{$buyer_name}</strong>[/t]<br>
+<input type="radio" name="command" value="reject" > [t]I do not want to register with <strong>{$buyer_name}</strong>[/t]<br>
+<input type="radio" name="command" value="block" > [t]I do not want to register with any other agency[/t]<br>
+
+<input type="submit" value="Submit">
+
+</form>
+</div>
+
+{/if}
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,86 @@
+ <!-- /UTS/advsearch/customersClueTip.html -->
+
+{*
+<if [uts:show_logo] && $customer.Photo>
+<div class="vacImg"><img src="/_images_upload/{$customer.Photo|escape}" alt="[th]Customer logo[/th]"></div>
+</if>
+*}
+
+<div class="cstDescr">{$customer.werkgever}</div>
+{*NOT USED HERE<div class="cstDescr">{$customer.network_text|escape:"javascript"}</div>*}
+<div class="cstDescr">{$customer.portfolio_text|escape:"javascript"}</div>
+
+<if $customer.__qa>
+  <foreach from=$customer.__qa item=qca>
+  <if $qca.customerAnswer>
+	<div class="itemWord actIw actIwQ{if $smarty.foreach.custQuestion.first} actIwQfirst{/if}{if $smarty.foreach.custQuestion.last} actIwQlast{/if}">
+      <div class="customerQuestion">{$qca.Question|escape}</div>
+      <div class="customerAnswer">{$qca.customerAnswer|escape}</div>
+    </div>
+  </if>  
+  </foreach>
+</if>    
+<div class="cleaner"></div>
+
+{*
+<if [uts:show_description] && $customer._description>
+<div class="vacDescr">{$customer._description}</div>
+</if>
+*}
+
+{*
+<if $customer.address>
+<div class="vacAdr vacDescrStyle">
+<span>{$customer.address|escape}</span>
+<span>{$customer.city|escape}</span>
+<span>{$customer.zipcode|escape}</span>
+</div>
+</if>
+*}
+
+{* start assignment, duration, tarif *}
+{*
+<if $customer.start_assignment>
+<div class="vacAssign vacDescrStyle">
+[t]Start:[/t] <span>{$customer.start_assignment|escape}</span>
+[t]Duration:[/t] <span>{$customer.duration_assignment|escape}</span>
+[t]Tarif:[/t] <span>{$customer.tariff_assignment|escape}</span>
+</div>
+</if>
+*}
+
+
+
+
+
+
+{* start matchcriteria *}
+
+<foreach from=$critList item=crit>
+<if !empty($crit._crvlist)>
+<div class="crit">
+{$crit.name|escape} <span>
+<foreach from=$crit._crvlist item=crval>{$crval|escape}</foreach>
+</span>
+</div>
+</if>
+</foreach>
+
+
+{* end matchcriteria *}
+
+{*
+<div class="linkCon">
+<a href="{$indexPhp}page/JobsRemote/command/detail/bb/1/vid/{$customer.id}">[t]Full detail page[/t]</a>
+</div>
+*}
+
+{* Buttons mail a friend-apply *}
+{*
+<div class="butCon">
+    <if $applyButtonEnable && $applicationURL>
+    <input class="button" type="button" name="bApply" value="[tb]Apply[/tb]" onClick="window.location='{$applicationURL|escape:"javascript"}'">
+    </if>
+    <input class="button" type="button" name="bMailafriend" value="[tb]Mail a friend[/tb]"  onClick="window.location='{$indexPhp}page/JobsRemote/command/mailfriend/vid/{$customer.id}/bb/1';">
+</div>
+*}

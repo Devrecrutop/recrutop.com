@@ -1,0 +1,99 @@
+{* req.ext.js: JQueryBase,JQueryUI *}
+<script language="javascript" type="text/javascript">
+{literal}
+$(document).ready(function() {
+	$( "#publicInvitationHook_date" ).datepicker({
+		dateFormat: 'dd-mm-yy',
+		firstDay: 1,		
+		minDate: 0,
+		dayNames: ['[thg]Sunday[/thg]', '[thg]Monday[/thg]', '[thg]Tuesday[/thg]', '[thg]Wednesday[/thg]', '[thg]Thursday[/thg]', '[thg]Friday[/thg]', '[thg]Saturday[/thg]'],
+		dayNamesMin: ['[thg]Su[/thg]', '[thg]Mo[/thg]', '[thg]Tu[/thg]', '[thg]We[/thg]', '[thg]Th[/thg]', '[thg]Fr[/thg]', '[thg]Sa[/thg]'],
+		dayNameShort: ['[thg]Sun[/thg]', '[thg]Mon[/thg]', '[thg]Tue[/thg]', '[thg]Wed[/thg]', '[thg]Thu[/thg]', '[thg]Fri[/thg]', '[thg]Sat[/thg]'],
+		monthNames: ['[thg]January[/thg]', '[thg]February[/thg]', '[thg]March[/thg]', '[thg]April[/thg]', '[thg]May[/thg]', '[thg]June[/thg]', '[thg]July[/thg]', '[thg]August[/thg]', '[thg]September[/thg]', '[thg]October[/thg]', '[thg]November[/thg]', '[thg]December[/thg]'],			
+		monthNamesShort: ['[thg]Jan[/thg]', '[thg]Feb[/thg]', '[thg]Mar[/thg]', '[thg]Apr[/thg]', '[thg]May[/thg]', '[thg]Jun[/thg]', '[thg]Jul[/thg]', '[thg]Aug[/thg]', '[thg]Sep[/thg]', '[thg]Oct[/thg]', '[thg]Nov[/thg]', '[thg]Dec[/thg]']
+	});
+});
+{/literal}
+</script>
+
+<div class="hookHeader actSeHandler" style="display:none;">[th]Hoe kunnen wij u helpen?[/th]</div>
+<div class="hookOuter actSeOuter">
+<!-- /UTS/agenda/publicInvitationHook.html STANDARD -->
+<!-- Template Webdevelopment validated 10-2013 -->
+	<div class="hookHeader">[t]Plan an appointment[/t]<img src="{$website}/_images_global/ckClose.png" border="0" id="actSeClose" alt="Close"></div>
+	<div class="hookIntro hookText">[t]If you want come in contact with one of our consultants? Fill out the form to plan an appointment directly in our agenda.[/t]</div>
+
+	<form name="publicInvitationHook_form" action="{$rootpath}index.php/page/AgendaPublicInvitation/command/proceedfromhook/bb/1" method="post">
+{if $loggedin}
+		<if [uts:show_consultant]>
+		<div class="hookWord">
+			<label for="publicInvitationHook_consultant">[t]Consultant[/t]</label>
+		</div>
+		<div class="hookInput">
+			<select id="publicInvitationHook_consultant" name="publicInvitationHook_consultant">
+				<option value="0">--</option>
+				{html_options options=$consultants}
+			</select>
+		</div>
+		</if>
+		<if [uts:show_duration]>
+		<div class="hookWord">
+			<label for="publicInvitationHook_duration">[t]Duration[/t]</label>
+		</div>
+		<div class="hookInput">
+			<select id="publicInvitationHook_duration" name="publicInvitationHook_duration">
+				<option value="30">30 [th]minutes[/th]</option>
+				<option value="45">45 [th]minutes[/th]</option>
+				<option value="60">1 [th]hour[/th]</option>
+			</select>
+		</div>
+		</if>
+		<if [uts:show_date]>
+		<div class="hookWord">
+			<label for="publicInvitationHook_date">[t]Date[/t]</label>
+		</div>
+		<div class="hookInput">
+			<input id="publicInvitationHook_date" type="text" name="publicInvitationHook_date" value="{$today}">
+		</div>
+		</if>
+{else}
+		<if [uts:show_email]>
+		<div class="hookWord">
+			<label for="publicInvitationHook_email">[t]E-mail[/t]</label>
+		</div>
+		<div class="hookInput">
+			<input id="publicInvitationHook_email" type="text" name="email">
+		</div>
+		</if>
+		<if [uts:show_name]>
+		<div class="hookWord">
+			<label for="publicInvitationHook_name">[t]Name[/t]</label>
+		</div>
+		<div class="hookInput">
+			<input id="publicInvitationHook_name" type="text" name="name">
+		</div>
+		</if>
+		<if [uts:show_email] || [uts:show_name]>
+		<div class="hookWord">
+			<label>[t]Code[/t]</label>
+		</div>
+		<div class="hookInput">
+			<img id="captcha" src="/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image">
+			<a href="#" onclick="document.getElementById('captcha').src = '/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0"></a>
+			<a href="/_javascript_global/securimage/securimage_play.php"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0"></a>
+		</div>
+		<div class="hookWord">
+			<label for="captchafield">[t]Code:[/t]</label>
+		</div>
+		<div class="hookInput">
+			<input type="text" name="captchafield" id="captchafield" size="10">
+		</div>
+		</if>
+{/if}
+
+<div class="buttonContainer">
+	<input class="button" type="submit" name="bPubInvSubmit" value="[tb]Book[/tb]">
+</div>
+</form>
+
+</div>

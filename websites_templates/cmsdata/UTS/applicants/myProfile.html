@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplProfOuter">
+<!-- /UTS/applicants/myProfile.html -->
+<h1 class="title aplTitle aplProfTitle">[t]Personal page[/t]</h1>
+{$menu}
+<div class="text aplText aplProfText">
+[t]Welcome to your profile! Please use the menu above to change your profile information, to change your password, or to check jobs you have currently applied for.[/t]
+</div>
+
+<!-- debug testing: {$entryCount}-->
+{if $entryCount eq 0}
+  <div class="text aplText aplProfTextApld">[t]You have not applied for any jobs yet.[/t]</div>
+{elseif $entryCount eq 1}
+  <div class="text aplText aplProfTextApld">[t]You have applied for one job.[/t]</div>
+{elseif $entryCount eq 2}
+  <div class="text aplText aplProfTextApld">[t]You have applied for two jobs.[/t]</div>
+{else}
+  <div class="text aplText aplProfTextApld">[t]You have applied for {$entryCount} jobs[/t]</div>
+{/if}
+
+{if $dispayPaAccCandidatePayOgoneLink}
+  <div class="text aplText">    
+    <a href="/index.php/page/premiumaccount/command/ogonecandidatesetup/bb/1/">[t]Upgrade to a premium account[/t]</a>  
+  </div>
+{/if}
+
+{if $candidate_portal_use_printcv}
+<script type="text/javascript" src="[website]/_javascript_global/jquery.fancybox.js"></script>
+<script type="text/javascript">
+        //{literal}
+        // define ready function
+
+        // fancybox, used for send results by email for instance
+        $(document).ready(function() {
+            $(".shCDbutton_2 input[rel=fancyBox]").fancybox({
+                autoScale: true
+            });
+            $("head").append("<link rel='stylesheet' href='[website]/_css_global/fancybox/jquery.fancybox.css' type='text/css'>");
+        });
+        //{/literal}
+</script>
+ <script type="text/javascript">
+        {literal}
+        function print_it_webservice() {
+           // f = document.getElementById("actionframe");
+
+            templateId = document.getElementById('printWebserviceDocId').value;
+            langId = document.getElementById('printWebserviceLang').value;
+
+            outertemplateId = 0;
+            outertmplel = document.getElementById('printWebserviceOuterDocId');
+            if (outertmplel)
+                outertemplateId = outertmplel.value;
+
+            if ( templateId != 0 ) {
+
+                if (outertemplateId != 0)
+                  window.actionframe.location = "/index.php/page/applicants/bb/1/command/myprofile/option/printByWebservice/printtemplateId/"+templateId+'/printlanguage/'+langId+'/outerprinttemplateId/'+outertemplateId;
+                else
+                    window.actionframe.location = "/index.php/page/applicants/bb/1/command/myprofile/option/printByWebservice/printtemplateId/"+templateId+'/printlanguage/'+langId;
+            } else {
+
+                alert('[th]Select a template[/th]');
+            }
+
+
+        }
+        {/literal}
+ </script>
+
+<span class="shCDbutton_2"><input name="buttonPrintAlt" class="button" type="button" href="#printWebserviceDocSelecter" value="[th]Print[/th]" rel="fancyBox"></span>
+
+
+<!--START_printWebserviceDocSelecter-->
+ <div id="printWebserviceDocSelecter" style="display:none;padding:20px;">
+<h2 class="subHeader">{$chooseTemplateText}</h2>
+<div class="formInput">
+<select name="printWebserviceDocId" id="printWebserviceDocId">
+    {foreach from=$templatesToChoose item=templateData}
+    <option value="{$templateData.id}" {if $CurrentTemlateId==$templateData.id} SELECTED {/if}>{$templateData.TemplateName}</option>
+    {/foreach}
+</select>
+</div>
+{if $candidate_portal_inc_outer_tmpl}
+<div class="formInput">
+<select name="printWebserviceOuterDocId" id="printWebserviceOuterDocId">
+    <option value="0">---</option>
+    {foreach from=$listTplOuter item=templateData}
+    <option value="{$templateData.template_id}" {if $CurrentOuterTemlateId==$templateData.template_id} SELECTED {/if}>{$templateData.name}</option>
+    {/foreach}
+</select>
+ </div>
+{/if}
+<div class="formInput">
+<select name="printWebserviceLang" id="printWebserviceLang">
+   {foreach from=$langs item=langData}
+    <option value="{$langData.id}" {if $CurrentLanguage==$langData.id} SELECTED {/if}>{$langData.code}</option>
+    {/foreach}
+</select>
+</div>
+<div class="buttonContainer"><input name="buttonPrintAlt" class="button" type="button" onClick="print_it_webservice();" value="[th]Print CV[/th]"></div>
+ </div>
+<!--END_printWebserviceDocSelecter-->
+<iframe name="actionframe" id="actionframe" width="1" height="1" border="0" frameborder="NO"></iframe>
+
+
+ {/if}
+
+{if $auto_jsa && $ouid && $candidate_passive == "N"}
+
+<script type="text/javascript">
+{literal}
+function removeAutoJSA(){
+    //if (confirm('[t]Are you sure you want to delete this search agent?[/t]'))  
+        window.location.href='/index.php/page/advsearchvacs/command/deletesq/uid/{/literal}{$jsa_detail.code}{literal}/bb/1/';
+     //   else  
+    //    void('');
+}
+function addAutoJSA(){
+        window.location.href='{/literal}{$handler}{literal}/command/addautosq/new/1/';
+}
+{/literal}
+</script>
+
+<div class="text aplText aplProfTextJSA">
+    {if $add_info_sq == "yes"}<div>[t]Your job search agent was created.[/t]</div>{/if}
+    
+    {if $allow_create_auto_jsa}
+        <a href="javascript: addAutoJSA();" >[t]Click here to create a preactivated job search agent[/t]</a> 
+    {else}
+        <a href="javascript: removeAutoJSA();" >[t]Click here to remove your preactivated job search agent[/t]</a>
+                     
+    {/if}
+</div>
+{/if}
+
+
+{*
+{if $linkedInRefreshSilently}
+
+<script type="text/javascript" src="http://platform.linkedin.com/in.js">/*
+  api_key: {$linkedInApiKey}
+  onLoad: linkedInRefreshCheck
+  authorize: true
+  scope: r_fullprofile,r_emailaddress,r_contactinfo
+  credentials_cookie: true
+*/</script>
+
+<script type="text/javascript">
+{literal}
+
+function linkedInRefreshCheck() {
+	if (IN.User.isAuthorized()) {
+	    //alert('true');
+	    IN.API.Profile("me").result(linkedInRefreshAsync);
+	}
+	else {
+		//alert('false');
+	}
+}
+
+function linkedInRefreshAsync(profiles) {
+	{/literal}
+	var currentMemberId = '{$linkedInMemberId|escape:'javascript'}';
+	{literal}
+    member = profiles.values[0];
+	if (currentMemberId != member.id) {
+		// different user is logged to LinkedIn
+		return;
+	}
+	$.get('/index.php/page/linkedInRefresh/command/jsToServerToken');
+}
+
+{/literal}
+</script>
+
+{/if}
+*}
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

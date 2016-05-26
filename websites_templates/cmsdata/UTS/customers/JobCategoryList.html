@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Vacature Lijst</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<style type="text/css">
+	/* {literal} */
+	.thin-column {
+		width: 32px;
+		text-align: center;
+	}
+
+	.thin-column img {
+		border: none;
+		margin: 0.25em;
+	}
+	/* {/literal} */
+</style>
+<!--uts:begin inner-->
+
+
+<div class="outer cpOuter">
+<!-- /UTS/customers/JobCategoryList.html -->
+<h1 class="title cpTitle">[t]Job categories[/t]</h1>
+
+{$CustomersMenu}
+<div class="intro cpIntro">[t]Here you can narrow your search result by clicking on a job category[/t]</div>
+<div class="jclCont">
+<div class="jclHolder" onMouseOver="this.className='jclHolderActive';" onMouseOut="this.className='jclHolder';"><!--  onClick="location='[website]/index.php/page/customers_ext/bb/1/showcat/{$jobcategory.id}'" -->
+<foreach from=$jobcategories key=id item=jobcategory>
+{if (!$show_empty_categories && $jobcategory.catcount > 0) || $show_empty_categories}
+<div class="jclItem"><a href="[website]/index.php/page/customers_ext/bb/1/showcat/{$jobcategory.id}">{$jobcategory.categorie}</a></div>
+{if $show_vacancies_per_category}
+<div class="jclCounter">{$jobcategory.catcount}</div>
+{/if}
+{/if}
+</foreach>
+</div>
+</div>
+</div>
+
+
+<!--uts:end inner-->
+</body>
+</html>

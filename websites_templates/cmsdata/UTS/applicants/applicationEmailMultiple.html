@@ -1,0 +1,23 @@
+{* this email is sent to the applicant after he applied for a multiple jobs *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/applicants/applicationEmailMultiple.html -->
+<p>[t]Dear {$name|escape},[/t]</p>
+<p>[t]You have succesfully applied for the jobs:[/t]
+{foreach from=$jobTitles item=jobTitle}
+<br>{$jobTitle|escape}
+{/foreach}</p>
+<p>[t]We will contact you within a few days, to inform you about the first screening results. You can contact me by e-mail or telephone if you have any questions.[/t]</p>
+<p>[t]Kind regards,
+{$contactPerson}
+{$client}
+{$website}[/t]</p>
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<!--uts:end inner-->
+</body>
+</html>

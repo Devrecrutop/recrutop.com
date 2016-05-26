@@ -1,0 +1,130 @@
+<!--multiselect categories V-->
+{if !empty($categories) && empty($dont_use_multiselect_component)}
+	{* there are some categories, use the two column multiselect *}
+	<script type="text/javascript" src="/_javascript_global/jquery.selectlist.js"></script>
+	<link type="text/css" rel="stylesheet" href="/_css_global/selectlist/selectlist.css">
+	<script type="text/javascript">
+		{literal}
+			$(document).ready(function () {
+				var selectInputId = '{/literal}{$elementIdPrefix}{literal}';
+				var selectWidth = $('.' + selectInputId + '_select').width();
+				$('#' + selectInputId + '_0').selectList({
+					template: '<li>%text%</li>',
+					list: $('#' + selectInputId + '_selectedContainer'),
+					onAdd: function (select, value, text) {
+						qsMultiSelectListValidateItem('{/literal}{$elementIdPrefix}{literal}', '{/literal}{$maxValues}{literal}', value);			
+					}
+				});
+		{/literal}
+		{foreach from=$categories item=cat key=catid}
+			{literal}
+				$('#' + selectInputId + '_{/literal}{$catid}{literal}').selectList({
+					template: "<li>%text%<br><small>{/literal}{$cat|escape:javascript}{literal}</small></li>",
+					list: $('#' + selectInputId + '_selectedContainer'),
+					onAdd: function (select, value, text) {
+						qsMultiSelectListValidateItem('{/literal}{$elementIdPrefix}{literal}', '{/literal}{$maxValues}{literal}', value);
+					}
+				});
+			{/literal}
+		{/foreach}
+		{literal}
+			// comment out following two lines, if you want to set the width of the selected item list and 2 column layout outside via CSS
+			// otherwise the width of the original select in the left column is used for list of selected items in the right column
+			$('#' + selectInputId + '_selectedContainer').css('width', selectWidth);
+			$('#' + selectInputId + '_selectedContainer').css('margin-left', selectWidth + 10);
+		});
+		{/literal}
+	</script>
+	<style type="text/css">
+		{literal}
+			.selectlist-list {}
+			.selectlist-item {
+			padding-right: 20px;
+			}
+		{/literal}
+	</style>
+	<div class="formInput aplMCatInput qMSCvV">
+		<label for="{$elementIdPrefix}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+		<if $qd.explanation>
+			<div class="explain small aplMCatExplain">
+				{$qd.explanation|escape}
+			</div>
+		</if>
+		<div class="qMSCvVw" style="clear: left;">
+			{* left column *}
+			<div class="qMSCvWrapper">
+				{* category select *}
+				<div style="margin-bottom: 0.5em;">
+					<select id="{$elementIdPrefix}_categories" name="{$elementIdPrefix}_categories" onchange="qsMultiSelectListCategoryShow('{$elementIdPrefix}', this.value);">
+						<option value="-1">---</option>
+						<if !empty($options._UNSORTED)>
+							<option value="0">[th]Unsorted[/th]</option>
+						</if>
+						<foreach from=$categories item=cat key=catid>
+							<option value="{$catid}">{$cat|escape}</option>
+						</foreach>
+					</select>
+				</div>
+				{* criteria select *}
+				<div>
+					{* categorized criteria select *}
+					<foreach from=$categories item=cat key=catid>
+						<select class="{$elementIdPrefix}_select {$elementIdPrefix}_{$catid}_select" name="{$elementName}[]" id="{$elementIdPrefix}_{$catid}" onChange="qsLimitMultiSelect('{$elementIdPrefix}_{$catid}', '{$maxValues}');" multiple="multiple" style="display: none;">
+							<option value="0">---</option>
+							<foreach from=$options[$catid] item=opt>
+								<option value="{$opt.value}" {if $opt.selected}selected{/if}>{$opt.text|escape}</option>
+							</foreach>
+						</select>
+					</foreach>
+					{* uncategorized criteria select *}
+					<if !empty($options._UNSORTED)>
+						<select class="{$elementIdPrefix}_select {$elementIdPrefix}_0_select" name="{$elementName}[]" id="{$elementIdPrefix}_0" onChange="qsLimitMultiSelect('{$elementIdPrefix}', '{$maxValues}');" multiple="multiple" style="display: none;">
+							<option value="0">---</option>
+							<foreach from=$options._UNSORTED item=opt>
+								<option value="{$opt.value}" {if $opt.selected}selected{/if}>{$opt.text|escape}</option>
+							</foreach>
+						</select>
+					</if>
+				</div>
+			</div>
+			{* right column - selected items list *}
+			<div id="{$elementIdPrefix}_selectedContainer"></div>
+		</div>
+		<div class="cleaner"></div>
+	</div>
+{else}
+	{* there are no categories defined, use the original way *}
+	<div class="formInput aplMCatInput">
+		<label for="{$elementIdPrefix}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+		<if $qd.explanation>
+			<div class="explain small aplMCatExplain">
+				{$qd.explanation|escape}
+			</div>
+		</if>
+		<select name="{$elementName}[]" id="{$elementIdPrefix}" onChange="qsLimitMultiSelect('{$elementIdPrefix}', '{$maxValues}');" multiple="multiple">
+			<foreach from=$categories item=cat key=catid>
+				<optgroup label="{$cat|escape}">
+					<foreach from=$options[$catid] item=opt>
+						<option value="{$opt.value}" {if $opt.selected}selected{/if}>{$opt.text|escape}</option>
+					</foreach>
+				</optgroup>
+			</foreach>
+			<if !empty($options._UNSORTED)>
+				<if !empty($categories)>
+					<optgroup label="[th]Unsorted[/th]">
+				</if>
+				<foreach from=$options._UNSORTED item=opt>
+					<option value="{$opt.value}" {if $opt.selected}selected{/if}>{$opt.text|escape}</option>
+				</foreach>
+				<if !empty($categories)>
+					</optgroup>
+				</if>
+			</if>
+		</select>
+	</div>
+{/if}
+<if $currentErrorMessage>
+	<div class="error aplMCatError">
+		{$currentErrorMessage}    
+	</div>
+</if>

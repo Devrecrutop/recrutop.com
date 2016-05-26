@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/eventExhibitorsList.html -->
+
+<script type="text/javascript">
+<literal>
+    function event_exhibitors_list_filter(searchcrit){
+        document.formEventExhibitors.exhibitorstarts.value=searchcrit;
+        document.formEventExhibitors.submit();    
+    } 
+</literal>    
+</script>
+
+<div class="outer aplOuter aplListOuter">
+<h1 class="title aplTitle aplListTitle">[t]Exhibitors list[/t]</h1>
+{$menu}
+<div class="text aplText aplListText">[t]Here you can find a list of exhibitors connected to this event.[/t]</div>
+
+<div>
+
+<form method="post" action="/index.php/page/eventsfo/command/exhibitorslist/evid/{$evid}/bb/1/" name="formEventExhibitors">
+<input type="hidden" name="evid" value="{$evid}">
+<input type="hidden" name="option" value="search">
+<input type="hidden" name="exhibitorstarts" value="{$exhibitorstarts}">
+
+
+{if $show_items.display_branch_select}
+<div class="formInput aplSelInput aplFIEvBranch">
+<label>[t]Branch[/t]</label>
+<select id="exhibitors_filter_branch" name="exhibitors_filter_branch" >
+    <option label="---" value="">---</option>
+<foreach from=$select_branches item=b>
+    <option label="{$b.name}" value="{$b.id}" {if $b.id == $postdata.exhibitors_filter_branch}selected="selected"{/if}>{$b.name}</option>
+</foreach>
+</select>
+</div>
+{/if}
+
+
+{if $show_items.display_status_select}
+<div class="formInput aplSelInput aplFIEvStatus">
+<label>[t]Status[/t]</label>
+<select id="exhibitors_filter_status" name="exhibitors_filter_status">
+    <option label="---" value="">---</option>
+    <foreach from=$select_statuses item=s>
+        <option label="{$s.name}" value="{$s.id}" {if $s.id == $postdata.exhibitors_filter_status}selected="selected"{/if}>{$s.name}</option>
+    </foreach>
+    <option label="[t]Without status[/t]" value="-5" {if $s.id == -5}selected="selected"{/if}>[t]Without status[/t]</option>
+</select>
+</div>
+{/if}
+
+<div class="buttonContainer aplBC aplBCEv">
+{if $enable_search_button}
+<!--uts:begin button search-->
+<input type="submit"  name="button" value="[tb]Search[/tb]" class="button">
+<!--uts:end button search-->
+{/if}
+<!--uts:begin button back-->
+<input class="button" type="button" value="[tb]Terug[/tb]" onClick="location='/index.php/page/eventsfo/command/detail/evid/{$evid}/bb/1'" name="button">
+<!--uts:end button back-->
+</div>
+
+</form>
+</div>
+
+
+<div><label>&nbsp;</label></div>
+
+<div><label>[t]Exhibitor name starts with[/t]</label></div>
+<div class="text eveText eveDetText">
+    {*    
+    <a href="/index.php/page/eventsfo/command/exhibitorslist/evid/{$evid}/exhibitorstarts/nalpha/bb/1">{if $exhibitorstarts == "naplha"}<b>{/if}#{if $exhibitorstarts == "naplha"}</b>{/if}</a>&nbsp;|&nbsp;
+    {foreach from=$alphabetical_search item=a}
+    <a href="/index.php/page/eventsfo/command/exhibitorslist/evid/{$evid}/exhibitorstarts/{$a.startchar_ent}/bb/1">{if $exhibitorstarts == $a.startchar}<b>{/if}{$a.startchar}{if $exhibitorstarts ==  $a.startchar}</b>{/if}</a>&nbsp;|&nbsp;
+    {/foreach}
+    <a href="/index.php/page/eventsfo/command/exhibitorslist/evid/{$evid}/exhibitorstarts/full/bb/1">{if $exhibitorstarts == "full"}<b>{/if}[t]ALL[/t]{if $exhibitorstarts == "full"}</b>{/if}</a>
+    *}
+    {if $show_items.navigation_type == "basic"}
+    
+    <a href="javascript:event_exhibitors_list_filter('nalpha');">{if $postdata.exhibitorstarts == "naplha"}<b>{/if}#{if $postdata.exhibitorstarts == "naplha"}</b>{/if}</a>&nbsp;|&nbsp;
+    <a href="javascript:event_exhibitors_list_filter('A-K');">{if $postdata.exhibitorstarts == 'A-K'}<b>{/if}A-K{if $postdata.exhibitorstarts ==  'A-K'}</b>{/if}</a>&nbsp;|&nbsp;
+    <a href="javascript:event_exhibitors_list_filter('L-Z');">{if $postdata.exhibitorstarts == 'L-Z'}<b>{/if}L-Z{if $postdata.exhibitorstarts ==  'L-Z'}</b>{/if}</a>&nbsp;|&nbsp;
+    <a href="javascript:event_exhibitors_list_filter('full');">{if $postdata.exhibitorstarts == "full"}<b>{/if}[t]ALL[/t]{if $postdata.exhibitorstarts == "full"}</b>{/if}</a>
+    
+    {else}
+    <a href="javascript:event_exhibitors_list_filter('nalpha');">{if $postdata.exhibitorstarts == "naplha"}<b>{/if}#{if $postdata.exhibitorstarts == "naplha"}</b>{/if}</a>&nbsp;|&nbsp;
+    {foreach from=$alphabetical_search item=a}
+    <a href="javascript:event_exhibitors_list_filter('{$a.startchar_ent}');">{if $postdata.exhibitorstarts == $a.startchar}<b>{/if}{$a.startchar}{if $postdata.exhibitorstarts ==  $a.startchar}</b>{/if}</a>&nbsp;|&nbsp;
+    {/foreach}
+    <a href="javascript:event_exhibitors_list_filter('full');">{if $postdata.exhibitorstarts == "full"}<b>{/if}[t]ALL[/t]{if $postdata.exhibitorstarts == "full"}</b>{/if}</a>
+    {/if}
+
+	
+</div>
+
+<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+<tr>
+<th class="aplTblHeader">[t]Exhibitors[/t] ({$listed_exhibitor_cnt}/{$full_exhibitor_cnt})</th>
+{if $show_items.display_customer_logo}
+<th class="aplTblHeader">&nbsp;</th>
+{/if}
+</tr>
+<foreach from=$exhibitorslist item=app>
+<tr>
+<td style="border-bottom:1px solid light-grey;">
+<a href="{$app.networkurl}" title="{$app.werkgever}" >
+{$app.werkgever}
+</a>
+</td>
+{if $show_items.display_customer_logo}
+<td style="border-bottom:1px solid light-grey;">
+
+<a href="{$app.networkurl}" title="{$app.werkgever}" >
+
+        {if $app.network_picture || $app.network_logo}
+		<img src="/_images_upload/{if $app.network_picture}{$app.network_picture}{else}{$app.network_logo}{/if}" alt="{$app.werkgever}" border="0">
+		{/if}
+{if $app.wg_website}
+</a>
+{/if}
+&nbsp;
+</td>
+{/if}
+</tr>
+<foreachelse>
+<tr>
+<td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="2">[t]There are no exhibitors...[/t]</td>
+</tr>
+</foreach>
+</table>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

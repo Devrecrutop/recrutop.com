@@ -1,0 +1,101 @@
+{* this email is sent to the applicant CP when the applicant changes his profile *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear {$name|escape},[/t]</p>
+<p>
+    [t]the applicant has changed his/her availability data using the website.[/t]
+</p>
+<p>
+    [t]Applicant: {$applicantName|escape}[/t] 
+</p>
+<p>[t]Changes:[/t]</p>
+
+<table cellpadding="5" style="border:1px solid black;">
+    <tr>
+        <th style="text-align:left;">[t]Field[/t]</th>
+        <th style="margin-left:20px; text-align:left;">[t]Value[/t]</th>
+    </tr>
+    <foreach from=$updateList item=v key=k>
+        <tr>
+            <td>
+                {if $k == "is_available"}[t]Is available[/t]
+                {elseif $k == "is_available_per_direct"}[t]Available[/t]
+                {elseif $k == "contact_planning"}[t]Contact planning[/t]
+                {elseif $k == "na_type"}[t]NA type[/t]
+                {elseif $k == "na_period"}[t]NA period[/t]
+                {elseif $k == "na_reason"}[t]NA reason[/t]
+                {elseif $k == "na_reason_remarks"}[t]NA remarks[/t]
+                {elseif $k == "available_by"}[t]Available by[/t]
+                {elseif $k == "opzegtermijn"}[t]Notice term[/t]
+                {elseif $k == "remind_candidate"}[t]Remind candidate[/t]
+                {else}{$k|escape}
+                {/if}
+            </td>
+            <td>{if $k == "is_available"}
+                    {if $v == 1}[t]Yes[/t]{else}[t]No[/t]{/if}
+                {elseif $k == "remind_candidate"}
+                    {if $v == 1}[t]Yes[/t]{else}[t]No[/t]{/if}
+                {elseif $k == "is_available_per_direct"}
+                    {if $v == 0}[t]By date[/t]{elseif $v == 1}[t]Yes[/t]{else}[t]Notice term[/t]{/if}
+                {elseif $k == "contact_planning"}
+                    {if $v == "1week"}[t]One week[/t]
+                    {elseif $v == "2weeks"}[t]Two weeks[/t]
+                    {elseif $v == "1month"}[t]One month[/t]
+                    {elseif $v == "2months"}[t]Two months[/t]
+                    {elseif $v == "3months"}[t]3 months[/t]
+                    {elseif $v == "6months"}[t]6 months[/t]
+                    {elseif $v == "1year"}[t]One year[/t]
+                    {else}{$v|escape}
+                    {/if}
+                {elseif $k == "na_type"}
+                    {if $v == "temporarily"}[t]Temporarily[/t]
+                    {else}[t]Forever[/t]
+                    {/if}
+                {elseif $k == "na_period"}
+                    {if $v == "1week"}[t]One week[/t]
+                    {elseif $v == "2weeks"}[t]Two weeks[/t]
+                    {elseif $v == "1month"}[t]One month[/t]
+                    {elseif $v == "2months"}[t]Two months[/t]
+                    {elseif $v == "3months"}[t]3 months[/t]
+                    {elseif $v == "6months"}[t]6 months[/t]
+                    {elseif $v == "9months"}[t]9 months[/t]
+                    {elseif $v == "1year"}[t]One year[/t]
+                    {elseif $v == "2year"}[t]Two years[/t]
+                    {else}{$v|escape}
+                    {/if}
+                {elseif $k == "na_reason"}
+                    {if $v == "have_new_job"}[t]Have new job[/t]
+                    {elseif $v == "content_with_current_job"}[t]Content with the current job[/t]
+                    {elseif $v == "applied_for_new_job"}[t]Applied for new job[/t]
+                    {elseif $v == "school"}[t]School[/t]
+                    {elseif $v == "sabbatical"}[t]Sabbatical[/t]
+                    {elseif $v == "kids"}[t]Kids[/t]
+                    {elseif $v == "not_working_temporarily"}[t]Not working temporarily[/t]
+                    {elseif $v == "on_project"}[t]On project[/t]
+                    {elseif $v == "avail_for_topjob_only"}[t]Available for top job only[/t]
+                    {elseif $v == "other"}[t]Other[/t]
+                    {else}{$v|escape}
+                    {/if}
+                {elseif $k == "available_by"}
+                    {if $v == ""}[t]Direct[/t]
+                    {else}{$v|escape}
+                    {/if}
+                {else}{$v|escape}
+                {/if}
+            </td>
+        </tr>
+    </foreach>
+</table>
+
+
+<p>
+<i>[t]Remark: this e-mail message has been automatically generated[/t]</i>
+</p>
+<!--uts:end inner-->
+</body>
+</html>

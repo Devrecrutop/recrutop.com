@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- jobsdetail-->
+<html>
+<head>
+<title>[t]JobsDetail[/t]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<!--uts:begin inner-->
+<!--START_9-->
+<!-- /UTS/google_map/google_map_hook.html -->
+<form name="jobsearchgmfrm" action=""  method="post">
+<input type="hidden" name="gm_make_search" value="1">
+<!--action="/index.php/page/JobsRemote/command/searchgm/id/{$id}/list/1/module_nr/{$module_nr}/cms_categorie/{$cms_categorie}{$site_url_part}/bb/1"-->
+
+<table border="0" cellspacing="0" cellpadding="0" class="vacstable">
+<tr>
+	<td valign="top">
+		<table border="0" width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td valign="top">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+				<!--MENUBAR-->
+				<!--BUTTONS_TOP-->
+				<!--START_PageTitle-->
+				<tr>
+					<td class="formHeaderContainer">
+						<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+						<tr>
+							<td class="formHeader"><h1>[t]Google Map[/t]</h1></td>
+						</tr>
+						</table>
+					</td>
+				</tr>
+				<!--END_PageTitle-->
+				</table>
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td>
+		<table border="0" cellspacing="0" cellpadding="0" width="100%">
+		<tr>
+			<td align="left" class="vacatureButtonHolder" id="gms">
+				<table  border="0" cellpadding="0" cellspacing="0" class="vacatureButtonTblContainer">
+				{if $PLACE == "top"}
+					<tr>
+						<td class="itemContainer">
+							<table border="0" cellpadding="0" cellspacing="0" width="100%" class="ItemTbl">
+							{foreach item=fn from=$fieldnamearray}
+								<tr>
+									<td class="HQuestion"><label for="{$fn.veld}">{$fn.naam}</label></td>
+									<td class="FieldContainer">
+											<select name="{$fn.veld}_gm" id="{$fn.veld}_gm" >
+											<option value="">---</option>
+											{html_options options=$fn.values selected=$fn.FieldValue}
+										</select>
+										</span>
+									</td>
+								</tr>
+							{/foreach}
+							<tr>
+								<td class="HQuestion">[t]Keyword[/t]</td>
+								<td class="FieldContainer"><label for="[t]Keyword[/t]"><input type="text" name="trefwoord" id="trefwoord" value="{$post_data.trefwoord}"></label></td>
+							</tr>
+							<tr>
+								{* JMa: we're climbing the DOM tree until we get to the FORM element *}
+								{literal}
+								<td class="jobSearchformTblButtonCell"><label for="JobSearchSubmit"><input type="submit" value="[tb]Search[/tb]"  class="button" id="JobSearchSubmit" onclick="var g=this;while(g.parentNode!=null){if (g.action != null) {g.action += '#gms';break};g=g.parentNode};return true"></label></td>
+								{/literal}
+							</tr>
+							{if $gmaps_no_results}<tr>
+								<td colspan="2" class="jobSearchformNoResults">[t]No results found, displaying all available.[/t]</td>
+							</tr>{/if}
+							</table>
+						</td>
+					</tr>
+					<!--START_GOOGLEMAP-->
+					<tr>
+						<td class="jobSearchCritContainer" style="padding-top:20px">
+							{if $googleMapsV3}
+							<iframe src="/index.php/page/googlemaps/id/{$GMtempId}/height/[uts:GMheight]/langNr/{$langNr}/search/{$search}/balloon/yes" style="border: 1px solid #666; width: 100%; height: [uts:GMheight]px;" frameborder="NO" border="0"></iframe>
+							{else}
+							<iframe src="http://yourit.nl/googlemaps/?id={$GMtempId}&domain={$GMdomain}&height=[uts:GMheight]&langNr={$langNr}&search={$search}&klantid={$klantid}&balloon=yes" style="border: 1px solid #666; width: 100%; height: [uts:GMheight]px;" frameborder="NO" border="0"></iframe>
+							{/if}
+						</td>
+					</tr>
+					<!--END_GOOGLEMAP-->
+				{elseif $PLACE == "bottom"}
+					<!--START_GOOGLEMAP-->
+					<tr>
+						<td class="jobSearchCritContainer" style="padding-top:20px">
+							{if OTYSCZ != 1 && VITH != 1}
+							<iframe src="http://yourit.nl/googlemaps/?id={$GMtempId}&domain={$GMdomain}&height=[uts:GMheight]&langNr={$langNr}&search={$search}&klantid={$klantid}&balloon=yes" style="border: 1px solid #666; width: 100%; height: [uts:GMheight]px;" frameborder="NO" border="0"></iframe>
+							{/if}
+							{if OTYSCZ == 1 || VITH == 1}
+							<iframe src="http://yourit.nl/googlemaps/?id={$GMtempId}&domain={$GMdomain}&height=[uts:GMheight]&width=[uts:GMwidth]&langNr={$langNr}&search={$search}&klantid={$klantid}&balloon=yes" style="border: 1px solid #666; width: 100%; height: [uts:GMheight]px; width: [uts:GMwidth]px;" frameborder="NO" border="0"></iframe>
+							{/if}
+						</td>
+					</tr>
+					<!--END_GOOGLEMAP-->
+					<tr>
+						<td class="itemContainer">
+							<table border="0" cellpadding="0" cellspacing="0" width="100%" class="ItemTbl">
+								{foreach item=fn from=$fieldnamearray}
+									<tr>
+										<td class="HQuestion"><label for="{$fn.veld}">{$fn.naam}</label></td>
+										<td class="FieldContainer">
+											<select name="{$fn.veld}_gm" id="{$fn.veld}_gm" >
+												<option value="">---</option>
+												{html_options options=$fn.values selected=$fn.FieldValue}
+											</select>
+											</span>
+										</td>
+									</tr>
+								{/foreach}
+							<tr>
+								<td class="HQuestion"><label for="[t]Keyword[/t]">[t]Keyword[/t]</label></td>
+								<td class="FieldContainer"><input type="text" name="trefwoord" id="[t]Keyword[/t]" value="{$post_data.trefwoord}"></td>
+							</tr>
+							<tr>
+								<td class="jobSearchformTblButtonCell"><input type="submit" value="[tb]Search[/tb]"  class="button" id="JobSearchSubmit"></td>
+							</tr>
+							</table>
+						</td>
+					</tr>
+				{elseif $PLACE == "left"}
+					<tr>
+						<td>
+							<table>
+							<tr>
+								<td class="itemContainer">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" class="ItemTbl">
+										{foreach item=fn from=$fieldnamearray}
+											<tr>
+											<td class="HQuestion">{$fn.naam}</td>
+												<td class="FieldContainer">
+													<label for="{$fn.veld}">
+													<select name="{$fn.veld}_gm" id="{$fn.veld}_gm" >
+														<option value="">---</option>
+														{html_options options=$fn.values selected=$fn.FieldValue}
+													</select>
+													</label>
+													</span>
+												</td>
+											</tr>
+										{/foreach}
+									<tr>
+										<td class="HQuestion"><label for="[t]Keyword[/t]">[t]Keyword[/t]</label></td>
+										<td class="FieldContainer"><input type="text" name="trefwoord" id="trefwoord" value="{$post_data.trefwoord}"></td>
+									</tr>
+									<tr>
+										<td class="jobSearchformTblButtonCell"><input type="submit" value="[tb]Search[/tb]"  class="button" id="JobSearchSubmit"></td>
+									</tr>
+									</table>
+								</td>
+							</tr>
+							</table>
+						</td>
+						<!--START_GOOGLEMAP-->
+						<td class="jobSearchCritContainer" style="padding-top:20px">
+							{if OTYSCZ != 1 && VITH != 1}
+							<iframe src="http://yourit.nl/googlemaps/?id={$GMtempId}&domain={$GMdomain}&height=[uts:GMheight]&langNr={$langNr}&search={$search}&klantid={$klantid}&balloon=yes" style="border: 1px solid #666; width: 100%; height: [uts:GMheight]px;" frameborder="NO" border="0"></iframe>
+							{/if}
+							{if OTYSCZ == 1 || VITH == 1}
+							<iframe src="http://yourit.nl/googlemaps/?id={$GMtempId}&domain={$GMdomain}&height=[uts:GMheight]&width=[uts:GMwidth]&langNr={$langNr}&search={$search}&klantid={$klantid}&balloon=yes" style="border: 1px solid #666; width: 100%; height: [uts:GMheight]px; width: [uts:GMwidth]px;" frameborder="NO" border="0"></iframe>
+							{/if}
+						</td>
+						<!--END_GOOGLEMAP-->
+					</tr>
+				{elseif $PLACE == "right"}
+					<tr>
+						<!--START_GOOGLEMAP-->
+						<td class="jobSearchCritContainer" style="padding-top:20px">
+							{if OTYSCZ != 1 && VITH != 1}
+							<iframe src="http://yourit.nl/googlemaps/?id={$GMtempId}&domain={$GMdomain}&height=[uts:GMheight]&langNr={$langNr}&search={$search}&klantid={$klantid}&balloon=yes" style="border: 1px solid #666; width: 100%; height: [uts:GMheight]px;" frameborder="NO" border="0"></iframe>
+							{/if}
+							{if OTYSCZ == 1 || VITH == 1}
+							<iframe src="http://yourit.nl/googlemaps/?id={$GMtempId}&domain={$GMdomain}&height=[uts:GMheight]&width=[uts:GMwidth]&langNr={$langNr}&search={$search}&klantid={$klantid}&balloon=yes" style="border: 1px solid #666; width: 100%; height: [uts:GMheight]px; width: [uts:GMwidth]px;" frameborder="NO" border="0"></iframe>
+							{/if}
+						</td>
+						<!--END_GOOGLEMAP-->
+						<td>
+							<table>
+							<tr>
+								<td class="itemContainer">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" class="ItemTbl">
+									{foreach item=fn from=$fieldnamearray}
+										<tr>
+											<td class="HQuestion"><label for="{$fn.veld}">{$fn.naam}</label></td>
+											<td class="FieldContainer">
+												<select name="{$fn.veld}_gm" id="{$fn.veld}_gm" >
+													<option value="">---</option>
+													{html_options options=$fn.values selected=$fn.FieldValue}
+												</select>								
+												</span>
+											</td>
+										</tr>
+									{/foreach}
+									<tr>
+										<td class="HQuestion"><label for="[t]Keyword[/t]">[t]Keyword[/t]</label></td>
+										<td class="FieldContainer"><input type="text" name="trefwoord" id="[t]Keyword[/t]" value="{$post_data.trefwoord}"></td>
+									</tr>
+									<tr>
+										<td class="jobSearchformTblButtonCell"><input type="submit" value="[tb]Search[/tb]"  class="button" id="JobSearchSubmit"></td>
+									</tr>
+									</table>
+								</td>
+							</tr>
+							</table>
+						</td>
+					</tr>
+				{/if}
+				<tr>
+					<td><iframe id="printframe" name="printframe" width="0" height="0" frameborder="0" scrolling="NO"></iframe></td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+</table>
+</form>
+
+<!--END_9-->
+<!--uts:end inner-->
+</body>
+</html>

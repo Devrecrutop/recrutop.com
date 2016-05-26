@@ -1,0 +1,1155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+
+<script src="/_javascript_global/codemirror/codemirror.js"></script>
+<link rel="stylesheet" href="/_javascript_global/codemirror/codemirror.css">
+<script src="/_javascript_global/codemirror/mode/xml/xml.js"></script>
+<link rel="stylesheet" href="/_javascript_global/codemirror/mode/xml/xml.css">
+
+<script src="/_javascript_global/editor/TinyMCE/tiny_mce.js"></script>
+
+<style type="text/css">
+{literal}
+         
+.hideMsAnswerDiv {
+  /*background:light-gray !important;*/
+
+ opacity : .50;
+   filter  : alpha(opacity=50); /* IE<9 */
+   cursor  : default;  
+}
+      
+{/literal}
+</style>
+
+<script type="text/javascript">
+//{* anyone who is trying to debug Matchctiteria combinations, ... will have no success *}
+var mc_combination_in_qs='{$enable_mc_combination_in_qs}';
+</script>
+
+{foreach from=$questions key=_qqid item=rr}
+    {if $rr.Type == "Multiselect" || ($rr.Type == "Criteria" && $rr.SubType == "Multiselect")}
+
+        <script type="text/javascript">
+            {literal}
+            $(document).ready(function(){
+
+        		var reqScripts = "[uts:ext_javascripts]";
+        		if(reqScripts.indexOf('JQueryMultiSelect') > -1 && !$.fn.magicSelect)  {
+                        
+              if ($('#q_answer_{/literal}{$_qqid}{literal}').length){ 
+              $('#q_answer_{/literal}{$_qqid}{literal}').multiSelect({
+                  selectAllText: '[th]Select all[/th]',
+                  noneSelected: '[th]Select fields...[/th]',
+                  oneOrMoreSelected: '[th]Select fields (% selected)...[/th]'
+              });
+               }}
+               /*    
+              if ($('#q_answer_{/literal}{$_qqid}{literal}').length) 
+              $('#q_answer_{/literal}{$_qqid}{literal}').(function(){
+              
+                    
+                    if (mc_combination_in_qs == "1"){
+                      processFieldValueChange('q_answer_'+'{/literal}{$_qqid}{literal}');
+                    }
+              
+              });            
+              */
+              
+           
+            
+            
+            });      
+            {/literal}  
+        </script>
+    {/if}
+{/foreach}
+
+<script type="text/javascript">
+
+var mc_combination_in_qs='{$enable_mc_combination_in_qs}';
+
+//{literal}
+function submit_question_form()
+{
+  document.edit_customer.command.value = "saveQuestions";
+  document.edit_customer.submit();
+}
+
+function del_qs_image(qid) 
+{     
+  document.getElementById("q_answer_"+qid).value="";
+  //document.getElementById("q_h_answer_"+qid).value="";
+  document.getElementById("q_dp_answer_"+qid).innerHTML="";
+  document.getElementById("q_bt_answer_"+qid).style.visibility='hidden';
+}
+
+function deleteItem(qid, itemId, itemType)
+{
+  if(confirm("[th]Really delete selected item?[/th]"))
+  {  
+    //alert(qid+ ', '+ addrId);
+  
+    did = document.createElement('input');
+    did.setAttribute('name', 'itemId');
+    did.setAttribute('type', 'hidden');
+    did.setAttribute('value', itemId);
+    
+    die = document.createElement('input');
+    die.setAttribute('name', 'itemEntity');
+    die.setAttribute('type', 'hidden');
+    die.setAttribute('value', itemType);    
+    
+    $('#edit_customer').append(did);
+    $('#edit_customer').append(die);    
+    
+    $('#command').val('deleteItem');    
+    $('#edit_customer').submit();            
+  }
+    
+}
+
+function addItem(qid, itemType)
+{
+    die = document.createElement('input');
+    die.setAttribute('name', 'itemEntity');
+    die.setAttribute('type', 'hidden');
+    die.setAttribute('value', itemType);    
+        
+    $('#edit_customer').append(die);    
+    
+    $('#command').val('addItem');    
+    $('#edit_customer').submit();   
+}
+
+$(document).ready(function(){
+
+$('input.readonly').on('click', function(evt) {
+   evt.preventDefault();
+}
+);
+
+
+  tinyMCE.init({  	  	  	  	
+    mode : "specific_textareas",
+    editor_selector : "mceCvPersEdit",
+    
+    theme : "advanced",  	
+  	theme_advanced_toolbar_location : "top",
+  	    	
+    theme_advanced_fonts : "Arial=arial,helvetica,sans-serif;"
+    + "Courier New=courier new,courier;"
+    + "Georgia=georgia,palatino;"      
+    + "Tahoma=tahoma,arial,helvetica,sans-serif;"              
+    + "Verdana=verdana,geneva;",
+    
+    theme_advanced_font_sizes : "6px,8px,10px,12px,14px,16px,24px",
+
+    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,"
+  	+ "justifyleft,justifycenter,justifyright,justifyfull,formatselect,"
+  	+ "bullist,numlist,outdent,indent",
+  	
+  	theme_advanced_buttons2 : "fontselect,fontsizeselect,link,unlink,separator,"
+  	+"undo,redo,separator,sub,sup,charmap",
+  	
+  	theme_advanced_buttons3 : "",
+
+  	height:"200px",
+  	width:"100%"
+  });
+
+});
+
+
+
+function getQuestionsCombinations(selectId){
+    ajaxUrl = '/index.php/page/applicants_mc_comb/bb/1/command/get_mc_comb_company_profile/';
+
+    $('input[name="command"]').val("get_mc_comb_company_profile");
+    $('input[name="mc_comb_command"]').val("get_mc_comb_company_profile");
+    $('input[name="mc_comb_current_field"]').val(selectId);
+
+    $.ajax({
+        type:'POST',
+        url: ajaxUrl,
+        data:$('form[name="edit_customer"]').serialize(),
+        dataType: "json",
+        //async:true,
+        success: function(response) {
+            //alert(response);
+            //alert(response.data.length);
+            if (response.data) {
+            
+                var n = response.data.length;
+            }
+            else {
+                var n = 0;
+            }
+
+            if (n==0){
+                processEmptyMcCombinations(response.criterias_on_page);
+            }
+            else {
+                if (response.status == "STATUSOK") {
+                    processMcCombinations(response.data);
+                }
+                else{
+                }
+            }
+
+        },
+        error: function(response) {
+           //alert("error"+response.status);
+        }
+    });
+
+
+}
+
+function qsMultiSelectLimitation(selectId) {
+    if (mc_combination_in_qs == "1" ) {
+        getQuestionsCombinations(selectId);
+    }
+}
+
+function processEmptyMcCombinations(mcOnPage){
+    jQuery.each(mcOnPage, function(i,val){
+
+        if (val.q_type == "Multiselect") {
+        
+            if (val.show_cat == "1"){
+                $(val.categories).each(function(cat,catval){
+
+                    $("."+val.q_id+"_"+catval.id+"_select option").each(function(){
+                        $("."+val.q_id+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').show();
+                        $("."+val.q_id+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').attr('selected',false);
+                        $("."+val.q_id+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').removeAttr('disabled');
+                    });
+                });
+
+            }
+            else{
+                
+               jQuery.each(val.display_options._ALL, function(index, item) {
+                //if (index != )
+                //$( '#'+index).attr('disabled', 'disabled');
+                
+                
+               }
+               );
+
+               $("#"+val.q_id+" option").each(function(index, item) {
+                //$(item).remove();
+               });
+               jQuery.each(val.display_options._ALL, function(index, item) {
+                    $("#"+val.q_id).append($("<option><\/option>").val(index).html(item));
+                });
+                
+
+            }
+
+        }
+        else if (val.q_type == "Select") {
+
+            $("#"+val.q_id+" option").each(function(index, item) {
+                $(item).remove();
+            });
+
+
+            $("#"+val.q_id).append($("<option><\/option>").val("NULL").html("---"));
+            jQuery.each(val.display_options._ALL, function(index, item) {
+                $("#"+val.q_id).append($("<option><\/option>").val(index).html(item));
+            });
+
+        }
+        else if (val.q_type == "Radio" || val.q_type == "Checkbox"){
+            $("input[name="+"'"+val.q_name+"[]']").each(function(j,selval)
+            {
+                $("#"+val.q_name+"_"+$(this).val()).show();
+                $("#"+val.q_name+"_"+$(this).val()).attr('checked',false);
+            });
+        }
+        else{
+            // ops
+        }
+
+    });
+}
+
+
+function processMcCombinations(mcCombinations){
+    jQuery.each(mcCombinations, function(i,val){
+
+    
+        if (val.SubType == "Multiselect") {
+
+            if (val.show_cat == "1"){
+
+                $(val.categories).each(function(cat,catval){
+
+
+                    $("."+val.qid+"_"+catval.id+"_select option").each(function(){
+
+                        if (jQuery.inArray($(this).val(), val.options) == -1 ){
+
+                                       
+                            if ($(this).val() > 0) {
+                                $("."+val.qid+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').attr('selected', false);
+
+                                $("."+val.qid+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').attr('disabled','disabled');
+                                $("."+val.qid+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').hide();
+                            }
+                        }
+                        else{
+                          
+                            $("."+val.qid+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').removeAttr('disabled');
+                            $("."+val.qid+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').show();
+                        }
+
+                    });
+
+
+                });
+
+
+            }
+            else{
+
+
+               $("#"+val.qid+" option").each(function(index, option) {
+               
+                $(option).remove();
+                
+                
+               });
+               
+
+               jQuery.each(val.display_options._ALL, function(index, item) {
+                    $("#"+val.qid).append($("<option><\/option>").val(index).html(item));
+                });               
+
+               jQuery.each(val.display_selected_options, function(sindex, sitem) {
+                    //$("#"+val.qid).prop("selected",true);
+                     $("#"+val.qid +" option[value='"+sitem+"']").attr('selected', 'selected');
+                });               
+
+
+                /*
+               var full_opts = $('#hidden_opts_'+val.qid).val();
+               var opts_arr = full_opts.split(',');   
+                              
+               $(opts_arr).each(function(items_index, itemid) {
+                   $('#'+itemid).prop("disabled",true);
+                   $('#'+itemid).attr('readonly',true); 
+                   $('#'+itemid).addClass("hideMsAnswerDiv");
+               });
+
+
+               jQuery.each(val.display_options._ALL, function(index, item) {
+                   $('#'+index).attr('disabled', false);
+                   $('#'+index).attr('readonly',false);
+                   $('label[for="'+index+'"]').show();
+                   $('#'+index).show();
+                   $('#'+index).removeClass("hideMsAnswerDiv");
+                
+                 
+               }
+               );
+               */
+
+
+            }
+
+
+        }
+        else if (val.SubType == "Select") {
+
+               var selectedindex = 0;
+                $("#"+val.qid).find(":selected").each(function(index, option){
+                    if($(this).val() != 'NULL'){
+                        selectedindex = $(this).val();
+                    }
+                });
+               $("#"+val.qid+" option").each(function(index, option) {
+                $(option).remove();
+               });
+
+                var temphtml = "<option value=\"NULL\">---<\/option>";
+                
+                var temparray = Array();
+                jQuery.each(val.display_options._ALL, function(index, item) {
+                    temparray.push({'id': index, 'opt': item});
+                });
+                bubbleSort(temparray);
+                for (var i = 0; i < temparray.length; i++) {
+                     if(selectedindex == temparray[i]['id']){
+                        temphtml += '<option value="'+temparray[i]['id']+'" SELECTED>'+temparray[i]['opt']+"<\/option>";
+                    }else {
+                        temphtml += '<option value="'+temparray[i]['id']+'">'+temparray[i]['opt']+"<\/option>";
+                    }
+                }
+               $("#"+val.qid).html(temphtml);
+
+
+        }
+        else if (val.SubType == "Radio" || val.SubType == "Checkbox"){
+           $("input[name="+"'"+val.qid+"[]']").each(function(j,selval)
+            {
+                if (jQuery.inArray($(this).val(), val.options) == -1 ){
+                    $("#"+val.qid+"_"+$(this).val()).hide();
+                    $("#"+val.qid+"_"+$(this).val()).attr("checked","");
+                }
+                else{
+                    $("#"+val.qid+"_"+$(this).val()).show();
+
+                }
+
+            });
+           if ( $("input[name="+"'"+val.qid+"']")){
+               $("input[name="+"'"+val.qid+"']").each(function(j,selval)
+                {
+                    if (jQuery.inArray($(this).val(), val.options) == -1 ){
+                        $("#"+val.qid+"_"+$(this).val()).hide();
+                        $("#"+val.qid+"_"+$(this).val()).attr("checked","");
+                    }
+                    else{
+                        $("#"+val.qid+"_"+$(this).val()).show();
+                    }
+
+                });
+           }            
+
+        }
+        else{
+            // ops
+        }
+
+
+    });
+}
+
+
+
+function bubbleSort(a)
+{
+    var swapped;
+    do {
+        swapped = false;
+        for (var i=0; i < a.length-1; i++) {
+            if (a[i]['opt'] > a[i+1]['opt']) {
+                var temp = a[i];
+                a[i] = a[i+1];
+                a[i+1] = temp;
+                swapped = true;
+            }
+        }
+    } while (swapped);
+}
+
+function processFieldValueChange(selectId){
+        if (mc_combination_in_qs == "1" ) {
+            getQuestionsCombinations(selectId);
+        }
+}
+
+
+
+//{/literal}
+</script>
+
+<div class="outer custOuter globalQsOuter gQsQuestions gQsQuestions{$pageid}">
+<!-- /UTS/global_questions/questions.html STANDARD -->
+
+<h1 class="title custTitle">{if $pageData.Title}{$pageData.Title}{else}[t]Questions[/t]{/if}</h1>
+{$menu}
+
+<div class="text custText">{if $pageData.IntroText}{$pageData.IntroText}{else}[t]Please answer the following questions.[/t]{/if}</div>
+
+<form name="edit_customer" id="edit_customer" action="{$handler}" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="page" value="{$page}">
+	<input type="hidden" name="command" id="command" value="saveQuestions">
+	<input type="hidden" name="nextcommand" id="nextcommand" value="displayQuestions">
+	<input type="hidden" name="pageid" value="{$pageid}">
+	<input type="hidden" name="next_pageid" value="{$next_pageid}">
+  
+  
+  
+	{if $enable_mc_combination_in_qs}
+    <input type="hidden" name="qsid" value="{$qsid}">
+		<input type="hidden" name="mc_comb_command" value="">
+		<input type="hidden" name="mc_comb_current_field" value="">
+    
+  	<foreach from=$questions key=qpresid item=qpres>
+  
+  	<input type="hidden" name="qPresent{$qpresid}" value="1">
+  	</foreach>    
+    
+	{/if}  
+  
+
+  <foreach from=$hiddenParams key=hiddenName item=hidden >    	
+	 <input type="hidden" name="{$hiddenName}" value="{$hidden}">
+	</foreach>
+
+    <foreach from=$questions key=_qid item=r>
+    
+    {if $r.Type eq "Radio"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    <div class="formInput formRadio">
+    <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label>
+    <div class="formCheckboxContainer aplMCheckContainer">
+    <input type="hidden" name="q_answer_{$_qid}" value="">
+    {assign var=rqs value="q_answer_`$_qid`"}    
+    <foreach from=$r.optionsAnswers key=answerId item=ar >
+    
+    <input type="radio" class="radiobutton" name="q_answer_{$_qid}" value="{$answerId}" 
+    {if isset($postdata.$rqs)} 
+        {if $postdata.$rqs == $answerId}
+        checked
+        {/if} 
+    {else}
+    {$ar.AnswerSelected}
+    {/if}>{$ar.AnswerOption|escape}<br >
+    </foreach>
+    </div>
+    </div>
+    <if $r.Explanation>
+    <div class="explain aplRadioExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+	{/if}
+
+
+    {if $r.Type eq "Checkbox"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    <div class="formInput formMultiCheckbox aplMCheckInput">
+    {assign var=cbqs value="q_answer_`$_qid`"}    
+    <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}
+    
+     </label>
+    <div class="formCheckboxContainer aplMCheckContainer">
+    <input type="hidden" name="q_answer_{$_qid}" value="">
+    <foreach from=$r.optionsAnswers key=answerId item=ar >
+    <span>
+    <input type="checkbox" class="radiobutton" id="q_answer_{$_qid}::{$answerId}" name="q_answer_{$_qid}[]" value="{$answerId}" 
+                    {if isset($postdata.$cbqs)}
+                        {if is_array($postdata.$cbqs)} 
+                        {if in_array($answerId,$postdata.$cbqs)}checked{/if}
+                        {/if} 
+                    {else}{$ar.AnswerSelected}
+                    {/if}>{$ar.AnswerOption|escape} <br >
+    </span>
+    </foreach>
+    </div>
+    </div>
+    <if $r.Explanation>
+    <div class="explain aplMCheckExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+	{/if}
+
+
+    {if $r.Type eq "Select"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    
+    <div class="formInput aplSelInput">
+    <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label>
+    <input type="hidden" name="q_answer_{$_qid}" value="">
+    <select name="q_answer_{$_qid}" id="q_answer_{$_qid}">
+    <option value="">---</option>
+    {assign var=sqs value="q_answer_`$_qid`"}    
+    
+    <foreach from=$r.optionsAnswers key=answerId item=ar >
+    <span>
+    <option id="q_answer_{$_qid}::{$answerId}" name="q_answer_{$_qid}" value="{$answerId}" 
+    {if isset($postdata.$sqs)} 
+        {if $postdata.$sqs == $answerId}
+        selected 
+        {/if}
+    {else}
+    {$ar.AnswerSelected}
+    {/if}>{$ar.AnswerOption|escape}</option> 
+    </span>
+    </foreach>
+    </select>
+    </div>
+    <if $r.Explanation>
+    <div class="explain aplSelExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+	{/if}
+
+
+    {if $r.Type eq "Multiselect"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    
+    <div class="formInput aplMSelInput">
+    <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label>
+    <input type="hidden" name="q_answer_{$_qid}" value="">
+    <select name="q_answer_{$_qid}[]" id="q_answer_{$_qid}" multiple="multiple">
+    <foreach from=$r.optionsAnswers key=answerId item=ar >
+    {assign var=msqs value="q_answer_`$_qid`"}    
+    <span>
+    <option value="{$answerId}" 
+    {if isset($postdata.$msqs)}
+        {if is_array($postdata.$msqs)} 
+        {if in_array($answerId,$postdata.$msqs)}selected{/if}
+        {/if} 
+    {else}{$ar.AnswerSelected}
+    {/if}>{$ar.AnswerOption|escape}</option> 
+    </span>
+    </foreach>
+    </select>
+    </div>
+    <if $r.Explanation>
+    <div class="explain aplMSelExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+	{/if}
+
+
+    
+    {if $r.Type eq "Textfield"}
+    
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}  
+    </div>
+    </if>
+	
+    <div class="formInput aplTextInput">
+    {assign var=tfqs value="q_answer_`$_qid`"}
+        
+    <label for="q_answer_{$_qid}">{$r.Question|escape}  {if $r.required}<span>*</span>{/if}</label>
+    <input type="text" value="{if isset($postdata.$tfqs)}{$postdata.$tfqs}{else}{$r.optionsAnswers.AnswerText|escape}{/if}" name="q_answer_{$_qid}" id="q_answer_{$_qid}">
+    </div>	
+    <if $r.Explanation>
+    <div class="explain aplTextExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>    
+	
+	{/if}
+
+    
+    {if $r.Type eq "Textarea" || $r.Type eq "MetaDescription"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    
+	<div class="formInput aplTextAreaInput">
+		<label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label> 
+		<if $r.Explanation>
+			<div class="explain small aplTextAreaExplain">
+				{$r.Explanation|escape}
+			</div>
+		</if>	
+        {assign var=taqs value="q_answer_`$_qid`"}
+		<textarea name="q_answer_{$_qid}" id="q_answer_{$_qid}" class="fieldTxtArea"  rows="{$r.NumRows|default:2}">{if isset($postdata.$taqs)}{$postdata.$taqs}{else}{$r.optionsAnswers.AnswerText}{/if}</textarea>
+	</div>
+	{/if}
+    
+    {if $r.Type eq "Code"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    
+	<div class="formInput aplTextAreaInput">
+		<label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label> 
+		<if $r.Explanation>
+			<div class="explain small aplTextAreaExplain">
+				{$r.Explanation|escape}
+			</div>
+		</if>
+        {assign var=taqs value="q_answer_`$_qid`"}		
+		<textarea name="q_answer_{$_qid}" id="q_answer_{$_qid}" class="fieldTxtArea"  rows="{$r.NumRows|default:2}">{if isset($postdata.$taqs)}{$postdata.$taqs}{else}{$r.optionsAnswers.AnswerText}{/if}</textarea>
+	</div>    
+    <script type="text/javascript">
+    
+        {literal}
+
+        var editor = CodeMirror.fromTextArea(document.getElementById("q_answer_{/literal}{$_qid}{literal}"), {
+          mode: "application/xml",
+          lineNumbers: true,
+          onCursorActivity: function() {
+            editor.setLineClass(hlLine, null);
+            hlLine = editor.setLineClass(editor.getCursor().line, "activeline");
+          }
+        });
+        var hlLine = editor.setLineClass(0, "activeline");
+        
+        {/literal}  
+    </script>
+    	
+	{/if}    
+
+
+    {if $r.Type eq "Image"}
+    
+    
+        <if $errorMessage && $_qid == $errorQuestion >
+        <div class="error aplImageError">
+            {$errorMessage}  
+        </div>
+        </if>
+    	
+        <div class="formInput aplTextInput">
+        {assign var=iqs value="q_answer_`$_qid`"}
+            
+        <label for="q_answer_{$_qid}">{$r.Question|escape}  {if $r.required}<span>*</span>{/if}</label>
+        {*<input type="text" value="{if isset($postdata.$tfqs)}{$postdata.$tfqs}{else}{$r.optionsAnswers.AnswerText|escape}{/if}" name="q_answer_{$_qid}" id="q_answer_{$_qid}">*}
+        <input type="hidden" name="q_answer_{$_qid}" id="q_answer_{$_qid}" value="{$r.optionsAnswers.AnswerText}">
+        <input type="file" name="q_answer_{$_qid}" id="q_answer_{$_qid}">
+        </div>
+
+        <if $r.optionsAnswers.AnswerText>
+		  <!-- MITCH: {$website} {$code} -->
+        <div class="formInput formSmallInput aplFileButton">
+		  {* ONLY IMAGES *}
+		  {if $r.optionsAnswers.AnswerText|strstr:".jpg" || $r.optionsAnswers.AnswerText|strstr:".gif" || $r.optionsAnswers.AnswerText|strstr:".bmp"}
+		   <label><a href="{$website}/_images_upload/{$r.optionsAnswers.AnswerText}" target="_blank" title="" id="q_dp_answer_{$_qid}">
+			  <img src="{$website}/_images_upload/{$r.optionsAnswers.AnswerText}" alt="{$r.optionsAnswers.AnswerText}" width="150" height="150" />			
+		   </a></label>  
+		  {else}
+			<label><a href="{$displayLink}" target="_blank" title="" id="q_dp_answer_{$_qid}">{$r.optionsAnswers.AnswerText}</a></label>  
+		  {/if}
+        
+	    <div class="buttonContainer formButtonContainer">        
+        <input class="button" type="button" value="[tb]Delete item[/tb]" onclick="del_qs_image('{$_qid}')" id="q_bt_answer_{$_qid}"></span>
+        </div>
+        </div>
+        
+        </if>
+        	
+        <if $r.Explanation>
+        <div class="explain aplTextExplain">
+            {$r.Explanation|escape}
+        </div>
+        </if>  
+            
+    {/if}
+    
+    
+    {*CRITERIA QUESTON BEGIN*}
+    {if $r.Type eq "Criteria"}
+          
+      {*NOW ONLY DISPLAY DEBUG VALUE*}
+      {*DBG |{$r.Question|escape} |{$r.optionsAnswers.AnswerText|escape} |{$r.SubType} |{$r.FieldName}*}
+      
+      {*CRITERIA SELECT BEGIN*}
+      {if $r.SubType == "Select"}
+      <if $errorMessage && $_qid == $errorQuestion >
+      <div class="error aplRadioError">
+          {$errorMessage}    
+      </div>
+      </if>
+      
+      <div class="formInput aplSelInput">
+        <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label>
+        <input type="hidden" name="q_answer_{$_qid}" value="">
+        <select name="q_answer_{$_qid}" id="q_answer_{$_qid}" onChange="processFieldValueChange('q_answer_{$_qid}')">
+        <option value="">---</option>
+        {assign var=mcsqs value="q_answer_`$_qid`"}    
+        
+        <foreach from=$r.optionsAnswers.__CritOptions key=answerId item=ar >
+        
+        <span>
+        <option id="q_answer_{$_qid}::{$answerId}" name="q_answer_{$_qid}" value="{$answerId}" 
+        {if isset($postdata.$mcsqs)} 
+          {if $postdata.$mcsqs == $answerId}selected {/if}
+        {else}
+          {if in_array($answerId,$r.optionsAnswers.__SelectedOptions)}selected{/if}
+        {/if}>{$ar|escape}
+       
+        
+        </option> 
+        </span>
+        </foreach>
+        </select>
+      </div>
+      <if $r.Explanation>
+      <div class="explain aplSelExplain">
+          {$r.Explanation|escape}
+      </div>
+      </if>      
+      {/if}
+      {*CRITERIA SELECT END*}
+    
+      {* CRITERIA MULTISELECT BEGIN *}
+      {if $r.SubType == "Multiselect"}
+      <if $errorMessage && $_qid == $errorQuestion >
+      <div class="error aplRadioError">
+        {$errorMessage}    
+      </div>
+      </if>
+        
+      <div class="formInput aplMSelInput">
+        <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}
+
+      
+
+        </label>
+        <input type="hidden" name="q_answer_{$_qid}" value="">
+        <select name="q_answer_{$_qid}[]" id="q_answer_{$_qid}" multiple="multiple" onChange="qsMultiSelectLimitation('q_answer_{$_qid}');">
+        <foreach from=$r.optionsAnswers.__CritOptions key=answerId item=ar >
+        {assign var=mcmsqs value="q_answer_`$_qid`"}    
+        <span>
+        {if !$enable_mc_combination_in_qs || 
+        (($enable_mc_combination_in_qs && ($r.optionsAnswers.__CritOptionsShow|@count eq 0)) 
+        || ($enable_mc_combination_in_qs && in_array($answerId,$r.optionsAnswers.__CritOptionsShow)))}
+        <option value="{$answerId}" 
+        {if isset($postdata.$mcmsqs)}
+          {if is_array($postdata.$mcmsqs)} 
+            {if in_array($answerId,$postdata.$mcmsqs)}selected{/if}
+          {/if} 
+        {else}
+          {if in_array($answerId,$r.optionsAnswers.__SelectedOptions)}selected{/if}
+        {/if}>{$ar|escape}
+        
+        </option>
+        {/if}
+ 
+        </span>
+        </foreach>
+        </select>
+        
+        <input type="hidden" name="hidden_opts_q_answer_{$_qid}" id="hidden_opts_q_answer_{$_qid}" value="{foreach from=$r.optionsAnswers.__CritOptions key=answerId item=ar }{$answerId},{/foreach}">
+        
+      </div>
+      
+      <if $r.Explanation>
+      <div class="explain aplMSelExplain">
+            {$r.Explanation|escape}
+      </div>
+      </if>
+      {/if}
+      {* CRITERIA MULTISELECT END *}
+      
+      {*CRITERIA RADIO BEGIN*}
+      {if $r.SubType == "Radio"}
+      <if $errorMessage && $_qid == $errorQuestion >
+      <div class="error aplRadioError">
+          {$errorMessage}    
+      </div>
+      </if>
+      <div class="formInput formRadio">
+      <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label>
+      <div class="formCheckboxContainer aplMCheckContainer">
+        <input type="hidden" name="q_answer_{$_qid}" value="">
+        {assign var=mcrqs value="q_answer_`$_qid`"}    
+        <foreach from=$r.optionsAnswers.__CritOptions key=answerId item=ar >
+        
+        <input type="radio" class="radiobutton" name="q_answer_{$_qid}" value="{$answerId}"
+         onChange="processFieldValueChange('q_answer_{$_qid}')"  
+        {if isset($postdata.$mcrqs)} 
+          {if $postdata.$mcrqs == $answerId}checked{/if} 
+        {else}
+          {if in_array($answerId,$r.optionsAnswers.__SelectedOptions)}checked{/if}
+        {/if}>
+        {$ar|escape}<br>
+        </foreach>
+      </div>
+      </div>
+      <if $r.Explanation>
+      <div class="explain aplRadioExplain">
+          {$r.Explanation|escape}
+      </div>
+      </if>
+  	{/if}    
+    {*CRITERIA RADIO END*}
+    
+    {*CRITERIA CHECKBOX BEGIN*}
+    {if $r.SubType == "Checkbox"}
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>
+    <div class="formInput formMultiCheckbox aplMCheckInput">
+    {assign var=mccbqs value="q_answer_`$_qid`"}    
+    <label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label>
+    <div class="formCheckboxContainer aplMCheckContainer">
+      <input type="hidden" name="q_answer_{$_qid}" value="">
+      <foreach from=$r.optionsAnswers.__CritOptions key=answerId item=ar >
+      <span>
+        <input type="checkbox" class="radiobutton" id="q_answer_{$_qid}::{$answerId}" name="q_answer_{$_qid}[]" value="{$answerId}"
+        onChange="processFieldValueChange('q_answer_{$_qid}')" 
+        {if isset($postdata.$mccbqs)}
+          {if is_array($postdata.$mccbqs)} 
+            {if in_array($answerId,$postdata.$mccbqs)}checked{/if}
+          {/if} 
+        {else}
+          {if in_array($answerId,$r.optionsAnswers.__SelectedOptions)}checked{/if}
+        {/if}>
+        {$ar|escape}<br>
+      </span>
+      </foreach>
+    </div>
+    </div>
+    <if $r.Explanation>
+    <div class="explain aplMCheckExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+	  {/if}    
+    {*CRITERIA CHECKBOX END*}                           
+	
+	{/if}   
+  {*CRITERIA QUESTION END*} 
+  
+  {*MULTI RADIOS QUESTION BEGIN*}
+  
+    {if $r.Type == "MultiRadios" && $r.NumRadios}
+           
+    <if $errorMessage && $_qid == $errorQuestion >
+    <div class="error aplRadioError">
+        {$errorMessage}    
+    </div>
+    </if>    
+    <div class="formInput formRadio formMultiRadio gQsMultiRadio">
+	    <!-- <label>{ $r.Question|escape} {if $r.required}<span>*</span>{/if}</label> Commented out, as decided by Bastiaan&Winston 20120201 -->
+	    <div class="formMultiRadioContainer">
+		    <input type="hidden" name="q_answer_{$_qid}" value="">
+		    {assign var=mrqs value="q_answer_`$_qid`"}    
+		    
+		    <span class="mrLeftText">{$r.LeftText|escape}</span>
+		           
+		    <section name=rb loop=$r.NumRadios+1 start=1>
+		                           
+		    <input type="radio" class="radiobutton mrRadioInput" name="q_answer_{$_qid}" value="{$smarty.section.rb.index}" 
+		    {if isset($postdata.$mrqs)} 
+		        {if $postdata.$mrqs == $smarty.section.rb.index}checked="checked"{/if} 
+		    {else}
+		        {if $r.optionsAnswers.__SelectedValue == $smarty.section.rb.index}checked="checked"{/if}
+		    {/if}><span class="mrRadioValue">{$smarty.section.rb.index}</span>
+		    
+		    </section>
+		    
+		    <span class="mrRightText">{$r.RightText|escape}</span>
+	    </div>
+    
+    </div>
+    <if $r.Explanation>
+    <div class="explain aplRadioExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+	 {/if}  
+  
+  {*MULTI RADIOS QUESTION END*}
+  
+  {*CUSTOMER ADDRESSES QUESTION BEGIN*}
+  
+  {if $r.Type == "Address"}
+  <!-- QUESTION ADDRESS -->
+  <if $errorMessage && $_qid == $errorQuestion >
+  <div class="error addrError">
+      {$errorMessage}    
+  </div>
+  </if>  
+  
+	<div class="formInput addrInputsBox">
+		<label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label> 
+    {assign var=addrqs value="q_answer_`$_qid`"}
+    
+    <if $r.Explanation>
+    <div class="explain addrExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+    
+    <div class="formInput formSmallInput aplAddressButton">
+    <a class="button" href="#" onClick="addItem('{$_qid}', 'Address')">[t]Add Address[/t]</a> 
+    </div>
+    
+    <foreach from=$r.optionsAnswers.__addresses key=addrId item=addr>
+    <div class="addrInputs">   
+      <input type="hidden" name="q_answer_{$_qid}[{$addrId}][id]" id="q_answer_{$_qid}_{$addrId}_id" value="{$addr.id}">
+      <input type="hidden" name="q_answer_{$_qid}[{$addrId}][fo_profile]" id="q_answer_{$_qid}_{$addrId}_fo_profile" value="{$addr.fo_profile}">
+    
+      <div class="formInput formSmallInput aplDelButton">
+      <a class="button" href="#" onClick="deleteItem('{$_qid}', '{$addrId}', 'Address')">[t]Delete Address[/t]</a> 
+      </div>
+    
+      <div class="formInput addressInput">   
+        <label>[tg]Type[/tg]</label>   
+        <input type="text" value="{if isset($postdata.$addrqs.$addrId.branche_name)}{$postdata.$addrqs.$addrId.branche_name}{else}{$addr.branche_name|escape}{/if}" name="q_answer_{$_qid}[{$addrId}][branche_name]" id="q_answer_{$_qid}_{$addrId}_branche_name">      
+      </div>    
+          
+      <div class="formInput addressInput">   
+        <label>[tg]Address[/tg]</label>   
+        <input type="text" value="{if isset($postdata.$addrqs.$addrId.address)}{$postdata.$addrqs.$addrId.address}{else}{$addr.address|escape}{/if}" name="q_answer_{$_qid}[{$addrId}][address]" id="q_answer_{$_qid}_{$addrId}_address">      
+      </div>
+    
+      <div class="formInput addressInput">   
+        <label>[tg]Postalcode[/tg]</label>   
+        <input type="text" value="{if isset($postdata.$addrqs.$addrId.postalcode)}{$postdata.$addrqs.$addrId.postalcode}{else}{$addr.postalcode|escape}{/if}" name="q_answer_{$_qid}[{$addrId}][postalcode]" id="q_answer_{$_qid}_{$addrId}_postalcode">      
+      </div>
+      
+      <div class="formInput addressInput">   
+        <label>[tg]City[/tg]</label>   
+        <input type="text" value="{if isset($postdata.$addrqs.$addrId.city)}{$postdata.$addrqs.$addrId.city}{else}{$addr.city|escape}{/if}" name="q_answer_{$_qid}[{$addrId}][city]" id="q_answer_{$_qid}_{$addrId}_city">      
+      </div>
+      
+      <div class="formInput addressInput">   
+        <label>[tg]Country[/tg]</label>                      
+        <select name="q_answer_{$_qid}[{$addrId}][country]" id="q_answer_{$_qid}_{$addrId}_country">
+        <option value="">---</option>
+        {if isset($postdata.$addrqs.$addrId.country)}
+          {html_options options=$r.optionsAnswers.__countries selected=$postdata.$addrqs.$addrId.country}
+        {else}
+          {html_options options=$r.optionsAnswers.__countries selected=$addr.country}
+        {/if}        
+        </select>
+                            
+      </div>                                 
+    
+    </div>
+    <br >
+    </foreach>    				
+		    
+
+	</div>  
+
+  {/if}
+  
+  {*CUSTOMER ADDRESSES QUESTION END*}
+
+
+  {*CUSTOMERS CONTACTS QUESTION BEGIN*}
+  
+  {if $r.Type == "Contact"}
+  <!-- QUESTION CONTACTS -->
+  <if $errorMessage && $_qid == $errorQuestion >
+  <div class="error addrError">
+      {$errorMessage}    
+  </div>
+  </if>  
+  
+	<div class="formInput cntsInputsBox">
+		<label>{$r.Question|escape} {if $r.required}<span>*</span>{/if}</label> 
+    {assign var=ccqs value="q_answer_`$_qid`"}
+    
+    <if $r.Explanation>
+    <div class="explain cntsExplain">
+        {$r.Explanation|escape}
+    </div>
+    </if>
+    
+	<div class="formInput cntsInput formSmallInput aplContactButton">
+      <a class="button" href="#" onClick="addItem('{$_qid}', 'Contact')">[t]Add Contact[/t]</a> 
+    </div>
+            
+    <foreach from=$r.optionsAnswers.__contacts key=ccId item=cc>
+    <div class="addrInputs">   
+      <input type="hidden" name="q_answer_{$_qid}[{$ccId}][id]" id="q_answer_{$_qid}_{$ccId}_id" value="{$cc.id}">
+      <input type="hidden" name="q_answer_{$_qid}[{$ccId}][fo_profile]" id="q_answer_{$_qid}_{$ccId}_fo_profile" value="{$cc.fo_profile}">
+    
+      <div class="formInput cntsInput formSmallInput aplDelButton">
+      <a class="button" href="#" onClick="deleteItem('{$_qid}', '{$ccId}', 'Contact')">[t]Delete Contact[/t]</a> 
+      </div>
+      
+      <div class="cntsPhoto">
+      {if $cc.pp_photo}
+      <img src="/_images_upload/{$cc.pp_photo|escape}" border="0">      
+      {/if}
+      </div>
+            
+      <div class="formInput cntsInput">
+        <label>[tg]Photo[/tg]</label>
+        <input type="file" name="q_answer_{$_qid}[{$ccId}][pp_photo]" id="q_answer_{$_qid}_{$ccId}_pp_photo">
+      </div>            
+                    
+      <div class="formInput cntsInput">   
+        <label>[tg]First name[/tg]</label>   
+        <input type="text" value="{if isset($postdata.$ccqs.$ccId.wg_cp_voornaam)}{$postdata.$ccqs.$ccId.wg_cp_voornaam}{else}{$cc.wg_cp_voornaam|escape}{/if}" name="q_answer_{$_qid}[{$ccId}][wg_cp_voornaam]" id="q_answer_{$_qid}_{$ccId}_wg_cp_voornaam">      
+      </div>
+      
+      <div class="formInput cntsInput">   
+        <label>[tg]Middle name[/tg]</label>   
+        <input type="text" value="{if isset($postdata.$ccqs.$ccId.wg_cp_tussenvoegsel)}{$postdata.$ccqs.$ccId.wg_cp_tussenvoegsel}{else}{$cc.wg_cp_tussenvoegsel|escape}{/if}" name="q_answer_{$_qid}[{$ccId}][wg_cp_tussenvoegsel]" id="q_answer_{$_qid}_{$ccId}_wg_cp_tussenvoegsel">      
+      </div>
+      
+      <div class="formInput cntsInput">   
+        <label>[tg]Last name[/tg]</label>   
+        <input type="text" value="{if isset($postdata.$ccqs.$ccId.wg_cp_achtern)}{$postdata.$ccqs.$ccId.wg_cp_achtern}{else}{$cc.wg_cp_achtern|escape}{/if}" name="q_answer_{$_qid}[{$ccId}][wg_cp_achtern]" id="q_answer_{$_qid}_{$ccId}_wg_cp_achtern">      
+      </div>
+      
+      <div class="formInput cntsInput">   
+        <label>[tg]Education[/tg]</label>   
+        <input type="text" value="{if isset($postdata.$ccqs.$ccId.education)}{$postdata.$ccqs.$ccId.education}{else}{$cc.education|escape}{/if}" name="q_answer_{$_qid}[{$ccId}][education]" id="q_answer_{$_qid}_{$ccId}_education">      
+      </div>
+                  
+      <div class="formInput cntsInput">   
+        <label>[tg]Job title[/tg]</label>   
+        <input type="text" value="{if isset($postdata.$ccqs.$ccId.wg_cp_functie)}{$postdata.$ccqs.$ccId.wg_cp_functie}{else}{$cc.wg_cp_functie|escape}{/if}" name="q_answer_{$_qid}[{$ccId}][wg_cp_functie]" id="q_answer_{$_qid}_{$ccId}_wg_cp_functie">      
+      </div>
+      
+      <div class="formInput cntsInput">   
+        <label>[tg]Postion number[/tg]</label>   
+        <input type="text" value="{if isset($postdata.$ccqs.$ccId.rank)}{$postdata.$ccqs.$ccId.rank}{else}{$cc.rank|escape}{/if}" name="q_answer_{$_qid}[{$ccId}][rank]" id="q_answer_{$_qid}_{$ccId}_rank">      
+      </div>
+      
+      <div class="formInput cntsInput">   
+        <label>[tg]CV / Personal[/tg]</label>                         
+      </div>
+      <div class="formInput cntsInput">           
+        <textarea name="q_answer_{$_qid}[{$ccId}][long_descr]" id="q_answer_{$_qid}_{$ccId}_long_descr" class="mceCvPersEdit">{if isset($postdata.$ccqs.$ccId.long_descr)}{$postdata.$ccqs.$ccId.long_descr}{else}{$cc.long_descr|escape}{/if}</textarea>              
+      </div>                                                                                                                                                                                                                        
+    
+    </div>
+    <br >
+    </foreach>              
+  
+  
+  </div>
+  {/if}  
+  
+  {*CUSTOMERS CONTACTS QUESTION END*}
+
+    
+    </foreach>	
+
+
+    <div style="clear:both;">&nbsp;</div>
+    
+	<div class="text formText custFiNetwText custFiNetwNotify">[t]Did you fill out the form correctly? Please press "Save" when you are done.[/t]</div>
+	<div class="buttonContainer formButtonContainer">
+		<input class="button" type="button" value="[tb]Save changes[/tb]" onclick="submit_question_form();">
+	</div>
+</form>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

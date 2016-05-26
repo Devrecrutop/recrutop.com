@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer outerCategoryArticleList">
+<!-- /UTS/blog/CategoryArticleList.div.html -->
+<h1 class="title blgArtListTitle">
+<a href="{$ArticleList[0].rss_link}" title="{$ArticleList[0].title|escape}"><img src="{$website}/_images_global/rssicon.gif" border="0" alt="{$ArticleList[0].title|escape}"></a>
+{$ArticleList[0]._catname|escape}
+</h1>
+
+{foreach key=bn_key item=a from=$ArticleList}
+<div class="itemContainer blgIc blcListIc">
+<h3 class="itemTitle blgIlink blgListIl"><a href="{$a._linkurl}" title="{$a.title|escape}" rel="external">{$a.title|escape}</a></h3>
+        		<div class="itemWord blgIword blgListIword blgListOn"><span class="blgListBy">
+                    {if $a._showpublisherimg == 1}<img src="{$a._publisherimage}" alt="{$a._username}" height="42" width="42"/>{/if}
+                    {$a._username}</span>{$a._time_entered}
+                </div>
+<if !empty($a._categories)>
+<div class="itemWord blgIword blgListIword blgListCat">
+	<span>[t]Categories[/t]:</span>
+	<foreach from=$a._categories item=cat>{$cat}, </foreach>
+</div>
+<else>
+<div class="itemWord blgIword blgListIword blgListCat">
+<a href="{$ArticleList[0].rss_link}" title="{$ArticleList[0].title|escape}">{$ArticleList[0]._catname|escape}</a>
+</div>
+</if>
+<!--end articleheader-->
+
+<div class="itemDescription blgIdesc blgListIdesc"> {$a._teaser} <div><a href="{$a._linkurl}" rel="external">[t]Read more[/t]</a></div></div>
+
+<!--start articlefooter-->
+<div class="itemFooter blgIfo blgListIfo">
+<div class="itemFooterWord iFoFirstChild iFoChild iFoBlogView"><span>{$a.viewcount}</span>[t]views[/t]</div>
+{if $a._reacnt}
+<div class="itemFooterWord iFoChild iFoBlogNumReact"><a href="{$a._linkurl}#reactions" rel="external"><span>{$a._reacnt}</span>[t]reactions[/t]</a></div>
+{else}
+<div class="itemFooterWord iFoChild iFoBlogNumReact">[t]No reactions[/t]</div>
+{/if}
+<if $a._allow_reactions>
+<div class="itemFooterWord iFoChild iFoBlogReact"><a href="{$a._linkurl}#react" rel="external">[t]React[/t]</a></div>
+</if>
+<div class="itemFooterWord iFoLastChild iFoChild blgIfoPrint"><a href="/index.php/page/blog/command/print/uid/{$a.uid}/bb/1" target="_blank" title="[th]This printing page will open in a new window[/th]">[t]Print[/t]</a></div>
+</div>
+
+<!--end articlefooter-->
+</div>
+{/foreach}
+{if $use_paging}
+<div style="clear:both;"></div>
+<div>
+<form action="#" name="pagingform" id="pagingform">
+<input type="hidden" name="pagenr" id="pagenr" value="1">
+<div class="blgPagination">
+<ul>
+{if $previouspage}<li class="prev"><a href="#" onClick="document.getElementById('pagenr').value = '{$previouspage}'; document.getElementById('pagingform').submit();">[tg]Previous page[/tg]</a></li>{/if}
+{foreach from=$minpages item=minpage}
+<li><a href="#" onclick = "document.getElementById('pagenr').value = '{$minpage}'; document.getElementById('pagingform').submit();">{$minpage}</a></li>
+{/foreach}
+<li class="active_page">{$currentpage}</li>
+{foreach from=$maxpages item=maxpage}
+<li><a href="#" onclick = "document.getElementById('pagenr').value = '{$maxpage}'; document.getElementById('pagingform').submit();">{$maxpage}</a></li>
+{/foreach}
+{if $nextpage}<li class="next"><a href="#" onClick="document.getElementById('pagenr').value = '{$nextpage}'; document.getElementById('pagingform').submit();">[tg]Next page[/tg]</a></li>{/if}
+</ul>
+</div>
+</form>
+</div>
+{/if}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

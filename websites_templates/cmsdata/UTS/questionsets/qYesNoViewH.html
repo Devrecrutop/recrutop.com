@@ -1,0 +1,23 @@
+<!--yes/no view H-->
+<div class="formInput formRadio aplRadioInput aplRadioInput{$elementName}">
+	<label for="{$elementName}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+	<label for="{$elementName}_1" class="labelRadio aplRadioInputYes">
+		<input type="radio" id="{$elementName}_1" name="{$elementName}" value="1" {if $currentValue == "1"}checked{/if} class="radiobutton">
+		[t]Yes[/t]
+	</label>
+	<label for="{$elementName}_0" class="labelRadio aplRadioInputNo">
+		<input type="radio" id="{$elementName}_0" name="{$elementName}" value="0" {if $currentValue == "0"}checked{/if} class="radiobutton">
+		[t]No[/t]
+	</label>
+	<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+</div>
+<if $qd.explanation>
+<div class="explain aplRadioExplain explain_{$elementName}">
+    {$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplRadioError error_{$elementName}">
+    {$currentErrorMessage}    
+</div>
+</if>

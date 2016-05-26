@@ -1,0 +1,21 @@
+<!-- TPL: /UTS/email_templates/elviriaFriendReferenceAnswerEmail.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- TPL: /UTS/email_templates/elviriaFriendReferenceAnswerEmail.html -->
+<p>[t]Dear {$memberName|escape},[/t]</p>
+<p>[t]Your friend {$friendName|escape} ihas sent you a reference.[/t]</p>
+
+
+<p>[t]Click on the following link to see the reference in your portal and to publish it:[/t]
+<a href="[uts:elviriabaseurl]/index.php/elviria/proceedto/token/{$loginToken}">[t]Click here[/t]</a></p>
+
+
+<p>[t]Best regards[/t],<br />Elviria</p>
+<!--uts:end inner-->
+</body>
+</html>

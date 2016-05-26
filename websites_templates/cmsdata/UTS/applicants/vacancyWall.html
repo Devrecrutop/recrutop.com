@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- UTS/applicants/vacancyWall.html Standard -->
+
+<div class="outer aplWallOuter">
+
+<div class="aplMc">
+{$menu}
+</div>
+
+<h1>[t]Wall[/t]</h1>
+
+<div class="intro avaIntro">[t]On this page you can see the jobs that have come out of your Job alerts.[/t]</div>
+
+<foreach from=$vacancies item=r name=actIc>
+    <div class="itemContainer actIc{if $r.premium} actIcPremium{/if}{cycle values=" actIcOdd, actIcEven"}{if $smarty.foreach.actIc.first} actIcFirst{/if}{if $smarty.foreach.actIc.last} actIcLast{/if}">
+             
+        <h3 class="itemTitle actItemTitle">
+            <a class="cluetips"  title="{if $r.functie_o}{$r.functie_o|escape:"javascript"}{else}{$r.functie_o_nolang|escape:"javascript"}{/if} - {$r.locatie|escape:"javascript"}" href="{$r.url}">{if $r.functie_o}{$r.functie_o}{else}{$r.functie_o_nolang}{/if} - {$r.locatie}</a></h3>
+
+        <div class="itemDescription actItemDescr">{if $r.functieo}{$r.functieo|strip_tags|truncate:350}{else}{$r.functieo_nolang|strip_tags|truncate:350}{/if}</div>
+
+        <div class="itemFooter actIf">
+        
+
+        {* start publication date *}
+        {if $r._published}
+        <div class="itemFooterWord actIFw actIFwPd{if $r.premium} actIFwPdPremium{/if}">
+        <span>[th]Published:[/th]</span>
+        {if $r._published_days_ago == 0}
+                [th]today[/th]
+        {elseif $r._published_days_ago == 1}
+                [th]yesterday[/th]
+        {elseif $r._published_days_ago le 5}
+                {assign var='xdays' value='[t]%1 days ago[/t]'}
+                {$xdays|regex_replace:"/\%1/":$r._published_days_ago}
+                {* this is the old one, which doesnt work because*}
+                {* uts cannot translate words in t-tags in a fragment type file, if the fgragment type file is included in the parent file like this - include file=- *}
+                {*{t 1=$r._published_days_ago count=$r._published_days_ago}%1 days ago{/t}*}
+        {else}
+                {$r._published|date_format:"%d-%m-%Y"}
+        {/if}
+        </div>
+        {/if}
+        {* end publication date *}
+
+
+        {if $r.ref_nr || $r.ref_nr_varchar}
+            <div class="itemFooterWord actIFw actIFwRef"><span>[th]Reference:[/th]</span>#{$r.ref_nr}</div>
+        {/if}
+
+        {* end icons *}
+        
+        </div>
+    </div>
+<foreachelse>
+	<div class="itemWord">[t]You have no jobs as a result from your Job alerts yet.[/t]&nbsp<a href="/index.php/page/advsearchvacs/bb/1/command/sqlist">[t]Go to Job alerts[/t]</a></div>
+</foreach>
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

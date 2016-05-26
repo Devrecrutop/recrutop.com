@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/viewSingleEventHook.div.html STANDARD -->
+<!-- VALID MD -->
+<div class="hookOuter eventHookContainer">
+	<div class="hookHeader eventHookHeader">[t]event hook title[/t]</div>
+	<div class="hookText eventHookText">[t]event hook text[/t]</div>
+	{foreach from=$events key=k item=event}
+		<div class="hookItemContainer eventHookItem">
+			<div class="hookItemTitle eventHookIt"><a href="{$event.url}">{$event.Title}</a></div>
+			{if $display_elements.show_start_date && $display_elements.show_end_date && $event.StartDate == $event.EndDate}
+				<div class="hookItemWord eventHookIw ehIwStartDate">
+					<span>[t]date:[/t]</span>
+					{$event.StartDate}
+				</div>
+			{else}
+				{if $display_elements.show_start_date}
+					<div class="hookItemWord eventHookIw ehIwStartDate">
+						<span>[t]start date:[/t]</span>
+						{$event.StartDate}
+					</div>
+				{/if}
+				{if $display_elements.show_end_date}
+					<div class="hookItemWord eventHookIw ehIwEndDate">
+						<span>[t]end date:[/t]</span>
+						{$event.EndDate}
+					</div>
+				{/if}
+			{/if}
+			{if $display_elements.show_last_subscription_date}
+				<div class="hookItemWord eventHookIw ehIwLastSubDate">
+					<span>[t]last subscription date:[/t]</span>
+					{$event.ExpirationDate}
+				</div>
+			{/if}
+			{if $display_elements.show_location}
+				<div class="hookItemWord eventHookIw ehIwLocation">
+					<span>[t]location:[/t]</span>
+					{$event.Location}
+				</div>
+			{/if}
+			{if $display_elements.show_selected_image && $event.Thumbnail != ""}
+				<div class="hookItemWord eventHookIw ehIwImage">
+					<span>[t]image:[/t]</span>
+					<img src="{$event.Thumbnail}">
+				</div>
+			{/if}
+			{if $display_elements.show_contactperson}
+				<div class="hookItemWord eventHookIw  ehIwContact">
+					<span>[t]contactperson:[/t]</span>
+					{$event.contactperson}
+				</div>
+			{/if}
+			{if $display_elements.show_description_short}
+				<div class="hookItemWord eventHookIw eventHookSD">
+					<span>[t]short description:[/t]</span>
+					{$event.ShortDescription}
+				</div>
+			{/if}
+			<div class="cleaner"></div>
+		</div>
+	{/foreach}
+	<div class="cleaner"></div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

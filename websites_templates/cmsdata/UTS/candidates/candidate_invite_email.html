@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<p>[t]Dear {$cand.voornaam} {$cand.tussenvoegsel} {$cand.achternaam},[/t]</p>
+
+<p>[t]You are invited to apply to a vacancy, please click on the link below.[/t]</p>
+<a href="{$loginLink}">[t]{$vacancyTitle}[/t]</a>
+
+<p>[t]The recruiter added the following personal message for you:[/t]</p>
+
+<p>{$message|escape}</p>
+
+<p>[t]Best regards,[/t]</p>
+<p>{$fromName}</p>
+
+<p>Remark: This email has been generated automatically.</p>
+
+<!--uts:end inner-->
+</body>
+</html>

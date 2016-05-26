@@ -1,0 +1,362 @@
+<!--uts:begin inner-->
+{literal}
+<style type="text/css" media="print">
+    .ocpButtonContainer {
+        display: none;
+    }
+    .ocpPersonalCon .ocpIw span {
+        float: left;
+        padding-top: 2px;
+        width: 140px;
+    }
+    .ocpDate {
+        float: left;
+        font-size: 0.75em;
+        padding-top: 2px;
+        width: 140px;
+    }
+    .ocpDegree {
+        float: left;
+        width: 315px;
+        font-weight: bold;
+    }
+    .ocpIDescr {
+        margin-bottom: 1em;
+        margin-left: 140px;
+    }
+    .ocpDescEmplo {
+        font-style: italic;
+    }
+    .ocpSubtitle {
+        margin-bottom: 1em;
+        font-style: italic;
+    }
+    .ocpIt, .ojpIt {
+        font-size: 1.5em;
+        margin: 0 0 0.5em;
+        clear: both;
+    }
+    .ocpComp .itemWord {
+        background: #F1F1F1;
+        float: left;
+        margin: 0 1em 1em 0;
+        padding: 5px;
+        width: 40%;
+    }
+    .cleaner {
+        clear: both;
+        float: none;
+    }
+    .ocpPhoto, .ocpPersonalTxt {
+        float: left;
+    }
+    .ocpRight .itemWord {
+         background: #F1F1F1;
+        margin: 0 1em 1em 0;
+        padding: 5px;
+    }
+    .ocpRight .itemWord span, .ojpRight .itemWord span {
+        display: block;
+        width: auto;
+        font-weight: bold
+    }
+
+    .changed {
+        color:red !important;
+    }
+    .added {
+        color:green !important;
+    }
+
+</style>
+
+<style type="text/css" media="screen">
+
+    .changed {
+        color:red !important;
+    }
+</style>
+{/literal}
+
+{* req. ext. javascript: JQueryBase,JQueryFancyBox *}
+<!--jsrepository:require(JQueryBase,JQueryFancyBox)-->
+
+<div class="outer ocpOuter ocpDetail">
+    <!-- /UTS/misc/cvapprove.html standard -->
+    <h1 class="title ocpTitle">{$candname}</h1>
+
+    <div id="ocpChoiceOuter" style="display:none;">
+        <form action="{$indexPhpRoot}page/customcv/command/setApprove" name="processform" id="processform" method="POST">
+            <input type="hidden" name="kid" value="{$candid}">
+            <input type="hidden" name="approved" id="approved" value="1">
+            <div class="itemWord ocpItemWord">
+                <label for="ocpReaction" id="ocpReaction_text">[th]Please state why u choose for : [/th]</label>
+            </div>
+            <div class="itemInput ocpItemInput">
+                <textarea name="reason" id="ocpReaction"></textarea>
+            </div>
+            <div class="buttonContainer">
+                <input type="submit" name="submit" value="Verzenden"> {* MD: Not multi ling compatible let needs to be added to UTS *}
+            </div>
+        </form>
+    </div>
+
+    <div class="ocpButtonContainer">
+        {if !$candidateOnlyMode}
+        <a class="ocpButton ocpAccept" href="#ocpChoiceOuter">[th]Approve[/th]</a>
+        <a class="ocpButton ocpDenied" href="#ocpChoiceOuter">[th]Disapprove[/th]</a>
+        {/if}
+
+    </div>
+
+    <div class="cleaner">&nbsp</div>
+
+    <div class="ocpLeft">
+        {foreach from=$qsData.pages item=page}
+        <div class="itemContainer ocpIc ">
+            <h2 class="itemTitle ocpIt">{$page.pageTitle}</h2>
+            <div class="itemWord ocpIw ocpPersonalTxt">
+                {foreach from=$page.questions item=que}
+
+                {if $que.type == 'Personalia' || $que.type == 'Criteria'}
+                <div class="ocpPersonalName">
+                    <span>{$que.name}</span>{$que.content}
+                </div>
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'textArea')}
+                <div class="ocpPersonalName">
+                    <span>{$que.name} </span>{$que.content}
+                </div>
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'textArea')}
+                <div class="ocpPersonalName">
+                    <span>{$que.name}</span>{$que.content}
+                </div>
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'subQuestions' && $que.field == 'werkervaring')}
+                <h3 class="itemTitle ocpIt">{$que.name}</h3>
+                {foreach from=$que.content item=subitem}
+                <div class="ocpDate">
+                    {$subitem.startDate.value} - {$subitem.endDate.value}
+                </div>
+                <div class="ocpDegree">{$subitem.experience.value} </div>
+                <div class="cleaner"> </div>
+                <div class="itemDescr ocpIDescr">
+                    {if $subitem.employerNameAndPlace.value}<div class="ocpDescEmplo">{$subitem.employerNameAndPlace.value} </div>{/if}
+                    {if $subitem.description.value}<div class="ocpDescExper">{$subitem.description.value} </div>{/if}
+                    {if $subitem.termination.value}<div class="ocpDescTermi">{$work.termination.value} </div>{/if}
+                </div>
+                {/foreach}
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'subQuestions' && $que.field == 'opleidingen')}
+                <h3 class="itemTitle ocpIt">{$que.name}</h3>
+                {foreach from=$que.content item=subitem}
+                <div class="ocpDate">
+                    {$subitem.startDate.value} - {$subitem.endDate.value}
+                </div>
+                <div class="ocpDegree">{$subitem.degree.value} </div>
+                <div class="cleaner"></div>
+                <div class="itemDescr ocpIDescr">
+                    {if $subitem.degreeDirection.value}<div class="ocpDescEmplo">{$subitem.degreeDirection.value} </div>{/if}
+                    {if $subitem.institute.value}<div class="ocpDescExper">{$subitem.institute.value} </div>{/if}
+                    {if $subitem.diploma.value}<div class="ocpDescTermi">{$work.diploma.value} </div>{/if}
+                </div>
+                {/foreach}
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'competence' && $que.field == 'competencies')}
+                <h3 class="itemTitle ocpIt">{$que.name}</h3>
+                <div class="itemWord ocpIw ocpPersonalTxt">
+                    {foreach from=$que.content item=subitem}
+                        <div class="ocpDate ocpDegree">
+                            {$subitem.competence}
+                        </div>
+                        <div class="itemDescr ocpIDescr">
+                          <div class="ocpDescExper">{$subitem.cat_1}, {$subitem.cat_2} </div>
+                          <div class="cleaner"></div>
+                        <div class="ocpDescExper">{$subitem.level} </div>
+                        </div>
+                    {/foreach}
+                </div>
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'overige' && $que.field == 'overige')}
+                <h3 class="itemTitle ocpIt">{$que.name}</h3>
+                <div class="itemWord ocpIw ocpPersonalTxt">
+                    {foreach from=$que.content item=sort}
+                        <div class="ocpDate ocpDegree">
+                            {$sort.title}
+                        </div>
+                        <div class="itemDescr ocpIDescr">
+                        {foreach from=$sort.data item=overige}
+                          <div class="ocpDescExper">{$overige} </div>
+                        {/foreach}
+                          <div class="cleaner"></div>
+                        </div>
+                    {/foreach}
+                </div>
+                {/if}
+
+                <div class="cleaner"></div>
+
+                {/foreach}
+            </div>
+        </div>
+        <div class="cleaner"></div>
+        {/foreach}
+
+    </div>
+
+    <div class="ocpRight">
+
+        {foreach from=$qsDataNew.pages item=page}
+        <div class="itemContainer ocpIc ">
+            <h2 class="itemTitle ocpIt">{$page.pageTitle}</h2>
+            <div class="itemWord ocpIw ocpPersonalTxt">
+                {foreach from=$page.questions item=que key=qid}
+                {if $diffs[$qid] == 'C'}
+                {assign var="cclass" value="changed"}
+                {else}
+                {assign var="cclass" value=""}
+                {/if}
+                {if $que.type == 'Personalia' || $que.type == 'Criteria'}
+                <div class="ocpPersonalName {$cclass}">
+                    <span>{$que.name}</span>{$que.content}
+                </div>
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'textArea')}
+                <div class="ocpPersonalName">
+                    <span>{$que.name} </span>{$que.content}
+                </div>
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'textArea')}
+                <div class="ocpPersonalName">
+                    <span>{$que.name}</span>{$que.content}
+                </div>
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'subQuestions' && $que.field == 'werkervaring')}
+                <h3 class="itemTitle ocpIt">{$que.name}</h3>
+                {foreach from=$que.content item=subitem key=subid}
+                {if $diffs[$qid][$subid] == 'C'}
+                {assign var="cclass" value="changed"}
+                {elseif $diffs[$qid][$subid] == 'N'}
+                {assign var="cclass" value="added"}
+                {else}
+                {assign var="cclass" value=""}
+                {/if}
+                <div class="ocpDate {$cclass}">
+                    {$subitem.startDate.value} - {$subitem.endDate.value}
+                </div>
+                <div class="ocpDegree {$cclass}">{$subitem.experience.value} </div>
+                <div class="cleaner"> </div>
+                <div class="itemDescr ocpIDescr {$cclass}">
+                    {if $subitem.employerNameAndPlace.value}<div class="ocpDescEmplo">{$subitem.employerNameAndPlace.value} </div>{/if}
+                    {if $subitem.description.value}<div class="ocpDescExper">{$subitem.description.value} </div>{/if}
+                    {if $subitem.termination.value}<div class="ocpDescTermi">{$work.termination.value} </div>{/if}
+                </div>
+                {/foreach}
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'subQuestions' && $que.field == 'opleidingen')}
+                <h3 class="itemTitle ocpIt">{$que.name}</h3>
+                {foreach from=$que.content item=subitem key=subid}
+                {if $diffs[$qid][$subid] == 'C'}
+                {assign var="cclass" value="changed"}
+                {elseif $diffs[$qid][$subid] == 'N'}
+                {assign var="cclass" value="added"}
+                {else}
+                {assign var="cclass" value=""}
+                {/if}
+                <div class="ocpDate {$cclass}">
+                    {$subitem.startDate.value} - {$subitem.endDate.value}
+                </div>
+                <div class="ocpDegree {$cclass}">{$subitem.degree.value} </div>
+                <div class="cleaner"></div>
+                <div class="itemDescr ocpIDescr {$cclass}">
+                    {if $subitem.degreeDirection.value}<div class="ocpDescEmplo">{$subitem.degreeDirection.value} </div>{/if}
+                    {if $subitem.institute.value}<div class="ocpDescExper">{$subitem.institute.value} </div>{/if}
+                    {if $subitem.diploma.value}<div class="ocpDescTermi">{$work.diploma.value} </div>{/if}
+                </div>
+                {/foreach}
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'competence' && $que.field == 'competencies')}
+                <h3 class="itemTitle ocpIt">{$que.name}</h3>
+                <div class="itemWord ocpIw ocpPersonalTxt">
+                    {foreach from=$que.content item=subitem}
+                        <div class="ocpDate ocpDegree">
+                            {$subitem.competence}
+                        </div>
+                        <div class="itemDescr ocpIDescr">
+                          <div class="ocpDescExper">{$subitem.cat_1}, {$subitem.cat_2} </div>
+                          <div class="cleaner"></div>
+                        <div class="ocpDescExper">{$subitem.level} </div>
+                        </div>
+                    {/foreach}
+                </div>
+                {/if}
+
+                {if ($que.type == 'CV' && $que.subtype == 'overige' && $que.field == 'overige')}
+                <h3 class="itemTitle ocpIt">{$que.name}</h3>
+                <div class="itemWord ocpIw ocpPersonalTxt">
+                    {foreach from=$que.content item=sort}
+                        <div class="ocpDate ocpDegree">
+                            {$sort.title}
+                        </div>
+                        <div class="itemDescr ocpIDescr">
+                        {foreach from=$sort.data item=overige}
+                          <div class="ocpDescExper">{$overige} </div>
+                        {/foreach}
+                          <div class="cleaner"></div>
+                        </div>
+                    {/foreach}
+                </div>
+                {/if}
+
+                <div class="cleaner"></div>
+
+                {/foreach}
+            </div>
+        </div>
+        <div class="cleaner"></div>
+        {/foreach}
+
+    </div>
+
+    <div class="cleaner"></div>
+
+
+</div>
+
+
+
+{literal}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".ocpAccept").fancybox({
+            beforeLoad		:	function() {
+                document.getElementById('ocpReaction_text').innerHTML = '[th]Please state why u choose for yes[/th]';
+            }
+        });
+        $(".ocpDenied").fancybox({
+            beforeLoad		:	function() {
+                $('#approved').val('0');
+                document.getElementById('ocpReaction_text').innerHTML = '[th]Please state why u choose for no[/th]';
+            }
+        });
+    });
+
+
+</script>
+
+
+
+{/literal}
+<!--uts:end inner-->

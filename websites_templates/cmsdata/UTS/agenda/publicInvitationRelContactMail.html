@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+<!-- /UTS/agenda/publicInvitationRelContactMail.html -->
+
+<p>
+{if $salutation == 'sir'}[t]Dear Mr.[/t]
+{elseif $salutation == 'madam'}[t]Dear Ms.[/t]
+{else}[t]Dear Ms./Mr.[/t]
+{/if}
+{$recipientSurname},</p>
+
+<p>
+[t]I would like to confirm that we have a meeting scheduled at {$date}, {$timeStart} - {$timeEnd}. I look forward to seeing you there.[/t]
+</p>
+
+<p>
+[t]Regards,[/t]<br>
+{$consultantName}
+</p>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>FAQ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+
+<!--uts:begin inner-->
+<!-- UTS/mailings/nm_search_results.html -->
+
+<div class="outer nmOuter nmSearchResultsOuter">
+	<!--MENUBAR-->
+
+	<!--START_PageTitle-->
+		<h1 class="title nmSrTitle">[t]PageTitle[/t]</h1>
+	<!--END_PageTitle-->
+	<foreach from=$results item=r>
+		<div class="itemContainer nmSrItemContainer">
+        	<h3 class="itemTitle nmSrItemTitle">{$r._n}. <a href="/index.php/page/mailings/command/showarticle/artid/{$r.artid}/bb/1/catid/{$catid}">{$r.title}</a></h3>
+            <div class="itemDescription nmSrItemDescr">{$r._snip|truncate:255:"..."}</div>
+            <div class="cleaner nmSrCleaner"></div>
+		</div>
+	</foreach>
+	<div class="text nmSrText">[t]SingleWord1[/t]<!--SingleWordLink1--></div>
+</div>
+<!--uts:end inner-->
+
+</body>
+</html>

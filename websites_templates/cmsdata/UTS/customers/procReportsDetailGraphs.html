@@ -1,0 +1,141 @@
+                                <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Procedures Reports</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!--/UTS/customers/procReportsDetailGraphs.html STANDARD-->
+
+{if $interactiveMode}
+
+<!-- <link rel="stylesheet" type="text/css" href="/_javascript_global/ext4/resources/css/ext-all.css" /> -->
+<script type="text/javascript" src="/_javascript_global/ext4/bootstrap.js"></script>
+
+<script type="text/javascript">
+{literal}
+function procReportsExport(format) {
+	
+	$('form[name=procReportExportForm] input[name=command]').val('export' + format);
+	$('form[name=procReportExportForm]').submit();
+}
+{/literal}
+</script>
+<style>
+{literal}
+body {
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:10pt;
+	color:#444;
+}
+td, .outer {
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:10pt;
+	text-align:left;
+	vertical-align:top;
+}
+p {
+	font-family:Verdana, Geneva, sans-serif;
+	margin: 0 0 0.5em 0;
+	padding: 0;
+}
+{/literal}
+</style>
+
+{else}
+
+<style>
+{literal}
+p {
+	margin: 0 0 0.5em 0;
+	padding: 0;
+}
+{/literal}
+</style>
+
+{/if}
+
+<div class="outer pRouter">
+
+<h1 class="title pRtitle" style="font-size: 1.4em;margin-bottom: 2em;">{$report.title|escape} - {$vacancyName|escape}</h1>
+
+
+
+{foreach from=$report.items item=item}
+
+{if $item.title}
+<h2 class="subHeader prSh">{$item.title|escape}</h2>
+{/if}
+
+{if $item.text}
+<div class="text prText">
+{$item.text}
+</div>
+{/if}
+
+{if $item.item_type == 'grid'}
+<div class="text prText">
+	{if $item.exportData.data}
+	  
+    {if $item.sum_all == 1}
+    <table border="0" cellpadding="0" cellspacing="2" class="prTbl">
+    
+		{foreach from=$item.exportData.header key=dataKey item=columnName}
+			<tr>
+        <td>{$columnName|replace:'PROCREPORT_COL_':''|escape} :</td>
+        <td>{if substr($item.exportData.data[0][$dataKey], 0, 12) == '[FORMAT:RED]'}{$item.exportData.data[0][$dataKey]|substr:12|escape}{else}{$item.exportData.data[0][$dataKey]|escape}{/if}</td>
+      </tr>
+		{/foreach}	    
+    
+    </table>
+    {else}
+    {*STANDARD*} 
+		<table border="0" cellpadding="0" cellspacing="2" class="prTbl">
+			<tr>
+				{foreach from=$item.exportData.header item=columnName}
+					<th>{$columnName|replace:'PROCREPORT_COL_':''|escape}</th>
+				{/foreach}		
+			</tr>
+			{foreach from=$item.exportData.data item=dataRow}
+				<tr>
+					{foreach from=$dataRow item=dataCell}					
+						<td style="{if !$interactiveMode}padding: 0.1em 0.2em;border: 0.03em solid #000;{/if}{if is_numeric($dataCell)}text-align: right;{/if}{if substr($dataCell, 0, 12) == '[FORMAT:RED]'}color: #b00;{/if}">
+							{if substr($dataCell, 0, 12) == '[FORMAT:RED]'}{$dataCell|substr:12}{else}{$dataCell|escape}{/if}
+						</td>
+					{/foreach}
+				</tr>
+			{/foreach}
+		</table>
+		{/if}
+		
+	{else}
+		<div>[t]No data.[/t]</div>
+	{/if}
+</div>
+{/if}
+
+
+{if ($item.item_type == 'bar' || $item.item_type == 'column' || $item.item_type == 'pie' || $item.item_type == 'area' || $item.item_type == 'line')}
+<div id="graph{$item.id}" class="prGraphContainer">
+	<img src="{$graphFiles[$item.id]}"  />
+</div>
+{/if}
+
+{/foreach}
+
+{if 1==0}
+
+<div class="buttonContainer">
+	<input class="button" type="button" value="[th]Export to PDF[/th]" onClick="procReportsExport('Pdf');">
+	{if $clientId == 1053}<input class="button" type="button" value="[th]Export to Doc[/th]" onClick="procReportsExport('Doc');">{/if}
+</div>
+
+</form>
+
+{/if}
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

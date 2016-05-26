@@ -1,0 +1,18 @@
+<!-- /UTS/candidates/reference_question.html STANDARD -->
+<!-- Template Webdevelopment validated 08-2013 -->
+<div class="formInput referenceQuestion">
+	<label>{$question|escape}</label>
+	<div class="formRadioContainer aplMRadioContainer">
+        {if !$disable_vote}
+		<input type="radio" name="__RfQuestion[{$qId}][score]" value="-1" class="radiobutton"><span>[t]n/a[/t]</span>
+		<input type="radio" name="__RfQuestion[{$qId}][score]" value="1" class="radiobutton"><span>1</span>
+		<input type="radio" name="__RfQuestion[{$qId}][score]" value="2" class="radiobutton"><span>2</span>
+		<input type="radio" name="__RfQuestion[{$qId}][score]" value="3" class="radiobutton" checked="checked"><span>3</span>
+		<input type="radio" name="__RfQuestion[{$qId}][score]" value="4" class="radiobutton"><span>4</span>
+		<input type="radio" name="__RfQuestion[{$qId}][score]" value="5" class="radiobutton"><span>5</span>
+		<div class="cleaner"></div>
+        {/if}
+		<textarea name="__RfQuestion[{$qId}][answer]" class="referenceQuestionAnswer" rows="3" cols="20"></textarea>
+	</div>
+	<div class="cleaner"></div>
+</div>

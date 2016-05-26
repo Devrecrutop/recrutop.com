@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>EVENT LIST</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+{literal}
+<script>
+function goto_cat(cat_id, cms_cat, cl) {
+	if (cat_id != 0) document.location = "/index.php/page/eventsfo/command/list/bb/1/cms_categorie/"+cms_cat+"/CurrentLanguage/"+cl+"/cat/"+cat_id;
+	if (cat_id == 0) document.location = "/index.php/page/eventsfo/command/list/bb/1/cms_categorie/"+cms_cat+"/CurrentLanguage/"+cl;
+}
+</script>
+{/literal}
+<div class="outer eveOuter eveLOuter">
+<!-- /UTS/events/EventsListNoMagic.html -->
+<h1 class="title eveTitle eveLTitle">[t]Evenementen[/t]</h1>
+
+{if $catflag}
+<div class="formInput">
+<label>[t]Category[/t]</label>
+<select onChange="goto_cat(this.options[this.selectedIndex].value, {$cms_categorie}, {$cl});">
+<option value="0" selected="selected">---</option>
+{foreach from=$categories key=k item=category}
+<option value="{$k}" {if $cat == $k}selected="selected"{/if}>{$category}</option>
+{/foreach}
+</select>
+</div>
+{/if}
+
+{if $cat != "all"}
+<div class="category">{$categories[$cat]}</div>
+{/if}
+
+{if $eventsList}
+{foreach from=$eventsList item=event }
+<div class="itemContainer" onClick="location='/index.php/page/eventsfo/command/detail/evid/{$event.evid}/code/{$code}/bb/1';">
+<div class="itemImage"><a href="/index.php/page/eventsfo/command/detail/evid/{$event.evid}/code/{$code}/bb/1">{$event.Thumbnail}</a></div>
+<h3 class="itemTitle"><a href="/index.php/page/eventsfo/command/detail/evid/{$event.evid}/code/{$code}/bb/1">{$event.Title}</a></h3>
+<div class="itemWord">
+<span>[t]Location[/t]</span>
+{$event.Location}
+</div>
+
+{if $event.StartDate}
+<div class="itemWord">
+<span>[t]Start[/t]</span>
+{$event.StartDate} [t]om[/t] {$event.StartTime}
+</div>
+{/if}
+
+{if $cat == "all" && $event.Category != "0"}
+<div class="itemWord">
+<span>[t]Category[/t]</span>
+{$event.Category}
+</div>
+{/if}
+<div class="itemDescription">{$event.ShortDescription}</div>
+</div>
+{/foreach}
+{/if}
+<!--END_2-->
+<!--END-->
+</div>
+<!--uts:end inner-->
+</body>
+</html>

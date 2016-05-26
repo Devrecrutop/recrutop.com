@@ -1,0 +1,399 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here !--></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- mnt/share/UTS/applicants/availablity.html -->
+
+<script type="text/javascript">
+
+is_data_saved = '{$is_data_saved}';
+
+{if $availability_delete_unavailable}
+    var availability_delete_unavailable = true;
+{else}
+    var availability_delete_unavailable = false;
+{/if}
+
+{if $Hide_available_yes_no}
+    var Hide_available_yes_no = true;
+{else}
+    var Hide_available_yes_no = false;
+{/if}
+
+
+
+//{literal}
+
+function availSaveMe()
+{
+	
+    var f=$('#frmMain');
+    if ( Hide_available_yes_no ) {
+        var is_available=true;
+    } else {
+        var is_available=($("input[name='av_is_available']:checked").val())==1;
+    }    
+    var na_type=$("input[name='av_na_type']:checked").val();
+    var apd=$("input[name='av_is_available_per_direct']:checked").val();
+    
+    if (!is_available && na_type=='temporarily' && ($('#selPeriod').val()=='NULL' || $('#selReason').val()=='NULL'))
+	{
+        alert('[th]Please specify the duration and reason.[/th]');
+        return;
+    }
+    
+    if (is_available && apd==2 && $('#selOpzegtermijn').val()=='')
+	{
+        alert('[th]Please specify the notice term.[/th]');
+        return;
+    }
+
+    var doSubmit = true;
+
+
+    if (!is_available && na_type=='forever' && availability_delete_unavailable) {
+        doSubmit = false;
+        var confirmed = confirm('[th]Do you really want to end your subscription? Choosing Yes will delete all your data from our database during the next 24 hours.[/th]');
+
+        if ( confirmed ) {
+            doSubmit = true;
+        }
+    }
+
+
+
+    if (doSubmit) {
+        f.submit();
+    }
+	
+    
+}
+
+/*       
+$(function()
+{
+       $('#dialog').dialog({ 
+        autoOpen: false,
+        width: 400,
+        modal: true,
+        resizable: false,
+        buttons:
+		{
+            "[th]No[/th]": function()
+			{
+                $(this).dialog("close");
+            },
+            "[th]Yes[/th]": function()
+			{
+                $('#av_agreed_remove_profile').val('1');
+                document.mainfrm.submit();
+            }
+        }
+    });
+});                
+*/
+
+function availSaveMeModified()
+{      
+    var f=$('#frmMain');
+    
+    var is_available=($("input[name='av_is_available']:checked").val())==1;
+    var na_type=$("input[name='av_na_type']:checked").val();
+    var apd=$("input[name='av_is_available_per_direct']:checked").val();
+    
+  /*   PPECH : Task #167697: Availability module- sign out doesn't work  // this seems to be not working and useless here
+    if (!is_available && na_type=='forever')
+	{
+                $('#dialog').dialog('open');	    
+                return false;
+                
+    }    */
+
+    if (!is_available && na_type=='temporarily' && ($('#selPeriod').val()=='NULL' || $('#selReason').val()=='NULL'))
+	{
+        alert('[th]Please specify the duration and reason.[/th]');
+        return;
+    }
+    
+    if (is_available && apd==2 && $('#selOpzegtermijn').val()=='')
+	{
+        alert('[th]Please specify the notice term.[/th]');
+        return;
+    }
+    
+    var doSubmit = true;
+
+                
+    if (!is_available && na_type=='forever') {
+        doSubmit = false;
+        var confirmed = confirm('[th]Do you really want to end your subscription? Choosing Yes will delete all your data from our database during the next 24 hours.[/th]');
+
+        if ( confirmed ) {
+            doSubmit = true;
+        }
+    }
+
+
+
+    if (doSubmit) {
+        f.submit();
+    }
+   
+}
+
+function availFormLogic()
+{
+	
+    var is_available=($("input[name='av_is_available']:checked").val())==1;
+    // alert(is_available);
+    
+    var na_type=$("input[name='av_na_type']:checked").val();
+    //alert(na_type);
+    var apd=$("input[name='av_is_available_per_direct']:checked").val();
+    
+    // Added 30/03/2012		Mitch	na_type === undefined 		Caused some trouble, rewriten if to match on both criteria
+    if (!is_available && (na_type == 'undefined' || na_type === undefined)) {
+	$('#radioNaTypeTemporarily').attr('checked',true);
+        na_type='temporarily';
+    }
+	
+    $('.disIfAvail').attr('disabled', is_available);
+    $('.disIfNA').attr('disabled', !is_available);
+    $('.disIfNAOrAPDNot0').attr('disabled', !is_available || apd!=0);
+    $('.disIfNAOrAPDNot2').attr('disabled', !is_available || apd!=2);
+    $('.disIfAvailOrNaForever').attr('disabled', (is_available || na_type=='forever'));
+    $('.disIfNaForever').attr('disabled', (!is_available && na_type=='forever'));
+	
+}
+
+function updateMessage()
+{
+        $("#applProcessNotification").fadeIn(3000);
+        $("#applProcessNotification").fadeOut(7000);
+}
+
+$(document).ready(function()
+{
+	
+    if (is_data_saved)
+	{
+        updateMessage();
+    }
+	
+});  
+
+//{/literal}
+</script>
+
+<div class="outer avaOuter">
+	<!-- /UTS/applicants/availability.html -->
+	<h1 class="title avaTitle">[t]Availability settings[/t]</h1>
+	{$menu}
+
+	{if $is_data_saved}
+		<div id="applProcessNotification"><div class="error">[t]Your update has been processed successfully[/t]</div></div>
+	{/if}
+
+	<div class="intro avaIntro">[t]You can use this form to change your availability status and related details.[/t]</div>
+
+	<form name="mainfrm" id="frmMain" action="{$handler}" method="post">
+		<div class="formInput formRadio avaJobs">
+                    {if $Hide_available_yes_no}
+                        <input type="hidden" name="av_is_available" value="1" />
+                    {else}
+			<label for="radioIsAvailableYes">[t]Available for jobs:[/t]</label>
+			<input type="radio" name="av_is_available" value="1" id="radioIsAvailableYes" {if $avdata.is_available}checked="checked"{/if}><span>[t]Yes[/t]</span>
+			<input type="radio" name="av_is_available" value="0" id="radioIsAvailableNo" {if !$avdata.is_available}checked="checked"{/if}><span>[t]No[/t]</span>
+                    {/if}
+
+		</div>
+<div id="Avail" style="display:{if $avdata.na_type == "temporarily"}none{else}block{/if};">
+		<div class="formInput formRadio formSmallInput AvaAvailable">
+			<label>[t]Available[/t]:</label>
+			<input type="radio" name="av_is_available_per_direct" value="1" id="radioIsAPD1" class="disIfNA" {if $avdata.is_available_per_direct == 1}checked="checked"{/if}>
+			[t]Per direct available[/t]
+		</div>
+
+		<div class="formInput formRadio formSmallInput AvaAvailable AvaAvailableLoose">
+			<input type="radio" name="av_is_available_per_direct" value="0" id="radioIsAPD0" class="disIfNA" {if $avdata.is_available_per_direct == 0}checked="checked"{/if}>
+			[t]Available by[/t]:
+			<div class="formInput formSmallInput apllDate AvaAvailableLooseDate">{html_select_date field_order="DMY" month_format="%m" end_year='+3' start_year='1990' prefix="av_available_by_" time=$avdata.available_by all_extra='class="disIfNAOrAPDNot0"'}</div>
+		</div>
+
+		<div class="formInput formRadio AvaAvailable AvaAvailableLoose">
+			<input type="radio" name="av_is_available_per_direct" value="2" id="radioIsAPD2" class="disIfNA" {if $avdata.is_available_per_direct == 2}checked="checked"{/if}>
+			[t]Notice term[/t]:
+			<span>
+			<select name="av_opzegtermijn" class="disIfNAOrAPDNot2" id="selOpzegtermijn">
+				<option value="">---</option>
+				<option value="1" {if $avdata.opzegtermijn==1 }selected{/if}>1 [thg]maand[/thg]</option>
+				<option value="2" {if $avdata.opzegtermijn==2 }selected{/if}>2 [thg]maanden[/thg]</option>
+				<option value="3" {if $avdata.opzegtermijn==3 }selected{/if}>3 [thg]maanden[/thg]</option>
+				<option value="12" {if $avdata.opzegtermijn==12 }selected{/if}>12 [thg]maanden[/thg]</option>
+			</select>
+			</span>
+		</div>
+</div>
+<div id="notAvail" style="display:{if $avdata.na_type == "temporarily"}block{else}none{/if};">
+		<div class="formInput formRadio avaNotAvailable">
+			<label for="radioNaTypeTemporarily">[t]Not available:[/t]</label>
+			<input type="radio" class="disIfAvail" name="av_na_type" value="temporarily" id="radioNaTypeTemporarily">[t]Temporarily[/t]
+			<input type="radio" id="visib" class="disIfAvail1" name="av_na_type" value="forever" id="radioNaTypeForever" id="radioNaTypeForever" {if $avdata.na_type == "forever"}checked="checked"{/if}>
+                        <div class="visibtxt">{if $availability_delete_unavailable}[t]Delete my profile[/t]{else}[t]indefinitely[/t]{/if}</div>
+		</div>
+
+		<div class="formInput avaDuration">
+			<label>[t]Duration:[/t]</label>
+			<select name="av_na_period" class="disIfAvailOrNaForever" id="selPeriod">
+				<option value="NULL">---</option>
+				<option value="1week" {if $avdata.na_period == "1week"}selected{/if}>[th]One week[/th]</option>
+				<option value="2weeks" {if $avdata.na_period == "2weeks"}selected{/if}>[th]Two weeks[/th]</option>
+				<option value="1month" {if $avdata.na_period == "1month"}selected{/if}>[th]One month[/th]</option>
+				<option value="2months" {if $avdata.na_period == "2months"}selected{/if}>[th]2 months[/th]</option>
+				<option value="3months" {if $avdata.na_period == "3months"}selected{/if}>[th]3 months[/th]</option>
+				<option value="6months" {if $avdata.na_period == "6months"}selected{/if}>[th]6 months[/th]</option>
+				<option value="9months" {if $avdata.na_period == "9months"}selected{/if}>[th]9 months[/th]</option>
+				<option value="1year" {if $avdata.na_period == "1year"}selected{/if}>[th]One year[/th]</option>
+				<option value="2years" {if $avdata.na_period == "2years"}selected{/if}>[th]Two years[/th]</option>
+			</select>
+		</div>
+
+		<div class="formInput avaReason">
+			<label>[t]Reason:[/t]</label>
+			<select name="av_na_reason" class="disIfAvailOrNaForever" id="selReason">
+				<option value="NULL">---</option>
+				<option value="have_new_job" {if $avdata.na_reason == "have_new_job"}selected{/if}>[th]I have a new job[/th]</option>
+				<option value="content_with_current_job" {if $avdata.na_reason == "content_with_current_job"}selected{/if}>[th]I am content with the current job[/th]</option>
+				<option value="applied_for_new_job" {if $avdata.na_reason == "applied_for_new_job"}selected{/if}>[th]I have applied for a new job[/th]</option>
+				<option value="school" {if $avdata.na_reason == "school"}selected{/if}>[th]Still studying[/th]</option>
+				<option value="sabbatical" {if $avdata.na_reason == "sabbatical"}selected{/if}>[th]Sabbatical[/th]</option>
+				<option value="kids" {if $avdata.na_reason == "kids"}selected{/if}>[th]Taking care of kids[/th]</option>
+				<option value="not_working_temporarily" {if $avdata.na_reason == "not_working_temporarily"}selected{/if}>[th]Temporarily not working[/th]</option>
+				<option value="on_project" {if $avdata.na_reason == "on_project"}selected{/if}>[th]Currently on project[/th]</option>
+				<option value="avail_for_topjob_only" {if $avdata.na_reason == "avail_for_topjob_only"}selected{/if}>[th]Available for top job only[/th]</option>
+				<option value="other" {if $avdata.na_reason == "other"}selected{/if}>[th]Other[/th]</option>
+			</select>
+		</div>
+		
+		<div class="formInput formRadio formSmallInput avaReminder">
+			<label for="chbRemindCandidate">[t]Reminder[/t]</label>
+			<input type="hidden" name="av_remind_candidate" value="0" class="disIfAvailOrNaForever"> <input type="checkbox" class="disIfAvailOrNaForever" name="av_remind_candidate" value="1" id="chbRemindCandidate" {if $avdata.remind_candidate}checked="checked"{/if}>
+			<span>[t]Remind me by e-mail[/t]</span>
+		</div>
+
+		<div class="formInput avaReasonRemark">
+			<label for="avnareasonremarks">[t]Reason remarks:[/t]</label>
+			<textarea name="av_na_reason_remarks" id="avnareasonremarks" cols="40" rows="6" class="disIfAvailOrNaForever">{$avdata.na_reason_remarks|escape}</textarea>
+		</div>
+		{*
+			<div class="buttonContainer avaBc"><input type="button" name="bApplSubmit" value="[tb]Submit[/tb]" class="button" onclick="availSaveMe()"></div>
+		*}
+</div>
+		<h2 class="subHeader avaShUpdate">[t]Automatic update planner[/t]</h2>
+		<div class="text avaTextUpdate">[t]Below you can select the next time we contact you about your availability.[/t]</div>
+		<!-- {$avdata.record_exists} -->
+		<div class="formInput avaSendEmail">
+			<label>[t]Send me an e-mail:[/t]</label>
+			<select name="av_contact_planning" class="disIfNaForever">
+				<!-- {$record_exists} -->
+				<!-- {$default_frequency} -->
+				{if $record_exists == '0'}
+					<option value="1week" {if $default_frequency == "1week"}selected{/if}>[th]Every week[/th]</option>
+					<option value="2weeks" {if $default_frequency == "2weeks"}selected{/if}>[th]Every two weeks[/th]</option>
+					<option value="1month" {if $default_frequency == "1month"}selected{/if}>[th]Every month[/th]</option>
+					<option value="2months" {if $default_frequency == "2months"}selected{/if}>[th]Every 2 months[/th]</option>
+					<option value="3months" {if $default_frequency == "3months"}selected{/if}>[th]Every 3 months[/th]</option>
+					<option value="6months" {if $default_frequency == "6months"}selected{/if}>[th]Every 6 months[/th]</option>
+					<option value="1year" {if $default_frequency == "1year"}selected{/if}>[th]Once a year[/th]</option>
+				{/if}
+
+				{if $record_exists == '1'}
+					<option value="never" {if $avdata.contact_planning == "never"}selected{/if}>[th]Never[/th]</option>
+					<option value="1week" {if $avdata.contact_planning == "1week"}selected{/if}>[th]Every week[/th]</option>
+					<option value="2weeks" {if $avdata.contact_planning == "2weeks"}selected{/if}>[th]Every two weeks[/th]</option>
+					<option value="1month" {if $avdata.contact_planning == "1month"}selected{/if}>[th]Every month[/th]</option>
+					<option value="2months" {if $avdata.contact_planning == "2months"}selected{/if}>[th]Every 2 months[/th]</option>
+					<option value="3months" {if $avdata.contact_planning == "3months"}selected{/if}>[th]Every 3 months[/th]</option>
+					<option value="6months" {if $avdata.contact_planning == "6months"}selected{/if}>[th]Every 6 months[/th]</option>
+					<option value="1year" {if $avdata.contact_planning == "1year"}selected{/if}>[th]Once a year[/th]</option>
+				{/if}
+			</select>
+		</div>
+		{*
+		    Enlight me, this will still fail for cmr 41.. the dialog .. The availSaveMeModified() doesn't do anything different than the availSaveMe() method.
+		<!--  OTYSCZ: {$OTYSCZ} -->
+		<!--  CLIENTID: {$clientid} -->
+		<!-- if $OTYSCZ || $clientid == 41 -->
+		*} 
+		{if $clientid == 41}
+			<div class="buttonContainer avaBc"><input type="button" name="bApplSubmit" value="[tb]Submit[/tb]" class="button" onclick="availSaveMeModified()"></div>
+			<div id="dialog" title="[th]Delete my profile[/th]" ><p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 0 0;"></span>[th]Are you sure you want to do this? This will delete all your data in our database.[/th]</p></div>
+		{else}
+			<div class="buttonContainer avaBc"><input type="button" name="bApplSubmit" value="[tb]Submit[/tb]" class="button" onclick="availSaveMe()"></div>
+		{/if}
+		<input type="hidden" name="command" value="myavailabilitysave">
+		<input type="hidden" name="proceedto" value="{$proceedto}">
+		<input type="hidden" name="av_agreed_remove_profile" id="av_agreed_remove_profile" value="0">
+	</form>
+</div>
+<script>
+{literal}
+
+$(document).ready
+(
+	function()
+	{
+		// On change
+		$("#radioIsAvailableYes").change
+		(
+			function()
+			{
+				if($(this).is(':checked') == true)
+				{
+					$('#Avail').show();
+					$('#notAvail').hide();
+				}
+			}
+		);
+		$("#radioIsAvailableNo").change
+		(
+			function()
+			{
+				if($(this).is(':checked') == true)
+				{
+					$('#Avail').hide();
+					$('#notAvail').show();
+				}
+			}
+		);
+
+
+       {/literal}{if $Hide_available_yes_no}{literal}
+                $('#Avail').show();
+                $('#notAvail').hide();
+       {/literal}{else}{literal}
+
+		// Run on startup
+		if($('#radioIsAvailableYes').is(':checked') == true)
+		{
+			$('#Avail').show();
+			$('#notAvail').hide();
+		}
+		else
+		{
+			$('#Avail').hide();
+			$('#notAvail').show();
+		}
+       {/literal}{/if}{literal}
+	}
+);
+
+
+{/literal}
+</script>
+<!--uts:end inner-->
+</body>
+</html>

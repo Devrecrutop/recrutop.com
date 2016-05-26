@@ -1,0 +1,20 @@
+{* If a contact person disapproves a timesheet, the following e-mail should be sent to the candidate *}
+<!-- TPL: /UTS/email_templates/tscDisapprovedByWgCpToCandidate.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear {$rcpName|escape},[/t]</p>
+<p>[t]The contact person {$wgCpName|escape} of {$wgName|escape}  has disapproved your timesheet for {$assName|escape} for period {$h.period_start|escape} until {$h.period_end|escape}.[/t]</p> 
+<p>[t]He left the following comments regarding this timesheet:[/t]</p>
+<p>{$disaprovalReason|escape}</p>
+<p>[t]Please open this timesheet to make corrections and to send in the timesheet AND the internal timesheet of the same week again:[/t]</t>
+<p>{$tscHashLink}</p>
+<p>[t]If you have any questions, please let us know.[/t]</p>
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p><b></b>
+<!--uts:end inner-->
+</body>
+</html>

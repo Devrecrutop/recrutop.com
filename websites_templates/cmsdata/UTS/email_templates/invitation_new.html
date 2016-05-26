@@ -1,0 +1,39 @@
+{* real agenda invitation template, used in OWS *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+{$salutation}
+</p>
+<p>
+[t]You have been invited for a(n) appointment with following details:[/t]
+</p>
+<p>
+[t]Appointment:[/t] {$inv.calendarItemTitle|escape}<br>
+[t]Start:[/t] {$beginDateTime|escape}<br>
+[t]End:[/t] {$endDateTime|escape}
+</p>
+
+<p>
+[t]Description:[/t] {$inv.calendarItemDescription|escape}
+</p>
+
+<p>
+<a href="{$acceptUrl|escape}">[t]Click here to accept the invitation[/t]</a>
+</p>
+<p>
+<a href="{$rejectUrl|escape}">[t]Click here to decline the invitation[/t]</a>
+</p>
+<p>
+<a href="{$suggestUrl|escape}">[t]Click here when you have another suggestion[/t]</a>
+</p>
+
+<p class="utsSignature">
+{$signature}
+</p>
+<!--uts:end inner-->
+</body>
+</html>

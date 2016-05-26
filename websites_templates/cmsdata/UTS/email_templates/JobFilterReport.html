@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+
+<div style="padding:1em;font-family:Arial,sans-serif">
+
+<h2>[t]Jobfilter report[/t]</h2>
+
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left;border-bottom:1px solid black;">[t]Reference #[/t]</th>
+<th style="text-align: left;border-bottom:1px solid black;">[t]External reference #[/t]</th>
+<th style="text-align: left;border-bottom:1px solid black;">[t]Title[/t]</th>
+<th style="text-align: left;border-bottom:1px solid black;">[t]Creation date[/t]</th>
+<th style="text-align: left;border-bottom:1px solid black;">[t]Modification date[/t]</th>
+</tr>
+</thead>
+<tbody>
+
+{foreach from=$jobs item=i}
+
+<tr>
+<th style="text-align: left;">{$i.ref}</th>
+<th style="text-align: left;">{$i.external_ref_nr}</th>
+<th style="text-align: left;">{$i.title}</th>
+<th style="text-align: left;">{$i.invoerdatum}</th>
+<th style="text-align: left;">{$i.wijzigingsdatum}</th>
+</tr>
+
+{/foreach}
+
+</tbody>
+</table>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

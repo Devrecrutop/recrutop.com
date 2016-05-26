@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if $messageId>
+<div class="moduleOuter">
+<!-- /UTS/blog/simpleMessage.html -->
+<if $messageId == "REACTION_APPROVED">
+<p>[t]You have approved the reaction.[/t]</p>
+<elseif $messageId == "REACTION_ALREADY_APPROVED">
+<p>[t]The reaction is already approved.[/t]</p>
+<elseif $messageId == "REACTION_DELETED">
+<p>[t]You have deleted the reaction.[/t]</p>
+<elseif $messageId == "NO_REACTION">
+<p>[t]There is no such reaction.[/t]</p>
+<elseif $messageId == "UNSUBSCRIBED">
+<p>[t]You have unsubscribed from this article.[/t]</p>
+<elseif $messageId == "NOT_SUBSCRIBED">
+<p>[t]You did not subscribe to this article.[/t]</p>
+</if>
+</div>
+</if>
+<!--uts:end inner-->
+</body>
+</html>

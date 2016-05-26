@@ -1,0 +1,53 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+function change_create_mode(){
+  var vmode = $("#create_mode").val();
+  
+  console.log(vmode);
+  
+  if (vmode == "profile") {
+    $("#selectVacancyProfile").css("visibility", "visible");
+  }
+  else{
+    $("#selectVacancyProfile").css("visibility", "hidden");
+  
+  }
+}
+//{/literal}
+</script>
+
+<div class="outer custOuter custPpOuter">
+<!-- /UTS/customers/vacancy_profile_select.html -->
+<!-- Template Webdevelopment validated 10-2013 -->
+	<h1 class="title">[t]Vacancy profile[/t]</h1>
+	{$CustomersMenu}
+	
+	<div class="text custPpText">[t]You can add a vacancy using a profile[/t]</div>
+	
+	<form action="[website]/index.php/page/customers_ext/command/create_vacancy_from_profile/bb/1" name="vacancyProfileForm" id="vacancyProfileForm" method="POST">
+		<input type="hidden" name="command" value="create_vacancy_from_profile">  
+		
+		<div class="formInput" id="createVacancyMode">
+		    <label for="create_mode">[t]Create a vacancy[/t]</label>
+		    <select name="create_mode" id="create_mode" onChange="change_create_mode()">
+		         <option value="normal" selected>[t]Empty vacancy[/t]</option> 
+		         <option value="profile">[t]From a profile[/t]</option>
+		    </select>
+		</div>
+		<div class="formInput selectVacancyProfile" id="selectVacancyProfile" style="visibility:hidden;">
+			<label for="vacancy_profile_id">[t]Select a profile[/t]</label>
+			<select name="vacancy_profile_id" id="vacancy_profile_id" >
+			{foreach from=$profiles key=profkey item=profitem}
+				<option value="{$profkey}">{$profitem}</option>
+			{/foreach}
+		    </select>
+		</div>
+		<div class="buttonContainer vacancyprofileButtonContainer">
+			<input class="button" type="submit" value="[th]Continue[/th]">
+		</div>
+	</form>
+</div>
+<!--uts:end inner-->

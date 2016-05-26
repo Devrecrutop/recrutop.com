@@ -1,0 +1,36 @@
+<div class="hookOuter nwHookOuter mDhOut">
+ <!-- /UTS/advsearch/custNetworkDetailHook.html -->
+<div class="hookHeader nwmDhT">[t]Customer details[/t]</div>
+
+<if $cust.address>
+<div class="hookSubHeader mDhSh mDhShAddress">[t]Address[/t]</div>
+<div class="hookText mDhTx mDhTxAddress">
+<span>{$cust.address|escape}</span>
+<span>{$cust.postalcode|escape}, {$cust.city|escape}, {$cust.country|escape}</span>
+{*cavailable values: wgid,address,postalcode,city,country,phone,fax,email,name,c*}
+</div>
+</if>
+
+{* start matchcriteria *}
+<if $critList>
+
+  <div class="hookSubHeader mDhSh">[t]Match criteria[/t]</div>
+  <foreach from=$critList item=crit>
+    <if !empty($crit._crvlist)>
+    <div class="hookItemContainer mDhItC">
+      <div class="hookItemTitle mDhItT">{$crit.name|escape}</div>
+      <div class="hookItemWord mDhIw">
+      <ul>
+        <foreach from=$crit._crvlist item=crval>
+	         <li>{$crval|escape}</li>
+        </foreach>
+      </ul>
+      </div>
+    </div>
+  </if>
+  </foreach>
+  
+</if>
+{* end matchcriteria *}
+
+</div>

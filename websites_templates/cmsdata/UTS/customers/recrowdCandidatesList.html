@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<div class="outer custOuter recrowdOuter rcwdCandListOuter">
+	<!-- /UTS/customers/recrowdCandidatesList.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Candidates[/t]</h1>
+	{$CustomersMenu}
+
+	<div class="text">[t]List of candidates.[/t]</div>
+
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<thead>
+		<tr>
+			<th>[t]Name[/t]</th>
+			<th>[t]Entry date[/t]</th>
+			<th>[t]Application status[/t]</th>
+			<th>[t]Motivation[/t]</th>
+		</tr>
+		</thead>
+
+		<tbody>
+		{foreach from=$candidates item=cand}
+		<tr>
+			<td><a href="/index.php/page/recrowd/bb/1/command/joinedCandidates/subcmd/detail/canid/{$cand.id}/vacid/{$vacancy_id}/openfrom/trajectories/">{$cand.candidate_name}</a></td>
+			<td>{$cand.entry_date|date_format:"%d-%m-%Y"}</td>
+			<td>
+				{if $cand.join_status eq 'interview'}[t]Interview[/t]
+				{elseif $cand.join_status eq 'rejected'}[t]Rejected[/t]
+				{elseif $cand.join_status eq 'hired'}[t]Hired[/t]
+				{elseif $cand.join_status eq 'revoked'}[t]Revoked[/t]
+				{else} [t]Pending[/t]
+				{/if}
+			</td>
+			<td>{$cand.motivation_text}</td>
+		</tr>
+		{foreachelse}  
+		<tr>
+			<td>&nbsp;</td>
+			<td>[t]No candidates[/t]</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		{/foreach}
+		</tbody> 
+	</table>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

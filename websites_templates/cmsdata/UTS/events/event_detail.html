@@ -1,0 +1,229 @@
+<html>
+<head>
+<title>medica evenementen detail</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/event_detail.html -->
+
+<script type="text/javascript">
+<literal>
+    function event_exhibitors_list_filter(searchcrit){
+        document.formEventExhibitors.exhibitorstarts.value=searchcrit;
+        document.formEventExhibitors.submit();    
+    }
+</literal>
+</script>
+
+
+<div class="outer eveOuter eveDetOuter">
+<!-- UTS/events/event_detail.html Custom build for JobNet 2010 -->
+
+<!--START_1-->
+<h1 class="title eveTitle eveDetTitle">{$event.Title}</h1>
+
+{if $vw_top}
+<div class="evdVWtop">
+	{$vw_top}
+</div>
+{/if}
+
+{if $wd_top}
+<div class="evdWDtop">
+	{$wd_top}
+</div>
+{/if}
+
+{if $event.categoryName}
+<h2 class="subHeader eveSh evdSh evdShCat">[t]Category[/t]</h2>
+<div class="text eveText evdText evdTextCat">{$event.categoryName}</div>
+{/if}
+
+<div class="photo1 evePhoto1 eveDetPhoto1"><div class="photo2 evePhoto2 eveDetPhoto2">{$Photo}</div></div>
+
+<h2 class="subHeader eveSh eveDetSh eveDetShLoc">[t]Locatie[/t]</h2>
+<div class="text eveText eveDetTextLoc">{$event.Location}</div>
+
+<h2 class="subHeader eveSh eveDetSh">[t]Datum[/t]</h2>
+<div class="text eveText eveDetText">
+	<span class="startDate eveSd eveDetSd">[t]{$StartDate} {$event.StartTime}[/t]<b></b></span>
+	<span class="endDate eveEd eveDetEd">[t]{$EndDate} {$event.EndTime}[/t]</span>
+</div>
+
+<h2 class="subHeader eveSh eveDetSh eveDetShLastDate">[t]Uiterste inschrijfdatum[/t]</h2>
+<div class="text eveText eveDetTextLastDate">{$ExpirationDate}</div>
+
+<h2 class="subHeader eveSh eveDetSh eveDetShCp">[t]Contactpersoon[/t]</h2>
+<div class="text eveText eveDetText eveDetTextCp">{$consultant}</div>
+
+{if $File}
+<h2 class="subHeader eveSh eveDetSh eveDetShInfo">[t]Uitgebreide informatie[/t]</h2>
+<div class="text eveText eveDetText eveDetTextInfo">{$File}</div>
+{/if}
+
+
+
+{foreach from=$CustomTextField item=i}
+<h2 class="subHeader eveSh eveDetSh eveDetShDesc eveDetShDcust">{$i.title}</h2>
+<div class="text eveText eveDetText eveDetTextDesc eveDetTextDcust">{$i.text}</div>
+{/foreach}
+
+<!-- Extra text fields -->
+{foreach from=$textFields item=tf}
+<h2 class="subHeader eveSh evdSh evdShDesc">{$tf.title}</h2>
+<div class="text eveText evdText evdTextDesc">{$tf.text}</div>
+{/foreach}
+
+{if $vw_bottom}
+<div class="evdVWbottom">
+{$vw_bottom}
+</div>
+{/if}
+
+{if $wd_bottom}
+<div class="evdWDbottom">
+{$wd_bottom}
+</div>
+{/if}
+
+<div class="buttonContainer eveBc eveDetBc">
+	<!--uts:begin button print-->
+	<input class="button eveBut eveDetButPrint" type="button" value="[tb]Afdrukken[/tb]" onClick="javascript:window.open('/index.php/page/foevents/command/print/evid/{$evid}/option/print/bb/1')" name="Button">
+	<!--uts:end button print-->
+	<!--uts:begin button back-->
+	<input class="button eveBut eveDetButBack" type="button" value="[tb]Terug[/tb]" onClick="location='/index.php/page/eventsapplicants/command/myevents/bb/1'" name="button">
+	<!--uts:end button back-->
+	<input class="button eveBut eveDetButMaf" type="button" value="[tb]Mail-a-friend[/tb]" onClick="location='/index.php/page/foevents/command/mailtofriend/evid/{$evid}/bb/1';" name="mailfriend">
+	{if $sourcelab_module}
+		<!--uts:begin button fairmap-->
+		<input class="button eveBut eveDetButBack" type="button" value="[tb]Fairmap[/tb]" onClick="location='/index.php/page/sourcelab/command/fairmap/eventId/{$evid}/bb/1';" class="button">
+		<!--uts:end button fairmap-->
+		{if $logged_in_candidate}
+		<if [uts:show_ticket_button] >
+		<!--uts:begin button ticket info-->
+		<input class="button eveBut eveDetButTicket" type="button" value="[tb]Ticket[/tb]" onClick="location='/index.php/page/sourcelab/command/entranceticket/eventId/{$evid}/bb/1';" class="button">
+		<!--uts:end button ticket info-->
+		</if>
+		{/if}
+	{/if}
+
+	<!--uts:begin button apply-->
+	{*we will only show the event details + print + back btn*}
+	
+	{*{if !$dont_show_registration_button}*}
+	{if !$already_applied} 
+	<input type="button"  name="Button4" value="[tb]Inschrijven[/tb]" onClick="location='/index.php/page/eventsapplicants/command/applyforevent/evid/{$evid}/bb/1';" class="button">
+		{if $exhibitorsforclient}
+		<input type="button"  name="button" value="[tb]Exhibitors[/tb]" onClick="location='/index.php/page/eventsfo/command/exhibitorslist/evid/{$evid}/bb/1';" class="button">
+		{/if}
+	{/if}
+	<!--uts:end button apply-->
+</div>
+
+
+{if $logged_in_candidate && $exhibitorsforclient}
+	<h2 class="subHeader eveSh eveDetSh eveDetShDesc">[t]Exhibitors[/t]</h2>
+	<div class="text">[t]Please make a selection using the drop down fields below[/t]</div>
+	<form method="post" action="/index.php/page/foevents/command/detail/evid/{$evid}/bb/1/" name="formEventExhibitors">
+		<input type="hidden" name="evid" value="{$evid}">
+		<input type="hidden" name="option" value="search">
+		<input type="hidden" name="exhibitorstarts" value="{$exhibitorstarts}">
+		
+		{if $show_items.display_branch_select}
+		<div class="formInput eveDetFiExhSearchBranch"><label>[t]Branch[/t]</label>
+			<select id="exhibitors_filter_branch" name="exhibitors_filter_branch" >
+			    <option label="---" value="">---</option>
+			<foreach from=$select_branches item=b>
+			    <option label="{$b.name}" value="{$b.id}" {if $b.id == $postdata.exhibitors_filter_branch}selected="selected"{/if}>{$b.name}</option>
+			</foreach>
+			</select>
+		</div>
+		{/if}
+		{if $show_items.display_status_select}
+		<div class="formInput eveDetFiExhSearchStatus"><label>[t]Status[/t]</label>
+			<select id="exhibitors_filter_status" name="exhibitors_filter_status">
+			    <option label="---" value="">---</option>
+			    <foreach from=$select_statuses item=s>
+			        <option label="{$s.name}" value="{$s.id}" {if $s.id == $postdata.exhibitors_filter_status}selected="selected"{/if}>{$s.name}</option>
+			    </foreach>
+			    <option label="[t]Without status[/t]" value="-5" {if $s.id == -5}selected="selected"{/if}>[t]Without status[/t]</option>
+			</select>
+		</div>
+		{/if}
+		{if $enable_search_button}
+		<!--uts:begin button search-->
+		<div class="formInputButton eveDetExhSearchButton"><input type="submit"  name="button" value="[tb]Search[/tb]" class="button"></div>
+		<!--uts:end button search-->
+		{/if}
+		<div class="cleaner eveDetSearchCleaner"></div>
+	</form>
+
+	<div class="text eveText eveDetText">
+	    {*
+	    <a href="/index.php/page/foevents/command/detail/evid/{$evid}/exhibitorstarts/full/bb/1">{if $exhibitorstarts == "full"}<b>{/if}#{if $exhibitorstarts == "full"}</b>{/if}</a>&nbsp;|&nbsp;
+	    {foreach from=$alphabetical_search item=a}
+	    <a href="/index.php/page/foevents/command/detail/evid/{$evid}/exhibitorstarts/{$a.startchar_ent}/bb/1">{if $exhibitorstarts == $a.startchar}<b>{/if}{$a.startchar}{if $exhibitorstarts ==  $a.startchar}</b>{/if}</a>&nbsp;|&nbsp;
+	    {/foreach}
+	    *}
+	    {if $show_items.navigation_type == "basic"}
+	    <a href="javascript:event_exhibitors_list_filter('nalpha');">{if $postdata.exhibitorstarts == "naplha"}<b>{/if}#{if $postdata.exhibitorstarts == "naplha"}</b>{/if}</a>&nbsp;|&nbsp;
+	    <a href="javascript:event_exhibitors_list_filter('A-K');">{if $postdata.exhibitorstarts == 'A-K'}<b>{/if}A-K{if $postdata.exhibitorstarts ==  'A-K'}</b>{/if}</a>&nbsp;|&nbsp;
+	    <a href="javascript:event_exhibitors_list_filter('L-Z');">{if $postdata.exhibitorstarts == 'L-Z'}<b>{/if}L-Z{if $postdata.exhibitorstarts ==  'L-Z'}</b>{/if}</a>&nbsp;|&nbsp;
+	    <a href="javascript:event_exhibitors_list_filter('full');">{if $postdata.exhibitorstarts == "full"}<b>{/if}[t]ALL[/t]{if $postdata.exhibitorstarts == "full"}</b>{/if}</a>
+	    {else}
+	    <a href="javascript:event_exhibitors_list_filter('nalpha');">{if $postdata.exhibitorstarts == "naplha"}<b>{/if}#{if $postdata.exhibitorstarts == "naplha"}</b>{/if}</a>&nbsp;|&nbsp;
+	    {foreach from=$alphabetical_search item=a}
+	    <a href="javascript:event_exhibitors_list_filter('{$a.startchar_ent}');">{if $postdata.exhibitorstarts == $a.startchar}<b>{/if}{$a.startchar}{if $postdata.exhibitorstarts ==  $a.startchar}</b>{/if}</a>&nbsp;|&nbsp;
+	    {/foreach}
+	    <a href="javascript:event_exhibitors_list_filter('full');">{if $postdata.exhibitorstarts == "full"}<b>{/if}[t]ALL[/t]{if $postdata.exhibitorstarts == "full"}</b>{/if}</a>
+	    {/if}
+	</div>
+
+	<form name="eventmainfrm" action="{$handler}" method="post">
+		<input type="hidden" name="command" value="save_included_exhibitors">
+		<input type="hidden" name="exhibitorstarts" value="{$exhibitorstarts}">
+		<input type="hidden" name="evid" value="{$evid}">
+
+	    <table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+		    <tr>
+		    <th class="aplTblHeader" colspan="3">[t]Exhibitor[/t]</th>
+		    {if $show_items.display_logo}{/if}
+		    </tr>
+	    {foreach from=$list_exhibitors item=e}
+	        <tr>
+	        <td style="border-bottom:1px solid light-grey;">
+	        <input type="checkbox" value="{$e.wg_id}" name="included_wg_ids_checked[]" {if $e.checked}checked="checked"{/if}>
+	        <input type="hidden" value="{$e.wg_id}" name="included_wg_ids_hidden[]">
+	        </td> 
+	        <td style="border-bottom:1px solid light-grey;">
+	        {$e.werkgever}
+	        </td>
+	        <td align="right" style="border-bottom:1px solid light-grey;">
+	        {if $show_items.display_logo}
+	        {if $e.network_picture || $e.network_logo}
+			<img src="/_images_upload/{if $e.network_picture}{$e.network_picture}{else}{$e.network_logo}{/if}" alt="{$e.werkgever}" border="0">
+			{/if}
+			{/if}
+			&nbsp;
+			</td>
+			</tr>
+	    {/foreach}
+	    </table>
+	
+		{if $list_exhibitors}
+		<div class="buttonContainer eveBc eveDetBc">
+			<!--uts:begin button save-->
+			<input class="button eveBut eveDetButBack" type="button" value="[tb]Save[/tb]" onClick="this.form.command.value='save_included_exhibitors'; this.form.submit()" class="button">
+			<!--uts:end button save-->
+		</div>
+		{/if}
+	</form>
+{/if}
+
+
+</div>
+<!--END_1-->
+<!--uts:end inner-->
+</body>
+</html>

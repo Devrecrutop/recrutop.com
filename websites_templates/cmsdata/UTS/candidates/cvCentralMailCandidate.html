@@ -1,0 +1,42 @@
+<!--START-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8;">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--END-->
+<!--uts:begin inner-->
+
+<!--START_Block1-->
+
+<!--START_Title1-->
+
+<!--END_Title1-->
+<!--START_Text1-->
+<div style="font-family: verdana, arial, sans-serif; font-size:12x;">
+<!-- /UTS/candidates/cvCentralMailCandidate.html -->
+
+<p></p>
+<p><b>[t]Dear {$r.candidate_name}[/t]</b></p>
+<p>[t]Your CV and registration is requested by <b>{$r.buyer_name}.</b> This interesting opportunity could be a chance for yourself. Please
+use the following link to accept or reject the offer (or to get yourself removed from our search database in case you do not want to receive
+any further offers).[/t]</p>
+<p>
+<a href="{$url}">[t]Click here to continue by accepting or rejecting the offer[/t]</a>
+</p>
+<p>[t]Kind regards[/t]</p>
+<p>
+{if ('' !== $seller_consultant_name)}
+<b>{$seller_consultant_name}</b><br>
+{/if}
+<b>{$r.seller_name}</b>
+</p>
+
+</div>
+<!--END_Text1-->
+
+<!--END_Block1-->
+
+<!--uts:end inner-->
+</body>
+</html>

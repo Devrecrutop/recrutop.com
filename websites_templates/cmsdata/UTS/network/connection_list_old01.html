@@ -1,0 +1,156 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>[t]Network Connection List[/t]</title>
+	<style type="text/css">
+		/* {literal} */
+		a img
+		{
+			border: none;
+		}
+		
+		.marginTop
+		{
+			margin-top: 1em;
+		}
+		
+		.center
+		{
+			text-align: center; /* Only for IE */
+			margin: 0px auto; /* Other browsers */
+		}
+		
+		*>.center /* Other browsers */
+		{
+			display: table; /* Allow resizing */
+			text-align: inherit; /* Disable IE centering */
+		}
+		
+		ul.horizontalMenu,
+		.horizontalMenu ul
+		{
+			margin: 0em;
+			padding: 0em;
+		}
+		
+		.horizontalMenu li
+		{
+			list-style: none;
+			display: inline;
+			margin: 0em;
+			padding: 0em 1em;
+		}
+		/* {/literal} */
+	</style>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<table border="0" cellpadding="0" cellspacing="0" class="vacsTable">
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0"  cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader"><H1>{$klantnaam} {if $CurrentLanguage eq 1 || $CurrentLanguage eq 0}Netwerk{else}Network{/if}</H1></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+{if $nameIntervals}
+<tr>
+<td class="pageLinkContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="pageLinkTbl">
+<tr>
+{foreach from=$nameIntervals key=intervalKey item=nameInterval}
+<td class="pageLink"><a href="{$thisWebsite}/index.php/page/network/greaterOrEqualTo/{$nameInterval.greaterOrEqualTo}/lessOrEqualTo/{$nameInterval.lessOrEqualTo}">{$intervalKey}</a></td>
+<td>|</td>
+{/foreach}
+</tr>
+</table>
+
+</td>
+</tr>
+{/if}
+
+{foreach from=$websites item=website}
+{assign var='websiteId' value=$website.id}
+{assign var='klantid' value=$website.klantid}
+<tr>
+<td class="vacancyItemContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="vacancyItemTbl">
+<tr>
+<td class="listImgSpace"><a href="{if $website.network_text}{$thisWebsite}/index.php/page/network/command/detail/tKlantid/{$website.klantid}/tSiteId/{$website.siteid}{else}{$website.website}" target="_blank{/if}" title="{$website.name}"><img src="/_images_upload/{if $website.network_image == "Picture" && $website.network_picture}{$website.network_picture}{else}{$website.network_logo}{/if}" alt="{$website.name}" border="0"></a></td>
+<td valign="top">
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="listFunctionContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="listFunctionTbl">
+<tr>
+<td class="listfunctionname"><a href="{if $website.network_text}{$thisWebsite}/index.php/page/network/command/detail/tKlantid/{$website.klantid}/tSiteId/{$website.siteid}{else}{$website.website}" target="_blank{/if}" title="{$website.name}">{$website.name}</a></td>
+</tr>
+<tr>
+<td class="listChapo">{foreach from=$websitesType.$websiteId key=i item=websiteType}{if $i}, {/if}{$websiteTypes.$websiteType}{/foreach}&nbsp;</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="listChapoContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="listChapoTbl">
+<tr>
+<td class="listChapo">{$website.portfolio_text|truncate:300:"..."}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+{/foreach}
+
+{if $nameIntervals}
+{if $websites}
+<tr>
+<td class="pageLinkContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="pageLinkTbl">
+<tr>
+{foreach from=$nameIntervals key=intervalKey item=nameInterval}
+<td class="pageLink"><a href="{$thisWebsite}/index.php/page/network/greaterOrEqualTo/{$nameInterval.greaterOrEqualTo}/lessOrEqualTo/{$nameInterval.lessOrEqualTo}">{$intervalKey}</a></td>
+<td>|</td>
+{/foreach}
+</tr>
+</table>
+
+</td>
+</tr>
+{else}
+<tr>
+<td class="pageLinkContainer">
+
+[t]There are no connections in this range.[/t]
+
+</td>
+</tr>
+{/if}
+{/if}
+
+</table>
+<!--uts:end inner-->
+</body>
+</html>

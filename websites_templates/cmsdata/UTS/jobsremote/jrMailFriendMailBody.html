@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+<!-- /UTS/jobsremote/jrMailFriendMailBody.html -->
+<table border="0" cellpadding="0" cellspacing="0" class="mailAlignTbl">
+<tr>
+<td class="mailAlign">
+
+<table border="0" cellpadding="0" cellspacing="0" class="mailTbl">
+
+<!--START_Block1-->
+<tr>
+<td valign="top" class="mailTextContainer">
+<table border="0" cellpadding="0" cellspacing="0" class="mailTextTbl">
+<!--START_Text1-->
+<tr>
+<td class="mailText">
+	[t]<p>Beste {$to_naam},</p>
+	<p>Ik kwam op {$website} een vacature tegen waar ik uw aandacht op wil vestigen.
+		<br><br>
+		<strong>Opmerkingen van {$naam} :</strong>
+	</p>
+	<p>{$opmerkingen}</p>
+	<p> <b>{$functie_o} / {$locatie}</b></p>
+	<p> {$functieo}...</p>[/t] 
+	<a href="{$remote_link}" class="mailLnk">[t]Click here for more information[/t]<!--SingleWordLink1--></a>
+	<br />
+	<br />
+</td>
+</tr>
+<!--END_Text1-->
+</table>
+</td>
+</tr>
+<!--END_Block1-->
+
+{if $as_statement}
+<tr>
+<td valign="top" class="mailFooterContainer">
+<table border="0" cellpadding="0" cellspacing="0" class="mailFooterTbl">
+<tr>
+<td class="mailFooter">{$as_statement}</td>
+</tr>
+</table>
+</td>
+</tr>
+{/if}
+
+</table>
+
+</td>
+</tr>
+</table>
+<!--uts:end inner-->
+
+</body>
+</html>

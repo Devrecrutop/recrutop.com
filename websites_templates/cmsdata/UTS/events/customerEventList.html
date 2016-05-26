@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplListOuter">
+<!-- /UTS/events/customerEventList.html -->
+<h1 class="title aplTitle aplListTitle">[t]Event list[/t]</h1>
+{$menu}
+<div class="text aplText aplListText">[t]Here you can find a list of events.[/t]</div>
+<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+<tr>
+<th class="aplTblHeader">[t]Event[/t]</th>
+<th class="aplTblHeader">[t]Date, time[/t]</th>
+<th class="aplTblHeader">[t]Location[/t]</th>
+{if $show_items.display_candidate_button}
+<th class="aplTblHeader">[t]Applicants[/t]</th>
+{/if}
+
+</tr>
+<foreach from=$eventlist item=app>
+<tr>
+<td class="aplListLink"><a href="/index.php/page/foevents/command/customerevent/evid/{$app.id}/bb/1">{$app.Title}</a></td>
+<td class="aplListDateTime">{$app.StartDate} {$app.StartTime}</td>
+<td class="aplListLocation">{$app.Location}</td>
+{if $show_items.display_candidate_button}
+<td class="aplListLink"><input class="button" type="button" value="[tb]Candidates[/tb]" onClick="location='/index.php/page/foevents/command/eventapplicants/evid/{$app.id}/bb/1'" name="button"></td>
+{/if}
+</tr>
+<foreachelse>
+<tr>
+<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="3">[t]There are no events...[/t]</td>
+</tr>
+</foreach>
+</table>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

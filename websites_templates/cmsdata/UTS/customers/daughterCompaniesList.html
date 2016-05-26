@@ -1,0 +1,59 @@
+<!-- /UTS/customers/daughterCompaniesList.html -->
+<!--uts:begin inner-->
+
+<script type="text/javascript">
+
+var vHandler = '{$handler|escape}';
+
+//{literal}
+
+function openRelation(relationId) {
+    window.location.href = vHandler + '/bb/1/command/detail/id/' + relationId;
+}
+
+//{/literal}
+</script>
+
+<div class="outer">
+
+    <h1 class="title">{if $foCustomerDaughterCompanyMenu}{$foCustomerDaughterCompanyMenu|escape}{else}[t]Daughter companies[/t]{/if}</h1>
+
+    {$CustomersMenu}
+
+    {if $relations}
+
+        <table style="width:100%;" class="tatListTable">
+            <tr>
+                <th>[t]Company name[/t]</th>
+                <th>[t]Type[/t]</th>
+                <th>[t]Status[/t]</th>
+            </tr>
+            {foreach from=$relations item=r}
+                <tr onclick="openRelation({$r.id});" style="cursor:pointer;">
+                    <td>{$r.relation|escape}</td>
+                    <td>
+                        {if $r.types}
+                            {foreach from=$r.types name=typesLoop item=type}
+                                {$type|escape}{if !$smarty.foreach.typesLoop.last},{/if}
+                            {/foreach}
+                        {else}
+                            &nbsp;
+                        {/if}
+                    </td>
+                    <td>{if $r.status}{$r.status|escape}{else}&nbsp;{/if}</td>
+                </tr>
+            {/foreach}
+        </table>
+
+    {else}
+
+        <div class="intro">
+            [t]There are no daughter companies defined.[/t]
+        </div>
+
+    {/if}
+
+</div>
+
+<!--uts:end inner-->
+

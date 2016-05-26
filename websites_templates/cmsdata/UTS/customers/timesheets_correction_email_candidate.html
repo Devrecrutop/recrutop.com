@@ -1,0 +1,18 @@
+{* this email is sent to the candidate if werkgevers contactpersons who has rights to correct tsc set status of tsc corrction *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<p>[t]Your timesheet from {$h.period_start} to {$h.period_end} for assignment {$assName} has been dispparoved.[/t]</p>
+<p>[t]Check the notes to see possible suggestions about the times that have been filled in.[/t]</p>
+<p>[t]Click on the link below to open this timesheet.[/t]</p> 
+<p><a href="{$correctLink}">{$correctLink}</a></p>
+
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplEnrollOuter">
+<!-- /UTS/applicants/enrollLeaveCV.html -->
+<h1 class="title aplTitle aplEnrollTitle">[t]Leave your details[/t]</h1>
+<div class="intro aplIntro aplEnrollIntro">
+</div>
+
+<form action="/index.php/page/applicants/bb/1/command/enrollLeaveCVMail" method="post" enctype="multipart/form-data">
+<input type="hidden" name="vid" value="{$vid}">
+<div class="formInput infoFormInput">
+<label>[tg]Name[/tg]</label>
+<input type="text" name="name">
+</div>
+
+<div class="formInput infoFormInput">
+<label>[tg]Email[/tg]</label>
+<input type="text" name="email">
+</div>
+
+<div class="formInput infoFormInput">
+<label>[tg]CV[/tg]</label>
+<input type="file" name="cvfile">
+</div>
+
+
+<h2 class="subHeader">[tg]Verificatie[/tg]</h2>
+<div class="text">[tg]Voer de code van het plaatje hieronder in om het formulier te verzenden.[/tg]</div>
+
+<div class="formInput infoFormInput">
+<label>[tg]Plaatje[/tg]</label>
+<img src="/_javascript_global/securimage/securimage_show.php">
+</div>
+
+<div class="formInput infoFormInput">
+<label>[tg]Code[/tg]</label>
+<input type="text" name="captcha_code">
+</div>
+
+<div class="buttonContainer"><input class="button" type="submit" name="Submit" value="[th]Versturen[/th]"></div>
+</div>
+</form>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

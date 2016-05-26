@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="generator" content="PSPad editor, www.pspad.com">
+<title>
+</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer pclOuter">
+<!-- UTS/pcl/candidates.div.html -->
+
+<h1 class="title pclTitle">[t]Public candidates list[/t]</h1>
+
+{if $use_filter_in_pcl && count($filter)>0}
+<!-- place for filter form-->
+<form method="post">
+<input type="hidden" name="command" value="set_filter">
+{foreach from=$filter item=item }
+<div class="formInput pclFi">
+<label>{$item.name}</label>
+<select name="filter[{$item.field}]">
+{$item.options}
+</select>
+</div>
+{/foreach}
+<div class="buttonContainer pclBc"><input type="submit" name="Submit" value="Search" class="button"></div>
+</form>
+{/if}
+
+{foreach from=$candidates item=rec key=id}
+<div class="itemContainer pclIc">
+<h3 class="itemTitle pclIt"><a href="{$pageurlb}/command/cand_detail/candcode/{$rec.hash}">{$rec.uid}</a></h3>
+<div class="itemWord pclIw pclCity">{$rec.woonplaats}</div>
+{if $rec.age}
+<div class="itemWord" plcIw pclAge>[t]Age:[/t]{$rec.age}</div>
+{/if}
+</div>
+{/foreach}
+
+{if $pages>1}
+<table cellspacing="0" cellpadding="0" border="0" class="navTbl pclNavTbl">
+<tr>
+<td class="navPrevious pclPrev">
+<a href="{$pageurl}/currpage/1">[t]First[/t]</a>&nbsp;
+</td>
+<td class="navPrevious pclPrev">
+{if $currPage>1}<a href="{$pageurl}/currpage/{$currPage-1}">[t]Previous[/t]</a>&nbsp;{/if}
+</td>
+<td class="navNumber pclNum">
+{foreach from=$paging key=page item=show}
+	{if ($show == 1)}
+		{if ($page != $currPage)}<a href="{$pageurl}/currpage/{$page}">{$page}</a>{/if}
+		{if ($page == $currPage)}<a href="{$pageurl}/currpage/{$page}">{$page}</a>{/if}
+	{/if}
+	{if ($show == 0)} ... {/if}
+{/foreach}
+
+</td>
+<td class="navNext pclNext">
+{if $currPage<$pages}&nbsp;<a href="{$pageurl}/currpage/{$currPage+1}">[t]Next[/t]</a>{/if}
+</td>
+<td class="navPrevious pclPrev">
+&nbsp;<a href="{$pageurl}/currpage/{$pages}">[t]Last[/t]</a>
+</td>
+</tr>
+</table>
+{/if}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>                
+</head>
+<body>
+<!--uts:begin inner-->
+
+<link type="text/css" href="/_css_global/candidateScheduleCalendar.css" rel="stylesheet" media="all">
+
+{literal}
+<script type="text/javascript">
+<!--
+{/literal}
+{* JS VARIABLES BEGIN *}  
+  var exceptionMsg = '{$exceptionMsg|escape:javascript}';
+  var exceptionCode = parseInt('{$exceptionCode|escape:javascript}');
+
+{* JS VARIABLES END *}  
+{literal}
+  
+  function addScheduleByDateTime(date, hour, minute)
+  {
+    //alert(date+', '+hour+', '+minute);
+    
+    $('#calPresetDate').val(date);
+    $('#calPresetHour').val(hour);
+    $('#calPresetMinute').val(minute);
+    
+    $('#calCommand').val('addschedulepreset');
+    $('#csc_cal_form').submit();        
+  }
+  
+  /**
+   * submit form and goto month
+   */     
+  function submitForm()
+  {  
+    $('#calCommand').val('calendar');
+    $('#csc_cal_form').submit();      
+  }
+  
+  /**
+   * sumbmit form and do not change month
+   */     
+  function submitFormNoDate()
+  {    
+    $('#calCommand').val('calendarnodate');
+    $('#csc_cal_form').submit();    
+  }
+  
+  /**
+   * got next/prew week
+   */     
+  function goToWeek(weekNr, weekYear)
+  {            
+    $('#gotoWeekNr').val(weekNr);
+    $('#gotoWeekYear').val(weekYear);
+    $('#csc_cal_goto').submit();    
+  }
+  
+  /**
+   *
+   */     
+  function addSchedule()
+  {
+    // open dlg and preset dates this week nr        
+    //$('#calCommand').val('addschift');
+    $('#calCommand').val('addschedule');
+    $('#csc_cal_form').submit();        
+  }
+  
+  function finishPlanning()
+  {
+    $('#calCommand').val('finish');
+    $('#csc_cal_form').submit();        
+  }
+  
+  function editSchiftItem(sid, type, source, isEditable)  
+  {    
+    if(type != 'shift' || source != '' || isEditable == '0')
+    {
+      alert('[th]This item can not be edited![/th]');
+      return;
+    }
+    // open dlg and preset dates this week nr    
+    
+    //$('#calCommand').val('editschift');
+    $('#calCommand').val('editschedule');
+    $('#calScheduleId').val(sid);
+    $('#csc_cal_form').submit();          
+  }
+  
+  // initialize document	
+  $(document).ready(function () {
+  
+    if(exceptionMsg.length > 0 || !isNaN(exceptionCode))
+    {
+      var displayMsg = '[th]General planning error occurred[/th]'; 
+      
+      if(isNaN(exceptionCode))
+      {
+        // exception message from add/edit/delete dialogs if thre is not exception code
+        displayMsg = exceptionMsg;
+      }
+      else
+      {
+        switch(exceptionCode)
+        {
+          case 1000: displayMsg = '[th]General planning error occurred[/th]'; break;
+          case 1100: displayMsg = '[th]Job planning error occurred[/th]'; break;
+          case 1400: displayMsg = '[th]Job planning error occurred[/th]'; break;
+          case 1200: displayMsg = '[th]Candidate planning error occurred[/th]'; break;          
+          case 1201: displayMsg = '[th]Undefined shift[/th]'; break;
+          case 1202: displayMsg = '[th]Undefined job shift[/th]'; break;
+          case 1203: displayMsg = '[th]Undefined planning style[/th]'; break;
+          case 1204: displayMsg = '[th]This time range does not cover whole shift for job[/th]'; break;
+          case 1205: displayMsg = '[th]Range is not inside existing candidate shift[/th]'; break;          
+          case 1300: displayMsg = '[th]Candidate planning error occurred[/th]'; break;          
+          case 1301: displayMsg = '[th]You can not use this type of recurrence for weekend days[/th]'; break;
+          case 1302: displayMsg = '[th]Unknow day to repeat[/th]'; break;
+          case 1303: displayMsg = '[th]Unknown recurrence type[/th]'; break;
+          case 1304: displayMsg = '[th]There are no items to add, check your setup[/th]'; break;
+          case 1305: displayMsg = '[th]You are trying to add duplicate entry [/th]'; break;
+          case 1306: displayMsg = '[th]Unsupported view type[/th]'; break;          
+          case 2000: displayMsg = '[th]Invalid Date - Time format[/th]'; break;
+          case 3000: displayMsg = '[th]End precede to Start Date/Time[/th]'; break;
+          case 4000: displayMsg = '[th]Planning in historical data is not possible[/th]'; break;
+          case 5000: displayMsg = '[th]Missing or incorrect argument[/th]'; break;
+          case 6000: displayMsg = '[th]Incorrect or undefined entity[/th]'; break;
+          case 7000: displayMsg = '[th]Duplicate entry[/th]'; break;
+                                    
+          default : displayMsg = '[th]General planning error occurred[/th]';
+        }
+      }
+      
+      alert(displayMsg);
+    }
+    
+  });  
+  
+//-->
+</script>
+{/literal}
+
+<!-- /UTS/applicants/candidateScheduleCalendar.html -->
+<div class="outer aplOuter aplScCalOuter">
+	<h1 class="title aplTitle aplScCalTitle">[t]Candidate schedule[/t]</h1>
+	{$menu}
+	<div style="width:{if $cScViewType == 1 || $cScViewType == 2}520px;{else}700px;{/if}">
+		<form name="csc_cal_goto" id="csc_cal_goto" action="{$handler}" method="post">
+			<input type="hidden" name="command" id="gotoCommnd" value="setweeknr">
+			<input type="hidden" name="week_nr" id="gotoWeekNr" value="">
+			<input type="hidden" name="week_year" id="gotoWeekYear" value="">
+		</form>
+		<div class="form aplScCalForm">
+			<form name="csc_cal_form" id="csc_cal_form" action="{$handler}" method="post">    
+				<input type="hidden" name="command" id="calCommand" value="calendar">
+				<input type="hidden" name="week_nr" id="calWeekNr" value="{$cScWeekInfo.weekNr}"> {* TO PRESET DATE IN ADD DIALOG BY ADD BUTTON *}
+				<input type="hidden" name="week_year" id="calWeekYear" value="{$cScWeekInfo.year}"> {* TO PRESET DATE IN ADD DIALOG BY ADD BUTTON *}
+				<input type="hidden" name="schedule_id" id="calScheduleId" value=""> {* USED FOR EDIT ITEM *}    
+				<input type="hidden" name="preset_date" id="calPresetDate" value=""> {* TO PRESET DATE IN ADD DIALOG BY DBL CLICK ACTION*}
+				<input type="hidden" name="preset_hour" id="calPresetHour" value=""> {* TO PRESET DATE IN ADD DIALOG BY DBL CLICK ACTION*}
+				<input type="hidden" name="preset_minute" id="calPresetMinute" value=""> {* TO PRESET DATE IN ADD DIALOG BY DBL CLICK ACTION*}
+				
+				<div class="buttonContainer">
+					<input type="button" name="bttnAddSchedule" value="[th]Add Schedule[/th]" onclick="addSchedule()">
+					{if $enableFinishedButton}
+					<input type="button" name="bttnFinishPlanning" value="[th]Finish planning[/th]" onclick="finishPlanning()">
+					{/if}
+				</div>
+				<div class="formInput aplScCalInput">
+					<label>[t]Go to[/t]:</label>
+					{html_uts_select_date prefix="csc_date_" start_year=-5 end_year=+5 display_days=false all_extra='onChange="submitForm();"' time=$cScFromTs}
+				</div>
+				
+				{if $utsTplProps.display_time_range}
+					<div class="formInput aplScCalInput">
+						<label>[t]From[/t]:</label>
+						{html_select_time use_24_hours=true display_seconds=false minute_interval=60 minute_extra="disabled" hour_extra='onChange="submitFormNoDate();"' prefix="csc_from_time_" time=$cScFromTs}
+					</div>
+					<div class="formInput aplScCalInput">
+						<label>[t]To[/t]:</label>
+						{html_select_time use_24_hours=true display_seconds=false minute_interval=60 minute_extra="disabled" hour_extra='onChange="submitFormNoDate();"' prefix="csc_to_time_" time=$cScToTs}
+					</div>
+				{/if}
+				<div class="formInput aplScCalInput">
+					<label>[t]Show[/t]:</label>
+					{if $utsTplProps.display_hrs_fractions}
+						<select name="csc_fraction" onChange="submitFormNoDate();">
+							<option value="1" {if $cScFraction == 1}selected="selected"{/if}>[th]Hours[/th]</option>
+							<option value="2" {if $cScFraction == 2}selected="selected"{/if}>[th]Half Hours[/th]</option>
+							<option value="4" {if $cScFraction == 4}selected="selected"{/if}>[th]Quarter Hours[/th]</option>
+						</select>
+					{/if}
+					<select name="csc_view_type" onChange="submitFormNoDate();">        
+						{if $utsTplProps.enable_view_work_week}
+							<option value="2" {if $cScViewType == 2}selected="selected"{/if}>[th]Work Week[/th]</option>
+						{/if}
+						{if $utsTplProps.enable_view_week}
+							<option value="3" {if $cScViewType == 3}selected="selected"{/if}>[th]Week[/th]</option>
+						{/if}
+						{if $utsTplProps.enable_view_month}
+							<option value="4" {if $cScViewType == 4}selected="selected"{/if}>[th]Month[/th]</option>
+						{/if}
+					</select>
+				</div>
+				<div class="cScCalPrev cScCalPrevWeek">
+					<a href="#" onClick="goToWeek('{$cScWeekInfo.prevWeekNr}','{$cScWeekInfo.prevYear}');return false;">[t]Previous Week[/t]</a>
+				</div>
+				<div class="cScCalNext cScCalNextWeek">
+					<a href="#" onClick="goToWeek('{$cScWeekInfo.nextWeekNr}','{$cScWeekInfo.nextYear}');return false;">[t]Next Week[/t]</a>
+				</div>
+        <div class="cleaner"></div>           
+			</form>
+		</div>
+		<table border="0" cellpadding="0" cellspacing="1" class="cSsCalTbl">
+			<tr> 
+				<td class="cSsCalTblHeader" style="width: 60px !important; ">[tg]Time[/tg]</td>
+				{* USE DAYS IN 1ST ROW AS HEADER *}
+				{foreach name=header from=$timerows[$firsRowId].days item=d}							
+					{if $smarty.foreach.header.total == 1}			
+						{* ONE DAY VIEW *}	
+						<td class="cSsCalTblHeader">[tg]Description[/tg]</td>
+					{else}				
+						{* 5 DAYS IN WORKWEEK OR 7 DAYS IN REGULAR WEEK *}
+						<td class="cSsCalTblHeader" {*width="{if $smarty.foreach.header.total == 5}20%{else}14%{/if}"*}>
+							<span style="cSsCalTblHeaderSp" style="white-space: nowrap;">{$d.dayName|truncate:$daylen:""} {$d.date|date_format:$dateFormat}&nbsp;
+						</td>
+					{/if}
+				{/foreach}			
+			</tr>
+			{foreach from=$timerows item=t}		
+				{* TIMEROWS LOOP BEGIN *}	
+				<tr class="{cycle values='cSsRowFlip,cSsRowFlop'}">
+					{foreach from=$t.days item=r name=day_loop}
+						{* DAYS COLS LOOP BEGIN *}			
+						{if ($smarty.foreach.day_loop.first)}
+							{* FIRST ROW DISPLAYS THE TIME *}				
+							<td class="cScCalHours"><span style="white-space: nowrap;"><font size=+1>{$t.hour_str}</font> : {$t.minute_str}</span></td>
+						{/if}
+						<td class="cScCalData" {if !$r.items}onDblClick="addScheduleByDateTime('{$r.date}', '{$t.hour}', '{$t.minute}')"{/if}>
+							{if $r.items}
+								{* IF ITEMS BEGIN *}
+								{foreach from=$r.items item=i}
+									{* ITEMS LOOP BEGIN *}				
+									<div id="Layer{$i.zIndex}" class="cScCalItem" style="height:{$i.divHeight}px; margin-top: {if $i.marginTop}{$i.marginTop}{else}0{/if}px; z-index:{$i.zIndex}; {if $i.bgColor}background-color: {$i.bgColor}{/if}; overflow: hidden;" title="{$i.from_time|date_format:'%H:%M'}&nbsp;-&nbsp;{if $i.to_time == '24:00:00'}00:00{else}{$i.to_time|date_format:"%H:%M"}{/if}&nbsp;{if $i.status == 'available'}[tgh]Available[/tgh]{elseif $i.status == 'notavailable'}[tgh]Not available[/tgh]{elseif $i.status == 'maybeavailable'}[tgh]Maybe available[/tgh]{/if}{if $i.note}&nbsp;-&nbsp;{$i.note|escape}{/if}" onDblClick="editSchiftItem('{$i.id}', '{$i.type}', '{$i.source_ident}', '{$i.isEditable}');">
+										<!--ITEM BODY BEGIN-->
+										<div class="cSsCalItemLink">
+											{$i.from_time|date_format:"%H:%M"}&nbsp;-&nbsp;{if $i.to_time == '24:00:00'}00:00{else}{$i.to_time|date_format:"%H:%M"}{/if}&nbsp; 
+											{if $i.status == 'available'}
+												[tgh]Available[/tgh]
+											{elseif $i.status == 'notavailable'}
+												[tgh]Not available[/tgh]&nbsp;
+												{* SUBSTATUS *}
+												{if $i.substatus == 'other'}([tgh]Other[/tgh])
+												{elseif $i.substatus == 'job'}
+													([tgh]Job[/tgh]: {$i.title|escape})
+												{elseif $i.substatus == 'assignment'}
+													([tgh]Assignment[/tgh]: {$i.title|escape})
+												{elseif $i.substatus == 'agendaitem'}
+													([tgh]Agenda[/tgh]: {$i.title|escape})
+												{elseif $i.substatus == 'sick'}
+													([tgh]Sick[/tgh])
+												{elseif $i.substatus == 'holidays'}
+													([tgh]Holidays[/tgh])
+												{elseif $i.substatus == 'roster'}
+													([tgh]Roster[/tgh])								   	  									   	  	
+												{/if}
+											{elseif $i.status == 'maybeavailable'}
+												[tgh]Maybe available[/tgh]
+											{/if}            
+											{if $i.note}
+												<div class="cSsCalItemAvai">{$i.note|escape}</div>
+											{/if}																																																						   	  																						
+										</div>
+										<!--ITEM BODY END-->				
+									</div>
+									{* ITEMS LOOP END *}
+								{/foreach}
+								{* IF ITEMS END *}
+							{/if}
+						</td>			
+						{* DAYS COLS LOOP END *}
+					{/foreach}
+				</tr>
+				{* TIMEROWS LOOP END *}
+			{/foreach}
+		</table>
+	</div>
+	<div class="cScCalLegend">
+		{* DEFINITION OF ALL COLORS IS IN FILE class.CandidateSchiftSchedule*}     			 		        
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #00cc00;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]Available[/t]</div>
+		</div>              
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #ffff33;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]Maybe available[/t]</div>
+		</div>              
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #ff3333;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]Not Available[/t]</div>
+		</div>
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #0099ff;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]Assignment[/t]</div>
+		</div>
+	</div>    
+	{*  
+	<div class="cScCalLegend">        
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #ffffff;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]N/A&nbsp;-&nbsp;Other[/t]</div>
+		</div>
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #0099ff;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]N/A&nbsp;-&nbsp;Assignment[/t]</div>
+		</div>
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #c8c8c8;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]N/A&nbsp;-&nbsp;Roster[/t]</div>
+		</div>
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #006600;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]N/A&nbsp;-&nbsp;Preplanning[/t]</div>
+		</div>
+	</div>
+	*}
+	{*
+	WE DO NOT WANT SEE THIS NOW, WHAT WILL BE NEXT?
+	<div class="cScCalLegend">          
+		<div class="cScCalLegendColor" style="background-color: #ff3333;">[t]N/A&nbsp;-&nbsp;Job[/t]</div>        
+		<div class="cScCalLegendColor" style="background-color: #ff3333;">[t]N/A&nbsp;-&nbsp;Sick[/t]</div>
+		<div class="cScCalLegendColor" style="background-color: #ff3333;">[t]N/A&nbsp;-&nbsp;Holidays[/t]</div>    
+		<div class="cScCalLegendColor" style="background-color: #ff3333;">[t]N/A&nbsp;-&nbsp;Agenda[/t]</div>                                                                                        
+	</div>
+	*}  
+</div>
+<!--uts:end inner-->
+</body>
+</html>

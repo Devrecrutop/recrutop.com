@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>WebUserForm2</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/agents/webUserProfilePage2.html -->
+
+
+<SCRIPT>
+
+</SCRIPT>
+
+<table class="vacstable" cellpadding="0" cellspacing="0" border="0">
+<form name="form" method="post" action="/index.php/page/webuser/command/savewebuser/WUpage/2/bb/1">
+
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]PageTitle[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+<!--START_MENUBAR-->
+<tr>
+<td class="pageLinkContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="pageLinkTbl">
+<tr>
+<td class="pageLink"><a href="/index.php/page/webuser/command/myprofile/WUpage/1/bb/1">[t]SingleWord1[/t]<!--SingleWordLink1--></a></td>
+<!--<td class="pageLink"><a href="/index.php/page/webuser/command/myprofile/WUpage/2/bb/1">[Single Word2]SingleWordLink2</a></td>-->
+<td class="pageLink"><a href="/index.php/page/webuser/command/myprofile/WUpage/3/bb/1">[t]SingleWord3[/t]<!--SingleWordLink3--></a></td>
+<!--START_VIDEOBOARD-->
+<td class="pageLink">| <a href="/index.php/page/CandidatesRemote/command/myprofile/page/4/bb/1">[t]SingleWord9[/t]<!--SingleWordLink9--></a></td>
+<!--END_VIDEOBOARD-->
+<td class="pageLink"><a href="/index.php/page/webuser/command/logout/bb/1">[t]SingleWord4[/t]<!--SingleWordLink4--></a></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_MENUBAR-->
+
+<!--START_Block1-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<!--START_Title1-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text1-->
+<tr>
+<td class="formText">[t]Text1[/t]</td>
+</tr>
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td class="itemContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="itemTbl">
+<tr>
+<td class="HQuestion">[t]SingleWord5[/t]<!--SingleWordLink5--></td>
+<td class="FieldContainer"><input type="text" name="FirstName" value="{$wum.FirstName}"></td>
+</tr>
+<tr>
+<td class="HQuestion">[t]SingleWord6[/t]<!--SingleWordLink6--></td>
+<td class="FieldContainer"><input type="text" name="InFix" value="{$wum.InFix}"></td>
+</tr>
+<tr>
+<td class="HQuestion">[t]SingleWord7[/t]<!--SingleWordLink7--></td>
+<td class="FieldContainer"><input type="LastName" name="LastName" value="{$wum.LastName}"></td>
+</tr>
+<tr>
+<td class="HQuestion">[t]SingleWord8[/t]<!--SingleWordLink8--></td>
+<td class="FieldContainer">
+
+<select name="Gender">
+<option value="U">[t]System1[/t]</option>
+<option value="M" {if $wum.Gender == "M"}selected{/if}>[t]System2[/t]</option>
+<option value="F" {if $wum.Gender == "F"}selected{/if}>[t]System3[/t]</option>
+</select>
+
+</td>
+</tr>
+<tr>
+<td class="HQuestion">[t]SingleWord9[/t]<!--SingleWordLink9--></td>
+<td class="FieldContainer">
+
+<select name="preferred_language">
+	 {html_options options=$langNames selected=$wum.preferred_language}
+</select>
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+
+
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="error"><!--ERROR--></td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td class="formButton"><input type="submit" name="Submit" value="[t]Button1[/t]" class="button"><!--ButtonLink1--></td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+
+</form>
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+</table>
+
+<!--uts:end inner-->
+</body>
+</html>

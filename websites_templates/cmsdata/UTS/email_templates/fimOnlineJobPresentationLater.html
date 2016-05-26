@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/email_templates/fimOnlineJobPresentationLater.html -->
+
+<p>
+        [t]Dear {$applicant_name|escape},[/t] 
+</p>
+
+<p>
+[t]Please use the following link to fill in the form that is necessary to complete your application for job {$job_title}.[/t]
+<a href="{$hashed_link}">{$hashed_link}</a>
+</p>
+
+<p class="utsSignature">
+[t]Regards,[/t]<br>
+{$sender_name}<br>
+{$client}<br>
+{$website}
+</p>
+
+
+
+<!--uts:end inner-->
+</body>
+</html>

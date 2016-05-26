@@ -1,0 +1,14 @@
+<script type="text/javascript" defer="true">
+animatedcollapse.addDiv('sqPanel', 'fade=1,persist=0,hide={if [uts:collapse_storedqueries] == "92"}0{else}1{/if}')
+</script>
+<!-- /UTS/advsearch/storedQueries.inc.html -->
+<div class="optionListContainer facetListCon">
+	<div class="optionListTitle facetListTitle"><a href="javascript:animatedcollapse.toggle('sqPanel')" title="[th]Expand/collapse[/th]">[t]Stored queries[/t]</a></div>
+	<div class="optionList facetList" id="sqPanel">
+		<ul>  
+		<foreach from=$sqList item=sq>
+			<li><a class="cluetips2" title="{$sq.name|escape} [th]detail[/th]" rel="{$handler}/command/sqtipdetail/id/{$sq.id}/">{$sq.name|escape}</a></li>
+		</foreach>
+		</ul>
+	</div>
+</div>

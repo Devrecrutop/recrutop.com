@@ -1,0 +1,93 @@
+<html>
+	<head>
+		<META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=UTF-8">
+		{literal}
+		<style>
+			body table:last-child {
+				page-break-after: avoid !important;
+			}
+			table {
+				page-break-after: always;
+			}
+			h1 {
+				font-size:15pt;
+			}
+
+			table {
+				border-spacing: 0;
+				border-collapse: collapse;
+				width:100%;
+			}
+			table tr td {
+				border:1px solid black;
+				padding:8px;
+			}
+			tr.candidateRow td {
+				padding:4px;
+			}
+			body{
+			  -webkit-print-color-adjust:exact;
+			}
+			.upper {
+				text-transform: uppercase;
+			}
+			.notBooked {
+				background-color: #ccc;
+			}
+			.booked {
+				background-color: green;
+			}
+		</style>
+		{/literal}
+	</head>
+	<body style="font: 12px Arial;">
+    <!--uts:begin inner-->
+	{foreach from=$tableData item=week key=k}
+
+		<img src="{$clientsLogoUrl}" />
+		{if isset($companyLogoUrl)}<img src="{$companyLogoUrl}" style="float:right;" />{/if}
+
+		<h1 class="upper">Planning week {$k}</h1>
+
+		<table border="1">
+		<tr>
+			<td>Name</td>
+			<td>Phone</td>
+			<td>Distance</td>
+			{foreach from=$week item=day}
+				<td colspan="{if count($day.shifts)==0}1{else}{$day.shifts|@count}{/if}">{$day.date}</td>
+			{/foreach}
+		</tr>
+		<tr>
+			<td colspan="3" style="text-align:right">Shifts</td>
+			{foreach from=$week item=day}
+				{if count($day.shifts)==0}
+					<td></td>
+				{/if}
+				{foreach from=$day.shifts item=shift}
+					<td>{$shift.fromTime}</td>
+				{/foreach}
+			{/foreach}
+		</tr>
+
+		{foreach from=$candidateRows item=r}
+		<tr class="candidateRow">
+			<td>{$r.name}</td>
+			<td>{$r.phoneMobile}</td>
+			<td>{$r.distance}</td>
+
+			{foreach from=$week item=day key=d}
+
+			{foreach from=$r.data.$k.$d item=shift}
+				{if count($shift)==0}<td class="notBooked">&nbsp;</td>{/if}
+				{if count($shift)>0}<td class="booked">&nbsp;</td>{/if}
+			{/foreach}
+
+			{/foreach}
+		</tr>
+		{/foreach}
+		</table><br/><br/>
+	{/foreach}		
+    <!--uts:end inner-->
+    </body>
+</html>

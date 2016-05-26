@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+<!-- UTS/agenda/publicInvitationCandidateMail.html -->
+
+<p>
+{if $salutation == 'sir'}[t]Dear Mr.[/t]
+{elseif $salutation == 'madam'}[t]Dear Ms.[/t]
+{else}[t]Dear Ms./Mr.[/t]
+{/if}
+{$candidateSurname},</p>
+
+<p>
+[t]I would like to confirm that we have a meeting schedules at {$date}, {$timeStart} - {$timeEnd} in our office. Please do not forget to take anything you might consider relevant to your application with you, like your CV, college diploma's and such. I look forward to seeing you there.[/t]
+</p>
+
+<p>
+[t]Regards,[/t]<br>
+{$consultantName}
+</p>
+<!--uts:end inner-->
+</body>
+</html>

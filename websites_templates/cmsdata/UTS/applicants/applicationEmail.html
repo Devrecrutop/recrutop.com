@@ -1,0 +1,33 @@
+{* this email is sent to the applicant after he applied for a job *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/applicants/applicationEmail.html -->
+<p>[t]Dear {$name|escape},[/t]</p>
+<p>[t]You have succesfully applied for a job: {$jobtitle|escape}[/t]</p>
+{if $display_vacancy_link}
+<p>[t]Vacancy: [/t] <a href="{$vacancyLink|escape}">[t]Vacancy [/t]</a></p>
+{/if}
+<p>[t]We will contact you within a few days, to inform you about the first screening results. You can contact me by e-mail or telephone if you have any questions.[/t]</p>
+{if $ExratextSec}
+<p>
+    [t]Extra text[/t]
+</p>
+{/if}
+{if $LinkSec}
+<p>
+    [linkname][t]Your link text[/t][/linkname]
+</p>
+{/if}
+<p>[t]Kind regards,
+{$contactPerson}
+{$client}
+{$website}[/t]</p>
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<!--uts:end inner-->
+</body>
+</html>

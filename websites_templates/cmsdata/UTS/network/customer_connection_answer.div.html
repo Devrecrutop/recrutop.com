@@ -1,0 +1,44 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>[t]Network Connection Proposal[/t]</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/network/customer_connection_answer.div.html -->
+<h1>[t]OTYS Network[/t]</h1>
+
+{if $answer == "reject"}
+	{if $reason}
+		{assign var=ansverLocalized value="[th]rejected[/th]"}
+		<p>[t]You have <strong>{$ansverLocalized}</strong> the connection with {$fullLinkClient}.[/t]</p>
+		<h4>[t]Your reason[/t]:</h4>
+		<p>{$reason}</p>
+	{else}
+		{assign var=ansverLocalized value="[th]reject[/th]"}
+		<p>[t]You want to <strong>{$ansverLocalized}</strong> the connection with {$fullLinkClient}.[/t]</p>
+		
+		<form action="{$website}/index.php" method="get">
+		<input type="hidden" name="page" value="network">
+		<input type="hidden" name="connection" value="reject">
+		<input type="hidden" name="customerConnectionId" value="{$connectionId}">
+		
+		<table>
+		<tr>
+			<td valign="top">[t]Reason to decline[/t]:</td>
+			<td><textarea name="reason" cols="40" rows="7"></textarea></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><input type="submit" value="[t]Decline[/t]"></td>
+		</tr>
+		</table>
+		</form>
+	{/if}
+{else}
+	{assign var=ansverLocalized value="[th]accepted[/th]"}
+	<p>[t]You have <strong>{$ansverLocalized}</strong> the connection with {$fullLinkClient}.[/t]</p>
+{/if}
+<!--uts:end inner-->
+</body>
+</html>

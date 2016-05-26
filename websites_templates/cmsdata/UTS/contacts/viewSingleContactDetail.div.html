@@ -1,0 +1,273 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/contacts/viewSingleContactDetail.div.html DEFAULT-->
+<div class="outer faceOuter consDetOuter">
+	{if $cp_info.cp_displayed_name || $cp_info.cp_full_name}
+		<h1 class="title faceTitle consDetTitle">
+			{if $cp_info.cp_displayed_name}{$cp_info.cp_displayed_name|escape}{else}
+			{if $display_elements2.show_first_name}{$contact_name.first_name|escape}{/if}
+			{if $display_elements2.show_middle_name} {$contact_name.middle_name|escape}{/if}
+			{if $display_elements2.show_last_name} {$contact_name.last_name|escape}{/if}
+			{/if}
+		</h1>
+	{/if}
+
+	{if $cp_photo !="" && $display_elements.show_photo}
+		<div class="photo1 facePhoto1 consDetPhoto1">
+			<div class="photo2 facePhoto2 consDetPhoto2">
+				<img src="http://{$cp_photo_link}" alt="
+				{if $display_elements2.show_first_name}{$contact_name.first_name|escape}{/if}
+				{if $display_elements2.show_middle_name} {$contact_name.middle_name|escape}{/if}
+				{if $display_elements2.show_last_name} {$contact_name.last_name|escape}{/if}
+				" {$cp_photo_size}>
+			</div>
+		</div>
+	{/if}
+
+	<div class="text faceText consDetText">
+		{if $cp_info.cp_displayed_name || $cp_info.cp_full_name}
+			<div class="textWord faceTextWord consDetTextWord consDetName">
+				<span>[t]Name:[/t]</span>
+				{if $cp_info.cp_displayed_name}
+					{$cp_info.cp_displayed_name|escape}
+				{else}
+					{if $display_elements2.show_first_name}{$contact_name.first_name|escape}{/if}
+					{if $display_elements2.show_middle_name} {$contact_name.middle_name|escape}{/if}
+					{if $display_elements2.show_last_name} {$contact_name.last_name|escape}{/if}
+				{/if}
+			</div>
+		{/if}
+                {*
+		{if $organisation_units_cnt > 0 && $display_elements.show_orgunit}
+			<div class="textWord faceTextWord consDetTextWord consDetOrgUni">
+				<span>[t]Organisation units:[/t]</span>
+				{foreach from=$organisation_units item=unit name=ou}
+					{$unit.item_name|escape} {if !$smarty.foreach.ou.last},&nbsp;{/if}
+				{/foreach}
+			</div>
+		{/if}
+
+		{if $roles_cnt > 0 && $display_elements.show_roles}
+			<div class="textWord faceTextWord consDetTextWord consDetRoles">
+				<span>[t]Roles:[/t]</span>
+				{foreach from=$roles item=rl name=roles}
+				{$rl.name|escape}{if !$smarty.foreach.roles.last},&nbsp;{/if}
+				{/foreach}
+			</div>
+		{/if}
+                *}
+		{if $display_elements.show_address && ($cp_info.cp_adres || $cp_info.cp_pc || $cp_info.cp_plaats)}
+			<div class="textWord faceTextWord consDetTextWord consDetAddr">
+				<span>[t]Address:[/t]</span>
+				{if $cp_info.cp_adres}
+				{$cp_info.cp_adres|escape}
+				{/if}
+			</div>
+
+			{if $cp_info.wg_cp_pc || $cp_info.wg_cp_plaats || $cp_info.home_country}
+			<div class="textWord faceTextWord consDetTextWord consDetAddr2">
+				<span>&nbsp;</span>
+			{/if}
+
+				{if $cp_info.wg_cp_pc}
+					{$cp_info.wg_cp_pc|escape},&nbsp;
+				{/if}
+				{if $cp_info.wg_cp_plaats}
+					{$cp_info.wg_cp_plaats|escape}
+				{/if}
+				{if $cp_info.home_country}
+					<br>
+					{$cp_info.home_country|escape}
+				{/if}
+
+			{if $cp_info.wg_cp_pc || $cp_info.wg_cp_plaats || $cp_info.home_country}
+			</div>
+			{/if}
+		{/if}
+
+		{if $display_elements.show_work_address  && ($cp_info.wg_cp_adres_werk || $cp_info.wg_cp_pc_werk || $cp_info.wg_cp_plaats_werk)}
+			<div class="textWord faceTextWord consDetTextWord consDetAddr3">
+				<span>[t]Work Address:[/t]</span>
+				{if $cp_info.wg_cp_adres_werk}
+					{$cp_info.wg_cp_adres_werk|escape},&nbsp;
+				{/if}
+				{if $cp_info.wg_cp_pc_werk}
+					{$cp_info.wg_cp_pc_werk|escape}&nbsp;
+				{/if}
+				{if $cp_info.wg_cp_plaats_werk}
+					{$cp_info.wg_cp_plaats_werk|escape}
+				{/if}
+				{if $cp_info.work_country}
+					<br>
+					{$cp_info.work_country|escape}
+				{/if}
+			</div>
+		{/if}	
+
+		{if $cp_info.wg_cp_email && $display_elements.show_email}
+			<div class="textWord faceTextWord consDetTextWord consDetMail">
+				<span>[t]E-mail:[/t]</span>
+				<a href="mailto:{$cp_info.wg_cp_email}" title="{$cp_info.wg_cp_email}">{$cp_info.wg_cp_email}</a>
+			</div>
+		{/if}
+
+		{if $cp_info.wg_cp_doorkiesnr && $display_elements.show_direct_number}
+			<div class="textWord faceTextWord consDetTextWord consDetPhoneWork">
+				<span>[t]Direct #:[/t]</span>
+				{$cp_info.wg_cp_doorkiesnr}
+			</div>
+		{/if}
+		
+		{if $cp_info.phone_home && $display_elements.show_home_phone}
+			<div class="textWord faceTextWord consDetTextWord consDetPhoneHome">
+				<span>[t]Phone home:[/t]</span>
+				{$cp_info.phone_home}
+			</div>
+		{/if}
+		
+		{if $cp_info.phone_mobile && $display_elements.show_cell_phone}
+			<div class="textWord faceTextWord consDetTextWord consDetPhoneCell">
+				<span>[t]Cell phone:[/t]</span>
+				{$cp_info.phone_mobile}
+			</div>
+		{/if}
+		
+		{if $cp_info.phone_work && $display_elements.show_work_phone}
+			<div class="textWord faceTextWord consDetTextWord consDetPhoneWork">
+				<span>[t]Work phone:[/t]</span>
+				{$cp_info.phone_work}
+			</div>
+		{/if}
+
+		{if $cp_info.phone_fax && $display_elements.show_fax}
+			<div class="textWord faceTextWord consDetTextWord consDetPhoneFax">
+				<span>[t]Fax:[/t]</span>
+				{$cp_info.phone_fax}
+			</div>
+		{/if}
+
+		{if $cp_info.phone_skype && $display_elements.show_skype}
+			<div class="textWord faceTextWord consDetTextWord consDetPhoneSkype">
+				<span>[t]Skype:[/t]</span>
+				{$cp_info.phone_skype}
+			</div>
+		{/if}
+
+		{if $long_descr !="" && $display_elements.show_text}
+			<h2 class="subHeader faceSh consDetSh consDetShCv">[t]CV:[/t]</h2>
+			<div class="text faceText consDetText consDetTextCv">{$long_descr}</div>
+		{/if}
+
+		{if $cp_media && $display_elements.show_wiqet}
+			<h2 class="subHeader faceSh consDetSh consDetShMedia">[t]Wiqet/Video:[/t]</h2>
+			<div class="text faceText consDetText consDetTextMedia">{$cp_media}</div>
+		{/if}
+
+		{if $cp_widget && $display_elements.show_widget}
+			<h2 class="subHeader faceSh consDetSh consDetShWidget">[t]Widget:[/t]</h2>
+			<div class="text faceText consDetText consDetTextWidget">{$cp_widget}</div>
+		{/if}
+
+		{if $cp_documents_cnt > 0 && $display_elements.show_documents}
+			<h2 class="subHeader faceSh consDetSh consDetShDoc">[t]Documents:[/t]</h2>
+			<div class="text faceText consDetText consDetTextDoc">
+			{foreach from=$cp_documents item=i}
+				<span>{$i.document_download_link}</span>
+			{foreachelse}
+			&nbsp;
+			{/foreach}
+			</div>
+		{/if}
+
+		{if $cp_active_jobs_cnt > 0 && $display_elements.show_active_jobs}
+			<h2 class="subHeader faceSh consDetSh consDetShActJob">[t]Active jobs:[/t]</h2>
+			{foreach from=$cp_active_jobs item=i}
+				<div class="itemContainer faceIc consDetIc consDetIcActJob">
+					<h3 class="itemTitle faceItitle consDetItitle consDetItitleActJob"><a href="{$i.url}">{$i.desc}</a></h3>
+				</div>
+			{foreachelse}
+				&nbsp;
+			{/foreach}
+		{/if}
+
+		{if $cp_inactive_jobs_cnt > 0 && $display_elements.show_inactive_jobs}
+			<h2 class="subHeader faceSh copnsDetSh consDetShInactJob">[t]Inactive jobs:[/t]</h2>
+			{foreach from=$cp_inactive_jobs item=i}
+				<div class="itemContainer faceIc consDetIc consDetIcInactJob">
+					<h3 class="itemTitle faceItitle consDetItitle consDetItitleInactJob"><a href="{$i.url}">{$i.desc}</a></h3>
+				</div>
+			{foreachelse}
+				&nbsp;
+			{/foreach}
+		{/if}
+
+		{if $cp_blog_articles_cnt > 0 && $display_elements.show_blog_articles}
+			<h2 class="subHeader faceSh consDetSh consDetShBlogArt">[t]Blog articles:[/t]</h2>
+			{foreach from=$cp_blog_articles item=i}
+				<div class="itemContainer faceIc consDetIc consDetIcBlogArt">
+					<h3 class="itemTitle faceItitle consDetItitle consDetItitleBlogArt"><a href="{$i._linkurl}">{$i.title|escape}</a></h3>
+					<div class="itemWord faceIword consDetIword consDetIwordBlogArt"><span>[t]at[/t]</span>{$i._datetime_published}</div>
+					<div class="itemDescription faceIdesc consDetIdesc consDetIdescBlogArt">{$i._teaser}</div>
+				</div>
+			{/foreach}
+		{/if}
+
+		{if $cp_blog_reactions_cnt > 0 && $display_elements.show_blog_reactions}
+			<h2 class="subHeader faceSh consDetSh consDetShBlogReact">[t]Blog reactions:[/t]</h2>
+			{foreach from=$cp_blog_reactions item=i}
+				<div class="itemContainer faceIc consDetIc consDetIcBlogReact">
+					<h3 class="itemTitle faceItitle consDetItitle consDetItitleBlogReact"><a href="{$i._linkurl}">{$i.title|escape}</a></h3>
+					<div class="itemWord faceIword consDetIword consDetIwordReact"><span>[t]at[/t]</span>{$i._datetime_reaction}</div>
+					<div class="itemDescription faceIdesc consDetIdesc consDetIwordReact">{$i._teaser}</div>
+				</div>
+			{/foreach}
+		{/if}
+
+		{if $cp_events_cnt > 0 && $display_elements.show_events}
+			<h2 class="subHeader faceSh consDetSh consDetShEve">[t]Events:[/t]</h2>
+			{foreach from=$cp_events item=i}
+				<div class="itemContainer faceIc consDetIc consDetIcEve">
+					<h3 class="itemTitle faceItitle consDetItitle consDetItitleEve"><a href="{$i.url}">{$i.Title}</a></h3>
+					{if $i.Photo}
+						<div class="itemImage faceIimg consDetIimg consDetIimgEve"><a href="{$i.url}" title="{$i.Title}"><img src="{$i.photo_url}" alt="{$i.Title}"></a></div>
+					{/if}
+				</div>
+			{foreachelse}
+				&nbsp;
+			{/foreach}
+		{/if}
+		
+		
+		{if [uts:show_related_products]}
+		  {if $link_products && $cp_products}
+		  <h2 class="subHeader faceSh consDetSh consDetShProducts">[t]Related products:[/t]</h2></div>  
+		  
+  		{foreach from=$cp_products item=p}
+  		<div class="itemContainer faceIc consDetIc consDetIcProducts">
+  		
+    		<h3 class="itemTitle faceItitle consDetItitle consDetItitleProducts"><a href="/index.php/page/webshop/bb/1/command/catalogDetail/productId/{$p.id}">{$p.product_name|escape}</a></h3>
+        {if [uts:show_product_thumbnail] && $p.thumbnail_filename}      
+          <div class="itemImage faceIimg consDetIimg consDetIimgProducts"><a href="/index.php/page/webshop/bb/1/command/catalogDetail/productId/{$p.id}"><img src="/_images_upload/{$p.thumbnail_filename}" alt="{$p.product_name|escape}" border="0"></a></div>
+        {/if}
+        {if [uts:show_product_descr] && $p.description}
+          <div class="itemDescription faceIdesc consDetIdesc consDetIwordProducts">{$p.description|escape}</div>
+        {/if}
+      
+      </div>  				
+  		{/foreach}		  
+		  
+		  {/if}
+		{/if}		
+		
+		
+	</div>
+</div>
+<iframe name="actionframe" width="0" height="0" frameborder="0" scrolling="No" contentEditable=false></iframe>
+<!--uts:end inner-->
+</body>
+</html>

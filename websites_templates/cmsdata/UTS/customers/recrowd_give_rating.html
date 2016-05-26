@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer custOuter recrowdOuter rcwdRatCompOuter">
+	<!-- /UTS/customers/recrowd_give_rating.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Unpublish vacancy[/t] {$title|escape}</h1>
+	{$CustomersMenu}
+	<p>[t]Please give the recruiters below a rating.[/t]</p>
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">	
+		<thead>
+	    <tr>
+	        <th>[t]Name[/t]</th>
+	        <th>[t]City[/t]</th>
+	        <th></th>
+	        <th></th>
+	    </tr>
+		</thead>
+		<tbody>
+	    <foreach from=$recruiters item=r>
+		<tr>
+			<td>{$r.name|escape}</td>
+			<td>{$r.location|escape}</td>
+			<td>{if !$r.ratingCnt}<a href="{$handler}/command/rating/subcmd/giveRating/vacid/{$vacid|escape}/ref/{$ref|escape}/cpid/{$r.id}">[t]Rating[/t]</a>{/if}</td>
+			<td>{if !$r.recomCnt}<a href="{$handler}/command/rating/subcmd/giveRecommendation/vacid/{$vacid|escape}/ref/{$ref|escape}/cpid/{$r.id}">[t]Recommendation[/t]</a>{/if}</td>
+      {*<td><a href="{$handler}/command/rating/subcmd/giveRecommendation/vacid/{$vacid|escape}/ref/{$ref|escape}/cpid/{$r.id}">[t]Recommendation[/t]</a></td>*}
+	    </tr>
+	    </foreach>
+		</tbody>
+	</table>
+	<if !$rcnt>
+	<div class="text">[t]Please give at least one rating or recommendation in order to be able to continue.[/t]</div>
+	</if>
+	<form name="funnyForm" action="{$handler}" method="post">
+		<input type="hidden" name="command" value="rating">
+		<input type="hidden" name="subcmd" value="finishUnpublish">
+		<input type="hidden" name="ref" value="{$ref|escape}">
+		<input type="hidden" name="vacid" value="{$vacid|escape}">
+		<div class="buttonContainer"> 
+		    <input type="submit" class="button" value="[tb]Continue[/tb]" {if !$rcnt}disabled="disabled"{/if}>
+		</div>
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

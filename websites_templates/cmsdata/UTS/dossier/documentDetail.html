@@ -1,0 +1,21 @@
+<!--uts:begin inner-->
+
+<!-- /UTS/dossier/documentDetail.html -->
+<div style="text-align: center;">
+<center>
+
+{if $data.subject != '' && $displaySubject}
+<div style="font-weight: bold; margin-bottom: 0.5em;">{$data.subject}</div>
+{/if}
+{if $data.remarks != ''}
+<div style="margin-bottom: 0.5em;">{$data.remarks}</div>
+{/if}
+
+<div>
+<span>[t]Download[/t]:</span> <a href="{$handler}/command_dossier/download/entity/Document/id/{$data.id}">{$data.document}</a>
+</div>
+
+</center>
+</div>
+
+<!--uts:end inner-->

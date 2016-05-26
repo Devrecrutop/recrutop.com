@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/blog/reactionNotifyEmail.html -->
+<p>
+    [t]There is a new reaction on your article[/t] &quot;<a href="{$url}">{$a.title|escape}</a>&quot;:
+</p>
+<table>
+    <tr>
+        <td align="left">[t]By[/t] {$rea.name|escape}</td>
+        <td align="right">{$rea.ts_entered|escape}</td>
+    </tr>
+    <tr>
+        <td colspan="2">[t]Subject[/t]: {$rea.subject|escape}</td>
+    </tr>
+</table>
+<div>
+{$rea.body}
+</div>
+<if !$rea.approved>
+<div style="color:#803030;margin-top:20px;">
+[t]This reaction was not approved automatically. You can also approve it from this e-mail by clicking on the "Approve reaction" link. To reject (delete) the reaction, click on the "Delete reaction" link.[/t]<br><br>
+<a href="{$approvelink}">[t]Approve reaction[/t]</a> |
+<a href="{$deletelink}">[t]Delete reaction[/t]</a>
+</div>
+</if>
+
+<!--uts:end inner-->
+</body>
+</html>
+

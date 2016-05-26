@@ -1,0 +1,61 @@
+{* req.ext.js: JQueryBase,JQueryAnimatedCollapse *}
+
+{literal}
+<script type="text/javascript">
+<!--
+
+function mFacetSetValue(chb, critf)
+{
+  //{/literal}
+  var mfHandler = '{$handler}';
+  //{literal}
+  
+  //alert(chb.value + ', ' + chb.checked + ', ' + critf + ', ' + mfHandler);
+  
+  if(chb.checked)
+  {
+    window.location = mfHandler + 'command/usefacet/field/'+critf+'/value/'+chb.value;
+  }
+  else
+  {
+    window.location = mfHandler + 'command/removeval/type/mcplus/crit/'+critf+'/id/'+chb.value;
+  }
+}
+
+//-->
+</script>
+{/literal}
+
+<script type="text/javascript" defer="true">
+<foreach from=$mfacets item=facetfield>
+  animatedcollapse.addDiv('mfacet_{$facetfield.field|escape:"javascript"}', 'fade=1,persist=0,hide=0')
+</foreach>
+</script>
+
+ 
+<div class="hookOuter nwHookOuter actFo multiFacets">
+<!-- /UTS/advsearch/multiFacetsHookCustomers.html -->
+  <foreach from=$mfacets item=facetfield>
+  
+  <div class="optionListContainer mfacetListCon">
+  
+  	<div class="optionListTitle mfacetListTitle">
+      <a href="javascript:animatedcollapse.toggle('mfacet_{$facetfield.field|escape:"javascript"}')" title="[th]Expand/collapse[/th]">{$facetfield.name|escape}</a>
+    </div>
+  	<div class="optionList mfacetList" id="mfacet_{$facetfield.field}">
+  	<ul>  
+  	<foreach from=$facetfield.facetlist item=facet>
+  		<li>
+  		<input type="checkbox" name="{$facetfield.field}[]" value="{$facet->value}" {if in_array($facet->value, $facetfield.curValues)}checked="checked"{/if} onClick="mFacetSetValue(this, '{$facetfield.field}');">    
+      <span class="mfacetValueName" title="{$facet->name|escape}">{$facet->name|escape|truncate:[uts:truncate_name]:"..":true}</span><span class="mfacetFrequency">({$facet->frequency})</span>            
+      </li>
+  	</foreach>
+      	
+  	</ul>
+    </div>
+  </div>
+  
+  </foreach>  
+
+  <div class="cleaner"></div>
+</div>

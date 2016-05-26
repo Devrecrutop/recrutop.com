@@ -1,0 +1,130 @@
+<!--uts:begin inner-->
+<script language="javascript" type="text/javascript" src="/_javascript_global/jquery.watermarkinput.js"></script>
+<script type="text/javascript">
+var return_url = '{$handler}/command_dossier/list';
+var preview_url = '{$handler}/command_dossier/ajaxpreview/entity/asset';
+//{literal}
+
+function submitAsset(obj) {
+
+    $.post($(obj).attr('action'), $(obj).serialize(),
+        function(data){
+            if (data.status=='ERROR') {
+				processError(data.errorDescription);
+            }
+			else {
+                window.location = return_url;
+            }
+       }, "json");    
+}
+
+function processError(msg) {
+				if (msg=='ERR_MISSING_NAME') {
+                    showError('[th]Please fill a name.[/th]');
+				}
+				else if (msg=='ERR_MISSING_TYPE') {
+                    showError('[th]Please select a type.[/th]');
+                }
+				else if (msg=='ERR_MISSING_CODE') {
+                    showError('[th]Please fill the code.[/th]');
+                }
+				else {
+                    showError('[th]Error occurred:[/th] '+msg);
+				}
+}
+
+jQuery(function($){
+	$("textarea[name='remarks']").each(watermarkFontStyle);
+	$("textarea[name='remarks']").blur(watermarkFontStyle);
+	$("textarea[name='remarks']").Watermark("[th]Asset description.[/th]", "#888");
+	$("textarea[name='remarks']").change(watermarkFontStyle);
+	$("textarea[name='remarks']").focus(function() {$(this).css('font-style','normal')});
+	$("textarea[name='code_asset']").each(watermarkFontStyle);	
+	$("textarea[name='code_asset']").blur(watermarkFontStyle);
+	$("textarea[name='code_asset']").Watermark("[th]Copy your embedded code here. Your video, photo etc. is previewed below. When you hit save this will be stored in your profile. You can delete and modify at any time in the future.[/th]", "#888");	
+	$("textarea[name='code_asset']").change(watermarkFontStyle);			
+	$("textarea[name='code_asset']").focus(function() {$(this).css('font-style','normal')});	
+});
+
+function previewCode() {
+	//$('div#previewArea').html($("textarea[name='code_asset']").val());
+
+	$('div#previewArea').html('');
+	$('#error').css('display', 'none');
+	
+	$.post(preview_url, $("form[name='documentForm']").serialize(),
+        function(data){
+            if (data.status=='ERROR') {
+				processError(data.errorDescription);
+            }
+			else {
+                $('div#previewArea').html(data.html);
+            }
+       }, "json");   
+	
+	
+}
+
+function watermarkFontStyle() {
+	// todo: implement this into jquery.watermarkinput.js
+	if ('' == $(this).val() || "[th]Asset description.[/th]" == $(this).val() || "[th]Copy your embedded code here. Your video, photo etc. is previewed below. When you hit save this will be stored in your profile. You can delete and modify at any time in the future.[/th]" == $(this).val()) {
+		$(this).css('font-style', 'italic');
+	}
+	else {
+		$(this).css('font-style', 'normal');
+	}
+}
+
+function showError(msg) {
+	$('#error').html(msg);
+	$('#error').css('display', 'block');
+}
+
+//{/literal}
+</script>
+<!-- /UTS/dossier/assetForm.html -->
+<div class="outer dossier assetForm">
+	<h1 class="title">[t]Add an asset[/t]</h1>
+    <form class="internal" name="documentForm" action="{$handler}/command_dossier/submitajax/entity/asset" method="post" onsubmit="submitAsset(this);return false;">
+        <div class="formInput actEqueryInput">
+        <label>[t]Name[/t]</label>
+        <input type="text" name="subject" value="" onchange="if ($('input[name=\'code_asset\']').val() != '') previewCode();" >
+        </div>
+		<div class="formInput">
+		<label>[t]Type[/t]</label>
+		<div>
+		<select name="id_asset_type" onchange="if ($('input[name=\'code_asset\']').val() != '') previewCode();">		
+        <option value="0">--</option>
+		{html_options options=$settings.asset_types}		
+		</select>
+		</div>
+        </div>
+        <div class="formInput">
+        <label>[t]Remark[/t]</label>
+		<div>
+        <textarea name="remarks"></textarea>
+		</div>
+        </div>		
+		<div class="formInput">
+        <label>[t]Code[/t]</label>
+		<div>
+		{* code is already used on FO, naming the field code_asset *}
+        <textarea name="code_asset" onchange="previewCode();"></textarea>
+		</div>
+        </div>
+        
+        <div class="error" id="error" style="display: none;"></div>
+        
+		<div id="previewArea">
+		</div>
+        <div class="buttonContainer">
+            <input type="submit" name="bSubmit" value="[tb]Submit[/tb]" class="button">
+        </div>
+		<input type="hidden" name="command" value="dossier">
+		<!--<input type="hidden" name="command_dossier" value="submitajax">-->
+		<input type="hidden" name="entity" value="asset">
+        <input type="hidden" name="kid" value="{$kid}">
+    </form>
+</div> 
+
+<!--uts:end inner-->

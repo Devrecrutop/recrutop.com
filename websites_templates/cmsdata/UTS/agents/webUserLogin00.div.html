@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>WebUserForm2</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/agents/WebUserLogin00.html -->
+<div class="outer">
+<!-- /fotemplatesdiv/WebUserForm00.html -->
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<h1 class="title">[t]PageTitle[/t]</h1>
+<!--END_PageTitle-->
+<!--APPLICATIONROW-->
+<!-- 894 -->
+
+<!--START_Block1-->
+
+<!--START_Title1-->
+<h2 class="subHeader">[t]Title1[/t]</h2>
+<!--END_Title1-->
+
+<!--START_Text1-->
+<div class="text">[t]Text1[/t]</div>
+<!--END_Text1-->
+
+<!--END_Block1-->
+
+<form name="form" method="post" action="/index.php/page/agents/command/myprofile/bb/1">
+<input type="hidden" name="Login" value="1">
+<div class="formInput">[t]SingleWord1[/t]<!--SingleWordLink1--><input type="text" name="Email" value="{$Email}"></div>
+<div class="formInput">[t]SingleWord2[/t]<!--SingleWordLink2--><input type="password" name="PassWord"></div>
+<div class="error"><!--ERROR--></div>
+<div class="buttonContainer" ><input type="submit" name="Submit" value="[t]Button1[/t]" class="button"><!--ButtonLink1--></div>
+</form>
+
+<!--START_Block2-->
+
+<!--START_Title2-->
+<h2 class="subHeader">[t]Title2[/t]</h2>
+<!--END_Title2-->
+
+<!--START_Text2-->
+<div class="text">[t]Text2[/t]</div>
+<!--END_Text2-->
+<div class="buttonContainer"><input type="button" name="MailPassword" value="[t]Button2[/t]" onClick="location='/index.php/page/agents/command/forgotpassword/bb/1';" class="button"><!--ButtonLink2--></div>
+<!--END_Block2-->
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

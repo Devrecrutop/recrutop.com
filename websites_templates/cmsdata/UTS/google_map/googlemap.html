@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xml:lang="cs" lang="cs">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Map Google</title>
+        <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyA6LuVOEuvpRPffXJWsLwP7HNUomGtP7Yo&sensor=false"></script>
+	<script src="/_javascript_global/AjaxRequest.js" type="text/javascript"></script>
+	<script type="text/javascript">
+        {literal}
+        var map;
+	
+	
+	function init() {
+                var mapOpts = {
+                    center: new google.maps.LatLng(52,5),
+                        zoom: 8
+                   }
+                {/literal}
+                {if $mapItems|@count < 1}
+                {literal}
+                   var mapOpts = {
+                        center: new google.maps.LatLng(52,5),
+                        zoom: 8
+                   }
+                {/literal}
+                {/if}
+                {literal}
+                map = new google.maps.Map(document.getElementById('map'), mapOpts);
+                var latlngbounds = new google.maps.LatLngBounds();
+                //map.addListenerAddressResolved(urlAddressResolved);
+                {/literal}                
+                var marker;
+                {if $mapItems|@count > 0}
+                    {foreach from=$mapItems item=mapItem}
+                    {literal}
+                        var bounds = new google.maps.LatLng({/literal}{$mapItem.geoLat}, {$mapItem.geoLong}{literal});
+                        latlngbounds.extend(bounds);
+                        marker = new google.maps.Marker({
+                            position: bounds,
+                            map: map
+                        });
+                        marker.setTitle('{/literal}{$mapItem.title}{literal}');
+                        attachSecretMessage(marker, '{/literal}{$mapItem.text}{literal}');
+                    {/literal}
+                    {/foreach}
+                {/if}
+                {literal}
+                google.maps.event.addListener(map, 'zoom_changed', function() {
+                    zoomChangeBoundsListener = 
+                        google.maps.event.addListener(map, 'bounds_changed', function(event) {
+                            if (this.getZoom() > 8 && this.initialZoom == true) {
+                                // Change max/min zoom here
+                                this.setZoom(8);
+                                this.initialZoom = false;
+                            }
+                        google.maps.event.removeListener(zoomChangeBoundsListener);
+                    });
+                });
+                map.initialZoom = true;
+                map.fitBounds(latlngbounds);
+                
+                //map.addControl(new GMapTypeControl());
+               // map.enableContinuousZoom()
+                //map.enableScrollWheelZoom();
+                //new GKeyboardHandler(map);
+	}
+        function attachSecretMessage(marker, message) {
+            var infowindow = new google.maps.InfoWindow(
+                { content: message,
+                  size: new google.maps.Size(50,50)
+                });
+            google.maps.event.addListener(marker, 'click', function() {
+              infowindow.open(map,marker);
+            });
+          }
+        {/literal}
+        google.maps.event.addDomListener(window, 'load', init);    
+	//]]>
+	</script>
+	<link href="_css/gm.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+            {literal}
+		#map {
+                    height: {/literal}{$height}{literal}px;
+		}
+		html, body {
+			margin: 0;
+			padding: 0;
+		}
+            {/literal}
+	</style>
+</head>
+
+<body>
+<!-- UTS/google_map/googlemap.html Standard -->
+<div id="map"></div>
+
+
+</body>
+</html>               

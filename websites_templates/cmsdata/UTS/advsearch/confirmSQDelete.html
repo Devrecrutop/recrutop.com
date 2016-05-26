@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer actOuter actJsaConfirmOuter">
+ <!-- /UTS/advsearch/confirmSQDelete.html -->
+<h1 class="title">[t]Confirmation required[/t]</h1>
+<div class="intro">
+<p>[t]Are you sure to delete the stored query?[/t]</p>
+</div>
+<form name="CSQDform" action="{$handler}/command/confirmsqdelete" method="post">
+<div class="formInput formRadio aplRadioInput">
+<label>[t]Confirm[/t]:</label>
+<input type="radio" id="idCSQDYes" name="CSQDConfirm" value="1" onclick="document.getElementById('idCSQDSubmit').disabled=false">[t]Yes[/t]
+<input type="radio" id="idCSQDNo" name="CSQDConfirm" value="0" onclick="document.getElementById('idCSQDSubmit').disabled=true" checked>[t]No[/t]
+</div>
+
+
+<div class="buttonContainer actEqueryBc">
+	<input type="submit" name="CSQDSubmit" id="idCSQDSubmit" value="[tb]Submit[/tb]" class="button" disabled>
+</div>
+<input type="hidden" name="uid" value="{$uid|escape}">
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

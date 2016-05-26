@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+<!-- /UTS/agenda/holidayRequestApproval.html -->
+
+<p>
+{if $gender == 'M'}[t]Dear Mr.[/t]
+{elseif $gender == 'V'}[t]Dear Ms.[/t]
+{else}[t]Dear Ms./Mr.[/t]
+{/if}
+{$recipientName},</p>
+
+<p>
+{if $approved}
+[t]Uw verlofaanvraag met onderstaande gegevens is goedgekeurd[/t]:
+{else}
+[t]Uw verlofaanvraag met onderstaande gegevens is afgewezen[/t]:
+{/if}
+</p>
+<p>
+[t]Titel[/t]: {$title}
+</p>
+<p>
+[t]Begin datum/tijd[/t]: {$startDateTime} {if $wholeDay} (volledige dag) {/if}<br/>
+[t]Eind datum/tijd[/t]: {$endDateTime} {if $wholeDay} (volledige dag) {/if}
+</p>
+{if strlen($message)>0}
+<p>
+{$message}
+</p>
+{/if}
+
+<p>
+{$from}
+</p>
+<!--uts:end inner-->
+</body>
+</html>

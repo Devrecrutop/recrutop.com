@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/candidates/newNerdsRequest.html -->
+<div class="outer">
+
+	{if $status == 'processed' || $status == 'received'}
+	
+		<h1 class="title">[t]Online assessment[/t]</h1>
+		
+		{$menu}
+	
+		<div class="intro">
+			[t]You  have  already  done  an  assessment  and  have  received  the  result  by  e-mail.[/t]
+		</div>
+	
+	{elseif $status == 'awaiting'}
+	
+		<h1 class="title">[t]Online assessment[/t]</h1>
+		
+		{$menu}
+	
+		<div class="intro">
+			[t]You have already requested an assessment. You have received an e-mail with a link. Please click on the link in this e-mail to begin with your assessment.
+[/t]
+		</div>
+	
+	{else}
+
+		<h1 class="title">[t]Request online assessment[/t]</h1>
+
+		{$menu}
+		
+		<div class="intro">
+			[t]Click on the link below to request an online assessment[/t]
+		</div>
+
+		<div class="text">
+			<a href="{$handler}/command/sendRequest">[t]Request online assessment[/t]</a>
+		</div>
+
+		{if $assessmentFee}
+			<div class="text">
+				[t]An online assessment costs[/t] &euro;{$assessmentFee}.
+			</div>
+		{/if}
+	
+	{/if}
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

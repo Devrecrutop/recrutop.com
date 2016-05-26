@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if "[uts:metatime]">
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+<div class="outer">
+<!-- /UTS/blog/thankYou.Div.html -->
+<h1 class="title">[t]Thank you![/t]</h1>
+<div class="intro">
+<if $messageId>
+	<if $messageId == "REACTION_ADDED">
+		<p>[t]Your reaction has been added to the article![/t]</p>
+	<elseif $messageId == "REACTION_PENDING">
+		<p>[t]Your reaction has been added to the article and will be displayed right after moderator's approval.[/t]</p>
+	</if>
+</if>
+<if "[uts:metatime]">
+	<p>[t]Now you are going to be redirected back to the article in few seconds...[/t]</p>
+</if>
+</div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

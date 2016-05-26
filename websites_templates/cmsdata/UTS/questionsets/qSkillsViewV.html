@@ -1,0 +1,114 @@
+<!--START_H_SKI-->
+<h3 class="formTitle aplSkillsTitle">{$qd.question|escape}</h3>
+
+<!--start computer skills-->
+<div class="formInput formSmallInput aplSkillsPcSH">
+<label>[t]Computer skills[/t]</label>
+<input class="smallButton aplSB aplSkillsPcSb" type="button" value="[tb]Add item[/tb]" onclick="qsAddCVItem('{$qd.id}', 'computer')">
+</div>
+<foreach from=$items.computer item=item key=key>
+<div class="formGroup aplSkillsFg aplSkillsCompFG">
+<div class="formInput aplSkillsPcInput">
+<label>[t]Computer skill[/t]</label>
+<input type="text" name="{$elementNamePrefix}_computer_{$key}_skill" value="{$item.skill|escape}">
+</div>
+<div class="formInput formSmallInput aplSkillsPcDB">
+<label>[t]&nbsp;[/t]</label>
+<input class="smallButton aplSB aplPcSb" type="button" value="[th]Delete computer item[/th]" onclick="qsDeleteCVItem('{$qd.id}', 'computer', '{$key}')">
+</div>
+<input type="hidden" name="{$elementNamePrefix}_computer_{$key}_iid" value="{$item.iid|escape}">
+<if $itemsErrorsComputer[$key]>
+<div class="error aplSkillsPcError">
+	{$itemsErrorsComputer[$key]}
+</div>
+</if>
+</div>
+</foreach>
+
+<!--start language skills-->
+<div class="formInput formSmallInput aplSkillsLangSH">
+<label>[t]Language skills[/t]</label>
+<input class="smallButton aplSB aplSkillsLangSb" type="button" value="[tb]Add item[/tb]" onclick="qsAddCVItem('{$qd.id}', 'language')">
+</div>
+<foreach from=$items.language item=item key=key>
+<div class="formGroup aplSkillsFg aplSkillsLangFG">
+<div class="formInput languageFormInput aplSkillsLangInput">
+<label>[t]Language[/t]</label>
+<select name="{$elementNamePrefix}_language_{$key}_language">
+<option value="NULL">---</option>
+<html_options options=$languageList selected=$item.language>
+</select>
+</div>
+<div class="formInput aplSkillsLlInput">
+<label>[t]Level[/t]</label>
+<table cellspacing="0" cellpadding="0" border="0" class="aplSkilsLlTbl">
+<tr>
+<td>[t]Spoken[/t]</td>
+<td>[t]Read[/t]</td>
+<td>[t]Write[/t]</td>
+</tr>
+<tr>
+<td class=" formSmallInput aplSkillsLlS">
+<select name="{$elementNamePrefix}_language_{$key}_langprof_spoken">
+<option value="1" {if $item.langprof_spoken == "1"}selected{/if}>[th]Excellent[/th]</option>
+<option value="2" {if $item.langprof_spoken == "2"}selected{/if}>[th]Very good[/th]</option>
+<option value="3" {if $item.langprof_spoken == "3"}selected{/if}>[th]Good[/th]</option>
+<option value="4" {if $item.langprof_spoken == "4"}selected{/if}>[th]Moderate[/th]</option>
+</select>
+</td>
+<td class=" formSmallInput aplSkillsLlR">
+<select name="{$elementNamePrefix}_language_{$key}_langprof_read">
+<option value="1" {if $item.langprof_read == "1"}selected{/if}>[th]Excellent[/th]</option>
+<option value="2" {if $item.langprof_read == "2"}selected{/if}>[th]Very good[/th]</option>
+<option value="3" {if $item.langprof_read == "3"}selected{/if}>[th]Good[/th]</option>
+<option value="4" {if $item.langprof_read == "4"}selected{/if}>[th]Moderate[/th]</option>
+</select>
+</td>
+<td class=" formSmallInput aplSkillsLlW">
+<select name="{$elementNamePrefix}_language_{$key}_langprof_write">
+<option value="1" {if $item.langprof_write == "1"}selected{/if}>[th]Excellent[/th]</option>
+<option value="2" {if $item.langprof_write == "2"}selected{/if}>[th]Very good[/th]</option>
+<option value="3" {if $item.langprof_write == "3"}selected{/if}>[th]Good[/th]</option>
+<option value="4" {if $item.langprof_write == "4"}selected{/if}>[th]Moderate[/th]</option>
+</select>
+</td>
+</tr>
+</table>
+</div>
+<div class="formInput formSmallInput aplSkillsDB">
+<label>[t][/t]&nbsp;</label>
+<input class="smallButton aplSB aplSkillsLangSb" type="button" value="[th]Delete language item[/th]" onclick="qsDeleteCVItem('{$qd.id}', 'language', '{$key}')">
+</div>
+<input type="hidden" name="{$elementNamePrefix}_language_{$key}_iid" value="{$item.iid|escape}">
+<if $itemsErrorsLanguage[$key]>
+<div class="error aplSkillsError">
+	{$itemsErrorsLanguage[$key]}    
+</div>
+</if>
+</div>
+</foreach>
+
+<!--start soft skills-->
+<div class="formInput formSmallInput aplSoftSkillsSH">
+<label>[t]Soft skills[/t]</label>
+<input class="smallButton aplSB aplSoftSkillsSb" type="button" value="[tb]Add item[/tb]" onclick="qsAddCVItem('{$qd.id}', 'soft')">
+</div>
+<foreach from=$items.soft item=item key=key>
+<div class="formGroup aplSkillsFg aplSkillsSoftFg">
+<div class="formInput  aplSoftSkillsInput">
+<label>[t]Skill[/t]</label>
+<textarea class="fieldTxtArea" name="{$elementNamePrefix}_soft_{$key}_skill" >{$item.skill|escape}</textarea>
+</div>
+<div class="formInput formSmallInput aplSoftSkillsDB">
+<label>[t]&nbsp;[/t]</label>
+<input class="smallButton aplSB aplSoftSkillsSb" type="button" value="[tb]Delete skill item[/tb]" onclick="qsDeleteCVItem('{$qd.id}', 'soft', '{$key}')">
+</div>
+
+<input type="hidden" name="{$elementNamePrefix}_soft_{$key}_iid" value="{$item.iid|escape}">
+<if $itemsErrorsSoft[$key]>
+<div class="error aplSoftSkillsError">
+	{$itemsErrorsSoft[$key]}
+</div>
+</if>
+</div>
+</foreach>

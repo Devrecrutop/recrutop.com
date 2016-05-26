@@ -1,0 +1,38 @@
+<!--uts:begin inner-->
+<!-- /UTS/customers/error.html -->
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+	<td class="pageLinkContainer">
+		[CustomersMenu]
+	</td>
+</tr>
+<tr>
+	<td class="formHeaderContainer">
+		<table cellspacing="0" cellpadding="0" border="0" class="formHeaderTbl">
+		<tr>
+			<td class="formHeader">[t]Amount of jobs exceeded[/t]</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td class="tekstblokje">
+{if $allow_jobs_amount_period}
+	{if $jobs_period == "month"}
+		{assign var=period value="[t]month[/t]"}
+	{elseif $jobs_period == "year"}
+		{assign var=period value="[t]year[/t]"}
+	{else}
+		{assign var=period value="[t]unknown period[/t]"}
+	{/if}
+	
+	[t]You can not add another job, because you are allowed to have only {$jobs_amount_period} jobs per {$period} and you are trying to add job #{$vcnt_cp}.[/t]
+{elseif $allow_jobs_amount_publish}
+	[t]You can not publish another job, because you are allowed to have only {$jobs_amount_publish} published jobs at the same time and you are trying to publish job #{$vcnt_cp}.[/t]
+{else}
+	[t]Unknown error - please contact us.[/t]
+{/if}
+	</td>
+</tr>
+</table>
+<!--uts:end inner-->

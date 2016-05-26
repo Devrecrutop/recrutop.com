@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>JobsMailFriendForm</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+{literal}
+<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+<!--
+function hidestatus(){
+window.status='Otys e-Recruiting Systems'
+return true
+}
+if (document.layers)
+document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+document.onmouseover=hidestatus
+document.onmouseout=hidestatus
+-->
+</SCRIPT>
+<script language="JavaScript" type="text/javascript">
+<!--
+focus();
+function emailCheck (emailStr) {
+/* The following pattern is used to check if the entered e-mail address
+   fits the user@domain format.  It also is used to separate the username
+   from the domain. */
+var emailPat=/^(.+)@(.+)$/
+/* The following string represents the pattern for matching all special
+   characters.  We don't want to allow special characters in the address.
+   These characters include ( ) < > @ , ; : \ " . [ ]    */
+var specialChars="\\(\\)<>@,;:\\\\\\\"\\.\\[\\]"
+/* The following string represents the range of characters allowed in a
+   username or domainname.  It really states which chars aren't allowed. */
+var validChars="\[^\\s" + specialChars + "\]"
+/* The following pattern applies if the "user" is a quoted string (in
+   which case, there are no rules about which characters are allowed
+   and which aren't; anything goes).  E.g. "jiminy cricket"@disney.com
+   is a legal e-mail address. */
+var quotedUser="(\"[^\"]*\")"
+/* The following pattern applies for domains that are IP addresses,
+   rather than symbolic names.  E.g. joe@[123.124.233.4] is a legal
+   e-mail address. NOTE: The square brackets are required. */
+var ipDomainPat=/^\[(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\]$/
+/* The following string represents an atom (basically a series of
+   non-special characters.) */
+var atom=validChars + '+'
+/* The following string represents one word in the typical username.
+   For example, in john.doe@somewhere.com, john and doe are words.
+   Basically, a word is either an atom or quoted string. */
+var word="(" + atom + "|" + quotedUser + ")"
+// The following pattern describes the structure of the user
+var userPat=new RegExp("^" + word + "(\\." + word + ")*$")
+/* The following pattern describes the structure of a normal symbolic
+   domain, as opposed to ipDomainPat, shown above. */
+var domainPat=new RegExp("^" + atom + "(\\." + atom +")*$")
+/* Finally, let's start trying to figure out if the supplied address is
+   valid. */
+/* Begin with the coarse pattern to simply break up user@domain into
+   different pieces that are easy to analyze. */
+var matchArray=emailStr.match(emailPat)
+if (matchArray==null) {
+  /* Too many/few @'s or something; basically, this address doesn't
+     even fit the general mould of a valid e-mail address. */
+	alert("[t]System1[/t]")
+	return false
+}
+var user=matchArray[1]
+var domain=matchArray[2]
+// See if "user" is valid
+if (user.match(userPat)==null) {
+    // user is not valid
+    alert("[t]System2[/t]")
+    return false
+}
+/* if the e-mail address is at an IP address (as opposed to a symbolic
+   host name) make sure the IP address is valid. */
+var IPArray=domain.match(ipDomainPat)
+if (IPArray!=null) {
+    // this is an IP address
+	  for (var i=1;i<=4;i++) {
+	    if (IPArray[i]>255) {
+	        alert("[t]System3[/t]")
+		return false
+	    }
+    }
+    return true
+}
+// Domain is symbolic name
+var domainArray=domain.match(domainPat)
+if (domainArray==null) {
+	alert("[t]System4[/t]")
+    return false
+}
+/* domain name seems valid, but now make sure that it ends in a
+   three-letter word (like com, edu, gov) or a two-letter word,
+   representing country (uk, nl), and that there's a hostname preceding
+   the domain or country. */
+/* Now we need to break up the domain to get a count of how many atoms
+   it consists of. */
+var atomPat=new RegExp(atom,"g")
+var domArr=domain.match(atomPat)
+var len=domArr.length
+if (domArr[domArr.length-1].length<2 ||
+    domArr[domArr.length-1].length>3) {
+   // the address must end in a two letter or three letter word.
+   alert("[t]System5[/t]")
+   return false
+}
+// Make sure there's a host name preceding the domain.
+if (len<2) {
+   var errStr="[t]System6[/t]"
+   alert(errStr)
+   return false
+}
+// If we've gotten this far, everything's valid!
+return true;
+}
+function subfrm_checkForm(f){
+if (!emailCheck(f.email.value)) {return false;}
+}
+//-->
+</script>
+{/literal}
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- UTS/mailings/nm_sub_form.div.html -->
+{literal}
+<script language="JavaScript" type="text/javascript">
+<!--
+focus();
+function emailCheck (emailStr) {
+var emailPat=/^(.+)@(.+)$/
+var specialChars="\\(\\)<>@,;:\\\\\\\"\\.\\[\\]"
+var validChars="\[^\\s" + specialChars + "\]"
+var quotedUser="(\"[^\"]*\")"
+var ipDomainPat=/^\[(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\]$/
+var atom=validChars + '+'
+var word="(" + atom + "|" + quotedUser + ")"
+var userPat=new RegExp("^" + word + "(\\." + word + ")*$")
+var domainPat=new RegExp("^" + atom + "(\\." + atom +")*$")
+var matchArray=emailStr.match(emailPat)
+if (matchArray==null) {
+	alert("[t]System1[/t]")
+	return false
+}
+var user=matchArray[1]
+var domain=matchArray[2]
+if (user.match(userPat)==null) {
+    alert("[t]System2[/t]")
+    return false
+}
+var IPArray=domain.match(ipDomainPat)
+if (IPArray!=null) {
+	  for (var i=1;i<=4;i++) {
+	    if (IPArray[i]>255) {
+	        alert("[t]System3[/t]")
+		return false
+	    }
+    }
+    return true
+}
+var domainArray=domain.match(domainPat)
+if (domainArray==null) {
+	alert("[t]System4[/t]")
+    return false
+}
+var atomPat=new RegExp(atom,"g")
+var domArr=domain.match(atomPat)
+var len=domArr.length
+if (domArr[domArr.length-1].length<2 ||
+    domArr[domArr.length-1].length>3) {
+   alert("[t]System5[/t]")
+   return false
+}
+if (len<2) {
+   var errStr="[t]System6[/t]"
+   alert(errStr)
+   return false
+}
+return true;
+}
+function subfrm_checkForm(f){
+if (!emailCheck(f.email.value)) {return false;}
+}
+//-->
+</script>
+{/literal}
+<form onsubmit="return subfrm_checkForm(this);" action="[website]/index.php/page/mailings/bb/1" method="POST">
+<input type="hidden" name="command" value="subform">
+<input type="hidden" name="preselect" value="{$preselect}" >
+<input type="hidden" name="register_get" value="1" >
+
+<div class="outer">
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<h1 class="title">[t]PageTitle[/t]</h1>
+<!--END_PageTitle-->
+<!--START_Block1-->
+<!--START_Title1-->
+{if "[t]Title1[/t]" != ' '}
+<h2 class="subHeader">[t]Title1[/t]</h2>
+{/if}
+<!--END_Title1-->
+<!--START_Text1-->
+<div class="text">[t]Text1[/t]</div>
+<!--END_Text1-->
+<!--END_Block1-->
+<div class="formInput">
+<label>[t]SingleWord1[/t]<!--SingleWordLink1--></label>
+<input type="Text" name="email">
+</div>
+<div class="buttonContainer"><input name="Submit" type="Submit" value="[t]Button1[/t]" class="button"><!--ButtonLink1--></div>
+<!--START_Block2-->
+<!--START_Title2-->
+{if "[t]Title2[/t]" != ' '}
+<h2 class="subHeader">[t]Title2[/t]</h2>
+{/if}
+<!--END_Title2-->
+<!--START_Text2-->
+<div class="text">[t]Text2[/t]</div>
+<!--END_Text2-->
+<!--END_Block2-->
+</div>
+</form>
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+<!--uts:end inner-->
+</body>
+</html>

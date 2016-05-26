@@ -1,0 +1,130 @@
+{* this is the candidate results template version 1, with facets on the left side *}
+{* Styles moved to global styling CSS *}
+
+<div class="outer actouter actOuter candRes1Outer">
+<!-- /UTS/advsearch/candidateResults1.html STANDARD - Actonomy Facets on the left -->
+<!-- Template Webdevelopment validated 07-2013 -->
+
+<!--LEFT PANEL 11-->
+<div class="actSResultsCont">
+
+<h1 class="title actTitle">[t]Search results[/t]</h1>
+{$CustomersMenu}
+
+<!--TOP MENU-->
+<div class="menuContainer actMc actTopMenu">
+<if false>
+For backwards compatibility: [t]One CV found[/t] [t]Two CVs found[/t] <!-- For backwards compatibility of translations of some custom templates originated from toptalenten install -->
+</if>
+	<div class="menuLink menuLinkFirstChild actMl actMlFc actMlJc"><if $totalCnt ge "500">{$totalCnt} [t]CVs gevonden, waarvan[/t] {$resultCnt} [t]getoond[/t]<else>{$resultCnt} [t]CVs gevonden[/t]</if></div>
+
+            <if [uts:show_edit_query_link]><div class="menuLink actMl actMlEq"><a href="{$handler}/command/editrequest">[t]Edit query[/t]</a></div></if>
+
+	<div class="menuLink actMl actMlNs"><a href="{$handler}/command/clearrequest">[t]New search[/t]</a></div>
+
+	<if $requestOrigin != "googlemaps">
+
+	<div class="menuLink menuLinkLastChild actMl actMlLc actMlSb">
+		<label for="actvChangeSortBy">[t]Sort by:[/t]</label>
+
+		<select id="actvChangeSortBy" name="ctrl_sortby" onchange="actvChangeSortBy(this.value)" class="relevance">
+		    <option value="score" {if $ctrl.sortby == "score"}selected{/if}>[th]Relevance[/th]</option>
+		    <option value="registration_dt" {if $ctrl.sortby == "registration_dt"}selected{/if}>[th]Registration date[/th]</option>
+		    <option value="update_dt" {if $ctrl.sortby == "update_dt"}selected{/if}>[th]Last update[/th]</option>
+		    <option value="city" {if $ctrl.sortby == "city"}selected{/if}>[th]City[/th]</option>
+		    <if $canWorkWithPersonalData>
+		    <option value="firstname" {if $ctrl.sortby == "firstname"}selected{/if}>[th]First name[/th]</option>
+		    <option value="lastname" {if $ctrl.sortby == "lastname"}selected{/if}>[th]Last name[/th]</option>
+		    </if>
+		</select>
+
+		<select name="ctrl_sortascdesc" onchange="actvChangeSortAscDesc(this.value)" class="order">
+		    <option value="asc" {if $ctrl.sortascdesc == "asc"}selected{/if}>[th]asc.[/th]</option>
+		    <option value="desc" {if $ctrl.sortascdesc == "desc"}selected{/if}>[th]desc.[/th]</option>
+		</select>
+
+	</div>
+
+	<div class="menuLink menuLinkLastChild menuLinkAsb actMl actMlLc actMlSb">
+		<label for="actvChangeSeenBefore">[t]Already seen before:[/t]</label>
+
+		<select id="actvChangeSeenBefore" name="ctrl_seenbefore" onchange="actvChangeSeenBefore(this.value)" class="relevance">
+		  <option value="all" {if $ctrl.seenbefore == "all"}selected{/if}>[th]All Candidates[/th]</option>
+		  <option value="seen" {if $ctrl.seenbefore == "seen"}selected{/if}>[th]Seen Before[/th]</option>
+		  <option value="notseen" {if $ctrl.seenbefore == "notseen"}selected{/if}>[th]Not Seen Before[/th]</option>
+		</select>
+
+	</div>
+
+	</if>
+
+	<div class="cleaner menuCleaner actMCleaner"></div>
+</div>
+<!--END TOP MENU -->
+
+{* start query editor *}
+	<if [uts:show_query_editor]>
+	<include file="queryEditorCandidates.inc.html">
+	</if>
+{* end query editor *}
+
+<include file="candidateResults.inc.html">
+
+<if $requestOrigin != "googlemaps">
+	<include file="pagingControls.inc.html">
+</if>
+
+<div class="menuContainer actMc actBottomMenu">
+	<div class="menuLink menuLinkFirstChild actMl actMlFc actMlCrss"><a href="{$handler}/command/request2rss">[t]RSS feed[/t]</a></div>
+	<div class="menuLink menuLinkLastChild actMl actMlLc actMlCJsa"><a href="{$handler}/command/showemailform" rel="prettyPopin">[t]Results by e-mail[/t]</a></div>
+	<if $useocd>
+	<div class="menuLink actMl actMlCsms"><a href="{$handler}/command/showsmsform" rel="prettyPopin">[t]Results by SMS[/t]</a></div>
+	<div class="menuLink menuLinkLastChild actMl actMlLc actMlCsvq"><a href="{$handler}/command/newsqform" rel="prettyPopin">[t]Store query[/t]</a></div>
+	<else>
+	<div class="menuLink menuLinkLastChild actMl actMlFc actMlCsms"><a href="{$handler}/command/showsmsform" rel="prettyPopin">[t]Results by SMS[/t]</a></div>
+	</if>
+<div class="cleaner actBMCleaner"></div>
+</div>
+
+<if $fo_automatch_show_unpub_cand_cnt >
+{if $unpub_cand_cnt > 0}
+<div>
+[t]There are {$unpub_cand_cnt} candidate(s) that match your criteria that are not published[/t]
+</div>
+{/if}
+</if>
+
+</div>
+<!--END LEFT PANEL-->
+
+<!--RIGHT PANEL 11-->
+<div class="actSRFacetCont actSRFacetCont_CV">
+
+<div class="actSRCf hookOuter">
+{* information box / SECTION A *}
+{* search request box / SECTION B *}
+<include file="sectionBCandidates.inc.html">
+</div>
+
+<div class="actKeySug">
+{* actonomy suggestions / SECTION C *}
+<if $expcnt gt 0 && [uts:show_expansions]>
+    <include file="sectionC.inc.html">
+</if>
+</div>
+
+<div class="actSROf">
+{* actonomy facets / all instances of SECTION D *}
+<include file="facets.inc.html">
+
+<if [uts:show_stored_queries] && $sqCount gt 0>
+    <include file="storedQueries.inc.html">
+</if>
+</div>
+
+</div>
+<!--END RIGHT PANEL-->
+
+<div class="cleaner"></div>
+
+</div>

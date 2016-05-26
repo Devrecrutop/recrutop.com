@@ -1,0 +1,69 @@
+# HELP FOR OTYS INSTALL FILE IN ARIAL 12PX #
+
+# Buttons-->borders: #F1F1F1 background:#767676
+
+# HOOKZ
+
+1. WebuserHook
+2. AgentSubHook
+3. NwsSubHook
+4. JobSearchHook
+5. JobCatHook
+
+._HookTable{
+background:transparent;
+width:100%;
+margin-top:10px;
+background:#eaeaea;
+border:1px solid #656565;
+}
+._HookHeaderContainer {
+padding:2px 4px 13px 4px;
+vertical-align:top;
+}
+._HookHeaderTbl {
+background:transparent;
+width:100%;
+}
+._HookHeader{
+color:#F52527;
+font-size:12px;
+font-weight:bold;
+}
+._HookTextContainer{
+padding:0px 4px 11px 3px;
+}
+._HookTextTbl{
+width:100%;
+}
+._Hooksubheader{
+font-size:11px;
+font-weight:bold;
+padding:0px 0px 2px 1px;
+color:#777777;
+}
+._HookText{
+font-size:11px;
+padding:0px 0px 0px 1px;
+}
+._HookWordcontainer{
+padding:2px 5px 2px 3px;
+}
+._HookWordtbl{
+width:100%;
+}
+._HookWord{
+padding:2px 7px 2px 1px;
+font-size:11px;
+}
+._HookFieldcontainer{
+padding:2px 4px 2px 1px;
+}
+._HookButtoncontainer{
+padding:2px 4px 4px 3px;
+}
+._HookButtoncontainer input{
+margin-top:2px;
+}
+
+

@@ -1,0 +1,376 @@
+<html>
+	<head>
+		<META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=UTF-8">
+	</head>
+	<body>
+        <!--uts:begin inner-->
+	<!-- /mnt/share/UTS/misc/web_order_template.html -->
+
+<div class="outer oPrWtOuter">
+<h1 class="title oPrWtTitle">[t]Online Proposal[/t]</h1>
+
+		{foreach from=$items item=item}
+		<h2 class="oPrWtSubTitle">
+			{if $item.type == 'own_snippet'}{$item.header}{/if}
+			{if $item.type == 'product' && $item.exclude_title == 0}{$item.name}{/if}
+			{if $item.name == 'total'}[th]Total[/th]{/if}
+			{if $item.name == 'sub_total'}[th]Sub total[/th]{/if}
+			{if $item.type == 'snippet' && $item.exclude_title == 0}{$item.name}{/if}
+		</h2>
+		
+		{if $item.type == 'product'}
+		<div class="oPrWtDescr">{$item.description}</div>
+		{if $item.hide_invoice_line != 1}<p>
+		<table border="0" cellpadding="0" cellspacing="0" class="oPrWtPTbl">
+		<tr>
+		<td class="oPrWtPC1">{if $item.amount > 1}{$item.amount} x{/if} {$item.invoice_line} {if $item.amount > 1}[th]&agrave;[/th] {if $round_down}{$item.price.price|floor|number_format:0:",":"."}{else}{$item.price.price|number_format:2:",":"."}{/if} {$proposal.currency} [th]per item[/th]{/if}</td>
+		<td class="oPrWtPC2">{if $round_down}{$item.price.price*$item.amount|floor|number_format:0:",":"."}{else}{$item.price.price*$item.amount|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+		<td class="oPrWtPC3">{if $item.price.period == 'week'}[th]per week[/th]{/if}{if $item.price.period == 'month'}[th]per month[/th]{/if}{if $item.price.period == 'year'}[th]per year[/th]{/if}{if $item.price.period == 'once'}[th]once only[/th]{/if}</td>
+		</tr>
+		</table>
+		</p>{/if}
+		{/if}
+		
+		{if $item.type == 'snippet'}
+		{if $item.header}<h2 class="oPrWtSubTitle">{$item.header}</h2>{/if}
+		<div class="oPrWtDescr">{$item.description}</div>
+		
+		{if $item.snippet_id == $summary_snippet_id}
+		
+			{if $vatInSummary}
+			{math assign="vatCoefficient" equation="1+x/100" x=$vat}
+			{/if}
+			
+			<table class="oPrWtPTTbl" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				{if $vatInSummary}
+					<td class="oPrWtPTHeader" colspan="2">[th]Products[/th]</td>
+					<td class="oPrWtPTHeader" style="text-align: center;">[th]Unit price[/th]</td>
+					<td class="oPrWtPTHeader" style="text-align: center;">[th]Price[/th]</td>
+					<td class="oPrWtPTHeader" style="text-align: center;">[th]VAT[/th]</td>
+					<td class="oPrWtPTHeader" style="text-align: center;">[th]Price inc. VAT[/th]</td>
+					<td class="oPrWtPTHeader" style="text-align: center;">[th]Period[/th]</td>
+				{else}
+					<td colspan="5" class="oPrWtPTHeader">[th]Products[/th]</td>
+				{/if}
+			</tr>
+			{foreach from=$item_products item=product}
+ 			<tr>
+			<td class="oPrWtPT1">{$product.amount format="%.2f"}</td>
+			<td class="oPrWtPT2">{$product.invoice_line}{if $product.product_exclude}<span style="color: #ff0000;"> ([th]excluded[/th])</span>{/if}</td>
+			<td class="oPrWtPT3">{if $round_down}{$product.price|floor|number_format:0:",":"."}{else}{$product.price|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			<td class="oPrWtPT4">{if $round_down}{$product.price*$product.amount|floor|number_format:0:",":"."}{else}{$product.price*$product.amount|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$product.price*$product.amount}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$product.price*$product.amount}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">
+                {if $product.period == 'once'}[th]once only[/th]{/if}
+                {if $product.period == 'week'}[th]per week[/th]{/if}
+                {if $product.period == 'month'}[th]per month[/th]{/if}
+                {if $product.period == 'year'}[th]per year[/th]{/if}
+            </td>
+			</tr>
+			{/foreach}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" class="oPrWtPTHeader">[th]Totals[/th]</td>
+			</tr>
+			<tr>
+			<td class="oPrWtPT1">&nbsp;</td>
+			<td class="oPrWtPT2">[th]Subtotal[/th]</td>
+			<td class="oPrWtPT3">&nbsp;</td>
+			<td class="oPrWtPT4">{if $round_down}{$item.amount.once+$item.amount.week+$item.amount.month+$item.amount.year|floor|number_format:0:",":"."}{else}{$item.amount.once+$item.amount.week+$item.amount.month+$item.amount.year|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$item.amount.once+$item.amount.week+$item.amount.month+$item.amount.year}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$item.amount.once+$item.amount.week+$item.amount.month+$item.amount.year}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">&nbsp;</td>
+			</tr>
+			{if $discount}
+			<tr>
+			<td class="oPrWtPT1">&nbsp;</td>
+			<td class="oPrWtPT2"><span class="oPrWtDiscount">[th]Discount[/th]</span></td>
+			<td class="oPrWtPT3"><span class="oPrWtDiscount">{$discount.discount_line} {$discount.discount_rate|number_format:2:",":"."}%</span></td>
+			<td class="oPrWtPT4"><span class="oPrWtDiscount">- {math assign="discfirst" equation="x * y" x=$total.once+$total.week+$total.month+$total.year y=$discount.discount_rate/100 format="%.2f"}{if $round_down}{$discfirst|floor|number_format:0:",":"."}{else}{$discfirst|number_format:2:",":"."}{/if} {$proposal.currency}</span></td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">&nbsp;</td>
+				<td class="oPrWtPT7">&nbsp;</td>
+			{/if}
+			<td class="oPrWtPT5">&nbsp;</td>
+			</tr>
+			
+			<tr>
+			<td class="oPrWtPT1">&nbsp;</td>
+			<td class="oPrWtPT2"><span class="oPrWtTotal">[th]Total[/th]</span></td>
+			<td class="oPrWtPT3">&nbsp;</td>
+			<td class="oPrWtPT4"><span class="oPrWtTotal">{math assign="disctotal" equation="x - (y*z)" x=$total.once+$total.week+$total.month+$total.year y=$total.once+$total.week+$total.month+$total.year z=$discount.discount_rate/100 format="%.2f"}{if $round_down}{$disctotal|floor|number_format:0:",":"."}{else}{$disctotal|number_format:2:",":"."}{/if} {$proposal.currency}</span></td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$disctotal}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$disctotal}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">&nbsp;</td>
+			</tr>
+			{/if}
+			
+			{if $terms.advance_invoice_percentage != '0'}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" class="oPrWtPTHeader">[th]Divided Invoices[/th]</td>
+			</tr>
+			<tr>
+			<td class="oPrWtPT1">&nbsp;</td>
+			<td class="oPrWtPT2">[th]Advance Invoice[/th]</td>
+			<td class="oPrWtPT3">&nbsp;</td>
+			<td class="oPrWtPT4">{math assign="advanceinvoice" equation="(z-(x * y))*a" x=$total.year+$total.once+$total.week y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week a=$terms.advance_invoice_percentage/100 format="%.2f"}{if $round_down}{$advanceinvoice|floor|number_format:0:",":"."}{else}{$advanceinvoice|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$advanceinvoice}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$advanceinvoice}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">{$terms.advance_invoice_term_days} [th]Days[/th]</td>
+			</tr>
+			{/if}
+			{if $terms.final_invoice_percentage != '0'}
+			<tr>
+			<td class="oPrWtPT1">&nbsp;</td>
+			<td class="oPrWtPT2">[th]Final Invoice[/th]</td>
+			<td class="oPrWtPT3">&nbsp;</td>
+			<td class="oPrWtPT4">{math assign="finalinvoice" equation="((z-(x * y))*a)" x=$total.year+$total.once+$total.week y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week a=$terms.final_invoice_percentage/100 format="%.2f"}{if $round_down}{$finalinvoice|floor|number_format:0:",":"."}{else}{$finalinvoice|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$finalinvoice}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$finalinvoice}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">{$terms.final_invoice_term_days} [th]Days[/th]</td>
+			</tr>
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" class="oPrWtPTHeader">[th]After First Year[/th]</td>
+			</tr>
+			
+			<tr>
+			<td class="oPrWtPT1">1</td>
+			<td class="oPrWtPT2">[th]Yearly payment[/th]</td>
+			<td class="oPrWtPT3">&nbsp;</td>
+			<td class="oPrWtPT4">{math assign="yearlyp" equation="x" x=$total.year+$total.week+$total.month z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$yearlyp|floor|number_format:0:",":"."}{else}{$yearlyp|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$yearlyp}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$yearlyp}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">{if $terms.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+			</tr>
+			{/if}
+			{if $terms.type == 'monthly'}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" class="oPrWtPTHeader">[th]Invoices[/th]</td>
+			</tr>
+			<tr>
+			<td class="oPrWtPT1">12</td>
+			<td class="oPrWtPT2">[th]Monthly payment[/th]{if $terms.percentage_over_total > 0}, {$terms.percentage_over_total}% [th]Added[/th]{/if}</td>
+			<td class="oPrWtPT3">&nbsp;</td>
+			<td class="oPrWtPT4">{math assign="mpfirst" equation="(((x-(x*y))/12)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$mpfirst|floor|number_format:0:",":"."}{else}{$mpfirst|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$mpfirst}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$mpfirst}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">{if $terms.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+			</tr>
+			
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" class="oPrWtPTHeader">[th]After First Year[/th]</td>
+			</tr>
+			<tr>
+			<td class="oPrWtPT1">12</td>
+			<td class="oPrWtPT2">[th]Monthly payment[/th]{if $terms.percentage_over_total > 0}, {$terms.percentage_over_total}% [th]Added[/th]{/if}</td>
+			<td class="oPrWtPT3">&nbsp;</td>
+			<td class="oPrWtPT4">{math assign="mpafter" equation="(((x-(x*y))/12)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$mpafter|floor|number_format:0:",":"."}{else}{$mpafter|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$mpafter}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$mpafter}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">{if $terms.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+			</tr>
+			{/if}
+			{if $terms.type == 'quarterly'}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" class="oPrWtPTHeader">[th]Invoices[/th]</td>
+			</tr>
+			
+			<tr>
+			<td class="oPrWtPT1">4</td>
+			<td class="oPrWtPT2">[th]Quarterly payment[/th]{if $terms.percentage_over_total > 0}, {$terms.percentage_over_total}% [th]Added[/th]{/if}</td>
+			<td class="oPrWtPT3">&nbsp;</td>
+			<td class="oPrWtPT4">{math assign="qpfirst" equation="(((x-(x*y))/4)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$qpfirst|floor|number_format:0:",":"."}{else}{$qpfirst|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$qpfirst}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$qpfirst}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">{if $terms.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+			</tr>
+			
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" class="oPrWtPTHeader">[th]After First Year[/th]</td>
+			</tr>
+			
+			<tr>
+			<td class="oPrWtPT1">4</td>
+			<td class="oPrWtPT2">[th]Quarterly payment[/th]{if $terms.percentage_over_total > 0}, {$terms.percentage_over_total}% [th]Added[/th]{/if}</td>
+			<td class="oPrWtPT3">&nbsp;</td>
+			<td class="oPrWtPT4">{math assign="qpafter" equation="(((x-(x*y))/4)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$qpafter|floor|number_format:0:",":"."}{else}{$qpafter|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$qpafter}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$qpafter}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">{if $terms.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+			</tr>
+			{/if}
+			{if $terms.type == 'once'}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" class="oPrWtPTHeader">[th]Invoices[/th]</td>
+			</tr>
+			<tr>
+			<td class="oPrWtPT1">&nbsp;</td>
+			<td class="oPrWtPT2">{$terms.name}</td>
+			<td class="oPrWtPT3">&nbsp;</td>
+			<td class="oPrWtPT4">{math assign="yearlyfirst" equation="(((x-(x*y))/1)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$yearlyfirst|floor|number_format:0:",":"."}{else}{$yearlyfirst|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$yearlyfirst}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$yearlyfirst}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">{$terms.final_invoice_term_days} [th]Days[/th]</td>
+			</tr>
+			
+			{if $total.year != '0'}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" class="oPrWtPTHeader">[th]After First Year[/th]</td>
+			</tr>
+			
+			<tr>
+			<td class="oPrWtPT1">[th]Yearly payment[/th]</td>
+			<td class="oPrWtPT2">&nbsp;</td>
+			<td class="oPrWtPT3">&nbsp;</td>
+			<td class="oPrWtPT4">{math assign="yearlyafter" equation="(((x)/1)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$yearlyafter|floor|number_format:0:",":"."}{else}{$yearlyafter|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td class="oPrWtPT6">{$vat} %</td>
+				<td class="oPrWtPT7">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$yearlyafter}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$yearlyafter}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td class="oPrWtPT5">{$terms.final_invoice_term_days} [th]Days[/th]</td>
+			</tr>
+			{/if}
+			{/if}
+			</table>
+		{/if}
+		
+		{/if}
+		
+		{if $item.type == 'own_snippet'}
+		<div class="oPrWtDescr">{$item.description}</div>
+		{/if}
+		{/foreach}
+		<div class="text">[t]If you have any questions about this proposal, please let us know.[/t]</div>
+<div class="oPrWtPTButtons">		
+		<input class="button" id="oPrWtYes" type="button" value="[th]Order[/th]" onClick="document.location = '{$indexPhpRoot}page/proposals/bb/1/command/terms/pid/{$id}'">
+		{if $crowdfunding}
+		<input class="button" id="oPrWtNo" type="button" value="[th]No thank you[/th]" onClick="document.location = '{$indexPhpRoot}page/proposals/bb/1/command/crowdfunding/pid/{$id}'">
+		{else}
+		<input class="button" id="oPrWtNo" type="button" value="[th]No thank you[/th]" onClick="document.location = '{$indexPhpRoot}page/proposals/bb/1/command/decline/pid/{$id}'">
+		{/if}
+</div>
+
+</div>
+
+        <!--uts:end inner-->
+    </body>
+</html>

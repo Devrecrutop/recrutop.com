@@ -1,0 +1,82 @@
+  <!-- /UTS/advsearch/candidateClueTip.html -->
+<if $can.foto && $fullDetailAccessible && [uts:show_photo]>
+<div class="vacImg"><img src="{$handler}/command/displayphoto/cid/{$cid}/key/{$hsuserid}" alt="[th]Candidate's photo[/th]"></div>
+</if>
+
+<if [uts:show_description] && $can.chapo>
+<div class="vacDescr">{$can.chapo}</div>
+</if>
+
+<if [uts:show_location] && $can.woonplaats>
+<div class="vacDescr vacDescrStyle">[t]Location[/t] <span>{$can.woonplaats|escape}</span></div>
+</if>
+
+
+{* start matchcriteria *}
+<if [uts:show_matchcriteria]>
+<foreach from=$critList item=crit>
+<if !empty($crit._crvlist)>
+<div class="crit">
+{$crit.name|escape} <span>
+<foreach from=$crit._crvlist item=crval name="matchc">{$crval|escape}{if !$smarty.foreach.matchc.last}, {/if}</foreach>
+</span>
+</div>
+</if>
+</foreach>
+</if>
+{* end matchcriteria *}
+
+{* start ontology *}
+
+<if [uts:show_ontology]>
+
+	<if $simpleOnt.FUNCTION && in_array("functions", $oclist) >
+		<div class="itemLine actIl actIlCvs">
+			<label>[t]functions[/t]</label>
+			<span>{$simpleOnt.FUNCTION|escape|truncate:200}</span>
+			<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+		</div>
+	</if>
+	<if $simpleOnt.SECTOR && in_array("sectors", $oclist) >
+		<div class="itemLine actIl actIlCvs">
+			<label>[t]sectors[/t]</label>
+			<span>{$simpleOnt.SECTOR|escape|truncate:200}</span>
+			<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+		</div>
+	</if>
+	<if $simpleOnt.EDUCATION && in_array("education", $oclist) >
+		<div class="itemLine actIl actIlCvs">
+			<label>[t]education[/t]</label>
+			<span>{$simpleOnt.EDUCATION|escape|truncate:200}</span>
+			<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+		</div>
+	</if>
+	<if $simpleOnt.COMPETENCE && in_array("competences", $oclist) >
+		<div class="itemLine actIl actIlCvs">
+			<label>[t]competences[/t]</label>
+			<span>{$simpleOnt.COMPETENCE|escape|truncate:200}</span>
+			<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+		</div>
+	</if>
+	<if $simpleOnt.SOFTCOMPETENCE && in_array("softcompetences", $oclist) >
+		<div class="itemLine actIl actIlCvs">
+			<label>[t]soft competences[/t]</label>
+			<span>{$simpleOnt.SOFTCOMPETENCE|escape|truncate:200}</span>
+			<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+		</div>
+	</if>
+	<if $simpleOnt.LANGUAGE && in_array("languages", $oclist) >
+		<div class="itemLine actIl actIlCvs">
+			<label>[t]languages[/t]</label>
+			<span>{$simpleOnt.LANGUAGE|escape|truncate:200}</span>
+			<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+		</div>
+	</if>
+
+</if>
+
+{* end ontology *}
+
+<div class="linkCon">
+<a href="{$indexPhpRoot}page/candetail/bb/1/command/start/id/{$cid}/origin/advsearchcvs">[t]Full detail page[/t]</a>
+</div>

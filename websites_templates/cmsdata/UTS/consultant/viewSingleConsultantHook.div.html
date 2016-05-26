@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+{if $cp_info.publish_pp}
+
+<div class="hookOuter fhlOuter chlOuter">
+<!-- /UTS/consultant/viewSingleConsultantHook.div.html -->
+
+<div class="hookHeader fhlTitle chlTitle">[t]Medewerkers[/t]</div>
+	<div class="hookItemContainer fhlItemContainer chlItemContainer">
+	{if $cp_info.cp_displayed_name || $cp_info.cp_full_name}
+	<div class="hookItemTitle fhlItemTitle chlItemTitle"><a href="http://{$consultant_detail}" title="[t]Details of [/t]{$cp_info.cp_full_name|escape}">{if $cp_info.cp_displayed_name}{$cp_info.cp_displayed_name|escape}{else}{$cp_info.cp_full_name|escape}{/if}</a></div>
+	{/if}
+	
+	{if $cp_photo !="" && $display_elements.show_photo}
+	<div class="hookItemPhoto1 fhlPhoto1 chlPhoto1">
+		<div class="hookItemPhoto2 fhlPhoto2 chlPhoto2">
+			<a href="http://{$consultant_detail}" title="[t]Details...[/t]"><img src="http://{$cp_photo_link}" border="0" alt="{$cp_info.cp_full_name|escape}" {$cp_photo_size}></a>
+		</div>
+	</div>
+	{/if}
+	
+	{if $cp_info.cp_email && $display_elements.show_email}
+	<div class="hookItemWord fhlItemWord chlItemWord chlEmail">
+	<span>[t]E-mail:[/t]</span>
+	<a href="mailto:{$cp_info.cp_email}" tile="{$cp_info.cp_email}">{$cp_info.cp_email}</a>
+	</div>
+	{/if}
+	
+	{if $organisation_units_cnt > 0 && $display_elements.show_orgunit}
+	<div class="hookItemWord fhlItemWord chlItemWord chlOrgUni">
+	<span>[t]Organisation units:[/t]</span>
+	{foreach from=$organisation_units item=unit name=ou}
+		{$unit.item_name|escape}
+		{if !$smarty.foreach.ou.last},&nbsp;{/if}
+	{/foreach}
+	</div>
+	{/if}
+	
+	{if $roles_cnt > 0 && $display_elements.show_roles}
+	<div class="hookItemWord fhlItemWord chlItemWord chlRoles">
+	<span>[t]Roles:[/t]</span>
+	{foreach from=$roles item=rl name=roles}
+		{$rl.name|escape}
+		{if !$smarty.foreach.roles.last},&nbsp;{/if}
+	{/foreach}
+	</div>
+	{/if}
+	
+	{if   $display_elements.show_address  && ($cp_info.cp_adres || $cp_info.cp_pc || $cp_info.cp_plaats)}
+	<div class="hookItemWord fhlItemWord chlItemWord chlAddr">
+	<span>[t]Address:[/t]</span>
+	{if $cp_info.cp_adres}
+		{$cp_info.cp_adres|escape},&nbsp;
+	{/if}
+	{if $cp_info.cp_pc}
+		{$cp_info.cp_pc|escape}&nbsp;
+	{/if}
+	{if $cp_info.cp_plaats}
+		{$cp_info.cp_plaats|escape}
+	{/if}
+	</div>
+	{/if}
+	
+	{if $cp_info.phone_home && $display_elements.show_home_phone}
+	<div class="hookItemWord fhlItemWord chlItemWord chlPhoneHome">
+	<span>[t]Phone home:[/t]</span>
+	{$cp_info.phone_home}
+	</div>
+	{/if}
+	
+	{if $cp_info.phone_mobile && $display_elements.show_cell_phone}
+	<div class="hookItemWord fhlItemWord chlItemWord chlPhoneCell">
+	<span>[t]Cell phone:[/t]</span>
+	{$cp_info.phone_mobile}
+	</div>
+	{/if}
+	
+	{if $cp_info.phone_work && $display_elements.show_work_phone}
+	<div class="hookItemWord fhlItemWord chlItemWord chlPhoneWork">
+	<span>[t]Work phone:[/t]</span>
+	{$cp_info.phone_work}
+	</div>
+	{/if}
+	
+	{if $cp_info.phone_fax && $display_elements.show_fax}
+	<div class="hookItemWord fhlItemWord chlItemWord chlPhoneFax">
+	<span>[t]Fax:[/t]</span>
+	{$cp_info.phone_fax}
+	</div>
+	{/if}
+	
+	{if $cp_info.phone_skype && $display_elements.show_skype}
+	<div class="hookItemWord fhlItemWord chlItemWord chlSkype">
+	<span>[t]Skype:[/t]</span>
+	{$cp_info.phone_skype}
+	</div>
+	{/if}
+	
+	{if $cp_media && $display_elements.show_wiqet}
+	<div class="hookItemText fhlItemText chlItemText chlMedia">
+	{$cp_media}
+	</div>
+	{/if}
+	
+	{if $cp_widget && $display_elements.show_widget}
+	<div class="hookItemText fhlItemText chlItemText chlWidget">
+	{$cp_widget}
+	</div>
+	{/if}
+	
+	{if $cp_documents_cnt > 0 && $display_elements.show_documents}
+	{foreach from=$cp_documents item=i}
+	<div class="hookItemText fhlItemText chlItemText chlDownload">{$i.document_download_link}</div>
+	{/foreach}
+	{/if}
+	
+	{if $short_descr !="" && $display_elements.show_short_text}
+	<div class="hookItemText fhlItemText chlItemText chlDesc">{$short_descr|truncate:200}<a href="http://{$consultant_detail}" title="[t]Details...[/t]" class="chlMoreLink">[t]Details...[/t]</a></div>
+	{/if}
+	
+	</div>
+
+<div class="cleaner fhlCleaner chlCleaner"></div>
+</div>
+
+{/if}
+
+<!--uts:end inner-->
+</body>
+</html>

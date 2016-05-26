@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+var vhandler = '{$handler}';
+//{literal}
+var vmodel = new ViewModel()
+
+$(document).ready( function() {
+    ko.bindingHandlers.ratyScore = {
+        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            // This will be called when the binding is first applied to an element
+            // Set up any initial state, event handlers, etc. here
+            var value = ko.utils.unwrapObservable(valueAccessor());
+            $(element).raty({
+                half  : true,
+                path : '/_images_global/raty/',
+                space : false,
+                hints: ['[th]bad[/th]', '[th]poor[/th]', '[th]regular[/th]', '[th]good[/th]', '[th]excellent[/th]'],
+                width: 90,
+                readOnly : false,
+                noRatedMsg : '[th]not rated yet[/th]',
+                score: value,
+                click: function(score, evt) {
+                    var value = valueAccessor();
+                    value(score);
+                }
+            });
+            //ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+                //$(element).raty("destroy");
+            //});
+        },
+        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            // This will be called once when the binding is first applied to an element,
+            // and again whenever the associated observable changes value.
+            // Update the DOM element based on the supplied values here.
+            // First get the latest data that we're bound to
+            // not needed here
+        }
+    };
+    
+    ko.bindingHandlers.ratyScoreReadonly = {
+        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            // This will be called when the binding is first applied to an element
+            // Set up any initial state, event handlers, etc. here
+            var value = ko.utils.unwrapObservable(valueAccessor());
+            $(element).raty({
+                half  : true,
+                path : '/_images_global/raty/',
+                space : false,
+                hints: ['[th]bad[/th]', '[th]poor[/th]', '[th]regular[/th]', '[th]good[/th]', '[th]excellent[/th]'],
+                width: 90,
+                readOnly : true,
+                noRatedMsg : '[th]not rated yet[/th]',
+                score: value
+            });
+            //ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+                //$(element).raty("destroy");
+            //});
+        },
+        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            // This will be called once when the binding is first applied to an element,
+            // and again whenever the associated observable changes value.
+            // Update the DOM element based on the supplied values here.
+             var value = valueAccessor(), allBindings = allBindingsAccessor();
+            // Next, whether or not the supplied model property is observable, get its current value
+            var valueUnwrapped = ko.utils.unwrapObservable(value);
+            //alert(valueUnwrapped);
+            $(element).raty('readOnly', false);
+            $(element).raty('score', valueUnwrapped);
+            $(element).raty('readOnly', true);
+        }
+    };
+    
+    ko.applyBindings(vmodel);
+});
+
+function ViewModel() {
+    var self = this;
+    self.speed = ko.observable(4);
+    self.communication = ko.observable(4);
+    self.accessibility = ko.observable(4);
+    self.quality = ko.observable(4);
+    self.total = ko.computed(function() {
+        var out = (parseFloat(self.speed())+parseFloat(self.communication())+parseFloat(self.accessibility())+parseFloat(self.quality()))/4;
+        //alert(self.speed()+' '+self.communication()+' '+self.accessibility()+' '+self.quality()+' '+self.refusals()+': '+out);
+        return out;
+    }, self); 
+    self.addRating = function() {
+        if (!confirm('[th]Are you sure to give this Recruiter the total rating of[/th] '+(Math.round(2*self.total())/2)+'?')) return;
+        $('#fAddRating').submit();
+    };
+}
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdRatCandOuter">
+	<!-- /UTS/customers/recrowd_give_rating_candidate.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Ratings[/t]: {$recruiterName|escape}</h1>
+	{$CustomersMenu}
+	<p>[t]Select the ratings for this recruiter below.[/t]</p>
+	<div class="itemContainer rcwdIc">
+	    <div class="itemWord rcwdiW">
+			<span>[t]Speed[/t]</span>[t]Explanation Speed[/t]
+			<div data-bind="ratyScore: speed"></div>
+		</div>
+	    <div class="itemWord rcwdiW">
+			<span>[t]Communication[/t]</span>[t]Explanation Communication[/t]
+			<div data-bind="ratyScore: communication"></div>
+		</div>
+	    <div class="itemWord rcwdiW">
+			<span>[t]Accessibility[/t]</span>[t]Explanation Accessibility[/t]
+			<div data-bind="ratyScore: accessibility"></div>
+		</div>
+	    <div class="itemWord rcwdiW">
+			<span>[t]Quality[/t]</span>[t]Explanation Quality[/t]
+			<div data-bind="ratyScore: quality"></div>
+		</div>
+	    <div class="itemFooter rcwdiF">
+			<span>[t]Total[/t]</span>
+			<div data-bind="ratyScoreReadonly: total"></div>
+		</div>
+	</div>
+    
+	<form action="{$handler}" method="post" id="fAddRating">
+		<input type="hidden" name="command" value="candidatePortal">
+		<input type="hidden" name="subcmd" value="saveRating">
+		<input type="hidden" name="cpid" value="{$cpid|escape}">
+        <input type="hidden" name="vacid" value="{$vacid|escape}">
+		<input type="hidden" name="speed" data-bind="value: speed">
+		<input type="hidden" name="communication" data-bind="value: communication">
+		<input type="hidden" name="accessibility" data-bind="value: accessibility">
+		<input type="hidden" name="quality" data-bind="value: quality">
+		<div class="buttonContainer">
+			<input type="button" value="[tb]Submit Rating[/tb]" data-bind="click: addRating">
+		</div>
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

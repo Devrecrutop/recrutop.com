@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>NM_Unsubscribe</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- UTS/mailings/nm_unsubscribe.div.html -->
+
+<form name="f" action="/index.php/page/mailings/bb/1" method="post">
+<!--MENUBAR-->
+<div class="outer">
+<!--START_PageTitle-->
+<h1 class="title">[t]PageTitle[/t]</h1>
+<!--END_PageTitle-->
+
+<foreach from=$clist item=c>
+<div class="formInput formCheckbox">
+<input type="hidden" name="sbs[{$c.id}]" value="{$c.subscribed}" >
+<input type="checkbox" name="grplist[]" value="{$c.id}" {if $c._preselect2}checked{/if}>
+{$c.mg_public_subject}
+</div>
+</foreach>
+
+<div class="formInput">
+<label>[t]SingleWord1[/t]<!--SingleWordLink1--></label>
+<input name="Submit" type="Submit" value="[t]Button1[/t]" class="button"><!--ButtonLink1-->
+</div>
+
+<input type="hidden" name="command" value="subman_save" >
+<input type="hidden" name="email" value="{$email}" >
+<input type="hidden" name="name" value="{$name}" >
+<input type="hidden" name="surname" value="{$surname}" >
+<input type="hidden" name="gender" value="{$gender}" >
+<input type="hidden" name="prefix" value="{$prefix}" >
+<input type="hidden" name="unsubmode" value="1" >
+</div>
+</form>
+<!--uts:end inner-->
+</body>
+</html>

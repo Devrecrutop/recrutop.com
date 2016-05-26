@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/email_templates/referralProductsOrderedNotificationMail.html -->
+
+<p>
+    [t]Order notification[/t]<br>
+</p>
+<p>
+    [t]Candidate {$candidateName} has bought the following products:[/t]<br>
+</p>
+<p>
+ <table border="0">
+    <tr>
+    <th>[t]Number[/t]</th>
+    <th>[t]Product[/t]</th>
+    <th>[t]Total credits[/t]</th>
+    </tr>
+	{foreach from=$product_order_list item=r}
+    <tr>  
+  		<td>{$r.product_cnt}</td>
+  		<td>{$r.product_name}</td>
+  		<td align="right">{$r.total_product_credits}</td>
+  	</tr>
+	{/foreach}
+  
+  <tr>  
+		<td>&nbsp;</td>
+		<td><strong>[t]Total:[/t]</strong></td>
+		<td align="right"><strong>{$total_credits}</strong></td>
+	</tr>
+  </table>
+</p>
+<p class="utsSignature">
+    [t]Best regards,[/t]
+    {$client} <br>
+    <strong>{$website}</strong> <br>
+</p>
+<p>
+<i>[t]Remark: this e-mail message has been automatically generated[/t]</i>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

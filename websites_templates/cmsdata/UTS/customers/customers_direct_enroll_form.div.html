@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Customers direct enroll form</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/customers/customers_direct_enroll_form.div.html -->
+
+<script language="javascript">
+
+{literal}
+function checkEmail(email) {
+if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email))
+	return (true);
+return (false);
+}
+
+function checkPhone(phone){
+    if (/[\x00-\x2A\x2C-\x2F\x3A-\xFF]/.test(phone))
+	return (true);
+    return (false);
+    
+}
+
+function validate_and_submit() {
+if (document.forms.f1.firstname.value=='') {
+	alert('[t]You did not enter a first name.[/t]');
+	document.forms.f1.firstname.focus();
+	return false;
+}
+if (document.forms.f1.surname.value=='') {
+	alert('[t]You did not enter a last name.[/t]');
+	document.forms.f1.surname.focus();
+	return false;
+}
+if (document.forms.f1.company.value=='') {
+	alert('[t]You did not enter a company name[/t]');
+	document.forms.f1.company.focus();
+	return false;
+}
+if (!checkEmail(document.forms.f1.email.value)) {
+	alert('[t]E-mail address is missing or has errors.[/t]');
+	document.forms.f1.email.focus();
+	return false;
+}
+if(checkPhone(document.forms.f1.phone.value)){
+    alert('[t]Phone number has errors.[/t]');
+    document.forms.f1.phone.focus();
+    return false;
+}
+
+return true;
+}
+{/literal}
+</script>
+
+<div class="outer cusOuter cusAplOuter">
+	<!--START_PageTitle-->
+	<h1 class="title cusTitle cusAplTitle">[t]Do you want to become our customer?[/t]</h1>
+	<!--END_PageTitle-->
+	
+	{if $postback.customer_enroll_error}
+		{if $postback.customer_enroll_error == 1}
+		<div class="error cusError cusAplErrorMF">[t]Missing fields![/t]</div>
+		{/if}
+		{if $postback.customer_enroll_error == 2}
+		<div class="error cusError cusAplErrorCE">[t]Please choose another email address![/t]</div>
+		{/if}
+		{if $postback.customer_enroll_error == 3 || $postback.customer_enroll_error == 4 || $postback.customer_enroll_error == 5}
+		<div class="error cusError cusAplErrorDP">[t]Some error occured during data processing![/t]</div>
+		{/if}
+		{if $postback.customer_enroll_error_invalid_captcha}
+		<div class="error cusError">[t]Please enter correct security code[/t]</div>
+		{/if}
+	{/if}
+
+	<h2 class="subHeader custAplSh custAplStartSh">[t]Customer registration[/t]</h2>
+
+	<div class="text custAplText">
+		[t]Please enter your contact details below.[/t]
+	</div>
+
+	<div class="form cusFrm">
+		<form name="f1" action="[website]/index.php/page/customers_ext/bb/1" method="post" onsubmit="return(validate_and_submit())">
+
+			<input name="command" type="hidden" value="direct_enroll_exec">
+			<input name="website_name" type="hidden" value="{$website_name}">
+		
+			<div class="formInput cusFi cusAplFi cusAplFiFn">
+				<label for="firstname">[t]First name[/t]</label>
+				<input type="text" name="firstname" size="20" value="{$postback.firstname}">
+			</div>
+		
+			<div class="formInput cusFi cusAplFi cusAplFiMn">
+				<label for="middlename">[t]Middle name[/t]</label>
+				<input type="text" name="infix" size="20" value="{$postback.infix}">
+			</div>
+
+			<div class="formInput cusFi cusAplFi cusAplFiLn">
+				<label for="lastname">[t]Last name[/t]</label>
+				<input type="text" name="surname" size="20" value="{$postback.surname}">
+			</div>
+			
+			<div class="formInput formRadio cusFi cusAplFi cusAplFiG">
+				<label for="gender">[t]Gender[/t]</label>
+				<input type="hidden" name="gender" value="O">
+				<input type="radio" name="gender" value="M" {if $postback.gender == "M"}checked{/if}>[t]Male[/t]
+				<input type="radio" name="gender" value="V" {if $postback.gender == "V"}checked{/if}>[t]Female[/t]
+			</div>
+
+			<div class="formInput cusFi cusAplFi cusAplFiC">
+				<label for="company">[t]Company[/t]</label>
+				<input type="text" name="company" size="20" value="{$postback.company}">
+			</div>
+		
+			<div class="formInput cusFi cusAplFi cusAplFiTn">
+				<label for="phone">[t]Telephone number[/t]</label>
+				<input type="text" name="phone" size="20" value="{$postback.phone}">
+			</div>
+
+			<div class="formInput cusFi cusAplFi cusAplFiJt">
+				<label for="jobtitle">[t]Job Title[/t]</label>
+				<input type="text" name="function" size="20" value="{$postback.function}">
+			</div>
+
+			<div class="formInput cusFi cusAplFi cusAplFiEm">
+				<label for="email">[t]E-mail[/t]</label>
+				<input type="text" name="email" size="20" value="{$postback.email}">
+			</div>
+
+			<div class="formInput cusFi cusAplFi cusAplFiD">
+				<label for="department">[t]Department[/t]</label>
+				<input type="text" name="department" size="20" value="{$postback.department}">
+			</div>
+		
+			<div class="formInput aplCsc">
+				<label>[t]Security code:[/t]</label>
+				<img id="captcha2" src="/_javascript_global/securimage/securimage_show.php?sid={$random}&code_name={$sess_code}" alt="CAPTCHA Image" >
+				<a href="#" onclick="document.getElementById('captcha2').src = '/_javascript_global/securimage/securimage_show.php?code_name={$sess_code}&sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0" ></a>
+				<a href="/_javascript_global/securimage/securimage_play.php?code_name={$sess_code}"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0" ></a>
+			</div>
+			
+			<div class="formInput formSmallInput aplCic">
+				<label>[t]Code[/t]</label>
+				<input type="text" name="captcha2" id="captcha_inp">
+			</div>
+			<div class="explain aplCaptchaExplain">
+				[t]Please enter the right security code as you see on the image.[/t]
+			</div>
+
+			<div class="buttonContainer cusButton cusAplBc">
+				<input class="button" type="submit" name="Send" value="[th]Register[/th]">
+			</div>
+		</form>
+	</div>
+</div>
+
+<!--uts:end inner-->
+
+</body>
+</html>

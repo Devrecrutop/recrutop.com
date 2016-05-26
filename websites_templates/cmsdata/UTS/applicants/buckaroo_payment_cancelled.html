@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>
+ONLINE PAYMENT
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+<!--
+function hidestatus(){
+window.status='Otys e-Recruiting Systems'
+return true
+}
+if (document.layers)
+document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+document.onmouseover=hidestatus
+document.onmouseout=hidestatus
+-->
+</SCRIPT>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/applicants/buckaroo_payment_cancelled.html -->
+<script language="Javascript1.2">
+{literal}
+function check_formstate(tabcode){
+layerShow(tabcode);
+//switch_tab(tabcode);
+}
+function pay() {
+{/literal}
+	location = '{$payurl}';
+{literal}
+}
+function cancel_transaction(){
+{/literal}
+	location = '{$cancelurl}';
+{literal}
+}
+
+{/literal}
+// -->
+</script>
+
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<div class="outer custOuter custFinOuter custFinPayRejectOuter">
+<h1 class="title">[t]Cancelled payment[/t]:</h1>
+<!--END_PageTitle-->
+<!--START PAYMENT/OVERVIEW-->
+<form method="post" action="">
+{if $is_cancelled}
+<div class="intro">[t]Your payment was cancelled.[/t]</div>
+{else}
+<div class="intro">[t]Your payment was not successfull![/t]</div>
+{/if}
+</form>
+<!--END STATUS CHANGE/OVERVIEW-->
+<div class="buttonContainer">
+<input name="button" class="button" type="button" onClick="pay();" value="[tb]Try again[/tb]">
+<input name="button" class="button" type="button" onClick="cancel_transaction();" value="[tb]Return home[/tb]">
+</div>
+
+</div>
+<iframe name="actionframe" id="actionframe" width="1" height="1" border="0" frameborder="NO"></iframe>
+
+<!--uts:end inner-->
+</body>
+</html>

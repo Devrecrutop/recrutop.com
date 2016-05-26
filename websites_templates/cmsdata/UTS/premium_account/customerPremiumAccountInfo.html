@@ -1,0 +1,66 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>[t]Customer Premium Account[/t]</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/premium_account/customerPremiumAccountInfo.html -->
+
+{literal}
+<script type="text/javascript" language="JavaScript">
+<!--
+//{/literal}
+
+  var handler = '{$handler}'
+  
+//{literal}
+
+//-->
+</script>
+{/literal}
+
+{if $actAccSetup.duration == "1m"}
+  {assign var=premiumAccountDuration value="[t]1 month[/t]"}
+{elseif $actAccSetup.duration == "2m"}
+  {assign var=premiumAccountDuration value="[t]2 months[/t]"}
+{elseif $actAccSetup.duration == "3m"}
+  {assign var=premiumAccountDuration value="[t]3 months[/t]"}
+{elseif $actAccSetup.duration == "4m"}
+  {assign var=premiumAccountDuration value="[t]4 months[/t]"}
+{elseif $actAccSetup.duration == "5m"}
+  {assign var=premiumAccountDuration value="[t]5 months[/t]"}
+{elseif $actAccSetup.duration == "6m"}
+  {assign var=premiumAccountDuration value="[t]6 months[/t]"}
+{elseif $actAccSetup.duration == "7m"}
+  {assign var=premiumAccountDuration value="[t]7 months[/t]"}
+{elseif $actAccSetup.duration == "8m"}
+  {assign var=premiumAccountDuration value="[t]8 months[/t]"}
+{elseif $actAccSetup.duration == "9m"}
+  {assign var=premiumAccountDuration value="[t]9 months[/t]"}
+{elseif $actAccSetup.duration == "10m"}
+  {assign var=premiumAccountDuration value="[t]10 months[/t]"}
+{elseif $actAccSetup.duration == "11m"}
+  {assign var=premiumAccountDuration value="[t]11 months[/t]"}
+{elseif $actAccSetup.duration == "1y"}
+  {assign var=premiumAccountDuration value="[t]1 year[/t]"}                        
+{else}
+  {assign var=premiumAccountDuration value=""}
+{/if}
+
+
+<div class="outer premAccoutOuter premAccoutBody">
+<h1 class="title csnTitle">[t]Premium account[/t]</h1>
+{*$menu*}<!--WGCPID:{$wgCpId}-->
+
+<div class="text premAccountText">[t]Upgrade to a premium account to obtain extra privileges.[/t]</div>
+<div class="text premAccountText">[t]The costs for this account are {$actAccSetup.price|string_format:"%.2f"} &euro; for {$premiumAccountDuration|escape}.[/t]</div>
+<div class="text premAccountText">
+<a href="{$handler}/command/ogonecustomerpayment">[t]Pay with Ogone to start using your premium account now![/t]</a>
+</div>
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

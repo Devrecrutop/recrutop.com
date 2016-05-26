@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Procedures Reports</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!--/UTS/customers/procReportsDetail.html STANDARD -->
+
+{if $interactiveMode}
+
+<!-- <link rel="stylesheet" type="text/css" href="/_javascript_global/ext4/resources/css/ext-all.css" /> -->
+<script type="text/javascript" src="/_javascript_global/ext4/bootstrap.js"></script>
+
+<script type="text/javascript">
+{literal}
+function procReportsExport(format) {
+	
+	$('form[name=procReportExportForm] input[name=command]').val('export' + format);
+	$('form[name=procReportExportForm]').submit();
+}
+{/literal}
+</script>
+<style>
+{literal}
+body {
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:10pt;
+	color:#444;
+}
+td {
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:10pt;
+	text-align:left;
+	vertical-align:top;
+}
+p {
+	margin: 0 0 0.5em 0;
+	padding: 0;
+}
+{/literal}
+</style>
+
+{else}
+
+<style>
+{literal}
+p {
+	margin: 0 0 0.5em 0;
+	padding: 0;
+}
+{/literal}
+</style>
+
+{/if}
+
+<div class="outer pRouter">
+
+<h1 class="title pRtitle" {if !$interactiveMode}style="font-size: 1.4em;margin-bottom: 2em;"{/if}>{$report.title|escape}{if !empty($vacancyName)} - {$vacancyName|escape}{/if}</h1>
+
+{if $interactiveMode}
+
+<form method="post" action="{$handler}" name="procReportExportForm">
+
+<input type="hidden" name="command" value="exportPdf">
+<input type="hidden" name="vacancyId" value="{$vacancyId}">
+<input type="hidden" name="reportId" value="{$reportId}">
+<input type="hidden" name="engine" value="">
+
+{/if}
+
+{foreach from=$report.items item=item}
+
+{if $item.title}
+<h2 class="subHeader prSh">{$item.title|escape}</h2>
+{/if}
+
+{if $item.text}
+<div class="prText">
+{$item.text}
+</div>
+{/if}
+
+{if $item.item_type == 'grid'}
+<div class="text prText">
+	{if $item.exportData.data}
+	  
+    {if $item.sum_all == 1}
+    <table border="0" cellpadding="" cellspacing="2" class="prTbl">
+    
+		{foreach from=$item.exportData.header key=dataKey item=columnName}
+	<tr>
+        <td>{$columnName|replace:'PROCREPORT_COL_':''|escape} :</td>
+        <td>{if substr($item.exportData.data[0][$dataKey], 0, 12) == '[FORMAT:RED]'}{$item.exportData.data[0][$dataKey]|substr:12|escape}{else}{$item.exportData.data[0][$dataKey]|escape}{/if}</td>
+	</tr>
+		{/foreach}	    
+    
+    </table>
+    {else}
+    {*STANDARD*} 
+		<table border="0" cellpadding="0" cellspacing="2" class="prTbl">
+			<tr>
+				{foreach from=$item.exportData.header item=columnName}
+					<th>{$columnName|replace:'PROCREPORT_COL_':''|escape}</th>
+				{/foreach}		
+			</tr>
+			{foreach from=$item.exportData.data item=dataRow}
+				<tr>
+					{foreach from=$dataRow item=dataCell}					
+						<td style="{if !$interactiveMode}padding: 0.1em 0.2em;border: 0.03em solid #000;{/if}{if is_numeric($dataCell)}text-align: right;{/if}{if substr($dataCell, 0, 12) == '[FORMAT:RED]'}color: #b00;{/if}">
+							{if substr($dataCell, 0, 12) == '[FORMAT:RED]'}{$dataCell|substr:12}{else}{$dataCell|escape}{/if}
+						</td>
+					{/foreach}
+				</tr>
+			{/foreach}
+		</table>
+		{/if}
+		
+	{else}
+		<div>[t]No data.[/t]</div>
+	{/if}
+</div>
+{/if}
+
+
+{if ($item.item_type == 'bar' || $item.item_type == 'column' || $item.item_type == 'pie' || $item.item_type == 'area' || $item.item_type == 'line')}
+
+{if !$interactiveMode}
+
+{* graphs are not yet supported in exports, as I was not able to find any reliable way to convert SVG/VML to image *}
+
+<div id="graph{$item.id}" class="prGraphContainer">
+	<img src="{$graphFiles[$item.id]}"  />
+</div>
+
+
+{else}
+
+<div id="graph{$item.id}"></div>
+<input type="hidden" name="graph[{$item.id}]" value="">
+
+<script type="text/javascript" >
+
+{literal}
+
+Ext.onReady(function() {
+
+	{/literal}
+	var itemId = {$item.id};
+	var xLabel = '{$item.data.x_label|escape:'javascript'}';
+	var yLabel = '{$item.data.y_label|escape:'javascript'}';
+	var header = {$item.exportData.headerJson};
+	var data   = {$item.exportData.dataJson};
+	var graphType = '{$item.item_type|escape:'javascript'}';
+	{literal}
+
+	var graphData = Ext.create('Ext.data.JsonStore', {
+		fields: header,
+		data: data
+	});
+
+	if (graphType == 'column') {
+		
+		var chart = new Ext.chart.Chart({
+			renderTo: 'graph' + itemId,
+			width: 600,
+			height: 450,
+			animate: true,
+			store: graphData,
+			legend: {
+			  position: 'right'  
+			},
+			axes: [{
+				type: 'Category',
+				position: 'bottom',
+				fields: header,
+				minimum: 0,
+				label: {
+					renderer: function() {return '';}
+				},
+				grid: false,
+				title: xLabel
+			}, {
+				type: 'Numeric',
+				position: 'left',
+				minimum: 0,
+				label: {
+					renderer: Ext.util.Format.numberRenderer('0.0')
+				},
+				fields: header,
+				//fields: ['name'],
+				title: yLabel
+			}],
+			series: [{
+				type: graphType,
+				axis: 'bottom',
+				xField: 'name',
+				yField: header
+			}]
+		});	
+	
+	}
+	
+	if (graphType == 'bar') {
+		
+		var chart = new Ext.chart.Chart({
+			renderTo: 'graph' + itemId,
+			width: 600,
+			height: 450,
+			animate: true,
+			store: graphData,
+			legend: {
+			  position: 'right'  
+			},
+			axes: [{
+				type: 'Numeric',
+				position: 'bottom',
+				fields: header,
+				minimum: 0,
+				label: {
+					renderer: Ext.util.Format.numberRenderer('0.0')
+				},
+				grid: true,
+				title: xLabel
+			}, {
+				type: 'Category',
+				position: 'left',
+				fields: ['name'],
+				title: yLabel,
+				label: {
+					renderer: function() {return '';}
+				}
+			}],
+			series: [{
+				type: graphType,
+				axis: 'bottom',
+				xField: 'name',
+				yField: header
+			}]
+		});	
+	
+	}
+	
+	if (graphType == 'pie') {
+
+		var chart = new Ext.chart.Chart({
+			renderTo: 'graph' + itemId,
+			width: 600,
+			height: 450,
+			animate: true,
+			store: graphData,
+			shadow: true,
+			legend: {
+			  position: 'right'  
+			},
+			insetPadding: 25,
+			theme: 'Base:gradients',
+			series: [{
+				type: 'pie',
+				field: 'data',
+				showInLegend: true,
+				highlight: {
+				  segment: {
+					margin: 20
+				  }
+				},
+				label: {
+					field: 'name',
+					display: 'rotate',
+					contrast: true,
+					font: '0px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif'
+				},
+				animate: true
+			}]
+		});	
+	
+	}
+	
+	if (graphType == 'area' || graphType == 'line') {
+	
+		chart = new Ext.chart.Chart({
+			renderTo: 'graph' + itemId,
+			width: 600,
+			height: 450,
+			animate: true,
+			store: graphData,
+			/*
+			legend: {
+				position: 'bottom'
+			},
+			*/
+			axes: [{
+				type: 'Numeric',
+				grid: true,
+				position: 'left',
+				fields: ['data1'],
+				title: yLabel,
+				grid: {
+					odd: {
+						opacity: 1,
+						fill: '#ddd',
+						stroke: '#bbb',
+						'stroke-width': 1
+					}
+				},
+				minimum: 0,
+				adjustMinimumByMajorUnit: 0
+			}, {
+				type: 'Category',
+				position: 'bottom',
+				fields: ['name'],
+				title: xLabel,
+				grid: true,
+				label: {
+					rotate: {
+						degrees: 315
+					}
+				}
+			}],
+			series: [{
+				type: graphType,
+				highlight: true,
+				axis: 'left',
+				xField: 'name',
+				yField: ['data1'],
+				style: {
+					opacity: 0.93
+				}
+			}]
+		}); 
+	
+	}
+	
+	
+	window.chart{/literal}{$item.id}{literal} = chart;	
+	
+});
+
+{/literal}
+</script>
+
+{/if}
+
+{/if}
+
+{/foreach}
+
+{if $interactiveMode}
+
+<div class="buttonContainer">
+	<input class="button" type="button" value="[th]Export to PDF[/th]" onClick="procReportsExport('Pdf');">
+	<input class="button" type="button" value="[th]Export to Doc[/th]" onClick="procReportsExport('Doc');">
+</div>
+
+</form>
+
+{/if}
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

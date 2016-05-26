@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplListOuter">
+<!-- /UTS/customers/joinStatusOverviewStatusList.html -->
+<h1 class="title aplTitle aplListTitle">[t]Join statuses[/t]</h1>
+{$menu}
+
+
+{if $eStatuses.ps1}
+{*<div class="text aplText aplListText">{$status1}</div>*}
+<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+<tr>
+<th class="aplTblHeader">{$status1}</th>
+<th class="aplTblHeader">[t]Candidates[/t]</th>
+</tr>
+<foreach from=$alljoinstatuses.ps1 key=s1key item=s1>
+<tr>
+<td class="aplListDateTime">{$s1.status}</td>
+<td class="aplListLink"><a href="/index.php/page/joinStatusOverview/command/joined_candidates/stype/1/sid/{$s1.key}/bb/1">{$s1.candidate_cnt}</a></td>
+</tr>
+<foreachelse>
+<tr>
+<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="3">[t]There are no statuses...[/t]</td>
+</tr>
+</foreach>
+</table>
+{/if}
+
+{if $eStatuses.ps2}
+{*<div class="text aplText aplListText">{$status2}</div>*}
+<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+<tr>
+<th class="aplTblHeader">{$status2}</th>
+<th class="aplTblHeader">[t]Candidates[/t]</th>
+</tr>
+<foreach from=$alljoinstatuses.ps2 item=s2>
+<tr>
+<td class="aplListDateTime">{$s2.status}</td>
+<td class="aplListLink"><a href="/index.php/page/joinStatusOverview/command/joined_candidates/stype/2/sid/{$s2.key}/bb/1">{$s2.candidate_cnt}</a></td>
+</tr>
+<foreachelse>
+<tr>
+<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="3">[t]There are no statuses...[/t]</td>
+</tr>
+</foreach>
+</table>
+{/if}
+
+
+{if $eStatuses.ps3}
+{*<div class="text aplText aplListText">{$status3}</div>*}
+<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+<tr>
+<th class="aplTblHeader">{$status3}</th>
+<th class="aplTblHeader">[t]Candidates[/t]</th>
+</tr>
+<foreach from=$alljoinstatuses.ps3 item=s3>
+<tr>
+<td class="aplListDateTime">{$s3.status}</td>
+<td class="aplListLink"><a href="/index.php/page/joinStatusOverview/command/joined_candidates/stype/3/sid/{$s3.key}/bb/1">{$s3.candidate_cnt}</a></td>
+</tr>
+<foreachelse>
+<tr>
+<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="3">[t]There are no statuses...[/t]</td>
+</tr>
+</foreach>
+</table>
+{/if}
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+
+
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdRecrSetOuter">
+	<!-- /UTS/applicants/buckaroo_payment_overview.html -->
+	<h1 class="title">[t]Payment overview[/t]</h1>
+  <div class="intro">[t]You can review the payment details.[/t]</div>
+
+	<form name="buckarooForm" action="{if $client_settings.buckaroo_is_live}{$client_settings.buckaroo_payment_live_url}{else}{$client_settings.buckaroo_payment_test_url}{/if}" method="post"  >
+  
+     {foreach from=$payment_item_info key=parkey item=parval }
+
+     <input type="hidden" name="{$parkey}" value="{$parval}" >
+
+     {/foreach}
+     
+     {if !$payment_service && $clientId == 1053}
+     {*<input type="hidden" name="brq_startrecurrent" value="1" >  *}
+     {/if}
+     {*
+    <input type="hidden" name="brq_websitekey" value="{$client_settings.buckaroo_website_key}" >
+    <input type="hidden" name="brq_amount" value="{$payment_item_info.total_normal}" >
+    <input type="hidden" name="brq_currency" value="{$payment_item_info.currency_code}" >
+    <input type="hidden" name="brq_invoicenumber" value="{$payment_item_info.orderId}" >
+    <input type="hidden" name="brq_return" value="{$payment_item_info.return}" >
+    <input type="hidden" name="brq_returncancel" value="{$payment_item_info.returncancel}" >
+    <input type="hidden" name="brq_returnerror" value="{$payment_item_info.returnerror}" >
+    <input type="hidden" name="brq_returnreject" value="{$payment_item_info.returnreject}" >
+    <input type="hidden" name="brq_signature" value="{$payment_item_info.signature}" >
+    *}    
+    
+  
+		<div class="formInput aplTextInput">
+			<span>[t]Order ID:[/t]</span> {$payment_item_info.brq_invoicenumber} 
+		</div>
+    {if $add_payment_item_info.type_of_payment == "fixed"} 
+		<div class="formInput aplTextInput">
+			<span>[t]Item:[/t]</span> {$add_payment_item_info.item_name} 
+		</div>
+    {/if}
+		<div class="formInput aplTextInput">
+			<span>[t]Price:[/t]</span> {$add_payment_item_info.currency_symbol} {$add_payment_item_info.total_normal}
+		</div>
+  
+   {if $add_payment_item_info.type_of_payment == "other"}
+		<div class="formInput aplTextInput">
+			<span>[t]Payment description:[/t]</span> {$add_payment_item_info.description}
+		</div>
+    {/if}
+
+
+   {if $payment_service}
+		<div class="formInput aplTextInput">
+			<span>[t]Payment service:[/t]</span> 
+			 {if $payment_service=="amex"}[t]American Express[/t]
+       {elseif $payment_service=="visa"}[t]Visa[/t]
+       {elseif $payment_service=="visaelectron" }[t]Visa Electron[/t]
+       {elseif $payment_service=="maestro"}[t]Maestro[/t]
+       {elseif $payment_service=="mastercard"}[t]Mastercard[/t]
+       {else} &nbsp;
+       {/if}
+		</div>
+    {/if}
+
+		<div class="buttonContainer">
+			{*<input class="button" type="submit" value="[tb]Make a payment[/tb]" name="sSubmit" >*}
+      <input class="button" type="button" value="[tb]Make a payment[/tb]" name="sSubmit" onClick="this.form.submit();" >
+		</div>
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

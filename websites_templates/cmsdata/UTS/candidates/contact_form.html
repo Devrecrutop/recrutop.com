@@ -1,0 +1,112 @@
+{* this template is used for displaying a contact form in CV Search *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+function changeContactSubject(){
+
+  how2contact = $('#how2contact').val();
+  if (how2contact == "directly") {
+    $('#subjectContact').val($('#candidate_subject').val());
+  }
+  if (how2contact == "consultant") {
+    $('#subjectContact').val($('#cp_subject').val());
+  }
+
+}
+//{/literal}
+</script>
+
+<!-- /UTS/candidates/contact_form.html -->
+<div class="outer actouter candAdvDetailOuter">
+<h1 class="title">[t]Contact a candidate[/t]</h1>
+<div class="intro">[t]Your details have already been entered. Do you want extra information about this candidate, or invite him/her for an interview? You can tell us what you wish using the remarks field. After receiving your message we will contact you as soon as possible.[/t]</div>
+
+<form name="form1" action="{$handler}" method="post">
+<input type="hidden" name="id" value="{$cand.id}">
+<input type="hidden" name="command" value="submitcontactform">
+<input type="hidden" name="origin" value="{$origin|escape}">
+<input type="hidden" name="cp_subject" id="cp_subject" value="{if $useSubject == "classic"}{$cand.voornaam|escape} {$cand.achternaam|escape} [th]in[/th] {$cand.woonplaats|escape}{else}[th]Candidate[/th] {$uid}{/if}">
+<input type="hidden" name="candidate_subject" id="candidate_subject" value="{$candidate_subject|escape}">
+
+{if $cp_settings.allow_direct_contacting_cand == 1}
+<div class="formInput">
+    <label>[t]Type of contact:[/t]</label>
+    <div >
+    <select name="how2contact" id="how2contact" onChange="changeContactSubject();">
+		<option value="directly" >[thn]directly[/thn]</option>
+		<option value="consultant" selected>[thn]via consultant[/thn]</option>
+	</select>
+	<input type="hidden" name="privileged" value="1">
+    </div>
+</div>
+{/if}
+
+<div class="formInput">
+    <label>[t]Your details:[/t]</label>
+    <input name="myDetails" type="text" size="40" value="{$wgcp.wg_cp_voornaam|escape} {$wgcp.wg_cp_tussenvoegsel|escape} {$wgcp.wg_cp_achtern|escape} &lt;{$wgcp.wg_cp_email|escape}&gt;" readonly>
+</div>
+<div class="formInput">
+    <label>[t]Consultant:[/t]</label>
+    <input name="consultantDetails"  size="40" type="text" value="{$cprow.cp_voorn|escape} {$cprow.cp_achtern|escape} &lt;{$cprow.cp_email|escape}&gt;" readonly>
+</div>
+<div class="formInput">
+    <label>[t]Subject:[/t]</label>
+    <input name="subject" id="subjectContact" size="40" type="text" value="{if $useSubject == "classic"}{$cand.voornaam} {$cand.achternaam|escape} [th]in[/th] {$cand.woonplaats}{else}[th]Candidate[/th] {$uid}{/if}" >
+</div>
+
+<if [uts:show_text_field_1] >
+<div class="formInput">
+    <label>[t]Text1:[/t]</label>
+    <input name="text1" size="40" type="text" value="">
+</div>
+</if>
+
+<if [uts:show_text_field_2] >
+<div class="formInput">
+    <label>[t]Text2:[/t]</label>
+    <input name="text2" size="40" type="text" value="">
+</div>
+</if>
+
+<if [uts:show_text_field_3] >
+<div class="formInput">
+    <label>[t]Text3:[/t]</label>
+    <input name="text3" size="40" type="text" value="">
+</div>
+</if>
+
+<if [uts:show_text_field_4] >
+<div class="formInput">
+    <label>[t]Text4:[/t]</label>
+    <input name="text4" size="40" type="text" value="">
+</div>
+</if>
+
+
+<div class="formInput">
+    <label>[t]Remarks:[/t]</label>
+    <textarea name="opmerkingen" rows="6"></textarea>
+</div>
+<div>
+
+<div class="buttonContainer">
+	<input class="button" type="submit" value="[tb]Send message[/tb]">
+	<input class="button" type="button" name="form" value="[tb]Back[/tb]" onClick="javascript:history.go(-1);">
+	<div class="cleaner"></div>
+</div>
+
+</div>
+
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

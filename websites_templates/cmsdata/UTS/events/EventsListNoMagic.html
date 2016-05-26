@@ -1,0 +1,166 @@
+<html>
+<head>
+<title>EVENT LIST</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/EventsListNoMagic.html -->
+{literal}
+<script>
+function goto_cat(cat_id, cms_cat, cl) {
+	if (cat_id != 0) document.location = "/index.php/page/eventsfo/command/list/bb/1/cms_categorie/"+cms_cat+"/CurrentLanguage/"+cl+"/cat/"+cat_id;
+	if (cat_id == 0) document.location = "/index.php/page/eventsfo/command/list/bb/1/cms_categorie/"+cms_cat+"/CurrentLanguage/"+cl;
+}
+</script>
+{/literal}
+<div id="eventsListHolder">
+<table border="0" cellpadding="0" cellspacing="0" class="vacsTable">
+<tr>
+<td class="formHeaderContainer"> <!-- Wessel? -->
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Evenementen[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--START-->
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+{*  19-12-2008 Wessel: It seems to me that the categories are not used, so I will not spend time on trying to make it work without magic  *}
+{*
+<!--START_1-->
+<tr>
+<td class="listCatContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="listCatTbl">
+<tr>
+<td class="listCat"><div class="listCatDiv">[Category]&nbsp;</div></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_1-->
+*}
+
+{if $cat != "all"}
+<tr>
+<td class="listCatContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="listCatTbl">
+<tr>
+<td class="listCat"><div class="listCatDiv">{$categories[$cat]}</div></td>
+</tr>
+</table>
+
+</td>
+</tr>
+{/if}
+
+{if $catflag}
+<tr>
+<td class="listCatContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="listCatTbl">
+<tr>
+<td class="listCat">
+[t]Category[/t]: 
+<select onChange="goto_cat(this.options[this.selectedIndex].value, {$cms_categorie}, {$cl});">
+<option value="0" selected="selected">---</option>
+{foreach from=$categories key=k item=category}
+<option value="{$k}" {if $cat == $k}selected="selected"{/if}>{$category}</option>
+{/foreach}
+</select>
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+{/if}
+
+<!--START_2-->
+<tr>
+<td class="vacancyListContainer">
+
+{if $eventsList}
+	{foreach from=$eventsList item=event }
+
+		<!-- item -->
+		<table border="0" class="ListTbl" cellpadding="0" cellspacing="0" onClick="location='/index.php/page/eventsfo/command/detail/evid/{$event.evid}/code/{$code}/bb/1';">
+			<tr>
+				<td valign="top">
+
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="listFunctionContainer">
+
+							<table border="0" cellpadding="0" cellspacing="0" class="listFunctionTbl">
+								<tr>
+									<td class="listFunctionName" width="100%"><a href="/index.php/page/eventsfo/command/detail/evid/{$event.evid}/code/{$code}/bb/1">{$event.Title}</a></td>
+								</tr>
+							</table>
+
+						</td>
+					</tr>
+
+					<tr>
+						<td class="listKeywordContainer">
+
+							<table border="0" cellpadding="0" cellspacing="0" class="listKeywordTbl">
+								<tr>
+									<td class="listKeywordTitle" width="10%">[t]Location[/t]:</td>
+									<td class="listKeyword">{$event.Location}</td>
+								</tr>
+								{if $event.StartDate}
+								<tr>
+									<td class="listKeywordTitle">[t]Start[/t]:</td>
+									<td class="listKeyword">{$event.StartDate} [t]om[/t] {$event.StartTime}.</td>
+								</tr>
+								{/if}
+								{if $cat == "all" && $event.Category != "0"}
+								<tr>
+									<td class="listKeywordTitle">[t]Category[/t]:</td>
+									<td class="listKeyword">{$event.Category}</td>
+								</tr>
+								{/if}
+								<tr>
+									
+									<td class="listKeyword" colspan="2">{$event.ShortDescription}</td>
+								</tr>
+							</table>
+
+						</td>
+					</tr>
+				</table>
+
+				</td>
+				<!-- <td nowrap valign="top" class="listImgSpace" align="right"><a href="/index.php/page/eventsfo/command/detail/evid/{$event.evid}/code/{$code}/bb/1">{$event.Thumbnail}</a></td> -->
+
+			</tr>
+		</table>
+		<!-- end item-->
+	 {/foreach}
+{/if}
+
+
+</td>
+</tr>
+<!--END_2-->
+</table>
+
+</td></tr>
+
+<!--END-->
+</table>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

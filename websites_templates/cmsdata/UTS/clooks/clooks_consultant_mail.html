@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+</head>
+<body>
+<!--uts:begin inner-->
+
+<p>
+    [t]Dear {$toname|escape},[/t]
+</p>
+
+<p>
+[t]Related to:[/t] {$candidate_name}<br>
+</p>
+
+<p>
+{if $clooksSuccess == "true"}
+[t]Candidate has succesfully finished Clooks interview[/t]<br>
+{else}
+
+  {if $code == "NOTAPPROVED"}
+[t]Candidate has stopped Clooks interview[/t]<br>
+  {else}
+[t]Candidate has unsuccesfully finished Clooks interview[/t]<br>
+  {/if}
+
+{/if}
+</p>
+
+{if $movie_url_with_layout}
+<p>[t]You can open candidate interview by clicking[/t]&nbsp;<a href="{$movie_url_with_layout}" target="_blank">[t]here[/t]</a></p>
+{/if}
+
+
+<p>[t]OTYS INTERACTIVE CLERQ[/t]</p>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+{literal}
+	function updateOwnPariticantsOptions(participantsTotal) {
+		for (i = 1; i <= 9; i++) {
+			document.getElementById('ownParticipantsOption' + i).style.display=i < participantsTotal ? '' : 'none';
+		}
+		if (document.getElementById('ownParticipantsSelect').value >= participantsTotal) {
+			document.getElementById('ownParticipantsSelect').value = participantsTotal - 1;
+		}
+	}
+{/literal}
+</script>
+
+<div class="outer aplOuter crowdDevOuter">
+	<!-- /UTS/misc/webOrderCrowdfunding.html -->
+	<!-- Template Webdevelopment validated 06-2013 -->
+	<h1 class="title">[t]Collaborative development[/t]</h1>
+	<div class="intro">[t]We can offer your change as collaborative development to our Crowdsourcing portal. This way you might be able to buy this feature together with other OTYS users for a shared price.)[/t]</div>
+	
+	<form action="{$handler}/bb/1/" method="post" id="crowdfundingForm">
+		<input type="hidden" name="pid" value="{$id}">
+		<input type="hidden" name="command" value="crowdfundingSave">
+		<div class="textWord wocfAmountPer">
+			<span>[t]Amount per participant[/t]</span>
+			<select name="participants_total" onchange="updateOwnPariticantsOptions(this.value);">
+				{foreach from=$crowdfundingAmounts key=participants item=amount}
+					<option value="{$participants}">{$amount|number_format:2:",":"."} {$proposal.currency}</option>
+				{/foreach}
+			</select>
+		</div>
+		<div class="textWord wocfOwn">
+			<span>[t]Own participants[/t]</span>
+			<select name="participants_own" id="ownParticipantsSelect">
+				{section name=participants start=1 loop=10}
+					<option value="{$smarty.section.participants.index}" {if $smarty.section.participants.index > 1}style="display:none;";{/if} id="ownParticipantsOption{$smarty.section.participants.index}">{$smarty.section.participants.index}</option>
+				{/section}
+			</select>
+		</div>
+		<div class="buttonContainer">
+			{* note: the oPrWtYes, oPrWtNo styles are also used in web_order_template.html, so if you change styling here, you change styling there also *}
+			<input class="button" id="oPrWtYes" type="button" value="[th]Offer as collaborative development[/th]" onClick="document.getElementById('crowdfundingForm').submit();">
+			<input class="button" id="oPrWtNo" type="button" value="[th]Do not offer as collaborative development[/th]" onClick="document.location='{$handler}/page/proposals/bb/1/command/decline/pid/{$id}'">
+		</div>
+		{foreach from=$items item=item}
+			{* maatwerk = custom development, crowdfunding concerns only custom devlopment products *}
+		{if $item.type == 'product' && $item.maatwerk}
+			<div class="textWord wocfDesc">
+				<h2>[t]Description[/t]</h2>
+				{$item.description}
+			</div>
+			
+			<div class="textWord wocfAmountTotal">
+				<span>[t]Total cost[/t]</span>
+				{if $round_down}
+					{$item.price.price*$item.amount|floor|number_format:0:",":"."}
+				{else}
+					{$item.price.price*$item.amount|number_format:2:",":"."}
+				{/if}
+				{$proposal.currency}
+				{if $item.price.period == 'week'}[th]per week[/th]
+				{elseif $item.price.period == 'month'}[th]per month[/th]
+				{elseif $item.price.period == 'year'}[th]per year[/th]
+				{elseif $item.price.period == 'once'}{*[th]once only[/th]*}
+				{/if}
+			</div>
+		{/if}
+		{/foreach}
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

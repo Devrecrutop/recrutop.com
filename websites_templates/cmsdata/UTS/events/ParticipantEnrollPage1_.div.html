@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>MEDICA_EVENTS_ENROLL_1</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/ParticipantEntrollPage1_.div.html -->
+<SCRIPT>
+//{literal}
+function check(){	
+var d = document.form
+if (d.email.value == ""){
+		show("\n\n[th]U heeft nog geen E-mail adres ingevuld.[/th]\n\n")
+		setTimeout("document.form.email.focus()", 1)
+		return false
+	}
+	if (d.password.value == "")	{
+		show("\n\n[th]U heeft geen password ingevoerd.[/th]\n\n")
+		setTimeout("document.form.password.focus()", 1)
+		return false
+	}
+	if (d.password_check.value == "")	{
+		show("\n\n[th]Vul ter controle 2 maal uw wachtwoord in.[/th]\n\n")
+		setTimeout("document.form.password_check.focus()", 1)
+		return false
+	}
+	if (d.password.value != d.password_check.value)	{
+		show("\n\n[th]Wachtwoorden komen niet overeen.[/th]\n\n")
+		d.password.value = "";
+		d.password_check.value = "";
+		setTimeout("document.form.password.focus()", 1)
+		return false
+	}
+	return true
+}
+function show(m){
+	setTimeout("alert(unescape(\"" + escape(m) + "\"))", 100)
+}
+//{/literal}
+</SCRIPT>
+<div class="outer">
+<form name="form" method="post" action="/index.php/page/participantsfo/command/enroll/code/[code]/bb/1" onsubmit="return check();">
+<h1 class="title">[t]Inschrijfformulier[/t]</h1>
+<div class="intro">
+[t]
+<p>Vul hieronder uw e-mailadres in en kies een wachtwoord. Klik op 'inschrijven' en vul de velden zo compleet mogelijk in.</p>
+<p>Bewaar uw inlogggegevens goed want daarmee kunt u inschrijven op evenementen of uw gegevens wijzigen. We sturen u hiervan een bevestiging per e-mail.</p>
+[/t]
+</div>
+<div class="formInput">
+<label>[t]E-mailadres[/t]</label>
+<input type="text" name="email">
+</div>
+<div class="formInput">
+<label>[t]Wachtwoord[/t]</label>
+<input type="password" name="password">
+</div>
+<div class="formInput">
+<label>[t]Bevestig wachtwoord[/t]</label>
+<input type="password" name="password_check">
+</div>
+<!--uts:begin button apply-->
+<div class="buttonContainer"><input class="button" type="submit" name="Submit" value="[tb]Inschrijven[/tb]"></div>
+<!--uts:end button apply-->
+<input type="hidden" name="ConsultantId" value="[ConsultantId]">
+<input type="hidden" name="step" value="2">
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

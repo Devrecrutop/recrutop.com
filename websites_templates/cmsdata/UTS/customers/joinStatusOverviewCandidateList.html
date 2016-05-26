@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplListOuter">
+<!-- /UTS/customers/joinStatusOverviewCandidateList.html -->
+<h1 class="title aplTitle aplListTitle">[t]Candidates[/t]</h1>
+{$menu}
+<div class="text aplText aplListText"><h2 class="title aplTitle aplListTitle">{$status_name} - {$status_info.status} ({$status_info.candidate_cnt})</h2></div>
+<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+<tr>
+<th class="aplTblHeader">[t]Candidate[/t]</th>
+<th class="aplTblHeader">[t]Vacancy[/t]</th>
+<th class="aplTblHeader">[t]Action[/t]</th>
+</tr>
+<foreach from=$reactions item=r>
+<tr>
+<td class="aplListDateTime">{$r.voornaam} {$r.tussenvoegsel} {$r.achternaam} {if $r.kuid}({$r.kuid}){/if}</td>
+<td class="aplListDateTime">{$r.vacancy_name} {if $r.jobref}({$r.jobref}){/if}</td>
+<td class="aplListDateTime"><a href="/index.php/page/customers/vid/{$r.vid}/bb/1/command/cand_detail/kid/{$r.kid}">[t]Edit[/t]</a></td>
+</tr>
+<foreachelse>
+<tr>
+<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="3">[t]There are no candidates...[/t]</td>
+</tr>
+</foreach>
+</table>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

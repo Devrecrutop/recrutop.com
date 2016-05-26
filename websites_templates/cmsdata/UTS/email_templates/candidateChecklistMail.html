@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+        [t]Dear {$contactname|escape},[/t]
+        
+</p>
+<p>
+    [t]The following documents have expired or are due to expire:[/t]
+</p>
+<p>             
+    <br>
+    {foreach from=$candidates item=c  key=ckey}
+        <b>{$c.name} {if $c.uid}({$c.uid}){/if} {if $c.email}&nbsp;({$c.email}){/if}</b> <br><br>
+        {foreach from=$candidates_documents[$ckey] item=d}
+            
+            {if $d.document eq "medical"}  [t]Medical insurance[/t] expires at {$d.expiry} <br>{/if} 
+            {if $d.document eq "travel"}   [t]Travel insurance[/t] expires at {$d.expiry} <br>{/if}
+            {if $d.document eq "workmen"}  [t]Workmen compensation[/t] expires at {$d.expiry} <br>{/if}
+            {if $d.document eq "passport"} [t]Passport[/t] expires at {$d.expiry} <br>{/if}
+            {if $d.document eq "visa_1"}   [t]Visa#1[/t] expires at {$d.expiry} <br>{/if}
+            {if $d.document eq "visa_2"}   [t]Visa#2[/t] expires at {$d.expiry} <br>{/if}
+            {if $d.document eq "visa_3"}   [t]Visa#3[/t] expires at {$d.expiry} <br>{/if}
+            
+        {/foreach}        
+        <br><br>
+    {/foreach}    
+</p>
+   
+<p>[t]OTYS INTERACTIVE CLERQ[/t]</p>
+
+
+<!--uts:end inner-->
+</body>
+</html>

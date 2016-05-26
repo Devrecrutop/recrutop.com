@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>                
+</head>
+<body>
+<!--uts:begin inner-->
+
+{literal}
+<script type="text/javascript">
+<!--
+
+  function cancelEdit()
+  {
+    // first remove rules to be able to submit form
+    $('#candidates_required').rules('remove', 'required');     
+    
+    $('#updateCommand').val('calendar');
+    $('#jsc_update_schedule').submit();
+  }  
+
+  function saveSchift()
+  {
+    $('#updateCommand').val('updateschedule');    
+    $('#jsc_update_schedule').submit();
+  }
+  
+  function deleteSchift()
+  {
+
+    if(!confirm('[th]Realy delete this schedule?[/th]'))
+    {
+      return false;
+    }
+  
+    $('#updateCommand').val('deleteschedule');
+    $('#jsc_update_schedule').submit();
+  }
+  
+  function deleteAllSchifts()
+  {
+    if(!confirm('[th]Realy delete all occurence of this schedule?[/th]'))
+    {
+      return false;
+    }
+    
+    $('#updateCommand').val('deleteall');
+    $('#jsc_update_schedule').submit();
+  }
+
+  // initialize document	
+  $(document).ready(function () {
+          
+     $("#bttnDel").bind('click', deleteSchift);
+     $("#bttnDelAll").bind('click', deleteAllSchifts);
+     $("#bttnSave").bind('click', saveSchift);
+     $("#bttnCancel").bind('click', cancelEdit);
+     
+  	$('#jsc_update_schedule').validate({
+  		rules: {					        		
+  			'candidates_required': {required: true, number: true}								
+  		},					
+  		messages: {        		 	
+  			'candidates_required': {required: '[th]Fill the number of required candidates.[/th] ', number: '[th]Fill the correct number of required candidates.[/th] ' }			
+  		}		
+  	});                        
+   	   	   	
+  }); // ready end
+      
+//-->
+</script>
+{/literal}
+
+
+<div class="outer aplOuter aplProfOuter">
+<!-- /UTS/applicants/jobScheduleEditDlg.html -->
+
+<h1 class="title aplTitle aplProfTitle">[t]Edit Job Schedule[/t]</h1>
+
+  <div>  
+  <form name="jsc_update_schedule" id="jsc_update_schedule" action="{$handler}" method="post">         
+  <input type="hidden" name="command" id="updateCommand" value="updateschedule">
+  <input type="hidden" name="vid" value="{$jobId}">
+  <input type="hidden" name="schedule_id" value="{$data.id}">
+  <input type="hidden" name="repeat_uid" value="{$data.repeat_uid}">             
+  {*ALWAYS AD-HOC, ACCEPTED, SHIFT*}
+  <input type="hidden" name="week_year" value="{$weekYear}">
+  <input type="hidden" name="week_nr" value="{$weekNr}">
+  
+  
+  <table width="100%" border="0" cellpadding="5" cellspacing="0">
+  
+  <tr>
+    <td nowrap="nowrap">[t]Candidates[/t]:</td>
+    <td nowrap="nowrap"><input type="text" name="candidates_required" id="candidates_required" size="4" maxlength="4" value="{$data.candidates_required}"></td>
+  </tr>
+    
+  <tr>
+    <td nowrap="nowrap">[t]Date[/t]:</td>
+    <td nowrap="nowrap">
+      {html_uts_select_date prefix="from_date_" start_year=-5 end_year=+5 time=$data.from_date all_extra='disabled="disabled"'} {*NOT ALLOWED TO CHANGE DATE*} 
+    </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">[t]Time From[/t]:</td>
+    <td nowrap="nowrap">
+      {html_select_time use_24_hours=true display_seconds=false minute_interval=15 prefix="from_time_" time=$data.from_time}
+      &nbsp;[t]To[/t]:&nbsp;
+      {html_select_time use_24_hours=true display_seconds=false minute_interval=15 prefix="to_time_" time=$data.to_time}
+    </td>
+  </tr>
+  
+      
+  <tr>
+    <td>&nbsp;</td>
+    <td align="right" nowrap="nowrap">
+    
+    <input type="button" name="bttnSave" id="bttnSave" value="[t]Save Schedule[/t]">
+    <input type="button" name="bttnDel" id="bttnDel" value="[t]Delete Schedule[/t]">
+    {if $data.repeat_uid}<input type="button" name="bttnDelAll" id="bttnDelAll" value="[t]Delete All Schedule Occurence[/t]">{/if}    
+    <input type="button" name="bttnCancel" id="bttnCancel" value="[t]Cancel[/t]">
+    </td>
+  </tr>
+	</table>
+	
+	</form>
+  </div>	     
+
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

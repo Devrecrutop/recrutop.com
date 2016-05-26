@@ -1,0 +1,80 @@
+<!--START-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--END-->
+<!--uts:begin inner-->
+<!-- UTS/mailings/nm_confirmation.html -->
+<table border="0" cellpadding="0" cellspacing="0" class="mailAlignTbl">
+<tr>
+<td class="mailAlign">
+
+<table border="0" cellpadding="0" cellspacing="0" class="mailTbl">
+<!--START_PageTitle-->
+<tr>
+<td class ="mailHeader">[t]PageTitle[/t] </td>
+</tr>
+<!--END_PageTitle-->
+
+
+<!--START_Block1-->
+<tr>
+<td valign="top" class="mailTextContainer">
+<table border="0" cellpadding="0" cellspacing="0" class="mailTextTbl">
+<!--START_Title1-->
+<tr>
+<td class="mailTextHeader">[t]Title1[/t]</td>
+</tr>
+<!--END_Title1-->
+<!--START_Text1-->
+<tr>
+<td class="mailText">[t]Text1[/t]</td>
+</tr>
+<!--END_Text1-->
+</table>
+</td>
+</tr>
+<!--END_Block1-->
+
+<tr>
+<td class="mailText" style="text-align:left">
+	{if $subgrpcnt}
+	[t]SingleWord1[/t]<!--SingleWordLink1--><br>
+        <ul>
+        {foreach from=$subgroups item=g}
+            <li>{$g.ml_mg_public_subject}</li>
+        {/foreach}
+        </ul>
+		{/if}
+
+	{if $unsubgrpcnt}
+	[t]SingleWord2[/t]<!--SingleWordLink2--><br>
+			<ul>
+			{foreach from=$unsubgroups item=g}
+				<li>{$g.ml_mg_public_subject}</li>
+			{/foreach}
+			</ul>
+		{/if}
+
+
+
+    <br />
+    [t]SingleWord4[/t]<!--SingleWordLink4-->
+    <br/>
+    {* <a href="http://{$website}/portal.php?page=confirm&uid={$uid}&CurrentLanguage={$preflang}">{$website}/portal.php?page=confirm&uid={$uid}&CurrentLanguage={$preflang}</a><br><br> *}
+    <a href="http://{$website}/index.php/page/mailings/bb/1/command/confirm/uid/{$uid}/CurrentLanguage/{$preflang}">{$website}/index.php/page/mailings/bb/1/command/confirm/uid/{$uid}/CurrentLanguage/{$preflang}</a><br><br>
+	</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+<!--uts:end inner-->
+</body>
+</html>
+

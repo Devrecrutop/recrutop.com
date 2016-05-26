@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>FAQ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- UTS/mailings/nm_show_article.div.html -->
+
+<if $metarefresh>
+<meta http-equiv="refresh" content="{$metarefresh};URL={$metaurl}">
+</if>
+<div class="outer nmOuter">
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<h1 class="title nmTitle">[t]PageTitle[/t]</h1>
+<!--END_PageTitle-->
+<!--START_Block1-->
+<!--START_Title1-->
+{if "[t]Title1[/t]" != ' '}
+<h2 class="subHeader nmSh">[t]Title1[/t]</h2>
+{/if}
+<!--END_Title1-->
+<!--START_Text1-->
+<div class="text nmText">[t]Text1[/t]</div>
+<!--END_Text1-->
+<!--END_Block1-->
+
+
+
+<if $published>
+{$abody}
+<else>
+<div class="error nmError">[t]System1[/t]<!--SystemLink1--></div>
+</if>
+
+<div class="buttonContainer nmBc">
+<input name="Submit1" type="button" value="[t]Button1[/t]" class="button nmPrintBut" onclick="print_article()"><!--ButtonLink1-->
+<input name="Submit2" type="button" value="[t]Button2[/t]" class="button nmMafBut" onclick="document.forms.maf.submit()"><!--ButtonLink2-->
+<input name="Submit3" type="button" value="[t]Button3[/t]" class="button nmAbbBut" onclick="document.forms.subfrm.submit()"><!--ButtonLink3-->
+
+<if $backlink>
+<if !$catid>
+<input name="Submit4" type="button" value="[t]Button4[/t]" class="button nmBackBut" onClick="history.go(-1)"><!--ButtonLink4-->
+<else>
+<input name="Submit4" type="button" value="[t]Button4[/t]" class="button nmBackBut" onclick="window.location='{$backlink}'"><!--ButtonLink4-->
+</if>
+</if>
+
+</div>
+
+
+
+
+
+</div>
+<script language="Javascript" type="text/javascript">
+var url = 'index.php?page=mailings&code={$code}&command=print&artid={$a.id}&catid={$catid}';
+
+{literal}
+function print_article() {
+	document.getElementById('actionframe').src = url;
+}
+{/literal}
+</script>
+
+
+<form name="maf" action="/index.php/page/mailings/bb/1" method="post">
+<input type="hidden" name="command" value="mailafriend" >
+<input type="hidden" name="artid" value="{$a.id}" >
+<input type="hidden" name="catid" value="{$catid}" >
+<input type="hidden" name="mtype" value="nmarticle" >
+<input type="hidden" name="register_get" value="1" >
+</form>
+<form name="subfrm" action="/index.php/page/mailings/bb/1" method="post">
+<input type="hidden" name="command" value="subform" >
+<input type="hidden" name="preselect" value="{$catid}" >
+<input type="hidden" name="register_get" value="1" >
+</form>
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+<iframe id="actionframe" width="1" height="1" border="0" frameborder="NO" src=""></iframe>
+<!--uts:end inner-->
+
+</body>
+</html>

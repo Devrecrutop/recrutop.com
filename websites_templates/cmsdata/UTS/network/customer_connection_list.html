@@ -1,0 +1,103 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>[t]Network Connection List[/t]</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer nwOuter nwCustListBody">
+<!-- /UTS/network/customer_connection_list.html STANDARD -->
+	<h1 class="title nwCustListTitle">{$pagename}</h1>
+
+{if [uts:search_name] || [uts:search_keyword] || [uts:search_sector]}
+	<div class="nwlSearchContainer">
+	<form method="post" action="{$thisWebsite}/index.php/page/network/command/custlist/{if $cms_categorie}cms_categorie/{$cms_categorie}/{/if}">
+	<input type="hidden" name="customer_search" value="1" >
+	{if [uts:search_name]}
+		<div class="formInput nwlFi">
+			<label>[t]Customer name[/t]:</label>
+			<input type="text" name="customer_search_name" value="{$customer_search_query.customer_search_name|escape}" >
+		</div>
+	{/if}
+	{if [uts:search_name]}
+		<div class="formInput nwlFi">
+			<label>[t]Keyword[/t]:</label>
+			<input type="text" name="customer_search_keyword" value="{$customer_search_query.customer_search_keyword|escape}" >
+		</div>
+	{/if}
+    {if [uts:search_sector]}
+		<div class="formInput nwlFi">
+			<label>[t]Branch[/t]:</label>
+            <select id="customer_search_sector" name="customer_search_sector" >
+                <option label="---" value="">---</option>
+                <foreach from=$select_sector item=b>
+                    <option label="{$b.name}" value="{$b.id}" {if $b.id == $customer_search_query.customer_search_sector}selected="selected"{/if}>{$b.name}</option>
+                </foreach>
+            </select>			
+		</div>
+    {/if}	
+	
+	
+	<input type="submit" value="[t]Search[/t]" class="button" >
+	</form>
+	</div>
+{/if}
+
+{if $nameIntervals}
+	<div class="moduleNavContainer nwCustListNav">
+	{foreach from=$nameIntervals key=intervalKey item=nameInterval}
+		<a href="{$thisWebsite}/index.php/page/network/command/custlist/greaterOrEqualTo/{$nameInterval.greaterOrEqualTo}/lessOrEqualTo/{$nameInterval.lessOrEqualTo}{if $cms_categorie}/cms_categorie/{$cms_categorie}{/if}">{$intervalKey}</a> |
+	{/foreach}
+	</div>
+{/if}
+
+{foreach from=$customerTypes item=customerType}
+	<div class="moduleListHolder modulenwCustListHolder">
+	{if $count_customer_types && $count_customer_types > 1}
+		{if $websites.$customerType}
+			<div class="moduleCategory nwCustListCategory">{$customerType}</div>
+		{/if}
+	{/if}
+
+	{foreach from=$websites.$customerType item=website}
+		{assign var='websiteId' value=$website.id}
+		{assign var='klantid' value=$website.klantid}
+		
+		<div class="moduleItemContainer nwCustListItem">
+		    {if $use_customizable_network}
+			<div class="moduleItemImg nwCustListImg"><a href="{$website.url}" title="{$website.name}"><img src="/_images_upload/{if $website.network_image == "Picture" && $website.network_picture}{$website.network_picture}{else}{$website.network_logo}{/if}" alt="{$website.name}" border="0"></a></div>
+			<div class="moduleItemLink nwCustListItemName"><a href="{$website.url}" title="{$website.name}">{$website.name}</a></div>
+            {else}		    
+			<div class="moduleItemImg nwCustListImg"><a href="{if $website.network_text}{$website.url}{else}{$website.website}" target="_blank{/if}" title="{$website.name}"><img src="/_images_upload/{if $website.network_image == "Picture" && $website.network_picture}{$website.network_picture}{else}{$website.network_logo}{/if}" alt="{$website.name}" border="0"></a></div>
+			<div class="moduleItemLink nwCustListItemName"><a href="{if $website.network_text}{$website.url}{else}{$website.website}" target="_blank{/if}" title="{$website.name}">{$website.name}</a></div>
+			{/if}
+		
+			{foreach from=$websitesType.$websiteId key=i item=websiteType}{if $i}, {/if}{$websiteTypes.$websiteType}{/foreach}
+				<div class="moduleShortDescription nwCustListShortText">{$website.portfolio_text|truncate:300:"..."}</div>
+				<div class="nwCustListItemClear cleaner"></div>
+		</div>
+	{/foreach}
+	</div>
+{/foreach}
+
+{if !$get_result}
+<div class="moduleAppRow nwCustListNoData">[t]There are no search results matching your search query[/t]</div>	
+{/if}
+
+
+{if $nameIntervals}
+	{if $websites}
+		<div class="moduleNavContainer nwCustListNav">
+			{foreach from=$nameIntervals key=intervalKey item=nameInterval}
+				<a href="{$thisWebsite}/index.php/page/network/command/custlist/greaterOrEqualTo/{$nameInterval.greaterOrEqualTo}/lessOrEqualTo/{$nameInterval.lessOrEqualTo}{if $cms_categorie}/cms_categorie/{$cms_categorie}{/if}">{$intervalKey}</a> |
+			{/foreach}
+		</div>
+	{else}
+		<div class="moduleAppRow nwCustListNoData">[t]There are no connections in this range.[/t]</div>
+	{/if}
+{/if}
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

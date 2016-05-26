@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+
+<p>[t]Text1[/t]</p>
+
+<p>
+
+[t]Candidate name[/t]: {$candidate_data.name}
+
+{if $candidate_dossier_code}
+<br>[t]Candidate number[/t]: {$candidate_dossier_code}
+{/if}
+
+{if $candidate_data.phone_mobile}
+<br>[t]Mobile phone number[/t]: {$candidate_data.phone_mobile}
+{/if}
+
+{if $candidate_data.phone_other}
+<br>[t]Other phone number[/t]: {$candidate_data.phone_other}
+{/if}
+
+{if $candidate_data.email}
+<br>[t]E-mail[/t]: {$candidate_data.email}
+{/if}
+
+</p>
+
+{if $client_data.name}
+<p>
+[t]Client name[/t]: {$client_data.name}
+</p>
+{/if}
+
+<p>
+
+{if $consultant_contact_data.name}
+[t]Consultant contact name[/t]: {$consultant_contact_data.name}
+{/if}
+
+{if $consultant_contact_data.phone}
+<br>[t]Consultant contact mobile phone[/t]: {$consultant_contact_data.phone}
+{/if}
+
+{if $consultant_contact_data.email}
+<br>[t]Consultant contact e-mail[/t]: {$consultant_contact_data.email}
+{/if}
+
+</p>
+
+<p>
+
+{if $consultant_requesting_data.name}
+[t]Consultant requesting name[/t]: {$consultant_requesting_data.name}
+{/if}
+
+{if $consultant_requesting_data.phone}
+<br>[t]Consultant requesting mobile phone[/t]: {$consultant_requesting_data.phone}
+{/if}
+
+{if $consultant_requesting_data.email}
+<br>[t]Consultant requesting e-mail[/t]: {$consultant_requesting_data.email}
+{/if}
+
+</p>
+
+<p>[t]Text2[/t]</p>
+
+<!--uts:end inner-->
+</body>
+</html>

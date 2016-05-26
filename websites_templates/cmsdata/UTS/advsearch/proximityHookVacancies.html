@@ -1,0 +1,68 @@
+ <!-- /UTS/advsearch/proximityHookVacancies.html -->
+<script type="text/javascript">
+//{literal}
+function prox_check_form(frm) {
+    if (!frm.proximity_zipCode.value) {
+        alert('[th]Please enter a zip code.[/th]');
+        return(false);
+    }
+    //if (!frm.proximity_preferredDistance.value) {
+    //    alert('[th]Please select a preferred distance in KM.[/th]');
+    //    return(false);
+    //}
+    if (!frm.proximity_maxDistance.value) {
+        alert('[th]Please select a maximal distance in KM.[/th]');
+        return(false);
+    }
+    
+    if (!isFinite(parseInt(frm.proximity_maxDistance.value))) {
+        alert('[th]Maximal distance must be a number.[/th]');
+        return(false);
+    }
+    if (parseInt(frm.proximity_preferredDistance.value)>parseInt(frm.proximity_maxDistance.value)) {
+        alert('[th]Maximal distance must be lower than preferred distance.[/th]');
+        return(false);
+    }
+    return(true);
+}
+//{/literal}
+</script>
+<form name="proxsearchhookform" method="post" action="{$baseHttpPath}/page/advsearchvacs/bb/1/" onsubmit="return(prox_check_form(this))">
+<div class="hookOuter aplOuter aplLdOuter">
+<div class="hookHeader aplTitle aplLdTitle">[t]Search jobs nearby[/t]</div>
+
+<if [uts:show_country_select]>
+<div class="formInput aplInput aplInputCountryCode">
+<label for="idCountryCode">[t]Country[/t]</label>
+<select id="idCountryCode" name="proximity_countryCode">
+<html_options options=$proximityCountries selected=$proximity.countryCode>
+</select>
+</div>
+<else>
+<input type="hidden" name="proximity_countryCode" value="[uts:dm_default_country]">    
+</if>
+<div class="formInput aplInput aplInputZipcode">
+<label for="idZipcode">[t]Zipcode[/t]</label>
+<input type="text" id="idZipcode" name="proximity_zipCode" value="{$proximity.zipCode|escape}">
+</div>
+<div class="formInput aplInput aplInputPrefDistPrxHook">
+<label for="idPrefDistPrxHook">[t]Preferred distance [km][/t]</label>
+<select id="idPrefDistPrxHook" name="proximity_preferredDistance">
+<option value="0">---</option>
+<html_options options=$distOpts selected=$proximity.preferredDistance>
+</select>
+</div>
+<div class="formInput aplInput aplInputMaxDistPrxHook">
+<label for="idMaxDistPrxHook">[t]Maximum distance [km][/t]</label>
+<select id="idMaxDistPrxHook" name="proximity_maxDistance">
+<option value="">---</option>
+<html_options options=$distOpts selected=$proximity.maxDistance>
+</select>
+</div>
+
+
+<div class="buttonContainer aplBc aplLdBc"><input type="submit" name="bApplSubmit" value="[tb]Search[/tb]" class="button"></div>
+</div>
+<input type="hidden" name="command" value="submitrequest">
+<input type="hidden" name="origin" value="hookproximity">
+</form>

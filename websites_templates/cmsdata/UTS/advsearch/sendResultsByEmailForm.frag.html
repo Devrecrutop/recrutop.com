@@ -1,0 +1,38 @@
+ <!-- /UTS/advsearch/sendResultsByEmailForm.frag.html -->
+<div style="width:250px;">
+    <form name="srbefrm" action="{$handler}/command/submitemailform" method="post">
+        <h1 class="title">[t]Send results by e-mail[/t]</h1>
+        <div class="intro">[t]Please specify your e-mail address and desired evaluation period. You will keep receiving search results into the e-mail address you specify on regular basis. You can deactivate this service anytime by clicking a link inside the e-mail.[/t]</div>
+        <div class="formInput actEqueryInput">
+        <label for="iSrbeEmail">[t]E-mail[/t]</label>
+        <input type="text" id="iSrbeEmail" name="email" value="{$email|escape}">
+        </div>
+        <if $error>
+            <div class="error">
+                <if $error == "ERR_EMAIL_EMPTY">
+                    [t]No e-mail specified[/t]
+                <elseif $error == "ERR_EMAIL_INVALID">
+                    [t]Invalid e-mail[/t]
+                <elseif $error == "ERR_EMAIL_POLICY">
+                    [t]Denied by policy[/t]
+                <elseif $error == "ERR_DUPE">
+                    [t]Duplicate request[/t]
+                <elseif $error == "ERR_LIMIT_EXCEEDED">
+                    [t]Limit exceeded for your IP[/t]
+                </if>
+                
+            </div>
+        </if>
+        <div class="formInput actEqueryInput">
+        <label for="iSrbeFrequency">[t]Period[/t]</label>
+        <select id="iSrbeFrequency" name="period">
+            <option value="daily">[th]Daily[/th]</option>
+            <option value="weekly" {if $period == "weekly"}selected{/if}>[th]Weekly[/th]</option>
+            <option value="monthly" {if $period == "monthly"}selected{/if}>[th]Monthly[/th]</option>
+        </select>
+        </div>
+        <div class="buttonContainer actEqueryBc">
+            <input type="submit" name="bSubmit" value="[tb]Submit[/tb]" class="button">
+        </div>
+    </form>
+</div>

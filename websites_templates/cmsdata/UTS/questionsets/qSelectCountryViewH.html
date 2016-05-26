@@ -1,0 +1,18 @@
+<!--select country view 1-->
+<div class="formInput aplSelInput">
+<label for="{$elementId}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+<select name="{$elementName}" id="{$elementId}" class="qsCountrySelectView" onChange="refreshStatesProvinces()">
+<option value="NULL">---</option>
+<html_options options=$options selected=$currentValue>
+</select>
+</div>
+<if $qd.explanation>
+<div class="explain aplSelExplain explain_{$elementName}">
+    {$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplSelError error_{$elementName}">
+    {$currentErrorMessage}    
+</div>
+</if>

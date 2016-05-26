@@ -1,0 +1,137 @@
+<!--START-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--END-->
+<!--uts:begin inner-->
+<table border="0" cellpadding="0" cellspacing="0" class="mailAlignTbl">
+<tr>
+<td class="mailAlign">
+
+<table border="0" cellpadding="0" cellspacing="0" class="mailTbl">
+
+<tr>
+<!--uts:begin logo-->
+<td style="" align="right">[uts:_logo]</td>
+<!--uts:end logo-->
+</tr>
+
+<!--START_Block1-->
+<tr>
+<td valign="top" class="mailTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="mailTextTbl">
+<!--START_Title1-->
+<tr>
+<td class="mailSubHeader"></td>
+</tr>
+<!--END_Title1-->
+<!--START_Text1-->
+<tr>
+<td class="mailText">
+
+<p>
+[t]Dear[/t] {$assgn.supervisor_name},<br >
+[t]assignment[/t] <!--.assgn.ahref.{$assgn.id}.{$assgn.type}.-->{$assgn.assignment_name}<!--.assgn.a.--> [t]was set into status[/t] {$assgn.status} [t]you should approve it[/t].
+</p>
+<p>
+[t]Assignment[/t]: {$assgn.assignment_name}<br >
+[t]Number[/t]: {$assgn.assignment_nr}<br >
+[t]Status[/t]: {$assgn.status}<br >
+[t]Candidate[/t]: {$assgn.candidate_name}<br >
+[t]Consultant[/t]: {$assgn.user_name}<br >
+</p>
+
+<p><!-- new data iSense -->
+[t]Consultant[/t]: {$assgn.consultant1}<br >
+[t]Consultant 2[/t]: {$assgn.consultant2}<br >
+[t]Consultant 3[/t]: {$assgn.consultant3}<br >
+
+[t]Start date[/t]: {$assgn.startDate}<br/>
+[t]End date[/t]: {if $assgn.endDateUnknown}[t]End date unknown[/t]{else}{$assgn.endDate}{/if}<br/>
+[t]Tariff[/t]: {$assgn.tariff} [t]per[/t] {$assgn.tariffUnit}<br/>
+[t]Hours[/t]: {$assgn.hours} {$assgn.hoursUnit}<br/>
+[t]Option for renewal[/t]: {if $assgn.optionForRenewal}[t]enabled[/t]{else}[t]disabled[/t]{/if}<br/>
+[t]Estimated hours[/t]: {$assgn.estimatedHours}<br/>
+[t]Type[/t]: {$assgn.jobType}<br/>
+[t]Remarks[/t]: {$assgn.remarks}<br/>
+<br/><br/>
+<!-- candidate -->
+[t]Name[/t]: {$assgn.candidate.firstName} {$assgn.candidate.middleName} {$assgn.candidate.lastName} <br/>
+[t]Gender:[/t]: {$assgn.candidate.gender}<br/>
+[t]BSN number[/t]: {$assgn.candidate.socialSecurityTaxNumber}<br/>
+[t]Wage[/t]: {$assgn.candidate.brutoWage} {$assgn.candidate.brutoWageUnit}<br/>
+{if $assgn.type=='freelance'}
+[t]Buying tariff EUR[/t] {$assgn.candidate.toBuyTariff} {$assgn.candidate.toBuyTariffUnit}<br/>
+[t]Company name[/t]: {$assgn.candidate.companyName}<br/>
+[t]Chamber of commerce #[/t]: {$assgn.candidate.chamberOfCommerce}<br/>
+[t]Tax #[/t]: {$assgn.candidate.vatNr}<br/>
+{/if}
+{if $assgn.type=='doorleen'}
+[t]Buying tariff EUR[/t] {$assgn.candidate.toBuyTariff} {$assgn.candidate.toBuyTariffUnit}<br/>
+[t]Relation[/t]: {$assgn.candidate.fromCustomerName}<br/>
+[t]Contact person[/t]: {$assgn.candidate.fromCustomerContactPersonName}<br/>
+[t]Contact person 2[/t]: {$assgn.candidate.fromCustomerContactPersonName2}<br/>
+{/if}
+<br/><br/>
+<!-- relation -->
+[t]Relation[/t]: {$assgn.customer.relation}<br/>
+[t]Contact[/t]: {$assgn.customerContact.firstName} {$assgn.customerContact.middleName} {$assgn.customerContact.lastName}<br/>
+[t]Contract contact[/t]: {$assgn.customer.contractContactName}<br/>
+[t]Deviating contract agreements[/t]: {$assgn.customer.deviationContractAgreement}<br/>
+</p>
+<p>
+<!-- lease cars-->
+{foreach from=$assgn.leaseCars item="car"}
+<p>
+	[t]Type[/t]: {$car.carType}<br/>
+	[t]Value car[/t]: {$car.valueCar}<br/>
+	[t]Start date[/t]: {$car.dateStart}<br/>
+	[t]End date[/t]: {$car.dateEnd}<br/>
+	[t]Km start[/t]: {$car.kmStart}<br/>
+	[t]Km end[/t]: {$car.kmEnd}<br/>
+	[t]Car brand/type[/t]: {$car.carBrand}<br/>
+	[t]License plate #[/t]: {$car.licencePlateNumber}<br/>
+	[t]Addition[/t]: {$car.addition}<br/>
+	[t]Lease price[/t]: {$car.leasePrice}<br/>
+	[t]Lease company[/t]: {$car.leaseCompany}<br/>
+</p>
+{/foreach}
+
+</p>
+
+<br >
+
+</td>
+</tr>
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+
+<!--uts:begin disclaimer-->
+<tr>
+<td class="mailFooterHeader">[t]Disclaimer[/t]</td>
+</tr>
+<tr>
+<td class="mailFooter">
+[t]
+<p>1. This e-mail is for the intended recipient only. If you have received it by mistake please let us know by reply and then delete it from your system; access, disclosure, copying, distribution or reliance on any of it by anyone else is prohibited.
+<br><br>2. If you as intended recipient have received this e-mail incorrectly, please notify the sender (via e-mail) immediately. This e-mail is confidential and may be legally privileged. {$klant} does not guarantee that the information sent and/or received by or with this e-mail is correct and does not accept any liability for damages related thereto.
+</p>
+[/t]
+<!--uts:end disclaimer-->
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+<!--uts:end inner-->
+</body>
+</html>

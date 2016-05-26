@@ -1,0 +1,64 @@
+{* used for signing up via Sign Up module with TK enabled *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplStkOuter">
+<!-- /UTS/applicants/signupTK.html -->
+<h1 class="title aplTitle aplStkTitle">[t]Sign up[/t]</h1>
+<div class="intro aplIntro aplStkIntro">
+<p>[t]If you have a CV, you can provide it now. We will attempt to parse your CV automatically and prefill all forms for you in order to make the registration process faster. We accept .DOC, .DOCX, .PDF, .ODT and .RTF files. Please also type the text code you see in the image into the field below the image. You don't need to type the code if you decide not to provide your CV at the moment.[/t]</p>
+<if $linkedinEnabled>
+<ul>
+<li class="aplAplyLi"><a href="{$handler}/command/startsignuplinkedin/">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
+</ul>
+</if>
+</div>
+
+<form name="mainfrm" action="{$handler}" method="post" enctype="multipart/form-data">
+	<div class="formInput aplInput aplStkInputCv">
+	<label for="cv_file">[t]CV:[/t]</label>
+	<input type="file" name="cv_file" id="cv_file">
+	</div>
+	<if $cvError>
+	<div class="error aplError aplStkError">{$cvError}</div>
+	</if>
+	<div class="formInput aplInput aplStkInputCvl">
+	<label for="selExtrLng">[t]CV language:[/t]</label>
+	<select name="extrLng" id="selExtrLng">
+	<html_options options=$extrLanguages selected=$prefillExtrLng>
+	</select>
+	</div>
+	<div class="formInput aplCsc aplStkCsc">
+	<label>[t]Code[/t]</label>
+	<img id="captcha" src="/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image">
+	<a href="#" onclick="document.getElementById('captcha').src = '/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0"></a>
+	<a href="/_javascript_global/securimage/securimage_play.php"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0"></a>
+	</div>
+	<div class="formInput formSmallInput aplCic aplStkCic">
+	<label for="captchafield">[t]Code:[/t]</label>
+	<input type="text" name="captchafield" id="captchafield" size="10">
+	</div>
+	<if $captchaError>
+	<div class="error aplError aplStkError">[t]Please enter the right security code![/t]</div>
+	</if>
+	<div class="buttonContainer aplBc aplStkBc">
+	<input type="submit" name="ApplbSignUp" value="[tb]Sign up button[/tb]" class="button">
+	</div>
+	
+	<input type="hidden" name="retryCmd" value="{$retryCmd|escape}">
+	<input type="hidden" name="command" value="enroll">
+	<input type="hidden" name="tkmode" value="1">
+	<input type="hidden" name="MAX_FILE_SIZE" value="5000000">
+	</div>
+</form>
+<!--uts:end inner-->
+</body>
+</html>
+
+{*[th]By filling this form you agree that our company can work with your personal data[/th]*}
+{*[th]You need to agree with processing your personal data[/th]*}
+

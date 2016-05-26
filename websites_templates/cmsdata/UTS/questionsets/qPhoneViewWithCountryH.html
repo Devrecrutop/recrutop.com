@@ -1,0 +1,46 @@
+<!--phone view with country code H -->
+<div class="formInput formSmallInput aplTextInput fIPhoneCountry KQDIV_{$qd.id}" id="KQDIV_{$qd.id}">
+	<label for="{$elementId}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+        <input type="text" id="countrycode_{$elementName}" value="" placeholder="0031" onchange="{$elementId}fillPhoneField()" />
+        <input type="text" id="phone_{$elementName}" value="" placeholder="612345678" onchange="{$elementId}fillPhoneField()" />
+	<input type="hidden" value="{$currentValue|escape}" name="{$elementName}" id="{$elementId}">
+</div>
+
+<script>
+    var elementName = '{$elementName}';
+    var elementId = '{$elementId}';
+    var phoneValue = '{$currentValue}';
+    
+    function {$elementId}getValue() {literal} {
+
+        var chunks = phoneValue.split("-");
+        if ( chunks[0] != undefined ) {
+            if ( chunks[1] != undefined ) {
+                document.getElementById('countrycode_'+elementName).value = chunks[0];
+                document.getElementById('phone_'+elementName).value = chunks[1];
+            } else {
+                document.getElementById('phone_'+elementName).value = chunks[0];
+            }
+        }      
+    }
+    function {/literal}{$elementId}{literal}fillPhoneField() {
+        countryCode = document.getElementById('countrycode_'+elementName).value;
+        phone = document.getElementById('phone_'+elementName).value;
+        document.getElementById(elementId).value = countryCode + '-' + phone;
+    }
+    {/literal}
+
+    {$elementId}getValue();
+
+</script>
+
+<if $qd.explanation>
+	<div class="explain aplTextExplain explain_{$elementName}">
+		{$qd.explanation|escape}
+	</div>
+</if>
+<if $currentErrorMessage>
+	<div class="error aplTextError error_{$elementName}">
+		{$currentErrorMessage}
+	</div>
+</if>

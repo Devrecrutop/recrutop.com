@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script>
+//{literal}
+function sqSMSDelete(f) {
+    if (!confirm('[th]Are you sure to delete this stored query?[/th]')) return;
+    f.command.value='sqsmsdelete';
+    f.submit();
+}
+//{/literal}
+</script>
+<div class="outer">
+ <!-- /UTS/advsearch/sqSMSActivateForm.html -->
+<h1 class="title">[t]SMS query activation[/t]</h1>
+<div class="intro">
+<p>[t]Use this page to activate/ deactivate your stored query or set other related options.[/t]</p>
+</div>
+<form name="smsactform" action="{$handler}" method="post">
+<input type="hidden" name="command" value="submitactivation">
+<div class="formInput actEqueryInput">
+<label>[t]Mobile phone number[/t]:</label>
+<input type="text" name="phNumber" value="{$phNumber|escape}">
+</div>
+
+<div class="formInput actEqueryInput">
+<label>[t]SMS code[/t]:</label>
+<input type="text" name="smsCode" value="{$smsCode|escape}" maxlength="8">
+</div>
+
+<div class="formInput actEqueryInput">
+<label>[t]Max jobs sent[/t]:</label>
+<select name="maxJobsSent">
+    <html_options options=$maxjobssentopts selected=$maxJobsSent>
+</select>
+</div>
+
+<div class="formInput formRadio aplRadioInput">
+<label>[t]Confirm activation[/t]:</label>
+<input type="radio" id="idSMSQADYes" name="SMSQADConfirm" value="1">[t]Activate query[/t]
+<input type="radio" id="idSMSQADNo" name="SMSQADConfirm" value="0" checked>[t]Deactivate query[/t]
+</div>
+
+<if $error>
+    <div class="error">
+        <if $error == "MSG_ERR_INVALID_PHONE">
+            [t]Invalid phone number[/t]
+        <elseif $error == "MSG_ERR_SQ_NOT_FOUND">
+            [t]Invalid phone number and SMS code combination.[/t]
+        <elseif $error == "MSG_ERR_ALREADY_ACTIVATED">
+            [t]Your SMS query has been already activated before.[/t]
+        <elseif $error == "MSG_ERR_NOT_ACTIVE_YET">
+            [t]Your SMS query is currently not active - not needed to deactivate.[/t]
+        </if>
+        
+    </div>
+</if>
+
+<div class="butCon">
+	<input type="submit" value="[tb]Submit form[/tb]" class="button">
+    <input type="button" value="[tb]Delete query...[/tb]" class="button" onclick="sqSMSDelete(this.form)">
+</div>
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

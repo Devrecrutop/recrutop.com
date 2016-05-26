@@ -1,0 +1,48 @@
+<!--start other h-->
+<h3 class="formTitle aplOtherFormTitle">{$qd.question|escape}</h3>
+<!--start hobbies-->
+<div class="formInput formSmallInput AplOtherHobbys">
+<label>[t]Hobbies[/t]</label>
+<input class="smallButton aplSB aplHobbysSb" type="button" value="[tb]Add item[/tb]" onclick="qsAddCVItem('{$qd.id}', 'hobbies')">
+</div>
+<div class="formGroup aplOtherHobbyFG">
+<foreach from=$items.hobbies item=item key=key>
+<div class="formInput aplOtherHobby">
+<label>[t]Hobby[/t]:</label>
+<input type="text" name="{$elementNamePrefix}_hobbies_{$key}_data" value="{$item.data|escape}">
+</div>
+<div class="formInput formSmallInput aplOtherHobbyDB">
+<label>&nbsp;</label>
+<input class="smallButton aplSB aplHobbysSb" type="button" value="[tb]Delete item[/tb]" onclick="qsDeleteCVItem('{$qd.id}', 'hobbies', '{$key}')"><input type="hidden" name="{$elementNamePrefix}_hobbies_{$key}_iid" value="{$item.iid|escape}">
+</div>
+<if $itemsErrorsHobby[$key]>
+<div class="error aplOtherHobbyError">
+	{$itemsErrorsHobby[$key]}
+</div>
+</if>
+</foreach>
+</div>
+
+<!--start references-->
+<div class="formInput formSmallInput aplOtherRefs">
+<label>[t]References[/t]</label>
+<input class="smallButton aplSB aplRefsSb" type="button" value="[tb]Add item[/tb]" onclick="qsAddCVItem('{$qd.id}', 'references')">
+</div>
+<div class="formGroup aplOtherRefFG">
+<foreach from=$items.references item=item key=key>
+<div class="formInput aplOtherRef">
+<label>[t]Reference[/t]</label>
+<textarea class="fieldTxtArea" name="{$elementNamePrefix}_references_{$key}_data" >{$item.data|escape}</textarea>
+</div>
+<div class="formInput formSmallInput aplOtherRefDB">
+<label>&nbsp;</label>
+<input class="smallButton aplSB aplRefsSb" type="button" value="[tb]Delete item[/tb]" onclick="qsDeleteCVItem('{$qd.id}', 'references', '{$key}')">
+</div>
+<input type="hidden" name="{$elementNamePrefix}_references_{$key}_iid" value="{$item.iid|escape}">
+<if $itemsErrorsReference[$key]>
+<div class="error aplOtherRefError">
+	{$itemsErrorsReference[$key]}
+</div>
+</if>
+</foreach>
+</div>

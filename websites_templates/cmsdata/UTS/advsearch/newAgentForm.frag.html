@@ -1,0 +1,361 @@
+<script src="/_javascript_global/jquery.multiSelect.js" type="text/javascript"></script>
+<script src="/_javascript_global/jquery.autocomplete.js" type="text/javascript" ></script>
+
+<script type="text/javascript" >
+
+var kwAskURL='{$handler}/command/kwautocomplete/arg/';
+var locaAskURL='{$handler}/command/locautocomplete/arg/';
+var cmpAskURL='{$handler}/command/cmpautocomplete/arg/';
+var iSearch = -1; 
+var ac = null; // autocomplete object
+
+//{literal}
+
+// define ready function
+if (jQuery) { 
+  // setup autocomplete for keyword
+  if ($('.ajaxWindow #actQueryKeywords').length) {
+    $('.ajaxWindow #actQueryKeywords').autocomplete({ 
+      serviceUrl:kwAskURL,
+      minChars:3, 
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:200
+      //deferRequestBy: 0, //miliseconds
+      // callback function:
+      //onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+    });
+  }
+  // setup autocomplete for competencies
+  if ($('.ajaxWindow #idComp').length) {
+    $('.ajaxWindow #idComp').autocomplete({ 
+      serviceUrl:cmpAskURL,
+      minChars:3,
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:300,
+      deferRequestBy: 100, //miliseconds
+      // callback function:
+      onSelect: function(value, data){ $('.ajaxWindow #competence_id_field').val(data); addCompetenceToSearch();}
+    });
+  }
+  
+  if($('.ajaxWindow #cb_main_local_search').length)
+  {
+    // before first initialization of autocompelte
+    iSearch = ($('.ajaxWindow #cb_main_local_search').is(':checked')) ? 1 : 0; // initlaize 
+    
+    
+    $('.ajaxWindow #cb_main_local_search').click(function() {              
+      var ch = ($(this).is(':checked')) ? 1 : 0;
+                
+      if ($('.ajaxWindow #actQueryLocation').length && ac != null ) 
+      {        
+        // reinit autocomplete        
+        ac.setOptions({minChars: 3, maxHeight: 300, width: 200, params:{international: ch}});
+        ac.clearCache();        
+      }      
+                     
+    });     	     	     	      
+  }
+  
+  if ($('.ajaxWindow #actQueryLocation').length) 
+  {
+     ac = $('.ajaxWindow #actQueryLocation').autocomplete({ 
+      serviceUrl:locaAskURL,
+      params:{international: iSearch},      
+      minChars:3,       
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:200
+      //deferRequestBy: 0, //miliseconds
+      // callback function:
+      //onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+    });
+        
+  }
+
+    // setup match criteria multiselects
+      var reqScripts = "[uts:ext_javascripts]";
+  if(reqScripts.indexOf('JQueryMultiSelect') > -1 && !$.fn.magicSelect){
+    //{/literal}
+    <foreach from=$critList item=crit>
+    
+    <if $crit.sm == "M">
+        var critf='{$crit.field}';
+        //{literal}
+        if ($('.ajaxWindow #multisel_mc_'+critf).length) $('.ajaxWindow #multisel_mc_'+critf).multiSelect({
+            selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select criteria...[/th]',
+            oneOrMoreSelected: '[th]Select criteria (% selected)...[/th]'
+            });
+
+        //{/literal}
+    </if>
+    </foreach>
+    //{literal}
+    
+    // setup jquery multiselect for keyword options
+    if ($('#multisel_kw_options').length) $('#multisel_kw_options').multiSelect({
+        selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select fields...[/th]',
+            oneOrMoreSelected: '[th]Select fields (% selected)...[/th]'
+    });
+	
+	// setup jquery multiselect for category search
+	if ($('#multisel_categorie').length) $('#multisel_categorie').multiSelect({
+        selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select categories...[/th]',
+            oneOrMoreSelected: '[th]Select categories (% selected)...[/th]'
+    });
+    } else if(reqScripts.indexOf('JQueryMagicSelect') > -1){
+		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		} else {
+			$('select').magicSelect();
+		}
+	}
+}
+//{/literal}
+</script>
+
+
+
+<link rel="stylesheet" type="text/css" href="/_css_global/jquery.unified-select.css" >
+<script src="/_javascript_global/jquery.selectbox-0.5.js" type="text/javascript"></script>
+
+<script  type="text/javascript">
+<literal>
+    if (jQuery) { 
+	
+		if(!$.fn.magicSelect)
+		{
+			if($(".ajaxWindow #idMaxDist").length != 0) $('.ajaxWindow #idMaxDist').selectbox();
+			if($(".ajaxWindow #idPrefDist").length != 0) $('.ajaxWindow #idPrefDist').selectbox();
+			if($(".ajaxWindow #idCountryCode").length != 0) $('.ajaxWindow #idCountryCode').selectbox();
+			if($(".ajaxWindow #multisel_categorie").length != 0) $('.ajaxWindow #multisel_categorie').selectbox();
+			if($(".ajaxWindow #multisel_categorie").length != 0) $('.ajaxWindow #multisel_categorie').selectbox();
+		}
+		else
+		{
+			console.log('disable this stuff');
+		}
+    }
+</literal>
+</script>
+
+<foreach from=$critList item=crit>
+	<if $crit.sm != "M">
+		<script  type="text/javascript">
+			{literal}
+			if(!$.fn.magicSelect)
+			{
+				$('.ajaxWindow #matchcriteria_{$crit.field}').selectbox();
+			}
+			{/literal}
+		</script>
+	</if>
+</foreach>
+
+<div class="ajaxWindow newAgentFormFrag">
+<!-- /UTS/advsearch/newAgentForm.frag.html -->
+<form name="srbefrm" action="{$handler}/command/newagentsubmit" method="post">
+	<input type="hidden" name="sq_out_email" value="{if $mode == "email"}1{else}0{/if}">
+	<input type="hidden" name="sq_out_sms" value="{if $mode == "sms"}1{else}0{/if}">
+	<input type="hidden" name="sq_out_twitter" value="0">
+	<input type="hidden" name="originCmd" value="{$originCmd|escape}">
+	
+	<if !$ocdmLoggedIn>
+		<input type="hidden" name="sq_name" value="{$sq.name|escape}" >
+	</if>
+	
+	<!-- critts -->
+		<h1 class="title">[t]Job search agent[/t]</h1>
+		<if $ocdmLoggedIn && $sqCnt>
+			<p><a href="{$handler}/command/sqlist">
+                        {if $sqCnt == 1}
+                        [tg]You have one saved search query already[/tg]
+                        {elseif $sqCnt == 2}
+                        [tg]You have already two saved search queries[/tg]
+                        {elseif $sqCnt > 2}
+                        [tg]You already have[/tg] {$sqCnt} [tg]saved search queries[/tg]
+                        {/if}
+                        </a></p>
+		</if>
+		
+		<div class="intro actIntro vacActIntro">[t]Use fields below to assemble your search query.[/t]</div>
+		
+		{* keyword field *}
+		<if [uts:show_keyword_options]>
+		<div class="formInput actFi actFIkeyword">
+			<label>[t]Keywords[/t]</label>
+			<input id="actQueryKeywords" type="text" name="main_keywords" value="{$keywordsValue|escape}" >
+		</div>
+		<div class="formInput actFi actFIkeywordsOptions">
+			<label></label>
+			<select id="multisel_kw_options" name="main_keywords_options[]" multiple="multiple" size="5">
+				<html_options options=$kwOptions selected=$kwOptionsSelected>
+			</select>
+		</div>
+		<if $splitLocation>
+			<div class="formInput actFi actFIlocation">
+				<label>[t]Location[/t]</label>
+				<input id="actQueryLocation" type="text" name="main_location" value="{$locationValue|escape}" >
+			</div>
+		</if>
+		<if $intlSearchEnabled>
+			<div class="formInput formMultiCheckbox aplMCheckInput">
+				<label>[t]International search[/t]</label>
+			</div>
+			<div class="formCheckboxContainer aplMCheckContainer">
+				<input type="hidden" name="main_local_search" value="1" >
+				<input type="checkbox" id="cb_main_local_search" name="main_local_search" value="0" {if !$localSearch}checked="checked"{/if} >
+			</div>
+		</if>
+	</if>
+	
+	{* criteria fields *}
+	<foreach from=$critList item=crit>
+		<div class="formInput actFi actFiSelect">
+			
+			<label>{$crit.name}</label>
+			<if $crit.sm == "M">
+				{* multiselect *}
+				{*<select name="matchcriteria_{$crit.field}[]" multiple="multiple">*}
+				<select id="multisel_mc_{$crit.field}" name="matchcriteria_{$crit.field}[]" multiple="multiple" size="5" >
+					<html_options options=$crit.options selected=$crit.curValues>
+				</select>
+			<else>
+				{* single select *}
+				<select name="matchcriteria_{$crit.field}" id="matchcriteria_{$crit.field}">
+					<option value="NULL">---</option>
+					<html_options options=$crit.options selected=$crit.curValue>
+				</select>
+			</if>
+		</div>
+	</foreach>
+	<!-- end critts-->
+  
+
+    <if [uts:show_distance_matching]>
+
+      <div>
+
+			<div class="formInput actFi actFICountryCode">
+				<label for="idCountryCode">[t]Country[/t]</label>
+				<select id="idCountryCode" name="proximity_countryCode">
+					<option value="">---</option>
+					<html_options options=$proximityCountries selected=$proximity.countryCode>
+				</select>
+			</div>      
+      
+			<div class="formInput actEqueryInput actEqueryInputFrag">
+				<label for="idZipcodeTxt">[t]Zipcode[/t]</label>
+				<input type="text" id="idZipcodeTxt" name="proximity_zipCode" value="{$proximity.zipCode|escape}">
+			</div>
+
+			<div class="formInput actEqueryInput actEqueryInputFrag">
+				<label for="idMaxDistSel">[t]Maximum distance [km][/t]</label>
+				<select id="idMaxDistSel" name="proximity_maxDistance" >
+					<option value="">---</option>
+					<html_options options=$distOpts selected=$proximity.maxDistance>
+				</select>
+			</div>
+			<div class="cleaner"></div>
+      </div>
+    </if>
+	
+	<div class="text">
+		<if $mode == "email">
+			<if $ocdmLoggedIn>
+			[t]Please specify an e-mail address and the desired evaluation period. Search results will be sent to the e-mail address specified on regular basis. The owner of the e-mail address still needs to activate the service based on instruction in the confirmation e-mail.[/t]
+			<else>
+			[t]Please specify your e-mail address and desired evaluation period. You will keep receiving search results into the e-mail address you specify on regular basis. You can deactivate this service anytime by clicking a link inside the e-mail.[/t]
+			</if>
+		<elseif $mode == "sq">
+			[t]Please specify the desired evaluation period and output channels to use. You can also change these settings later. If you specify output channels now, the recipient needs to activate the query based on instructions in e-mail/SMS he receives.[/t]
+		 <elseif $mode == "sms">
+			<if $ocdmLoggedIn>
+			[t]Please specify a mobile phone number and a desired evaluation period. The owner of the mobile phone number still needs to activate the service based on instruction in the confirmation SMS.[/t]
+			<else>
+			[t]Please specify your desired evaluation period and your mobile phone number. Your will first get a confirmation SMS with instruction how to activate your stored query.[/t]
+			</if>
+		</if>
+	</div>
+	<if $ocdmLoggedIn>
+		<div class="formInput actEqueryInput">
+			<label for="iSrbeName">[t]Agent name[/t]</label>
+			<input type="text" id="iSrbeName" name="sq_name" value="{$sq.name|escape}" >
+		</div>
+	</if>
+	<div class="formInput actEqueryInput">
+		<label for="iSrbeFrequency">[t]Period[/t]</label>
+		<select id="iSrbeFrequency" name="sq_period">
+			<option value="daily">[th]Daily[/th]</option>
+			<option value="weekly" {if $sq.period == "weekly"}selected{/if}>[th]Weekly[/th]</option>
+			<option value="monthly" {if $sq.period == "monthly"}selected{/if}>[th]Monthly[/th]</option>
+		</select>
+	</div>
+	
+	{* captcha *}
+	<if !$ocdmLoggedIn>
+		<div class="formInput actEqueryInput">
+			<label>[t]Code[/t]</label>
+			<img id="newsqcaptcha" src="/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image" >
+			<a href="#" onclick="document.getElementById('newsqcaptcha').src = '/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0" ></a>
+			<a href="/_javascript_global/securimage/securimage_play.php"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0" ></a>
+		</div>
+		<div class="formInput actEqueryInput">
+			<label for="newsqcaptchafield">[t]Code:[/t]</label>
+			<input type="text" name="captchafield" id="newsqcaptchafield" size="10">
+		</div>
+	</if>
+	
+	<h2 class="subHeader">[t]Output channels[/t]</h2>
+	<if $dispEmailControls>
+		<div class="formInput actEqueryInput actEqueryEmailInput">
+			<label><img src="/_images_global/email.gif">[t]E-mail[/t]</label>
+			<input type="checkbox" name="sq_out_email" value="1" {if $sq.out_email}checked{/if} {if $mode == "email"}disabled style="display:none;"{/if} >
+			<input type="text" name="sq_email" value="{$sq.email|escape}">
+		</div>
+	</if>
+	<if $dispSMSControls>
+		<div class="formInput actEqueryInput actEquerySmsInput">
+			<label><img src="/_images_global/sms.png">[t]SMS[/t]</label>
+			<input type="checkbox" name="sq_out_sms" value="1" {if $sq.out_sms}checked{/if} {if $mode == "sms"}disabled style="display:none;"{/if} >
+			<input type="text" name="sq_sms_mobile_number" value="{$sq.sms_mobile_number|escape}">
+		</div>
+	</if>
+	<if $dispTwitterControls>
+		<div class="formInput actEqueryInput actEqueryTwitterInput">
+			<label>[t]Twitter[/t]</label>
+			<input type="checkbox" name="sq_out_twitter" value="1" {if $sq.out_twitter}checked{/if} disabled style="display:none;">
+		</div>
+	</if>
+	
+	<if $error>
+		<div class="error">
+			<if $error == "ERR_EMAIL_EMPTY">
+				[t]No e-mail specified[/t]
+			<elseif $error == "ERR_EMAIL_INVALID">
+				[t]Invalid e-mail[/t]
+			<elseif $error == "ERR_EMAIL_POLICY">
+				[t]Denied by policy[/t]
+			<elseif $error == "ERR_DUPE">
+				[t]Duplicate request[/t]
+			<elseif $error == "ERR_LIMIT_EXCEEDED">
+				[t]Limit exceeded for your IP[/t]
+			<elseif $error == "ERR_INVALID_PHONE">
+				[t]Invalid phone number[/t]
+			<elseif $error == "ERR_INVALID_CAPTCHA">
+				[t]Invalid security code[/t]    
+			<elseif $error == "ERR_TOO_MANY_INACTIVE_SMS_SQS">
+				[t]There are more SMS queries awaiting activation.[/t]
+			</if>
+		</div>
+	</if>
+	<div class="buttonContainer actEqueryBc">
+		<input type="submit" name="bSubmit" value="[tb]Submit[/tb]" class="button">
+	</div>
+<div class="cleaner"></div>
+</form>
+</div>

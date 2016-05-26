@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer">
+ <!-- /UTS/advsearch/simpleMessage.html -->
+<h1 class="title">
+<if $type == "THANK_YOU">
+[t]Thank you![/t]
+<elseif $type == "ERROR">
+[t]Error occured![/t]
+<elseif $type == "INFORMATION">
+[t]Information[/t]
+</if>
+</h1>
+<div class="intro">
+<if $messageId>
+<if $messageId == "SQ_NOT_FOUND">
+<p>[t]Sorry, stored query not found.[/t]</p>
+<elseif $messageId == "SQ_DELETED">
+<p>[t]Your stored query has been deleted.[/t]</p>
+<elseif $messageId == "SQ_ALREADY_ACTIVATED">
+<p>[t]This stored query has been already activated before.[/t]</p>
+<elseif $messageId == "SQ_ACTIVATED">
+<p>[t]Your stored query has been successfully activated.[/t]</p>
+<elseif $messageId == "SQ_DEACTIVATED">
+<p>[t]Your stored query has been successfully deactivated.[/t]</p>
+<elseif $messageId == "SQ_NOTACTIVEYET">
+<p>[t]Your stored query is not active yet.[/t]</p>
+<elseif $messageId == "CANDIDATE_DISALLOW">
+    <h1>[t]Access denied[/t]</h1>
+<p>[t]Your account is configured to not allow viewing vacancies[/t]</p>
+</if>
+</if>
+</div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+</head>
+<body>
+<!--uts:begin inner-->
+<!--system part-->
+
+<!--display part-->
+<div class="outer">
+<!-- UTS/clooks/clooks_result_page.html -->
+	<h1 class="title">[t]Clooks Interview Result[/t]</h1>
+
+	<h2 class="subHeader">[t]Details[/t]</h2>
+
+	 {if $clooksSuccess == "true"}
+    <div class="text">[t]Thank you, you interview was successfully made![/t]</div>
+
+     {if $movie_url_with_layout}
+      <div class="text">[t]You can open your interview by clicking[/t]&nbsp;<a href="{$movie_url_with_layout}" target="_blank">[t]here[/t]</a></div>
+      {/if}
+    {else}
+      {if $code == "NOTAPPROVED"}
+    <div class="text">[t]The interview has been stopped.[/t]</div>
+      {else}
+    <div class="text">[t]Oops something went wrong![/t]</div>
+      {/if}
+    {/if}
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

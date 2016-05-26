@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>REACTIEFORMULIER BISJAB</title>
+<link type="text/css" rel="stylesheet" href="http://www.otys.nl/_css_global/globalStyling.css">
+<link type="text/css" rel="stylesheet" href="http://www.yourit.nl/insta6/_css/style2.css">
+<!-- FORM SENDER CHANGE CODES AND HIDDEN FIELDS FOR EACH CUSTOMER -->
+</head>
+<style>
+body{
+margin:10px;
+}
+</style>
+<body>
+
+<!--START_9-->
+<!--START-->
+
+<div class="outer">
+<h1 class="title">[titel]</h1>
+<!--START_1-->
+<div class="intro">[introfoto][introtekst]<!--INTROLINKS--></div>
+<!--END_1-->
+<!--COL1-->
+<div class="subHeader">[kop]</div>
+<div class="test">{foto}[body]<!--LINKS--></div>
+<!--ENDCOL1-->
+
+<form action="http://213.206.122.28/mailer/mailer_fl2.php?command=mail&code=[code]" method="post" enctype="multipart/form-data">
+<input type="hidden" name="to_email" value="info@domain.fr">
+<input type="hidden" name="to_naam" value="[klantnaam]">
+<input type="hidden" name="email_onderwerp" value="">
+<input type="hidden" name="header_consultant" value="Aanvraag">
+<input type="hidden" name="footer_consultant" value=" ">
+<input type="hidden" name="header_customer" value="<p>Geachte heer/mevrouw,</p><p>We hebben uw aanvraag ontvangen, waarvoor onze dank.<br>Wij zullen zo spoedig mogelijke contact met u opnemen.</p><p>&nbsp;</p>">
+<input type="hidden" name="footer_customer" value="Met vriendelijke groet,<br><br>[klantnaam]">
+<input type="hidden" name="notify_subject_consultant" value="Aanvraag vanaf de website">
+<input type="hidden" name="notify_subject_customer" value="Uw aanvraag bij [klantnaam]">
+<input type="hidden" name="code" value="[code]">
+
+<div class="formInput contentContactFormInput"><label class="contactName" for="Naam">Naam</label><input type="text" name="Naam" id="Naam"></div>
+<div class="formInput contentContactFormInput"><label class="contactFunction" for="Functie">Functie</label><input type="text" name="Functie" id="Functie"></div>
+<div class="formInput contentContactFormInput"><label class="contactOrganistation" for="Organisatie">Organisatie</label><input type="text" name="Organisatie" id="Organisatie"></div>
+<div class="formInput contentContactFormInput"><label class="contactAddress" for="Postadres">Postadres</label><input type="text" name="Postadres" id="Postadres"></div>
+<div class="formInput contentContactFormInput"><label class="contactZipCode" for="Postcode">Postcode</label><input type="text" name="Postcode" id="Postcode"></div>
+<div class="formInput contentContactFormInput"><label class="contactCity" for="Plaats">Plaats</label><input type="text" name="Plaats" id="Plaats"></div>
+<div class="formInput contentContactFormInput"><label class="contactPhone" for="Telefoon">Telefoon</label><input type="text" name="Telefoon" id="Telefoon"></div>
+<div class="formInput contentContactFormInput"><label class="contactMobile" for="Mobiel">Mobiel</label><input type="text" name="Mobiel" id="Mobiel"></div>
+<div class="formInput contentContactFormInput"><label class="contactEmail" for="Email">E-Mail</label><input type="text" name="Email" id="Email"></div> 
+<div class="formInput contentContactFormInput"><label class="contactEmail" for="Email">Functienaam</label><input type="text" name="Functienaam"></div>
+<div class="formInput contentContactFormInput"><label class="contactEmail" for="Email">Functieomschrijving</label><textarea type="text" name="Functieomschrijving" rows="8" cols="50"></textarea></div>
+<div class="formInput contentContactFormInput"><label class="contactEmail" for="Email">Functie eisen</label><textarea type="text" name="Functie eisen" rows="8" cols="50"></textarea></div>
+<!--COL2-->
+<div class="subHeader">[kop]</div>
+<div class="test">{foto}[body]<!--LINKS--></div>
+<!--ENDCOL2-->
+<div class="formInput contentContactFormInput"><label>Attachment:</label><input type="hidden" name="MAX_FILE_SIZE" value="2097152"><input type="file" name="attachment"></div>
+<div class="buttonContainer"><input class="button" type="submit" name="Submit" value="Versturen"></div>
+</form>
+
+</div>
+<!--END-->
+<!--END_9-->
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>WebUserForm2</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/agents/AgentsForm.html -->
+
+
+{literal}
+<script>
+function del_agent() {
+	document.form1.command.value="delagent";
+	document.form1.submit();
+}
+
+
+</script>
+{/literal}
+<div class="outer agentsOuter agentsFormOuter">
+
+<form name="form1"  method="POST">
+<input type="hidden" name="command" value="{$postcommand}">
+<input type="hidden" name="AgentId" value="{$r.id}">
+
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<h1 class="title">[t]CV Search Agent[/t]</h1>
+<!--END_PageTitle-->
+
+{$customer_menu}
+
+<!--START_Block1-->
+
+<!--START_Text1-->
+<div class="intro">[t]Use the following criteria to create a CV agent or adjust an existing agent. If you click on the checkbox, you can make a criteria required. In this case, you will not receive CV's unless this criteria is fullfilled.[/t]</div>
+<!--END_Text1-->
+
+<!--END_Block1-->
+<div class="formInput">
+	<label for="Name">[t]Search Agent Name[/t]:<!--SingleWordLink1--></label>
+	<input type="Text" name="Name" size=35 value="{$r.Name}" id="Name">
+</div>
+<div class="formInput formSmallInput">
+	<label>Active</label>
+	<input type="hidden" value="0" name="active">
+	<input type="checkbox" value="1" name="active" {if $r.active}checked{/if}>
+</div>
+
+    {foreach item=fn from=$fieldnamearray}
+    <div class="formInput">
+    	<label>{$fn.naam}</label>
+    	<select name="{$fn.veld}" >
+    		{if $auto_agents_no_value_allowed}
+    	    <option value="">---</option>
+    	    {/if}
+    		{html_options options=$fn.values selected=$fn.FieldValue}
+    	</select>
+    	<span class="radiobuttons" align="right"><input type="checkbox" name="Required[]" value="{$fn.veld}" {if $fn.Required == "Y"}checked{/if}></span>
+    </div>
+    </foreach>
+
+
+<!--START_auto_agents-->
+<div class="formInput">
+	<label>[t]Scheduled sending[/t]:<!--SingleWordLink2--></label>
+    <select name="schedule_agent" id="schedule_agent">
+          <option value="0" {if $agent_schedule == 0} selected {/if}>---</option>
+          <option value="4" {if $agent_schedule == 4} selected {/if}>[th]Every Monday[/th]</option>
+          <option value="5" {if $agent_schedule == 5} selected {/if}>[th]Every Tuesday[/th]</option>
+          <option value="6" {if $agent_schedule == 6} selected {/if}>[th]Every Wednesday[/th]</option>
+          <option value="7" {if $agent_schedule == 7} selected {/if}>[th]Every Thursday[/th]</option>
+          <option value="8" {if $agent_schedule == 8} selected {/if}>[th]Every Friday[/th]</option>
+          <option value="9" {if $agent_schedule == 9} selected {/if}>[th]Every Saturday[/th]</option>
+          <option value="10" {if $agent_schedule == 10} selected {/if}>[th]Every Sunday[/th]</option>
+          <option value="11" {if $agent_schedule == 11} selected {/if}>[th]Each Day[/th]</option>
+          <option value="12" {if $agent_schedule == 12} selected {/if}>[th]Each Workday[/th]</option>
+          <option value="13" {if $agent_schedule == 13} selected {/if}>[th]Every first day of the month[/th]</option>
+    </select>
+</div>
+<!--END_auto_agents-->
+
+<div class="buttonContainer">
+<input name="Submit" type="Submit" value="[th]Save[/th]" class="button" ><!--ButtonLink1-->
+{if $r.id}
+<input name="Delete" type="button" value="[th]Delete[/th]" class="button"  onclick="del_agent();"><!--ButtonLink2-->
+{/if}
+</div>
+
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+</form>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

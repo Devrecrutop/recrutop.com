@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+<div class="outer custOuter custJobThankYouOuter">
+	<!-- /UTS/customers/recrowd_thank_you.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Thank You[/t]</h1>
+	<div class="intro">[t]Thank you for adding the vacancy.[/t]</div>
+    <form name="recrowdForm" action="{$handler}" method="post">
+		<div class="buttonContainer">
+			<input class="button" type="button" value="[tb]Publish Now[/tb]" onclick="this.form.command.value='publish'; this.form.submit()">
+			<input class="button" type="button" value="[tb]Publish Later[/tb]" onclick="this.form.command.value='publishLater'; this.form.submit()">
+			<input class="button" type="button" value="[tb]Edit[/tb]" onclick="this.form.command.value='editVacancy'; this.form.submit()">
+	    </div>
+	    <input type="hidden" name="command" value="">
+	    <input type="hidden" name="vacid" value="{$vacid|escape}">
+    </form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

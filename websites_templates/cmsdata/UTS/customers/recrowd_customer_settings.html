@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+function recrowdSubmitHandler() {
+    return true;
+}
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdRecrSetOuter">
+	<!-- /UTS/customers/recrowd_customer_settings.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Customer Settings[/t]</h1>
+	{$CustomersMenu}
+	{$CustomersSubMenu}
+
+	<form name="recrowdForm" action="{$handler}" method="post" class="qsPageOuter" onsubmit="return recrowdSubmitHandler()">
+
+		<div class="formInput aplTextInput">
+		    <label>[t]Receive new candidate notifications[/t]</label>
+			<input type="checkbox" name="recrowd_receive_candidate_notification" value="1" class="radiobutton" {if $data.recrowd_receive_candidate_notification == 1 }checked="checked"{/if}>
+		</div>
+
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerAddress">[t]Address:[/t]</label>
+			<input type="text" name="wg_bezoekadres" value="{$data_wg.wg_bezoekadres|escape}" id="recrowdCustomerAddress" size="10">
+		</div>
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerPostcode">[t]Postal code:[/t]</label>
+			<input type="text" name="wg_pc_bezoekadres" value="{$data_wg.wg_pc_bezoekadres|escape}" id="recrowdCustomerPostcode" size="10">
+		</div>
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerCity">[t]City:[/t]</label>
+			<input type="text" name="wg_plaats_bezoek" value="{$data_wg.wg_plaats_bezoek|escape}" id="recrowdCustomerCity" size="10">
+		</div>
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerPhone">[t]Phone:[/t]</label>
+			<input type="text" name="phone_mobile" value="{$data.phone_mobile|escape}" id="recrowdCustomerPhone" size="10">
+		</div>
+    
+    
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[tb]Submit[/tb]" name="sSubmit">
+		</div>
+		<input type="hidden" name="command" value="saveCustomerSettings">
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

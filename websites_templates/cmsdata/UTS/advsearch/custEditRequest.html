@@ -1,0 +1,194 @@
+{* required ext.JS: JQueryBase,JQueryAutocomplete,JQueryMultiSelect *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<script type="text/javascript">
+var vxCustomerType = '{$recrowdCustomerType|escape:"javascript"}';
+//{literal}
+
+function advsearchform_check_form(frm) 
+{
+
+    //{/literal}
+    <if [uts:show_distance_matching]>    
+    //{literal}
+    if (frm.proximity_preferredDistance.value && !frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value!='0') {
+        alert('[th]Set also the maximal distance.[/th]');
+        return(false);
+    }
+    
+    if (frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value && parseInt(frm.proximity_preferredDistance.value)>parseInt(frm.proximity_maxDistance.value)) {
+        alert('[th]Maximal distance must be lower than preferred distance.[/th]');
+        return(false);
+    }
+    //{/literal}
+    </if>
+    //{literal}
+    return(true);
+}
+
+//{/literal}
+</script>
+
+<div class="outer actOuter custActO{if $recrowdCustomerType} cAOTtype{$recrowdCustomerType}{/if}">
+
+	<!-- /UTS/advsearch/custEditRequest.html standard --> {* TPL ID: 663*}
+	<h1 class="title actTitle custActTitle">[t]Advanced search[/t]</h1>
+	
+	<div class="intro actIntro custActIntro">[t]Use fields below to assemble your search query.[/t]</div>
+	<form name="advsearchform" method="post" action="{$handler}" onsubmit="return(advsearchform_check_form(this))">
+	
+		{* KEYWORD FIELD BEGIN *}
+		<if [uts:show_keyword_options]>
+			<div class="formInput actFi actFIkeyword">
+				<label>[t]Keywords[/t]</label>
+				<input id="actQueryKeywordsCustMod" type="text" name="main_keywords" value="{$keywordsValue|escape}">
+			</div>
+			<div class="formInput actFi actFIkeywordsOptions">
+				<label></label>
+				<select id="multisel_kw_options_cust_mod" name="main_keywords_options[]" multiple="multiple" size="5">
+					<html_options options=$kwOptions selected=$kwOptionsSelected>
+				</select>
+			</div>			
+		</if>
+		{* KEYWORD FIELD END *}
+		
+
+    {* DISTANCE FIELD BEGIN *}
+    <if [uts:show_distance_matching]>
+        
+      <div class="formInput actFi actFICountryCode">
+        <label for="idCountryCode">[t]Country[/t]</label>
+        <select id="idCountryCode" name="proximity_countryCode"/>
+          <option value="">---</option>
+          <html_options options=$proximityCountries selected=$proximity.countryCode>
+        </select>
+      </div>
+      
+      <div class="formInput actFi actFIZipcode">
+        <label for="idZipcode">[t]Zipcode[/t]</label>
+        <input type="text" id="idZipcode" name="proximity_zipCode" value="{$proximity.zipCode|escape}" />
+      </div>
+      
+      <div class="formInput actFi actFIPrefDist">
+        <label for="idPrefDist">[t]Preferred distance [km][/t]</label>
+        <select id="idPrefDist" name="proximity_preferredDistance">
+          <option value="0">---</option>
+          <html_options options=$distOpts selected=$proximity.preferredDistance>
+        </select>
+      </div>
+      
+      <div class="formInput actFi actFIMaxDist">
+        <label for="idMaxDist">[t]Maximum distance [km][/t]</label>
+        <select id="idMaxDist" name="proximity_maxDistance">
+          <option value="">---</option>
+          <html_options options=$distOpts selected=$proximity.maxDistance>
+        </select>
+      </div>
+    
+    </if>
+    {* DISTANCE FIELD END *}
+				
+		
+		{* LOCATION FIELD BEGIN *}
+    <div class="formInput actFi actFIlocation">
+      <label>[t]Location[/t]</label>
+      <input id="actQueryLocation" type="text" name="main_location" value="{$locationValue|escape}" />
+    </div>		
+    {* LOCATION FIELD END *}
+		
+		{* MATCHCRITERIA FIELDS BEGIN *}
+		<foreach from=$critList item=crit>
+			<div class="formInput actFi actFiSelect">
+				<label>{$crit.name}</label>
+				<if $crit.sm == "M">
+					{* multiselect *}					
+					<select id="multisel_mc_{$crit.field}" name="matchcriteria_{$crit.field}[]" multiple="multiple" size="5">
+						<html_options options=$crit.options selected=$crit.curValues>
+					</select>
+				<else>
+					{* single select *}
+					<select name="matchcriteria_{$crit.field}" id="matchcriteria_{$crit.field}">
+						<option value="NULL">---</option>
+						<html_options options=$crit.options selected=$crit.curValue>
+					</select>
+				</if>
+			</div>
+		</foreach>
+		{* MATCHCRITERIA FIELDS END *}
+
+		
+		<div class="buttonContainer"><input type="submit" name="bApplSubmit" value="[tb]Search[/tb]" class="button"></div>
+		<input type="hidden" name="command" value="submitrequest">
+		<input type="hidden" name="origin" value="module">
+	</form>
+</div>
+<script type="text/javascript" defer="true">
+var kwCustModAskURL='{$handler}/command/kwautocomplete/arg/';
+var iSearch = -1; 
+var ac = null; // autocomplete object
+
+//{literal}
+
+
+// define ready function
+$(document).ready(function() {
+  // setup autocomplete for keyword
+  if ($('#actQueryKeywordsCustMod').length) {
+    $('#actQueryKeywordsCustMod').autocomplete({ 
+      serviceUrl:kwCustModAskURL,
+      minChars:3, 
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:200
+      //deferRequestBy: 0, //miliseconds
+      // callback function:
+      //onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+    });
+  }
+  
+  var reqScripts = "[uts:ext_javascripts]";
+  if(reqScripts.indexOf('JQueryMultiSelect') > -1)
+  {
+    // setup match criteria multiselects
+    //{/literal}
+    <foreach from=$critList item=crit>
+    <if $crit.sm == "M">
+        var critf='{$crit.field}';
+        //{literal}
+        if ($('#multisel_mc_'+critf).length)
+        {         
+          $('#multisel_mc_'+critf).multiSelect({
+              selectAllText: '[th]Select all[/th]',
+              noneSelected: '[th]Select criteria...[/th]',
+              oneOrMoreSelected: '[th]Select criteria (% selected)...[/th]'
+          });
+        }
+        //{/literal}
+    </if>
+    </foreach>
+    //{literal}
+
+	
+    
+    // setup jquery multiselect for keyword options
+    if ($('#multisel_kw_options_cust_mod').length)
+    { 
+      $('#multisel_kw_options_cust_mod').multiSelect({
+            selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select fields...[/th]',
+            oneOrMoreSelected: '[th]Select fields (% selected)...[/th]'
+      });
+	  }
+  }	
+});
+//{/literal}
+</script>
+<!--uts:end inner-->
+</body>
+</html>

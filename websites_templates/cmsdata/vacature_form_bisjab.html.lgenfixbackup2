@@ -1,0 +1,205 @@
+<html>
+<head>
+<title>REACTIEFORMULIER BISJAB</title>
+<link rel="stylesheet" href="http://www.yourit.nl/otysma/_css/style2.css" type="text/css">
+<!-- FORM SENDER CHANGE CODES AND HIDDEN FIELDS FOR EACH CUSTOMER -->
+</head>
+<style>
+body{
+margin:10px;
+}
+</style>
+<body>
+
+<!--START_9-->
+<!--START-->
+<table class="maintable" width="100%" cellpadding="0" cellspacing="0" border="0">
+
+<form action="http://213.206.122.28/mailer/mailer_fl2.php?command=mail&code=otys_install" method="post" enctype="multipart/form-data">
+<input type="hidden" name="to_email" value="info@domain.nl">
+<input type="hidden" name="to_naam" value="[klantnaam]">
+<input type="hidden" name="email_onderwerp" value="">
+<input type="hidden" name="header_consultant" value="Aanvraag">
+<input type="hidden" name="footer_consultant" value=" ">
+<input type="hidden" name="header_customer" value="<p>Geachte heer/mevrouw,</p><p>We hebben uw aanvraag ontvangen, waarvoor onze dank.<br>Wij zullen zo spoedig mogelijke contact met u opnemen.</p><p>&nbsp;</p>">
+<input type="hidden" name="footer_customer" value="Met vriendelijke groet,<br><br>[klantnaam]">
+<input type="hidden" name="notify_subject_consultant" value="Aanvraag vanaf de website">
+<input type="hidden" name="notify_subject_customer" value="Uw aanvraag bij [klantnaam]">
+<input type="hidden" name="code" value="otys_install">
+
+<tr> 
+<td class="formHeaderContainer">
+
+<table cellspacing="0" cellpadding="0" border="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[titel]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<!--START_1-->
+<tr> 
+<td class="introContainer">
+
+<table cellspacing="0" cellpadding="0" border="0" class="introTbl">
+<tr>
+<td class="intro">[introfoto][introtekst]<!--INTROLINKS--></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_1-->
+
+<!--COL1-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table cellspacing="0" cellpadding="0" border="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[kop]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="tekstblokje">{foto}[body]<!--LINKS--></td>
+</tr>
+<!--ENDCOL1-->
+
+<tr> <!-- these fields are free, except Email -->
+<td class="vacFormContainer">
+
+<table cellspacing="0" cellpadding="0" border="0" class="vacFormTbl">
+<tr>
+<td valign="top" class="vacFormLeftContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="vacFormLeftTbl">
+<tr> 
+<td class="HQuestion">Naam</td>
+<td class="fieldContainer"><input type="text" name="Naam"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Functie</td>
+<td class="fieldContainer"><input type="text" name="Functie"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Organisatie</td>
+<td class="fieldContainer"><input type="text" name="Organisatie"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Branche</td>
+<td class="fieldContainer"><input type="text" name="Branche"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Postadres</td>
+<td class="fieldContainer"><input type="text" name="Postadres"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Postcode</td>
+<td class="fieldContainer"><input type="text" name="Postcode"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Plaats</td>
+<td class="fieldContainer"><input type="text" name="Plaats"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Telefoon</td>
+<td class="fieldContainer"><input type="text" name="Telefoon"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">Mobiel</td>
+<td class="fieldContainer"><input type="text" name="Mobiel"></td>
+</tr>
+
+<tr> 
+<td class="HQuestion">E-Mail</td>
+<!-- obligatory -->
+<td class="fieldContainer"><input type="text" name="Email"></td>
+</tr>
+</table>
+
+</td>
+<td valign="top" class="vacFormRightContainer">
+
+<table cellspacing="0" cellpadding="0" border="0" class="vacFormRightTbl">
+<tr>
+<td class="VQuestion">Functienaam</td>
+</tr>
+<tr>
+<td class="fieldContainer"><input type="text" name="Functienaam"></td>
+</tr>
+<tr>
+<td class="VQuestion">Functieomschrijving</td>
+</tr>
+<tr>
+<td class="fieldContainer"><textarea type="text" name="Functieomschrijving" rows="8" cols="50"></textarea></td>
+</tr>
+<tr>
+<td class="VQuestion">Functie eisen</td>
+</tr>
+<tr>
+<td class="fieldContainer"><textarea type="text" name="Functie eisen" rows="8" cols="50"></textarea></td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+<!--COL2-->
+<table cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td class="formSubHeaderContainer">
+
+<table cellspacing="0" cellpadding="0" border="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[kop]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="tekstblokje">{foto}[body]<!--LINKS--></td>
+</tr>
+</table>
+<!--ENDCOL2-->
+
+</td>
+</tr>
+
+<tr>
+<td>Attachment:</td>
+</tr>
+<tr>
+<td><input type="hidden" name="MAX_FILE_SIZE" value="2097152" /><input type="file" name="attachment" size="50" /></td>
+</tr>
+
+<tr>
+<td align="left" class="formButton"><input class="button" type="submit" name="Submit" value="Versturen"></td>
+</tr>
+
+</form>
+</table>
+<!--END-->
+<!--END_9-->
+</body>
+</html>

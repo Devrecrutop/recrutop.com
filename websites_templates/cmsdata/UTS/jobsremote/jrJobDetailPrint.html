@@ -1,0 +1,400 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="/_css_global/formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body onload="this.focus(); window.print(); window.close();">
+<!--uts:begin inner-->
+<!--START_9-->
+
+<!-- /UTS/jobsremote/jrJobDetailPrint.html -->
+{literal}
+<script language="Javascript1.2">
+<!--
+function printWindow(){
+browserVersion = parseInt(navigator.appVersion)
+if (browserVersion >= 4) window.print()
+}
+
+// -->
+</script>
+{/literal}
+<link href="/_css_global/formstyles.css" rel="stylesheet" type="text/css">
+<table class="printTbl" cellpadding="0" cellspacing="0" border="0" style="width: 100%">
+
+{if $logo}
+<!--START_Logo-->
+<tr>
+<td class="printLogo" align="{$logo.LogoAlignment}"><img src="/_images_upload/{$logo.Logo}"></td>
+</tr>
+<!--END_Logo-->
+{/if}
+<tr>
+<td class="printHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printHeaderTbl">
+<tr>
+<td class="printHeader">{$job.functie_o} {if $tSettings.ReferenceNr == "1"}<!--START_ReferenceNr-->&nbsp;({$job.referenceNr})<!--END_ReferenceNr-->{/if}</td>
+{if $photo}
+<!--START_Photo-->
+<td class="printPhoto" align="right"><img src="/_images_upload/{$photo}" border="0" alt=""></td>
+<!--END_Photo-->
+{/if}
+</tr>
+</table>
+
+
+</td>
+</tr>
+
+
+
+<!--START_PageTitle-->
+<tr>
+<td class="printHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printHeaderTbl">
+<tr>
+<td class="printHeader">[t]PageTitle[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+<!--START_Block1-->
+<tr>
+<td class="printTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printTextTbl">
+<!--START_Title1-->
+<tr>
+<td class="printSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printSubHeaderTbl">
+<tr>
+<td class="printSubHeader">[t]Title1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title1-->
+
+<!--START_Text1-->
+<tr>
+<td class="printTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printTextTbl">
+<tr>
+<td class="printText">[t]Text1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text1-->
+</table>
+</td>
+</tr>
+<!--END_Block1-->
+
+
+
+<!--START_VACANCY_TBL-->
+
+
+{if $tSettings.ShowJobCategory == "1"}
+<!--START_ShowJobCategory-->
+<tr>
+<td class="printSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printSubHeaderTbl">
+<tr>
+<td class="printSubHeader">[t]SingleWord5[/t]<!--SingleWordLink5--></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+
+<tr>
+<td class="printTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printTextTbl">
+<tr>
+<td class="printText">{$jobCategory}</td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+<!--END_ShowJobCategory-->
+{/if}
+
+{if $tSettings.Location == "1" && $job.locatie}
+<!--START_Location-->
+<!--START_locatie-->
+<tr>
+<td class="printSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printSubHeaderTbl">
+<tr>
+<td class="printSubHeader">[t]SingleWord1[/t]<!--SingleWordLink1--></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+
+<tr>
+<td class="printTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printTextTbl">
+<tr>
+<td class="printText">{$job.locatie}</td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+<!--END_locatie-->
+<!--END_Location-->
+{/if}
+{if $tSettings.Region == "1" && $job.regio}
+<!--START_Region-->
+<tr>
+<td class="printSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printSubHeaderTbl">
+<tr>
+<td class="printSubHeader">[t]SingleWord3[/t]<!--SingleWordLink3--></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+
+<tr>
+<td class="printTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printTextTbl2">
+<tr>
+<td class="printText">{$job.regio}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Region-->
+{/if}
+
+{if $tSettings.Company == "1" && $show_employer}
+<!--START_Company-->
+<tr>
+<td class="printSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printSubHeaderTbl">
+<tr>
+<td class="printSubHeader">[t]SingleWord4[/t]<!--SingleWordLink4--></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+
+<tr>
+<td class="printTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printTextTbl2">
+<tr>
+<td class="printText">{$job.werkgeverid}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Company-->
+{/if}
+{foreach from=$textFields item=tf}
+<!--START_1-->
+<tr>
+<td class="printSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printSubHeaderTbl">
+<tr>
+<td class="printSubHeader">{$tf.title}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="printTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printTextTbl">
+<tr>
+<td class="printText">{$tf.text}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_1-->
+{/foreach}
+
+{if $cpEnabled}
+<!--START_ContactSection-->
+<tr>
+<td class="printSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printSubHeaderTbl">
+<tr>
+<td class="printSubHeader">[t]SingleWord2[/t]<!--SingleWordLink2--></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+
+<tr>
+<td class="printTextContainer">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="printTextTbl">
+
+{if $tSettings.ContactName == "1"}
+<!--START_ContactName-->
+<tr>
+<td class="printText">{$cp.fullName}</td>
+</tr>
+<!--END_ContactName-->
+{/if}
+
+{if $cp.phone_work && $tSettings.ContactPhoneNumber == "1"}
+<!--START_ContactPhoneNumber-->
+<tr>
+<td><font face="Wingdings" size="3">( </font><span class="printText">{$cp.phone_work}</span>&nbsp;</td>
+</tr>
+<!--END_ContactPhoneNumber-->
+{/if}
+
+{if $cp.email && $tSettings.ContactEmail == "1"}
+<!--START_ContactEmail-->
+<tr>
+<td class="printLink"><font face="Wingdings" size="3">* </font><a href="mailto:{$cp.email}">{$cp.email}</a>&nbsp;</td>
+</tr>
+<!--END_ContactEmail-->
+{/if}
+</table>
+
+</td>
+</tr>
+<!--END_ContactSection-->
+{/if}
+
+{if $show_employer && $tSettings.Company == "1"}
+<tr>
+<td class="printSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printSubHeaderTbl">
+<tr>
+<td class="printSubHeader">[t]Show employer[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="printTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printTextTbl">
+<tr>
+<td class="printText">{if $job.werkgeverid}{$job.werkgeverid}{else}[tg]Anonymous[/tg]{/if}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+{/if}
+<!--END_VACANCY_TBL-->
+{if $use_public_publish_date}
+<!--START_USE_PUBLISH_DATE-->
+{if $job.public_publish_date}
+<!--START_PUBLISH_DATE_START-->
+<tr>
+<td class="printSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printSubHeaderTbl">
+<tr>
+<td class="printSubHeader">[t]Public publish date[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="printTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printTextTbl">
+<tr>
+<td class="printText">{$job.public_publish_date|date_format:"%d.%m.%Y"}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--START_PUBLISH_DATE_END-->
+{/if}
+{if $job.public_end_date}
+<!--END_PUBLISH_DATE_START-->
+<tr>
+<td class="printSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printSubHeaderTbl">
+<tr>
+<td class="printSubHeader">[t]Publish end date[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="printTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="printTextTbl">
+<tr>
+<td class="printText">{$job.public_end_date|date_format:"%d.%m.%Y"}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PUBLISH_DATE_END-->
+{/if}
+<!--END_USE_PUBLISH_DATE-->
+{/if}
+<!--END_VACANCY_TBL-->
+
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+
+</table>
+<!--END_9-->
+<!--uts:end inner-->
+</body>
+</html>

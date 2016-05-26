@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>whatever</title>
+</head>
+<body>
+<!--uts:begin inner-->
+ <!-- /UTS/advsearch/candidateLiteDetail.html -->
+<h1 class="title actTitle">{$can._kbuid|escape}</h1>
+
+<if $showBackToResults>
+<div class="menuContainer aplMc">
+<div class="menuLink aplMlink MenuLinkFirstChild aplMlinkFc MenuLinkLastChild aplMlinkLc"><a href="{$handler}/command/dispresults">[t]Back to results[/t]</a></div>
+<div class="cleaner menuLinkCleaner aplLinkCleaner"></div>
+</div>
+</if>
+
+<div style="background-color:#FFF0F0; padding:15px; margin-bottom:15px;">
+[t]You have no permissions to see candidate's personal data, therefore you can see only this limited content. If you already have a customer's account on this website, please login. If you don't and you are interested in this candidate, please sign up for customer's account.[/t]  <br>
+<div style="margin-top:10px;">
+<a href="{$indexPhpRoot}page/CustomersRemote/command/clientlogin/bb/1/option/start/">[t]Login[/t]</a> |
+<a href="{$indexPhpRoot}page/customers_ext/command/direct_enroll/bb/1">[t]Sign up[/t]</a>
+</div>
+</div>
+
+<if [uts:show_description] && $can.chapo>
+<div class="vacDescr">{$can.chapo}</div>
+</if>
+
+<if [uts:show_location] && $can.woonplaats>
+<div class="vacDescr">[t]Location[/t]: {$can.woonplaats|escape}</div>
+</if>
+
+<if $can.foto>
+<div class="vacImg"><img src="{$handler}/command/displayphoto/cid/{$cid}/key/{$hsuserid}" alt="[th]Candidate's photo[/th]"></div>
+</if>
+
+
+{* start matchcriteria *}
+<if [uts:show_matchcriteria]>
+<foreach from=$critList item=crit>
+<if !empty($crit._crvlist)>
+<div class="crit">
+<p>{$crit.name|escape}</p>
+<ul>
+<foreach from=$crit._crvlist item=crval>
+<li>{$crval|escape}</li>
+</foreach>
+</ul>
+</div>
+</if>
+</foreach>
+</if>
+{* end matchcriteria *}
+<!--uts:end inner-->
+</body>
+</html>

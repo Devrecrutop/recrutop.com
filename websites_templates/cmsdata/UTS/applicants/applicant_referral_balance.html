@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+
+</head>
+<body>
+<style type="text/css" media="screen">
+{literal}
+.creditItem{width:150px;float:left;}
+.creditItemVal{width:150px;float:left;text-align:right;}
+.creditLineSeparate{border-bottom:1px solid gray;}
+{/literal}
+</style>
+
+<!--uts:begin inner-->
+<!--system part-->
+
+<script type="text/javascript">
+// {literal}
+
+// {/literal}
+</script>
+
+
+
+<!--display part-->
+<div class="outer custOuter custFinOuter custFinDetOuter">
+<!-- UTS/applicants/applicant_referral_balance.html -->
+	<h1 class="title">[t]Referral credit balance[/t]</h1>
+	
+	{$menu}
+   		
+	<h2 class="subHeader">[t]Details[/t]</h2>
+  <div class="text">[t]Below you will find an overview of all your transactions and your current referral credit balance.[/t]</div>
+    	
+  <div class="itemContainer custIc custFinIc custFinSub1Ic">
+    <div class="itemWord creditItem first">[t]Date[/t]</div>
+    <div class="itemWord creditItem">[t]Transaction[/t]</div>
+    <div class="itemWord creditItemVal">[t]Credits[/t]</div>
+  	<div class="cleaner custCleaner custFinCleaner"></div>
+  </div>
+      
+      
+	{foreach from=$credit_history item=r}
+  	<div class="itemContainer custIc custFinIc custFinBoughtIc">
+  		<div class="itemWord creditItem first">{$r.create_datetime|date_format:"%d-%m-%Y"}</div>
+      
+      {if $r.action_name == "candidate_subscription"} {*candidate subscription*}
+  		<div class="itemWord creditItem">[t]Welcome bonus[/t]</div>
+      {elseif $r.action_name == "referral_of_candidate"} {*referring a candidate*}
+      <div class="itemWord creditItem">[t]Supplied candidate {$r.candidate_name} for job {$r.vacancy_name}[/t]</div>
+      {elseif $r.action_name == "referral_of_job"}   {*referring a job*}
+      <div class="itemWord creditItem">[t]Supplied job {$r.vacancy_name}[/t]</div>
+      {elseif $r.action_name == "job_status_change"}   {*job status change*}
+      <div class="itemWord creditItem">[t]Changed status {$r.vacancy_name} to {$r.status_name}[/t]</div>
+      {elseif $r.action_name == "join_status_change"}  {*candiate join status change*}
+      <div class="itemWord creditItem">[t]Changed status {$r.candidate_name} to {$r.status_name}[/t]</div>
+      {elseif $r.action_name == "manual_credits"}  {*manual change by cp*}
+      <div class="itemWord creditItem">[t]Manual change[/t]{if $r.consultant_message}: {$r.consultant_message}{/if}</div>
+      {elseif $r.action_name == "cashed_in_credits"}  {*cashed in credits*}
+      <div class="itemWord creditItem">[t]Cashed in credits[/t]:
+      {foreach from=$r.products_ordered item=po}
+       <span>{$po.product_name} ({$po.product_cnt} [t]x[/t] {$po.product_credits} [t]credits[/t]), </span>
+      {/foreach}
+      
+      </div>
+      {else}
+      &nbsp;
+      {/if}
+      
+  		<div class="itemWord creditItemVal">{$r.credits}</div>
+  	  <div class="cleaner custCleaner custFinCleaner"></div>
+  	</div>
+  {foreachelse}
+  	<div class="itemContainer custIc custFinIc custFinBoughtIc">
+  		<div class="itemWord creditItem first">&nbsp;</div>
+  		<div class="itemWord creditItem">[t]No transactions[/t]</div>
+  		<div class="itemWord creditItemVal">&nbsp;</div>
+  	<div class="cleaner custCleaner custFinCleaner"></div>
+  	</div>
+
+	{/foreach}
+
+  <div class="itemContainer custIc custFinIc custFinTotalIc">
+    <div class="itemWord creditItem first">&nbsp;</div>
+    <div class="itemWord creditItem"><strong>[t]Current balance[/t]</strong></div>
+    <div class="itemWord creditItemVal"><strong>{$credit_total}</strong></div>
+  	<div class="cleaner custCleaner custFinCleaner"></div>
+  </div>
+
+    
+</div>
+<!--uts:end inner-->
+</body>
+</html>

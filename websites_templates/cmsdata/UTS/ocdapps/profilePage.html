@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplProfOuter">
+<!-- /UTS/ocdapps/profilePage.html -->
+<h1 class="title aplTitle aplProfTitle">[t]My profile[/t]</h1>
+
+{* start menu *}
+<!-- ozan test: [uts:disable_cv_search_query] -->
+<div class="menuContainer aplMc">
+<div class="menuLink aplMlink MenuLinkFirstChild aplMlinkFc"><a href="{$handler}/command/profile">[t]Home[/t]</a></div>
+<div class="menuLink aplMlink"><a href="{$handler}/command/logindata">[t]Login data[/t]</a></div>
+<if !$isCandidate>
+	{*<div class="menuLink aplMlink"><a href="{$handler}/command/createcandidate">[t]Create a candidate for this user[/t]</a></div>*}
+</if>
+<div class="menuLink aplMlink MenuLinkLastChild aplMlinkLc"><a href="{$handler}/command/logout/x/{$rnd}">[t]Logout[/t]</a></div>
+<div class="cleaner menuLinkCleaner aplLinkCleaner"></div>
+</div>
+{* end menu *}
+
+<div class="intro">
+[t]Welcome back to your main profile. This page is your personal starting point and it is displayed every time you log in into this website.[/t]
+</div>
+
+<hr><br>
+{* start candidate section *}
+<div class="text aplText aplProfText ocdCandText">
+	<if $isCandidate>
+		<if $multipleCandidates>
+		<p>[t]You are registered as multiple applicants on this website. Please select an account to use:[/t]</p>
+		<form name="selectCandidateForm" method="post" action="{$handler}/command/selectcandidate">
+		    <select name="selectCandidate">
+		        <html_options options=$candidateList selected=$isCandidate>
+		    </select>
+		    <input type="submit" value="[tb]Select[/tb]">
+		</form>
+		</p>
+		<else>
+		<p>[t]You are registered as an applicant on this website.[/t]</p>
+		</if>
+	<a href="{$indexPhpRoot}page/applicants/bb/1/command/myprofile">[t]Go to your applicant's profile page[/t]</a>
+	<else>
+	<p>[t]You don't have an applicant's account yet. You can fill more information about you to get it in order to get faster access to all interesting jobs.[/t]</p>
+	<a href="{$indexPhpRoot}page/applicants/bb/1/command/startsignup">[t]Sign up as an applicant now[/t]</a>
+	</if>
+<hr>
+</div>
+{* end candidate section *}
+
+{* start contact person section *}
+<if $isContactperson || [uts:enable_customer_signup] >
+<div class="text aplText aplProfText ocdContText">
+	<if $isContactperson>
+		<if $multipleContactPersons>
+		<p>[t]You are registered as multiple contact persons on this website. Please select an account to use:[/t]</p>
+		<form class="ocdMultiCp" name="selectCPForm" method="post" action="{$handler}/command/selectcp">
+			<div class="formInput">
+			    <select name="selectCP">
+			        <html_options options=$contactpersonList selected=$isContactperson>
+			    </select>
+			</div>
+		    <input class="button" type="submit" value="[tb]Select[/tb]">
+		</form>
+		</p>
+		<else>
+		<p>[t]You are registered as a customer on this website.[/t]</p>
+		</if>
+	<p><a href="{$indexPhpRoot}page/CustomersRemote/bb/1/command/clientlogin/bb/1/option/start/level/customer">[t]Go to your customer's portal[/t]</a></p>
+	<if $isSupplier>
+		<p><a href="{$indexPhpRoot}page/CustomersRemote/bb/1/command/clientlogin/bb/1/option/start/level/supplier">[t]Go to your vendor management portal[/t]</a></p>
+		</if>
+		<else>
+		<p>[t]You don't have a customer's account yet. You can fill more information about you to get it.[/t]</p>
+		<a href="{$indexPhpRoot}page/customers_ext/command/direct_enroll/bb/1">[t]Sign up as a customer now[/t]</a>
+	</if>
+<hr>
+</div>
+</if>
+{* end contact person section *}
+
+<if $js_agents == 1>
+{* start old webuser section *}
+<div class="text aplText aplProfText ocdWebuserText">
+
+<if $isWebuser>
+    <if $multipleWebusers>
+        <p>[t]You are registered as multiple search agent users on this website. Please select an account to use:[/t]</p>
+        <form name="selectWUForm" method="post" action="{$handler}/command/selectwu">
+            <select name="selectWU">
+                <html_options options=$webuserList selected=$isWebuser>
+            </select>
+            <input type="submit" value="[tb]Select[/tb]">
+        </form>
+        </p>
+    <else>
+        <p>[t]You are registered as a search agent user on this website.[/t]</p>
+    </if>
+    <if $foActonomyEnabled == 1>
+        <p><a href="{$indexPhpRoot}page/advsearchvacs/bb/1/command/sqlist">[t]Go to your search agents list[/t]</a></p>
+    <else>
+        <p><a href="{$indexPhpRoot}page/agents/bb/1/command/myprofile/WUpage/3">[t]Go to your search agents list[/t]</a></p>
+    </if>
+    
+<else>
+    <p>[t]You are not registered as a search agent user.[/t]</p>
+    <a href="{$indexPhpRoot}page/agents/bb/1/command/enroll">[t]Activate your search agent account[/t]</a>
+</if>
+<hr>
+</div>
+{* end old webuser section *}
+</if>
+
+{* start stored query section *}
+<if $foActonomyEnabled && ![uts:disable_job_search_query] >
+<div class="text aplText aplProfText ocdJobQuery">
+<p>    
+{t 1=$sqCntJobs count=$sqCntJobs text0="You have no search queries for jobs saved" text1="You have one saved search query for jobs" text2="You have two saved search queries for jobs"}You have %1 saved search queries for jobs{/t}<br><br>
+<a href="{$indexPhpRoot}page/advsearchvacs/bb/1/command/sqlist">[t]Go to your search query list (jobs)[/t]</a>
+</p>
+<hr>
+</div>
+</if>
+
+<if $foActonomyCvSearchEnabled && ![uts:disable_cv_search_query] > 
+<div class="text aplText aplProfText ocdCvQuery">
+<p>
+{t 1=$sqCntCVs count=$sqCntCVs text0="You have no CV search queries saved" text1="You have one saved CV search query" text2="You have two saved CV search queries"}You have %1 saved CV search queries{/t}<br><br>
+<a href="{$indexPhpRoot}page/advsearchcvs/bb/1/command/sqlist">[t]Go to your saved CV search query list[/t]</a>
+</p>
+<hr>
+</div>
+</if>
+{* end stored query section *}
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

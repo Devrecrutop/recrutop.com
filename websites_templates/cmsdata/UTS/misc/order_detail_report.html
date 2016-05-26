@@ -1,0 +1,212 @@
+<!--uts:begin inner-->
+<table>
+	<tr>
+		<td>[t]Address[/t]</td>
+		<td>[t]Type business[/t]</td>
+		<td>[t]Account Managers[/t]</td>
+		<td>[t]Customer name[/t]</td>
+		<td>[t]Contact[/t]</td>
+		<td>[t]E-mail contact[/t]</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>{$trajectory.wg_bezoekadres} {$trajectory.wg_plaats}</td>
+		<td>{if $trajectory.business_id == 2}[t]Existing Business[/t]{elseif $trajectory.business_id == 1}[t]New Business[/t]{/if}</td>
+		<td>{$trajectory.account_managers}</td>
+		<td>{$trajectory.werkgever}</td>
+		<td>{$trajectory.contact}</td>
+		<td>{$trajectory.wg_cp_email}</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>[t]Code[/t]</td>
+		<td>[t]Product[/t]</td>
+		<td>[t]Unit[/t]</td>
+		<td>[t]Amount[/t]</td>
+		<td>[t]Subtot.[/t]</td>
+		<td>[t]VAT amount[/t]</td>
+		<td>[t]Price (+VAT)[/t]</td>
+		<td>[t]Curr.[/t]</td>
+		<td>[t]Period[/t]</td>
+	</tr>
+	<tr>
+		<td colspan="9">[th]Products[/th]</td>
+	</tr>
+	{foreach from=$products item=product}
+	<tr>
+		<td>{$product.product_code}</td>
+		<td>{$product.invoice_line}{if $product.product_exclude}<span style="color: #ff0000;"> ([th]excluded[/th])</span>{/if}</td>
+		<td>{$product.price format="%.2f"}</td>
+		<td>{$product.amount format="%.2f"}</td>
+		<td>{$product.price*$product.amount format="%.2f"}</td>
+		<td>{$vat*$product.price*$product.amount/100 format="%.2f"}</td>
+		<td>{$product.price*$product.amount+$vat*$product.price*$product.amount/100 format="%.2f"}</td>
+		<td>{$currency}</td>
+		<td>{$product.period}</td>
+	</tr>
+	{/foreach}
+	<tr>
+		<td>{if $discount}[t]Subtotal[/t]{else}[th]Total[/th]{/if}</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>{$total.once+$total.week+$total.month+$total.year format="%.2f"}</td>
+		<td>{$vat/100*$total.year+$vat/100*$total.once format="%.2f"}</td>
+		<td>{$total.once+$total.week+$total.month+$total.year+$vat/100*$total.year+$vat/100*$total.once format="%.2f"}</td>
+		<td>{$currency}</td>
+		<td>&nbsp;</td>
+	</tr>
+	{if $discount}
+	<tr>
+		<td>[th]Discount[/th]</td>
+		<td>{$discount.discount_line} {$discount.discount_rate}%</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>- {math equation="x * y" x=$total.once+$total.week+$total.month+$total.year y=$discount.discount_rate/100 format="%.2f"}</td>
+		<td>- {math equation="x * y" x=$vat/100*$total.year+$vat/100*$total.once y=$discount.discount_rate/100 format="%.2f"}</td>
+		<td>- {math equation="x * y" x=$total.once+$total.week+$total.month+$total.year+$vat/100*$total.year+$vat/100*$total.once y=$discount.discount_rate/100 format="%.2f"}</td>
+		<td>{$currency}</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>[th]Total[/th]</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>{math equation="x - (y*z)" x=$total.once+$total.week+$total.month+$total.year y=$total.once+$total.week+$total.month+$total.year z=$discount.discount_rate/100 format="%.2f"}</td>
+		<td>{math equation="x - (y*z)" x=$vat/100*$total.year+$vat/100*$total.once y=$vat/100*$total.year+$vat/100*$total.once z=$discount.discount_rate/100 format="%.2f"}</td>
+		<td>{math equation="x - (y*z)" x=$total.once+$total.week+$total.month+$total.year+$vat/100*$total.year+$vat/100*$total.once y=$total.once+$total.week+$total.month+$total.year+$vat/100*$total.year+$vat/100*$total.once z=$discount.discount_rate/100 format="%.2f"}</td>
+		<td>{$currency}</td>
+		<td>&nbsp;</td>
+	</tr>
+	{/if}
+	<tr>
+		<td colspan="9">[th]Payment terms and conditions[/th]</td>
+	</tr>
+	{if $active_term.advance_invoice_percentage != '0'}
+	<tr>
+		<td colspan="9">[th]Divided Invoices[/th]</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>[th]Advance Invoice[/th]</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>{math equation="(z-(x * y))*a" x=$total.year+$total.once+$total.week y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week a=$active_term.advance_invoice_percentage/100 format="%.2f"}</td>
+		<td>{math equation="((z-(x * y))*a)*b" x=$total.year+$total.once+$total.week y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week a=$active_term.advance_invoice_percentage/100 b=$vat/100 format="%.2f"}</td>
+		<td>{math equation="((z-(x * y))*a)+(((z-(x * y))*a)*b)" x=$total.year+$total.once+$total.week y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week a=$active_term.advance_invoice_percentage/100 b=$vat/100 format="%.2f"}</td>
+		<td>&nbsp;</td>
+		<td>{$active_term.advance_invoice_term_days} [th]Days[/th]</td>
+	</tr>
+	{/if}
+	{if $active_term.final_invoice_percentage != '0'}
+	<tr>
+		<td>&nbsp;</td>
+		<td>[th]Final Invoice[/th]</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>{math equation="(z-(x * y))*a" x=$total.year+$total.once+$total.week y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week a=$active_term.final_invoice_percentage/100 format="%.2f"}</td>
+		<td>{math equation="((z-(x * y))*a)*b" x=$total.year+$total.once+$total.week y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week a=$active_term.final_invoice_percentage/100 b=$vat/100 format="%.2f"}</td>
+		<td>{math equation="((z-(x * y))*a)+(((z-(x * y))*a)*b)" x=$total.year+$total.once+$total.week y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week a=$active_term.final_invoice_percentage/100 b=$vat/100 format="%.2f"}</td>
+		<td>&nbsp;</td>
+		<td>{$active_term.final_invoice_term_days} [th]Days[/th]</td>
+	</tr>
+	{/if}
+	{if $active_term.type == 'monthly'}
+	<tr>
+		<td colspan="9">[th]Invoices[/th]</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>[th]Monthly payment[/th], {$active_term.percentage_over_total}% [th]Added[/th]</td>
+		<td>&nbsp;</td>
+		<td>12</td>
+		<td>{math equation="(((x-(x*y))/12)*u/100)" u=$active_term.percentage_over_total+100 x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}</td>
+		<td>{math equation="((((x-(x*y))/12)*a)*u/100)" u=$active_term.percentage_over_total+100  x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{math equation="((((x-(x*y))/12)*u/100)+((((x-(x*y))/12)*a)*u/100))" u=$active_term.percentage_over_total+100  x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{$currency}</td>
+		<td>{if $active_term.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+	</tr>
+	<tr>
+		<td colspan="9">[th]After First Year[/th]</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>[th]Monthly payment[/th], {$active_term.percentage_over_total}% [th]Added[/th]</td>
+		<td>&nbsp;</td>
+		<td>12</td>
+		<td>{math equation="(((x-(x*y))/12)*u/100)" u=$active_term.percentage_over_total+100 x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}</td>
+		<td>{math equation="((((x-(x*y))/12)*a)*u/100)" u=$active_term.percentage_over_total+100  x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{math equation="((((x-(x*y))/12)*u/100)+((((x-(x*y))/12)*a)*u/100))" u=$active_term.percentage_over_total+100  x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{$currency}</td>
+		<td>{if $active_term.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+	</tr>
+	{/if}
+	{if $active_term.type == 'quarterly'}
+	<tr>
+		<td colspan="9">[th]Invoices[/th]</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>[th]Quarterly payment[/th], {$active_term.percentage_over_total}% [th]Added[/th]</td>
+		<td>&nbsp;</td>
+		<td>4</td>
+		<td>{math equation="(((x-(x*y))/4)*u/100)" u=$active_term.percentage_over_total+100 x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}</td>
+		<td>{math equation="((((x-(x*y))/4)*a)*u/100)" u=$active_term.percentage_over_total+100  x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{math equation="((((x-(x*y))/4)*u/100)+((((x-(x*y))/4)*a)*u/100))" u=$active_term.percentage_over_total+100  x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{$currency}</td>
+		<td>{if $active_term.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+	</tr>
+	<tr>
+		<td colspan="9">[th]After First Year[/th]</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>[th]Quarterly payment[/th], {$active_term.percentage_over_total}% [th]Added[/th]</td>
+		<td>&nbsp;</td>
+		<td>4</td>
+		<td>{math equation="(((x-(x*y))/4)*u/100)" u=$active_term.percentage_over_total+100 x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}</td>
+		<td>{math equation="((((x-(x*y))/4)*a)*u/100)" u=$active_term.percentage_over_total+100  x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{math equation="((((x-(x*y))/4)*u/100)+((((x-(x*y))/4)*a)*u/100))" u=$active_term.percentage_over_total+100  x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{$currency}</td>
+		<td>{if $active_term.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+	</tr>
+	{/if}
+	{if $active_term.type == 'once'}
+	<tr>
+		<td colspan="9">[th]Invoices[/th]</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>{$active_term.name}</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>{math equation="(((x-(x*y))/1)*u/100)" u=$active_term.percentage_over_total+100 x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}</td>
+		<td>{math equation="((((x-(x*y))/1)*a)*u/100)" u=$active_term.percentage_over_total+100  x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{math equation="((((x-(x*y))/1)*u/100)+((((x-(x*y))/1)*a)*u/100))" u=$active_term.percentage_over_total+100  x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{$currency}</td>
+		<td>{$active_term.final_invoice_term_days} [th]Days[/th]</td>
+	</tr>
+	{if $total.year != '0'}
+	<tr>
+		<td colspan="9">[th]After First Year[/th]</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>[th]Yearly payment[/th]</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>{math equation="(((x)/1)*u/100)" u=$active_term.percentage_over_total+100 x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}</td>
+		<td>{math equation="((((x)/1)*a)*u/100)" u=$active_term.percentage_over_total+100  x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{math equation="((((x)/1)*u/100)+((x*a)*u/100))" u=$active_term.percentage_over_total+100  x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month a=$vat/100 format="%.2f"}</td>
+		<td>{$currency}</td>
+		<td>{$active_term.final_invoice_term_days} [th]Days[/th]</td>
+	</tr>
+	{/if}
+	{/if}
+</table>
+<!--uts:end inner-->

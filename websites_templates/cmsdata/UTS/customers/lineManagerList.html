@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>                
+</head>
+<body>
+<!--uts:begin inner-->
+
+{literal}
+<script type="text/javascript">
+<!--
+{/literal}
+{* JS VARIABLES BEGIN *}  
+
+var appHandler = '{$handler}';  
+
+{* JS VARIABLES END *}  
+{literal}
+
+/**
+ * 
+ */ 
+function chStatuses()
+{
+  if(checkChbx())
+  {
+    $('#frmChCh').submit();
+  }
+  else
+  {
+    alert('[th]You have to select at least one candidate![/th]');
+  }  
+}
+
+/**
+ * return true if there is at least one candidate checked
+ */ 
+function checkChbx()
+{
+  if($('input[name="lm_bs[]"]:checked').length > 0)
+  {
+    return true;
+  }
+  
+  return false;
+}
+
+/**
+ *
+ */ 
+function saveButtonEnable()
+{
+  $('#bttnChStatuses').attr('disabled', 'disabled');
+
+  var st0 = ($('select[name=status]').val() != '');
+  var st1 = ($('select[name=vb_procedures_status]').val() != '');
+  var st2 = ($('select[name=vb_procedures_status2]').val() != '');
+  var st3 = ($('select[name=vb_procedures_status3]').val() != '');
+  
+  if(st0 || st1 || st2 || st3)
+  {  
+    $('#bttnChStatuses').removeAttr('disabled');
+  }
+}
+
+// initialize document	
+$(document).ready(function () {
+  
+  saveButtonEnable();  
+           
+});  
+
+//-->
+</script>
+{/literal}
+<div class="outer custOuter custLinOuter">
+<!-- /UTS/customers/lineManagerList.html -->
+	<h1 class="title custTitle custLinTitle">[t]Updates[/t]</h1>
+	{$menu}
+	<div class="intro">
+		[t]Line managers portal with a list of candidates[/t]
+	</div>
+	  
+  {*FILTER FORM BEGIN*}
+<div class="tscFilterDiv">
+    <form action="{$handler}" id="frm_flt" name="frm_flt" method="post">
+    <input type="hidden" name="command" value="setfilter">  
+	
+    <div class="formInput">
+		<label>[t]Candidate[/t]</label>
+		<input type="text" name="flt[candidate]" value="{$flt.candidate|escape}">
+	</div>
+    <div class="formInput">
+		<label>[t]Vacancy[/t]</label>
+		<input type="text" name="flt[vacancy]" value="{$flt.vacancy|escape}">	
+	</div>
+	
+{if $stChangeAllowed}
+  	{if $eStatuses.cs}
+    <div class="formInput">
+		<label>[t]Status[/t]</label>
+		<select name="flt[status]">
+			<option value="">---</option>
+			{html_options options=$stValues.cs selected=$flt.status}
+		</select>
+	</div>
+  	{/if}
+    {if $eStatuses.ps1}
+    <div class="formInput">
+		<label>{$sts.name1}</label>
+		<select name="flt[vb_procedures_status]">
+			<option value="">---</option>
+			{html_options options=$stValues.ps1 selected=$flt.vb_procedures_status}
+		</select>
+  	</div>
+  	{/if}
+    {if $eStatuses.ps2}
+    <div class="formInput">
+		<label>{$sts.name2}</label>
+		<select name="flt[vb_procedures_status2]" >
+			<option value="">---</option>
+			{html_options options=$stValues.ps2 selected=$flt.vb_procedures_status2}
+		</select>  	  	
+	</div>
+  	{/if}
+    {if $eStatuses.ps3}
+    <div class="formInput">
+		<label>{$sts.name3}</label>
+		<select name="flt[vb_procedures_status3]" >
+			<option value="">---</option>
+			{html_options options=$stValues.ps3 selected=$flt.vb_procedures_status3}
+		</select>  	  	
+  	</div>
+  	{/if}  	
+{/if}    
+	<div class="buttonContainer">
+		<input class="button" type="submit" name="flt_bttn" value="[t]Filter[/t]">
+	</div>
+
+	</form>
+</div>
+{*FILTER FORM END*}	  		
+
+{if $lmBatchSttatuses && $stChangeAllowed}
+<!-- SET BATCH STATUSES SELECTS -->
+	
+<form name="frmChCh" id="frmChCh" action="/index.php/page/lmbsreacties/bb/1" method="post">
+	<input type="hidden" name="command" value="setstatuses">
+	<input type="hidden" name="returnapp" value="linemanager">
+	<input type="hidden" name="returncmd" value="appstart">
+	<input type="hidden" name="returnparams" value="">
+
+<div class="LMCandDetailStatus">
+	<h2 class="subHeader">[t]Change Status[/t]</h2>
+  	{if $eStatuses.cs}
+  	<div class="formInput fiStatus">
+		<label>[t]Status[/t]</label>
+		<select name="status" id="stSel0" onChange="saveButtonEnable()">
+	  		<option value="">---</option>
+	  		{html_options options=$stValues.cs}
+	  		<option value="empty">[t]Geen status[/t]</option>
+  		</select>
+  	</div>
+  	{/if}
+    
+    {if $eStatuses.ps1}
+  	<div class="formInput fiProcedures1">
+		<label>{$sts.name1}</label>
+		<select name="vb_procedures_status" id="stSel1" onChange="saveButtonEnable()">
+		<option value="">---</option>
+		{html_options options=$stValues.ps1}
+		</select>
+	</div>
+  	{/if}
+  	
+    {if $eStatuses.ps2}
+	<div class="formInput fiProcedures1">
+		<label>{$sts.name2}</label>
+		<select name="vb_procedures_status2" id="stSel2" onChange="saveButtonEnable()">
+			<option value="">---</option>
+			{html_options options=$stValues.ps2}
+		</select>
+	</div>
+  	{/if}
+	
+    {if $eStatuses.ps3}
+	<div class="formInput fiProcedures1">
+		<label>{$sts.name3}</label>
+		<select name="vb_procedures_status3" id="stSel3" onChange="saveButtonEnable()">
+			<option value="">---</option>
+			{html_options options=$stValues.ps3}
+		</select>
+	</div>
+  	{/if}
+    
+	<div class="buttonContainer">
+		<input class="button" type="button" name="bttnChStatuses" id="bttnChStatuses" value="[tb]Change Statuses[/tb]" onclick="chStatuses();" disabled="disabled">
+	</div>
+</div>
+{/if}
+	
+	<table border="0" cellpadding="0" cellspacing="0" class="custLinTbl" width="100%">
+		<tr>
+		  {if $lmBatchSttatuses && $stChangeAllowed}
+		  <th class="custLinChb">&nbsp;</th>
+		  {/if}
+			<th class="custLinCand">[t]Candidate[/t]</th>
+			<th class="custLinVand">[t]Vacancy[/t]</th>
+			<th class="custlinNam1d">{$sts.name1}</th>
+			<th class="custLinNam2d">{$sts.name2}</th>
+			<th class="custLinNam3d">{$sts.name3}</th>         
+		</tr>
+		{foreach from=$LMList item=u}
+			<tr class="{cycle values='odd,even'}">
+        
+        {if $lmBatchSttatuses && $stChangeAllowed}
+        <td class="custLinChb">
+          <input type="checkbox" name="lm_bs[]" value="{$u.reactie_id}:{$u.candidate_id}">
+        </td>
+        {/if}
+              
+				<td class="custLinCand"><a href="/index.php/page/customers/bb/1/command/cand_detail/kid/{$u.candidate_id}/vid/{$u.job_id}" {if $u.recently_changed}style="color:orange;"{/if}>{$u.candidate_name|escape}</a></td>
+				<td class="custLinVand"><a href="/index.php/page/customers_ext/bb/1/command/detail/vid/{$u.job_id}">{$u.job_name|escape}</a></td>
+				{*    
+					THIS IS INCORRECT PORTAL    
+					<td nowrap="nowrap"><a href="/index.php/page/sh_portal/bb/1/command/can_detail/kid/{$u.candidate_id}/vid/{$u.job_id}"  {if $u.recently_changed}style="color:orange;"{/if}>{$u.candidate_name|escape}</a></td>
+					<td nowrap="nowrap"><a href="/index.php/page/sh_portal/bb/1/command/vac_detail/vid/{$u.job_id}">{$u.job_name|escape}</a></td>
+				*}
+				<td class="custlinNam1d">{if $u.st1}{$u.st1_descr|escape}<br /><span class="custlinNam1dDate">{if $u.st1_ts}{$u.st1_ts|date_format}{/if}</span>{else}---{/if}</td>
+				<td class="custlinNam2d">{if $u.st2}{$u.st2_descr|escape}<br /><span class="custlinNam2dDate">{if $u.st2_ts}{$u.st2_ts|date_format}{/if}</span>{else}---{/if}</td>
+				<td class="custlinNam3d">{if $u.st3}{$u.st3_descr|escape}<br /><span class="custlinNam3dDate">{if $u.st3_ts}{$u.st3_ts|date_format}{/if}</span>{else}---{/if}</td>
+			</tr>
+		{foreachelse}
+			<tr>
+				<td nowrap="custlinAvad" colspan="5">[t]No Updates Available[/t]</td>
+			</tr>
+		{/foreach}
+	</table>
+	
+	
+	{if $lmBatchSttatuses && $stChangeAllowed}
+	</form>
+	{/if}
+	
+	{*PAGING BEGIN*}
+	<div class="pageNav custLinPageNav">
+		{if $is_prev}
+			<a href="{$handler}?command=setpage&amp;pageno=1" class="pnFirst custLinFirst">[t]&lt;&lt;&nbsp;First[/t]</a>
+			<a href="{$handler}?command=prevpage" class="pnPrev custLinPrev">[t]&lt;&nbsp;Previous[/t]</a>
+		{/if}
+		
+		<foreach from=$page_array item=p key=k>
+			<a href="{$handler}?command=setpage&amp;pageno={$k}" {if $p}class="pnActive custLinActive"{/if}>{$k}</a>
+		</foreach>
+		
+		{if $is_next}
+			<a href="{$handler}?command=nextpage" class="pnNext custLinNext">[t]Next&nbsp;&gt;[/t]</a>
+			<a href="{$handler}?command=setpage&amp;pageno={$lastpage}" class="pnLast custLinLast">[t]Last&nbsp;&gt;&gt;[/t]</a>
+		{/if}
+	</div>
+	{*PAGING END*}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

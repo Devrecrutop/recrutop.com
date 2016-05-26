@@ -1,0 +1,128 @@
+ <!-- /UTS/customers/jobApproveForm.html -->
+
+ 
+<script type="text/javascript">
+//var appHandler = '{$handler}';
+var appHandler = '{$handler}';
+//{literal}
+$(document).ready(function() {
+
+});
+
+     
+
+function getApprovalCps(){  
+  
+  options = $("#select_wgcp");
+  options.empty();
+   var wg_id = $("#select_wg").val();
+     
+	$.post(appHandler, 		   				   				   
+		   {command: 'asyncgetwgcp', wg_id: wg_id},
+       approvePostProcess,   			  
+		   'json');
+}
+
+function approvePostProcess(data){
+  
+   
+  options = $("#select_wgcp");
+  //optionswgcp = $("#select_wgcp");
+  
+  if (data.message == "OK") {
+    
+    if (data.result.length > 0) {
+      for(i=0; i< data.result.length; i++){
+         options.append($("<option></option>").val(data.result[i].id).html(data.result[i].Name));
+      };
+    
+    }
+    else{
+      options.empty();
+      //options.empty();
+    }
+    
+    
+  }
+  else{
+      options.empty();
+  }
+  
+  setApprovalSubmit()
+  
+}
+
+function setApprovalSubmit(){
+   var wgcp_id = $("#select_wgcp").val();
+   if (wgcp_id > 0) {
+    $('#bSubmit').removeAttr('disabled');
+    
+   }  
+   else{
+    $('#bSubmit').attr('disabled', 'disabled');
+    
+   }
+}
+//{/literal}
+</script> 
+ 
+<div style="width:310px;">
+    <form name="srbefrm" action="{$handler}/command/requestapprove" method="post">
+        <input type="hidden" name="vid" value="{$vid}">
+
+        <h1 class="title">[t]Job approve[/t]</h1>
+
+        
+        {if !$notification_sent}
+        <p style="text-align:justify;">
+        
+            [t]Send request to approve this vacancy to the following people[/t]
+        </p>        
+        <div class="formInput actEqueryInput">
+        <label for="iSrbeFrequency">[t]Customer[/t]</label>
+        <select id="select_wg" name="select_wg" onChange="getApprovalCps()">
+            <option value="0">---</option>
+            {foreach from=$customers item=r}
+            <option value="{$r.id}">{$r.werkgever}</option>
+            {/foreach}
+        </select>
+        </div>
+        <div class="formInput actEqueryInput">
+        <label for="iSrbeFrequency">[t]Approval manager[/t]</label>
+        <select id="select_wgcp" name="select_wgcp" onchange="setApprovalSubmit();">
+            {*<option value="0">---</option>*}
+            {foreach from=$customers_contacts item=c}
+            <option value="{$c.id}">{$c.name} {$c.email}</option>
+            {/foreach}
+        </select>
+        </div>
+        <div class="formInput actEqueryInput">
+        <label for="iSrbeFrequency">[t]Message[/t]</label>
+        <textarea id="message" name="message"></textarea>
+        </div>        
+        
+        
+       
+        <div class="buttonContainer actEqueryBc">
+            <input type="submit" name="bSubmit" id="bSubmit" value="[tb]Submit[/tb]" class="button" disabled="disabled">
+        </div>
+        
+        {else}
+        {if $job_published}
+         <p style="text-align:justify;">
+          
+              [t]Job is already published![/t]
+          </p>        
+        {else}
+        
+         <p style="text-align:justify;">
+          
+              [t]Your reguest was sent![/t]
+          </p>        
+        
+        {/if}
+        {/if}
+        
+    </form>
+    
+</div>

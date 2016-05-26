@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Vacature Lijst</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--uts:begin inner-->
+
+
+<div class="outer cpOuter">
+<!-- /UTS/applicants/jobListApplicationInvitationHook.html -->
+<h1 class="title cpTitle">[t]Job invitations[/t]</h1>
+
+{$CustomersMenu}
+<div class="jclCont">
+<div class="jclHolder" onMouseOver="this.className='jclHolderActive';" onMouseOut="this.className='jclHolder';"><!--  onClick="location='[website]/index.php/page/customers_ext/bb/1/showcat/{$jobcategory.id}'" -->
+
+    <table>
+        <tr>
+            <th>&nbsp;</th>
+            <th>[t]Job[/t]</th>
+            <th>[t]Company[/t]</th>
+            <th>[t]Description[/t]</th>
+            <th>[t]Status[/t]</th>
+        </tr>
+        <foreach from=$invitations key=id item=invitation>
+            <tr>
+                <td>
+                    {if $invitation.wg_logo}
+                    <a href="$invitation.customer_network_link">
+                    <img src="/_images_upload/{$invitation.wg_logo}" />
+                    </a>
+                    {/if}
+                    
+                </td>
+
+                <td>
+                    <a href="[website]/index.php/page/customers_ext/command/detail/vid/{$invitation.job_id}/bb/1/temp/0">
+                    {if $invitation.functie_o_lang}{$invitation.functie_o_lang}{else}{$invitation.functie_o}{/if}
+                    </a>
+                </td>
+                
+                <td>
+                    <a href="{$invitation.customer_network_link}">{$invitation.werkgever}</a>
+                </td>                    
+                <td>
+                    {if $invitation.functieo_lang}{$invitation.functieo_lang}{else}{$invitation.functieo}{/if}
+                </td>
+                <td>
+                    {if $invitation.reactie_id > 0}
+                        [t]Applied[/t]
+                    {elseif $invitation.candidate_reaction == 'not interested'}
+                        [t]Not interested[/t]
+                    {else}
+                        [t]No reaction yet[/t]
+                    {/if}
+                </td>
+            </tr>
+        </foreach>
+    </table>
+</div>
+</div>
+</div>
+
+
+<!--uts:end inner-->
+</body>
+</html>

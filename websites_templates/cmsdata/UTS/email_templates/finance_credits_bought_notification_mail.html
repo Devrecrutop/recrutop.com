@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+        [t]Dear {$toname|escape},[/t]
+</p>
+<p>
+    [t]Credits were purchased on website[/t] 
+</p>
+<p>
+    [t]By[/t]: {$sale.customer_name|escape}<br>  
+    [t]On[/t]: {$sale.purchase_date|date_format:"%D %H:%M:%S"}<br>
+    [t]Package name[/t]: {$sale.package}<br>
+    [t]Value[/t]: {$sale.currency}&nbsp; {$sale.value}<br>
+    [t]Credits[/t]: {$sale.credits}<br>
+</p>
+<!--uts:end inner-->
+</body>
+</html>

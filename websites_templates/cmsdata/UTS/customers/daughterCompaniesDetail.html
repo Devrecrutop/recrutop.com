@@ -1,0 +1,235 @@
+<!-- /UTS/customers/daughterCompaniesList.html -->
+<!--uts:begin inner-->
+
+<script type="text/javascript">
+
+var vHandler = '{$handler}';
+
+//{literal}
+
+var mcDialog = false;
+var mcSelected = [];
+var mcCurrentId = 0;
+
+$(function() {
+
+    mcDialog = $("#mcDialog").dialog({
+        autoOpen: false,
+        width: 600,
+        height: 500,        
+        modal: true,
+        buttons: {
+            "[th]Save[/th]": function() {
+                mcDialog.dialog("close");
+                mcSave();
+            },
+            "[th]Cancel[/th]": function() {
+                mcDialog.dialog("close");
+            }            
+        },
+        close: function() {            
+        }
+    });
+
+});
+
+function mcEdit(mcId, mcTitle) {
+
+    mcCurrentId = mcId;
+
+    mcDialog.dialog("option", "title", mcTitle);    
+    mcDialog.dialog("open");    
+
+    $('#mcAll').empty();
+    $('#mcSelected').empty();
+
+    mcSelected = [];
+
+    var selectedStr = $('input[name=matchCriteria_' + mcId + ']').val();
+    if (selectedStr.length > 0) {
+        mcSelected = selectedStr.split(',');
+    }
+
+    $.post(
+        vHandler, {
+            command: 'getMcList',
+            mcTableId: mcId
+        },
+        function (res) {
+
+            var html = $('#mcItemTemplate')[0].innerHTML;
+            var data = '';
+            for (var i in res) {
+                var item = res[i];
+                var itemHtml = html;
+                itemHtml = itemHtml.replace(/\[\[mcId\]\]/g, item.id);
+                itemHtml = itemHtml.replace(/\[\[mcValue\]\]/g, item.name);
+                data += itemHtml;                
+            }
+            $('#mcAll').append(data);
+            $('#mcSelected').append(data);
+
+            for (var i in mcSelected) {
+                mcSelect(mcSelected[i]);
+            }
+
+        },
+        'json'
+    );
+}
+
+function mcSave() {
+
+    var mcIds = [];
+    var mcValues = [];
+
+    $('#mcSelected .mcItem.active input[name=mcId]').each(function (id, el) {
+
+        var mcId = $(el).val();
+        var mcValue = $(el).parent().text();
+
+        mcIds.push(mcId);
+        mcValues.push(mcValue);
+
+    });
+
+    mcIds = mcIds.join(',');
+    mcValues = mcValues.join(',');
+
+    $('input[name=matchCriteria_' + mcCurrentId + ']').val(mcIds);
+    $('#matchCriteriaText_' + mcCurrentId).text(mcValues);
+}
+
+function mcSelect(mcId) {
+    $('.mcItem_' + mcId).toggleClass('active');
+}
+
+//{/literal}
+</script>
+
+<style>
+/*{literal}*/
+.mcItem:hover {
+    background-color: #eee;
+}
+
+#mcAll .mcItem {
+    display: block;
+}
+
+#mcAll .mcItem.active {
+    display: none;
+}
+
+#mcSelected .mcItem {
+    display: none;
+}
+
+#mcSelected .mcItem.active {
+    display: block;A
+}
+
+/*{/literal}*/
+</style>
+
+<div class="outer">
+
+    <h1 class="title">{$data.relation}</h1>
+
+    {$CustomersMenu}
+    {if $prfResult}
+        <div class="prfResult">PRF file generated and sent.</div>
+    {/if}
+
+    <form action="{$handler}/command/save/bb/1" method="post">
+
+        <input type="hidden" name="relationId" value="{$data.id}" >
+
+        <div class="formInput">
+            <label>[t]Company name[/t]</label>
+            <input type="text" value="{$data.relation|escape}" disabled="disabled">
+        </div>
+
+        <div class="formInput">
+            <label>[t]Company culture[/t]</label>
+            <textarea name="companyCulture">{$data.companyCulture|escape}</textarea>
+        </div>
+
+        {if $data.matchCriteriaNames}
+            <h2>[t]Match criteria[/t]</h2>
+            {foreach from=$data.matchCriteriaNames item=matchCriteriaTitle key=matchCriteriaId}
+                <h3>
+                    {$matchCriteriaTitle|escape}
+                </h3>
+                <div>
+                    <input type="hidden" name="matchCriteria_{$matchCriteriaId}" value="{foreach from=$data.matchCriteria[$matchCriteriaId] item=mcValue key=mcId name=mcIdLoop}{$mcId}{if !$smarty.foreach.mcIdLoop.last},{/if}{/foreach}" />
+                    <span id="matchCriteriaText_{$matchCriteriaId}">{foreach from=$data.matchCriteria[$matchCriteriaId] item=mcValue name=mcValueLoop}{$mcValue|escape}{if !$smarty.foreach.mcValueLoop.last},{/if} {/foreach}</span>
+                    <span onclick="mcEdit({$matchCriteriaId}, '{$matchCriteriaTitle|escape:javascript|escape}');" style="cursor:pointer;color:#fff;background-color:#000;">&nbsp;+&nbsp;</span>
+                </div>
+            {/foreach}
+        {/if}
+
+        <h2>[t]Jobs[/t]<a name="dcdetail_jobs" id="dcdetail_jobs"></a></h2>
+
+        {if $data.vacancies}
+
+            <table style="width:100%;" class="tatListTable">
+                <tr>
+                    <th>[t]Vacancy name[/t]</th>
+                    <th>[t]Location[/t]</th>
+                    <th>[t]Status[/t]</th>
+                </tr>
+                {foreach from=$data.vacancies item=v}
+                    <tr>
+                        <td>{$v.vacancy|escape}</td>
+                        <td>{if $v.location}{$v.location|escape}{else}&nbsp;{/if}</td>
+                        <td>{if $v.status}{$v.status|escape}{else}&nbsp;{/if}</td>                        
+                    </tr>
+                {/foreach}
+            </table>
+
+        {else}
+
+            <div class="intro">
+                [t]There are no vacancies linked.[/t]
+            </div>
+
+        {/if}
+
+        <div class="buttonContainer">
+            <input type="button" value="[th]Back[/th]" class="button" onclick="window.location.href='{$handler}/command/list/bb/1';">
+            <input type="submit" value="[th]Save[/th]" class="button">
+            <input type="button" value="[th]Add job[/th]" class="button" onclick="window.location.href='//{$uts.cursite}/index.php/page/customers_ext/command/addavacancy/bb/1/relation/{$data.id}';">
+            {if $__st_fim_daughter_from_mother}
+                <input type="button" value="[th]Create PRF[/th]" class="button" onclick="window.location.href='{$handler}/command/sendprf/bb/1/relation/{$data.id}';">
+            {/if}
+        </div>
+
+    </form>
+
+
+    <div id="mcDialog">
+        <table style="width:100%;">
+            <tr>
+                <td style="width:50%;" valign="top"> 
+                    <h3>[t]All[/t]</h3>
+                    <div id="mcAll"></div>
+                </td>
+                <td style="width:50%;" valign="top"> 
+                    <h3>[t]Selected[/t]</h3>
+                    <div id="mcSelected"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="display:none;" id="mcItemTemplate">
+        <div class="mcItem mcItem_[[mcId]]" style="cursor:pointer;" onclick="mcSelect([[mcId]])">
+            <input type="hidden" name="mcId" value="[[mcId]]" />
+            [[mcValue]]
+        </div>
+    </div>
+
+</div>
+
+<!--uts:end inner-->

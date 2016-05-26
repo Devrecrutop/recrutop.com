@@ -1,0 +1,57 @@
+{*INVOICE ASSIGNMENT DETAIL*}  
+  <div id="inv-assignment">
+  
+  <table width="100%" border="0" cellspacing="0" cellpadding="4" id="tbl-assignment">  
+  <tr>
+    <td width="160">[t]Assignment[/t]:</td>
+    <td colspan="3">{$data.optional_table.assignment_name|escape}</td>                  
+  </tr>  
+  <tr>
+    <td width="160">[t]Working Days[/t]:</td>
+    <td>{$data.optional_table.working_days|number_format:2:",":"."}</td>
+    <td width="160">[t]Part Time Percentage[/t]:</td>
+    <td>{$data.optional_table.part_time_percentage|number_format:2:",":"."}</td>              
+  </tr>
+  <tr>
+    <td width="160">[t]Public Holiday[/t]:</td>
+    <td>{$data.optional_table.holiday_days|number_format:2:",":"."}</td>
+    <td width="160">
+      [t]Hours Per[/t] 
+      {if $data.optional_table.hrs_unit == "day"}[t]Day[/t]
+      {elseif $data.optional_table.hrs_unit == "week"}[t]Week[/t]
+      {elseif $data.optional_table.hrs_unit == "month"}[t]Month[/t]
+      {/if}
+    :</td>
+    <td>{$data.optional_table.hrs_per_unit|number_format:2:",":"."}</td>              
+  </tr>
+  <tr>
+    <td width="160">[t]Full Time Hrs[/t]:</td>
+    <td>{$data.optional_table.working_hrs|number_format:2:",":"."}</td>
+    <td width="160">[t]External Tariff[/t]:</td>
+    <td>{$data.optional_table.external_tariff|number_format:2:",":"."}</td>              
+  </tr>  
+  <tr>
+    <td width="160">[t]Days Worked[/t]:</td>
+    <td>{$data.optional_table.worked_days|number_format:2:",":"."}</td>
+    <td width="160">[t]Hours Worked[/t]:</td>
+    <td>{$data.optional_table.worked_hrs|number_format:2:",":"."}</td>              
+  </tr>
+  <tr>
+    <td width="160">[t]Personal Nr.[/t]:</td>
+    <td>{$data.optional.personal_nr|escape}</td>
+    {*<td>{$extraData.employee_nr|escape}</td> NOT USED, BUT DO NOT REMOVE*}    
+    <td width="160">[t]Hours Off[/t]:</td>
+    <td>{$data.optional_table.holiday_hrs|number_format:2:",":"."}</td>              
+  </tr>
+
+  <tr>
+    <td width="160">[t]Employee[/t]:</td>    
+    <td>{$extraData.employee_name|escape}</td>    
+    <td width="160">[t]Weeknumber(s)[/t]:</td>
+    <td>{$extraData.week_numbers|escape}</td>              
+  </tr>
+                  
+  </table>
+  
+  </div>  
+  <hr>       

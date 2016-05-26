@@ -1,0 +1,246 @@
+<link rel="stylesheet" type="text/css" href="/_css_global/jquery.unified-select.css">
+<script type="text/javascript" defer="true">
+animatedcollapse.addDiv('actEqueryContainer', 'fade=1,persist=0,hide={if [uts:collapse_query] == "90"}0{else}1{/if}');
+
+//{literal}
+function advdispqueryform_check_form(frm) {
+    //{/literal}
+    <if [uts:show_distance_matching]>
+    //{literal}
+    if (frm.proximity_preferredDistance.value && !frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value!='0') {
+        alert('[th]Set also the maximal distance.[/th]');
+        return(false);
+    }
+    
+    if (frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value && parseInt(frm.proximity_preferredDistance.value)>parseInt(frm.proximity_maxDistance.value)) {
+        alert('[th]Maximal distance must be lower than preferred distance.[/th]');
+        return(false);
+    }
+    //{/literal}
+    </if>
+    //{literal}
+    return(true);
+}
+
+
+//{/literal}
+</script>
+<div class="actEquery actCvsEquery">
+ <!-- /UTS/advsearch/queryEditorCandidates.html -->
+	<div class="actEqueryTitle"><a href="javascript:animatedcollapse.toggle('actEqueryContainer', '')">[t]Edit query[/t]</a></div>
+		<div id="actEqueryContainer">
+		{* editor content start *}
+			<form name="advdispqueryform" method="post" action="{$handler}" onsubmit="return(advdispqueryform_check_form(this))">
+			<if [uts:show_keyword_options]>
+			{* keyword field *}
+				<div class="formInput actEqueryInput aFiKeyw">
+					<label>[t]Keywords[/t]</label>
+					<input id="qeKeywords" type="text" name="main_keywords" value="{$keywordsValue|escape}">
+				</div>
+
+				<div class="formInput actEqueryInput aFiKeywOpt">
+					<label></label>
+					<select id="qe_multisel_kw_options" name="main_keywords_options[]" multiple="multiple" size="5">
+					    <html_options options=$kwOptions selected=$kwOptionsSelected>
+					</select>
+				</div>
+			</if>
+
+			{* location field *}
+			<if [uts:show_location]>
+				<div class="formInput actEqueryInput aFiLocation">
+					<label>[t]Location[/t]</label>
+					<input id="actQueryLocation" type="text" name="main_location" value="{$locationValue|escape}">
+				</div>
+			</if>
+
+			{* start gender field *}
+			<if [uts:show_gender]>
+				<div class="formInput actEqueryInput aFiGender">
+					<label>[t]Gender[/t]</label>
+					<select name="main_geslacht">
+					    <option value="">---</option>
+					    <html_options options=$genderOptions selected=$genderValue>
+					</select>
+				</div>
+			</if>
+			{* end gender field *}
+
+			{* start age field *}
+			<if [uts:show_age]>
+			<div class="formInput actEqueryInput aFiAgeYearFrom">
+				<label>[t]Age search (from)[/t]</label>
+				<select name="main_age_year_from">
+				    <option value="">---</option>
+				    <html_options options=$yearOptions selected=$ageYearFrom>
+				</select>
+			</div>
+			
+			<div class="formInput actEqueryInput aFiAgeYearTo">
+				<label>[t]Age search (to)[/t]</label>
+				<select name="main_age_year_to">
+				    <option value="">---</option>
+				    <html_options options=$yearOptions selected=$ageYearTo>
+				</select>
+			</div>
+			</if>
+			{* end age field *}
+			
+			
+			{* start avdate field *}
+			<if [uts:show_avdate]>
+			<div class="formInput formSmallInput actEqueryInput aFiAvDate">
+				<label>[t]Available from[/t]</label>
+				<html_select_date time=$avDateVal field_order="DMY" month_format="%m" prefix="main_avdatefrom_" day_value_format="%02d" start_year="-1" end_year="+5" day_extra="id='aFiAvDateDay'" month_extra="id='aFiAvDateMonth'" year_extra="id='aFiAvDateYear'" day_empty="--" month_empty="--" year_empty="----">
+			</div>
+			</if>
+			{* end avdate field *}
+			
+			{* start na_reason field *}
+			<if [uts:show_na_reason]>
+			<div class="formInput actEqueryInput aFiReason">
+				<label>[t]N/A reason[/t]</label>
+				<select name="main_na_reason">
+				    <option value="">---</option>
+				    <html_options options=$naReasonOpts selected=$naReasonVal>
+				</select>
+			</div>
+			</if>
+			{* end na_reason field *}
+			
+			{* distance options *}
+			<if [uts:show_distance_matching]>
+			<div class="formInput actEqueryInput aFiCountryCode">
+				<label for="idCountryCode">[t]Country[/t]</label>
+				<select id="idCountryCode" name="proximity_countryCode">
+					<option value="">---</option>
+					<html_options options=$proximityCountries selected=$proximity.countryCode>
+				</select>
+			</div>
+			
+			{* zipcode *}
+			<div class="formInput actEqueryInput aFiZipCode">
+				<label for="idZipcode">[t]Zipcode[/t]</label>
+				<input type="text" id="idZipcode" name="proximity_zipCode" value="{$proximity.zipCode|escape}">
+			</div>
+			<input type="hidden" name="proximity_preferredDistance" value="0">
+			
+			{* max dist *}
+			<div class="formInput actEqueryInput">
+				<label for="idMaxDist">[t]Maximum distance [km][/t]</label>
+				<select id="idMaxDist" name="proximity_maxDistance">
+					<option value="">---</option>
+					<html_options options=$distOpts selected=$proximity.maxDistance>
+				</select>
+			</div>
+			</if>
+			
+			{* start boolean fields *}
+			{* start hasPhoto field *}
+			<if [uts:show_has_photo]>
+			<div class="formInput actEqueryInput aFiPhoto">
+				<label>[t]Has photo[/t]</label>
+				<select name="main_hasPhoto">
+				    <option value="">---</option>
+				    <html_options options=$hasPhotoOptions selected=$hasPhotoValue>
+				</select>
+			</div>
+			</if>
+			
+			{* start hasOriginalCV field *}
+			<if [uts:show_has_original_cv]>
+			<div class="formInput actEqueryInput aFiOriginalCV">
+				<label>[t]Has original CV[/t]</label>
+				<select name="main_hasOriginalCV">
+				    <option value="">---</option>
+				    <html_options options=$hasOriginalCVOptions selected=$hasOriginalCVValue>
+				</select>
+			</div>
+			</if>
+			
+			{* start isPublic field - FINALLY NOT USED *}
+			<if [uts:show_is_public]>
+			<div class="formInput actEqueryInput aFiPublic">
+				<label>[t]Public[/t]</label>
+				<select name="main_isPublic">
+				    <option value="">---</option>
+				    <html_options options=$isPublicOptions selected=$isPublicValue>
+				</select>
+			</div>
+			</if>
+			
+			{* start hasEmail field *}
+			<if [uts:show_has_email]>
+			<div class="formInput actEqueryInput aFiEmail">
+				<label>[t]Has e-mail[/t]</label>
+				<select name="main_hasEmail">
+				    <option value="">---</option>
+				    <html_options options=$hasEmailOptions selected=$hasEmailValue>
+				</select>
+			</div>
+			</if>
+			
+			{* start hasMobileNr field *}
+			<if [uts:show_has_mobile_nr]>
+			<div class="formInput actEqueryInput aFiMobile">
+				<label>[t]Has mobile nr.[/t]</label>
+				<select name="main_hasMobileNr">
+				    <option value="">---</option>
+				    <html_options options=$hasMobileNrOptions selected=$hasMobileNrValue>
+				</select>
+			</div>
+			</if>
+			
+			{* start published_not_anonymous field *}
+			<if [uts:show_publish_not_anonymous]>
+			<div class="formInput actEqueryInput aFiAnon">
+				<label>[t]Published (not anonymous)[/t]</label>
+				<select name="main_published_not_anonymous">
+				    <option value="">---</option>
+				    <html_options options=$published_not_anonymousOptions selected=$published_not_anonymousValue>
+				</select>
+			</div>
+			</if>
+			{* end boolean fields *}
+			
+			{* registration date *}
+			<if [uts:show_reg_date]>
+			<div class="formInput actEqueryInput aFiRegDate">
+				<label>[t]Registered within[/t]</label>
+				<select name="main_invoerdatum">
+				    <option value="">---</option>
+				    <html_options options=$regDateOpts selected=$regDateVal>
+				</select>
+			</div>
+			</if>
+			
+			<if [uts:show_last_update]>
+			<div class="formInput actEqueryInput aFiUpdate">
+				<label>[t]Last update within[/t]</label>
+				<select name="main_wijzigingsdatum">
+				    <option value="">---</option>
+				    <html_options options=$lastUpdateOpts selected=$lastUpdateVal>
+				</select>
+			</div>
+			</if>
+			
+			<if [uts:show_last_contact]>
+			<div class="formInput actEqueryInput aFiContact">
+				<label>[t]Last contact within[/t]</label>
+				<select name="main_last_contact_datetime">
+				    <option value="">---</option>
+				    <html_options options=$lastContactOpts selected=$lastContactVal>
+				</select>
+			</div>
+			</if>
+			
+			<div class="buttonContainer actEqueryBc">
+				<input type="submit" name="bApplSubmit" value="[tb]Search again[/tb]" class="button">
+			</div>
+			
+			<input type="hidden" name="command" value="submitrequest">
+			<input type="hidden" name="origin" value="{$requestOrigin}">
+			<div class="cleaner actEqueryCleaner actCvsEqueryCleaner"></div>
+		</form>
+	</div>
+</div>

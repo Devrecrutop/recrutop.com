@@ -1,0 +1,4 @@
+{* this is the generic tagcloud HTML representation *}
+<foreach from=$data item=d>
+    <a href="{$d.o->link}" style="font-size:{$d.fontsize}px; padding:3px 2px 3px 2px;">{$d.o->tag|escape}</a>
+</foreach>

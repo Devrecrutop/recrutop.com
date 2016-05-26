@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+{assign var='columns_to_display' value=$multicolumn_settings.set_display_columns}
+{assign var='set_display_text' value=$multicolumn_settings.set_display_text}
+{assign var='set_display_mode' value=$multicolumn_settings.set_display_mode}
+{assign var='set_display_description' value=$multicolumn_settings.set_display_description}
+
+<div class="outer faceOuter consListOuter">
+	<!-- /UTS/consultant/viewPublicConsultantList.html+ -->
+	<!-- HTML VALID MD -->
+	<h1 class="title faceTitle consListTitle">[t]Consultant List[/t]</h1>
+	<div class="intro faceIntro consListIntro">[t]Consultant list introduction text...[/t]</div>
+
+	<!-- columns_to_display: {$columns_to_display} -->
+	<!-- set_display_text: {$set_display_text} -->
+	<!-- set_display_mode: {$set_display_mode} -->
+	<!-- set_display_description: {$set_display_description} -->
+
+	{if $set_display_mode == 'columns'}
+		<div class="moduleTable faceListTable consListTable">
+	{/if}
+		{foreach from=$cp_list_data item=cp_item name=cpd}
+			{if $set_display_mode == 'columns'}					
+				{if $smarty.foreach.cpd.iteration==1 || $smarty.foreach.cpd.iteration % $columns_to_display == 1}
+					<div class="moduleRowContainer faceListRowContainer faceListCol_n{$columns_to_display}">
+				{/if}
+					<div onclick="window.location.href='http://{$cp_item.consultant_detail_link}'" class="itemContainer faceIc consListIc{if $smarty.foreach.cpd.iteration == $columns_to_display || $smarty.foreach.cpd.iteration % $columns_to_display == 0} faceIcLast{/if}">
+						{if $set_display_text|lower == 'y'}
+							<h3 class="itemTitle faceItitle consListItemTitle">
+								<a href="http://{$cp_item.consultant_detail_link}" title="[t]Details...[/t]">
+									{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+									{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+									{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+								</a>
+							</h3>
+						{/if}
+						{if $cp_item.cp_photo.photo != ""}
+							<div class="itemImage faceIimg consListItemImg">
+								<a href="http://{$cp_item.consultant_detail_link}" title="[t]Details...[/t]">
+									<img src="http://{$cp_item.cp_photo_link}" border="0" alt="
+									{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+									{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+									{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+									">
+								</a>
+							</div>
+						{/if}
+						{if $display_elements.show_short_description && $set_display_description}
+							<div class="itemDescription faceDesc consListItemDesc">{$cp_item.short_descr|truncate:$short_description_char_limit:"..."}</div>
+						{/if}
+						<div class="cleaner faceICleaner consListICleaner"></div>
+					</div>
+				{if $smarty.foreach.cpd.iteration == $columns_to_display || $smarty.foreach.cpd.last || $smarty.foreach.cpd.iteration % $columns_to_display == 0}
+					</div>
+				{/if}
+			{else}
+				<div onclick="window.location.href='http://{$cp_item.consultant_detail_link}'" class="itemContainer faceIc consListIc">
+					{if $cp_item.cp_photo.photo !="" }
+						<div class="itemImage faceIimg consListItemImg">
+							<a href="http://{$cp_item.consultant_detail_link}" title="[t]Details...[/t]">
+								<img src="http://{$cp_item.cp_photo_link}" border="0" alt="
+								{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+								{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+								{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+								">
+							</a>
+						</div>
+					{/if}
+					<h3 class="itemTitle faceItitle consListItemTitle">
+						<a href="http://{$cp_item.consultant_detail_link}" title="[t]Details...[/t]">
+							{if $display_elements.show_first_name}{$cp_item.first_name|escape}{/if}
+							{if $display_elements.show_middle_name} {$cp_item.middle_name|escape}{/if}
+							{if $display_elements.show_last_name} {$cp_item.last_name|escape}{/if}
+						</a>
+					</h3>
+					{if $display_elements.show_short_description && $set_display_description}
+						<div class="itemDescription faceDesc consListItemDesc">{$cp_item.short_descr|truncate:$short_description_char_limit:"..."}</div>
+					{/if}
+					<div class="cleaner faceCleaner consListICleaner"></div>
+				</div>
+			{/if}
+		{foreachelse}
+			<div class="approw faceApprow consListApprow">[t]Consultant list is empty...[/t]</div>
+		{/foreach}
+	{if $set_display_mode == 'columns'}
+		</div>
+	{/if}
+	<div class="cleaner faceICleaner consList"></div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

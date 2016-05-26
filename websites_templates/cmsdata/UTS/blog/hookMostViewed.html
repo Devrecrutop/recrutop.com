@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<if !empty($articles)>
+	<div class="hookOuter blogHookArticleListOuter">
+	<!-- /UTS/blog/hookMostViewed.html -->
+	<div class="hookHeader blogHookArticleListHeader"><div><h5>[t]Most viewed[/t]</h5></div></div>
+	<foreach from=$articles item=a>
+	<div class="hookItemContainer blogHookItemContainer">
+	<div class="hookItemTitle blogHookItemLink"><a href="{$a._linkurl}">{$a.title|escape}</a></div>
+	<div class="hookItemWord blogHookWord"><span>[t]at[/t]</span>{$a._datetime_published}</div>
+	<div class="hookItemFooter blogHookFooter">{$a.viewcount} [t]views[/t] | {$a._reacnt} [t]reactions[/t]</div>
+	</div>
+	</foreach>
+	</div>
+</if>
+
+<!--uts:end inner-->
+</body>
+</html>

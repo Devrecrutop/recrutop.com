@@ -1,0 +1,119 @@
+ <!-- /UTS/advsearch/sqTipDetail.frag.html -->
+ 
+<form name="sqform" method="post" id="fsq">
+<div class="itemLine actIl actIlSqtip actIlSqtipName">
+	<label>[t]Name[/t]</label>
+	<span><input type="text" name="sq_name" value="{$sq.name|escape}"></span>
+	<div class="cleaner itemLineCleaner actSqtipIlCleaner"></div>
+</div>
+
+<div class="itemLine actIl actIlSqtip actIlSqtipPeriod">
+	<label>[t]Period[/t]</label>
+	<span><select name="sq_period">
+		<option value="daily">[th]Daily[/th]</option>
+		<option value="weekly" {if $sq.period == "weekly"}selected{/if}>[th]Weekly[/th]</option>
+		<option value="monthly" {if $sq.period == "monthly"}selected{/if}>[th]Monthly[/th]</option>
+	</select></span>
+	<div class="cleaner itemLineCleaner actSqtipIlCleaner"></div>
+</div>
+
+<div class="itemLine actIl actIlSqtip actIlSqtipSMS">
+	<label>[t]Max jobs to send by SMS[/t]</label>
+	<span><select name="sq_sms_max_jobs_sent">
+		<html_options options=$maxjobssentopts selected=$sq.sms_max_jobs_sent>
+	</select></span>
+	<div class="cleaner itemLineCleaner actSqtipIlCleaner"></div>
+</div>
+
+<div class="itemLine actIl actIlSqtip actIlSqtipCreated">
+	<label>[t]Created[/t]</label>
+	<span>{$sq._fmt_created}</span>
+	<div class="cleaner itemLineCleaner actSqtipIlCleaner"></div>
+</div>
+
+<div class="itemLine actIl actIlSqtip actIlSqtipLastP">
+	<label>[t]Last processed[/t]</label>
+	<span>{$sq._fmt_last_processed|default:"[th]N/A[/th]"}</span>
+	<div class="cleaner itemLineCleaner actSqtipIlCleaner"></div>
+</div>
+
+<div class="itemLine actIl actIlSqtip actIlSqtipActivated">
+	<label>[t]Activated (e-mails)[/t]</label>
+	<span><input type="checkbox" name="active[{$sq.id}]" {if $sq.active}checked{/if} disabled>{if $sq.active}<span style="margin-left:10px;">{$sq._fmt_activated}</span>{/if}</span>
+	<div class="cleaner itemLineCleaner actSqtipIlCleaner"></div>
+</div>
+
+
+<!-- isSMS disabled: {$isSMSEnabled} -->
+{if $isSMSEnabled}
+<div class="itemLine actIl actIlSqtip actIlSqtipActSMS">
+	<label>[t]Activated (SMS)[/t]</label>
+	<span><input type="checkbox" name="active_sms[{$sq.id}]" {if $sq.active_sms}checked{/if} disabled>{if $sq.active_sms}<span style="margin-left:10px;">{$sq._fmt_activated_sms}</span>{/if}</span>
+	<div class="cleaner itemLineCleaner actSqtipIlCleaner"></div>
+</div>
+{/if}
+
+
+<div class="itemLine actIl actIlSqtip actIlSqtipProc">
+	<label>[t]Processed[/t]</label>
+	<span>{if $sq.result_count}{$sq.result_count}x{else}[t]N/A[/t]{/if}</span>
+	<div class="cleaner itemLineCleaner actSqtipIlCleaner"></div>
+</div>
+
+<div class="itemLine actIl actIlSqtip  actIlSqtipAvg">
+	<label>[t]Avg. results[/t]</label>
+	<span>{if $sq._result_avg}{$sq._result_avg}{else}[t]N/A[/t]{/if}</span>
+	<div class="cleaner itemLineCleaner actSqtipIlCleaner"></div>
+</div>
+    
+<div class="itemLine actIl actIlSqtip actIlSqtipOutEmail">
+	<label>[t]Output to e-mail[/t]</label>
+	<span><input type="hidden" name="sq_out_email" value="0">
+	<input type="checkbox" name="sq_out_email" value="1" {if $sq.out_email}checked{/if}>
+	<input type="text" name="sq_email" value="{$sq.email|escape}"></span>
+	<div class="cleaner itemLineCleaner actSqtipIlCleaner"></div>
+</div>
+
+{if $isSMSEnabled}
+<div class="itemLine actIl actIlSqtip actIlSqtipOutSMS">
+	<label>[t]Output to SMS[/t]</label>
+	<span><input type="hidden" name="sq_out_sms" value="0">
+<input type="checkbox" name="sq_out_sms" value="1" {if $sq.out_sms}checked{/if}>
+<input type="text" name="sq_sms_mobile_number" value="{$sq.sms_mobile_number|escape}"></span>
+	<div class="cleaner itemLineCleaner actSqtipIlCleaner"></div>
+</div>
+{/if}
+     <!--<tr>
+        <td title="[th]This feature is not supported yet[/th]">[t]Output to Twitter[/t]</td>
+        <td><input type="checkbox" name="sq_out_twitter" {if $sq.out_twitter}checked{/if} disabled="disabled"></td>
+        <td></td>
+    </tr>-->
+
+<if !empty($ahistory) >
+<hr>    
+<p>[t]Activation history (last 10 events)[/t]</p>
+<table width="100%">
+    <tr>
+        <th>[t]Date, time[/t]</th>
+        <th class="tipDetailEmail">[t]E-mail[/t]</th>
+        <th class="tipDetailSMS">[t]SMS[/t]</th>
+    </tr>
+    <foreach from=$ahistory item=ahitem>
+        <tr>
+        <td>{$ahitem._fmt_dt}</td>
+        <td class="tipDetailEmail">{if $ahitem.active_email === "1"}<span style="color:#008000;">[t]activated[/t]</span>{elseif $ahitem.active_email === "0"}<span style="color:#800000;">[t]deactivated[/t]</span>{else}---{/if}</td>
+        <td class="tipDetailSMS">{if $ahitem.active_sms === "1"}<span style="color:#008000;">[t]activated[/t]</span>{elseif $ahitem.active_sms === "0"}<span style="color:#800000;">[t]deactivated[/t]</span>{else}---{/if}</td>
+        </tr>
+    </foreach>
+</table>
+</if>
+<div>
+    <input class="button jbdButton sqtipButSave" type="button" id="bSave" value="[tb]Save[/tb]" onclick="sqSave()">
+    <input class="button jbdButton sqtipButDelete" type="button" id="bDelete" value="[tb]Delete[/tb]" onclick="sqDelete()">
+    <input class="button jbdButton sqtipButRun" type="button" id="bRun" value="[tb]Run as a search[/tb]" onclick="sqUse('{$sq.code|escape:"javascript"}')">
+    <input class="button jbdButton sqtipButRSS" type="button" id="bRSS" value="[tb]RSS feed[/tb]" onclick="sqRSS()">
+</div>
+<input type="hidden" name="command" id="iCommand" value="">
+<input type="hidden" name="id" id="iID" value="{$sq.id}">
+<input type="hidden" name="uid" id="iCode" value="{$sq.code}">
+</form>

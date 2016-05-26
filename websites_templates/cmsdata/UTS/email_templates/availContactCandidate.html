@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+    <if $tpl_salutation == "informal">
+        [t]Dear {$informalname|escape},[/t]  {*informal*}
+    <else>
+        [t]Dear {$formalname|escape},[/t]    {*formal*}
+    </if>
+        
+</p>
+<p>
+    {if $isset_registeredDateLoc}
+    [t]You have been registered in our database at {$krow._registeredDateLoc}.[/t]
+    {else}
+    [t]You have been registered in our database for a long time.[/t]
+    {/if}
+    {if $isset_lastContactDateLoc}
+    [t]Since {$krow._lastContactDateLoc} we had no contact.[/t]         
+    {else}
+    [t]Since that time we had no contact.[/t]        
+    {/if}
+    [t]We would like to know if you are still available for a new job or if you would unregister yourself from out database. Please click {$hereLinkStart}here{$hereLinkEnd} to go to your profile.[/t]
+</p>
+<p>
+    [t]Or you can copy and paste the following link into your browser:[/t]<br>
+    {$loginLink}
+</p>
+   
+<p class="utsSignature">
+[t]Kind regards,[/t]<br>
+[t]{$contactPerson}[/t]<br>
+[t]{$client}[/t]<br>
+[t]URL:[/t] <a href="[th]{$website}/[/th]" target="_blank">[t]{$website}[/t]</a>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

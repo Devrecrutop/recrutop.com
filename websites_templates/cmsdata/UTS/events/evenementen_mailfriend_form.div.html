@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+<HEAD>
+	<TITLE>MEDICA_MAIL_A_FRIEND</TITLE>
+</HEAD>
+<BODY>
+<!--uts:begin inner-->
+<!-- /UTS/events/evenementen_mailfriend_form.div.html -->
+
+<!--jsrepository:require(JQueryBase,JQueryValidation)-->
+
+<div class="outer eveOuter eveMafOuter">
+	<form id="eventForm" onsubmit="return checkForm(this);" ACTION="/index.php/page/eventsfo/code/[code]/bb/1" METHOD="POST"> 
+		<input type="hidden" name="command" value="mailfriend">
+		<input type="hidden" name="send" value="1">
+		<input type="hidden" name="code" value="[code]">
+		<input type="hidden" name="subject" value="[subject]">
+		<input type="hidden" name="max_words" value="50">
+
+		<h1 class="title eveTitle eveMafTitle">[t]E-mail een evenement[/t]</h1>
+		<div class="intro eveIntro eveMafIntro">[t]Vul het formulier volledig in en druk op 'verstuur'.[/t]</div>
+		<h2 class="subHeader eveSh eveMafSh">[t]Uw gegevens[/t]</h2>
+		<div class="formInput eveFi eveMafFi">
+			<label>[t]Uw naam[/t]</label>
+			<input type="Text" name="naam" class="validate[required]" id="from_name">
+		</div>
+		<div class="formInput eveFi eveMafFi">
+			<label>[t]Uw emailadres[/t]</label>
+			<input type="Text" name="email" class="validate[required,custom[email]]" id="from_email">
+		</div>
+		<h2 class="subHeader eveSh eveMafSh">[t]Verzenden aan[/t]</h2>
+		<div class="formInput eveFi eveMafFi">
+			<label>[t]Naam[/t]</label>
+			<input type="Text" name="to_naam[]" class="validate[required]" id="to_name">
+		</div>
+		<div class="formInput eveFi eveMafFi">
+			<label>[t]Emailadres[/t]</label>
+			<input type="Text" name="to_adres[]" class="validate[required,custom[email]]" id="to_email">
+		</div>
+		<div class="formInput eveFi eveMafFi">
+			<label>[t]Eventuele opmerkingen[/t]</label>
+			<textarea name="opmerkingen"></textarea>
+		</div>
+		<div class="buttonContainer eveBc eveMafBc"><input name="Submit" type="Submit" value="[tb]Verstuur[/tb]" class="button"></div>
+	</form>
+</div>
+<script>
+{literal}
+    $(document).ready(function()
+	{
+    	$("#eventForm").validationEngine();
+    });
+{/literal}
+</script>
+
+<!--uts:end inner-->
+</BODY>
+</HTML>

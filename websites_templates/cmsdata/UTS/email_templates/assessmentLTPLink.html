@@ -1,0 +1,20 @@
+<!-- TPL: /UTS/email_templates/assessmentLTPLink.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- TPL: /UTS/email_templates/assessmentLTPLink.html -->
+<p>[t]Dear[/t] {$name|escape},</p>
+<p>[t]You are invited for an assessment, please click on the link below to start the form:[/t]</p>
+<p>[t]Username[/t]: {$username}</p>
+<p><a href="{$LTP_assessment_link}">[t]LTP assessment[/t]</a></p>
+<p>[t]Good luck with the test ![/t]</p>
+<p>{$signature}</p>
+
+
+<!--uts:end inner-->
+</body>
+</html>

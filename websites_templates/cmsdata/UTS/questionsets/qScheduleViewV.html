@@ -1,0 +1,55 @@
+<!--/UTS/questionsets/qScheduleViewV.html - schedule view V -->
+<div class="formInput formSmallInput aplTextInput KQDIV_{$qd.id}" id="KQDIV_{$qd.id}">
+	<label for="{$elementId}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+
+        <table class="scheduleTableSelects">
+            {foreach from=$days item=day key=dayId}
+            <tr>
+                <td>{$day}</td>
+                <td>{$translations.from}</td>
+                <td>                    
+                    <select name="{$elementNamePrefix}[{$dayId}][from][hour]">
+                    <option value="none"> --- </option>
+                    {foreach from=$hours item=hour}
+                    <option value="{$hour}" >{$hour}</option>
+                    {/foreach}
+                    </select>
+                    :
+                    <select name="{$elementNamePrefix}[{$dayId}][from][minute]">
+                    <option value="none"> --- </option>
+                    {foreach from=$minutes item=minute}
+                    <option value="{$minute}" >{$minute}</option>
+                    {/foreach}
+                    </select>
+                </td>
+                <td>{$translations.to}</td>
+                <td>
+                    <select name="{$elementNamePrefix}[{$dayId}][oto][hour]">
+                    <option value="none"> --- </option>
+                    {foreach from=$hours item=hour}
+                    <option value="{$hour}" >{$hour}</option>
+                    {/foreach}
+                    </select>
+                    :
+                    <select name="{$elementNamePrefix}[{$dayId}][oto][minute]">
+                    <option value="none"> --- </option>
+                    {foreach from=$minutes item=minute}
+                    <option value="{$minute}" >{$minute}</option>
+                    {/foreach}
+                    </select>
+                </td>
+            </tr>
+            {/foreach}
+        </table>
+</div>
+
+<if $qd.explanation>
+	<div class="explain aplTextExplain">
+		{$qd.explanation|escape}
+	</div>
+</if>
+<if $currentErrorMessage>
+	<div class="error aplTextError">
+		{$currentErrorMessage}    
+	</div>
+</if>

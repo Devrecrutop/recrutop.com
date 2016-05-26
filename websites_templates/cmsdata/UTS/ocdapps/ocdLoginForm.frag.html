@@ -1,0 +1,20 @@
+<!-- /UTS/ocdapps/ocdLoginForm.frag.html -->
+<div class="ajaxWindow ocdLoginFormFrag">
+    <form name="sqloginfrm" action="{$loginAction|escape}" method="post">
+        <h1 class="title">[t]User login[/t]</h1>
+        <div class="formInput actEqueryInput">
+			<label for="iSrbeUsername">[t]Username[/t]</label>
+			<input type="text" id="iSrbeUsername" name="username" value="" >
+        </div>
+		<div class="formInput actEqueryInput">
+			<label for="iSrbePassword">[t]Password[/t]</label>
+			<input type="password" id="iSrbePassword" name="password" value="" >
+		</div>
+        <div class="buttonContainer actEqueryBc">
+            <input type="submit" name="bSubmit" value="[tb]Submit[/tb]" class="button">
+        </div>
+        <foreach from=$customHiddenInputs item=val key=k>
+            <input type="hidden" name="{$k}" value="{$val|escape}">
+        </foreach>
+    </form>
+</div>

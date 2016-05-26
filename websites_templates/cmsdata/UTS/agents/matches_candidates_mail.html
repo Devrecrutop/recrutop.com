@@ -1,0 +1,94 @@
+<!--START-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--END-->
+
+<table border="0" cellpadding="0" cellspacing="0" class="mailAlignTbl">
+<tr>
+<td class="mailAlign">
+
+<table border="0" cellpadding="0" cellspacing="0" class="mailTbl">
+
+<tr>
+<!--uts:begin logo-->
+<td style="" align="right"><img src="{$logo}" ></td>
+<!--uts:end logo-->
+</tr>
+
+<!--START_Block1-->
+<tr>
+<td valign="top" class="mailTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="mailTextTbl">
+<!--START_Title1-->
+<tr>
+<td class="mailSubHeader"></td>
+</tr>
+<!--END_Title1-->
+<!--START_Text1-->
+<tr>
+<td class="mailText">
+
+<P>
+[t]<P>Dear {$FullName} ,[/t]
+[t]<P>You have created an agent on {$website} to be informed about CV's that could be interesting for you.</P>[/t]
+[t]<P>Name of agent: {$AgentName}.</P>[/t]
+</td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td>[t]De kandidaten die voldoen aan uw Search agent kunt u bekijken door op de naam van de kandidaat te klikken.[/t]</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr>
+<td class="mailText">
+	<table cellspacing="0" cellpadding="0" border="0" width="100%" class="vacancyListTbl">
+	{foreach from=$candidates item=rec key=id}
+			<tr>
+				<td>
+				   {if $AllowLink}<a href="{$website}/index.php/bb/1/page/publiccandidates/command/cand_detail/candcode/{$rec.hash}">{$rec.achternaam} {$rec.voornaam}</a>
+				   {else}{$rec.achternaam} {$rec.voornaam}
+				   {/if}
+				</td>
+				<td>
+				   {if $rec.age}
+				   [t]Age[/t]: {$rec.age}
+				   {/if}
+				</td>
+			</tr>
+			{/foreach}
+	</table>
+</td>
+</tr>
+
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+<tr><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr>
+<td class="mailFooterHeader">[t]Disclaimer[/t]</td>
+</tr>
+<tr>
+<td class="mailFooter">
+<!--uts:begin disclaimer-->
+[t]
+<p>1. This e-mail is for the intended recipient only. If you have received it by mistake please let us know by reply and then delete it from your system; access, disclosure, copying, distribution or reliance on any of it by anyone else is prohibited.
+<br><br>2. If you as intended recipient have received this e-mail incorrectly, please notify the sender (via e-mail) immediately. This e-mail is confidential and may be legally privileged. {$klant} does not guarantee that the information sent and/or received by or with this e-mail is correct and does not accept any liability for damages related thereto.
+</p>
+[/t]
+<!--uts:end disclaimer-->
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>

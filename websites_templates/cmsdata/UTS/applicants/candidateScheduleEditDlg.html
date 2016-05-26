@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>                
+</head>
+<body>
+<!--uts:begin inner-->
+
+{literal}
+<script type="text/javascript">
+<!--
+
+  
+  function cancelEdit()
+  {
+    $('#updateCommand').val('calendar');
+    $('#csc_update_schedule').submit();
+  }  
+
+  function saveSchift()
+  {
+    /*
+    csc_update_schedule.command.value = 'updateschedule';
+    csc_update_schedule.submit();
+    */
+    
+    $('#updateCommand').val('updateschedule');
+    $('#csc_update_schedule').submit();    
+  }
+  
+  function deleteSchift()
+  {
+
+    if(!confirm('[th]Realy delete this schedule?[/th]'))
+    {
+      return false;
+    }
+
+    $('#updateCommand').val('deleteschedule');
+    $('#csc_update_schedule').submit();    
+
+    /*  
+    csc_update_schedule.command.value = 'deleteschedule';
+    csc_update_schedule.submit();
+    */
+  }
+  
+  function deleteAllSchifts()
+  {
+    if(!confirm('[th]Realy delete all occurence of this schedule?[/th]'))
+    {
+      return false;
+    }
+    
+    /*
+    csc_update_schedule.command.value = 'deleteall';
+    csc_update_schedule.submit();
+    */
+    
+    $('#updateCommand').val('deleteall');
+    $('#csc_update_schedule').submit();    
+  }
+
+  // initialize document	
+  $(document).ready(function () {
+          
+     $("#bttnDel").bind('click', deleteSchift);
+     $("#bttnDelAll").bind('click', deleteAllSchifts);
+     $("#bttnSave").bind('click', saveSchift);
+     $("#bttnCancel").bind('click', cancelEdit);                 
+    
+   	// on click on availability type, set up required field status if needed
+   	$("input[name='status']").bind('click', function() {	 	  
+  		 
+  		 if($(this).attr('value') == 'notavailable') 
+  		 {		 	
+  		 	$('#substatus').removeAttr('disabled');
+  			
+  			$("#substatus").rules('add', {
+  			 	required: true,			 
+  			 	messages: {
+  			   required: '[th]Select reason your nonavailability.[/th]'			   
+  			  }
+  			});						 			 		 	
+  		 }
+  		 else 
+  		 {		 	
+  		 	$('#substatus').attr('disabled', 'disabled');
+  		 	$('#substatus').attr('selectedIndex', 0);
+  		 	$("#substatus").rules('remove', 'required');
+  		 }  		 	 		 
+   	}); 	    
+   	   	   	
+  }); // ready end
+  
+  function candidateScheduleUpdateToTimeSelect(value) {  
+	if (value == '24') {
+		$('select[name=to_time_Minute]').val('00');
+		$('select[name=to_time_Minute] option:not(:selected)').attr('disabled', 'disabled');
+	}
+	else {
+		$('select[name=to_time_Minute] option').removeAttr("disabled", "disabled");
+	}
+  }
+      
+//-->
+</script>
+{/literal}
+<div class="outer aplOuter aplProfOuter">
+	<!-- /UTS/applicants/candidateScheduleEditDlg.html -->
+	<h1 class="title aplTitle aplProfTitle">[t]Edit Candidate Schedule[/t]</h1>
+	{$menu}
+	<div class="form aplScCalForm">
+		<form name="csc_update_schedule" id="csc_update_schedule" action="{$handler}" method="post">         
+			<input type="hidden" name="command" id="updateCommand" value="updateschedule">
+			<input type="hidden" name="schedule_id" id="updateScheduleId" value="{$data.id}">
+			<input type="hidden" name="repeat_uid" id="updateRepeatUid" value="{$data.repeat_uid}">             
+			{*ALWAYS AD-HOC, ACCEPTED, SHIFT*}
+			<input type="hidden" name="week_year" id="updateWeekYear" value="{$weekYear}">
+			<input type="hidden" name="week_nr" id="updateWeekNr" value="{$weekNr}">
+			<div class="formGroup">
+				<div class="formInput aplScCalInput">
+					<label>[t]Date[/t]:</label>
+					{html_uts_select_date prefix="from_date_" start_year=-5 end_year=+5 time=$data.from_date all_extra='disabled="disabled"'} {*NOT ALLOWED TO CHANGE DATE*} 
+				</div>
+			</div>
+			<div class="formGroup">
+				<div class="formInput aplScCalInput">
+					<label>[t]Time From[/t]:</label>
+					{if true}
+						{html_select_time use_24_hours=true display_seconds=false minute_interval=15 prefix="from_time_" time=$data.from_time}		
+					{else}
+						{html_select_time use_24_hours=true display_seconds=false minute_interval=15 prefix="from_time_" time=$data.from_time}
+					{/if}
+				</div>
+				<div class="formInput aplScCalInput">
+					<label>[t]To[/t]:</label>
+					{if true}
+						{* BKo: we need to allow to select 24:00 also, so html_select_time cannot be used *}
+						<select name="to_time_Hour" onchange="candidateScheduleUpdateToTimeSelect(this.value);">	
+							{section name=toTimeHourLoop start=0 loop=25 step=1}
+							<option label="{"%02d"|sprintf:$smarty.section.toTimeHourLoop.index}" value="{"%02d"|sprintf:$smarty.section.toTimeHourLoop.index}" {if (int)substr($data.to_time,0,2) == $smarty.section.toTimeHourLoop.index}selected="selected"{/if}>
+							{"%02d"|sprintf:$smarty.section.toTimeHourLoop.index}
+							</option>
+							{/section}		
+						</select>
+						<select name="to_time_Minute">
+							<option label="00" value="00" {if ((int)(substr($data.to_time,3,2) / 15)) == 0}selected="selected"{/if}>00</option>
+							<option label="15" value="15" {if ((int)(substr($data.to_time,3,2) / 15)) == 1}selected="selected"{/if} {if (int)substr($data.to_time,0,2) == 24}disabled="disabled"{/if}>15</option>
+							<option label="30" value="30" {if ((int)(substr($data.to_time,3,2) / 15)) == 2}selected="selected"{/if} {if (int)substr($data.to_time,0,2) == 24}disabled="disabled"{/if}>30</option>
+							<option label="45" value="45" {if ((int)(substr($data.to_time,3,2) / 15)) == 3}selected="selected"{/if} {if (int)substr($data.to_time,0,2) == 24}disabled="disabled"{/if}>45</option>
+						</select>
+					{else}
+						{html_select_time use_24_hours=true display_seconds=false minute_interval=15 prefix="to_time_" time=$data.to_time}
+					{/if}
+				</div>
+				{* MD: Didnt have time to fix this yet *}
+				<table width="100%" border="0" cellpadding="5" cellspacing="0">
+					<tr>
+					<td nowrap="nowrap">[t]Available[/t]:</td>
+					<td nowrap="nowrap">
+					<input type="radio" name="status" value="available" {if $data.status == 'available'}checked="checked"{/if}>[t]Yes[/t]&nbsp;			
+					<input type="radio" name="status" value="maybeavailable" {if $data.status == 'maybeavailable'}checked="checked"{/if}>[t]Maybe[/t]&nbsp;    
+					<input type="radio" name="status" value="notavailable" {if $data.status == 'notavailable'}checked="checked"{/if}>[t]Not[/t]&nbsp;
+					<select name="substatus" id="substatus" style="width: 100px;" {if $data.status != 'notavailable'}disabled="disabled"{/if}>
+					<option value="">---</option>			 	
+					<option value="holidays" {if $data.substatus == 'holidays'}selected="selected"{/if}>[t]Holiday[/t]</option>
+					<option value="sick" {if $data.substatus == 'sick'}selected="selected"{/if}>[t]Sick[/t]</option>
+					<option value="other" {if $data.substatus == 'other'}selected="selected"{/if}>[t]Other[/t]</option>	 			 			 			 
+					</select>			
+					</td>
+					</tr>
+
+					<tr>
+					<td valign="top" nowrap="nowrap">[t]Note[/t]:</td>
+					<td nowrap="nowrap"><textarea name="note" id="note" rows="4" cols="40">{$data.note|escape}</textarea></td>
+					</tr>                    
+
+					<tr>
+					<td>&nbsp;</td>
+					<td align="right" nowrap="nowrap">    
+					<input type="button" name="bttnSave" id="bttnSave" value="[th]Save Schedule[/th]">
+					<input type="button" name="bttnDel" id="bttnDel" value="[th]Delete Schedule[/th]">
+					{if $data.repeat_uid}<input type="button" name="bttnDelAll" id="bttnDelAll" value="[th]Delete All Schedule Occurence[/th]">{/if}        
+					<input type="button" name="bttnCancel" id="bttnCancel" value="[th]Cancel[/th]">
+					</td>
+					</tr>
+				</table>
+			</div>
+		</form>
+	</div>     
+</div>
+<!--uts:end inner-->
+</body>
+</html>

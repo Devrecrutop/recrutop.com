@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>                
+</head>
+<body>
+<!--uts:begin inner-->
+
+
+{literal}
+<script type="text/javascript">
+<!--
+
+/**
+ *
+ */
+  
+
+
+
+
+function resendInvitation(iid){
+        var r=confirm("[th]You are about to resend this invitation. \nDo you want to continue?[/th]");
+        if (r==true){
+          document.frmInvList.command.value="resendInvitation";
+          document.frmInvList.invitation_id.value=iid;        
+          document.frmInvList.submit();  
+        }      
+
+}
+
+function closeInvitation(iid){
+        var r=confirm("[th]You are about to close this invitation. \nDo you want to continue?[/th]");
+        if (r==true){
+          document.frmInvList.command.value="closeInvitation";
+          document.frmInvList.invitation_id.value=iid;        
+          document.frmInvList.submit();  
+        }      
+
+}
+
+function deleteInvitation(iid){
+      
+        var r=confirm("[th]You are about to delete this invitation. \nDo you want to continue?[/th]");
+        if (r==true){
+          document.frmInvList.command.value="deleteInvitation";
+          document.frmInvList.invitation_id.value=iid;        
+          document.frmInvList.submit();  
+        }      
+        
+}
+
+//-->
+</script>
+{/literal}
+
+
+<div class="outer custOuter custLinOuter">
+<!-- /UTS/customers/LMInvitesUpdateList.html -->
+	<h1 class="title custTitle custLinTitle">[t]Updates on invites[/t]</h1>
+  
+  {$menu}  
+  
+  {if $timeslot_id}
+  <div class="intro">[t]Reservations for timeslot {$timeslot.title}.[/t]</div>
+  {else}
+  <div class="intro">[t]See the invites and their updates below.[/t]</div>
+  {/if}
+
+  <form action="{$handler}/command/invitesList" id="frmInvList" name="frmInvList" method="post">
+  <input type="hidden" id="invitation_id" name="invitation_id" value="" >
+  <input type="hidden" name="command" value="" >
+
+	
+	<table border="0" cellpadding="0" cellspacing="0" class="custLinTbl" width="100%">
+		<tr>
+			<th class="custLinC1">[t]Sent[/t]</th>
+			<th class="custLinC2">[t]Candidate[/t]</th>
+      <th class="custLinC3">[t]Vacancy[/t]</th>
+      <th class="custLinC4">[t]Status[/t]</th>
+			<th class="custlinC5">[t]Timeslot[/t]</th>
+			<th class="custLinC6">[t]Resend[/t]</th>
+      <th class="custLinC7">[t]Close[/t]</th>
+      <th class="custLinC8">[t]Delete[/t]</th>
+		</tr>
+		{foreach from=$LMList item=u}
+			<tr class="{cycle values='odd,even'}">
+        
+				<td class="custLinC1">{$u.invitation_sent_datetime|date_format:"%d-%m-%Y"}</td>
+				<td class="custLinC2"><a href="/index.php/page/customers/vid/{$u.vacancy_id}/bb/1/command/cand_detail/kid/{$u.candidate_id}">{$u.candidate_name|escape}</a>&nbsp;</td>
+				<td class="custlinC3">{$u.JobTitle}</td>
+				<td class="custlinC4">{if $u.invitation_activity eq 'pending'}[t]Pending[/t]{elseif $u.invitation_activity eq 'unable_to_plan'}[t]Unable to plan[/t]{else}[t]Planned[/t]{/if}</td>
+				<td class="custlinC5">{if $u.timeslot_id}<a href="/index.php/page/lm_timeslots/bb/1/command/getTimeslot/id/{$u.timeslot_id}">{$u.start_date|date_format:"%d-%m-%Y"} {$u.start_time} - {$u.end_time} {$u.title}</a>{else}&nbsp;{/if}</td>
+				<td class="custlinC6"><img src="{$website}/_images_global/email.gif" alt="[th]Resend[/th]" onClick="resendInvitation('{$u.invitation_id}')" ></td>
+				<td class="custlinC7"><img src="{$website}/_images_global/buttonClose.gif" alt="[th]Close[/th]" onClick="closeInvitation('{$u.invitation_id}')" ></td>
+        <td class="custlinC8"><img src="{$website}/_images_global/buttonClearFilter.gif" alt="[th]Delete[/th]" onClick="deleteInvitation('{$u.invitation_id}')" ></td>
+			</tr>
+		{foreachelse}
+    
+			<tr>
+				<td nowrap="custlinAvad" colspan="8">[t]No Records Available[/t]</td>
+			</tr>
+		{/foreach}
+
+    
+	</table>
+  
+  </form>
+
+	
+	{*PAGING BEGIN*}
+	<div class="pageNav custLinPageNav">    
+		{if $is_prev}
+			<a href="{$handler}/command/setpage/cw/invitesList/pageno/1/" class="pnFirst custLinFirst">[t]&lt;&lt;&nbsp;First[/t]</a>
+			<a href="{$handler}/command/prevpage/cw/invitesList/" class="pnPrev custLinPrev">[t]&lt;&nbsp;Previous[/t]</a>
+		{/if}
+		
+		<foreach from=$page_array item=p key=k>
+			<a href="{$handler}/command/setpage/cw/invitesList/pageno/{$k}/" {if $p}class="pnActive custLinActive"{/if}>{$k}</a>
+		</foreach>
+		
+		{if $is_next}
+			<a href="{$handler}/command/nextpage/cw/invitesList/" class="pnNext custLinNext">[t]Next&nbsp;&gt;[/t]</a>
+			<a href="{$handler}/command/setpage/cw/invitesList/pageno/{$lastpage}/" class="pnLast custLinLast">[t]Last&nbsp;&gt;&gt;[/t]</a>
+		{/if}
+	</div>
+	{*PAGING END*}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

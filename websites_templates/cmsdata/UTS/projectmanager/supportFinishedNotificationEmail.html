@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>xxx</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Your support request has been resolved.[/t]</p>
+<table cellpadding="0" cellspacing="0"  border="0">
+  <tr>
+    <td style="padding:2px 10px 2px 0px;">[t]Ticketnr[/t]:</td>
+    <td>##{$s.ticketnr}##</td>
+  </tr>
+  <tr>
+    <td style="padding:2px 10px 2px 0px;">[t]Soort[/t]:</td>
+    <td>{$s._itemtype}</td>
+  </tr>
+  <tr>
+    <td style="padding:2px 10px 2px 0px;">[t]Prioriteit[/t]:</td>
+    <td>{$s.prioriteit}</td>
+  </tr>
+  <tr>
+    <td style="padding:2px 10px 2px 0px;">[t]Toegewezen[/t]:</td>
+    <td>{$s._assigned_to}</td>
+  </tr>
+  <tr>
+    <td style="padding:2px 10px 2px 0px;">[t]Onderwerp[/t]:</td>
+    <td>{$s.onderwerp|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:2px 10px 2px 0px;">[t]Vraag[/t]:</td>
+    <td>{$s.vraag|escape}</td>
+  </tr>
+  <tr>
+    <td style="padding:2px 10px 2px 0px;">[t]Comment[/t]:</td>
+    <td><pre>{$message|escape}</pre></td>
+  </tr>
+</table>
+<!--uts:end inner-->
+</body>
+</html>

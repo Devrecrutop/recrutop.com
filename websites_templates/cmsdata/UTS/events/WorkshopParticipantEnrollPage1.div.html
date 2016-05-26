@@ -1,0 +1,138 @@
+<html>
+<head>
+<title>MEDICA_EVENTS_ENROLL_1</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/WorkshopParticipantEnrollPage1.div.html -->
+<SCRIPT>
+//{literal}
+function check()
+{	
+var d = document.form
+if (d.email.value == "")
+	{
+		show("\n\n[th]U heeft nog geen E-mail adres ingevuld.[/th]\n\n")
+		setTimeout("document.form.email.focus()", 1)
+		return false
+	}
+	if (d.password.value == "")
+	{
+		show("\n\n[th]U heeft geen password ingevoerd.[/th]\n\n")
+		setTimeout("document.form.password.focus()", 1)
+		return false
+	}
+	if (d.password_check.value == "")
+	{
+		show("\n\n[th]Vul ter controle 2 maal uw wachtwoord in.[/th]\n\n")
+		setTimeout("document.form.password_check.focus()", 1)
+		return false
+	}
+if (d.password.value != d.password_check.value)
+	{
+		show("\n\n[th]Wachtwoorden komen niet overeen.[/th]\n\n")
+		d.password.value = "";
+		d.password_check.value = "";
+		setTimeout("document.form.password.focus()", 1)
+		return false
+	}
+
+	return true
+}
+
+function show(m)
+{
+	setTimeout("alert(unescape(\"" + escape(m) + "\"))", 100)
+}
+//{/literal}
+</SCRIPT>
+      
+<table border="0" cellpadding="0" cellspacing="0" class="vacstable">
+<form name="form" method="post" action="/index.php/page/participantsfo/command/enroll/type/workshop/code/[code]/bb/1" onsubmit="return check();">
+<tr> 
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Inschrijfformulier[/t]</td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">
+
+<p>[t]Vul hieronder uw e-mailadres in en kies een wachtwoord. 
+          Klik op 'inschrijven' en vul de velden zo compleet mogelijk in.[/t]</p>
+        <p>[t]Bewaar uw inlogggegevens goed want daarmee kunt u inschrijven op evenementen 
+          of uw gegevens wijzigen. We sturen u hiervan een bevestiging per e-mail.[/t]</p></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="itemContainer">
+
+<table border="0" cellpadding="0"  cellspacing="0" class="itemHolder">
+<tr>
+<td class="itemTblContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="itemTbl">
+<tr> 
+<td class="HQuestion">[t]E-mailadres[/t]</td>
+<td class="fieldContainer"><input type="text" name="email"></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="itemTblContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="itemTbl">
+<tr> 
+<td class="HQuestion">[t]Wachtwoord[/t]</td>
+<td class="fieldContainer"><input type="password" name="password"></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="itemTblContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="itemTbl">
+<tr> 
+<td class="HQuestion">[t]Bevestig wachtwoord[/t]</td>
+<td class="fieldContainer"><input type="password" name="password_check"><input type="hidden" name="ConsultantId" value="[ConsultantId]"></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--uts:begin button apply-->
+<tr> 
+<td class="formTblButtonCell"> <input type="submit" name="Submit" value="[tb]Inschrijven[/tb]" class="button"> </td>
+</tr>
+<!--uts:end button apply-->
+</table>
+
+</td>
+</tr>
+<input type="hidden" name="step" value="2">
+</form>
+</table>
+<!--uts:end inner-->
+</body>
+</html>

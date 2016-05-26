@@ -1,0 +1,48 @@
+<!--START PUBLICATION H-->
+
+<!-- UTS/questionsets/qSocNetViewH.html -->
+
+<h3 class="socNetFiTitle">{$qd.question|escape}</h3>
+<if $qd.explanation>
+<div class="explain explain_{$elementName}">
+    {$qd.explanation|escape}
+</div>
+</if>
+
+<div class="formInput formSmallInput socNetFiAdd">
+<label>[t]Social network[/t]</label>
+<input type="button" class="button" value="[tb]Add item[/tb]" onclick="qsAddCVItem('{$qd.id}', '')">
+</div>
+
+<foreach from=$items item=item key=key>
+<div class="formGroup socNetFiformGroup">
+	<div class="formInput positionWFormInput socNetFiNetwork">
+		<label>[t]Network[/t]:</label>
+		<select name="{$elementNamePrefix}_{$key}_network_id">
+			<option value="0">---</option>												
+			<html_options options=$socNetList selected=$item.network_id>
+		</select>
+	</div>
+
+	<div class="formInput positionWFormInput socNetFiUrl">
+		<label>[t]URL[/t]:</label>
+		<input name="{$elementNamePrefix}_{$key}_url" type="text" value="{$item.url|escape}">
+	</div>
+	<div class="formInput positionWFormInput socNetFiLink">
+		<label>[t]Link text[/t]:</label>
+		<input name="{$elementNamePrefix}_{$key}_link_text" type="text" value="{$item.link_text|escape}">
+	</div>		
+	<div class="formInput formSmallInput formDeleteButton">
+		<label>&nbsp;</label>
+		<input name="button" type="button" class="button" value="[t]Delete item[/t]" onclick="qsDeleteCVItem('{$qd.id}', '', '{$key}')">
+	</div>
+	
+	<if $itemsErrors[$key]>
+	<div class="error error_{$elementName}">
+	    {$itemsErrors[$key]}    
+	</div>
+	</if>
+	
+	<input type="hidden" name="{$elementNamePrefix}_{$key}_iid" value="{$item.iid|escape}">
+</div>
+</foreach>

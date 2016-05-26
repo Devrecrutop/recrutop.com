@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+{* <p>[t]Dear[/t] {$recipientFirstName} {$recipientInfix} {$recipientLastName},</p> *}
+<p>[t]Dear[/t] {$recipientFirstName},</p>
+<p>[t]Your participation in crowdfunding project has been accepted.[/t]</p>
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+	<td width="180px"><b>[t]Invoice line[/t]:</b></td>
+	<td>{$c.invoice_line|escape}</td>
+</tr>
+<tr>
+	<td><b>[t]Total price[/t]:</b></td>
+	<td>{$c.cost} {$c.currency}</td>
+</tr>
+<tr>
+	<td><b>[t]Amount per participant[/t]:</b></td>
+	<td>{$c.costPerParticipant} {$c.currency}</td>
+</tr>
+<tr>
+	<td><b>[t]Total number of participants[/t]:</b></td>
+	<td>{$c.participants_total}</td>
+</tr>
+<tr>
+	<td><b>[t]Your number of participants[/t]:</b></td>
+	<td>{$c.participants_yours}</td>
+</tr>
+<tr>
+	<td><b>[t]Participants still needed[/t]:</b></td>
+	<td>{$c.participantsNeeded}</td>
+</tr>
+<tr>
+	<td colspan="2"><b>[t]Description[/t]:</b></td>
+</tr>
+<tr>
+	<td colspan="2">{$c.description}</td>
+</tr>
+</table>
+
+<p class="utsSignature">
+[t]Regards,[/t]<br>
+{$accountManagerName}<br>
+{$clientName}
+</p>
+
+<p><i>[t]Our terms & conditions apply to all offers and are available on our website.[/t]</i></p>
+
+<!--uts:end inner-->
+</body>
+</html>

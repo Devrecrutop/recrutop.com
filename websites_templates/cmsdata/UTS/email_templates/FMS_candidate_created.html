@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+ <p>
+     {*
+     Here you have access to the following names:
+        $cand_firstname         Firstname only
+        $cand_fullname          Firstname middlename Lastname
+        cand_fulllastname       middlename Lastname
+     *}
+    {if $tpl_salutation == "informal"}
+        [t]Dear[/t] {$cand_firstname|escape},
+    {else}
+        [t]Dear[/t] {$cand_fullname|escape},
+    {/if}
+ </p>
+
+<p>[t]Your account for the iManage portal has been created, you can login with the following credentials:[/t]
+    <br>[t]Email:[/t] {$email}
+    <br>[t]Password:[/t] {$password}
+</p>
+
+<p>
+[t]Kind regards,[/t]<br>
+[t]{$contactPerson}[/t]<br>
+[t]{$client}[/t]<br>
+[t]URL:[/t] <a href="{$website}/" target="_blank">{$website}</a>
+
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+var vReactionType = '{$rea.reaction_type}';
+//{literal}
+
+function acceptJob() {
+    //alert(vReactionType);
+    if (vReactionType=='recruitment') {
+        recruitmentAccept();
+    } else if (vReactionType=='tender') {
+        tenderAccept();
+    }
+}
+
+function rejectJob() {
+    //alert(vReactionType);
+    if (vReactionType=='recruitment') {
+        recruitmentReject();
+    } else if (vReactionType=='tender') {
+        tenderReject();
+    }
+}
+
+function recruitmentAccept() {
+    if (!confirm('[th]Are you sure to accept this job?[/th]')) return;
+    // accept job right away
+    $('#iRaCom').val('recruitmentAccept');
+    $('#fReaction').submit();
+}
+
+function recruitmentReject() {
+    // display ui dialog to specify reason
+    $('#dialog-form-recruitment-reject').dialog('open');
+}
+
+function tenderAccept() {
+    // display ui dialog to specify fee and motivation
+    $('#dialog-form-tender-accept').dialog('open');
+}
+
+function tenderReject() {
+    if (!confirm('[th]Are you sure to reject this job?[/th]')) return;
+    $('#iRaCom').val('tenderReject');
+    $('#fReaction').submit();
+}
+
+function backToActiveTrajectories(backWhere){
+  backurl = "/index.php/page/recrowd_trajectories/command/findList/frList/"+backWhere+"/bb/1";
+  window.location = backurl; 
+}
+
+$(document).ready(function() {
+    var recMotivation = $( "#taRecruitmentMotivation" ), tenFee = $( "#inTenderFee" ), tenMotivation = $( "#taTenderMotivation" ), allRecFields = $( [] ).add( recMotivation ), allTenFields = $( [] ).add( tenFee ).add( tenMotivation ), tenTips = $( ".validateTenTips" )
+      recTips = $( ".validateRecTips" );
+ 
+    function updateTips( t ) {
+      recTips
+        .text( t )
+        .addClass( "ui-state-highlight" );
+      setTimeout(function() {
+        recTips.removeClass( "ui-state-highlight", 1500 );
+      }, 500 );
+    }
+    
+    function updateTenTips( t ) {
+      tenTips
+        .text( t )
+        .addClass( "ui-state-highlight" );
+      setTimeout(function() {
+        tenTips.removeClass( "ui-state-highlight", 1500 );
+      }, 500 );
+    }
+ 
+    function checkLength( o, n, min, max ) {
+      if ( o.val().length > max || o.val().length < min ) {
+        o.addClass( "ui-state-error" );
+        updateTips( '[th]Field must not be empty: [/th]'+n );
+        return false;
+      } else {
+        return true;
+      }
+    }
+    
+    function checkTenLength( o, n, min, max ) {
+      if ( o.val().length > max || o.val().length < min ) {
+        o.addClass( "ui-state-error" );
+        updateTenTips( '[th]Field must not be empty: [/th]'+n );
+        return false;
+      } else {
+        return true;
+      }
+    }
+    
+    function checkPercentage( o, n) {
+      if (o.val().length < 1) {
+        o.addClass( "ui-state-error" );
+        updateTenTips( '[th]Field must not be empty: [/th]'+n );
+        return false;
+      }
+      var perc = parseFloat(o.val());
+      if (isNaN(perc) || perc<0 || perc>100) {
+        o.addClass( "ui-state-error" );
+        updateTenTips( '[th]Number between 0 and 100 expected: [/th]'+n );
+        return false;
+      }
+      return true;
+    }
+    
+    $( "#dialog-form-recruitment-reject" ).dialog({
+        modal: true,
+        autoOpen: false,
+        height: 250,
+        width: 300,
+        resizable: false,
+        buttons: {
+            "[th]Submit[/th]": function() {
+                var bValid = true;
+                allRecFields.removeClass( "ui-state-error" );
+ 
+                bValid = bValid && checkLength( recMotivation, "[th]motivation[/th]", 1, 500 );
+                
+                if (bValid) {
+                    $('#frmRecruitmentReject').submit();
+                }
+          
+            },
+            "[th]Cancel[/th]": function() {
+                $( this ).dialog( "close" );
+            }
+        }
+	});
+    
+    $( "#dialog-form-tender-accept" ).dialog({
+        modal: true,
+        autoOpen: false,
+        height: 250,
+        width: 300,
+        resizable: false,
+        buttons: {
+            "[th]Submit[/th]": function() {
+                var bValid = true;
+                allTenFields.removeClass( "ui-state-error" );
+ 
+                bValid = bValid && checkLength( tenMotivation, "[th]motivation[/th]", 1, 500 );
+                bValid = bValid && checkPercentage (tenFee, "[th]fee[/th]");
+                
+                if (bValid) {
+                    $('#frmTenderAccept').submit();
+                }
+          
+            },
+            "[th]Cancel[/th]": function() {
+                $( this ).dialog( "close" );
+            }
+        },
+        close: function() {
+        allFields.val( "" ).removeClass( "ui-state-error" );
+        }
+	});
+});
+//{/literal}
+</script>
+
+<form name="reactionForm" id="fReaction" method="post" action="{$handler}">
+    <input type="hidden" name="command" value="recruitmentAcceptance">
+    <input type="hidden" name="raCom" value="" id="iRaCom">
+    <input type="hidden" name="vacid" value="{$vacid}">
+</form>
+
+<div class="outer ojbOuter ojbDetail">
+	<!-- /UTS/customers/recrowd_present_vacancy.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title ojbTitle">{$job.JobTitle}</h1>
+
+    {if $rea.reaction_status == "accepted" }
+    <div class="intro recrowdOfferProcessedNotice">[t]This job was already accepted at: [/t]&nbsp{$rea.reaction_datetime|date_format:"%d-%m-%Y"}</div>
+	<meta http-equiv="refresh" content="10;URL=[website]/index.php/page/recrowd_trajectories/command/active_trajectories/bb/1">
+    {elseif $rea.reaction_status == "rejected" }
+	<div class="intro">[t]This job was already rejected at: [/t]&nbsp{$rea.reaction_datetime|date_format:"%d-%m-%Y"}</div>
+    {elseif $rea.reaction_status == "deadline passed" }
+	<div class="intro">[t]Deadline has already passed for this job.[/t]</div>
+    {/if}
+    <div class="ojpSubtitle">{if $networkurl}<a href="{$networkurl}" target="_blank">{$job.JobCompany.JobCompanyName|escape}</a>{else}{$job.JobCompany.JobCompanyName|escape}{/if}</div>
+    <div class="ojpContactCon">
+        <div class="itemContainer ojpIc ojpContact">
+            <h3 class="itemTitle ojpIt">[t]Contact gegevens[/t]</h3>
+            <div class="itemWord ojpIw">
+                {if $job.JobContact.JobContactName}<div class="ojpContactName"><span>[t]Consultant[/t]</span>{$job.JobContact.JobContactName}</div>{/if}
+                {if $job.JobContact.JobContactPhone}<div class="ojpContactPhone"><span>[t]Telefoonnummer[/t]</span>{$job.JobContact.JobContactPhone}</div>{/if}
+                {if $job.JobContact.JobContactEmail}<div class="ojpContactEmail"><span>[t]E-mail[/t]</span>{$job.JobContact.JobContactEmail}</div>{/if}
+                {if $job.JobId}<div class="ojpContactId"><span>[t]Referentie[/t]</span>{$job.JobId}</div>{/if}
+            </div>
+        </div>
+    </div>
+    <div class="buttonContainer ojpButtonContainer">
+        <input class="button ojpButton ojpAccept" type="button" value="[tb]Accept[/tb]" onClick="acceptJob()" {if $rea.reaction_status || $isArchived }disabled="disabled"{/if}>
+        <input class="button ojpButton ojpDenied" type="button" value="[tb]Reject[/tb]" onClick="rejectJob()" {if $rea.reaction_status || $isArchived }disabled="disabled"{/if}>
+        {if $frList}
+        <input class="button ojpButton ojpBack" type="button" value="[tb]Back[/tb]" onClick="backToActiveTrajectories('{$frList}')">
+        {/if}
+    </div>
+    <div class="cleaner"></div>
+    {if $job.JobDescription.Chapo}
+	<div class="itemContainer ojpIc ojpChapo">
+		<h3 class="itemTitle ojpIt">{$job.JobDescription.ChapoTitle}</h3>
+		<div class="itemDescr ojpIDescr">{$job.JobDescription.Chapo}</div>
+	</div>
+    {/if}
+    
+    <div class="ojpLeft">
+        {if $job.JobDescription.FunctieEo}
+		<div class="itemContainer ojpIc ojpFeo">
+			<h3 class="itemTitle ojpIt">{$job.JobDescription.FunctieEoTitle}</h3>
+			<div class="itemDescr ojpIDescr">{$job.JobDescription.FunctieEo}</div>
+		</div>
+        {/if}
+        {if $job.JobDescription.FunctieEe}
+		<div class="itemContainer ojpIc ojpFee">
+			<h3 class="itemTitle ojpIt">{$job.JobDescription.FunctieEeTitle}</h3>
+			<div class="itemDescr ojpIDescr">{$job.JobDescription.FunctieEe}</div>
+		</div>
+        {/if}
+	    <div class="cleaner"></div>
+    </div>
+    
+    <div class="ojpRight">
+        {if $job.JobDescription.CompanyProfile}
+		<div class="itemContainer ojpIc ojpCompProf">
+			<h3 class="itemTitle ojpIt">{$job.JobDescription.CompanyProfileTitle}</h3>
+			<div class="itemDescr ojpIDescr">{$job.JobDescription.CompanyProfile}</div>
+		</div>
+        {/if}
+        {if $job.JobDescription.SalO}
+		<div class="itemContainer ojpIc ojpCompSalO">
+			<h3 class="itemTitle ojpIt">{$job.JobDescription.SalOTitle}</h3>
+			<div class="itemDescr ojpIDescr">{$job.JobDescription.SalO}</div>
+		</div>
+        {/if}
+        {if $job.JobDescription.CompanyCulture}
+		<div class="itemContainer ojpIc ojpCompCul">
+			<h3 class="itemTitle ojpIt">{$job.JobDescription.CompanyCultureTitle}</h3>
+			<div class="itemDescr ojpIDescr">{$job.JobDescription.CompanyCulture}</div>
+		</div>
+        {/if}
+        {if $job.JobLocationAddress}
+		<div class="itemContainer ojpIc ojpCompCul">
+			<h3 class="itemTitle ojpIt">[t]Adresgegevens[/t]</h3>
+			<div class="itemWord ojpIw">
+				{if $job.JobLocationAddress}<div class="ojpAddrStreet"><span>[t]Straat[/t]</span>{$job.JobLocationAddress}</div>{/if}
+				{if $job.JobLocationCity}<div class="ojpAddrCity"><span>[t]Stad[/t]</span>{$job.JobLocationCity}</div>{/if}
+				{if $job.JobLocationZipCode}<div class="ojpAddrZipCode"><span>[t]Postcode[/t]</span>{$job.JobLocationZipCode}</div>{/if}
+				{if $job.JobLocationCountry}<div class="ojpAddrCountry"><span>[t]Land[/t]</span>{$job.JobLocationCountry}</div>{/if}
+			</div>
+		</div>
+        {/if}
+	    <div class="cleaner"></div>
+    </div>
+    <div class="cleaner"></div>
+
+	<div id="shadowing"></div>
+	<div id="box">
+		<span id="boxtitle"></span>
+		<form method="GET" action="lightbox-form-test.html" target="_parent">
+			<p>[th]Available now[/th]
+				<input type="checkbox" name="available" id="available" value="1" maxlength="60" size="60">
+			</p>
+			<p>[th]Available from:[/th]
+				<html_uts_select_date time=$currentValue field_order="DMY" month_format="%m" prefix=available_from day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" start_year=$smarty.now|date_format:"%Y" end_year=$smarty.now+800*24*60*60|date_format:"%Y" reverse_years=true>
+			</p>
+			<div class="buttonContainer ojpButtonContainer">
+				<input class="button ojpButton ojpAccept" type="button" value="[th]Verwerken[/th]" onclick="realsubmit()">
+				<input class="button ojpButton ojpDenied" type="button" value="[th]Annuleren[/th]" onclick="closebox()"> 
+			</div>
+		</form>
+	</div>
+</div>
+
+{* dialogs *}
+<div id="dialog-form-recruitment-reject" title="[thn]Reject Job[/thn]" style="display:none;">
+  <form id="frmRecruitmentReject" action="{$handler}" method="post">
+  <fieldset style="border: none;">
+    <p class="validateRecTips">[thn]All form fields are required.[/thn]</p>
+    <label for="selRecruitmentRefusalReason">[thn]Reason[/thn]:</label>
+    <select name="recruitment_refusal_reason" id="selRecruitmentRefusalReason" class="ui-widget-content ui-corner-all">
+        {html_options options=$refusalReasons}
+    </select><br>
+    <label for="taRecruitmentMotivation">[thn]Motivation[/thn]:</label>
+    <textarea rows="5" id="taRecruitmentMotivation" name="reaction_motivation"></textarea>
+    
+  </fieldset>
+    <input type="hidden" name="command" value="recruitmentAcceptance">
+    <input type="hidden" name="raCom" value="recruitmentReject">
+    <input type="hidden" name="vacid" value="{$vacid}">
+  </form>
+</div>
+
+<div id="dialog-form-tender-accept" title="[thn]Accept Job[/thn]" style="display:none;">
+  <form id="frmTenderAccept" action="{$handler}" method="post">
+  <fieldset style="border: none;">
+    <p class="validateTenTips">[thn]All form fields are required.[/thn]</p>
+    <label for="inTenderFee">[thn]Fee %[/thn]:</label>
+    <input type="text" name="tender_fee_percentage" value="" size="4" id="inTenderFee">
+    <label for="taTenderMotivation">[thn]Motivation[/thn]:</label>
+    <textarea rows="5" id="taTenderMotivation" name="reaction_motivation"></textarea>
+    
+  </fieldset>
+    <input type="hidden" name="command" value="recruitmentAcceptance">
+    <input type="hidden" name="raCom" value="tenderAccept">
+    <input type="hidden" name="vacid" value="{$vacid}">
+  </form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

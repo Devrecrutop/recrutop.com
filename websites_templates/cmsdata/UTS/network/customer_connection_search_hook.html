@@ -1,0 +1,27 @@
+<div class="hookOuter nwlSearchOuter">
+<!-- UTS/network/customer_connection_search_hook.html -->
+	<div class="hookHeader nwlShHHeader">[t]Werkgevers zoeken[/t]</div>
+    <form method="post" action="{$baseHttpPath}index.php/page/network/command/custlist/cms_categorie/{$cmsCategory}/">
+        <input type="hidden" name="customer_search" value="1">
+
+        <div class="hookInput nwlShI nwlShIName">
+            <label>[t]Bedrijfsnaam[/t]:</label>
+            <input type="text" name="customer_search_name" value="">
+        </div>
+
+        <div class="hookInput nwlShI nwlShIKw">
+            <label>[t]Trefwoord[/t]:</label>
+            <input type="text" name="customer_search_keyword" value="">
+        </div>
+
+        <div class="hookInput nwlShI nwlShIBranche">
+            <label>[t]Branche[/t]:</label>
+            <select name="branch_id"><option value="">---</option>{html_options options=$branchList selected=$branchId}</select>
+        </div>
+
+        <div class="hookButton nwlSearchBc">
+            <input type="submit" value="[th]Search[/th]" class="button">
+        </div>
+		<div class="cleaner nwlShcleaner"></div>
+    </form>
+</div>

@@ -1,0 +1,18 @@
+<!-- /UTS/candidates/baction_changeStatus.frag.html -->
+<form action="{$handler}" name="baf" method="post">
+<div class="prettyH">[t]Change status[/t]</div>
+<p class="prettyT">[t]Please select a status and confirm the operation. {$ccnt} candidates will be updated.[/t]</p>
+    <select name="baStatus">
+        <html_options options=$statuses>
+    </select>
+    <div>
+        <input type="submit" class="button" value="[tb]Proceed[/tb]">
+        <input type="button" class="button" value="[tb]Cancel[/tb]" onclick="$('#dummyCloseLink').trigger('click')">
+    </div>
+    <foreach from=$cids item=cid>
+        <input type="hidden" name="cids[]" value="{$cid}">
+    </foreach>
+    <input type="hidden" name="command" value="runaction">
+    <input type="hidden" name="action" value="changeStatus">
+</form>
+<a href="#" rel="close" id="dummyCloseLink" style="display:none;"></a>

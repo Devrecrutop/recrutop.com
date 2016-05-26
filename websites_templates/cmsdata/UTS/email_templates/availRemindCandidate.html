@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+    <if $tpl_salutation == "informal">
+        [t]Dear {$informalname|escape},[/t]  {*informal*}
+    <else>
+        [t]Dear {$formalname|escape},[/t]    {*formal*}
+    </if>
+</p>
+<p>
+    [t]since {$krow._deactivationDateLoc} your account was switched off. You wanted to be alerted when the automated activation of your account would take place.[/t]
+</p>
+<p>
+    [t]If you want to go to your profile, please click {$hereLinkStart}here{$hereLinkEnd}. Alternatively, you can copy and paste the following URL into your browser:[/t]
+</p>
+<p>
+    {$loginLink}
+</p>
+    
+<p class="utsSignature">
+[t]Kind regards,[/t]<br>
+[t]{$contactPerson}[/t]<br>
+[t]{$client}[/t]<br>
+[t]URL:[/t]<a href="{$website}/" target="_blank">{$website}</a>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>
+

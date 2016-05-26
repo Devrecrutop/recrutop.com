@@ -1,0 +1,21 @@
+<html>
+<body>
+
+<h1>{$form.name}</h1>
+
+<table>
+{foreach from=$form.fields item=f}
+<tr id="{cycle values="rowflip,rowflop"}">
+<td>{$f.name|escape}:</td>
+<td>
+	{if $f.subtype == 'DateTime'}{$answers[$f.id]|date_format:"%d-%m-%Y %H:%M:%S"}
+	{if $f.subtype == 'YesNo'}{if $answers[$f.id]}[t]Yes[/t]{else}[t]No[/t]{/if}{/if}
+	{else}{$answers[$f.id]|escape}
+	{/if}
+</td>
+</tr>
+{/foreach}
+</table>
+
+</body>
+</html>

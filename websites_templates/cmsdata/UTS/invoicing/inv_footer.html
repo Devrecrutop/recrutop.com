@@ -1,0 +1,18 @@
+<!-- /UTS/invoicing/inv_footer.html -->
+{*INVOICE HTML FOOTER*}
+<hr style="height: 1pt;">
+<div id="footer">
+
+{if $fSt.addr}
+<div>{$fData.supplier_name|escape}&nbsp;&nbsp;{$fData.supplier_address|escape}</div>
+{/if}
+
+<div>
+{if $fSt.vatnr && $fData.vatnr}[t]Vat Nr.:[/t]{$fData.vatnr|escape}&nbsp;&nbsp;{/if}
+{if $fData.kvknr}[t]Kvk Nr.:[/t]{$fData.kvknr|escape}&nbsp;&nbsp;{/if}
+{if $fSt.banknr && $fData.banknr}[t]Bank Nr.:[/t]{$fData.banknr|escape}&nbsp;&nbsp;{/if}
+{if $fSt.tel && $fData.tel}[t]Tel.:[/t]{$fData.tel|escape}&nbsp;&nbsp;{/if}
+{if $fSt.fax && $fData.fax|escape}[t]Fax:[/t]{$fData.fax|escape}&nbsp;&nbsp;{/if}
+{if $fSt.email && $fData.email}[t]E-mail:[/t]{$fData.email|escape}&nbsp;&nbsp;{/if}
+</div>
+</div>

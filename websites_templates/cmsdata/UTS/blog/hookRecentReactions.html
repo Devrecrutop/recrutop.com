@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<if !empty($reactions)>
+	<div class="hookOuter blogHookReactionsOuter">
+	<!-- /UTS/blog/hookRecentReactions.html -->
+	<div class="hookHeader blogHookReactionsHeader"><div><h5>[t]Recent reactions[/t]</h5></div></div>
+	<foreach from=$reactions item=re>
+	<div class="hookItemContainer blogHookReactionsContainer">
+	<div class="hookItemTitle blogHookReactionsLink" title="{$re._name} [th]reacted on article[/th] {$re.title|escape}"><a href="{$re._linkurl}#rea{$re._reaid}">{$re.title|escape}</a></div>
+	<div class="hookItemWord blogHookReactionsName">{$re._name}</div>
+	<if [uts:showDateTime]>
+	<div class="hookItemWord blogHookReactionsWord"><span>[t]at[/t]</span>{$re._datetime_reaction}</div>
+	</if>
+	</div>
+	</foreach>
+	</div>
+</if>
+
+<!--uts:end inner-->
+</body>
+</html>

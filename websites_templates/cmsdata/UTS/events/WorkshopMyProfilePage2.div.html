@@ -1,0 +1,241 @@
+<html>
+<head>
+<title>My profile page 2</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/WorkshopMyProfilePage2.div.html -->
+<SCRIPT>
+//{literal}
+function check()
+{	
+	var d = document.form
+	if (d.Epassword_new.value || d.Epassword_check.value){
+		if (d.Epassword_old.value=="") {
+			show("\n\n[th]Als u uw wachtwoord wilt aanpassen, moet u ook uw oude wachtwoord invullen.[/th]\n\n")
+			setTimeout("document.form.Epassword_old.focus()", 1)
+			return false
+		}
+		if (d.Epassword_new.value != d.Epassword_check.value) {
+			show("\n\n[th]De nieuwe wachtwoorden komen niet overeen.[/th]\n\n")
+			d.Epassword_new.value = "";
+			d.Epassword_check.value = "";
+			setTimeout("document.form.Epassword_new.focus()", 1)
+			return false
+		}
+	}
+	return true
+}
+
+function show(m)
+{
+	setTimeout("alert(unescape(\"" + escape(m) + "\"))", 100)
+}
+function ignoreSpaces(string) {
+var temp = "";
+string = '' + string;
+splitstring = string.split(" ");
+for(i = 0; i < splitstring.length; i++)
+temp += splitstring[i];
+return temp;
+}
+function check_date(field){
+var checkstr = "0123456789";
+var DateField = field;
+var Datevalue = "";
+var DateTemp = "";
+var seperator = "-";
+var day;
+var month;
+var year;
+var leap = 0;
+var err = 0;
+var i;
+   err = 0;
+   DateValue = DateField.value;
+   /* Delete all chars except 0..9 */
+   for (i = 0; i < DateValue.length; i++) {
+	  if (checkstr.indexOf(DateValue.substr(i,1)) >= 0) {
+	     DateTemp = DateTemp + DateValue.substr(i,1);
+	  }
+   }
+   DateValue = DateTemp;
+   /* Always change date to 8 digits - string*/
+   /* if year is entered as 2-digit / always assume 19xx */
+   if (DateValue.length == 6) {
+      DateValue = DateValue.substr(0,4) + '19' + DateValue.substr(4,2); }
+   if (DateValue.length != 8) {
+      err = 19;}
+   /* year is wrong if year = 0000 */
+   year = DateValue.substr(4,4);
+   if (year == 0) {
+      err = 19;
+   }
+   /* Validation of month*/
+   month = DateValue.substr(2,2);
+   if ((month < 1) || (month > 12)) {
+      err = 21;
+   }
+   /* Validation of day*/
+   day = DateValue.substr(0,2);
+   if (day < 1) {
+     err = 22;
+   }
+   /* Validation leap-year / february / day */
+   if ((year % 4 == 0) || (year % 100 == 0) || (year % 400 == 0)) {
+      leap = 1;
+   }
+   if ((month == 2) && (leap == 1) && (day > 29)) {
+      err = 23;
+   }
+   if ((month == 2) && (leap != 1) && (day > 28)) {
+      err = 24;
+   }
+   /* Validation of other months */
+   if ((day > 31) && ((month == "01") || (month == "03") || (month == "05") || (month == "07") || (month == "08") || (month == "10") || (month == "12"))) {
+      err = 25;
+   }
+   if ((day > 30) && ((month == "04") || (month == "06") || (month == "09") || (month == "11"))) {
+      err = 26;
+   }
+   /* if 00 ist entered, no error, deleting the entry */
+   if ((day == 0) && (month == 0) && (year == 00)) {
+      err = 0; day = ""; month = ""; year = ""; seperator = "";
+   }
+   /* if no error, write the completed date to Input-Field (e.g. 13.12.2001) */
+   if (err == 0) {
+      DateField.value = day + seperator + month + seperator + year;
+   }
+   /* Error-message if err != 0 */
+   else {
+      alert("[th]Date is incorrect![/th]");
+      DateField.select();
+	  DateField.focus();
+   }
+}
+//{/literal}
+</SCRIPT>
+      
+<table border="0" width="400">
+
+<form name="form" method="post" action="/index.php/page/participantsfo/command/save/code/[code]/bb/1" onsubmit="return check();">
+<tr>
+<td class="kop" colspan="2">[t]Persoonlijke pagina[/t]</td>
+</tr>
+
+
+<tr> 
+<td height="30" colspan="2" valign="top">
+
+<table width="100%" border="0" align="left" cellpadding="0" cellspacing="0">
+<tr> 
+<td nowrap><a href="/index.php/page/participantsfo/command/myprofile/type/workshop/ppage/2/code/[code]/bb/1">[t]Personalia[/t]</a> | <a href="/index.php/page/participantsfo/command/myprofile/type/workshop/ppage/3/code/[code]/bb/1">[t]Inschrijvingen[/t]</a></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr> 
+<td class="subkop" colspan="2">[t]Personalia[/t]</td>
+</tr>
+
+<tr>
+<td colspan="2" class="tekstblokje">
+[t]Hieronder kunt u uw personalia wijzigen. Let op, u krijgt hiervan geen bevestiging. Wanneer u de wachtwoorden wijzigt,
+bewaart u deze dan goed.[/t]</td>
+</tr>
+
+<tr> 
+<td>[t]E-mailadres[/t]</td>
+<td><input type="text" name="email" value="[email]"> </td>
+</tr>
+<tr> 
+<td>[t]Oud wachtwoord[/t]</td>
+<td><input type="password" name="Epassword_old" value=""> </td>
+</tr>
+
+<tr> 
+<td>[t]Nieuw wachtwoord[/t]</td>
+<td><input type="password" name="Epassword_new"> </td>
+</tr>
+
+<tr> 
+<td>[t]Bevestig wachtwoord[/t]</td>
+<td> <input type="password" name="Epassword_check"> </td>
+</tr>
+
+<tr> 
+<td colspan="2" class="errorleft"><!--ERROR--></td>
+</tr>
+
+<tr> 
+<td>[t]Voornaam[/t]</td>
+<td><input type="text" name="FirstName" value="[FirstName]"> </td>
+</tr>
+
+<tr> 
+<td>[t]Voorletters[/t]</td>
+<td><input type="text" name="Initials" value="[Initials]"> </td>
+</tr>
+
+<tr> 
+<td>[t]Tussenvoegsel[/t]</td>
+<td><input type="text" name="tussenvoegsel" value="[`tussenvoegsel]"> </td>
+</tr>
+
+<tr> 
+<td>[t]Achternaam[/t]</td>
+<td><input type="text" name="LastName" value="[LastName]"> </td>
+</tr>
+
+<tr> 
+<td>[t]Geslacht[/t]</td>
+<td class="radiobuttons"> <input type="radio" name="Gender" value="M" [GMc]>M<input type="radio" name="Gender" value="F" [GFc]>V</td>
+</tr>
+
+<tr> 
+<td>[t]Geboortedatum[/t]</td>
+<td><input type="text" name="DateOfBirth" value="[DateOfBirth]" maxlength="10" onblur="check_date(this)" ></td>
+</tr>
+
+<tr> 
+<td>[t]Adres[/t]</td>
+<td><input type="text" name="Address" value="[Address]"></td>
+</tr>
+
+<tr> 
+<td>[t]Postcode[/t]</td>
+<td><input type="text" name="ZipCode" value="[ZipCode]" onBlur="this.value=ignoreSpaces(this.value);"> </td>
+</tr>
+
+<tr> 
+<td>[t]Woonplaats[/t]</td>
+<td><input type="text" name="Municipality" value="[Municipality]"> </td>
+</tr>
+
+<tr> 
+<td>[t]Telefoon[/t]</td>
+<td><input type="text" name="TelephoneNumber" value="[`TelephoneNumber]"> </td>
+</tr>
+
+<tr> 
+<td>[t]GSM[/t]</td>
+<td><input type="text" name="TelephoneMobile" value="[`TelephoneMobile]"> </td>
+</tr>
+
+<tr> 
+<td colspan="2">&nbsp; </td>
+</tr>
+
+<tr> 
+<td colspan="2"><input type="submit" name="Submit" value="[tb]Wijzigen[/tb]" class="button"> </td>
+</tr>
+
+
+</form>
+</table>
+</body>
+<!--uts:end inner-->
+</html>

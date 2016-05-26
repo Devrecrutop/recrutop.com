@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Jobs LIST
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="formstyles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <!--uts:begin inner-->
+<script language="JavaScript" type="text/javascript">
+{literal}
+{/literal}
+</script>
+<!--START_9-->
+<div class="outer jblOuter">
+<!-- /UTS/jobsremote/jrSearchList.html -->
+
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<h1 class="title jblTitle">{$smarthead_title}</h1>
+<!--END_PageTitle-->
+<div class="intro jblIntro">[t]System5[/t]{$jobsLastUpdate|date_format:"%d.%m.%Y"}</div>
+<!--START_Block1-->
+{*
+<!--START_Title1-->
+<h2 class="subHeader jblSh jblTopSh">[t]Title1[/t]</h2>
+<!--END_Title1-->
+*}
+<!--START_Text1-->
+<div class="text jblText jblTopText">[t]Text1[/t]</div>
+<!--END_Text1-->
+
+<!--END_Block1-->
+<!--START_CAT_TBL-->
+<!--<div class="categorytext">[catdescr]</div>-->
+<!--END_CAT_TBL-->
+
+<!--START_VACANCY_TBL-->
+{foreach from=$list item=jobs key=catid}
+{assign var='categorie' value=$cats[$catid]}
+ {if $categorie}
+<div class="category jblCat">{$categorie.name}<div class="itemImage jblCatItemImage" >{if $categorie.icon}<img src="/_images_upload/{$categorie.icon}" width="40" border="0">{/if}</div></div>
+            {if "[uts:job_cat_descr]" && "[uts:job_cat_descr_intro]"}
+<!--<div class="categorytext">{$categorie.description}</div>-->
+            {/if}
+ {/if}
+ {foreach from=$jobs item=job}
+    <div class="itemContainer jblItemContainer">
+    <!--START_ThumbnailLeft-->
+    {if $job.Thumbnail && $templateSettings.Thumbnail && $templateSettings.ThumbnailPosition=='L'}
+    <div class="itemImage jblItemImage" onClick="location={$job.detailURL}"><img width="{$job.ThumbnailWidth}" src="/_images_upload/{$job.Thumbnail}"></div>
+    {/if}
+    <!--END_ThumbnailLeft-->
+    <h3 class="itemTitle jblItemTitle"><a href="{$job.detailURL}">{$job.functie_o}&nbsp;</a></h3>
+    <!--START_ReferenceNr-->
+    {if $templateSettings.ReferenceNr}
+    <div class="itemWord jblItemWord jblWordRef">{$job.referenceNr}</div>
+    {/if}
+    <!--END_ReferenceNr-->
+    <!--START_SHOW_LAST_APPLICATION_DATE-->
+    {if $templateSettings.ShowLastApplicationDate && $job.last_application_date}
+    <div class="itemWord jblItemWord jblWordLad"><span>[t]SingleWord10[/t]</span><!--SingleWordLink10-->{$job.last_application_date|date_format:"%d:%m:%Y"}</div>
+    {/if}
+    <!--END_SHOW_LAST_APPLICATION_DATE-->
+    <!--START_JobListStatusPublicatie-->
+    {if $templateSettings.JobListStatusPublicatie}
+    <div class="itemWord jblItemWord jblWordStatus">{$job.status_publicatie}</div>
+    {/if}
+    <!--END_JobListStatusPublicatie-->
+    <!--START_KEYWORDS-->
+    <!--START_KEYWORD_ROW1-->
+    <!--START_Location-->
+    {if $templateSettings.Location}
+    <div class="itemWord jblItemWord jblWordLoc"><span>[t]SingleWord1[/t]</span><!--SingleWordLink1-->{$job.locatie}</div>
+    {/if}
+    <!--END_Location-->
+    <!--END_KEYWORD_ROW1-->
+
+    <!--START_KEYWORD_ROW2-->
+    <!--START_Region-->
+    {if $templateSettings.Region}
+    <div class="itemWord jblItemWord jblWordReg"><span>[t]SingleWord2[/t]<!--SingleWordLink2--></span>{$job.regio}</div>
+    {/if}
+    <!--END_Region-->
+    <!--END_KEYWORD_ROW2-->
+
+    <!--START_KEYWORD_ROW3-->
+    <!--START_Company-->
+    {if $templateSettings.Company}
+    <div class="itemWord jblItemWord jblWordEmpl"><span>[t]SingleWord3[/t]<!--SingleWordLink3--></span>{$job.werkgeverid}</div>
+    {/if}
+    <!--END_Company-->
+    <!--END_KEYWORD_ROW3-->
+
+    <!--END_KEYWORDS-->
+
+    <!--START_ShortDescription-->
+    {if $templateSettings.ShortDescription}
+    <div class="itemDescription jblItemDescr">{$job.ShortDescription}</div>
+    {/if}
+    <!--END_ShortDescription-->
+    <div class="cleaner jblCleaner"></div>
+    </div>
+ {/foreach}
+{/foreach}
+<!--END_VACANCY_TBL-->
+
+<!--START_JobsListPageNav-->
+{if !($templateSettings.ExpanderImage) && $lastpage>1}
+<table cellspacing="0" cellpadding="0" border="0" class="navTbl jblNavTbl">
+<tr>
+<td class="navPrevious jblNavPrev">
+<!--START_JobsListPrevious-->
+{if $is_prev}
+<a href="{$pagingUrl}JobsListPage={$pageno-1}">[t]SingleWord4[/t]</a><!--SingleWordLink4-->
+{/if}
+<!--END_JobsListPrevious-->
+</td>
+<td class="navNumber jblNavNumb">
+<!--START_JobsListPageLinks-->
+{foreach from=$page_array item=p key=k}
+<a class="jblpagenav{if $p}active{/if}" href="{$pagingUrl}JobsListPage={$k}">{$k}</a>
+{/foreach}
+<!--END_JobsListPageLinks-->
+</td>
+<td class="navNext jblNavNext">
+<!--START_JobsListNext-->
+{if $is_next}
+<a href="{$pagingUrl}JobsListPage={$pageno+1}">[t]SingleWord5[/t]</a><!--SingleWordLink5-->
+{/if}
+<!--END_JobsListNext-->
+</td>
+</tr>
+</table>
+{/if}
+<!--END_JobsListPageNav-->
+
+<!--START_Block2-->
+
+<!--START_Title2-->
+
+<h2 class="subHeader jblSh jblBottomSh">[t]Title1[/t]</h2>
+
+<!--END_Title2-->
+
+<!--START_Text2-->
+
+<div class="text jblText jblBottomText">[t]Text1[/t]</div>
+
+<!--END_Text2-->
+
+<!--END_Block2-->
+
+<!--START_SystemBlock-->
+
+<!--SystemLinks-->
+
+<!--END_SystemBlock-->
+
+</div>
+<!--END_9-->
+<!--uts:end inner-->
+  </body>
+</html>

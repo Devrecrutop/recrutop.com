@@ -1,0 +1,50 @@
+﻿<html>
+<head>
+<title>Deelnemer Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/ParticipantLogin.div.html -->
+<div class="outer partLoginOuter">
+<form name="partLoginForm" method="post" action="/index.php/page/participantsfo/command/myprofile/code/[code]/bb/1">
+<h1 class="title">[t]Gebruiker login[/t]</h1>
+<h2 class="subHeader partLoginLogin">[t]Log in[/t]</h2>
+<div class="text">[t]Hebt u al eerder uw gegevens ingevoerd, of ingeschreven op een evenement
+via deze website? Vul dan hieronder uw e-mailadres en wachtwoord 
+in. U kunt dan direct uw gegevens wijzigen of inschrijven op een evenement.[/t]
+</div>
+<div class="formInput">
+<label>[t]E-mailadres[/t]</label>
+<input type="text" name="Eemail" id="tPartEmail">
+</div>
+<div class="formInput">
+<label>[t]Wachtwoord[/t]</label>
+<input type="password" name="Epassword">
+</div>
+<!--uts:begin button login-->
+<div class="buttonContainer"><input class="button" type="submit" name="Submit" value="[tb]Log in[/tb]"></div>
+<!--uts:end button login-->
+<div class="error"><!--ERROR--></div>
+</form>
+<!--START_8-->
+<form name="form" method="post" action="/index.php/page/participantsfo/command/myprofile/client_session/[client_session]/code/[code]/bb/1">
+<input type="hidden" name="klantid" value="[klantid]">
+<h2 class="subHeader partLoginInschrijven">[t]Inschrijven[/t]</h2>
+<div class="text">[t]Bent u nog niet bij ons bekend? Klik dan hieronder op de knop 'inschrijven' 
+en vul uw gegevens zo compleet mogelijk in. Wij nemen binnen 
+enkele dagen telefonisch of per e-mail contact met u op.[/t]</div>
+<!--uts:begin button apply-->
+<div class="buttonContainer"><input class="button" type="button" name="Inschrijven" value="[tb]Inschrijven[/tb]" onClick="location='/index.php/page/participantsfo/command/enroll/ConsultantId/[ConsultantId]/client_session/[client_session]/code/[code]/bb/1';"></div>
+<!--uts:end button apply-->
+</form>
+<!--END_8-->
+<!--uts:begin block forgotten_password-->
+<h2 class="subHeader partLoginPwVergeten">[t]Wachtwoord vergeten?[/t]</h2>
+<div class="text">[t]Wanneer u al eerder hebt ingeschreven, maar uw wachtwoord niet meer weet, kunt u hieronder op de button 'Vraag een nieuw wachtwoord aan' klikken. U dient dan het e-mailadres waarmee u heeft ingeschreven in te voeren, waarna automatisch een nieuw wachtwoord wordt aangemaakt. U krijgt dit via e-mail toegestuurd.[/t]</div>
+<div class="buttonContainer"><input type="button" class="button" value="[tb]Vraag een nieuw wachtwoord aan[/tb]" onclick="{literal}if (document.forms.partLoginForm.Eemail.value.indexOf('@')>0) {document.forms.partLoginForm.action='/index.php/page/participantsfo/command/forgotpassword/code/[code]/bb/1';document.forms.partLoginForm.submit()} else alert('[th]Please fill your valid e-mail address first![/th]');{/literal}"></div>
+<!--uts:end block forgotten_password-->
+</div>
+<!--uts:end inner-->
+</body>
+</html>

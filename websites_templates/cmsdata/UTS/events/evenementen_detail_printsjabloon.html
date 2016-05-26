@@ -1,0 +1,134 @@
+<html>
+<head>
+<title>[th]Evenementbeschrijving[/th]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+{literal}
+.kop {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+.subkop {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 4px;
+}
+.tekstblokje {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+.intro {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+.maintable {
+	background : #ffffff;
+	border : 1px #000085 solid;
+	color : #000085;
+	margin : 0px 0px;
+	text-align : left;
+	width : 100%;
+	padding: 0px 10px 0px 10px;
+}
+table {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+{/literal}
+-->
+</style>
+</head>
+<body onload="focus(); print();"> 
+
+<!--uts:begin inner-->
+<!-- /UTS/events/evenementen_detail_printsjabloon.html -->
+
+
+<div class="outer eveOuter eveDetOuter">
+<h1 class="title eveTitle eveDetTitle">{$e.Title}</h1>
+
+{if $vw_top}
+<div class="evdVWtop">
+{$vw_top}
+</div>
+{/if}
+
+{if $wd_top}
+<div class="evdWDtop">
+{$wd_top}
+</div>
+{/if}
+
+{if $e.categoryName}
+<div class="category eveCat eveDetCat">{$e.categoryName}</div>
+{/if}
+
+<div class="photo1 evePhoto1 eveDetPhoto1"><div class="photo2 evePhoto2 eveDetPhoto2">{if $e.Photo}<img src="{$path_http}{$e.Photo}" border="0">{/if}</div></div>
+
+{if $e.Location}
+<h2 class="subHeader eveSh eveDetSh eveDetShLoc">[t]Locatie[/t]</h2>
+<div class="text eveText eveDetText eveDetTextLoc">{$e.Location}</div>
+{/if}
+
+<h2 class="subHeader eveSh eveDetSh eveDetShDate">[t]Date[/t]</h2>
+{if $e.shortListText}
+<div class="text eveText eveDetText eveDetTextShort">{$e.shortListText}</div>
+{else}
+<div class="text eveText eveDetText">
+{if $e.Start_Date}<span class="startDate eveSd eveDetSd">{$e.Start_Date}</span>{else}<span class="startDate eveSd eveDetSd">[t]Unknown[/t]</span>{/if}-{if $e.End_Date}<span class="endDate eveËd eveDetEd">{$e.End_Date}</span>{else}<span class="endDate eveËd eveDetEd">[t]Unknown[/t]</span>{/if}
+</div>
+{/if}
+{if $e.Expiration_Date}
+<h2 class="subHeader eveSh eveDetSh eveDetShLastDate">[t]Uiterste inschrijfdatum[/t]</h2>
+<div class="text eveText eveDetText eveDetTextLastDate">{$e.Expiration_Date}</div>
+{/if}
+{if $program}
+<h2 class="subHeader eveSh eveDetSh eveDetShProg">[t]Program[/t]</h2>
+<div class="text eveText eveDetText eveDetTextProg">
+{foreach from=$program item=prg}
+<div class="textItemContainer eveIc eveDetIc">
+<div class="textItemTitle eveIt eveDetIt">{$prg.day}</div>
+<div class="textItemWord eveIw eveDetIw eveDetIwProgDate">{$prg.displayProgDate}</div>
+<div class="textItemWord eveIw eveDetIw eveDetIwTime"><span class="startDate eveSd eveDetSd eveDetSdProg">{$prg.prog_start_time|date_format:"%H:%M"}</span>-<span class="endDate eveEd eveDetEd eveDetEdProg">{$prg.prog_end_time|date_format:"%H:%M"}</span>{if $prg.note}&nbsp;&nbsp;<span class="startDate eveSd eveDetSd eveDetSdProg">{$prg.note}</span>{/if}</div>
+</div>
+{/foreach}
+</div>
+{/if}
+{if $consultant}
+<h2 class="subHeader eveSh eveDetSh eveDetShCp">[t]Contactpersoon[/t]</h2>
+<div class="text eveText eveDetText eveDetTextCp">{$consultant}</div>
+{/if}
+{if $e.File}
+<h2 class="subHeader eveSh eveDetSh eveDetShInfo">[t]Uitgebreide informatie[/t]</h2>
+<div class="text eveText eveDetText eveDetTextInfo"><span><a href="{$path_http}{$e.File}" target="_blank">{$e.File}</a></span></div>
+{/if}
+{foreach from=$textFields item=tf}
+<h2 class="subHeader eveSh eveDetSh eveDetShDesc">{$tf.title}</h2>
+<div class="text eveText eveDetText eveDetTextDesc">{$tf.text}</div>
+{/foreach}
+
+{if $vw_bottom}
+<div class="evdVWbottom">
+{$vw_bottom}
+</div>
+{/if}
+
+{if $wd_bottom}
+<div class="evdWDbottom">
+{$wd_bottom}
+</div>
+{/if}
+
+
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Vacature Lijst</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<!-- /UTS/customers/jobList.div.html Standard -->
+<style type="text/css">
+	/* {literal} */
+	.thin-column {
+		width: 32px;
+		text-align: center;
+	}
+
+	.thin-column img {
+		border: none;
+		margin: 0.25em;
+	}
+	/* {/literal} */
+</style>
+
+
+<!--uts:begin inner-->
+<!--UT: Jobslist-->
+
+
+<script>
+    var OTYSCZ = '{$OTYSCZ}';
+    var enable_job_closed_mail_candidate = '{$enable_job_closed_mail_candidate}';
+    {literal}
+    function withdrawVacancy( numCandidatesToEmail, elementId ) {
+
+        if ( parseInt(OTYSCZ) == 1 ) {
+            if (!confirm('[th]Are you sure you want to unpublish this vacancy?[/th] (OTYSCZ only)')) return false;
+        }
+        if ( enable_job_closed_mail_candidate && parseInt(numCandidatesToEmail) > 0 ) {
+            if (confirm("[th]Would you like to send a standard notification to all candidates that have an open status regarding this vacancy? \nThe email will inform the candidates that the vacancy is closed and their application will no longer be considered. \nCandidates that have already been contacted will not recieve this email. When you click cancel, the job will be unpublished but no email is sent to candidates with an open application.[/th]")) {
+
+                href = document.getElementById(elementId).href;
+                document.getElementById(elementId).href = href + '/sendJobClosedMail/1';
+            }
+        }
+    }
+    {/literal}
+</script>
+
+
+<!--START_9-->
+<div class="outer custOuter custJblOuter">
+<!-- /UTS/customers/jobList.div.html Standard -->
+
+	<!--MENUBAR-->
+	<!--START_PageTitle-->
+	<h1 class="title jblTitle">[PageTitle]</h1>
+	<!--END_PageTitle-->
+	[CustomersMenu]
+	[CustomersSubMenu]
+  
+  {if $customer_jobname_filter}
+	<div class="outer custOuter custPpOuter">
+    <form name="advsearchform" method="post" action="/index.php/page/customers_ext/bb/1" >
+    <div> 
+    <div class="formInput actFi">
+    <label>[t]Search vacancy by title[/t]</label>
+    <input value="{$job_name_filter_keyword}" type="text" name="job_name_filter_keyword">
+    </div>
+    
+    <div class="buttonContainer">
+      <input name="bApplSubmit" value="[t]Zoek[/t]" class="button" type="submit">
+    </div>
+          
+    <input name="command" value="default" type="hidden">
+    <input name="search_jobtitle_by_keyword" value="1" type="hidden">
+    </div>
+    </form>              
+	</div>
+  {/if}    
+  
+	<div class="intro jblIntro">[last_update]</div>
+
+	{if $allow_jobs_amount_period || $allow_jobs_amount_publish}
+	<div class="text custPublishPeriod">
+	{if $allow_jobs_amount_period}
+		{if $jobs_period == "month"}
+			{assign var=period value="[t]month[/t]"}
+		{elseif $jobs_period == "year"}
+			{assign var=period value="[t]year[/t]"}
+		{else}
+			{assign var=period value="[t]unknown period[/t]"}
+		{/if}
+		[t]You have {$jobsCount} jobs inserted this {$period} from {$jobs_amount_period} possible jobs.[/t]<br >
+	{/if}
+	{if $allow_jobs_amount_publish}
+		[t]You have {$publicCount} published jobs from {$jobs_amount_publish} possible publicable jobs.[/t]<br >
+	{/if}
+	</div>
+	{/if}
+	<!--START_Block1-->
+	<!--START_Title1-->
+	<h2 class="subHeader jblSh jblTopSh">[`Title1]</h2>
+	<!--END_Title1-->
+	<!--START_Text1-->
+	<div class="text jblText jblTopText">[`Text1]</div>
+	<!--END_Text1-->
+	<!--END_Block1-->
+
+	<!--START_CAT_TBL-->
+	<div class="category jblCat">[categorie]</div>
+	<!--END_CAT_TBL-->
+
+	<!--START_VACANCY_TBL-->
+	<div class="itemContainer jblItemContainer">
+		<!--START_ThumbnailLeft-->
+		<div class="itemImage jblItemImage" style="width: [`ThumbnailWidth]; cursor:hand;" onClick="[`ThumbnailLink]">[`Thumbnail]</div>
+		<!--END_ThumbnailLeft-->
+		<h3 class="itemTitle jblItemTitle"><a href="[website]/index.php/page/customers_ext/command/detail/vid/[id]/bb/1/temp/[`temp]"><span class="publish_[publish_status]">[functie_o]</span></a><inactive>[t]- inactive[/t]<inactive></h3>
+		<!--START_KEYWORDS-->
+		<!--START_KEYWORD_ROW1-->
+		<!--START_Location-->
+		<div class="itemWord jblItemWord jblWordLoc"><span>[SingleWord1]<!--SingleWordLink1--></span>[locatie]</div>
+		<!--END_Location-->
+		<!--END_KEYWORD_ROW1-->
+		<!--START_KEYWORD_ROW2-->
+		<!--START_Region-->
+		<div class="itemWord jblItemWord jblWordReg"><span>[SingleWord2]<!--SingleWordLink2--></span>[regio]</div>
+		<!--END_Region-->
+		<!--END_KEYWORD_ROW2-->
+		<!--START_KEYWORD_ROW3-->
+		<!--START_Company-->
+		<div class="itemWord jblItemWord jblWordEmpl"><span>[SingleWord3]<!--SingleWordLink3--></span>[werkgeverid]</div>
+		<!--END_Company-->
+		<!--END_KEYWORD_ROW3-->
+		<!--END_KEYWORDS-->
+		<!--START_ShortDescription-->
+		<div class="itemDescription jblItemDescr">[ShortDescription]</div>
+		<!--END_ShortDescription-->
+		<!--START_TEMPWARNING-->
+		<div class="error">[SingleWord4]<!--SingleWordLink4--></div>
+		<!--END_TEMPWARNING-->
+		<div class="itemFooter">
+			<!--START_CANDLIST_LINK-->
+			{if !$jobslist_icons}
+				{if $new_candidates_list_in_jobslist}
+					<div class="itemFooterWord iFWcandListNew"><a href="{$website}/index.php/page/customers/bb/1/command/candjob_list/vid/[id]">[SingleWord5]</a><!--SingleWordLink5--></div>
+				{else}
+					<div class="itemFooterWord iFWcandList"><a href="[website]/index.php/page/customers_ext/command/candlist/bb/1/vid/[id]">[SingleWord5]</a><!--SingleWordLink5--></div>
+				{/if}
+			{/if}
+			<!--START_MATCH_BUTTON-->
+			<div class="itemFooterWord iFWmatch"><a href="[website]/index.php/page/customers_ext/command/matchjob/bb/1/vid/[id]">[SingleWord6]</a><!--SingleWordLink6--></div>
+			<!--END_MATCH_BUTTON-->
+			<!--START_change_availability-->
+			<div class="itemFooterWord iFWavail"><a href="[website]/index.php/page/CustomersAgenda/command//bb/1/vid/[id]">[SingleWord7]</a><!--SingleWordLink7--></div>
+			<!--START_match_fetch-->
+			<!--START_match_fetch_skills-->
+			<div class="itemFooterWord iFWskills"><a href="[website]/index.php/page/CustomersMatchVacancySkills/command//bb/1/vid/[id]">[SingleWord8]</a><!--SingleWordLink8--></div>
+			<!--END_match_fetch_skills-->
+			<!--start_match_fetch_time-->
+			<div class="itemFooterWord iFWtime"><a href="[website]/index.php/page/CustomersAgendaAssignedList/command//bb/1/vid/[id]">[SingleWord9]</a><!--SingleWordLink9--></div>
+			<!--END_match_fetch_time-->
+			<!--END_match_fetch-->
+			<!--START_match_cand_fo-->
+			<div class="itemFooterWord iFWcandFo"><a href="[website]/index.php/page/customers_ext/command/cand_matches/bb/1/code/[code]/vid/[id]/retvac/1">[t]Number of Matches[/t]: [mc]</a><!--SingleWordLink9--></div>
+			<!--END_match_cand_fo-->
+			<!--END_change_availability-->
+			<!--END_CANDLIST_LINK-->
+			{if $jobslist_icons}
+				<!--START_EDIT_BUTTON-->
+				<div class="itemFooterWord iFWedit"><a href="{if $recrowdMode}[website]/index.php/page/recrowd/bb/1/command/editVacancy/vacid/[id]{else}[website]/index.php/page/customers_ext/command/editjob/vid/[id]/contactpersoon/[contactpersoon]/bb/1/tmpjob/0{/if}" title="[th]edit[/th]"><img src="{$website}/_images_global/zoeken.gif" alt="[th]edit[/th]" ></a></div>
+				<!--END_EDIT_BUTTON-->
+				{if $allow_publishing_jobs}
+				<!--START_PUBLISH_BUTTON-->
+				<div class="itemFooterWord iFWpublish"><a href="[website]/index.php/page/customers_ext/command/publish/vid/[id]/contactpersoon//bb/1/retvac/1" title="[th]publish[/th]" {if OTYSCZ === 1}onclick="javascript: if (!confirm('[th]Are you sure you want to publish this vacancy?[/th]')) return false;"{/if} ><img src="{$website}/_images_global/actief.gif" alt="[th]publish[/th]" ></a></div>
+				<!--END_PUBLISH_BUTTON-->
+				{/if}
+
+				{if $allow_withdraw}
+				<!--START_WITHDRAW_BUTTON-->
+				<div class="itemFooterWord iFWwithdraw">
+					<a href="{if $recrowdMode}[website]/index.php/page/recrowd/bb/1/command/unpublish/vacid/[id]/ref/customerVacList{else}[website]/index.php/page/customers_ext/command/withdraw/vid/[id]/bb/1/contactpersoon/{/if}" id="withdraw_[id]" title="[th]withdraw[/th]" onclick="return withdrawVacancy('[numActiveLinkedCandidates]', this.id);" >
+                                           <img src="{$website}/_images_global/buttonClearFilter.gif" alt="[th]withdraw[/th]" >
+                                        </a>
+				</div>
+				<!--END_WITHDRAW_BUTTON-->
+				{/if}
+
+				{if $allow_job_copying && $direct_vacancy_adding}
+				<!--START_JOBCOPY_BUTTON-->
+				<div class="itemFooterWord iFWcopy"><a href="[website]/index.php/page/customers_ext/command/copy_job/vid/[id]/contactpersoon//bb/1/prefix/[th]copy-[/th]" title="[th]copy[/th]"><img src="{$website}/_images_global/copy-16x16.gif" alt="[th]copy[/th]" ></a></div>
+				<!--END_JOBCOPY_BUTTON-->
+				{/if}
+
+				{if $new_candidates_list_in_jobslist}
+				<div class="itemFooterWord iFWmatchedCandNew"><a href="{if $recrowdMode}[website]/index.php/page/recrowd/bb/1/command/joinedCandidates/vacid/[id]{else}{$website}/index.php/page/customers/bb/1/command/candjob_list/vid/[id]{/if}" title="[th]candidates[/th] "><img src="{$website}/_images_global/candidatemanager_icon.gif" alt="[th]candidates[/th]" ></a></div>
+				{else}
+				<div class="itemFooterWord iFWmatchedCand"><a href="{if $recrowdMode}[website]/index.php/page/recrowd/bb/1/command/joinedCandidates/vacid/[id]{else}[website]/index.php/page/customers_ext/command/candlist/bb/1/vid/[id]{/if}" title="[th]candidates[/th]"><img src="{$website}/_images_global/candidatemanager_icon.gif" alt="[th]candidates[/th]" ></a></div>
+				{/if}
+
+				{if $allow_add_wiqet_to_job}
+				<div class="itemFooterWord iFWwiqet"><a href="{$website}/index.php/page/wiqets/bb/1/command/select_wiqet/vid/[id]" title="wiqet"><b><img src="{$website}/_images_global/wiqet.gif" alt="wiqet" ></b></a></div>
+				{/if}
+
+				{if $shortlist_sx_extended}
+				<div class="itemFooterWord iFWsxExt"><img src="{$website}/_images_global/euro.gif" title="[th]Total views[/th]: [JobTotalViews] | [th]Maximum views[/th]: [JobMaximumViews]" ></div>
+				{/if}
+
+				{if $allow_renew_publication_startdate}
+				<!--START_REFRESH_PUBLICATION_DATE-->
+				<div class="itemFooterWord iFWpubDate"><a href="[website]/index.php/page/customers_ext/command/refresh_publish_date/bb/1/vid/[id]" title="[th]Start publication date will be reset to today[/th]" onclick="javascript: if (!confirm('[th]Are you sure you want to renew the publication date?[/th]')) return false;"><img src="{$website}/_images_global/refresh.gif" title="[th]Start publication date will be reset to today[/th]" ></a></div>
+				<!--END_REFRESH_PUBLICATION_DATE-->
+				{/if}
+				
+				{if $planningModule && OTYSCZ}
+				<!-- START_PLANNING_CALENDAR -->
+				<div class="itemFooterWord iFWplanningCalendar"><a href="[website]/index.php/page/jobschedule/bb/1/code/[code]/vid/[id]/" title="[th]Planning calendar[/th]"><img src="{$website}/_images_global/calendar_button.gif" alt="[th]Planning calendar[/th]" ></a></div>
+				<!-- END_PLANNING_CALENDAR -->				  
+				{/if}
+				
+				{if $recrowdMode}
+				<!--START_MAKE_SPLITZ_JOB-->
+				<div class="itemFooterWord iFWMakeSplitz"><a href="[website]/index.php/page/recrowd/bb/1/command/vacFormInit/vacid/[id]/prefillSplitz/1"><img src="{$website}/_images_global/euro.gif" title="[thn]Make Spl!tz Job[/thn]"></a></div>
+				<!--END_MAKE_SPLITZ_JOB-->
+				
+				<!--START_RECRUITERS-->
+				<div class="itemFooterWord iFWRecruiters"><a href="[website]/index.php/page/recrowd/bb/1/command/vacRecruiters/vacid/[id]/ref/customerVacList"><img src="{$website}/_images_global/euro.gif" title="[thn]Recruiters[/thn]"></a></div>
+				<!--END_RECRUITERS-->
+				
+				<!--START_TENDER_OVERVIEW-->
+				<div class="itemFooterWord iFWTenderOverview"><a href="[website]/index.php/page/recrowd/bb/1/command/vacTenderOverview/vacid/[id]/ref/customerVacList"><img src="{$website}/_images_global/euro.gif" title="[thn]Tender Overview[/thn]"></a></div>
+				<!--END_TENDER_OVERVIEW-->
+				{/if}
+				
+
+			{/if}
+		</div>
+	</div>
+<!--END_VACANCY_TBL-->
+
+
+<!--START_JobsListPageNav-->
+<div class="pageNav jblPageNav">
+	<!--START_JobsListPrevious-->
+	<a class="pnPrev jblPrev" href="[previous_link]">[th]Previous page[/th]</a>
+	<!--END_JobsListPrevious-->
+	
+	<!--START_JobsListPageLinks-->
+	<a href="[page_link]" style="[active]">[PageNumber]</a>
+	<!--END_JobsListPageLinks-->
+
+
+	<!--START_JobsListNext-->
+	<a class="pnNext jblNext" href="[next_link]">[th]Next page[/th]</a>
+	<!--END_JobsListNext-->
+</div>
+<!--END_JobsListPageNav-->
+
+</div>
+
+
+
+
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+<!--END_9-->
+<!--uts:end inner-->
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+BEGIN:VCALENDAR
+PRODID:-//OTYS Company//Agenda 1.0 MIMEDIR//EN
+VERSION:2.0
+METHOD:{$event.METHOD|upper}
+X-MS-OLK-FORCEINSPECTOROPEN:TRUE
+BEGIN:VEVENT
+{foreach from=$attendees key=id item=attendee}ATTENDEE;CN="{$attendee.attendee_CN} ({$attendee.attendee_email})";RSVP=TRUE:mailto:{$attendee.attendee_email}
+{/foreach}
+CLASS:PUBLIC
+CREATED:{$event.CREATED}
+DESCRIPTION:{$event.DESCRIPTION}
+DTEND:{$event.DTEND}
+DTSTAMP:{$event.DTSTAMP}
+DTSTART:{$event.DTSTART}
+{if $event.RRULE}
+RRULE:{$event.RRULE}
+{/if}
+{if $event.X_OTYS_RECURRENCE}
+X-OTYS-RECURRENCE:{$event.X_OTYS_RECURRENCE}
+{/if}
+LAST-MODIFIED:{$event.DTSTAMP}
+LOCATION:{$event.LOCATION}
+ORGANIZER;CN="{$event.ORGANIZER.CN}":mailto:{$event.ORGANIZER.email}
+PRIORITY:{$event.PRIORITY}
+SEQUENCE:0
+SUMMARY;LANGUAGE=en:{$event.SUMMARY}
+TRANSP:OPAQUE
+UID:{$UID}
+X-MS-OLK-SENDER;CN="{$event.ORGANIZER.CN}":mailto:{$event.ORGANIZER.email}
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+END:VCALENDAR

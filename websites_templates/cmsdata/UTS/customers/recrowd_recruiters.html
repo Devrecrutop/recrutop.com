@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+var vhandler = '{$handler}';
+var vvacid = '{$vacid}';
+var vvacpassive = {$vacPassive|default:0};
+//{literal}
+var vmodel = new ViewModel()
+
+$(document).ready( function() {
+    $('a.ajaxLink').on('click', function(e) {
+        e.preventDefault();
+    });
+    
+    ko.bindingHandlers.ratyScore = {
+        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            // This will be called when the binding is first applied to an element
+            // Set up any initial state, event handlers, etc. here
+            var value = ko.utils.unwrapObservable(valueAccessor());
+            $(element).raty({
+                half  : true,
+                path : '/_images_global/raty/',
+                space : false,
+                hints: ['[th]bad[/th]', '[th]poor[/th]', '[th]regular[/th]', '[th]good[/th]', '[th]excellent[/th]'],
+                width: 90,
+                readOnly : true,
+                noRatedMsg : '[th]not rated yet[/th]',
+                score: value
+            });
+            
+            //ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+                //$(element).raty("destroy");
+            //});
+        },
+        update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            // This will be called once when the binding is first applied to an element,
+            // and again whenever the associated observable changes value.
+            // Update the DOM element based on the supplied values here.
+            
+            // not implemented, no updates needed
+        }
+    };
+    
+    ko.applyBindings(vmodel);
+    vmodel.doLoadMore();
+});
+
+function Recruiter(id) {
+    var self = this;
+	self.selected = ko.observable(false);
+    self.disabled = ko.observable(false);
+    self.id = id;
+    self.link = '';
+    self.name = '';
+    self.employer = '';
+    self.city = '';
+    self.rating = 0;
+    self.reviews = 0;
+    self.status = '';
+    self.isRejected = false;
+}
+
+function ViewModel() {
+    var self = this;
+    self.busy = ko.observable(false);
+    self.offset = ko.observable(0);
+	self.recruiters = ko.observableArray([]);
+    self.totalFound = ko.observable(0);
+    self.totalFoundText = ko.computed(function() {return '[th]%d recruiters[/th]'.replace('%d', self.totalFound());}, self);
+    self.enableMore = ko.computed(function() {return (self.totalFound()-self.offset())>0;}, self);
+    self.addDisabled = ko.computed(function() {
+        var ret=true;
+        for (var k in self.recruiters()) {
+            if (self.recruiters()[k].selected() && !self.recruiters()[k].disabled()) {
+                ret=false;
+                break;
+            }
+        }
+        return ret;
+    }, self);
+    self.loadMore = function() {
+        self.doLoadMore();
+    }
+    self.doLoadMore = function() {
+        self.busy(true);
+        $.getJSON(vhandler+"/command/vacRecruiters/reCom/loadRecruiters/vacid/"+vvacid+"/offset/"+self.offset(), function(data) {
+            self.busy(false);
+			self.totalFound(data.totalFound);
+            for (var k in data.recruiters) {
+                var c=new Recruiter(data.recruiters[k].id);
+                c.name = data.recruiters[k].name;
+                c.selected(data.recruiters[k].bound);
+                c.disabled(vvacpassive==1 || data.recruiters[k].bound);
+                c.link = data.recruiters[k].link;
+                c.employer = data.recruiters[k].company;
+                c.city = data.recruiters[k].location;
+                c.rating = data.recruiters[k].rating;
+                c.reviews = data.recruiters[k].reviews;
+                c.status = '';
+                if (data.recruiters[k].status=='deadline passed') {
+                    c.status='[th]deadline passed[/th]';
+                } else if (data.recruiters[k].status=='accepted') {
+                    c.status='[th]accepted[/th]';
+                } else if (data.recruiters[k].status=='rejected') {
+                    c.status='[th]rejected[/th]';
+                    c.isRejected = true;
+                } else if (data.recruiters[k].status=='closed') {
+                    c.status='[th]closed[/th]';
+                } else {
+                    if (data.recruiters[k].is_read==1) {
+                        c.status='[th]read[/th]';
+                    } else {
+                        c.status='[th]unread[/th]';
+                    }
+                }
+                self.recruiters.push(c);
+            }
+            self.offset(self.offset()+data.recruiters.length);
+		});
+	};
+    self.submitSelection = function() {
+        var cntact = 0;
+        for (var k in self.recruiters()) {
+            if (self.recruiters()[k].selected() && !self.recruiters()[k].isRejected) cntact++;
+        }
+        if (cntact>3) {
+            alert('[th]Too many selected recruiters.[/th]');
+            return;
+        }
+        // submit the form
+        self.busy(true);
+        $('#selectForm').submit();
+    };
+}
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdRecrThankOuter">
+	<!-- /UTS/customers/recrowd_recruiters.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Recruiter List for[/t] {$vacTitle|escape}</h1>
+    {$CustomersMenu}
+	{$CustomersSubMenu}
+
+	<div class="pushRight"><img src="[website]/_images_global/busy_ts.gif" alt="busy" data-bind="visible: busy"></div> {* webdevelopers: make styling so the busy image is pushed to the side *}
+	<form name="recrowdSelectForm" method="post" action="{$handler}" id="selectForm">
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<thead>
+			<tr>
+				<th>&nbsp;</th>
+				<th>[t]Recruiter name[/t]</th>
+				<th>[t]Employer[/t]</th>
+				<th>[t]City[/t]</th>
+				<th>[t]Rating[/t]</th>
+				<th>[t]Reviews[/t]</th>
+				<th>[t]Status[/t]</th>
+			</tr>
+			</thead>
+			<tbody data-bind="foreach: recruiters">
+			<tr>
+				<td><input type="checkbox" name="selected[]" {literal}data-bind="checked: selected, value: id, attr:{ disabled: disabled }"{/literal}></td>
+				<td>
+	                <span data-bind="if: link"><a {literal}data-bind="text: name, attr:{ href: link }"{/literal}></a></span>
+	                <span data-bind="ifnot: link"><span data-bind="text: name"></span></span>
+	            </td>
+				<td data-bind="text: employer"></td>
+				<td data-bind="text: city"></td>
+				<td><div data-bind="ratyScore: rating"></div></td>
+				<td data-bind="text: reviews"></td>
+				<td data-bind="text: status"></td>
+	        </tbody>
+		</table>
+		<div class="text" data-bind="text: totalFoundText"></div>
+		<div class="text" data-bind="visible: enableMore"><a href="#" data-bind="click: loadMore" class="ajaxLink">[t]Show 5 more recruiters[/t]</a></div>
+		<div class="buttonContainer">
+			<input class="button" {literal}data-bind="click: submitSelection, attr:{ disabled: addDisabled }"{/literal} type="button" name="add" value="[tb]Add[/tb]">
+		</div>
+	    <input type="hidden" name="command" value="vacRecruiters">
+	    <input type="hidden" name="reCom" value="addRecruiters">
+	    <input type="hidden" name="vacid" value="{$vacid}">
+	    <input type="hidden" name="ref" value="{$ref|escape}">
+    </form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>                
+</head>
+<body>
+<!--uts:begin inner-->
+
+
+{literal}
+<script type="text/javascript">
+<!--
+
+/**
+ *
+ */
+  
+
+
+
+function saveSeat(){
+
+  choose_timeslot = $('input[name=choose_timeslot]:checked').val();
+
+  if (!choose_timeslot) {
+    alert("[th]Please choose a timeslot[/th]");
+  }
+  else if (choose_timeslot == -1){
+
+    var r=confirm("[th]Are you sure you cannot plan any of the available dates and times? \nYour application will be reconsidered when no appointment is planned. \nDo you want to continue?[/th]");
+    if (r==true){
+          document.frmSeat.command.value="saveASeat";
+          document.frmSeat.submit();  
+    }
+    
+  }
+  else{
+          document.frmSeat.command.value="saveASeat";
+          document.frmSeat.submit();  
+  }
+
+}
+
+
+
+//-->
+</script>
+{/literal}
+
+
+<div class="outer custOuter custLinOuter">
+<!-- /UTS/candidates/BOTimeSlotCandidateSelectPage.html -->
+	<h1 class="title custTitle custLinTitle">[t]Plan an appointment[/t]</h1>
+  
+  {$menu}  
+  
+  <div class="intro">[t]Thank you for you application for {$vacancy.JobTitle}. Underneath there are moments on which we are 
+available for your appointment. We would like you to reserve the best date and time for your appointment. 
+When you are not able to schedule a meeting, we will reconsider your application and contact you personally if desired.
+ We strongly advice you to plan one of the available moments.[/t]</div>
+
+	
+<form name="frmSeat" id="frmSeat" action="/index.php/page/bo_timeslots/bb/1" method="post">
+
+
+	
+	<table border="0" cellpadding="0" cellspacing="0" class="custLinTbl" width="100%">
+		<tr>
+			<th class="custLinC0"></th>
+			<th class="custLinC1">[t]Date[/t]</th>
+			<th class="custLinC2">[t]Title[/t]</th>
+      <th class="custLinC2">[t]Location[/t]</th>
+			<th class="custlinC3">[t]Start time[/t]</th>
+			<th class="custLinC4">[t]End time[/t]</th>
+			<th class="custLinC5">[t]Status[/t]</th>         
+		</tr>
+		{foreach from=$BOList item=u}
+			<tr class="{cycle values='odd,even'}">
+        
+        <td class="custLinC0"><input type="radio" {if $u.timeslot_status neq 'available'}disabled{/if} name="choose_timeslot" value="{$u.id}"></td>
+				<td class="custLinC1">{$u.start_date|date_format:"%d-%m-%Y"} {if $u.end_date && $u.end_date neq $u.start_date}- {$u.end_date}{/if}</td>
+				<td class="custLinC2">{$u.title|escape}</td>
+        <td class="custLinC2">{$u.location|escape}</td>
+				<td class="custlinC3">{$u.start_time}</td>
+				<td class="custlinC4">{$u.end_time}</td>
+				<td class="custlinC5">{if $u.timeslot_status eq 'available'}[t]Available[/t]{else}[t]Not available[/t]{/if}</td>
+			</tr>
+		{foreachelse}
+    
+			<tr>
+				<td nowrap="custlinAvad" colspan="6">[t]No Records Available[/t]</td>
+			</tr>
+		{/foreach}
+    {*
+    {if $BOList|@count > 0}
+     
+			<tr class="{cycle values='odd,even'}">
+        
+        <td class="custLinC0"><input type="radio" name="choose_timeslot" value="-1"></td>
+        <td class="custLinC0" colspan="6">[t]None of the above[/t]</td>
+			</tr>
+    {/if}
+    *}
+    
+	</table>
+	
+  	<div class="buttonContainer">
+  		<input class="button" type="button"  value="[t]Save[/t]" onClick="saveSeat()">
+  	</div>
+    
+    <input  type="hidden" name="bookfor" value="{$bookfor}" />
+    <input  type="hidden" name="command" value="saveASeat" />
+    <input  type="hidden" name="tcmsend" value="{$tcmsend}" /> {* timeslot confirmation mail send - Fintrex *}
+	</form>
+
+	
+	{*PAGING BEGIN*}
+	<div class="pageNav custLinPageNav">    
+		{if $is_prev}
+			<a href="{$handler}/command/bssetpage/cw/bookAndGo/pageno/1/bookfor/{$bookfor}/" class="pnFirst custLinFirst">[t]&lt;&lt;&nbsp;First[/t]</a>
+			<a href="{$handler}/command/bsprevpage/cw/bookAndGo/bookfor/{$bookfor}/" class="pnPrev custLinPrev">[t]&lt;&nbsp;Previous[/t]</a>
+		{/if}
+		
+		<foreach from=$page_array item=p key=k>
+			<a href="{$handler}/command/bssetpage/cw/bookAndGo/pageno/{$k}/bookfor/{$bookfor}/" {if $p}class="pnActive custLinActive"{/if}>{$k}</a>
+		</foreach>
+		
+		{if $is_next}
+			<a href="{$handler}/command/bsnextpage/cw/bookAndGo/bookfor/{$bookfor}/" class="pnNext custLinNext">[t]Next&nbsp;&gt;[/t]</a>
+			<a href="{$handler}/command/bssetpage/cw/bookAndGo/pageno/{$lastpage}/bookfor/{$bookfor}/" class="pnLast custLinLast">[t]Last&nbsp;&gt;&gt;[/t]</a>
+		{/if}
+	</div>
+	{*PAGING END*}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,224 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>[thg]Content manager[/thg]</title>
+<!--snippet:INBOX_JS-->
+<!--snippet:MAIN_CSS-->
+<!--snippet:KEYSOTE_JS-->
+<!--snippet:GLOBAL_HTA_SUPPORT_SECTION-->
+</head>
+
+<body>
+<!--uts:begin inner-->
+
+<script>
+var netImgs = new Array();
+
+{if $NLImg}
+netImgs[netImgs.length] = "NetworkLogo";
+{/if}
+{if $NPImg}
+netImgs[netImgs.length] = "NetworkPicture";
+{/if}
+
+// {literal}
+/** Images readable format.
+ **/
+var imgNames = {
+NetworkLogo: "logo",
+NetworkPicture: "screenshot"
+}
+
+function delImage(image) {
+    imageExist = false;
+    image = image == undefined ? "Logo" : image;
+    message = '[th]You have only [pict] set for this website.\nIf you delete it, website will be temporarily removed from network.\n\nDo you really want to delete it?[/th]';
+    message = message.replace(/\[pict\]/g, imgNames[image]);
+    
+    for (var i = 0; i < netImgs.length; ++i) {
+        if (netImgs[i] == image) {
+            imageExist = true;
+        }
+    }
+    
+    if(imageExist && (netImgs.length > 1 || confirm(message))) {
+        ok = confirm("[th]Weet u zeker dat u dit logo wilt verwijderen ?[/th]\n\n");
+        
+        if (ok) {
+            document.edit_customer.command.value = "do_del" + image;
+            document.edit_customer.submit();
+        }
+    }
+}
+
+function delNetLogo() {
+delImage("NetworkLogo");
+}
+
+function delNetPicture() {
+delImage("NetworkPicture");
+}
+
+function submit_network_form()
+{          
+	if(document.edit_customer.network_logo && document.getElementById("custFimageNetwLogo") == null){
+	   var form = document.edit_customer;
+	   var formLogo = form.network_logo.value;
+	   var imgExtension = formLogo.substr(formLogo.lastIndexOf('.'));
+	   imgExtension = imgExtension.toLowerCase();
+		if (formLogo.length == 0){
+			alert("U heeft geen afbeelding opgegeven.");
+		}
+		else if (imgExtension!= '.gif' && imgExtension!= '.jpg' && imgExtension!= '.jpeg' && imgExtension!= '.png'){
+			alert("De " + imgExtension + " extensie is niet ondersteund. Gelieve een gif, jpg, jpeg of png afbeelding te kiezen.");
+		}
+		else {
+			document.edit_customer.command.value = "saveCustomerDetails";
+			document.edit_customer.submit();  
+		}
+	}
+	else {
+	   document.edit_customer.command.value = "saveCustomerDetails";
+	   document.edit_customer.submit();  
+	}   
+}
+// {/literal}
+</script>
+
+<div class="outer custOuter custNetwEditOuter">
+	<!-- /UTS/network/customer_edit_form.html -->
+
+	<h1 class="title custNetwEditTitle">[t]Network - customer details[/t]</h1>
+	{$menu}
+
+	<if [uts:screenshot_display] == 107 && [uts:logo_display] == 110>	
+		<div class="intro text custNetwEditText">[t]You can upload your company logo and a screenshot of your website below. Without both of them your link is not going to be included in our network directory.[/t]</div>
+	</if>
+
+	<form name="edit_customer" action="/index.php/page/network/bb/1/" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="page" value="network">
+		<input type="hidden" name="command" value="">
+		<input type="hidden" name="nextcommand" value="editCustomerDetails">
+		<input type="hidden" name="customerConnectionId" value="{$customerConnectionId}">
+		<input type="hidden" name="current_network_logo_JobsImg" value="{$r.network_logo_JobsImg}">
+		<input type="hidden" name="current_network_logo_JobsThumb" value="{$r.network_logo_JobsThumb}">
+
+		{if $use_customizable_network}
+			<div class="text">
+				[t]You can open your profile by clicking[/t]&nbsp;<div class="customQsProfileViewLink"><a href="/index.php/page/network/command/custdetail/connectionId/{$customerConnectionId}/bb/1/" target="_blank">[t]here[/t]</a></div>
+			</div>
+			<if [uts:hide_type_selection] == 0>
+				<div class="formInput custFiNetwScreens">
+					<label>[tg]Customer type[/tg]:</label>					
+					<select id="customer_type_id" name="customer_type_id" >
+						<foreach from=$customer_types item=ct>
+							<option label="{$ct.type}" value="{$ct.id}" {if $ct.id == $r.customer_type_id}selected="selected"{/if}>{$ct.type}</option>
+						</foreach>
+					</select>		
+				</div>
+			</if>
+		{/if}
+		
+		<if [uts:screenshot_display] == 107>
+			<div class="formInput custFiNetwScreens">
+				<label>[tg]Screenshot[/tg]:</label>
+				<input type="hidden" name="current_network_picture" value="{$r.network_picture}"><input type="file" name="network_picture" size="25" class="bestandselect">
+			</div>
+		</if>
+		
+		<if [uts:logo_display] == 110>	
+			<div class="formInput custFiNetwLogo">
+				<label>[tg]Logo[/tg]:</label>
+				<input type="hidden" name="current_network_logo" value="{$r.network_logo}"><input type="file" name="network_logo" size="25">
+			</div>
+		</if>
+		
+		
+		<if [uts:description_display] == 113 && [uts:network_text_display] == 116 && [uts:reference_display] == 119>
+			<div class="text formText custFiNetwIntro">[t]Next, please enter a short description, a detailed description and -if applicable- a reference about our website or services in the fields below.[/t]</div>
+		</if>
+		<if [uts:description_display] == 113>
+			<div class="formInput custFiNetwDescr">
+				<label>[tg]Description[/tg]:</label>
+				<textarea name="portfolio_text" cols="40" rows="4">{$r.portfolio_text}</textarea>
+			</div>
+		</if>
+		<if [uts:network_text_display] == 116>
+			{if $r.network_text}
+				<div class="formInput custFiNetwText">
+					<label>[tb]Network Text[/tb]:</label>
+					<textarea name="network_text" cols="40" rows="4">{$r.network_text}</textarea>
+				</div>
+			{/if}
+		</if>
+		<if [uts:reference_display] == 119>
+			<div class="formInput custFiNetwRef">
+				<label>[tg]Reference[/tg]:</label>
+				<textarea name="reference" cols="40" rows="4">{$r.reference}</textarea>
+			</div>
+		</if>
+		{if $NPImg || $NLImg}
+			<div class="formInput custFiNetwText">
+				<label>&nbsp;</label>
+			</div>
+			<div class="image formImage custFimageNetw">
+				{if $NPImg}
+					<if [uts:screenshot_display] == 107>
+						<div class="custFimageNetwOuter">
+							<div class="custFimageNetwScreens">
+								<h3>[t]Screenshot[/t]</h3>{$NPImg}
+								{if $NPImg && $NLImg}
+									<div>
+										<input type="radio" name="network_image" value="Picture" class="radiobuttons"{if $r.network_image == "Picture" || !isset($r.network_image)} checked="checked"{/if}>
+										<label>[t]Use Screenshot[/t]</label>
+									</div>
+								{/if}
+							</div>
+							<span class="delButton delPicture">
+								<input class="button" type="button" value="[tb]Del[/tb]" onclick="delNetPicture();">
+							</span>
+						</div>
+					</if>
+				{/if}
+				<if [uts:logo_display] == 110>	
+					{if $NLImg}
+						<div class="custFimageNetwLogoOuter">
+							<div id="custFimageNetwLogo" class="custFimageNetwLogo">
+								<h3>[t]Logo[/t]</h3>{$NLImg}
+								{if $NPImg && $NLImg}
+									<div>
+										<input type="radio" name="network_image" value="Logo" class="radiobuttons"{if $r.network_image == "Logo"} checked="checked"{/if}>
+										<label>[t]Use Logo[/t]</label>
+									</div>
+								{/if}
+							</div>
+							<span class="delButton delLogo">
+								<input class="button" type="button" value="[tb]Del[/tb]" onclick="delNetLogo();">
+							</span>
+						</div>
+					{/if}
+				</if>
+				<div class="cleaner custCleaner custNetwCleaner"></div>
+			</div>
+		{/if}
+		<if [uts:wiqet_display] == 122>
+			<div class="formInput custFiNetwWiqet">
+				<label>[t]Wiqet[/t]</label>
+				<select id="wiqet_id" name="wiqet_id" >
+					<option label="---" value="0">---</option>
+					<foreach from=$wiqet_list item=b>
+						<option label="{$b.name}" value="{$b.id}" {if $b.id == $r.wiqet_id}selected="selected"{/if}>{$b.name}</option>
+					</foreach>
+				</select>
+			</div>
+			{$wiqet}
+		</if>
+		<div class="text formText custFiNetwText custFiNetwNotify">[t]Did you fill out the form correctly? Did you upload both images? Please press "Save" when you are done.[/t]</div>
+		<div class="buttonContainer formButtonContainer">
+			<input class="button" type="button" value="[tb]Save changes[/tb]" onclick="submit_network_form();">
+		</div>
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

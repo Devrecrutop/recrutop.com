@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>WebUserForm2</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/agents/webUserAgentsList.html -->
+<div class="outer myProfileAgentsOuter listAgentOuter">
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<h1 class="title">[t]PageTitle[/t]</h1>
+<!--END_PageTitle-->
+{if $useOwnMenu}
+{$ownMenu}
+{else}
+<div class="menuContainer">
+<div class="menuLink MenuLinkFirstChild"><a href="/index.php/page/agents/command/myprofile/bb/1/WUpage/1">[t]SingleWord1[/t]<!--SingleWordLink1--></a></div>
+<div class="menuLink mlMpAgentsPersonalia"><a href="/index.php/page/agents/command/myprofile/bb/1/WUpage/2">[t]SingleWord2[/t]<!--SingleWordLink2--></a></div>
+<div class="menuLink"><a href="/index.php/page/agents/command/myprofile/bb/1/WUpage/3">[t]SingleWord3[/t]<!--SingleWordLink3--></a></div>
+<div class="menuLink MenuLinkLastChild"><a href="/index.php/page/agents/command/logout/bb/1">[t]SingleWord4[/t]<!--SingleWordLink4--></a></div>
+</div>
+{/if}
+<!--START_Block1-->
+<!--START_Title1-->
+<h2 class="subHeader">[t]Title1[/t]</h2>
+<!--END_Title1-->
+<!--START_Text1-->
+<div class="text">[t]Text1[/t]</div>
+<!--END_Text1-->
+<!--END_Block1-->
+<foreach key=ag_key item=ag from=$AgentsList>
+<div>Agent #{$ag.tel}:<a href="/index.php/page/agents/command/editagent/bb/1/AgentId/{$ag.id}">{$ag.Name}</a></div>
+</foreach>
+<div class="buttonContainer"><input type="button" name="newagent" value="[t]Button1[/t]" class="button" onclick="location='/index.php/page/agents/bb/1/command/newagent'"><!--ButtonLink1--></div>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aspOuter">
+<!-- /UTS/aspolicy/aspForm.html -->
+<h1 class="title aspTitle">[t]E-mail address policy settings[/t]</h1>
+<div class="intro aspIntro">[t]You can use the form below to change the policy applied to your e-mail address.[/t]</div>
+<form name="aspfrm" action="{$handler}" method="post">
+<div class="formInput aspInput aspEmail">
+<label for="emailaddress">[t]E-mail:[/t]</label>
+<input type="text" name="email" id="emailaddress" value="{if $emailPrefill}{$emailPrefill|escape}{else}{$settings.email}{/if}">
+</div>
+<div class="formInput formCheckbox aspInput aspGroups">
+<input type="hidden" name="s_allow_groupmails" value="0">
+<input type="checkbox" name="s_allow_groupmails" id="s_allow_groupmails" value="1" {if $settings.allow_groupmails}checked{/if}>
+<label for="s_allow_groupmails">[t]Allow receiving newsletter/ group e-mails[/t]</label>
+</div>
+<div class="formInput formCheckbox aspInput aspWebsite">
+<input type="hidden" name="s_allow_fo_form_mailers" value="0">
+<input type="checkbox" name="s_allow_fo_form_mailers" id="s_allow_fo_form_mailers" value="1" {if $settings.allow_fo_form_mailers}checked{/if}>
+<label for="s_allow_fo_form_mailers">[t]Allow receiving anonymous messages from our website (mail-a-friend)[/t]</label>
+</div>
+<if $error>
+<div class="error aspError">
+<if $error == "ERR_EMPTY_EMAIL">
+[t]Please specify your valid e-mail address.[/t]    
+<elseif $error == "ERR_EMAIL_DOESNT_MATCH">
+[t]You are not authorized to change policy of this e-mail address.[/t]
+<else>
+{$error}
+</if>
+</div>
+</if>
+<div class="buttonContainer aspButton"><input type="submit" name="bApplSubmit" value="[tb]Submit[/tb]" class="button"></div>
+<input type="hidden" name="command" value="apply">
+<input type="hidden" name="uid" value="{$uid}">
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

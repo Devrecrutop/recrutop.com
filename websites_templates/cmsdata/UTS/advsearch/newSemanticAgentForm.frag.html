@@ -1,0 +1,293 @@
+<script src="/_javascript_global/jquery.multiSelect.js" type="text/javascript"></script>
+<script src="/_javascript_global/jquery.autocomplete.js" type="text/javascript" ></script>
+
+<script type="text/javascript" >
+
+var kwAskURL='{$handler}/command/kwautocomplete/arg/';
+var locaAskURL='{$handler}/command/locautocomplete/arg/';
+var cmpAskURL='{$handler}/command/cmpautocomplete/arg/';
+var iSearch = -1; 
+var ac = null; // autocomplete object
+
+//{literal}
+
+// define ready function
+if (jQuery) { 
+  // setup autocomplete for keyword
+  if ($('.ajaxWindow #actQueryKeywords').length) {
+    $('.ajaxWindow #actQueryKeywords').autocomplete({ 
+      serviceUrl:kwAskURL,
+      minChars:3, 
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:200
+      //deferRequestBy: 0, //miliseconds
+      // callback function:
+      //onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+    });
+  }
+  // setup autocomplete for competencies
+  if ($('.ajaxWindow #idComp').length) {
+    $('.ajaxWindow #idComp').autocomplete({ 
+      serviceUrl:cmpAskURL,
+      minChars:3,
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:300,
+      deferRequestBy: 100, //miliseconds
+      // callback function:
+      onSelect: function(value, data){ $('.ajaxWindow #competence_id_field').val(data); addCompetenceToSearch();}
+    });
+  }
+  
+  if($('.ajaxWindow #cb_main_local_search').length)
+  {
+    // before first initialization of autocompelte
+    iSearch = ($('.ajaxWindow #cb_main_local_search').is(':checked')) ? 1 : 0; // initlaize 
+    
+    
+    $('.ajaxWindow #cb_main_local_search').click(function() {              
+      var ch = ($(this).is(':checked')) ? 1 : 0;
+                
+      if ($('.ajaxWindow #actQueryLocation').length && ac != null ) 
+      {        
+        // reinit autocomplete        
+        ac.setOptions({minChars: 3, maxHeight: 300, width: 200, params:{international: ch}});
+        ac.clearCache();        
+      }      
+                     
+    });     	     	     	      
+  }
+  
+  if ($('.ajaxWindow #actQueryLocation').length) 
+  {
+     ac = $('.ajaxWindow #actQueryLocation').autocomplete({ 
+      serviceUrl:locaAskURL,
+      params:{international: iSearch},      
+      minChars:3,       
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:200
+      //deferRequestBy: 0, //miliseconds
+      // callback function:
+      //onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+    });
+        
+  }
+
+    // setup match criteria multiselects
+      var reqScripts = "[uts:ext_javascripts]";
+  if(reqScripts.indexOf('JQueryMultiSelect') > -1 && !$.fn.magicSelect){
+    //{/literal}
+    <foreach from=$critList item=crit>
+    
+    <if $crit.sm == "M">
+        var critf='{$crit.field}';
+        //{literal}
+        if ($('.ajaxWindow #multisel_mc_'+critf).length) $('.ajaxWindow #multisel_mc_'+critf).multiSelect({
+            selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select criteria...[/th]',
+            oneOrMoreSelected: '[th]Select criteria (% selected)...[/th]'
+            });
+
+        //{/literal}
+    </if>
+    </foreach>
+    //{literal}
+    
+    // setup jquery multiselect for keyword options
+    if ($('#multisel_kw_options').length) $('#multisel_kw_options').multiSelect({
+        selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select fields...[/th]',
+            oneOrMoreSelected: '[th]Select fields (% selected)...[/th]'
+    });
+	
+	// setup jquery multiselect for category search
+	if ($('#multisel_categorie').length) $('#multisel_categorie').multiSelect({
+        selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select categories...[/th]',
+            oneOrMoreSelected: '[th]Select categories (% selected)...[/th]'
+    });
+    } else if(reqScripts.indexOf('JQueryMagicSelect') > -1){
+		if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		} else {
+			$('select').magicSelect();
+		}
+	}
+}
+//{/literal}
+</script>
+
+
+
+<link rel="stylesheet" type="text/css" href="/_css_global/jquery.unified-select.css" >
+<script src="/_javascript_global/jquery.selectbox-0.5.js" type="text/javascript"></script>
+
+<script  type="text/javascript">
+<literal>
+    if (jQuery) { 
+	
+		if(!$.fn.magicSelect)
+		{
+			if($(".ajaxWindow #idMaxDist").length != 0) $('.ajaxWindow #idMaxDist').selectbox();
+			if($(".ajaxWindow #idPrefDist").length != 0) $('.ajaxWindow #idPrefDist').selectbox();
+			if($(".ajaxWindow #idCountryCode").length != 0) $('.ajaxWindow #idCountryCode').selectbox();
+			if($(".ajaxWindow #multisel_categorie").length != 0) $('.ajaxWindow #multisel_categorie').selectbox();
+			if($(".ajaxWindow #multisel_categorie").length != 0) $('.ajaxWindow #multisel_categorie').selectbox();
+		}
+		else
+		{
+			console.log('disable this stuff');
+		}
+    }
+</literal>
+</script>
+
+<foreach from=$critList item=crit>
+	<if $crit.sm != "M">
+		<script  type="text/javascript">
+			{literal}
+			if(!$.fn.magicSelect)
+			{
+				$('.ajaxWindow #matchcriteria_{$crit.field}').selectbox();
+			}
+			{/literal}
+		</script>
+	</if>
+</foreach>
+
+<div class="ajaxWindow newAgentFormFrag">
+<!-- /UTS/advsearch/newSemanticAgentForm.frag.html -->
+<form name="srbefrm" action="{$handler}/command/newsemanticagentsubmit" method="post">
+	<input type="hidden" name="sq_out_email" value="{if $mode == "email"}1{else}0{/if}">
+	<input type="hidden" name="originCmd" value="{$originCmd|escape}">
+	
+	
+	<!-- critts -->
+
+        {*  VARIABLE: $semanticSearch
+
+
+    [id] => 1
+    [klantid] => 1053
+    [candidate_id] => 4859793
+    [output_email] => 1
+    [email_address] => wessel@otys.nl
+    [output_wall] => 0
+)
+
+        *}
+
+        
+
+
+
+		<h1 class="title">[t]Semantical search agent[/t]</h1>
+                {*
+		<if $ocdmLoggedIn && $sqCnt>
+			<p><a href="{$handler}/command/sqlist">
+                        {if $sqCnt == 1}
+                        [tg]You have one saved search query already[/tg]
+                        {elseif $sqCnt == 2}
+                        [tg]You have already two saved search queries[/tg]
+                        {elseif $sqCnt > 2}
+                        [tg]You already have[/tg] {$sqCnt} [tg]saved search queries[/tg]
+                        {/if}
+                        </a></p>
+		</if>
+		*}
+		<div class="intro actIntro vacActIntro">[t]You can change your semantical search agent below.[/t]</div>
+	
+
+	<div class="formInput actEqueryInput">
+		<label for="minscore">[t]Min. score[/t]</label>
+		<select id="minscore" name="minscore">
+			<option value="0">[th] --- [/th]</option>
+			<option value="10" {if $semanticSearch.min_score == "10"}selected{/if}>10%</option>
+			<option value="20" {if $semanticSearch.min_score == "20"}selected{/if}>20%</option>
+			<option value="30" {if $semanticSearch.min_score == "30"}selected{/if}>30%</option>
+			<option value="40" {if $semanticSearch.min_score == "40"}selected{/if}>40%</option>
+			<option value="50" {if $semanticSearch.min_score == "50"}selected{/if}>50%</option>
+			<option value="60" {if $semanticSearch.min_score == "60"}selected{/if}>60%</option>
+			<option value="70" {if $semanticSearch.min_score == "70"}selected{/if}>70%</option>
+			<option value="80" {if $semanticSearch.min_score == "80"}selected{/if}>80%</option>
+			<option value="90" {if $semanticSearch.min_score == "90"}selected{/if}>90%</option>
+			<option value="100" {if $semanticSearch.min_score == "100"}selected{/if}>100%</option>
+		</select>
+	</div>
+
+	<div class="formInput actEqueryInput">
+		<label for="maxvacancies">[t]Max. vacancies[/t]</label>
+		<select id="maxvacancies" name="maxvacancies">
+			<option value="0">[th] --- [/th]</option>
+			<option value="5" {if $semanticSearch.max_vacancies == 5}selected{/if}>5</option>
+			<option value="10" {if $semanticSearch.max_vacancies == 10}selected{/if}>10</option>
+			<option value="15" {if $semanticSearch.max_vacancies == 15}selected{/if}>15</option>
+			<option value="20" {if $semanticSearch.max_vacancies == 20}selected{/if}>20</option>
+			<option value="25" {if $semanticSearch.max_vacancies == 25}selected{/if}>25</option>
+			<option value="30" {if $semanticSearch.max_vacancies == 30}selected{/if}>30</option>
+			<option value="35" {if $semanticSearch.max_vacancies == 35}selected{/if}>35</option>
+			<option value="40" {if $semanticSearch.max_vacancies == 40}selected{/if}>40</option>
+			<option value="45" {if $semanticSearch.max_vacancies == 45}selected{/if}>45</option>
+			<option value="50" {if $semanticSearch.max_vacancies == 50}selected{/if}>50</option>
+		</select>
+	</div>
+
+	<div class="formInput actEqueryInput">
+		<label for="iSrbeFrequency">[t]Period[/t]</label>
+		<select id="iSrbeFrequency" name="sq_period">
+			<option value="daily" {if $semanticSearch.period == "daily"}selected{/if}>[th]Daily[/th]</option>
+			<option value="weekly" {if $semanticSearch.period == "weekly"}selected{/if}>[th]Weekly[/th]</option>
+			<option value="monthly" {if $semanticSearch.period == "monthly"}selected{/if}>[th]Monthly[/th]</option>
+		</select>
+	</div>
+	
+	{if $cand_portal_enable_wall}
+	<h2 class="subHeader">[t]Output channels[/t]</h2>
+	<if $dispEmailControls>
+		<div class="formInput actEqueryInput actEqueryEmailInput">
+			<input type="hidden" name="sq_out_email" value="0">
+			<input type="checkbox" name="sq_out_email" value="1" {if $semanticSearch.output_email}checked{/if}>
+			<label>[t]E-mail[/t]</label>
+			<input type="text" name="sq_email" value="{if $semanticSearch.id}{$semanticSearch.email_address|escape}{else}{$candidateEmail}{/if}">
+
+
+
+		</div>
+		<div class="formInput actEqueryInput actEqueryWallInput">
+			<input type="hidden" name="sq_out_wall" value="0">
+			<input type="checkbox" name="sq_out_wall" value="1" {if $semanticSearch.id}{if $semanticSearch.output_wall}checked{/if}{else}checked{/if}>
+			<label>[t]Wall[/t]</label>
+		</div>
+	</if>
+        {else}
+            <input type="hidden" name="sq_out_email" value="1">
+	{/if}
+
+	<if $error>
+		<div class="error">
+			<if $error == "ERR_EMAIL_EMPTY">
+				[t]No e-mail specified[/t]
+			<elseif $error == "ERR_EMAIL_INVALID">
+				[t]Invalid e-mail[/t]
+			<elseif $error == "ERR_EMAIL_POLICY">
+				[t]Denied by policy[/t]
+			<elseif $error == "ERR_DUPE">
+				[t]Duplicate request[/t]
+			<elseif $error == "ERR_LIMIT_EXCEEDED">
+				[t]Limit exceeded for your IP[/t]
+			<elseif $error == "ERR_INVALID_PHONE">
+				[t]Invalid phone number[/t]
+			<elseif $error == "ERR_INVALID_CAPTCHA">
+				[t]Invalid security code[/t]    
+			<elseif $error == "ERR_TOO_MANY_INACTIVE_SMS_SQS">
+				[t]There are more SMS queries awaiting activation.[/t]
+			</if>
+		</div>
+	</if>
+	<div class="buttonContainer actEqueryBc">
+		<input type="submit" name="bSubmit" value="[tb]Submit[/tb]" class="button">
+	</div>
+<div class="cleaner"></div>
+</form>
+</div>

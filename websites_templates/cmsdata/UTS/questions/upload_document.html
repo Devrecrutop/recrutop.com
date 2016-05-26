@@ -1,0 +1,70 @@
+<tr>
+<td class="itemContainer">
+<table border="0" cellpadding="0" cellspacing="0" class="itemHolder">
+<tr>
+<td class="itemHeader">{$Question}</td>
+</tr>
+{if $Explanation}
+<tr>
+<td class="explain">{$Explanation}</td>
+</tr>
+{/if}
+<tr><td>
+<table width="100%">
+<tr>
+<td class="ItemFieldContainer">
+<input style="width: 100%;" type="file" name="document">
+</td>
+<td>
+{if $use_document_types}
+	 {html_options name=doc_type options=$docTypesList}
+{else}
+	 <input type="hidden" name="doc_type" value="0">
+{/if}
+</td>
+<td class="ItembuttonContainer">
+<input type="button" class="button" value="[th]Add[/th]" onclick="AddDoc({$QuestionId});">
+</td>
+</tr>
+</table>
+</td>
+</tr>
+{if $docs}
+<tr>
+<td>
+{foreach  from=$docs item=doc}
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl" width="100%">
+<tr>
+<td class="ItemQuestion">[t]Document[/t]<!--SingleWordLink3--></td>
+<td class="itemHeader">{$doc.link}</td>
+<td class="itemHeader">
+{foreach  from=$doc key=fieldname item=fieldvalue}
+	{if $fieldname!="link" && $fieldname!="doc_type"}
+	<input type="hidden" name="Answers[{$QuestionId}][{$doc.id}][{$fieldname}]" value="{$fieldvalue}">
+	{/if}
+	{if $fieldname=="doc_type"}
+		{if $use_document_types }
+			{assign var="doc_type" value="Answers[`$QuestionId`][`$doc.id`][doc_type]"}
+			{html_options name=$doc_type options=$docTypesList selected=$fieldvalue}
+		{else}
+		<input type="hidden" name="Answers[{$QuestionId}][{$doc.id}][{$fieldname}]" value="{$fieldvalue}">
+		{/if}
+	{/if}
+{/foreach}
+</td>
+<td class="itemButtonSml"><input type="button" class="button" value="[th]X[/th]" onclick="DelDoc({$QuestionId}, '{$doc.id}');"><!--ButtonLink1--></td>
+</tr>
+</table>
+{foreachelse}
+{/foreach}
+</td>
+</tr>
+{/if}
+<!--START_ERROR-->
+<tr>
+<td class="error">[Error]</td>
+</tr>
+<!--END_ERROR-->
+</table>
+</td>
+</tr>

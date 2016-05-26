@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+</head>
+<body>
+<!--uts:begin inner-->
+<!--system part-->
+
+<script type="text/javascript">
+var show_limit_exceed = '{$show_limit_exceed}';
+var show_no_products_selected = '{$show_no_products_selected}';
+// {literal}
+
+function validateProductForm(){
+  var formam = document.cash_credits.amount_products;
+  for(var i = 0; i < formam.length; i++) {
+      proNum = formam[i].value;  
+        
+      if (parseInt(proNum) < 0 || isNaN(proNum) || parseInt(proNum)!= proNum) {
+        formam[i].focus();
+        alert("[th]Please enter a positive whole number[/th]"); 
+        return false; 
+       }
+    }
+    
+    document.cash_credits.submit();
+}
+if (show_limit_exceed == '1') {
+  alert("[th]You don't have enough credits to buy these products![/th]");
+}
+if (show_no_products_selected == '1') {
+  alert("[th]You didn't select any products![/th]");
+}
+// {/literal}
+</script>
+
+<!--display part-->
+<div class="outer custOuter custFinOuter custFinDetOuter">
+<!-- UTS/applicants/applicant_referral_cash_in_credits.html -->
+<!-- Template Webdevelopment validated 09-2013 -->
+	<h1 class="title">[t]Cash in credits[/t]</h1>
+	{$menu}
+
+	{if $candidate_credits <= 0} 
+	<div class="text">[t]You currently have {$candidate_credits} credits.[/t]</div>
+	{else} 
+	<div class="text">[t]You currently have {$candidate_credits} credits, if you want to cash in your credits, please make your choice below.[/t]</div>
+	{/if}
+	<form name="cash_credits" action="/index.php/page/portal_referral/command/cash_in_credits/bb/1/" method="POST">
+		<input type="hidden" name="command" value="cash_in_credits">
+		<input type="hidden" name="action" value="check_form">
+		{* css is not defined*}    
+		<table class="cashInTbl" cellspacing="0" cellpadding="0"  border="0">
+			<tr class="cashInHeaderRow">
+				<th class="number">[t]Number[/t]</th>
+				<th class="image">[t]Image[/t]</th>
+				<th class="product">[t]Product[/t]</th>
+				<th class="description">[t]Description[/t]</th>
+				<th class="credits">[t]Credit costs[/t]</th>
+			</tr>
+			{foreach from=$product_list item=r}
+			<tr>  
+				<td class="number"><input type="text" name="amount_products[{$r.id}]" id="amount_products" value="{$amount_products[$r.id]|default:0}" size="3" maxlength="3"></td>
+				<td class="image">{if $r.picture_th}<img src="/_images_upload/{$r.picture_th}" >{else} &nbsp;{/if}</td>
+				<td class="product">{$r.product_name|escape}</td>
+				<td class="description">{$r.product_description}</td>
+				<td class="credits" align="right">{$r.credits}</td>
+			</tr>
+			{foreachelse}
+			<tr>  
+				<td  colspan="5">[t]There are no products to order.[/t]</td>
+			</tr>
+			{/foreach}
+			{if $candidate_credits > 0} 
+			{if $cnt_products > 0}
+			<tr>
+				<td colspan="5" class="orderButtonContainer" align="right"><input class="button" type="button" onClick="validateProductForm();" value="[th]Order[/th]" ></td>
+			</tr>
+			{/if}
+			{/if}
+		</table>
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

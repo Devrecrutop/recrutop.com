@@ -1,0 +1,92 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>[t]Network Connection List[/t]</title>
+	<style type="text/css">
+		/* {literal} */
+		a img
+		{
+			border: none;
+		}
+		
+		.marginTop
+		{
+			margin-top: 1em;
+		}
+		
+		.center
+		{
+			text-align: center; /* Only for IE */
+			margin: 0px auto; /* Other browsers */
+		}
+		
+		*>.center /* Other browsers */
+		{
+			display: table; /* Allow resizing */
+			text-align: inherit; /* Disable IE centering */
+		}
+		
+		ul.horizontalMenu,
+		.horizontalMenu ul
+		{
+			margin: 0em;
+			padding: 0em;
+		}
+		
+		.horizontalMenu li
+		{
+			list-style: none;
+			display: inline;
+			margin: 0em;
+			padding: 0em 1em;
+		}
+		/* {/literal} */
+	</style>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/network/connection_list.div.html -->
+<div class="outer nwOuter">
+<h1 class="title">{$pagename}</h1>
+
+{if $nameIntervals}
+<div class="menuContainer">
+{foreach from=$nameIntervals key=intervalKey item=nameInterval}
+<div class="menuLink"><a href="{$thisWebsite}/index.php/page/network/greaterOrEqualTo/{$nameInterval.greaterOrEqualTo}/lessOrEqualTo/{$nameInterval.lessOrEqualTo}">{$intervalKey}</a></div>
+{/foreach}
+</div>
+{/if}
+
+{foreach from=$websites item=website}
+{assign var='websiteId' value=$website.id}
+{assign var='klantid' value=$website.klantid}
+<div class="itemContainer">
+<div class="itemImage"><a href="{if $website.network_text}{$thisWebsite}{$website.url}{else}{$website.website}" target="_blank{/if}" title="{$website.name}"><img src="{$website.website}/_images_upload/{if $website.network_image == "Picture" && $website.network_picture}{$website.network_picture}{else}{$website.network_logo}{/if}" alt="{$website.name}" border="0"></a></div>
+<h3 class="itemTitle"><a href="{if $website.network_text}{$thisWebsite}{$website.url}{else}{$website.website}" target="_blank{/if}" title="{$website.name}">{$website.name}</a></h3>
+<div class="itemDescription nwItwebType">
+	{foreach from=$websitesType.$websiteId key=i item=websiteType}
+		{if $i}, {/if}
+		{$websiteTypes.$websiteType}
+	{/foreach}
+</div>
+<div class="itemDescription">{$website.portfolio_text|truncate:300:"..."}</div>
+</div>
+{/foreach}
+
+
+{if $nameIntervals}
+{if $websites}
+<div class="menuContainer netBottomMc">
+{foreach from=$nameIntervals key=intervalKey item=nameInterval}
+<div class="menuLink"><a href="{$thisWebsite}/index.php/page/network/greaterOrEqualTo/{$nameInterval.greaterOrEqualTo}/lessOrEqualTo/{$nameInterval.lessOrEqualTo}">{$intervalKey}</a></div>
+{/foreach}
+</div>
+{else}
+<div class="approw">[t]There are no connections in this range.[/t]</div>
+{/if}
+{/if}
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

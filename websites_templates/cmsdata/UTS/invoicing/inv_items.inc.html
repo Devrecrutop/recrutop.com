@@ -1,0 +1,177 @@
+{*INVOICE ITEMS AND TOTALS*}  
+  <div id="inv-items">
+  
+  <table width="100%" border="0" cellspacing="0" cellpadding="4" id="tbl-items">  
+  <tr>
+    <th style="width: 40px;">[t]Nr.[/t]</th>
+    
+    {if $data.invoice.use_amount}
+    <th style="width: 60px;">[t]Amount[/t]</th>
+    {/if}
+    
+    <th>[t]Description[/t]</th>          
+    <th style="width: 60px; text-align: right;">[t]Currency[/t]</th>
+    <th style="width: 80px; text-align: right;">[t]Unit Price[/t]</th>
+    
+    {if $data.invoice.use_amount}
+    <th style="width: 80px; text-align: right;">[t]Total[/t]</th>
+    {/if}    
+    
+    {if $data.invoice.use_multiple_vat}
+    <th style="width: 80px; text-align: right;">[t]VAT[/t]</th>
+    {/if} 
+    
+    {if $settings.invoicingVatTypes}
+    <th style="width: 40px; text-align: right;">[t]Type[/t]</th>
+    {/if}
+    {if $settings.invoicing_manual_product_invoice}
+    <th style="width: 100px; text-align: right;">[t]Product code[/t]</th>
+    {/if}
+  </tr>    
+  {foreach name=items from=$data.items item=item}
+  {if $settings.invoicing_manual_product_invoice}
+  <tr><td colspan="9">{$item.explanation|escape}</td></tr>
+  {/if}
+  <tr>
+    <td style="text-align: left;">#&nbsp;{$smarty.foreach.items.iteration}</td>
+    
+    {if $data.invoice.use_amount}
+    <td>{$item.amount}</td>
+    {/if}
+    
+    
+	{* Addded wordwrap param, for too long invoice description names ...
+	  See:  http://www.smarty.net/docs/en/language.modifier.wordwrap.tpl
+	  ORG line: <td style="text-align: left;">{$item.description|escape}</td>
+	*}
+    <td style="text-align: left;">{$item.description|escape|wordwrap:60:"<br />\n"}</td> 
+    <td>{$data.invoice.currency|escape}</td>
+    <td>{$item.unit_price|number_format:2:",":"."}</td>
+    
+    {if $data.invoice.use_amount}
+    <td>{$item.amount*$item.unit_price|number_format:2:",":"."}</td>
+    {/if}    
+    
+    {if $data.invoice.use_multiple_vat}
+    <td>{$item.vat|number_format:2:",":"."}&nbsp;%</td>
+    {/if}
+    
+    {if $settings.invoicingVatTypes}
+    <td>{$item.vat_type|escape}</td>
+    {/if}
+    
+    {if $settings.invoicing_manual_product_invoice}
+      <td>{$item.product_code|escape}</td>
+    {/if}
+  </tr>  
+  {/foreach}
+  </table>  
+  
+  </div>  
+  <hr>      
+  
+  <div id="inv-totals" >
+  
+  <table width="100%" border="0" cellspacing="0" cellpadding="4" id="tbl-totals">    
+  
+  {if $settings.invoicingVatTypes}
+      
+    {*VAT TYPES TOTALS BEGIN*}
+    <tr>    
+      <th>&nbsp;</th>            
+      <th style="width: 80px;" class="bottomline">[t]Type[/t]</th>
+      <th style="width: 80px;" class="bottomline">[t]VAT[/t]&nbsp;%</th>
+      <th style="width: 80px;" class="bottomline">[t]Currency[/t]</th>
+      <th style="width: 80px;" class="bottomline">[t]VAT excl.[/t]</th>
+      <th style="width: 80px;" class="bottomline">[t]VAT[/t]</th>
+      <th style="width: 80px;" class="bottomline">[t]VAT incl.[/t]</th>
+    </tr>      
+    {foreach name=subtotals from=$data.subtotals item=st}
+    <tr>
+      <td>&nbsp;</td>      
+      <td>{$st.vat_type|escape}</td>
+      <td>
+        {if $st.vat_type == 0}
+          [t]vrijgesteld[/t]
+        {elseif $st.vat_type == 6}
+          [t]verlegd[/t]        
+        {else}        
+          {$st.vat_percentage|number_format:2:",":"."}&nbsp;%
+        {/if}
+      </td>                  
+      <td>{$data.invoice.currency|escape}</td>
+      <td>{$st.total_vat_excl|number_format:2:",":"."}</td>
+      <td>{$st.total_vat|number_format:2:",":"."}</td>
+      <td>{$st.total_vat_incl|number_format:2:",":"."}</td>
+    </tr>
+    {/foreach}
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td class="total">[t]Total[/t]</td>
+      <td class="total">{$data.invoice.currency|escape}</td>
+      <td class="total">{$data.invoice.total_vat_excl|number_format:2:",":"."}</td>
+      <td class="total">{$data.invoice.total_vat|number_format:2:",":"."}</td>
+      <td class="total">{$data.invoice.total_vat_incl|number_format:2:",":"."}</td>
+    </tr>     
+    {*VAT TYPES TOTALS END*}               
+  
+  {else}
+  
+    {*STANDARD TOTALS BEGIN*}
+    {if $data.invoice.use_multiple_vat}    
+      <tr>
+        <th>&nbsp;</th>
+        <th style="width: 80px;" class="bottomline">[t]VAT[/t]&nbsp;%</th>
+        <th style="width: 80px;" class="bottomline">[t]Currency[/t]</th>
+        <th style="width: 80px;" class="bottomline">[t]VAT excl.[/t]</th>
+        <th style="width: 80px;" class="bottomline">[t]VAT[/t]</th>
+        <th style="width: 80px;" class="bottomline">[t]VAT incl.[/t]</th>
+      </tr>      
+      {foreach name=subtotals from=$data.subtotals item=st}
+      <tr>
+        <td>&nbsp;</td>
+        <td>{$st.vat_percentage|number_format:2:",":"."}&nbsp;%</td>
+        <td>{$data.invoice.currency|escape}</td>
+        <td>{$st.total_vat_excl|number_format:2:",":"."}</td>
+        <td>{$st.total_vat|number_format:2:",":"."}</td>
+        <td>{$st.total_vat_incl|number_format:2:",":"."}</td>
+      </tr>
+      {/foreach}
+      <tr>
+        <td>&nbsp;</td>
+        <td class="total">[t]Total[/t]</td>
+        <td class="total">{$data.invoice.currency|escape}</td>
+        <td class="total">{$data.invoice.total_vat_excl|number_format:2:",":"."}</td>
+        <td class="total">{$data.invoice.total_vat|number_format:2:",":"."}</td>
+        <td class="total">{$data.invoice.total_vat_incl|number_format:2:",":"."}</td>
+      </tr>                
+    
+    {else}             
+      <tr> 
+        <td>&nbsp;</td>
+        <td style="width: 80px;">[t]VAT excl.[/t]</td>
+        <td style="width: 80px;">{$data.invoice.currency|escape}</td>       
+        <td style="width: 80px;">{$data.invoice.total_vat_excl|number_format:2:",":"."}</td>
+      </tr>
+      <tr> 
+        <td>&nbsp;</td>
+        <td>[t]VAT[/t]&nbsp;{$data.invoice.vat_percentage_default|escape}%</td>
+        <td>{$data.invoice.currency|escape}</td>    
+        <td>{$data.invoice.total_vat|number_format:2:",":"."}</td>
+      </tr>    
+      <tr> 
+        <td>&nbsp;</td>
+        <td class="total">[t]VAT incl.[/t]</td>
+        <td class="total">{$data.invoice.currency|escape}</td>    
+        <td class="total">{$data.invoice.total_vat_incl|number_format:2:",":"."}</td>
+      </tr>
+      </tr>      
+      
+    {/if}
+    {*STANDARD TOTALS END*} 
+    
+  {/if}           
+  </table>  
+  
+  </div>    

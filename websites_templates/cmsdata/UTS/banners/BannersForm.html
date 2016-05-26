@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>
+Banners
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+
+</head>
+<body margin="0">
+
+<script>
+function DelBanner(id) {
+ok = confirm("Are you sure you want to delete this item?");
+if (ok) {
+//document.form1.command.value="delete";
+//document.form1.submit();
+alert('delete');
+} else {
+    alert('no delete');
+return false;
+}
+}
+</script>
+
+<!--uts:begin inner-->
+<!-- UTS Template /UTS/Banners/BannersForm.html -->
+<div class="outer bnrOuter">
+<h1 class="title bnrTitle">{if $data.rep_id}[t]Edit banner[/t]{else}[t]Add banner[/t]{/if}</h1>
+
+{$customer_menu}
+
+
+{if $data.rep_id}
+<div class="text bnrText">[t]In the table below, you can edit a banner[/t]</div>
+{else}
+<div class="text bnrText">[t]In the table below, you can add a banner[/t]</div>
+{/if}
+
+<form name="form1" action="/index.php/page/banner_engine/command/save/bb/1/BannerId/{$data.rep_id}" method="POST" enctype="multipart/form-data">
+<input type="hidden" name="command" value="save">
+<input type="hidden" name="BannerId" value="{$data.rep_id}">
+
+<table border="0" cellpadding="0" cellspacing="0" class="bnrCreateTbl">
+{if $data.rep_id}
+<tr id="bnrNotify">
+<td colspan="2">[tg]The dimensions of the default banner must be: [/tg] {$data.banner_width} x {$data.banner_height} px<br>[tg]And its size should not exceed: [/tg] {$data.banner_rec_size} KB</td>
+</tr>
+{/if}
+{if $error}
+<tr id="bnrFlip">
+<td colspan="2">{$error}</td>
+</tr>
+{/if}
+<tr id="bnrFlop">
+<td>[t]Banner type[/t]</td>
+<td><select name="bannerTypeId" id ="bannerTypeId" {if $data.rep_id}DISABLED{/if}>{html_options options=$BannersTypes selected=$data.banner_type_id}</select>{if $data.rep_id}<input type="hidden" name="bannerTypeId" value="{$data.banner_type_id}">{/if}</td>
+</tr>
+<tr id="bnrFlip">
+<td>[t]Name[/t]</td>
+<td><input type="text" id="banner_display_name" name="banner_display_name" value="{$data.banner_display_name}"></td>
+</tr>
+<tr id="bnrFlop">
+<td>[t]Alternative text[/t]</td>
+<td><input type="text" id="alternative_text" name="alternative_text" value="{$data.alternative_text}"></td>
+</tr>
+<tr id="bnrFlip">
+<td>[t]link to[/t]</td>
+<td><input type="text" id="banner_link_to" name="banner_link_to" value="{$link_to_pre}{$data.banner_link_to}"></td>
+</tr>
+<tr id="bnrFlop">
+<td>[t]Comment[/t]</td>
+<td><textarea type="text" id="banner_notes" name="banner_notes" rows="5">{$data.banner_notes}</textarea></td>
+</tr>
+<tr id="bnrFlip">
+<td>[t]Limit Views[/t]</td>
+<td><select name="banner_limit_id" id ="banner_limit_id" >{foreach from=$banner_limits key=k item=v}<option label="{$v.limit_name}" value="{$v.id}"  {if $v.id == $data.banner_limit_id}SELECTED{/if}>{$v.limit_name}</option>{/foreach}</select></td>
+</tr>
+<tr id="bnrFlop">
+<td>[t]Banner[/t]</td>
+<td><input type="hidden" name="MAX_FILE_SIZE" value="2097152"><input style="width:100%;" type="file" name="file"></td>
+</tr>
+{if $data.rep_id && $data.uploaded_photo}
+<tr id="bnrFlip">
+<td>[t]Current file[/t]:</td>
+<td><a href = "/index.php/page/banner_engine/command/show_photo/bb/1/BannerId/{$data.rep_id}/BannerCode/{$data.unique_code}" target="_blank">{$data.uploaded_photo}</a><a href="/index.php/page/banner_engine/command/delete/bb/1/BannerId/{$data.rep_id}"><img src="/_images_global/buttonClearFilter.gif" border="0" alt="delete" ></a><input type="hidden" name="uploaded_filename" value="{$data.uploaded_photo}"></td>
+</tr>
+{/if}
+</table>
+
+<div class="formTblButtonCell"><input type="submit" class="button" value="[t]Save[/t]"></div>
+
+</form>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

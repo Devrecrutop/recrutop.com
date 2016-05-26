@@ -1,0 +1,11 @@
+<div class="hookOuter actFo actFoJobsHook">
+ <!-- /UTS/advsearch/facetHook.html -->
+<div class="hookHeader actFh">{$critName|escape}</div>
+<ul>
+<foreach name="fCritVals" from=$critValues item=c>
+<li id="{$c->name}"><a {if $mode == "cat"}href="[website]/index.php/page/advsearchvacs/bb/1/command/startsearchdisp/field/{$critField|escape:"url"}/query/{$c->value}/new/vacatures-{$c->name2|escape:"url"}.html"{else}href="[website]/index.php/page/advsearchvacs/bb/1/command/startsearchdisp/container/matchcriteria/field/{$critField|escape:"url"}/query/{$c->value}/new/vacatures-{$c->name2|escape:"url"}.html"{/if}>{$c->name} <span class="facetHookFreq">({$c->frequency})<span class="facetHookComma">{if !$smarty.foreach.fCritVals.last}, {/if}</span></span></a></li>
+</foreach>
+</ul>
+<div class="cleaner"></div>
+
+</div>

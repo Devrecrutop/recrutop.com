@@ -1,0 +1,77 @@
+<!--uts:begin inner-->
+<div class="outer aplOuter">
+<!-- /UTS/candidates/videoboard-form.html -->
+<form action="{$action}" method="post">
+<h1 class="title aplTitle">[t]Videoboard[/t]</h1>
+{if $showNavigation}
+<div class="menuContainer aplMc">
+<div class="menuLink menuLinkFirstChild aplMlink aplMlinkFc"><a href="[website]/index.php/page/CandidatesRemote/command/myprofile/bb/1/page/1">[t]Login[/t]</a></div>
+<!--START_PAGELINKS-->
+<div class="menuLink aplMlink"><a href="[website]/index.php/page/CandidatesRemote/command/myprofile/page/2/bb/1/subpage/[Page]">[PageName]</a></div>
+<!--END_PAGELINKS-->
+<if $availabilityEnabled>
+<div class="menuLink aplMlink"><a href="/index.php/page/applicants/bb/1/command/myavailabilityold">[t]Availability[/t]</a></div>
+</if>
+<div class="menuLink aplMlink"><a href="[website]/index.php/page/CandidatesRemote/command/myprofile/bb/1/page/5">[t]Videoboard[/t]</a></div>
+<!--START_APPLICATION-->
+<div class="menuLink aplMlink"><a href="[website]/index.php/page/CandidatesRemote/command/myprofile/bb/1/page/3">[t]Applications[/t]</a></div>
+<!--END_APPLICATION-->
+<div class="menuLink menuLinkLastChild aplMlink aplMlinkLc"><a href="[website]/index.php/page/CandidatesRemote/bb/1/command/logout">[t]Logout[/t]</a></div>
+</div>
+{/if}
+
+{* for the new applicants module *}
+<if $myprofileMenu>
+	{$myprofileMenu}
+</if>
+<div class="intro aplIntro">[t]Please record your video message below, or upload an existing video presentation from your computer. The message will be stored together with your application. In addition, you can also choose to have your presentation published on videoboard[/t]</div>
+
+{* Unused params: &amp;functieId=34&amp;branche=34&amp;nieuwevideoopnemen=ja *}
+<div class="text"><iframe src="http://www.videoboard.nl/otys_web.asp?kandidaatID={$kandidaatID}&amp;lang={$lang}&amp;wsbureau={$wsbureau}&amp;wsemail={$wsemail}&amp;wstelefoon={$wstelefoon}&amp;plaats={$plaats}&amp;geboortedatum={$geboortedatum|date_format:'%Y-%m-%d'}&amp;css={$css}" style="width: 100%; height: 372px; border: 0px;" frameborder='0'></iframe></div>
+
+<h2 class="subHeader">[t]Publicatie op videoboard[/t]</h2>
+<div class="text">[t]If you do not want to be published on Videoboard you do not have to fill in the following details.[/t]</div>
+
+<div class="formInput formCheckbox">
+<input type="checkbox" name="publish" value="t"{if $publish == 't'} checked="checked"{/if} class="videoCheckbox">
+<label>[t]Publish on Videoboard[/t]</label>
+</div>
+
+<div class="formInput">
+<label>[t]Region[/t]</label>
+<input type="text" name="provincie" value="{$provincie}">
+</div>
+
+<div class="formInput">
+<label>[t]Job title[/t]</label>
+<input type="text" name="functieomschrijving" value="{$functieomschrijving}">
+</div>
+
+<div class="formInput">
+<label>[t]Education level[/t]</label>
+<input type="text" name="opleidingsniveau" value="{$opleidingsniveau}">
+</div>
+
+<div class="formInput">
+<label>[t]Years experience in given job[/t]</label>
+<select name="jarenervaring">
+<option value="">---</option>
+{html_options options=$expYears selected=$jarenervaring}
+</select>
+</div>
+
+<div class="formInput">
+<label>[t]Introduce yourself in 5 words[/t]</label>
+<input type="text" name="pitch" value="{$pitch}">
+</div>
+
+<div class="formInput">
+<label>[t]Elevator Pitch[/t]</label>
+<div class="explain">[t]Please provide a short description of your personality and qualifications[/t]</div>
+<textarea cols="50" rows="5" name="omschrijving" style="width: 100%;">{$omschrijving}</textarea>
+</div>
+
+<div class="buttonContainer"><input type="submit" class="button" value="[tb]Save[/tb]"></div>
+</form>
+</div>
+<!--uts:end inner-->

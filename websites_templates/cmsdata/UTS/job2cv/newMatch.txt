@@ -1,0 +1,6 @@
+{if $matchCount > 0}
+[t]You have posted the job[/t] {$vacancyTitle}[t]. We have automatched {$matchCount} candidates to this job. Please click on the following link to view them:[/t]
+{else}
+[t]You have posted the job[/t] {$vacancyTitle}[t]. We have run an automatch. Unfortunately no candidates have been found that match its criteria. Please click on the following link to view the job:[/t]
+{/if}
+{$url}

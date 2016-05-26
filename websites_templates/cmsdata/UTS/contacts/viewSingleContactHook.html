@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/contacts/viewSingleContactHook.html -->
+<div class="hookContainer cvhContainer">
+	{if $cp_info.cp_displayed_name || $cp_info.cp_full_name}<div class="hookTitle cvhHeader"><h1><a href="http://{$consultant_detail}" title="[t]Details...[/t]">{if $cp_info.cp_displayed_name}{$cp_info.cp_displayed_name|escape}{else}{$cp_info.cp_full_name|escape}{/if}</a></h1></div>{/if}
+	<div class="hookDetailsContainer cvhDetailsContainer">
+
+		{if $cp_photo !="" && $display_elements.show_photo}
+		<div class="hookPhoto cvhPhoto"><div class="hookPhoto2 cvhPhoto2"><a href="http://{$consultant_detail}" title="[t]Details...[/t]"><img src="http://{$cp_photo_link}" border="0" alt="{$cp_info.cp_full_name|escape}" {$cp_photo_size}></a></div></div>
+		{/if}
+
+		{if $short_descr !="" && $display_elements.show_short_text}
+		<div class="hookShortDescription cvhShortDescription">{$short_descr|truncate:200}</div>
+		{/if}
+		<div class="cvhNawContainer">
+
+			{if $cp_info.wg_cp_email && $display_elements.show_email}
+			<div class="hookWord cvhWord">[t]E-mail:[/t]</div>
+			<div class="hookValue cvhValue"><a href="mailto:{$cp_info.wg_cp_email}" tile="{$cp_info.wg_cp_email}  ">{$cp_info.wg_cp_email}</a></div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $organisation_units_cnt > 0 && $display_elements.show_orgunit}
+			<div class="hookWord cvhWord">[t]Organisation units:[/t]</div>
+			<div class="hookValue cvhValue">
+			{foreach from=$organisation_units item=unit name=ou}
+				{$unit.item_name|escape}
+				{if !$smarty.foreach.ou.last},&nbsp;{/if}
+			{/foreach}
+			</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $roles_cnt > 0 && $display_elements.show_roles}
+			<div class="hookWord cvhWord">[t]Roles:[/t]</div>
+			<div class="hookValue cvhValue">
+			{foreach from=$roles item=rl name=roles}
+				{$rl.name|escape}
+				{if !$smarty.foreach.roles.last},&nbsp;{/if}
+			{/foreach}
+			</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if   $display_elements.show_address  && ($cp_info.wg_cp_adres || $cp_info.wg_cp_pc || $cp_info.wg_cp_plaats)}
+			<div class="hookWord cvhWord">[t]Home Address:[/t]</div>
+			<div class="hookValue cvhValue">
+			{if $cp_info.wg_cp_adres}{$cp_info.wg_cp_adres|escape},&nbsp;{/if}
+			{if $cp_info.wg_cp_pc}{$cp_info.wg_cp_pc|escape}&nbsp;{/if}
+			{if $cp_info.wg_cp_plaats}{$cp_info.wg_cp_plaats|escape}{/if}
+			{if $cp_info.home_country}<br >{$cp_info.home_country|escape}{/if}
+			</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+
+			{if   $display_elements.show_work_address  && ($cp_info.wg_cp_adres_werk || $cp_info.wg_cp_pc_werk || $cp_info.wg_cp_plaats_werk)}
+			<div class="hookWord cvhWord">[t]Work Address:[/t]</div>
+			<div class="hookValue cvhValue">
+			{if $cp_info.wg_cp_adres_werk}{$cp_info.wg_cp_adres_werk|escape},&nbsp;{/if}
+			{if $cp_info.wg_cp_pc_werk}{$cp_info.wg_cp_pc_werk|escape}&nbsp;{/if}
+			{if $cp_info.wg_cp_plaats_werk}{$cp_info.wg_cp_plaats_werk|escape}{/if}
+			{if $cp_info.work_country}<br >{$cp_info.work_country|escape}{/if}
+			</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $cp_info.wg_cp_doorkiesnr && $display_elements.show_direct_number}
+			<div class="hookWord cvhWord">[t]Direct #:[/t]</div>
+			<div class="hookValue cvhValue">{$cp_info.wg_cp_doorkiesnr}</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $cp_info.phone_home && $display_elements.show_home_phone}
+			<div class="hookWord cvhWord">[t]Phone home:[/t]</div>
+			<div class="hookValue cvhValue">{$cp_info.phone_home}</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $cp_info.phone_mobile && $display_elements.show_cell_phone}
+			<div class="hookWord cvhWord">[t]Cell phone:[/t]</div>
+			<div class="hookValue cvhValue">{$cp_info.phone_mobile}</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $cp_info.phone_work && $display_elements.show_work_phone}
+			<div class="hookWord cvhWord">[t]Work phone:[/t]</div>
+			<div class="hookValue cvhValue">{$cp_info.phone_work}</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $cp_info.phone_fax && $display_elements.show_fax}
+			<div class="hookWord cvhWord">[t]Fax:[/t]</div>
+			<div class="hookValue cvhValue">{$cp_info.phone_fax}</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $cp_info.phone_skype && $display_elements.show_skype}
+			<div class="hookWord cvhWord">[t]Skype:[/t]</div></td>
+			<div class="hookValue cvhValue">{$cp_info.phone_skype}</div>
+			<div class="hookCleaner"></div>
+			{/if}
+		</div>
+
+		{if $cp_media && $display_elements.show_wiqet}
+		<div class="hookVTV cvhMedia">{$cp_media}</div>
+		{/if}
+
+		{if $cp_widget && $display_elements.show_widget}
+		<div class="hookVTV cvhWidget">{$cp_widget}</div>
+		{/if}
+
+		{if $cp_documents_cnt > 0 && $display_elements.show_documents}
+		{foreach from=$cp_documents item=i}
+		<div class="hookVTV cvhDocumentDownload">{$i.document_download_link}</div>
+		{/foreach}
+		{/if}
+		<div class="hookLink cvhDetailsLink"><a href="http://{$consultant_detail}" title="[t]Details...[/t]">[t]Details...[/t]</a></div>
+
+	</div>
+
+</div>
+<iframe name="actionframe" width="0" height="0" frameborder="0" scrolling="No" contentEditable=false></iframe>
+<!--uts:end inner-->
+</body>
+</html>

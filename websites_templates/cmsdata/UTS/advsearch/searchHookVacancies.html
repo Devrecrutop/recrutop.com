@@ -1,0 +1,394 @@
+{* req. ext. javascript: JQueryBase,JQueryAutocomplete,JQueryMultiSelect,JQueryAnimatedCollapse *}
+<script type="text/javascript">
+var kwAskURL='[website]/index.php/page/advsearchvacs/bb/1/command/kwautocomplete/arg/';
+var locAskURL='[website]/index.php/page/advsearchvacs/bb/1/command/locautocomplete/arg/';
+var iSearch = -1; 
+var ac = null; // autocomplete object
+
+//{literal}
+
+function advsearchhookform_check_form(frm) {
+    //{/literal}
+    <if $distanceDisplaySettings>
+    //{literal}
+    if (frm.proximity_preferredDistance.value && !frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value!='0') {
+        alert('[thj]Set also the maximal distance.[/thj]');
+        return(false);
+    }
+    
+    if (frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value && parseInt(frm.proximity_preferredDistance.value)>parseInt(frm.proximity_maxDistance.value)) {
+        alert('[thj]Maximal distance must be lower than preferred distance.[/thj]');
+        return(false);
+    }
+    //{/literal}
+    </if>
+    //{literal}
+    return(true);
+}
+    //{/literal}
+	<if $mobile_enabled == false>
+    //{literal}
+// define ready function
+$(document).ready
+(
+	function()
+	{
+		// setup jquery multiselect for keyword options
+		
+		var reqScripts = "[uts:ext_javascripts]";
+		if(reqScripts.indexOf('JQueryMultiSelect') > -1 && !$.fn.magicSelect)
+		{
+			if($('#hook_multisel_kw_options').length)
+			{
+				$('#hook_multisel_kw_options').multiSelect({
+					selectAllText: '[thj]Select all[/thj]',
+					noneSelected: '[thj]Select fields...[/thj]',
+					oneOrMoreSelected: '[thj]Select fields (% selected)...[/thj]'
+				});
+			}
+		}
+		else
+		{
+			console.log('JQueryMultiSelect disabled');
+		}
+		
+	 var reqScripts = "[uts:ext_javascripts]";
+	 
+	if(reqScripts.indexOf('JQueryAutocomplete') > -1 && !$.fn.autocomplete){
+	  
+		// setup autocomplete for the keyword
+		if ($('#asSearchHookKeywords').length) {
+		  $('#asSearchHookKeywords').autocomplete({ 
+			serviceUrl:kwAskURL,
+			minChars:3, 
+			//delimiter: /(,|;)\s*/, // regex or character
+			maxHeight:300,
+			width:200
+			//deferRequestBy: 0, //miliseconds
+			// callback function:
+			//onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+		  });
+		}
+			
+		  if($('#cb_main_local_search').length)
+		  {
+			// before first initialization of autocompelte
+			iSearch = ($('#cb_main_local_search').is(':checked')) ? 1 : 0; // initlaize 
+			
+			
+			$('#cb_main_local_search').click(function() {              
+			  var ch = ($(this).is(':checked')) ? 1 : 0;
+						
+			  if ($('#asSearchHookLocation').length && ac != null) 
+			  {        
+				// reinit autocomplete        
+				ac.setOptions({minChars: 3, maxHeight: 300, width: 200, params:{international: ch}});
+				ac.clearCache();        
+			  }      
+							 
+			});     	     	     	      
+		  }	
+			
+		// setup autocomplete for the location, if available
+		if ($('#asSearchHookLocation').length) 
+	  {
+		  ac = $('#asSearchHookLocation').autocomplete({ 
+			serviceUrl:locAskURL,
+			params:{international: iSearch},  
+			minChars:3, 
+			//delimiter: /(,|;)\s*/, // regex or character
+			maxHeight:300,
+			width:200
+			//deferRequestBy: 0, //miliseconds
+			// callback function:
+			//onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+		  });
+		}
+	}
+	else
+	{
+	
+	}
+		
+	// setup jquery multiselect for category search
+	
+  var reqScripts = "[uts:ext_javascripts]";
+  if(reqScripts.indexOf('JQueryMultiSelect') > -1 && !$.fn.magicSelect){
+
+//  if( jQuery.isFunction(jQuery.fn.JQueryMultiSelect) ){
+	console.log('test');
+
+	if ($('#multisel_categorie').length) $('#multisel_categorie').multiSelect({
+        selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select categories...[/th]',
+            oneOrMoreSelected: '[th]Select categories (% selected)...[/th]'
+    });
+    
+    // setup match criteria multiselects
+    //{/literal}
+    <foreach from=$critList item=crit>
+    <if $crit.sm == "M">
+        var critf='{$crit.field}';
+        
+        //{literal}
+        if ($('#hook_multisel_mc_'+critf).length) $('#hook_multisel_mc_'+critf).multiSelect({
+            selectAllText: '[thj]Select all[/thj]',
+            noneSelected: '[thj]Select criteria...[/thj]',
+            oneOrMoreSelected: '[thj]Select criteria (% selected)...[/thj]'
+            });
+
+        //{/literal}
+    </if>
+    </foreach>
+	<foreach from=$critListEx item=crit>
+    <if $crit.sm == "M">
+        var critf='{$crit.field}';
+        //{literal}
+        if ($('#hook_multisel_mc_'+critf).length) $('#hook_multisel_mc_'+critf).multiSelect({
+            selectAllText: '[thj]Select all[/thj]',
+            noneSelected: '[thj]Select criteria...[/thj]',
+            oneOrMoreSelected: '[thj]Select criteria (% selected)...[/thj]'
+            });
+
+        //{/literal}
+    </if>
+    </foreach>
+    
+    }
+    //{literal}
+	animatedcollapse.addDiv('asrHookVacanciesExtendedControls', 'fade=1,persist=1');
+
+	var ac_ot_old = animatedcollapse.ontoggle;
+
+	animatedcollapse.ontoggle=function($, divobj, state) {
+		if (typeof(ac_ot_old) == 'function') {
+			ac_ot_old($,divobj,state);
+		}
+		if (divobj.id=='asrHookVacanciesExtendedControls') {
+			//alert(state);
+			if (state=='block') {
+				$('#exControlsToggleLink').html('[thj]Less search options[/thj]');
+				//$("#asrHookVacanciesExtendedControls input,#asrHookVacanciesExtendedControls select").attr("disabled", true);
+				$("#asrHookVacanciesExtendedControls input,#asrHookVacanciesExtendedControls select").removeAttr("disabled");
+			} else if (state=='none') {
+				$('#exControlsToggleLink').html('[thj]More search options[/thj]');
+				$("#asrHookVacanciesExtendedControls input,#asrHookVacanciesExtendedControls select").attr("disabled", true);
+				
+			}
+		}
+	}
+	
+	animatedcollapse.init();
+});
+
+//{/literal}
+    </if>
+</script>
+
+<div class="hookOuter actHOuter actJshOuter">
+	<!-- /UTS/advsearch/searchHookVacancies.html STANDARD -->
+	<!-- HTML VALID	- MD -->
+	<div class="hookHeader actHHeader">[t]Advanced search[/t]</div>
+	<form name="advsearchhookform" method="post" action="[website]/index.php/page/advsearchvacs/bb/1" onsubmit="return(advsearchhookform_check_form(this))">
+		{* keyword field *}
+		<if [uts:show_keyword_options]>
+			<div class="hookWord actHWord actHKw"><label for="asSearchHookKeywords">[t]Keywords[/t]</label></div>
+			<div class="hookInput actHInput actHIKw"><input type="text" id="asSearchHookKeywords" name="main_keywords" value="{$keywordsValue|escape}"></div>
+			<div class="hookWord actHWord actHVsl"><label for="hook_multisel_kw_options">&nbsp;</label></div>
+			<div class="hookInput actHInput actHVsi">
+				<select id="hook_multisel_kw_options" name="main_keywords_options[]" multiple="multiple" size="5">
+					<html_options options=$kwOptions selected=$kwOptionsSelected>
+				</select>
+			</div>
+			<if $splitLocation>
+				<div class="hookWord actHWord actHVLoc"><label for="asSearchHookLocation">[t]Location[/t]</label></div>
+				<div class="hookInput actHInput actHILoc"><input type="text" id="asSearchHookLocation" name="main_location" value="{$locationValue|escape}"></div>
+			</if>
+			<if $intlSearchEnabled>
+				<div class="hookWord actHWord actHInl">
+					<label for="cb_main_local_search">[t]International search[/t]</label>
+				</div>
+				<div class="hookInput actHInput actHIni">
+					<input type="hidden" name="main_local_search" value="1">
+					<input type="checkbox" id="cb_main_local_search" name="main_local_search" value="0" {if !$localSearch}checked="checked"{/if}>
+				</div>
+			</if>
+		</if>
+
+		{* publication options *}
+		<if $publicationDisplaySettings == 1>
+			<div class="hookWord actHWord"><label for="main_pubdate">[t]Show[/t]</label></div>
+			<div class="hookInput actHInput actHIPub">
+				<select name="main_pubdate" id="main_pubdate">
+					<option value="">---</option>
+					<html_options options=$pubOpts selected=$pubOption>
+				</select>
+			</div>
+		</if>
+
+		{* distance options *}
+		<if $distanceDisplaySettings == 1>
+		<span class="actJshDist">
+			<div class="hookWord actHWord actHcountry"><label for="idCountryCode">[t]Country[/t]</label></div>
+			<div class="hookInput actHInput actHSCountry">
+				<select id="idCountryCode" name="proximity_countryCode">
+					<html_options options=$proximityCountries selected=$proximity.countryCode>
+				</select>
+			</div>
+			<div class="hookWord actHWord actHWZipcode"><label for="idZipcode">[t]Zipcode[/t]</label></div>
+			<div class="hookInput actHInput actHIZipcode"><input type="text" id="idZipcode" name="proximity_zipCode" value="{$proximity.zipCode|escape}"></div>
+			<div class="hookWord actHWord actHWMindistance"><label for="idPrefDistSrchHook">[t]Preferred distance [km][/t]</label></div>
+			<div class="hookInput actHInput actHIMindistance">
+				<select id="idPrefDistSrchHook" name="proximity_preferredDistance">
+					<option value="0">---</option>
+					<html_options options=$distOpts selected=$proximity.preferredDistance>
+				</select>
+			</div>
+			<div class="hookWord actHWord actHWMaxdistance"><label for="idMaxDistSrchHook">[t]Maximum distance [km][/t]</label></div>
+			<div class="hookInput actHInput actHIMaxdistance">
+				<select id="idMaxDistSrchHook" name="proximity_maxDistance">
+					<option value="">---</option>
+					<html_options options=$distOpts selected=$proximity.maxDistance>
+				</select>
+			</div>
+		</span>
+		</if>
+
+		{* criteria fields *}
+		<foreach from=$critList item=crit>
+
+		<if $mobile_enabled><div class="actCriteria"></if>
+
+			<if $crit.sm == "M">
+				<div class="hookWord actHWord actHCrit"><label for="hook_multisel_mc_{$crit.field}">{$crit.name}</label></div>
+			<else>
+				<div class="hookWord actHWord actHCrit"><label for="matchcriteria_{$crit.field}">{$crit.name}</label></div>
+			</if>
+			<div class="hookInput actHInput actHICrit">
+				<if $crit.sm == "M">
+					{* multiselect *}
+					<select name="matchcriteria_{$crit.field}[]" id="hook_multisel_mc_{$crit.field}" multiple="multiple" size="5">
+						<html_options options=$crit.options selected=$crit.curValues>
+					</select>
+				<else>
+					{* single select *}
+					<select name="matchcriteria_{$crit.field}" id="matchcriteria_{$crit.field}">
+						<option value="NULL">---</option>
+						<html_options options=$crit.options selected=$crit.curValue>
+					</select>
+				</if>
+			</div>
+
+		<if $mobile_enabled></div></if>
+
+		</foreach>
+		
+		{* schedule start/end date *}
+		<if [uts:show_schedule_search_dates] && $plnCandJobs>
+			<div class="hookWord actHWord actHIScheduleWord"><label for="">[t]Available[/t]</label></div>
+			<div class="hookInput actHInput actHIScheduleFrom">
+				<label for="">[t]From[/t]</label>
+				<html_select_date time=$schedule.fromDate field_order="DMY" month_format="%B" prefix="scheduleFromDate" day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" >
+				&nbsp;
+				<html_select_time time=$schedule.fromTime use_24_hours=true display_seconds=false minute_interval=15 prefix="scheduleFromTime" >
+			</div>
+			<div class="hookInput actHInput actHIScheduleTo">
+				<label for="">[t]To[/t]</label>
+				<html_select_date time=$schedule.toDate field_order="DMY" month_format="%B" prefix="scheduleToDate" day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" >
+				&nbsp;
+				<html_select_time time=$schedule.toTime use_24_hours=true display_seconds=false minute_interval=15 prefix="scheduleToTime" >
+			</div>
+		</if>
+
+		{* start category *}
+		<if [uts:show_categories]>
+			<div class="hookWord actHWord actHWCat">
+				<label for="multisel_categorie">[t]Categories[/t]</label>
+			</div>
+			<div class="hookInput actHInput actHICat">
+				<select id="multisel_categorie" name="categorie[]" multiple="multiple" size="5">
+					<html_options options=$catOpts selected=$catSelected>
+				</select>
+			</div>
+		</if>
+		{* end category *}
+
+		{* !!! extended controls *}
+		<div class="hookBottomLink actHBl optionListTitle facetListTitle" style="{if !$exElements}display:none;{/if}">
+			<a href="javascript:animatedcollapse.toggle('asrHookVacanciesExtendedControls')" id="exControlsToggleLink">[t]More search options[/t]</a>
+		</div>
+		<div id="asrHookVacanciesExtendedControls" style="display:none;">
+			
+			{* publication options *}
+			<if $publicationDisplaySettings == 2>
+				<div class="hookWord actHWord"><label for="main_pubdate">[t]Show[/t]</label></div>
+				<div class="hookInput actHInput">
+					<select name="main_pubdate" id="main_pubdate">
+						<option value="">---</option>
+						<html_options options=$pubOpts selected=$pubOption>
+					</select>
+				</div>
+			</if>
+		
+			{* distance options *}
+			<if $distanceDisplaySettings == 2>
+				<div class="hookWord actHWord actHcountry"><label for="idCountryCode">[t]Country[/t]</label></div>
+				<div class="hookInput actHInput actHcountrySi">
+					<select id="idCountryCode" name="proximity_countryCode">
+						<html_options options=$proximityCountries selected=$proximity.countryCode>
+					</select>
+				</div>
+				<div class="hookWord actHWord actHWZipcode"><label for="idZipcode">[t]Zipcode[/t]</label></div>
+				<div class="hookInput actHInput actHIZipcode"><input type="text" id="idZipcode" name="proximity_zipCode" value="{$proximity.zipCode|escape}"></div>
+				<div class="hookWord actHWord actHWPrefDist"><label for="idPrefDistSrchHook">[t]Preferred distance [km][/t]</label></div>
+				<div class="hookInput actHInput actHIPrefDist">
+					<select id="idPrefDistSrchHook" name="proximity_preferredDistance">
+						<option value="">---</option>
+						<html_options options=$distOpts selected=$proximity.preferredDistance>
+					</select>
+				</div>
+				<div class="hookWord actHWord actHWMaxDist"><label for="idMaxDistSrchHook">[t]Maximum distance [km][/t]</label></div>
+				<div class="hookInput actHInput actHIMaxdistance">
+					<select id="idMaxDistSrchHook" name="proximity_maxDistance">
+						<option value="">---</option>
+						<html_options options=$distOpts selected=$proximity.maxDistance>
+					</select>
+				</div>
+			</if>
+
+			{* criteria fields *}
+			<foreach from=$critListEx item=crit>
+				<if $crit.sm == "M">
+					<div class="hookWord actHWord"><label for="hook_multisel_mc_{$crit.field}">{$crit.name}</label></div>
+				<else>
+					<div class="hookWord actHWord"><label for="matchcriteria_{$crit.field}">{$crit.name}</label></div>
+				</if>
+				<div class="hookInput actHInput actHICrit">
+					<if $crit.sm == "M">
+						{* multiselect *}
+						<select id="hook_multisel_mc_{$crit.field}" name="matchcriteria_{$crit.field}[]" multiple="multiple" size="5">
+							<html_options options=$crit.options selected=$crit.curValues>
+						</select>
+					<else>
+						{* single select *}
+						<select name="matchcriteria_{$crit.field}" id="matchcriteria_{$crit.field}">
+							<option value="NULL">---</option>
+							<html_options options=$crit.options selected=$crit.curValue>
+						</select>
+					</if>
+				</div>
+			</foreach>
+		<div class="cleaner"></div>
+		</div>
+	
+		{* !!! end extended controls *}
+		<div class="hookButton actHButton"><input type="submit" name="bApplSubmit" value="[tb]Search[/tb]" class="button" ></div>
+		<input type="hidden" name="command" value="submitrequest">
+		<input type="hidden" name="origin" value="hook">
+	</form>
+
+	<if [uts:show_extended_search_link]>
+		<div class="hookBottomLink actHBl"><a href="[website]/index.php/page/advsearchvacs/bb/1/command/start" title="[th]Proceed to full extended search page[/th]" class="actFullSearch">[t]Full extended search[/t]</a></div>
+	</if>
+	<div class="cleaner actHCleaner"></div>
+</div>

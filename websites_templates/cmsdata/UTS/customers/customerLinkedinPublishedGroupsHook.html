@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<div class="hookOuter LinkedinShortlist">
+	<!-- UTS/customers/customerLinkedinPublishedGroupsHook.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+    <div class="hookHeader">[t]LinkedIn groups[/t]</div>
+    <div class="hookText">[t]This recruiter is owner of the following LinkedIn Groups:[/t]</div>
+    {foreach from=$linkedin_published_groups key="linkedinGroupKey" item=linkedinGroupItem}
+    <div>&nbsp;</div>
+	<div class="hookItemContainer recommHookIc">
+		<div class="hookItemImage"><a href="{$linkedinGroupItem.group_url}" target="_blank">{if $linkedinGroupItem.group_large_logo}<img src="{$linkedinGroupItem.group_large_logo}">{/if}</a></div>
+		<div class="hookItemTitle"><a href="{$linkedinGroupItem.group_url}" target="_blank">{$linkedinGroupItem.group_name}</a></div>
+		<div class="hookItemWord">{$linkedinGroupItem.group_members} [t]members[/t]</div>
+		<div class="jslCleaner jslKwCleaner"></div>
+	</div>
+  
+    {/foreach}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

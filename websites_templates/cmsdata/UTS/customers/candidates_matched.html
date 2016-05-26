@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/customers/candidates_matched.html -->
+<!--UT: Candidates_matched-->
+<table border="0" cellpadding="0" cellspacing="0" class="vacsTable" width="100%">
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Candidates matched for[/t]&nbsp;{$vacancy}</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="pageLinkContainer">{$customer_menu}</td>
+</tr>
+
+
+
+{foreach from=$candidates item=cand key=kid}
+
+  <tr>
+  <td class="vacancyItemContainer" valign="top">
+
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="vacancyItemTbl">
+  <tr>
+  <td valign="top">
+
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+  <!--START_fotoLeft-->
+  {if $cand.foto}
+  <td valign="top" style="width: {$cand.fotoWidth}; cursor:hand;" class="customerCandidateListImg" onClick="{$cand.fotoLink}">{$cand.foto}</td>
+  {else}
+  <td valign="top"></td>
+  {/if}
+  <!--END_fotoLeft-->
+  <td valign="top">
+
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td class="listFunctionContainer">
+
+  <table border="0" cellpadding="0" cellspacing="0" class="listFunctionTbl">
+  <tr>
+  <td class="listFunctionName">
+      <a href="/index.php/page/customers_ext/command/detail_matched/bb/1/code/{$code}/mkid/{$cand.id}/vid/{$vid}">{$cand.voornaam}</a>
+
+      {if $cand.score}
+      <span class="candidate_match_score">
+      {$cand.score}% match
+      </span>
+      {/if}
+  </td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <!--START_KEYWORDS-->
+  <tr>
+  <td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+  <!--START_KEYWORD_ROW1-->
+  <tr>
+  <td>
+
+  <table border="0" cellpadding="0" cellspacing="0" class="listKeywordTbl">
+  <tr>
+  <!--START_Location-->
+  <td class="listKeywordTitle">[t]City[/t]:<!--SingleWordLink1--></td>
+  <td class="listKeyword">{$cand.woonplaats}</td>
+  <!--END_Location-->
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <!--END_KEYWORD_ROW1-->
+
+  <!--START_KEYWORD_ROW2-->
+  <tr>
+  <td>
+
+  <table border="0" cellpadding="0" cellspacing="0" class="listKeywordTbl">
+  <tr>
+  <!--START_Region-->
+  <td class="listKeywordTitle">[t]Region[/t]:<!--SingleWordLink2--></td>
+  <td class="listKeyword">{$cand.regio}</td>
+  <!--END_Region-->
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <!--END_KEYWORD_ROW2-->
+
+  </table>
+  </td>
+  </tr>
+  <!--END_KEYWORDS-->
+  </table>
+  </td>
+  </tr>
+  <!--START_ShortDescription-->
+  <tr>
+  <td class="listChapoContainer">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listChapoTbl">
+  <tr>
+  <td class="listChapo">{$cand.ShortDescription}
+  {if $cand.ShortDescription}
+  	...<a href="/index.php/page/customers_ext/command/detail_matched/code/{$code}/mkid/{$cand.id}/bb/1/vid/{$vid}">[t]more[/t]</a>
+  {/if}
+  </td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <!--END_ShortDescription-->
+  </table>
+  </td>
+  <!--START_fotoRight-->
+<!--  <td style="width: {$cand.fotoWidth}; cursor:hand;" onClick="{$cand.fotoLink}">{$cand.foto}</td> -->
+  <!--END_fotoRight-->
+  </tr>
+  </table>
+  </td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+{foreachelse}
+  <tr>
+  <td class="vacancyItemContainer" valign="top">
+
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="vacancyItemTbl">
+  <tr>
+  <td valign="top">
+  [t]No matched candidates.[/t]
+  </td>
+  </tr>
+  </table>
+
+  </td>
+  </tr>
+{/foreach}
+
+<tr>
+<td>
+<table>
+	<tr>
+		<td valign="top" class="formTblButtonCell">
+			<table border="0" cellpadding="0"  cellspacing="0">
+				<tr>
+					<!--START_BUTTON2-->
+					<td valign="top">
+						<input type="button"  value="[th]Terug[/th]" onClick="window.location='{$backurl}';" name="button" class="button">
+						<!--ButtonLink2--></td>
+					<td>
+						&nbsp;</td>
+					<!--END_BUTTON2-->
+				</tr>
+			</table>
+		</td>
+	</tr>
+
+</table>
+</td>
+</tr>
+</table>
+
+<!--uts:end inner-->
+</body>
+</html>

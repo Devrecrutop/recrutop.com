@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>FAQ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="http://www.yourit.nl/thatcher/style2.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<!--uts:begin inner-->
+<!-- UTS/mailings/nm_search_results.html -->
+
+<table border="0" cellspacing="0" cellpadding="0" class="maintable">
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]PageTitle[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+
+<tr>
+	<td>
+		<table>
+			<foreach from=$results item=r>
+				<tr>
+					<td>{$r._n}.</td>
+					<td><a href="/index.php/page/mailings/command/showarticle/artid/{$r.artid}/bb/1/catid/{$catid}">{$r.title} </a></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						{$r._snip|truncate:255:"..."}
+					</td>
+			</foreach>
+		</table>
+	</td>
+</tr>
+
+<tr>
+	<td><hr>
+		[t]SingleWord1[/t]<!--SingleWordLink1-->
+	</td>
+</tr>
+
+
+
+
+</table>
+
+<!--uts:end inner-->
+
+</body>
+</html>

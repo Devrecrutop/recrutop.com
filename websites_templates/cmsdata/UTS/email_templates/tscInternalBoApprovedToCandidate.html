@@ -1,0 +1,18 @@
+{* If a consultant approves an internal timesheet without making any changes *}
+<!-- TPL: /UTS/email_templates/tscInternalBoApprovedToCandidate.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear {$candidate.firstName|escape},[/t]</p>
+<p>[t]We have approved your internal timesheet for period {$h.period_start|escape} until {$h.period_end|escape}.[/t]</p> 
+<p>[t]You can check this timesheet by clicking the link below:[/t]</p>
+<p>{$tscHashLinkCandidate}</p>
+<p>[t]If you have any questions, please let us know.[/t]</p>
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p><b></b>
+<!--uts:end inner-->
+</body>
+</html>

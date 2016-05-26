@@ -1,0 +1,40 @@
+{* this email is sent to the applicant CP when the applicant changes his profile *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/applicants/myProfileUpdateEmail.html -->
+<p>[t]Dear {$name|escape},[/t]</p>
+<p>
+    [t]the applicant has changed his/her profile using the website.[/t]
+</p>
+<p>
+    [t]Applicant: {$applicantName|escape}[/t] 
+</p>
+<p>[t]Changes:[/t]</p>
+
+<table cellpadding="5" style="border:1px solid black;">
+    <tr>
+        <th style="text-align:left;">[t]Question[/t]</th>
+        <th style="margin-left:20px; text-align:left;">[t]Change type[/t]</th>
+        <th style="margin-left:20px; text-align:left;">[t]Data[/t]</th>
+    </tr>
+    <foreach from=$updateList item=u>
+        <tr>
+            <td>{$u.name|escape}</td>
+            <td>{if $u.type=="update"}[t]Field updated[/t]{elseif $u.type=="addFile"}[t]File added[/t]{/if}</td>
+            <td>{$u.value}</td>
+        </tr>
+    </foreach>
+</table>
+
+
+<p>
+<i>[t]Remark: this e-mail message has been automatically generated[/t]</i>
+</p>
+<!--uts:end inner-->
+</body>
+</html>

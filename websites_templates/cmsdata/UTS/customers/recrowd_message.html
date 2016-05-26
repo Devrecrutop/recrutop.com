@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<div class="outer rcwdOuter rcwdMessageOuter">
+	<!-- /UTS/customers/recrowd_message.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<if $title == "UNPUBLISH_NOT_ALLOWED">
+    <h1 class="title">[t]Unable to unpublish vacancy[/t]</h1>
+	<elseif $title == "THANK_YOU">
+    <h1 class="title">[t]Thank You![/t]</h1>
+	</if>
+	
+	<if $body == "VACANCY_NOT_PUBLISHED">
+    <div class="intro">[t]This vacancy is not published.[/t]</div>
+	<elseif $body == "CANDIDATES_PENDING">
+    <div class="intro">[t]This vacancy may not be unpublished yet because there are candidates connected that do not have a status showing the candidate recruitment process has been finished yet.[/t]</div>
+	<elseif $body == "UNPUBLISHED">
+    <div class="intro">[t]The vacancy has been unpublished.[/t]</div>
+	<elseif $body == "RATING_GIVEN">
+	<div class="intro">[t]The rating has been stored.[/t]</div>
+	<elseif $body == "RATING_ALREADY_GIVEN">
+	<div class="intro">[t]You have already rated the recruiter before.[/t]</div>
+	</if>
+	
+	<if $linkUrl>
+	<a href="{$linkUrl}">
+		{if $linkText == "BACK_TO_LIST"}[t]Back to the list[/t]
+		{elseif $linkText == "BACK_TO_DETAIL"}[t]Back to the detail[/t]
+		{/if}
+	</a>
+	</if>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

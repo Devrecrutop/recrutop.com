@@ -1,0 +1,376 @@
+{* required ext.JS: JQueryBase,JQueryAutocomplete,JQueryMultiSelect *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<script type="text/javascript">
+//{literal}
+function advsearchform_check_form(frm) {
+    //{/literal}
+    <if [uts:show_distance_matching]>
+    //{literal}
+    if (frm.proximity_preferredDistance.value && !frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value!='0') {
+        alert('[th]Set also the maximal distance.[/th]');
+        return(false);
+    }
+    
+    if (frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value && parseInt(frm.proximity_preferredDistance.value)>parseInt(frm.proximity_maxDistance.value)) {
+        alert('[th]Maximal distance must be lower than preferred distance.[/th]');
+        return(false);
+    }
+    //{/literal}
+    </if>
+    //{literal}
+    return(true);
+}
+//{/literal}
+</script>
+
+<div class="outer actOuter vacActO">
+	<!-- /UTS/advsearch/editRequestVacancies.html -->
+	<h1 class="title actTitle vacActTitle">[t]Advanced search[/t]</h1>
+	<div class="intro actIntro vacActIntro">[t]Use fields below to assemble your search query.[/t]</div>
+	<form name="advsearchform" method="post" action="{$handler}" onsubmit="return(advsearchform_check_form(this))">
+		{* keyword field *}
+		<if [uts:show_keyword_options]>
+			<div class="formInput actFi actFIkeyword">
+				<label>[t]Keywords[/t]</label>
+				<input id="actQueryKeywords" type="text" name="main_keywords" value="{$keywordsValue|escape}">
+			</div>
+			<div class="formInput actFi actFIkeywordsOptions">
+				<label></label>
+				<select id="multisel_kw_options" name="main_keywords_options[]" multiple="multiple" size="5">
+					<html_options options=$kwOptions selected=$kwOptionsSelected>
+				</select>
+			</div>
+			<if $splitLocation>
+				<div class="formInput actFi actFIlocation">
+					<label>[t]Location[/t]</label>
+					<input id="actQueryLocation" type="text" name="main_location" value="{$locationValue|escape}">
+				</div>
+			</if>
+			<if $intlSearchEnabled>
+				<div class="formInput formMultiCheckbox aplMCheckInput">
+					<label>[t]International search[/t]</label>
+				</div>
+				<div class="formCheckboxContainer aplMCheckContainer">
+					<input type="hidden" name="main_local_search" value="1">
+					<input type="checkbox" id="cb_main_local_search" name="main_local_search" value="0" {if !$localSearch}checked="checked"{/if}>
+				</div>
+			</if>
+		</if>
+
+		{* publication options *}
+		<if [uts:show_publication_options]>
+			<div class="formInput actFi actFIpubdate">
+				<label for="main_pubdate">[t]Show[/t]</label>
+				<select id="main_pubdate" name="main_pubdate">
+					<option value="">---</option>
+					<html_options options=$pubOpts selected=$pubOption>
+				</select>
+			</div>
+		</if>
+
+		<!-- ORIGINAL HR WAS HERE -->
+		{* distance options *}
+		<if [uts:show_distance_matching]>
+			<div class="formInput actFi actFICountryCode">
+				<label for="idCountryCode">[t]Country[/t]</label>
+				<select id="idCountryCode" name="proximity_countryCode">
+					<option value="">---</option>
+					<html_options options=$proximityCountries selected=$proximity.countryCode>
+				</select>
+			</div>
+			
+			<div class="formInput actFi actFIZipcode">
+				<label for="idZipcodeExt">[t]Zipcode[/t]</label>
+				<input type="text" id="idZipcodeExt" name="proximity_zipCode" value="{$proximity.zipCode|escape}">
+			</div>
+
+			<div class="formInput actFi actFIPrefDist">
+				<label for="idPrefDist">[t]Preferred distance [km][/t]</label>
+				<select id="idPrefDist" name="proximity_preferredDistance">
+					<option value="0">---</option>
+					<html_options options=$distOpts selected=$proximity.preferredDistance>
+				</select>
+			</div>
+			
+			<div class="formInput actFi actFIMaxDist">
+				<label for="idMaxDist">[t]Maximum distance [km][/t]</label>
+				<select id="idMaxDist" name="proximity_maxDistance">
+					<option value="">---</option>
+					<html_options options=$distOpts selected=$proximity.maxDistance>
+				</select>
+			</div>
+			<!-- ORIGINAL HR WAS HERE -->
+		</if>
+
+		{* criteria fields *}
+		<foreach from=$critList item=crit>
+			<div class="formInput actFi actFiSelect">
+				<label>{$crit.name}</label>
+				<if $crit.sm == "M">
+					{* multiselect *}
+					{*<select name="matchcriteria_{$crit.field}[]" multiple="multiple">*}
+					<select id="multisel_mc_{$crit.field}" name="matchcriteria_{$crit.field}[]" multiple="multiple" size="5">
+						<html_options options=$crit.options selected=$crit.curValues>
+					</select>
+				<else>
+					{* single select *}
+					<select name="matchcriteria_{$crit.field}" id="matchcriteria_{$crit.field}">
+						<option value="NULL">---</option>
+						<html_options options=$crit.options selected=$crit.curValue>
+					</select>
+				</if>
+			</div>
+		</foreach>
+
+		{* schedule start/end date *}
+		<if [uts:show_schedule_search_dates] && $plnCandJobs && (OTYSCZ || VTTH)>
+			<div class="moduleWord actFiWord actFiScheduleWord"><label>[t]Available[/t]</label></div>
+			<div class="formInput actFiSchedule actFiScheduleFrom">
+				<label>[t]From[/t]</label>
+				<html_select_date time=$schedule.fromDate field_order="DMY" month_format="%B" prefix="scheduleFromDate" day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" >
+				&nbsp;
+				<html_select_time time=$schedule.fromTime use_24_hours=true display_seconds=false minute_interval=15 prefix="scheduleFromTime" >
+			</div>
+			<div class="formInput actFiSchedule actFiScheduleTo">
+				<label>[t]To[/t]</label>
+				<html_select_date time=$schedule.toDate field_order="DMY" month_format="%B" prefix="scheduleToDate" day_value_format="%02d" day_empty="--" month_empty="--" year_empty="----" >
+				&nbsp;
+				<html_select_time time=$schedule.toTime use_24_hours=true display_seconds=false minute_interval=15 prefix="scheduleToTime" >
+			</div>
+		</if>
+
+		{* start category *}
+		<if [uts:show_categories]>
+			<div class="formInput actFi actFiSelect">
+				<label>[t]Categories[/t]</label>
+				<select id="multisel_categorie" name="categorie[]" multiple="multiple" size="5">
+					<html_options options=$catOpts selected=$catSelected>
+				</select>
+			</div>
+		</if>
+		{* end category *}
+
+		{* start competencies *}
+		<if [uts:show_competencies]>
+			<!-- ORIGINAL HR WAS HERE -->
+			<input type="hidden" name="cmpsPresent" value="1">
+			<div class="formInput actFi">
+				<label for="idComp">[t]Add a competence (type at least 3 letters)[/t]</label>
+				<input type="text" id="idComp" value="" onkeypress="return(!(window.event && window.event.keyCode == 13))">
+				<input id='competence_id_field' type='hidden' name='competence_id'>
+				<a href="javascript:addCompetenceToSearch()" title="[th]Add this competence to the search[/th]">[t]Add[/t]</a>
+	
+				<script defer="true" type="text/javascript">
+					var cmpAskURL='{$handler}/command/cmpautocomplete/arg/';
+					//{literal}
+					/* remark: quickselect not used anymore, we use the autocomplete plugin instead now $('#idComp').quickselect({ url:cmpAskURL, minChars:3, match:'substring',autoSelectFirst:false,mustMatch:true,additional_fields:$('#competence_id_field'),formatItem:function(data, index, total){return(data[0])}});*/
+					function addCompetenceToSearch() {
+						var cmpId=$('#competence_id_field').val();
+						var cmpName=$('#idComp').val();
+						if (!cmpId) return;
+						if ($('#cmpTR_'+cmpId).length) return;
+						$('#competence_id_field').val('');
+						$('#idComp').val('');
+						$('#cmpList').each(function(){
+							var $table = $(this);
+							// Number of td's in the last table row
+							var n = $('tr:last td', this).length;
+							var tds = '<tr id="cmpTR_'+cmpId+'">';
+							tds+='<td>'+cmpName+'</td>';
+							tds+='<td>'+$('#invisibleMinLevelSelect').html().replace('SELECTNAME', 'cmpMinLevel_'+cmpId)+'</td>';
+							tds+='<td>'+$('#invisibleMaxLevelSelect').html().replace('SELECTNAME', 'cmpMaxLevel_'+cmpId)+'</td>';
+							tds+='<td>'+$('#invisibleCertificateSelect').html().replace('SELECTNAME', 'cmpCertificate_'+cmpId)+'</td>';
+							tds+='<td><input type="button" title="[th]Remove item[/th]" value="[tb]X[/tb]" onclick="removeCompetenceItem(\''+cmpId+'\')"><input type="hidden" value="'+cmpId+'" name="cmps[]"></td>';
+							tds += '</tr>';
+							if($('tbody', this).length > 0){
+								$('tbody', this).append(tds);
+							}else {
+								$(this).append(tds);
+							}
+						});
+					}
+					function removeCompetenceItem(cmpid) {
+						if (!$('#cmpTR_'+cmpid).length) return;
+							$('#cmpTR_'+cmpid).remove();
+					}
+					//{/literal}
+				</script>
+			</div>
+
+			{* active competency table *}
+			<table cellspacing="0" cellpadding="0" border="0" class="actCompTbl" id="cmpList">
+				<tr>
+					<td class="actComp">Competency</td>
+					<td class="actMinLvl">Min level</td>
+					<td class="actMaxLvl">Max level</td>
+					<td class="actCert">Certificate</td>
+				</tr>
+				<!--current competencies-->
+				<foreach from=$competencies item=comp>
+					<tr id="cmpTR_{$comp.id}">
+						<td>{$comp._name|escape}</td>
+						<td>
+							<select name="cmpMinLevel_{$comp.id}">
+								<option value="">---</option>
+								<html_options options=$cmpLevels selected=$comp.minLevel>
+							</select>
+						</td>
+						<td>
+							<select name="cmpMaxLevel_{$comp.id}">
+								<option value="">---</option>
+								<html_options options=$cmpLevels selected=$comp.maxLevel>
+							</select>
+						</td>
+						<td>
+							<select name="cmpCertificate_{$comp.id}">
+								<option value="">---</option>
+								<html_options options=$cmpCertificates selected=$comp.certificate>
+							</select>
+						</td>
+						<td>
+							<input type="button" title="[th]Remove item[/th]" value="[tb]X[/tb]" onclick="removeCompetenceItem('{$comp.id|escape:"javascript"}')">
+							<input type="hidden" value="{$comp.id}" name="cmps[]">
+						</td>
+					</tr>
+				</foreach>
+			</table>
+
+			{* invisible stuff *}
+			<div id="invisibleMinLevelSelect" style="display:none;">
+				<select name="SELECTNAME"><option value="">---</option><html_options options=$cmpLevels></select>
+			</div>
+			<div id="invisibleMaxLevelSelect" style="display:none;">
+				<select name="SELECTNAME"><option value="">---</option><html_options options=$cmpLevels></select>
+			</div>
+			<div id="invisibleCertificateSelect" style="display:none;">
+				<select name="SELECTNAME"><option value="">---</option><html_options options=$cmpCertificates></select>
+			</div>
+		</if>
+		<div class="buttonContainer"><input type="submit" name="bApplSubmit" value="[tb]Search[/tb]" class="button"></div>
+		<input type="hidden" name="command" value="submitrequest">
+		<input type="hidden" name="origin" value="module">
+	</form>
+</div>
+<script type="text/javascript" defer="true">
+var kwAskURL='{$handler}/command/kwautocomplete/arg/';
+var locaAskURL='{$handler}/command/locautocomplete/arg/';
+var cmpAskURL='{$handler}/command/cmpautocomplete/arg/';
+var iSearch = -1; 
+var ac = null; // autocomplete object
+
+//{literal}
+
+// define ready function
+$(document).ready(function() {
+  // setup autocomplete for keyword
+  if ($('#actQueryKeywords').length) {
+    $('#actQueryKeywords').autocomplete({ 
+      serviceUrl:kwAskURL,
+      minChars:3, 
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:200
+      //deferRequestBy: 0, //miliseconds
+      // callback function:
+      //onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+    });
+  }
+  // setup autocomplete for competencies
+  if ($('#idComp').length) {
+    $('#idComp').autocomplete({ 
+      serviceUrl:cmpAskURL,
+      minChars:3,
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:300,
+      deferRequestBy: 100, //miliseconds
+      // callback function:
+      onSelect: function(value, data){ $('#competence_id_field').val(data); addCompetenceToSearch();}
+    });
+  }
+  
+  if($('#cb_main_local_search').length)
+  {
+    // before first initialization of autocompelte
+    iSearch = ($('#cb_main_local_search').is(':checked')) ? 1 : 0; // initlaize 
+    
+    
+    $('#cb_main_local_search').click(function() {              
+      var ch = ($(this).is(':checked')) ? 1 : 0;
+                
+      if ($('#actQueryLocation').length && ac != null ) 
+      {        
+        // reinit autocomplete        
+        ac.setOptions({minChars: 3, maxHeight: 300, width: 200, params:{international: ch}});
+        ac.clearCache();        
+      }      
+                     
+    });     	     	     	      
+  }
+  
+  if ($('#actQueryLocation').length) 
+  {
+     ac = $('#actQueryLocation').autocomplete({ 
+      serviceUrl:locaAskURL,
+      params:{international: iSearch},      
+      minChars:3,       
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:200
+      //deferRequestBy: 0, //miliseconds
+      // callback function:
+      //onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+    });
+        
+  }
+    var reqScripts = "[uts:ext_javascripts]";
+	
+  if(reqScripts.indexOf('JQueryMultiSelect') > -1 && !$.fn.magicSelect){
+    // setup match criteria multiselects
+    //{/literal}
+    <foreach from=$critList item=crit>
+    <if $crit.sm == "M">
+        var critf='{$crit.field}';
+        //{literal}
+        if ($('#multisel_mc_'+critf).length) $('#multisel_mc_'+critf).multiSelect({
+            selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select criteria...[/th]',
+            oneOrMoreSelected: '[th]Select criteria (% selected)...[/th]'
+            });
+
+        //{/literal}
+    </if>
+    </foreach>
+    //{literal}
+    
+    // setup jquery multiselect for keyword options
+    if ($('#multisel_kw_options').length) $('#multisel_kw_options').multiSelect({
+        selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select fields...[/th]',
+            oneOrMoreSelected: '[th]Select fields (% selected)...[/th]'
+    });
+	
+	// setup jquery multiselect for category search
+	if ($('#multisel_categorie').length) $('#multisel_categorie').multiSelect({
+        selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select categories...[/th]',
+            oneOrMoreSelected: '[th]Select categories (% selected)...[/th]'
+    });
+    }
+	else
+	{
+		console.log('JQueryMultiSelect disabled');
+	}
+});
+//{/literal}
+</script>
+<!--uts:end inner-->
+</body>
+</html>

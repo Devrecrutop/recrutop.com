@@ -1,0 +1,213 @@
+{* req. ext. javascript: JQueryBase,JQueryAutocomplete,JQueryMultiSelect,JQueryAnimatedCollapse *}
+<script type="text/javascript">
+var kwAskURL='"[website]/index.php/page/advsearchcusts/bb/1/command/kwautocomplete/arg/';
+var locAskURL='"[website]/index.php/page/advsearchcusts/bb/1/command/locautocomplete/arg/';
+var iSearch = -1; 
+var ac = null; // autocomplete object
+
+//{literal}
+
+function advsearchcusthookform_check_form(frm) 
+{
+    //{/literal}
+    <if [uts:show_distance_matching]>
+    //{literal}
+    if (frm.proximity_preferredDistance.value && !frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value!='0') {
+        alert('[thj]Set also the maximal distance.[/thj]');
+        return(false);
+    }
+    
+    if (frm.proximity_maxDistance.value && frm.proximity_preferredDistance.value && parseInt(frm.proximity_preferredDistance.value)>parseInt(frm.proximity_maxDistance.value)) {
+        alert('[thj]Maximal distance must be lower than preferred distance.[/thj]');
+        return(false);
+    }
+    //{/literal}
+    </if>
+    //{literal}
+    return(true);
+}
+
+// define ready function
+$(document).ready(function() 
+{
+  // setup jquery multiselect for keyword options
+  var reqScripts = "[uts:ext_javascripts]";
+  
+  if(reqScripts.indexOf('JQueryMultiSelect') > -1  && !$.fn.magicSelect)
+  {
+    if ($('#hook_multisel_kw_options_cust_mod').length) $('#hook_multisel_kw_options_cust_mod').multiSelect({
+        selectAllText: '[thj]Select all[/thj]',
+        noneSelected: '[thj]Select fields...[/thj]',
+        oneOrMoreSelected: '[thj]Select fields (% selected)...[/thj]'
+    });
+	}
+	
+	// setup autocomplete for the keyword
+	if ($('#asrSearchHookKeywordsCustMod').length) 
+  {
+	  $('#asrSearchHookKeywordsCustMod').autocomplete({ 
+		serviceUrl:kwAskURL,
+		minChars:3, 
+		//delimiter: /(,|;)\s*/, // regex or character
+		maxHeight:300,
+		width:200
+		//deferRequestBy: 0, //miliseconds
+		// callback function:
+		//onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+	  });
+	}
+	  
+  if(reqScripts.indexOf('JQueryMultiSelect') > -1)
+  {
+    // setup match criteria multiselects
+    //{/literal}
+    <foreach from=$critList key=critFld item=crit>
+    <if $crit.sm == "M">
+        var critf='{$critFld}';
+        //{literal}
+        if ($('#cust_hook_multisel_mc_'+critf).length)
+        {         
+          $('#cust_hook_multisel_mc_'+critf).multiSelect({
+              selectAllText: '[th]Select all[/th]',
+              noneSelected: '[th]Select criteria...[/th]',
+              oneOrMoreSelected: '[th]Select criteria (% selected)...[/th]'
+          });
+        }
+        //{/literal}
+    </if>
+    </foreach>
+    //{literal}
+  }	
+
+//{/literal}
+{*
+// 	animatedcollapse.addDiv('asrHookVacanciesExtendedControls', 'fade=1,persist=1');
+// 
+// 	var ac_ot_old = animatedcollapse.ontoggle;
+// 
+// 	animatedcollapse.ontoggle=function($, divobj, state) 
+//   {
+// 		if (typeof(ac_ot_old) == 'function') 
+//     {
+// 			ac_ot_old($,divobj,state);
+// 		}
+// 		
+// 		if (divobj.id=='asrHookVacanciesExtendedControls') 
+//     {
+// 			//alert(state);
+// 			if (state=='block') 
+//       {
+// 				$('#exControlsToggleLink').html('[thj]Less search options[/thj]');				
+// 				$("#asrHookVacanciesExtendedControls input,#asrHookVacanciesExtendedControls select").removeAttr("disabled");
+// 			} 
+//       else if (state=='none') 
+//       {
+// 				$('#exControlsToggleLink').html('[thj]More search options[/thj]');
+// 				$("#asrHookVacanciesExtendedControls input,#asrHookVacanciesExtendedControls select").attr("disabled", true);				
+// 			}
+// 		}
+// 	}
+// 	
+// 	animatedcollapse.init();
+*}
+//{literal}
+	
+});
+
+//{/literal}
+</script>
+
+<div class="hookOuter actHOuter nwHookOuter actHCustOuter">
+<!-- /UTS/advsearch/searchHookCustomers.html -->
+	
+	<div class="hookHeader actHHeader">[t]Advanced Search Customers[/t]</div>
+	<form name="advsearchcusthookform" method="post" action="[website]/index.php/page/advsearchcusts/bb/1" onsubmit="return(advsearchcusthookform_check_form(this))">
+		{* KEYWORD FIELD BEGIN *}
+		<if [uts:show_keyword_options]>								
+			<div class="hookWord actHWord actHKw"><label for="asrSearchHookKeywordsCustMod">[t]Keywords[/t]</label></div>
+			<div class="hookInput actHInput actHIKw"><input type="text" id="asrSearchHookKeywordsCustMod" name="main_keywords" value="{$keywordsValue|escape}"></div>
+			<div class="hookWord actHWord actHVsl"><label for="hook_multisel_kw_options_cust_mod">&nbsp;</label></div>						
+			<div class="hookInput actHInput actHVsi">				
+				<select id="hook_multisel_kw_options_cust_mod" name="main_keywords_options[]" multiple="multiple" size="5">
+					<html_options options=$kwOptions selected=$kwOptionsSelected>
+				</select>
+			</div>			
+		</if>
+		{* KEYWORD FIELD END *}
+		
+    {* DISTANCE FIELD BEGIN *}
+    <if [uts:show_distance_matching]>
+	<span class="actJshDist">
+      <div class="hookWord actHWord actHcountry"><label for="idCountryCodeCustModHook">[t]Country[/t]</label></div>               
+      <div class="hookInput actHInput actHSCountry">        
+        <select id="idCountryCodeCustModHook" name="proximity_countryCode"/>
+          <option value="">---</option>
+          <html_options options=$proximityCountries selected=$proximity.countryCode>
+        </select>
+      </div>
+      
+      <div class="hookWord actHWord actHWZipcode"><label for="idZipcodeCustModHook">[t]Zipcode[/t]</label></div>
+      <div class="hookInput actHInput actHIZipcode">        
+        <input type="text" id="idZipcodeCustModHook" name="proximity_zipCode" value="{$proximity.zipCode|escape}" />
+      </div>
+            
+      <div class="hookWord actHWord actHWMindistance"><label for="idPrefDistCustModHook">[t]Preferred distance [km][/t]</label></div>
+      <div class="hookInput actHInput actHIMindistance">        
+        <select id="idPrefDistCustModHook" name="proximity_preferredDistance">
+          <option value="0">---</option>
+          <html_options options=$distOpts selected=$proximity.preferredDistance>
+        </select>
+      </div>
+      
+      <div class="hookWord actHWord actHWMaxdistance"><label for="idMaxDistCustModHook">[t]Maximum distance [km][/t]</label></div>
+      <div class="hookInput actHInput actHIMaxdistance">
+        <select id="idMaxDistCustModHook" name="proximity_maxDistance">
+          <option value="">---</option>
+          <html_options options=$distOpts selected=$proximity.maxDistance>
+        </select>
+      </div>
+    </span>
+    </if>
+    {* DISTANCE FIELD END *}
+    
+		{* LOCATION FIELD BEGIN *}		
+		<div class="hookWord actHWord actHWLocation"><label for="actQueryLocationCustModHook">[t]Location[/t]</label></div>
+	    <div class="hookInput actHInput actHILocation">      
+	      <input id="actQueryLocationCustModHook" type="text" name="main_location" value="{$locationValue|escape}" />
+	    </div>		
+	    {* LOCATION FIELD END *}   
+   	
+
+		{* MATCHCRITERIA FIELDS BEGIN *}
+		<foreach from=$critList key=critFld item=crit>
+													
+		<if $crit.sm == "M">
+			<div class="hookWord actHWord actHCrit"><label for="cust_hook_multisel_mc_{$critFld}">{$crit.name}</label></div>
+		<else>
+			<div class="hookWord actHWord actHCrit"><label for="cust_matchcriteria_{$critFld}">{$crit.name}</label></div>
+		</if>
+		<div class="hookInput actHInput actHICrit">	
+		<if $crit.sm == "M">			
+			{* multiselect *}					
+			<select id="cust_hook_multisel_mc_{$critFld}" name="matchcriteria_{$critFld}[]" multiple="multiple" size="5">
+				<html_options options=$crit.options selected=$crit.curValues>
+			</select>
+		<else>			
+			{* single select *}
+			<select id="cust_matchcriteria_{$critFld}" name="matchcriteria_{$critFld}">
+				<option value="NULL">---</option>
+				<html_options options=$crit.options selected=$crit.curValue>
+			</select>				
+		</if>				
+		</div>
+			
+		</foreach>
+		{* MATCHCRITERIA FIELDS END *}
+		
+		<div class="hookButton actHButton"><input type="submit" name="bApplSubmit" value="[tb]Search[/tb]" class="button" ></div>
+		<input type="hidden" name="command" value="submitrequest">
+		<input type="hidden" name="origin" value="hook">
+	</form>
+
+	<div class="cleaner actHCleaner"></div>
+</div>

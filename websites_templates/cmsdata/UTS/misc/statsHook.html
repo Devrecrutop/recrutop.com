@@ -1,0 +1,18 @@
+<!-- stats hook start -->
+<!--uts:begin inner-->
+<div class="hookOuter rmhHOuter">
+<!-- UTS/misc/statsHook.html -->
+	<div class="hookHeader shHeader">[t]Statistics[/t]</div>
+        <div class="hookIntroText shIntroText">[t]Below are the statistics of last month[/t]</div>
+            {foreach from=$statistics key=k item=s}
+                <div class="hookItemContainer shContainer">
+                <div class="hookItemTitle shTitle">
+                [t]{$s.dataType}[/t]</div>
+                </div>
+                <div class="hookItem shYearly">{$s.newResults}</div>
+                <div class="hookItem shMonthly">{$s.results}</div>
+            {/foreach}
+        <div class="hookFooter shFooter">[t]Bottom text with different style[/t] <a href="/index.php/page/stats/command/default/bb/1">[t]More details[/t]</a></div>
+</div>
+<!--uts:end inner-->
+<!-- stats hook end -->

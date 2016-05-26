@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer custOuter recrowdOuter rcwdJndCandOuter">
+	<!-- /UTS/customers/recrowd_joined_candidates.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Candidates for[/t] {$vacTitle|escape}</h1>
+	{$CustomersMenu}
+	{$CustomersSubMenu}
+	
+    <div class="itemWrapper">
+		<foreach from=$clist item=c>
+	    <div class="itemContainer rcwdIc{cycle values=" rcwdIcOdd, rcwdIcEven"}{if $smarty.foreach.rcwdIc.first} rcwdIcFirst{/if}{if $smarty.foreach.rcwdIc.last} rcwdIcLast{/if}">
+			<div class="itemImage rcwdIi">
+			{if $c.foto}<a href="{$handler}/command/joinedCandidates/subcmd/detail/canid/{$c.kid}/vacid/{$vacid}"><img src="{$handler}/command/joinedCandidates/subcmd/photo/canid/{$c.kid}" alt="photo"></a>{/if}</div>
+			<h3 class="itemTitle rcwdIt"><a href="{$handler}/command/joinedCandidates/subcmd/detail/canid/{$c.kid}/vacid/{$vacid}">{$c.kname|escape}</a></h3>
+			<div class="itemWord rcwdIw rcwdIwCity">{$c.woonplaats|escape}</div>
+			<div class="itemWord rcwdIw rcwdIwRecr">{if $c.recruiters}[t]Via Recruiter[/t]/ {$c.recruiters|escape}{else}[t]Direct[/t]{/if}</div>
+			<div class="itemDescription rcwdId rcwdIdChapo">{$c.chapo}</div>
+			<div class="itemDescription rcwdId rcwdIdPromo">{$c.motivation_text}</div>
+		</div>
+		</foreach>
+    </div>
+</div>
+<!--uts:end inner-->
+</body>
+</html> 

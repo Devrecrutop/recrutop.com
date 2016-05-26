@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer actOuter">
+<!-- /UTS/advsearch/jobCatList.html -->
+<h1 class="title actTitle">[t]Job category list[/t]</h1>
+<div class="text aplText aplLdText">
+<p>[t]Click on a category to start an advanced search in.[/t]</p>
+<ul class="list aplList aplLdList">
+<foreach from=$cats item=cat>
+<li><a href="{$handler}/command/startsearch/field/categorie/query/{$cat.id|escape}" title="{$cat._description|escape}">{$cat._name|escape}</a></li>
+</foreach>
+</ul>
+</div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

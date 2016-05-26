@@ -1,0 +1,218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/contacts/viewSingleContactDetail.html DEFAULT -->
+<div class="cvdContainer">
+	{if $cp_info.cp_displayed_name || $cp_info.cp_full_name}
+	<div class="cvdformHeader"><h1>{if $cp_info.cp_displayed_name}{$cp_info.cp_displayed_name|escape}{else}
+	{if $display_elements2.show_first_name}{$contact_name.first_name|escape}{/if}
+	{if $display_elements2.show_middle_name} {$contact_name.middle_name|escape}{/if}
+	{if $display_elements2.show_last_name} {$contact_name.last_name|escape}{/if}
+	{/if}</h1></div>
+	{/if}
+	<div class="cvdNawContainer">
+		{if $cp_photo !="" && $display_elements.show_photo}
+		<div class="cvdPhotoContainer"><div class="cvdPhotoContainer2"><img src="http://{$cp_photo_link}" alt="
+		{if $display_elements2.show_first_name}{$contact_name.first_name|escape}{/if}
+		{if $display_elements2.show_middle_name} {$contact_name.middle_name|escape}{/if}
+		{if $display_elements2.show_last_name} {$contact_name.last_name|escape}{/if}
+		" {$cp_photo_size}></div></div>
+		{/if}
+
+		{if $cp_info.cp_displayed_name || $cp_info.cp_full_name}
+		<div class="cvdNawWord name">[t]Name:[/t]</div>
+		<div class="cvdNawValue">{if $cp_info.cp_displayed_name}{$cp_info.cp_displayed_name|escape}{else}
+		{if $display_elements2.show_first_name}{$contact_name.first_name|escape}{/if}
+		{if $display_elements2.show_middle_name} {$contact_name.middle_name|escape}{/if}
+		{if $display_elements2.show_last_name} {$contact_name.last_name|escape}{/if}
+		{/if}</div>
+		{/if}
+                {*
+		{if $organisation_units_cnt > 0 && $display_elements.show_orgunit}
+		<div class="cvdNawWord organisation">[t]Organisation units:[/t]</div>
+		<div class="cvdNawValue">
+		{foreach from=$organisation_units item=unit name=ou}
+			{$unit.item_name|escape}
+			{if !$smarty.foreach.ou.last},&nbsp;{/if}
+		{/foreach}
+		</div>
+		{/if}
+
+		{if $roles_cnt > 0 && $display_elements.show_roles}
+		<div class="cvdNawWord roles">[t]Roles:[/t]</div>
+		<div class="cvdNawValue">
+		{foreach from=$roles item=rl name=roles}
+			{$rl.name|escape}
+			{if !$smarty.foreach.roles.last},&nbsp;{/if}
+		{/foreach}
+		</div>
+		{/if}
+                *}
+                
+		{if   $display_elements.show_address  && ($cp_info.wg_cp_adres || $cp_info.wg_cp_pc || $cp_info.wg_cp_plaats)}
+		<div class="cvdNawWord address">[t]Home Address:[/t]</div>
+		<div class="cvdNawValue">
+			{if $cp_info.wg_cp_adres}{$cp_info.wg_cp_adres|escape},&nbsp;{/if}
+			{if $cp_info.wg_cp_pc}{$cp_info.wg_cp_pc|escape}&nbsp;{/if}
+			{if $cp_info.wg_cp_plaats}{$cp_info.wg_cp_plaats|escape}{/if}
+			{if $cp_info.home_country}<br >{$cp_info.home_country|escape}{/if}
+		</div>
+		{/if}
+
+		{if   $display_elements.show_work_address  && ($cp_info.wg_cp_adres_werk || $cp_info.wg_cp_pc_werk || $cp_info.wg_cp_plaats_werk)}
+		<div class="cvdNawWord address">[t]Work Address:[/t]</div>
+		<div class="cvdNawValue">
+			{if $cp_info.wg_cp_adres_werk}{$cp_info.wg_cp_adres_werk|escape},&nbsp;{/if}
+			{if $cp_info.wg_cp_pc_werk}{$cp_info.wg_cp_pc_werk|escape}&nbsp;{/if}
+			{if $cp_info.wg_cp_plaats_werk}{$cp_info.wg_cp_plaats_werk|escape}{/if}
+			{if $cp_info.work_country}<br >{$cp_info.work_country|escape}{/if}
+		</div>
+		{/if}
+
+
+		{if $cp_info.wg_cp_email && $display_elements.show_email}
+		<div class="cvdNawWord email">[t]E-mail:[/t]</div>
+		<div class="cvdNawValue"><a href="mailto:{$cp_info.wg_cp_email}" title="{$cp_info.wg_cp_email}  ">{$cp_info.wg_cp_email}</a></div>
+		{/if}
+
+		{if $cp_info.wg_cp_doorkiesnr && $display_elements.show_direct_number}
+		<div class="hookWord cvhWord">[t]Direct #:[/t]</div>
+		<div class="hookValue cvhValue">{$cp_info.wg_cp_doorkiesnr}</div>
+		<div class="hookCleaner"></div>
+		{/if}
+
+
+		{if $cp_info.phone_home && $display_elements.show_home_phone}
+		<div class="cvdNawWord home">[t]Phone home:[/t]</div>
+		<div class="cvdNawValue">{$cp_info.phone_home}</div>
+		{/if}
+
+		{if $cp_info.phone_mobile && $display_elements.show_cell_phone}
+		<div class="cvdNawWord cell">[t]Cell phone:[/t]</div>
+		<div class="cvdNawValue">{$cp_info.phone_mobile}</div>
+		{/if}
+
+		{if $cp_info.phone_work && $display_elements.show_work_phone}
+		<div class="cvdNawWord work">[t]Work phone:[/t]</div>
+		<div class="cvdNawValue">{$cp_info.phone_work}</div>
+		{/if}
+
+		{if $cp_info.phone_fax && $display_elements.show_fax}
+		<div class="cvdNawWord fax">[t]Fax:[/t]</div>
+		<div class="cvdNawValue">{$cp_info.phone_fax}</div>
+		{/if}
+
+		{if $cp_info.phone_skype && $display_elements.show_skype}
+		<div class="cvdNawWord skype">[t]Skype:[/t]</div>
+		<div class="cvdNawValue">{$cp_info.phone_skype}</div>
+		{/if}
+
+	</div>
+	<div class="cvdDescrContainer">
+
+		{if $long_descr !="" && $display_elements.show_text}
+		<div class="cvdDescrTitle cv"><h2>[t]CV:[/t]</h2></div>
+		<div class="cvdDescrValue">{$long_descr}</div>
+		{/if}
+
+		{if $cp_media && $display_elements.show_wiqet}
+		<div class="cvdDescrTitle wiqet"><h2>[t]Wiqet/Video:[/t]</h2></div>
+		<div class="cvdDescrValue media">{$cp_media}</div>
+		{/if}
+
+		{if $cp_widget && $display_elements.show_widget}
+		<div class="cvdDescrTitle widget"><h2>[t]Widget:[/t]</h2></div>
+		<div class="cvdDescrValue widget">{$cp_widget}</div>
+		{/if}
+
+		{if $cp_documents_cnt > 0 && $display_elements.show_documents}
+		<div class="cvdDescrTitle documents"><h2>[t]Documents:[/t]</h2></div>
+		{foreach from=$cp_documents item=i}
+		<div class="cvdDescrValue documents">{$i.document_download_link}</div>
+		{foreachelse}
+		<div class="cvdDescrValue">&nbsp;</div>
+		{/foreach}
+		{/if}
+
+		{if $cp_active_jobs_cnt > 0 && $display_elements.show_active_jobs}
+		<div class="cvdDescrTitle activeJobs"><h2>[t]Active jobs:[/t]</h2></div>
+		{foreach from=$cp_active_jobs item=i}
+		<div class="cvdDescrValue activeJobs"><a href="{$i.url}">{$i.desc}</a></div>
+		{foreachelse}
+		<div class="cvdDescrValue">&nbsp;</div>
+		{/foreach}
+		{/if}
+
+		{if $cp_inactive_jobs_cnt > 0 && $display_elements.show_inactive_jobs}
+		<div class="cvdDescrTitle inactiveJobs"><h2>[t]Inactive jobs:[/t]</h2></div>
+		{foreach from=$cp_inactive_jobs item=i}
+		<div class="cvdDescrValue inactiveJobs"><a href="{$i.url}">{$i.desc}</a></div>
+		{foreachelse}
+		<div class="cvdDescrValue">&nbsp;</div>
+		{/foreach}
+		{/if}
+
+		{if $cp_blog_articles_cnt > 0 && $display_elements.show_blog_articles}
+		<div class="cvdDescrTitle blogArticles"><h2>[t]Blog articles:[/t]</h2>
+		{foreach from=$cp_blog_articles item=i}
+		<div class="cvdBlogItem">
+			<div class="cvdBlogTitle"><a href="{$i._linkurl}">{$i.title|escape}</a></div>
+			<div class="cvdBlogArticleTeaser">{$i._teaser}</div>
+			<div class="cvdBlogTime">[t]at[/t] {$i._datetime_published}</div>
+		</div>
+		{/foreach}
+		</div>
+		{/if}
+
+		{if $cp_blog_reactions_cnt > 0 && $display_elements.show_blog_reactions}
+		<div class="cvdDescrTitle BlogReactions"><h2>[t]Blog reactions:[/t]</h2>
+		{foreach from=$cp_blog_reactions item=i}
+		<div class="cvdBlogReactionItem">
+			<div class="cvdBlogTitle"><a href="{$i._linkurl}">{$i.title|escape}</a></div>
+			<div class="cvdBlogArticleTeaser">{$i._teaser}</div>
+			<div class="cvdBlogTime">[t]at[/t] {$i._datetime_reaction}</div>
+		</div>
+		{/foreach}
+		</div>
+		{/if}
+
+		{if $cp_events_cnt > 0 && $display_elements.show_events}
+		<div class="cvdDescrTitle Events"><h2>[t]Events:[/t]</h2></div>
+		{foreach from=$cp_events item=i}
+		<div class="cvdEventsItemTitle"><a href="{$i.url}">{$i.Title}</a></div>
+		{if $i.Photo}
+		<div class="cvdEventsItemValue"><a href="{$i.url}" title="{$i.Title}"><img src="{$i.photo_url}" alt="{$i.Title}" border="0"></a></div>
+		{/if}
+		{foreachelse}
+		<div class="cvdEventsItemValue">&nbsp;</div>
+		{/foreach}
+		{/if}
+		
+		{if [uts:show_related_products]}
+		  {if $link_products && $cp_products}
+		  <div class="cvdDescrTitle Products"><h2>[t]Related products:[/t]</h2></div>  
+		  
+  		{foreach from=$cp_products item=p}
+  		<div class="cvdProductTitle"><a href="/index.php/page/webshop/bb/1/command/catalogDetail/productId/{$p.id}">{$p.product_name|escape}</a></div>
+      {if [uts:show_product_thumbnail] && $p.thumbnail_filename}      
+        <div class="cvdProductImg"><a href="/index.php/page/webshop/bb/1/command/catalogDetail/productId/{$p.id}"><img src="/_images_upload/{$p.thumbnail_filename}" alt="{$p.product_name|escape}" border="0"></a></div>
+      {/if}
+      {if [uts:show_product_descr] && $p.description}
+        <div class="cvdProductDescr">{$p.description|escape}</div>
+      {/if}  				
+  		{/foreach}		  
+		  
+		  {/if}
+		{/if}
+		
+		
+	</div>
+</div>
+<iframe name="actionframe" width="0" height="0" frameborder="0" scrolling="No" contentEditable=false></iframe>
+<!--uts:end inner-->
+</body>
+</html>

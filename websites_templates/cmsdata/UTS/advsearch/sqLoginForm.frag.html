@@ -1,0 +1,34 @@
+<div class="ajaxWindow sqLoginFormFrag">
+	<!-- /UTS/advsearch/sqLoginForm.frag.html -->
+	<!-- Template Webdevelopment validated 05-2013 -->
+	<h1 class="title">[t]Store query[/t]</h1>
+	<div class="intro">
+		[t]You have to be logged in first to be able to store a query. Please log in or sign up.[/t]
+	</div>
+
+	<form name="sqloginfrm" action="{$handler}/command/sqloginsubmit" method="post">
+		<div class="formInput actEqueryInput">
+			<label for="iSrbeUsername">[t]Username[/t]</label>
+			<input type="text" id="iSrbeUsername" name="username" value="">
+		</div>
+		<div class="formInput actEqueryInput">
+			<label for="iSrbePassword">[t]Password[/t]</label>
+			<input type="password" id="iSrbePassword" name="password" value="">
+		</div>
+		<if $error>
+		<div class="error">
+			<if $error == "ERR_USERNAME_EMPTY">
+			[t]No username specified[/t]
+			<elseif $error == "ERR_ACCESS_DENIED">
+			[t]Access denied[/t]
+			</if>
+		</div>
+		</if>
+		<div class="buttonContainer actEqueryBc bcLeft">
+			<input type="submit" name="bSubmit" value="[tb]Submit[/tb]" class="button">
+		</div>
+		<div class="buttonContainer actEqueryBc bcRight">
+			<a class="button" href="{$indexPhp}page/applicants/bb/1/command/startsignup">[t]Sign up here[/t]</a>
+		</div>
+    </form>
+</div>

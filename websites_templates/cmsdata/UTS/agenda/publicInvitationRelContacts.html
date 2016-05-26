@@ -1,0 +1,77 @@
+{* req.ext.js: JQueryBase,JQueryUI *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Public Invitation - Step 1</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!--/UTS/AGENDA/publicInvitationRelContacts.html-->
+
+<script language="javascript" type="text/javascript">
+{if $productAmountLimit}
+var productAmountLimit = {$productAmountLimit};
+{literal}
+
+function checkOrderedAmount() {
+	if ($('.publicInvitationRelContactCheckbox:checked').size() > productAmountLimit)
+		alert("[th]You have selected more invitees than you have specified in your order![/th]");
+}
+{/literal}
+{/if}
+</script>
+
+<div class="outer pInRcOuter">
+<h1 class="title pInRcTitle">[t]Add additional people to the appointment[/t]</h1>
+<div class="text pInRcText">[t]Select which people you want to invite.[/t]</div>
+
+
+<form name="searchsuggestionsf" action="{$handler}" method="post">
+<input type="hidden" name="id_itemtype" value="{$id_itemtype}" >
+<input type="hidden" name="id_consultant_{$id_itemtype}" value="{$id_consultant}" >
+<input type="hidden" name="duration" value="{$duration}" >
+<input type="hidden" name="date" value="{$date}" >
+<input type="hidden" name="command" value="{if $id_agendaitem}invitetoitem{else}search{/if}" >
+<input type="hidden" name="uses_invited_wgcp_list" value="1" >
+{if $uid}
+<input type="hidden" name="uid" value="{$uid}" >
+{/if}
+
+<div class="pInRcItem">
+{foreach from=$contacts key=wgcpId item=wgcp  name=wgcp_loop}
+<div {if $smarty.foreach.wgcp_loop.first}style="margin-bottom: 0.5em;font-weight: bold;"{/if}>
+<input type="hidden" name="id_wgcp_{$wgcpId}" value="0" >
+<input type="checkbox" name="id_wgcp_{$wgcpId}" value="1" {if in_array($wgcpId, $wgcpIds) || $alreadyInvitedWgcpIds && in_array($wgcpId, $alreadyInvitedWgcpIds)}checked="checked"{/if} {if $alreadyInvitedWgcpIds && in_array($wgcpId, $alreadyInvitedWgcpIds)}disabled="disabled"{else}class="publicInvitationRelContactCheckbox"{/if} {if $productAmountLimit}onclick="checkOrderedAmount();"{/if} >{$wgcp.name|escape} {if $wgcp.email}&lt;{$wgcp.email|escape}&gt;{/if}
+</div>
+{/foreach}
+
+<div style="margin-top: 0.5em;margin-bottom: 0.5em;font-weight: bold;"><input type="checkbox" {if $addAdditionalPerson}checked="checked"{/if} onclick="document.getElementById('createRelationContactContainer').style.display=this.checked?'block':'none';document.getElementById('searchSuggestionsSubmitContainer').style.display=this.checked?'none':'block';" >[t]Add additional person[/t]</div>
+<div id="createRelationContactContainer" style="display: {if $addAdditionalPerson}block{else}none{/if};clear:both;">
+
+<div class="formInput"><label>[t]First name[/t]</label><input type="text" name="wgcp_firstname" value="{$wgcpData.firstname|escape}" ></div>
+<div class="formInput"><label>[t]Middle name[/t]</label><input type="text" name="wgcp_middlename" value="{$wgcpData.middlename|escape}" ></div>
+<div class="formInput"><label>[t]Last name[/t]</label><input type="text" name="wgcp_lastname" value="{$wgcpData.lastname|escape}" >{if $nameError}<div class="error">[t]Name is mandatory.[/t]</div>{/if}</div>
+<div class="formInput"><label>[t]E-mail[/t]</label><input type="text" name="wgcp_email" value="{$wgcpData.email|escape}" >{if $emailError}<div class="error">[t]Wrong e-mail address.[/t]</div>{/if}</div>
+{if $tooManyInvitationsError}<div class="error">[t]Too many contacts are invited for this type of agenda item.[/t]</div>{/if}
+<div class=""><input type="button" value="[tb]Create additional contact[/tb]" class="button" onclick="this.form.command.value='createcontact';this.form.submit();"></div>
+</div>
+
+{if $tooManyInvitationsError}
+<div class="error">[t]Too many contacts are invited for this type of agenda item.[/t]</div>
+{/if}
+
+<div class="cleaner"></div>
+<div id="searchSuggestionsSubmitContainer" style="display: {if $addAdditionalPerson}none{else}block{/if};">
+<div class="pInRcButton"><input type="submit" value="{if $id_agendaitem}[tb]Invite selected people[/tb]{else}[tb]Search for suggestions[/tb]{/if}" class="button"></div>
+</div>
+</div>
+
+
+</form>
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

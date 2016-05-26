@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>JobsSearch</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<!--uts:begin inner-->
+<!--START_9-->
+<script type="text/javascript" src="{$website}/_javascript_global/jobSearch.js"></script>
+<!-- /fotemplatesdiv/JobSearch.html -->
+<!-- UTS/jobsremote/jrSearchForm.html -->
+<div class="outer jsmOuter">
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<h1 class="title jsmTitle">[t]PageTitle[/t]</h1>
+<!--END_PageTitle-->
+<!--START_Block1-->
+<!--START_Title1-->
+<h2 class="subHeader jsmSh">[t]Title1[/t]</h2>
+<!--END_Title1-->
+<!--START_Text1-->
+<div class="text jsmText">[t]Text1[/t]</div>
+<!--END_Text1-->
+<!--END_Block1-->
+
+<form name="jobsearchfrm" action="/index.php/page/JobsRemote/command/searchlist/bb/1" method="post">
+<!--START_CRIT-->
+{foreach from=$criterias item=crit}
+
+<div class="formInput jsmFi">
+
+<div class="virtual_selectbox" id="virtual_selectbox_{$crit.id}" onClick="showHide('{$crit.id}')">{$crit.name} <span id="virtual_title_{$crit.id}"></span></div>
+    {if $crit.selectType=='SELECT'}
+<div class="virtual_checkbox" id="virtual_checkbox_{$crit.id}">
+<div class="virtualInputContainer"><input type="radio" id="blank{$crit.id}" class="jobSearchCheckBox" value="" name="{$crit.field}">---</div>
+  {foreach from=$crit.options key=optid item=option}
+<div class="virtualInputContainer"><input type="radio" id="{$optid}" class="jobSearchCheckBox" value="{$optid}" name="{$crit.field}">{$option}</div>
+  {/foreach}
+</div>
+    {/if}
+
+    {if $crit.selectType=='MULTISELECT'}
+<div class="virtual_checkbox" id="virtual_checkbox_{$crit.id}">
+  {foreach from=$crit.options key=optid item=option}
+<div class="virtualInputContainer"><input type="checkbox" class="jobSearchCheckBox" id="{$optid}" value="{$optid}" name="{$crit.field}[]">{$option}</div>
+  {/foreach}
+</div>
+    {/if}
+</div>
+<div class="cleaner"></div>
+{/foreach}
+<!--END_CRIT-->
+
+<div class="formInput jsmFi jsmFiKw">
+<label>[t]SingleWord1[/t]</label><!--SingleWordLink1-->
+<input type="text" name="trefwoord">
+</div>
+<div class="buttonContainer"><input type="submit" value="[t]Button1[/t]" name="submitbutton" class="button"><!--ButtonLink1--></div>
+</form>
+</div>
+<!--END_9-->
+<!--uts:end inner-->
+</body>
+</html>

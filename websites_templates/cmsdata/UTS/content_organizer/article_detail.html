@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer corgOuter">
+ <!-- /UTS/content_organizer/article_detail.html -->
+	<h1 class="title corgTitle">{$art.title|escape}</h1>
+	<div class="intro corgIntro"></div>
+	<h2 class="subHeader corgSh"></h2>
+	<div class="text corgText">
+		{if $art.image_filename}
+			<img src="/_images_upload/{$art.image_filename}" style="float:{$img_pos}; padding:5px;">
+		{/if}
+		{$art.content}
+	</div>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

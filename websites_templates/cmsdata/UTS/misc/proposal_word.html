@@ -1,0 +1,350 @@
+<html>
+	<head>
+		<META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=UTF-8">
+	</head>
+	<body style="font: 12px Arial;">
+        <!--uts:begin inner-->
+		{foreach from=$items item=item}
+		<h2>
+			{if $item.type == 'own_snippet'}{$item.header}{/if}
+			{if $item.type == 'product' && $item.exclude_title == 0}{$item.name}{/if}
+			{if $item.name == 'total'}[th]Total[/th]{/if}
+			{if $item.name == 'sub_total'}[th]Sub total[/th]{/if}
+			{if $item.type == 'snippet' && $item.exclude_title == 0}{$item.name}{/if}
+		</h2>
+		
+		{if $item.type == 'product'}
+		<p>{$item.description}</p>
+		{if $item.hide_invoice_line != 1}<p>
+		<table border="0" class="product" style="border:1px solid #999; font: 12px Arial;" width="100%">
+		<tr>
+		<td class="product_invoice_line" style="padding-left:10px;">{$item.invoice_line}</td>
+		<td class="product_amount" style="width:30px;border-left:1px solid #999;padding-left:10px;">{$item.amount}</td>
+		<td class="product_price" style="width:100px;border-left:1px solid #999;padding-left:10px; text-align: right;">{if $round_down}{$item.price.price|floor|number_format:0:",":"."}{else}{$item.price.price|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+		<td class="product_total" style="width:200px;border-left:1px solid #999;padding-left:10px; text-align: right;">{if $round_down}{$item.price.price*$item.amount|floor|number_format:0:",":"."}{else}{$item.price.price*$item.amount|number_format:2:",":"."}{/if} {$proposal.currency} {if $item.price.period == 'week'}[th]per week[/th]{/if}{if $item.price.period == 'month'}[th]per month[/th]{/if}{if $item.price.period == 'year'}[th]per year[/th]{/if}{if $item.price.period == 'once'}[th]once only[/th]{/if}</td>
+		</tr>
+		</table>
+		</p>{/if}
+		{/if}
+		
+		{if $item.type == 'snippet'}
+		<h2>{$item.header}</h2>
+		<p>{$item.description}</p>
+		
+		{if $item.snippet_id == $summary_snippet_id}
+		
+			{if $vatInSummary}
+			{math assign="vatCoefficient" equation="1+x/100" x=$vat}
+			{/if}
+		
+			<table class="summary" style="border:1px solid #999; width: 100%;" cellpadding="4" cellspacing="0">
+			<tr>
+				{if $vatInSummary}
+					<td style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;">[th]Products[/th]</td>
+					<td style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;text-align: center;">[th]Unit price[/th]</td>
+					<td style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;text-align: center;">[th]Qty[/th]</td>
+					<td style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;text-align: center;">[th]Price[/th]</td>
+					<td style="width: 50px; background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;text-align: center;">[th]VAT[/th]</td>
+					<td style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;text-align: center;">[th]Price inc. VAT[/th]</td>
+					<td style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;text-align: center;">[th]Period[/th]</td>
+				{else}			
+					<td colspan="{if $vatInSummary}7{else}5{/if}" style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;">[th]Products[/th]</td>
+				{/if}
+			</tr>
+			{foreach from=$item_products item=product}
+			<tr>
+			<td style="font: 12px Arial;">{$product.invoice_line}{if $product.product_exclude}<span style="color: #ff0000;"> ([th]excluded[/th])</span>{/if}</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{if $round_down}{$product.price|floor|number_format:0:",":"."}{else}{$product.price|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			<td style="width:{if $vatInSummary}40{else}100{/if}px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">{$product.amount format="%.2f"}</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{if $round_down}{$product.price*$product.amount|floor|number_format:0:",":"."}{else}{$product.price*$product.amount|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{$vat} %</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$product.price*$product.amount}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$product.price*$product.amount}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">
+                {if $product.period == 'once'}[th]once only[/th]{/if}
+                {if $product.period == 'week'}[th]per week[/th]{/if}
+                {if $product.period == 'month'}[th]per month[/th]{/if}
+                {if $product.period == 'year'}[th]per year[/th]{/if}
+            </td>
+			</tr>
+			{/foreach}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;">[th]Totals[/th]</td>
+			</tr>
+			<tr>
+			<td style="font: 12px Arial;">[th]Subtotal[/th]</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{if $round_down}{$item.amount.once+$item.amount.week+$item.amount.month+$item.amount.year|floor|number_format:0:",":"."}{else}{$item.amount.once+$item.amount.week+$item.amount.month+$item.amount.year|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{$vat} %</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$item.amount.once+$item.amount.week+$item.amount.month+$item.amount.year}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$item.amount.once+$item.amount.week+$item.amount.month+$item.amount.year}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">&nbsp;</td>
+			</tr>
+				
+			{if $discount}
+			<tr>
+			<td style="font: 12px Arial;">[th]Discount[/th]</td>
+			<td colspan="2" style="font: 12px Arial;">{$discount.discount_line} {$discount.discount_rate|string_format:"%.2f"}%</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">- {math assign="discfirst" equation="x * y" x=$total.once+$total.week+$total.month+$total.year y=$discount.discount_rate/100 format="%.2f"}{if $round_down}{$discfirst|floor|number_format:0:",":"."}{else}{$discfirst|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">&nbsp;</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">&nbsp;</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">&nbsp;</td>
+			</tr>
+			
+			<tr>
+			<td style="font: 12px Arial;">[th]Total[/th]</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{math assign="disctotal" equation="x - (y*z)" x=$total.once+$total.week+$total.month+$total.year y=$total.once+$total.week+$total.month+$total.year z=$discount.discount_rate/100 format="%.2f"}{if $round_down}{$disctotal|floor|number_format:0:",":"."}{else}{$disctotal|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{$vat} %</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$disctotal}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$disctotal}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">&nbsp;</td>
+			</tr>
+			{/if}
+			
+			{if $terms.advance_invoice_percentage != '0'}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;">[th]Divided Invoices[/th]</td>
+			</tr>
+			<tr>
+			<td style="font: 12px Arial;">[th]Advance Invoice[/th]</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{math assign="advanceinvoice" equation="(z-(x * y))*a" x=$total.year+$total.once+$total.week y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week a=$terms.advance_invoice_percentage/100 format="%.2f"}{if $round_down}{$advanceinvoice|floor|number_format:0:",":"."}{else}{$advanceinvoice|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{$vat} %</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$advanceinvoice}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$advanceinvoice}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">{$terms.advance_invoice_term_days} [th]Days[/th]</td>
+			</tr>
+			{/if}
+			{if $terms.final_invoice_percentage != '0'}
+			<tr>
+			<td style="font: 12px Arial;">[th]Final Invoice[/th]</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{math assign="finalinvoice" equation="((z-(x * y))*a)" x=$total.year+$total.once+$total.week y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week a=$terms.final_invoice_percentage/100 format="%.2f"}{if $round_down}{$finalinvoice|floor|number_format:0:",":"."}{else}{$finalinvoice|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{$vat} %</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$finalinvoice}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$finalinvoice}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">{$terms.final_invoice_term_days} [th]Days[/th]</td>
+			</tr>
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;">[th]After First Year[/th]</td>
+			</tr>
+			
+			<tr>
+			<td style="font: 12px Arial;">[th]Yearly payment[/th]</td>
+			<td>&nbsp;</td>
+			<td style="width:{if $vatInSummary}40{else}100{/if}px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">1</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{math assign="yearlyp" equation="x" x=$total.year+$total.week+$total.month z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$yearlyp|floor|number_format:0:",":"."}{else}{$yearlyp|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{$vat} %</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$yearlyp}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$yearlyp}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">{if $terms.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+			</tr>
+			{/if}
+			{if $terms.type == 'monthly'}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;">[th]Invoices[/th]</td>
+			</tr>
+			<tr>
+			<td style="font: 12px Arial;">[th]Monthly payment[/th], {$terms.percentage_over_total}% [th]Added[/th]</td>
+			<td>&nbsp;</td>
+			<td style="width:{if $vatInSummary}40{else}100{/if}px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">12</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{math assign="mpfirst" equation="(((x-(x*y))/12)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$mpfirst|floor|number_format:0:",":"."}{else}{$mpfirst|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">{if $terms.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+			</tr>
+			
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;">[th]After First Year[/th]</td>
+			</tr>
+			<tr>
+			<td style="font: 12px Arial;">[th]Monthly payment[/th], {$terms.percentage_over_total}% [th]Added[/th]</td>
+			<td>&nbsp;</td>
+			<td style="width:{if $vatInSummary}40{else}100{/if}px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">12</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{math assign="mpafter" equation="(((x-(x*y))/12)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$mpafter|floor|number_format:0:",":"."}{else}{$mpafter|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{$vat} %</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$mpafter}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$mpafter}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">{if $terms.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+			</tr>
+			{/if}
+			{if $terms.type == 'quarterly'}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;">[th]Invoices[/th]</td>
+			</tr>
+			
+			<tr>
+			<td style="font: 12px Arial;">[th]Quarterly payment[/th], {$terms.percentage_over_total}% [th]Added[/th]</td>
+			<td>&nbsp;</td>
+			<td style="width:{if $vatInSummary}40{else}100{/if}px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">4</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{math assign="qpfirst" equation="(((x-(x*y))/4)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$qpfirst|floor|number_format:0:",":"."}{else}{$qpfirst|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{$vat} %</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$qpfirst}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$qpfirst}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">{if $terms.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+			</tr>
+			
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;">[th]After First Year[/th]</td>
+			</tr>
+			
+			<tr>
+			<td style="font: 12px Arial;">[th]Quarterly payment[/th], {$terms.percentage_over_total}% [th]Added[/th]</td>
+			<td>&nbsp;</td>
+			<td style="width:{if $vatInSummary}40{else}100{/if}px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">4</td>
+
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{math assign="qpafter" equation="(((x)/4)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.week+$total.month z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$qpafter|floor|number_format:0:",":"."}{else}{$qpafter|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{$vat} %</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$qpafter}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$qpafter}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">{if $terms.direct_debit == '1'}[th]Auto[/th]{else}&nbsp;{/if}</td>
+			</tr>
+			{/if}
+			{if $terms.type == 'once'}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;">[th]Invoices[/th]</td>
+			</tr>
+			<tr>
+			<td style="font: 12px Arial;">{$terms.name}</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td style="width:{if $vatInSummary}40{else}100{/if}px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{math assign="yearlyfirst" equation="(((x-(x*y))/1)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.once+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$yearlyfirst|floor|number_format:0:",":"."}{else}{$yearlyfirst|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{$vat} %</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$yearlyfirst}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$yearlyfirst}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">{$terms.final_invoice_term_days} [th]Days[/th]</td>
+			</tr>
+			
+			{if $total.year != '0'}
+			<tr>
+			<td colspan="{if $vatInSummary}7{else}5{/if}" style="background-color: #999; color: #ffffff; padding: 2px; font: 12px Arial;">[th]After First Year[/th]</td>
+			</tr>
+			
+			<tr>
+			<td style="font: 12px Arial;">[th]Yearly payment[/th]</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{math assign="yearlyafter" equation="(((x)/1)*u/100)" u=$terms.percentage_over_total+100 x=$total.year+$total.week+$total.month y=$discount.discount_rate/100 z=$total.year+$total.once+$total.week+total.month format="%.2f"}{if $round_down}{$yearlyafter|floor|number_format:0:",":"."}{else}{$yearlyafter|number_format:2:",":"."}{/if} {$proposal.currency}</td>
+			{if $vatInSummary}
+				<td style="width:40px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">{$vat} %</td>
+				<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial; text-align: right;">
+					{if $round_down}
+						{math assign="priceExcVat" equation="floor(x)" x=$yearlyafter}
+					{else}
+						{math assign="priceExcVat" equation="x" x=$yearlyafter}
+					{/if}					
+					{$priceExcVat*$vatCoefficient|number_format:2:",":"."}
+					{$proposal.currency}
+				</td>
+			{/if}
+			<td style="width:100px;border-left:1px solid #999;padding-left:10px; font: 12px Arial;">{$terms.final_invoice_term_days} [th]Days[/th]</td>
+			</tr>
+			{/if}
+			{/if}
+			</table>
+		{/if}
+		
+		{/if}
+		
+		{if $item.type == 'own_snippet'}
+		<p>{$item.description}</p>
+		{/if}
+		{/foreach}
+        <!--uts:end inner-->
+    </body>
+</html>

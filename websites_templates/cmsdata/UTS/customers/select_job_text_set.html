@@ -1,0 +1,129 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!--uts:begin inner-->
+
+<!--START_9-->
+<!--UT: Startpage-->
+<!-- /UTS/customers/select_job_text_set.html -->
+<div class="outer custOuter custPpOuter">
+<h1 class="title">[t]Job options[/t]</h1>
+{$CustomersMenu}
+
+{if $profile_edit != 1}
+<h2 class="subHeader custPpSH">[t]Add vacancy[/t]</h2>
+<div class="text custPpText">[t]Please choose the department you want to use from the options below.[/t]</div>
+{else}
+<h2 class="subHeader custPpSH">[t]Manage Profiles[/t]</h2>
+<div class="text custPpText">[t]Click a profile name in the left column to edit the profile.[/t]</div>
+{/if}
+
+
+{if ($posting_profiles_for_others && $link_job_to_2_relations && $profile_edit != 1) || $allowprofilesearch}
+<script type="text/javascript" src="/_javascript_global/jquery.js"></script>
+<link type="text/css" href="/_css_global/smoothness/jquery-ui-1.7.2.custom.css" rel="stylesheet">
+<script type="text/javascript" src="/_javascript_global/jquery-ui-1.7.2.custom.min.js"></script>
+<script type="text/javascript" src="/_javascript_global/jquery.multiSelect.js"></script>
+<script type="text/javascript" src="/_javascript_global/jquery.autocomplete.js"></script>
+
+<script type="text/javascript">
+var custSearchCompURL="/index.php/page/customers_ext/bb/1/command/companyautocomplete/nosmarthead/1/arg/";
+//{literal}
+// define ready function
+$(document).ready(function() {
+	// setup autocomplete for the company name, if available
+	if ($('#SearchCompanyName').length) {
+	   
+	  $('#SearchCompanyName').autocomplete({ 
+		serviceUrl:custSearchCompURL,
+		minChars:1, 
+		maxHeight:300,
+		width:200,
+        noCache: true, 
+        // callback function:
+        onSelect: function(value, data){
+        reload_relation_profiles(data);
+        }		
+	  });
+	}
+});
+function reload_relation_profiles(company_id){
+    document.relprofileform.select_company_id.value=company_id; 
+    document.relprofileform.submit();
+}
+//{/literal}
+</script>
+{/if}
+
+{if ($posting_profiles_for_others && $link_job_to_2_relations && $profile_edit != 1) || $allowprofilesearch}
+<form name="relprofileform" method="post" action="" >
+<div class="formInput custProfSearch"><label>[t]Search[/t]</label><input type="hidden" name="companyprofileselect" value="1"><input type="hidden" name="select_company_id" ><input type="hidden" name="startsearch" value="1"><input type="text" id="SearchCompanyName" name="SearchCompanyName" value="{$searchstring}"> | &nbsp;</div>
+</form>
+{/if}
+	{$CustomersSubMenu}
+
+
+
+{if [uts:layout] == 21}
+<table border="0" cellpadding="0" cellspacing="0" class="hqTbl custPpVacTbl">
+<tr>
+<th>[t]Company[/t]</th>
+<th>[t]Logo[/t]</th>
+</tr>
+{foreach from=$job_text_sets key=k item=jts}
+<tr id="{cycle values="hqFlip custPpFlip,hqFlop custPpFlop"}">
+<td>
+{if $profile_edit == 1}<a href="/index.php/page/jtprofiles/bb/1/command/detail/jts_id/{$jts.id}">
+{else}<a href="/index.php/page/customers_ext/bb/1/command/addavacancy/jts_id/{$jts.id}">{/if}
+{$jts.name}</a>
+{$jts.$company_profile_field|truncate:[uts:profile_limit]:'...'}
+</td>
+<td>{if $jts.logo}<a href="/index.php/page/customers_ext/bb/1/command/addavacancy/jts_id/{$jts.id}"><img id="jtsI" src="[website]/_images_upload/{$jts.logo}"></a>{/if}</td>
+</tr>
+{foreachelse}
+<tr>
+<td colspan="2" class="hqNoItems custPpNoItems">[t]There are no profiles available[/t]</td>
+</tr>
+{/foreach}
+</table>
+{/if}
+
+{if [uts:layout] == 22}
+<table border="0" cellpadding="0" cellspacing="0" class="hqTbl custPpVacTbl">
+<tr>
+<th>[t]Company[/t]</th>
+<th>[t]Logo[/t]</th>
+</tr>
+{foreach from=$job_text_sets key=k item=jts}
+<tr id="{cycle values="hqFlip custPpFlip,hqFlop custPpFlop"}">
+<td>{if $profile_edit == 1}  <a href="/index.php/page/jtprofiles/bb/1/command/detail/jts_id/{$jts.id}">{else}  <a href="/index.php/page/customers_ext/bb/1/command/addavacancy/jts_id/{$jts.id}">{/if}{$jts.name}</a></td>
+<td>{if $jts.logo}<img src="/_images_upload/{$jts.logo}"  id="jtsI">{/if}</td>
+</tr>
+{foreachelse}
+<tr>
+<td colspan="2" class="hqNoItems custPpNoItems">[t]There are no profiles available[/t]</td>
+</tr>
+{/foreach}
+</table>
+
+{/if}
+
+	<div class="pageNav slctJobPageNav">
+		<table border="0" cellpadding="0" cellspacing="0" class="hqTbl custPpVacTbl" style="border:none">
+		<tr style="border:none">
+		<td width="33%" style="text-align:center; border:none">{if $prevpage}
+	<a href="/index.php/page/{$page}/command/{$command}/bb/1/curpage/{$prevpage}">[t]Previous[/t]</a> 
+	{/if}&nbsp;</td>
+		<td width="33%" style="text-align:center; border:none"><b>{$curpage}</b></td>
+		<td width="33%" style="text-align:center; border:none">{if $nextpage}
+		<a href="/index.php/page/{$page}/command/{$command}/bb/1/curpage/{$nextpage}">[t]Next[/t]</a> 
+		{/if}&nbsp;</td>
+		</tr>
+		</table>
+	</div>
+
+
+
+</div>
+
+<!--END_9-->
+<!--uts:end inner-->

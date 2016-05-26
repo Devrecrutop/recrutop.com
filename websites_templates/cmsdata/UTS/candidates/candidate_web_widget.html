@@ -1,0 +1,50 @@
+<!-- START OTYS CANDIDATE ENROLL WIDGET -->
+<script type="text/javascript" src="{$website}/_javascript_global/aew_client.js"></script>
+<form name="applicant_enroll_widget" action="{$website}/index.php/page/applicants_widget/command/widgetsubmit" method="post" onsubmit="return(applicant_enroll_widget_check(this))" enctype="multipart/form-data">
+<div id="aew_main">
+<div id="aew_firstname">
+<div id="aew_firstname_lab">[tg]Firstname[/tg]</div>
+<div id="aew_firstname_inp"><input id="aew_candidate_firstname" type="text" name="aew_candidate_firstname" value=""></div>
+</div>
+{if $show_middlename}
+<div id="aew_middlename">
+<div id="aew_middlename_lab">[tg]Middle name[/tg]</div>
+<div id="aew_middlename_inp"><input id="aew_candidate_middlename" type="text" name="aew_candidate_middlename" value=""></div>
+</div>
+{/if}
+<div id="aew_lastname">
+<div id="aew_lastname_lab">[tg]Lastname[/tg]</div>
+<div id="aew_lastname_inp"><input id="aew_candidate_lastname" type="text" name="aew_candidate_lastname" value=""></div>
+</div>
+<div id="aew_email">
+<div id="aew_email_lab">[tg]Email[/tg]</div>
+
+<div id="aew_email_inp"><input id="aew_candidate_email" type="text" name="aew_candidate_email" value=""></div>
+</div>
+<div id="aew_cv">
+<div id="aew_cv_lab">[tg]CV[/tg]</div>
+<div id="aew_cv_inp"><input id="aew_candidate_cv" type="file" name="aew_candidate_cv"></div>
+</div>
+
+
+<div id="aew_submit">
+<input id="aew_candidate_submit" type="submit" name="candidate_submit" value="[tg]Send[/tg]">
+</div>
+
+
+<input type="hidden" name="current_language" value="{$language}">
+<input name="MAX_FILE_SIZE" value="5000000" type="hidden">
+
+<input type="hidden" name="fname_error" value="[tgh]Please specify the applicant firstname![/tgh]">
+<input type="hidden" name="lname_error" value="[tgh]Please specify the applicant lastname![/tgh]">
+<input type="hidden" name="email_error" value="[tgh]Please specify an e-mail![/tgh]">
+<input type="hidden" name="email_invalid_error" value="[tgh]The e-mail address is invalid![/tgh]">
+<input type="hidden" name="cv_error" value="[tgh]Please upload a CV![/tgh]">
+<input type="hidden" name="security_code" value="{$security_code}">
+<input type="hidden" name="ckey" value="{$client_key}">
+
+
+
+</div>
+</form>
+<!-- END OTYS CANDIDATE ENROLL WIDGET -->

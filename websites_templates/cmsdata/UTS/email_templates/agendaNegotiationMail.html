@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+<!-- /UTS/email_templates/agendaNegotiationMail.html -->
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Dear[/t] {$consultantName},</p>
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">
+{if $customMessage}
+{$customMessage|escape}
+{else}
+[t]You have been invited for an appointment. Please select preferred schedule date and time.[/t]
+{/if}
+</p>
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">
+[t]Type[/t]: {$itemTypeName|escape}<br>
+[t]Subject[/t]: {$subject|escape}<br>
+{if $location}[t]Location[/t]: {$location|escape}<br>{/if}
+{if $description}[t]Description[/t]: {$description|escape}{/if}
+</p>
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">[t]Possible appointment dates and times:[/t]</p>
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;">
+{foreach from=$suggestions item=s}
+{$s.date}, {$s.timeStart} - {$s.timeEnd}<br>
+{/foreach}
+</p>
+
+<!--START_AGENDA_NEGOTIATION_LINK-->
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;"><a href="{$website}/index.php/page/AgendaNegotiation/command/response/uid/{$uid}/bb/1/?mobile=0">[t]Select preferred appointment date a time[/t]</a></p>
+<!--END_AGENDA_NEGOTIATION_LINK-->
+
+<p style="font-family: verdana, arial, sans-serif; font-size:12px;" class="utsSignature">
+[t]Regards,[/t]<br>
+{$senderName}
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

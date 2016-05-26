@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+PRODID:-//OTYS Company//Agenda 1.0 MIMEDIR//EN
+VERSION:2.0
+METHOD:REPLY
+BEGIN:VEVENT
+ATTENDEE;PARTSTAT={$type|upper}:mailto:{$attendeeEmail}
+CLASS:PUBLIC
+CREATED:{$timestamp}
+DTSTAMP:{$timestamp}
+{if $event.DTSTART_TZ}DTSTART;TZID={$event.DTSTART_TZ}:{$event.DTSTART}{else}DTSTART:{$event.DTSTART}{/if}
+
+{if $event.DTEND_TZ}DTEND;TZID={$event.DTEND_TZ}:{$event.DTEND}{else}DTEND:{$event.DTEND}{/if}
+
+LAST-MODIFIED:{$timestamp}
+LOCATION:{$event.LOCATION}
+PRIORITY:{$event.PRIORITY}
+SEQUENCE:0
+STATUS:{$status}
+SUMMARY:{$type|lower|capitalize}: {$event.SUMMARY}
+TRANSP:OPAQUE
+UID:{$event.UID}
+END:VEVENT
+END:VCALENDAR

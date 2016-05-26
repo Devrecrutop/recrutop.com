@@ -1,0 +1,20 @@
+{* this email is sent to the job customer after an applicant applied for his job; function sendCandidateApplyDetails() if CSM setting fo_candidates.uts_print_cv_email_customer (1535) is ON *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/applicants/candidateApplyDetailsEmail.html -->
+
+<p>[t]Dear {$customerName|escape},[/t]</p> 
+<p>[t]A new applicant has applied for your job: {$jobTitle|escape}[/t]</p>
+<p>[t]Candidate details:[/t]<br>{$candidateDetails}</p>
+<p>[t]Find attached the CV of the candidate.[/t]</p>
+<p>[t]Kind regards,[/t]</p>
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+
+<!--uts:end inner-->
+</body>
+</html>

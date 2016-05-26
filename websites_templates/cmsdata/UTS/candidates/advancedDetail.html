@@ -1,0 +1,294 @@
+{* this is the master template for candidate advanced detail *}
+{* required javascripts: JQueryBase,JQueryAnimatedCollapse,JQueryUI,JQueryFancyBox,JQueryClueTip *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>whatever</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+{* Md temp add because Ext. JS in UTS doesnt work *}
+<script type="text/javascript" src="[website]/_javascript_global/jquery.fancybox.js"></script>
+<link type="text/css" href="[website]/_css_global/fancybox/jquery.fancybox.css" rel="stylesheet">
+
+<literal>
+<style type="text/css">
+  @import url("/_css_global/smoothness/jquery-ui-1.7.2.custom.css");
+</style>
+</literal>
+<script type="text/javascript">
+var adIndexPhp='{$indexPhp|escape:javascript}';
+var adCID='{$cid|escape:javascript}';
+var defaultTab='{$defaultTab}';
+
+var cntProfile='{$cntProfile}';
+var cntAdditional='{$cntAdditional}';
+var cntDossier='{$cntDossier}';
+//{literal}
+
+    function performAction() {
+        var action=$('#candAdvDetailActionSelect').val();
+        if (action=='') {
+            alert('[th]Please select a batch action[/th]');
+            return;
+        }
+        //alert(action);
+        $('#ppVirtualLink').attr('href', adIndexPhp+'page/canbactions/bb/1/command/showgui/action/'+action+'/cids/'+adCID);
+        $('#ppVirtualLink').trigger('click');
+    }
+
+    //
+    $(document).ready(function() {
+    $(function(){
+        //alert('ready');
+		defaultTabIndex = $('#candAdvDetailTabs li').index($('#' + defaultTab));
+		if(defaultTabIndex == -1)defaultTabIndex = $('#candAdvDetailTabs li').index($('#tabPreview'));
+		$('#candAdvDetailTabs').tabs({ cache: false, opacity: 'normal', selected: defaultTabIndex,
+            load: function(event, ui) {
+                //alert('loaded '+ui.panel.id);
+                $('a.cluetipsDossier', ui.panel).cluetip({
+                    activation:       'click',
+                    width:            500,
+                    sticky:           true,
+                    ajaxCache:        false,
+                    closeText:        '[th]Close[/th]'
+                });
+                $('a.internal', ui.panel).click(function() {
+                    $(ui.panel).load(this.href);
+                    return false;
+                });
+            }
+        });
+
+        animatedcollapse.addDiv('candAdvDetailLinkedIn', 'fade=1,persist=1');
+        animatedcollapse.addDiv('candAdvDetailTwitter', 'fade=1,persist=1');
+        animatedcollapse.addDiv('candAdvDetailFacebook', 'fade=1,persist=1');
+
+        animatedcollapse.init();
+
+		// fancybox, used for send results by email for instance
+		$("a[rel=prettyPopin]").each(
+			function()
+			{
+				$(this).fancybox
+				({
+					'autoScale'     	: true,
+					'type'				: 'ajax'
+				});
+			}
+		);
+	});
+
+
+       // other code here
+        if ($('li#tabPreview').length) {
+            if (cntProfile == 0) $("li#tabPreview").addClass("tabPassive");
+        }
+        if ($('li#tabAdditional').length) {
+            if (cntAdditional == 0) $("li#tabAdditional").addClass("tabPassive");
+        }
+        if ($('li#tabFile').length) {
+            if (cntDossier == 0) $("li#tabFile").addClass("tabPassive");
+        }
+
+     });
+
+
+//{/literal}
+</script>
+
+<div class="outer actouter actOuter candAdvDetailOuter" id="test">
+<!-- /UTS/candidates/advancedDetail.html -->
+<!-- advancedDetail.html - CV Search CandidateDetail -->
+
+{if $loggedInAsCP}
+<!-- LOGGED IN -->
+{else}
+<!-- NOT LOGGED IN -->
+{/if}
+
+{* 2011-06-08, task 137005, by Tomas - added a condition to display only title (or uid) when 'allwaysUseCvTitle' is set *}
+{if $allwaysUseCvTitle}
+        <h1 class="title">[t]Candidate[/t]
+          <if $usePublicCvTitle && $c.extended.public_cv_title>
+            {$c.extended.public_cv_title|escape}
+          <else>
+            {$c.main._uid}
+          </if>
+        </h1>
+{else}
+        <if $canShowPersonal>
+            <h1 class="title">{$c.main.voornaam|escape}{if $c.main.tussenvoegsel} {$c.main.tussenvoegsel|escape}{/if} {$c.main.achternaam|escape}</h1>
+
+            <h2 class="subHeader">
+              <if $usePublicCvTitle && $c.extended.public_cv_title>
+                ({$c.extended.public_cv_title})
+              <else>
+                <if $c.main._uid> {* 2011-06-08, by Tomas - i noticed sometimes this is empty and so empty parentheses were displayed, so i added this condition *}
+                ({$c.main._uid})
+                </if>
+              </if>
+            </h2>
+
+        <elseif $usePublicCvTitle && $c.extended.public_cv_title>
+            <h1 class="title">[t]Candidate[/t] {$c.extended.public_cv_title|escape}</h1>
+        <else>
+            <h1 class="title">[t]Candidate[/t] {$c.main._uid}</h1>
+        </if>
+{/if}
+
+{$CustomersMenu}
+<div class="actSResultsCont candAdvResultsContainer">
+
+<if $hsuserid && $origin == "advsearchcvs">
+<div class="menuContainer actMc actTopMenu candAdvDetailTopMenu">
+<if $previd>
+<div class="menuLink actMlink MenuLinkFirstChild actMlinkFc"><a href="{$handler}/command/start/id/{$previd}/origin/{$origin|escape}">[t]Previous result[/t]</a></div>
+</if>
+<if $nextid>
+<div class="menuLink actMlink {if !$previd}MenuLinkFirstChild actMlinkFc{/if}"><a href="{$handler}/command/start/id/{$nextid}/origin/{$origin|escape}">[t]Next result[/t]</a></div>
+</if>
+<div class="menuLink actMlink {if !$previd && !$nextid}MenuLinkFirstChild actMlinkFc{/if} MenuLinkLastChild actMlinkLc"><a href="{$indexPhp}page/advsearchcvs/bb/1/command/dispresults">[t]Back to search results[/t]</a></div>
+
+<if $loggedInAsCP>
+<div class="candAdvDetailTools">
+<!--<img style="cursor:pointer;" src="/_images_global/go.png" align="middle" alt="[thn]Perform the action selected[/thn]" onclick="performAction()">-->
+<select name="batchAction" id="candAdvDetailActionSelect">
+<option value="">[thn](select action)[/thn]</option>
+{if $cp.allow_statuses_change}<option value="changeStatus">[thn]change status[/thn]</option>{/if}
+</select> | <a onclick="performAction()">[t]Perform[/t]</a>
+</div>
+</if>
+<div class="cleaner menuLinkCleaner actLinkCleaner"></div>
+</div>
+</if>
+
+<div class="candAdvDetailPersonal">
+<include file="advDetailPersonal.inc.html">
+</div>
+</div>
+
+{if $candidateSocialNetworks && ($socNetProfiles.linkedin || $socNetProfiles.twitter || $socNetProfiles.facebook)}
+<div class="actSRFacetCont canAdvDetailFacetCont">
+	<div class="actSROf">
+
+    {* start linked in *}
+    {if $socNetProfiles.linkedin}
+		<div class="optionListContainer facetListCon">
+			<div class="optionListTitle facetListTitle"><a href="javascript:animatedcollapse.toggle('candAdvDetailLinkedIn')" title="[th]Expand/collapse[/th]">[t]LinkedIn[/t]</a></div>
+			<div class="optionList facetList" id="candAdvDetailLinkedIn">
+      {foreach from=$socNetProfiles.linkedin item=sn}
+        <a href="{$sn.url}" target=_"blank">{if $sn.link_text}{$sn.link_text}{else}{$sn.url}{/if}</a><br>
+      {/foreach}
+			</div>
+		</div>
+    {/if}
+		{* end linked in *}
+
+		{* start Twitter *}
+    {if $socNetProfiles.twitter}
+		<div class="optionListContainer facetListCon">
+			<div class="optionListTitle facetListTitle"><a href="javascript:animatedcollapse.toggle('candAdvDetailTwitter')" title="[th]Expand/collapse[/th]">[t]Twitter[/t]</a></div>
+			<div class="optionList facetList" id="candAdvDetailTwitter">
+      {foreach from=$socNetProfiles.twitter item=sn}
+        <a href="{$sn.url}" target=_"blank">{if $sn.link_text}{$sn.link_text}{else}{$sn.url}{/if}</a><br>
+      {/foreach}
+			</div>
+		</div>
+    {/if}
+		{* end Twitter *}
+
+		{* start Facebook *}
+    {if $socNetProfiles.facebook}
+		<div class="optionListContainer facetListCon">
+			<div class="optionListTitle facetListTitle"><a href="javascript:animatedcollapse.toggle('candAdvDetailFacebook')" title="[th]Expand/collapse[/th]">[t]Facebook[/t]</a></div>
+			<div class="optionList facetList" id="candAdvDetailFacebook">
+      {foreach from=$socNetProfiles.facebook item=sn}
+        <a href="{$sn.url}" target=_"blank">{if $sn.link_text}{$sn.link_text}{else}{$sn.url}{/if}</a><br>
+      {/foreach}
+			</div>
+		</div>
+    {/if}
+		{* end Facebook *}
+
+	</div>
+</div>
+{/if}
+
+<if [uts:show_media_slider]>
+    <if $display_media_slider>
+        <if $gallery>
+            <div class="text jbdText">
+
+                    <script type="text/javascript" src="/_javascript_global/galleria-1.2.9.min.js"></script>
+                    <script type="text/javascript" src="/_css_global/galleria/classic.white/galleria.classic.min.js"></script>
+                    <link type="text/css" href="/_css_global/galleria/classic.white/galleria.classic.css" rel="stylesheet">
+
+
+                    <script type="text/javascript" src="/_javascript_global/jquery.lightbox.js"></script>
+                    <link rel="stylesheet" type="text/css" href="/_css_global/lightbox/lightbox.css" media="screen" />
+
+                    {literal}
+                    <script type="text/javascript">
+                            // not used - see style below
+                            var productDetailPhotoSliderWidth = 265;
+                            var productDetailPhotoSliderHeight = 160;
+
+                            $(document).ready(function() {
+                                    Galleria.configure({
+                            lightbox: true,
+                            imageCrop: true
+                                    });
+                                    Galleria.run('#productDetailPhotoSlider');
+                            });
+                    </script>
+                    <style>
+                        #productDetailPhotoSlider { width: 265px; height: 210px; }
+                    </style>
+                    {/literal}
+                    <div id="productDetailPhotoSlider">
+                            {foreach from=$gallery item=galimage}
+                                    <a href="[website]/_images_upload/{$galimage.photo}"><img src="[website]/_images_upload/{$galimage.thumbnail}" data-big="[website]/_images_upload/{$galimage.photo}"></a>
+                            {/foreach}
+                    </div>
+            </div>
+       
+        </if>    
+    </if>
+</if>
+
+{*
+
+<div class="candAdvDetailTabbedSection" style="clear:both; margin-top:10px;" id="candAdvDetailTabs">
+    <ul>
+        <if [uts:show_cv_tab] && ($canShowPersonal || [uts:nologin_cv_tab_visible])>
+		<li id="tabCV"><a href="{$handler}/command/cv/id/{$cid}">[t]CV[/t]</a></li>
+        </if>
+    
+		<if [uts:show_preview_tab] && ($canShowPersonal || [uts:nologin_preview_tab_visible])>
+		<li id="tabPreview"><a href="{$handler}/command/preview/id/{$cid}">[t]Snapshot[/t]</a></li>
+		</if>
+		<if [uts:show_additional_tab] && ($canShowPersonal || [uts:nologin_additional_tab_visible])>
+		<li id="tabAdditional"><a href="{$handler}/command/additional/id/{$cid}">[t]Additional[/t]</a></li>
+		</if>
+        <if [uts:show_file_tab] && ($canShowPersonal || [uts:nologin_file_tab_visible])>
+		<li id="tabFile"><a href="{$handler}/command/dossier/id/{$cid}">[t]File[/t]</a></li>
+        </if>
+		
+		{if $useRecommendations}
+		<li id="tabRecommendations"><a href="{$handler}/command/recommendations/id/{$cid}">[t]Recommendations[/t]</a></li>
+		{/if}
+	</ul>
+</div>
+*}
+
+
+
+
+<a href="" rel="prettyPopin" style="display:none;" id="ppVirtualLink"></a>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Procedures Reports</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer">
+<!--/UTS/customers/procReportsIntroduction.html STANDARD -->
+
+{if $portalType == 'custom'}
+
+<h1 class="title">[t]Procedure reports for the customer portal[/t]</h1>
+
+<div class="text">
+[t]Select the customer portal report below.[/t]
+</div>
+
+{elseif $portalType == 'hiring'}
+
+<h1 class="title">[t]Procedure reports for the hiring manager portal[/t]</h1>
+
+<div class="text">
+[t]Select the hiring manager portal report below.[/t]
+</div>
+
+{elseif $portalType == 'vendor'}
+
+<h1 class="title">[t]Procedure reports for the vendor manager portal[/t]</h1>
+
+<div class="text">
+[t]Select the vendor manager portal report below.[/t]
+</div>
+
+{/if}
+
+<div>
+	<form name="reportForm" action="{$handler}/command/report/bb/1" method="post">
+		<div class="formInput">
+			<label>[t]Vacancy[/t]</label>
+			<select name="vacancyId">
+				<option value="0">---</option>
+				{html_options options=$vacancies selected=$vacancyId}
+			</select>
+		</div>
+		<div class="formInput">
+			<label>[t]Report[/t]</label>
+			<select name="reportId">
+				<option value="0">---</option>
+				{html_options options=$reports selected=$reportId}
+			</select>
+		</div>
+		{if $error}
+			<div class="error">
+				{if $error == 'MSG_VACANCY_MISSING'}[t]Please select the vacancy.[/t]
+				{elseif $error == 'MSG_REPORT_MISSING'}[t]Please select the report.[/t]
+				{/if}
+			</div>
+		{/if}
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[th]View report[/th]">
+		</div>
+	</form>
+</div>
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

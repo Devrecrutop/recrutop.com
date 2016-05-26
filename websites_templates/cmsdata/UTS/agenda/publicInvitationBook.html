@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Public Invitation - Step 3</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!--/UTS/AGENDA/publicInvitationBook.html-->
+<div class="outer pInBkOuter">
+
+{if $success}
+
+<h1 class="title pInBkTitle">[t]Appointment booked[/t]</h1>
+
+<div class="text pInBkText">
+[t]Your appointment has been booked.[/t]
+</div>
+
+<div class="text pInBkText">
+[t]Appointment details:[/t]
+</div>
+
+<div class="pInBkItem">
+<table>
+{*<tr>
+<td>[t]Type[/t]:</td>
+<td>{$itemTypeName|escape}</td>
+</tr>*}
+<tr>
+<td>[t]Consultant[/t]:</td>
+<td>{$consultantName|escape}</td>
+</tr>
+<tr>
+<td>[t]Date and time[/t]:</td>
+<td>{$date|escape}, {$timeStart} - {$timeEnd}</td>
+</tr>
+{if $description}
+<tr>
+<td>[t]Description[/t]:</td>
+<td>{$description|escape}</td>
+</tr>
+{/if}
+</table>
+</div>
+
+{else}
+
+{if $error == 'ALREADY_BOOKED'}
+
+<h1 class="title pInBkTitle">[t]Already invited[/t]</h1>
+
+<div class="text pInBkText">
+[t]You are already invited to this appointment.[/t]
+</div>
+
+{else}
+
+<h1 class="title pInBkTitle">[t]Appointment booking failed[/t]</h1>
+
+<div class="text pInBkText">
+[t]Another appointment has been made for this consultant at the spot that you have chosen while you request was being processed. Please repeat the process again and select another spot.[/t]
+</div>
+
+{if !$invitetoitem}
+<div class="pInBkButton"><input type="button" value="[tb]Choose another spot[/tb]" class="button" onclick="window.location='{$handler}/command/start{if $uid}/uid/{$uid}{/if}'"></div>
+{/if}
+
+{/if}
+
+{/if}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

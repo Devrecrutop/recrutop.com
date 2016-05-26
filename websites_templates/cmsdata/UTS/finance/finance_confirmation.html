@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+
+</head>
+<body>
+<!--uts:begin inner-->
+<!--system part-->
+
+<script type="text/javascript">
+// {literal}
+
+function accept_action(){
+    document.mainfrm.nextstep.value="continue";
+    document.mainfrm.submit();
+}
+
+function returnback(){
+    history.back();
+}
+
+// {/literal}
+</script>
+
+<!--display part-->
+<form name="mainfrm" id="frmMain" action="{$submiturl}" method="post">
+<input type="hidden" name="cid" value="{$cid}">
+<input type="hidden" name="nextstep" value="">
+<input type="hidden" name="premiumjob" value="{if $premiumjob}yes{/if}">
+<input type="hidden" name="embedvideo" value="{if $embedvideo}yes{/if}">
+<input type="hidden" name="job_logo" value="{if $job_logo}yes{/if}">
+<input type="hidden" name="products" value="{$products}">
+<input type="hidden" name="republish_job" value="{if $republish_job}yes{/if}">
+
+<div class="outer custOuter custFinOuter custFinConfirmOuter">
+<!-- /UTS/finance/finance_confirmation.html -->
+	<h1 class="title">[t]Confirmation[/t]</h1>
+
+	<h2 class="subHeader">[t]Details[/t]</h2>
+    <div class="text">{$credits} [t]Credit(s) will be subtracted for this action.[/t]</div>
+    <div class="text">[t]Click 'Accept' to continue or 'Back' to go back to the previous page[/t]</div>
+    
+    <div class="formInput custFi custFiNotAgain">
+		<label>[t]Don't show this message again[/t]</label>
+		<input type="checkbox" value="1" name="hide_confirmation_window" class="formInput checkboxFi">
+    </div>
+    
+    
+    <div class="buttonContainer custBc custFinBc custFinConfirmBc">
+	    <input type="button" value="[tb]Accept[/tb]" onClick="accept_action();" class="button custButton custFinButton">
+	    <input type="button" value="[tb]Back[/tb]" onClick="returnback();" class="button custButton custFinButton">
+    </div>
+</div>
+</form>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+//{literal}
+function recrowdSubmitHandler() {
+    if (!document.getElementById('iFeePercentage').disabled) {
+        var ffee = parseFloat(document.getElementById('iFeePercentage').value);
+        if (isNaN(ffee) || ffee<0 || ffee>100) {
+            alert('[th]Please enter valid minimum fee percentage.[/th]');
+            return false;
+        }
+    }
+    return true;
+}
+// setup match criteria multiselects
+   
+$(document).ready(function() {        
+	
+	$('.critMS').multiSelect({
+		selectAllText: 'Selecteer alle',
+		noneSelected: 'Selecteer criteria',
+		oneOrMoreSelected: 'Selecteer criteria (% geselecteerd)...'
+		});
+	
+	
+});
+//{/literal}
+</script>
+
+<div class="outer custOuter recrowdOuter rcwdRecrSetOuter">
+	<!-- /UTS/customers/recrowd_recruiter_settings.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+	<h1 class="title">[t]Recruiter Settings[/t]</h1>
+	{$CustomersMenu}
+	{$CustomersSubMenu}
+
+	<form name="recrowdForm" action="{$handler}" method="post" class="qsPageOuter" onsubmit="return recrowdSubmitHandler()">
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerName">[t]Customer name:[/t]</label>
+			<input type="text" name="werkgever" value="{$data_wg.werkgever|escape}" id="recrowdCustomerName" size="10">
+		</div>
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerAddress">[t]Address:[/t]</label>
+			<input type="text" name="wg_bezoekadres" value="{$data_wg.wg_bezoekadres|escape}" id="recrowdCustomerAddress" size="10">
+		</div>
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerPostcode">[t]Postal code:[/t]</label>
+			<input type="text" name="wg_pc_bezoekadres" value="{$data_wg.wg_pc_bezoekadres|escape}" id="recrowdCustomerPostcode" size="10">
+		</div>
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerCity">[t]City:[/t]</label>
+			<input type="text" name="wg_plaats_bezoek" value="{$data_wg.wg_plaats_bezoek|escape}" id="recrowdCustomerCity" size="10">
+		</div>
+		<div class="formInput aplTextInput">
+			<label for="recrowdCustomerPhone">[t]Phone:[/t]</label>
+			<input type="text" name="phone_mobile" value="{$data.phone_mobile|escape}" id="recrowdCustomerPhone" size="10">
+		</div>
+		<div class="formInput formRadio aplRadioInput aplRadioViewH aplRadioInput">
+			<label>[t]Recruitment Type:[/t]</label>
+			<label for="chbRecTypeRecruitment" class="labelRadio aplRadioInput">
+				<input type="checkbox" id="chbRecTypeRecruitment" name="doing_recruitment" value="1" class="radiobutton" {if $data.doing_recruitment == 1}checked="checked"{/if}>
+				[t]Recruitment[/t]
+			</label>
+			<label for="chbRecTypeInterim" class="labelRadio aplRadioInput">
+				<input type="checkbox" id="chbRecTypeInterim" name="doing_interim" value="1" class="radiobutton" {if $data.doing_interim == 1}checked="checked"{/if}>
+				[t]Interim[/t]
+			</label>
+			<div class="cleaner aplCleaner aplBooleanHCleaner"></div>
+		</div>
+		<div class="formInput aplTextInput">
+			<label for="iFeePercentage">[t]Minimum Fee Percentage:[/t]</label>
+			<input type="text" name="minimum_fee_percentage" value="{$data.minimum_fee_percentage|escape}" id="iFeePercentage" size="10">
+		</div>
+		<div class="formInput aplTextInput">
+			<label>[t]Allow open entries[/t]</label>
+			<input type="checkbox" id="chbAllowOpenEntries" name="allow_open_entries" value="1" class="radiobutton" {if $data.allow_open_entries == 1 }checked="checked"{/if}>
+		</div>
+
+		{foreach from=$criterialist item=cr key=crk}
+		<div class="formInput aplTextInput">
+			<label>{$cr.name}</label>
+			{if $cr.sm == "M" }
+				<select name="crit_{$crk}[]" id="crit_{$crk}" multiple="multiple" size="5" class="multiSelect critMS">
+					{foreach from=$cr.values item=cv key=cvk}
+					<option value="{$cvk}" {if $cv.selected}selected{/if}>{$cv.name}</option>
+					{/foreach}
+				</select>
+			{else}
+				<select name="crit_{$crk}[]" id="crit_{$crk}">
+					<option value="">---</option>
+					{foreach from=$cr.values item=cv key=cvk}
+					<option value="{$cvk}" {if $cv.selected}selected{/if}>{$cv.name}</option>
+					{/foreach}
+				</select>
+			
+			{/if}
+		</div>
+		{/foreach}
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[tb]Submit[/tb]" name="sSubmit">
+		</div>
+		<input type="hidden" name="command" value="saveSettings">
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

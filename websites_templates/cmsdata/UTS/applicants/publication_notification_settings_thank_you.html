@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+<div class="outer aplOuter aplTyOuter">
+<!-- /UTS/applicants/thankYouEvent.html -->
+<h1 class="title apltitle aplTyTitle">[t]Thank you![/t]</h1>
+
+<div class="intro aplIntro aplTyIntro">
+[t]Thank you, your publication setting was successfully changed.[/t]
+</div>
+
+{* insert custom client's measuring snippets *}
+<if $snippets>
+{$snippets}
+</if>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/customers/vacancy_approve_form.html -->
+{literal}
+<script type="text/javascript">
+	function showprompt(choice){
+		if (confirm("[th]Are you sure?[/th]")){
+			//alert(choice);
+			document.getElementById('mark').value = choice;
+			document.getElementById('processform').submit();
+		}
+	}
+</script>
+{/literal}
+    
+{literal}
+<style type="text/css">
+.ojpIw span {
+	display:inline-block;
+	width:100%;
+/*	font-weight:bold;*/
+	line-height:1.4em;
+}
+.ojpDicCrit{
+  width:200px;
+  float:right;
+}
+.ojpExtraCrit{
+  width:100%;
+  float:right;
+}
+.ojpDicCritItem{font-weight:normal;}
+.ojpExtraCritItem{font-weight:normal;}
+.ojpApproveButton{
+	background:#009900;
+	color:#fff;
+	font-size:14px;
+	padding:10px;
+	margin-right:20px;
+}
+.ojpRejectButton{
+	background-color:red;
+	color:#fff;
+	font-size:14px;
+	padding:10px;
+}
+.ojpAddressInfo{
+	background:#f8f8f8;
+	width:100%;
+	clear:both;
+	border:1px solid #eee;
+	margin:20px 0px 20px 0px;
+	padding:10px;
+}
+.ojpCriteriaInfo{
+	background:#f8f8f8;
+	width:100%;
+	clear:both;
+	border:1px solid #eee;
+	margin:20px 0px 20px 0px;
+	padding:10px;
+}
+.ojpExtraFieldsInfo{
+	background:#f8f8f8;
+	clear:both;
+	border:1px solid #eee;
+	margin:20px 0;
+	padding:10px;
+}
+.ojpAddressConsultant{
+	background:#ffffea;
+	float:left;
+	width:48%;
+	border:1px solid #eee;
+	margin:0 0 20px 0;
+	padding:10px;
+}
+.ojpCustomerMessage{
+	background:#ffffea;
+	float:left;
+	width:48%;
+	border:1px solid #eee;
+	margin:50px 0 0 0;
+	padding:10px;
+}
+.ojpDescriptionItem{
+	border:1px solid #eee;
+	margin:20px 0px 0px 0px;
+	padding:10px;
+}
+.ojpChapoColor{background:#F2FFF2;}
+.ojpFunctieeColor{background:#FEF4DE;}
+.ojpFunctieoColor{background:#E8F3FF;}
+.ojpProfileColor{background:#F2FFF2;}
+.ojpJobdescriptionColor{background:#f8f8f8;}
+.ojpCompanycultureColor{background:#E8F3FF;}
+.ojpCompanyprofileColor{background:#FEF4DE;}
+.ojpFloatLeft{float:left;}
+.ojpFloatRight{float:right;}
+.ojpWidthColumn{width:48%;}
+</style>
+{/literal}         
+<form action="{$handler}/command/setReactionMark/bb/1" name="processform" id="processform" method="POST">
+<input type="hidden" name="vid" value="{$vid}">
+<input type="hidden" name="creatorWgCpId" value="{$creatorWgCpId}">  
+<input type="hidden" name="mark" id="mark" value="">
+<!--uts:begin inner-->
+<div class="outer custOuter custJobApprove">
+<!-- /mt/share/UTS/customers/vacancy_approve_form.html -->
+	<h1 class="title">{$job.JobTitle}</h1>
+	<i style="margin-bottom:20px;">{$job.JobCompany.JobCompanyName}</i>
+	
+	<div>
+	
+	{if $job.JobContact.JobContactName || $job.JobContact.JobContactPhone || $job.JobContact.JobContactEmail || $job.JobId}
+		<div class="ojpAddressConsultant">
+			<div class="ojpFloatLeft">
+				<h2 class="subHeader">[t]Contact gegevens[/t]</h2>
+				{if $job.JobContact.JobContactName}[t]Consultant[/t]: {$job.JobContact.JobContactName}<br>{/if}
+				{if $job.JobContact.JobContactPhone}[t]Phonenumber[/t]: {$job.JobContact.JobContactPhone}<br>{/if}
+				{if $job.JobContact.JobContactEmail}[t]E-mail[/t]: {$job.JobContact.JobContactEmail}<br>{/if}
+				{if $job.JobId}[t]Referentie[/t]: {$job.JobId}{/if}
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	{/if}
+            
+	{if $job_published}
+		<div class="ojpButtonContainer"><p>[t]Job is already published![/t]</p></div>
+	{else}
+		{if !$allready_approved}
+		<div class="ojpButtonContainer">
+			<input class="ojpApproveButton" type="button" value="[th]Ik ben ge&iuml;nteresseerd[/th]" onClick="showprompt('approved')">
+			<input class="ojpRejectButton" type="button" value="[th]Ik ben niet ge&iuml;nteresseerd[/th]" onClick="showprompt('rejected')">
+		</div>
+		<div class="ojpCustomerMessage">
+			<h2 class="subHeader">[t]Your message:[/t]</h2>
+			<textarea name="message" style="width:100%;padding:0;"></textarea>
+		</div>
+		{else}
+		<div class="ojpButtonContainer"><p>[t]This vacancy was already processed![/t]</p></div>
+		{/if}
+ 	{/if}
+
+	{if $job.JobDescription.Chapo}
+		<div class="ojpDescriptionItem ojpChapoColor">
+			<h2 class="subHeader">{$job.JobDescription.ChapoTitle}</h2>
+			{$job.JobDescription.Chapo}
+		</div>
+	{/if}
+                {if $num_candidates_per_vacancy_enable}
+
+			<div class="ojpDescriptionItem  ojpFunctieeColor">
+				<h2 class="subHeader">[t]Aantal vacatures[/t]</h2>
+				{$job.NumCandidatesNeeded}
+			</div>
+                {/if}
+		<div class="cleaner"></div>
+
+		<div class="ojpFloatLeft ojpWidthColumn"> 
+		{if $job.JobDescription.FunctieEo}
+			<div class="ojpDescriptionItem ojpFunctieoColor">
+				<h2 class="subHeader">{$job.JobDescription.FunctieEoTitle}</h2>
+				{$job.JobDescription.FunctieEo}
+			</div>
+		{/if}
+ 		{if $job.JobDescription.FunctieEe}
+			<div class="ojpDescriptionItem ojpFunctieeColor">
+				<h2 class="subHeader">{$job.JobDescription.FunctieEeTitle}</h2>
+				{$job.JobDescription.FunctieEe}
+			</div>
+		{/if}
+
+
+
+		{if $match_criterias}
+			<div class="ojpCriteriaInfo">
+				<h2 class="subHeader">[t]Matchcriterias[/t]</H2>
+				{foreach from=$match_criterias item=criteriagroup}
+				<div class="ojpIw">
+					{if $criteriagroup.criteria}
+					<span> {$criteriagroup.naam}
+						<div class="ojpDicCrit">
+						{foreach from=$criteriagroup.criteria item=criteria}
+							<div class="ojpDicCritItem">{$criteria.fieldname}</div> 
+						{/foreach}
+						</div>
+					</span>
+					{/if}
+				</div>
+				{/foreach}
+			</div>
+		{/if}
+       	</div>
+
+		<div class="ojpFloatRight ojpWidthColumn">
+		{if $job.JobDescription.CompanyProfile}
+			<div class="ojpDescriptionItem ojpProfileColor">
+				<h2 class="subHeader">{$job.JobDescription.CompanyProfileTitle}</h2>
+				{$job.JobDescription.CompanyProfile}
+			</div>
+		{/if}
+		{if $job.JobDescription.SalO}
+			<div class="ojpDescriptionItem ojpJobdescriptionColor">
+				<h2 class="subHeader">{$job.JobDescription.SalOTitle}</h2>
+				{$job.JobDescription.SalO}
+			</div>
+		{/if}
+		{if $job.JobDescription.CompanyCulture}
+			<div class="ojpDescriptionItem ojpCompanycultureColor">
+				<h2 class="subHeader">{$job.JobDescription.CompanyCultureTitle}</h2>
+				{$job.JobDescription.CompanyCulture}
+			</div>
+		{/if}
+		{if $extra_fields}
+			<div class="ojpExtraFieldsInfo">
+				<h2 class="subHeader">[t]Extra fields[/t]</H2>
+				{foreach from=$extra_fields item=extrafield}
+				<div class="ojpIw">
+					{if $extrafield.veld && $extrafield.show}
+					<span> {$extrafield.naam}
+						<div class="ojpExtraCrit">
+						{foreach from=$extra_fields_values key=efk item=fieldvalue}
+							{if $efk ==  $extrafield.veld}
+							<div class="ojpExtraCritItem">{$fieldvalue.text}</div>
+							{/if} 
+						{/foreach}
+						</div>     
+					</span>
+					{/if}
+				</div>
+				{/foreach}
+			</div>
+		{/if}
+
+		{if $job.JobLocationAddress || $job.JobLocationCity || $job.JobLocationZipCode || $job.JobLocationCountry}
+			<div class="ojpAddressInfo">
+				<h2 class="subHeader">[t]Adresgegevens[/t]</h2>
+				{if $job.JobLocationAddress}[t]Straat[/t]: {$job.JobLocationAddress}<br>{/if}
+				{if $job.JobLocationZipCode}[t]Postcode[/t]: {$job.JobLocationZipCode}<br>{/if}
+				{if $job.JobLocationCity}[t]Stad[/t]: {$job.JobLocationCity}<br>{/if}
+				{if $job.JobLocationCountry}[t]Land[/t]: {$job.JobLocationCountry}<br>{/if}
+			</div>
+		{/if}
+                
+		</div>
+	<div style="clear:both;"></div>
+	</div>
+</div>
+</form>
+
+<!--uts:end inner-->
+</body>
+</html>

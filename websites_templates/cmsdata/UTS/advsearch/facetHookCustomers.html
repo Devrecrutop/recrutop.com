@@ -1,0 +1,10 @@
+<div class="hookOuter nwHookOuter actFo">
+ <!-- /UTS/advsearch/facetHookCustomers.html -->
+<div class="hookHeader actFh">{$critName|escape}</div>
+<ul>
+<foreach name="fCritVals" from=$critValues item=c>
+<li><a href="[website]/index.php/page/advsearchcusts/bb/1/command/startsearchdisp/container/matchcriteria/field/{$critField|escape:"url"}/query/{$c->value}/new/customer-{$c->name2|escape:"url"}.html">{$c->name}</a><span>({$c->frequency})<span>{if !$smarty.foreach.fCritVals.last}, {/if}</span></span></li>
+</foreach>
+</ul>
+<div class="cleaner"></div>
+</div>

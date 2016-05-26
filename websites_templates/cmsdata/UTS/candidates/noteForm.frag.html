@@ -1,0 +1,49 @@
+<script type="text/javascript">
+//{literal}
+function submitNote(obj) {
+    $.post($(obj).attr('action'), $(obj).serialize(),
+        function(data){
+            if (data.status=='ERROR') {
+                if (data.errorDescription=='ERR_MISSING_SUBJECT') {
+                    alert('[th]Please fill a subject.[/th]');
+                } else {
+                    alert('[th]Error occurred:[/th] '+data.errorDescription);
+                }
+            } else {
+                //alert(data.data);
+                var seltab=$('#candAdvDetailTabs').tabs( "option", "selected" );
+                //alert('submit form ajax '+seltab);
+                $('#candAdvDetailTabs').tabs('load', seltab);  
+            }
+       }, "json");
+    
+}
+//{/literal}
+</script>
+<div style="width:350px;">
+<!-- /UTS/candidates/noteForm.frag.html -->
+    <form class="internal" name="notefrm" action="{$handler}/command/submitnote" method="post" onsubmit="submitNote(this);return false">
+        <h1 class="title">[t]Make a note[/t]</h1>
+        <div class="formInput actEqueryInput">
+        <label>[t]Subject[/t]</label>
+        <input type="text" name="n_onderwerp" value="" >
+        </div>
+        <div class="formInput actEqueryInput">
+        <label>[t]Text[/t]</label>
+        <textarea name="n_notitie"></textarea>
+        </div>
+        <if $error>
+            <div class="error">
+                <if $error == "ERR_MISSING_SUBJECT">
+                    [t]No subject specified[/t]
+                </if>
+            </div>
+        </if>
+        
+        <div class="buttonContainer actEqueryBc">
+            <input type="submit" name="bSubmit" value="[tb]Submit[/tb]" class="button">
+        </div>
+        <input type="hidden" name="command" value="ajaxsubmitnote">
+        <input type="hidden" name="cid" value="{$cid}">
+    </form>
+</div>

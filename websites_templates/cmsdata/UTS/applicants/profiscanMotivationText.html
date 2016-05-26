@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter">
+<!-- /UTS/applicants/profiscanMotivationText.html -->
+<h1 class="title aplTitle">[t]Enter the motivation text[/t]</h1>
+
+<div class="text aplText">[t]Enter the motivation text to be sent to Profiscan screening.[/t]</div>
+
+<form action="{$handler}" method="post">
+
+<div class="form">
+
+<div class="formInput aplTextAreaInput">
+<label for="profiscanMotivation">[t]Motivation[/t]:</label>
+<div class="explain small aplTextAreaExplain">
+[t]Write your motivation text.[/t]
+</div>
+<textarea name="motivation" id="profiscanMotivation" class="fieldTxtArea" rows="5">{$motivation|escape}</textarea>
+</div>
+
+<if $errorMessages>
+{foreach from=$errorMessages item=errorMessage}
+<div class="error aplTextAreaError">
+{if $errorMessage == 'MSG_ERR_EMPTY'}[t]The field cannot be empty.[/t]
+{else}{$errorMessage}
+{/if}
+<br>
+</div>
+{/foreach}
+</if>
+
+</div>
+
+<div class="buttonContainer">
+	<input type="submit" value="[th]Send to Profiscan[/th]" class="button" name="sSubmit">
+	<input type="hidden" name="command" value="profiscansubmit">
+</div>
+
+</form>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

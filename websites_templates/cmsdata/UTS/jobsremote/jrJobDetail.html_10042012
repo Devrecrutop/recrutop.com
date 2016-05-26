@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Jobs LIST
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="formstyles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <!--uts:begin inner-->
+<!--START_9-->
+<!-- UTS/jobsremote/jrJobsDetail.html -->
+<!-- js for registering click on custom apply for job button -->
+<script type="text/javascript" src="/_javascript_global/applyclickcounter.js"></script>
+
+<div class="outer jbdOuter">
+<!--MENUBAR-->
+<!--START_TAGCLOUD_TOP-->
+<div>
+<!-- [actonomyTagCloud] -->
+</div>
+<!--END_TAGCLOUD_TOP-->
+<!--BUTTONS_TOP-->
+
+<!--START_VACANCY_TBL-->
+<h1 class="title jbdTitle">{$job.functie_o}</h1>
+{if "[uts:ReferenceNr]"}
+<!--START_ReferenceNr-->
+<div class="text jbsRef">{$job.referenceNr}</div>
+<!--END_ReferenceNr-->
+{/if}
+{if $jobDetailShowStatus}
+<!--START_JobListStatusPublicatie-->
+<div class="text jbdStatPub">{$job.status_publicatie}</div>
+<!--END_JobListStatusPublicatie-->
+{/if}
+{if $vw_html && $vw_position == 'top'}
+<!--START_VW_top-->
+<div class="text jbdWiqet jbdWiqetTop">
+<!--START WIQET-->
+{$vw_html}
+<!--END WIQET-->
+</div>
+<!--END_VW_top-->
+{/if}
+{if $photo}
+<!--START_Photo-->
+<div class="photo1 jbdPhoto1"><div class="photo2 jbdPhoto2">
+{if [uts:NetworkLogoLink] && $networkConId}
+  <a href="/index.php/page/network/command/custdetail/connectionId/{$networkConId}/bb/1"><img src="/_images_upload/{$photo}" border="0" alt=""></a><!--CON ID-->
+{else}
+  <img src="/_images_upload/{$photo}" border="0" alt="">
+{/if}  
+</div></div>
+<!--END_Photo-->
+{/if}
+
+{foreach from=$textFields item=tf}
+<!--START_1-->
+<h2 class="subHeader jbdSh jbdTextSh">{$tf.title}</h2>
+<div class="text jbdText"><p>{$tf.text}</p></div>
+<!--END_1-->
+{/foreach}
+{if $job.File}
+<!--START_File-->
+<h2 class="subHeader jbdSh jbdShFile">[t]SingleWord2[/t]<!--SingleWordLink2--></h2>
+<div class="text jbdText jdbFile"><a href="{$job.File}" target="_blank">{$job.File}</a></div>
+<!--END_File-->
+{/if}
+{if "[uts:ShowJobCategory]"}
+<!--START_ShowJobCategory-->
+<h2 class="subHeader jbdSh jbdShCat">[t]SingleWord8[/t]<!--SingleWordLink8--></h2>
+<div class="text jbdText jbdTextCat">{$jobCategory}</div>
+<!--END_ShowJobCategory-->
+{/if}
+{if "[uts:Location]" && $job.locatie}
+<!--START_Location-->
+<!--START_locatie-->
+<h2 class="subHeader jbdSh jbdShLoc">[t]SingleWord1[/t]<!--SingleWordLink1--></h2>
+<div class="text jbdText jbdTextLoc">{$job.locatie}</div>
+<!--END_locatie-->
+<!--END_Location-->
+{/if}
+{if "[uts:Region]" && $job.regio}
+<!--START_Region-->
+<h2 class="subHeader jbdSh jbdShReg">[t]SingleWord5[/t]<!--SingleWordLink5--></h2>
+<div class="text jbdText jbdTextReg">{$job.regio}</div>
+<!--END_Region-->
+{/if}
+{if "[uts:Company]" || $show_employer}
+<!--START_Company-->
+<h2 class="subHeader jbdSh jbdShEmpl">[t]SingleWord4[/t]<!--SingleWordLink4--></h2>
+<div class="text jbdText jbdTextEmpl">{$job.werkgeverid}</div>
+<!--END_Company-->
+{/if}
+<!--END_VACANCY_TBL-->
+{if $use_public_publish_date}
+<!--START_USE_PUBLISH_DATE-->
+{if $job.public_publish_date}
+<!--START_PUBLISH_DATE_START-->
+<h2 class="subHeader jbdSh jbdShPubStart">[t]SingleWord6[/t]<!--SingleWordLink6--></h2>
+<div class="text jbdText jbdTextPubStart">{$job.public_publish_date|date_format:"%d.%m.%Y"}</div>
+<!--START_PUBLISH_DATE_END-->
+{/if}
+{if $job.public_end_date}
+<!--END_PUBLISH_DATE_START-->
+<h2 class="subHeader jbdSh jbdShPubEnd">[t]SingleWord7[/t]<!--SingleWordLink7--></h2>
+<div class="text jbdText jbdTextPubEnd">{$job.public_end_date|date_format:"%d.%m.%Y"}</div>
+<!--END_PUBLISH_DATE_END-->
+{/if}
+<!--END_USE_PUBLISH_DATE-->
+{/if}
+{if $vw_html && $vw_position != 'top'}
+<!--START_VW_bottom-->
+<div class="text jbdWiqet jbdWiqetBottom">{$vw_html}</div>
+<!--END_VW_bottom-->
+{/if}
+
+{if $cpEnabled}
+{if "[uts:ContactName]"}
+<!--START_ContactSection-->
+<h2 class="subHeader jbdSh jbdShCp">[t]SingleWord3[/t]<!--SingleWordLink3--></h2>
+<div class="text jbdText cpContainer jbdCpContainer">
+<!--START_ContactName-->
+<div class="textWord cpName">{$cp.fullName}</div>
+<!--END_ContactName-->
+{/if}
+{if $cp.phone_work && "[uts:ContactPhoneNumber]"}
+<!--START_ContactPhoneNumber-->
+<div class="textWord cpPhone">T:&nbsp;{$cp.phone_work}</div>
+<!--END_ContactPhoneNumber-->
+{/if}
+{if $cp.phone_mobile && "[uts:ContactMobielPhone]"}
+<!--START_ContactMobielPhone-->
+<div class="textWord cpMobile">M:&nbsp;{$cp.phone_mobile}</div>
+<!--END_ContactMobielPhone-->
+{/if}
+{if $cp.email && "[uts:ContactEmail]"}
+<!--START_ContactEmail-->
+<div class="textWord cpEmail">E:&nbsp;<a href="mailto:{$cp.email}">{$cp.email}</a></div>
+<!--END_ContactEmail-->
+{/if}
+</div>
+<!--END_ContactSection-->
+{/if}
+
+<!--START_Block2-->
+<!--START_Title2-->
+<h2 class="subHeader jbdSh">[t]Title2[/t]</h2>
+<!--END_Title2-->
+<!--START_Text2-->
+<div class="text jbdText">[t]Text2[/t]</div>
+<!--END_Text2-->
+<!--END_Block2-->
+
+<!--START_Block3-->
+<!--START_Title3-->
+<h2 class="subHeader jbdSh">[t]Title3[/t]</h2>
+<!--END_Title3-->
+<!--START_Text3-->
+<div class="text jbdText">[t]Text3[/t]</div>
+<!--END_Text3-->
+<!--END_Block3-->
+
+
+{if $nobuttons}
+  {if !$noapply && $applyLink}
+    <a href="{$applyLink.link}">{$applyLink.text}</a>
+    <br />
+    <br />
+  {/if}
+{else}
+<!--START_BUTTON_SECTION-->
+<div class="buttonContainer jbdBc">
+<!--START_BUTTON1-->
+{*<input class="button jbdButton jbdButPrint" type="button" name="Button" value="[t]Button1[/t]" onClick="javascript:window.open('/index.php/page/JobsRemote/command/detail/vid/{$job.id}/option/print/bb/1/CurrentLanguage/{$CurrentLanguage}');">*}
+<input class="button jbdButton jbdButPrint" type="button" name="Button" value="[t]Button1[/t]" onClick="javascript:window.printframe.location='/index.php/page/JobsRemote/command/detail/vid/{$job.id}/option/print/CurrentLanguage/{$CurrentLanguage}/bb/1';">
+
+<!-- <input class="button jbdButton jbdButPrint" type="button" name="Button" value="[Button1]" onClick="javascript:window.open('/index.php/page/JobsRemote/command/detail/vid/[id]/option/print/bb/1/CurrentLanguage/[CurrentLanguage]');"> --><!--ButtonLink1-->
+<!--END_BUTTON1-->
+<!--START_BUTTON2-->
+<input class="button jbdButton jbdButBack" type="button" value="[t]Button2[/t]" onClick="javascript:history.go(-1)" name="button"><!--ButtonLink2-->
+<!--END_BUTTON2-->
+<!--START_BUTTON3-->
+{if !$applyDisabled}
+<!--START_APPLICATION_BUTTON-->
+{if !$applyData.applicationUrlText}
+<!--START_APPLICATION_BUTTON_STANDARD-->
+<input class="button jbdButton jbdButApl" type="button" name="Button4" value="[t]Button3[/t]" onClick="{$applyData.clickCounter}location='{$applyData.apply_url}&SiteId={$SiteId}';"><!--ButtonLink3-->
+<!--END_APPLICATION_BUTTON_STANDARD-->
+{else}
+<!--START_APPLICATION_BUTTON_CUSTOM-->
+<input class="button jbdButton jbdButApl" type="button" name="Button4" value="{$applyData.applicationUrlText}" onClick="{$applyData.clickCounter}window.open('{$applyData.apply_url}&SiteId={$SiteId}','{$applyData.apply_page}');">
+<!--END_APPLICATION_BUTTON_CUSTOM-->
+{/if}
+<!--END_APPLICATION_BUTTON-->
+{/if}
+<!--END_BUTTON3-->
+{if $enableJobBasket && !$job.remove_apply_button}
+<!--START_BUTTON5-->
+<script type="text/javascript">
+<!--
+{literal}
+function addToJobBasket() {
+
+	var xhr;
+    try {
+		xhr = new ActiveXObject('Msxml2.XMLHTTP');
+	}
+    catch (e) {
+        try {
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+        catch (e2) {
+			try {
+				xhr = new XMLHttpRequest();
+			}
+			catch (e3) {
+				xhr = false;
+			}
+        }
+    }
+
+{/literal}
+	xhr.open('GET', "{$website}/index.php/page/jobbasket/command/jobbasketadd/vid/{$job.id}",  true);
+{literal}
+	xhr.onreadystatechange = function() {
+
+		if(xhr.readyState == 4) {
+			if(xhr.status == 200) {
+
+				try {
+
+					response = eval("(" + xhr.responseText + ")");
+
+					if (response['status'] == 'OK') {
+
+						// defined in jobBasketHook.html UTS template
+						if(window.console) {
+							console.log(typeof jobBasketRefreshCount);
+						}
+						if(typeof jobBasketRefreshCount == 'function') {
+							jobBasketRefreshCount(response['data']['vacanciesCount']);
+						}
+
+						alert('[System3]'); // job was added to the job basket
+						return;
+					}
+					if (response['status'] == 'ERR_NOT_AVAIL') {
+
+						alert('[System4]'); // job is unavailable
+						return;
+					}
+				}
+				catch (exception) {
+				}
+
+			}
+        }
+	//	alert('Request failed'); // response error
+    };
+
+	xhr.send(null);
+}
+{/literal}
+//-->
+</script>
+<input class="button jbdButton jbdButBasket" type="button" name="addtobasket" value="[t]Button5[/t]"  onClick="javascript:addToJobBasket();"><!--ButtonLink5-->
+<!--END_BUTTON5-->
+{/if}
+<!--START_BUTTON4-->
+<input class="button jbdButton jbdButMail" type="button" name="mailfriend" value="[t]Button4[/t]"  onClick="location='/index.php/page/JobsRemote/command/mailfriend/vid/{$job.id}/bb/1';"><!--ButtonLink4-->
+<!--END_BUTTON4-->
+</div>
+<!--END_BUTTON_SECTION-->
+{/if} {* end of buttons *}
+{if "[uts:acto_jobtext_tagcloud]"}
+<!--START_TAGCLOUD_BOTTOM-->
+<div>
+{$acto_jobtext_tagcloud}
+</div>
+<!--END_TAGCLOUD_BOTTOM-->
+{/if}
+{if $job_tagcloud}
+<!--START_JOB_TAGCLOUD-->
+<div>
+{$job_tagcloud}
+</div>
+<!--END_JOB_TAGCLOUD-->
+{/if}
+</div>
+<iframe title="printframe" id="printframe" name="printframe" width="0" height="0" frameborder="0" scrolling="NO"></iframe>
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+<!--END_9-->
+    <!--uts:end inner-->
+  </body>
+</html>

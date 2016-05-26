@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>News Categories</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/mailings/nm_articles_list.html -->
+
+<table border="0" cellspacing="0" cellpadding="0" class="vacsTable">
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader"><H1>{$c.ml_mg_public_subject}</H1></td>
+<td class="nwsArtListChapeau">[t]PageTitle[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+<!--START_Block1-->
+
+<!--START_Title1-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Text1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+
+<tr>
+<td class="nwsSearchFormContainer">
+<form name="srchfrm" action="/index.php/page/mailings/bb/1" method="post">
+
+<table border="0" cellpadding="0" cellspacing="0" class="nwsSearchFormTbl">
+<tr>
+<td class="nwsArtSearchFormQuestion"><a href="/index.php/page/mailings/bb/1">[t]SingleWord1[/t]<!--SingleWordLink1--></a></td>
+<td class="nwsSearchFormFieldContainer">[t]SingleWord3[/t]<!--SingleWordLink3--><input type="text" name="query" value=""></td>
+<td class="nwsSearchFormButton"><input class="button" type="submit" value="[t]Button1[/t]" ><!--ButtonLink1--></td>
+</tr>
+</table>
+<input type="hidden" name="catid" value="{$c.id}" >
+<input type="hidden" name="command" value="search" >
+</form>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>
+
+<script>
+var code = '{$code}';
+{literal}
+function popup_newsletter(aid,cid){
+	url = 'mailings.php?code=' + code + '&command=showarticle&artid='+aid+'&catid='+cid+'';
+	var popupwindow = window.open(url,'newspopup', 'width=700,height=700,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes');
+	popupwindow.focus();
+}
+{/literal}
+</script>
+
+<table border="0" cellpadding="0" cellspacing="0" class="NwsArtListItemHolder">
+<if $rcnt>
+
+<if $display_cat_rss>
+<tr>
+<td><a href='/index.php/page/news_feed/bb/1/catid/{$catid}' title="{$rss_title}"><div class="actMlCrssSimple" style="float:right;"></div></a></td>
+</tr>
+</if>
+
+
+
+<foreach from=$alist item=a>
+<tr>
+<td class="NwsArtListItemContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="NwsArtListItemTbl">
+<tr>
+<td class="NwsArtListLink">
+
+
+<if $a.link>
+<a href="[[$a.link]]">[[$a.ml_Name]]</a>
+<else>
+
+<if $fo_news_as_popup>
+<a href="#" onclick="popup_newsletter('{$a.id}', '{$c.id}'); return false;">{$a.ml_Name}</a>
+<else>
+<a href="/index.php/page/mailings/command/showarticle/artid/{$a.id}/bb/1/catid/{$c.id}">{$a.ml_Name}</a>
+</if>
+    </if>
+
+</td>
+</tr>
+
+<if $shortdesc_enable>
+<!--START_ShortDescription-->
+<tr>
+<td class="NwslistChapoContainer">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="NwslistChapoTbl">
+<tr>
+<td class="NwsArtlistChapo">{$a.ShortDescription}</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_ShortDescription-->
+</if>
+</table>
+
+</td>
+</tr>
+
+
+
+
+</foreach>
+<else>
+<tr>
+<td class="NwsArtListItemContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="NwsArtListItemTbl">
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]System1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</if>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">
+<input name="subscribe" type="button" value="[t]Button2[/t]" class="button" onclick="document.forms.subfrm.submit()"><!--ButtonLink2-->
+{if $removeListButton}
+<!--START_ListButton-->
+<input name="subscribe" type="button" value="[t]SingleWord1[/t]" class="button" onclick="javascript:window.location='mailings.php?code={$code}';"><!--SingleWordLink1-->
+<!--END_ListButton-->
+{/if}
+</td>
+
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">{$rcnt} [t]SingleWord2[/t]<!--SingleWordLink2--></td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+
+<form name="subfrm" action="/index.php/page/mailings/bb/1" method="post">
+<input type="hidden" name="command" value="subform" >
+<input type="hidden" name="preselect" value="{$c.id}" >
+<input type="hidden" name="register_get" value="1" >
+</form>
+
+
+<!--uts:end inner-->
+</body>
+</html>

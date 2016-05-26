@@ -1,0 +1,66 @@
+{* this template is used for displaying a contact form in CV Search *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- /UTS/candidates/requestemail_form.html -->
+<script type="text/javascript">
+//{literal}
+function submitForm() {
+    jobId = document.forms['form1']['jobId'].value;
+    if ( jobId == 0  ) {
+        document.getElementById('error').style.display = 'block';
+        return false;
+    } else {
+        document.forms['form1'].submit();
+    }
+}
+//{/literal}
+</script>
+
+<div class="outer actouter candRequestMailOuter">
+<!-- /UTS/candidates/requestemail_form.html -->
+<h1 class="title">[t]Invite candidate[/t]</h1>
+<div class="intro">[t]Select the vacancy to invite the candidate[/t]</div>
+
+<div id="error" style="display:none;" class="error">
+  [t]Please select a vacancy.[/t]
+</div>
+
+
+<form name="form1" action="{$handler}" method="post">
+<input type="hidden" name="candidate_id" value="{$candidate_id}">
+<input type="hidden" name="command" value="inviteCandidateEmail">
+<input type="hidden" name="origin" value="{$origin|escape}">
+
+<div class="formInput">
+    <label>[t]Vacancy[/t]</label>
+
+    <select name="jobId">
+        <option value="0"> --- </option>
+        {foreach from=$wgcpJobs item=job}
+            <option value="{$job.id}">{$job.functie_o}</option>
+        {/foreach}
+    </select>
+</div>
+<div class="formInput">
+    <label>[t]Message:[/t]</label>
+    <textarea name="message"></textarea>
+</div>
+
+<div class="buttonContainer jbdBc">
+<input onclick="submitForm();return false;" type="submit" value="[tb]Send[/tb]" class="button">
+<input type="button" name="form" value="[tb]Back[/tb]" onClick="javascript:history.go(-1);" class="button">
+</div>
+
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

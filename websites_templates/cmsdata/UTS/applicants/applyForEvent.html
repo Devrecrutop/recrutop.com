@@ -1,0 +1,43 @@
+{* this template is used when applying for event *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+</head>
+<body>
+<!--uts:begin inner-->
+
+<div class="outer aplOuter aplAplSOuter applyForEvent">
+<!-- /UTS/applicants/applyForEvent.html -->
+<h1 class="title aplTitle aplAplSTitle">[t]Event Application[/t]</h1>    
+<div class="intro aplLink aplAplSLink">
+<ul>
+<li><a href="{$handler}/command/applyloginformsimple/evid/{$evid}">[t]I have registered before[/t]</a></li>
+<li><a href="{$handler}/command/applyforgotpwdformsimple/evid/{$evid}">[t]I have forgotten my password[/t]</a></li>
+
+<li><a href="/index.php/page/eventsfo/command/detail/evid/{$evid}/bb/1">[t]Go to event details[/t]</a></li>
+
+<li><a href="/index.php/page/eventsfo/command/list/bb/1">[t]Go to event list[/t]</a></li>
+
+<li><a href="/index.php/page/applicants/bb/1/command/myprofile">[t]Main profile[/t]</a></li>
+
+<if $linkedinEnabled>
+<li class="aplAplyLi aplAplyLiJob"><a href="{$handler}/command/applylinkedinsimple/evid/{$evid}/qsuid/{$qsuid}">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
+</if>
+
+
+
+{*
+<if $tkEnabled>
+<li><a href="{$handler}/command/applytksimple/vid/{$vid}/qsuid/{$qsuid}">[t]Use my CV to fill in the form[/t]</a></li>
+</if>
+*}
+</ul>
+</div>
+<div class="appRow aplAr aplAplSAr">[t]Register for: "{$eventtitle|escape}".[/t]</div>
+{$questionSet}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

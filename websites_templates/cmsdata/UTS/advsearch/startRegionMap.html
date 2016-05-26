@@ -1,0 +1,78 @@
+{* required JS: JQueryBase *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript" src="/_javascript_global/swfobject.js"></script>
+<script type="text/javascript">
+//{literal}
+var flashvars = {
+		page: ""
+	};
+	
+    var params = {
+  		allowscriptaccess: "always",
+		wmode: "transparent"
+	};
+	
+	
+    
+    // this is a callback from flash
+    function check_prov(region) {
+		if (document.getElementById('reg_'+region).value == 1) document.getElementById('reg_'+region).value = 0;
+		else if (document.getElementById('reg_'+region).value == 0) document.getElementById('reg_'+region).value = 1;
+	}
+    
+    $(document).ready(function() {
+        swfobject.embedSWF("/_flash/landkaart.swf", "kaart", "220", "300", "7.0.0", "", flashvars, params);
+		
+    });
+//{/literal}
+</script>
+<form name="advsearchform" method="post" action="{$handler}">
+<div class="outer aplOuter aplLdOuter">
+<h1 class="title aplTitle aplLdTitle">[t]Advanced search[/t]</h1>
+<div class="text aplText aplLdText">[t]Select regions to search in and press Search button to start searching.[/t]</div>
+<div style="position:relative;">
+{* disabled for now	
+<div id="mapregion1" class="mapregion">1</div>
+<div id="mapregion2" class="mapregion">2</div>
+<div id="mapregion3" class="mapregion">3</div>
+<div id="mapregion4" class="mapregion">4</div>
+<div id="mapregion5" class="mapregion">5</div>
+<div id="mapregion6" class="mapregion">6</div>
+<div id="mapregion7" class="mapregion">7</div>
+<div id="mapregion8" class="mapregion">8</div>
+<div id="mapregion9" class="mapregion">9</div>
+<div id="mapregion10" class="mapregion">10</div>
+<div id="mapregion11" class="mapregion">11</div>
+<div id="mapregion12" class="mapregion">12</div>
+*}
+<div class="kaartHolder" style="position:relative;z-index:10">
+<div id="kaart">
+	<a href="http://www.adobe.com/go/getflashplayer" target="_blank"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player"></a></div>
+	<input value="0" type="hidden" id="reg_friesland" name="reg_friesland" class="prov">
+	<input value="0" type="hidden" id="reg_groningen" name="reg_groningen" class="prov">
+	<input value="0" type="hidden" id="reg_drenthe" name="reg_drenthe" class="prov">
+	<input value="0" type="hidden" id="reg_noordholland" name="reg_noordholland" class="prov">
+	<input value="0" type="hidden" id="reg_flevoland" name="reg_flevoland" class="prov">
+	<input value="0" type="hidden" id="reg_gelderland" name="reg_gelderland" class="prov">
+	<input value="0" type="hidden" id="reg_utrecht" name="reg_utrecht" class="prov">
+	<input value="0" type="hidden" id="reg_zuidholland" name="reg_zuidholland" class="prov">
+	<input value="0" type="hidden" id="reg_limburg" name="reg_limburg" class="prov">
+	<input value="0" type="hidden" id="reg_noordbrabant" name="reg_noordbrabant" class="prov">
+	<input value="0" type="hidden" id="reg_zeeland" name="reg_zeeland" class="prov">
+	<input value="0" type="hidden" id="reg_overijssel" name="reg_overijssel" class="prov">
+	<input value="0" type="hidden" id="reg_international" name="reg_international" class="prov">
+</div>
+</div> <!--pos relative div-->
+<div class="buttonContainer aplBc aplLdBc"><input type="submit" name="bApplSubmit" value="[tb]Search[/tb]" class="button"></div>
+</div>
+<input type="hidden" name="command" value="searchinregions">
+</form>
+<!--uts:end inner-->
+</body>
+</html>

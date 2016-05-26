@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+        [t]Dear {$jobOwnerName|escape},[/t] 
+</p>
+<p>
+    [t]Candidate {$applicantName} on job {$vacancyName} was changed by {$linemanagerName} on {$change_date_time}.[/t]<br>
+</p>
+{foreach from=$status_changes item=r}
+<p>
+    {if $r.type == "candidate"}
+    [t]Status[/t] 
+    {else}
+    {$r.status_name}
+    {/if}
+    
+    [t]changed from: {$r.from_status}, changed to: {$r.to_status}[/t]<br>
+</p>
+{/foreach}
+
+{if $linemanager_extra_remarks && $lm_remarks}
+<p>
+  [t]comments: {$lm_remarks}[/t]<br>       
+</p>
+{/if}
+  
+
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Beste relatie,[/t]</p>
+<p>[t]Je hebt interesse getoond in de onderstaande kandidaat:[/t]</p>
+[t]Naam:[/t] <strong>{$cand.voornaam}</strong><br>
+[t]Woonplaats:[/t] <strong>{$cand.woonplaats}</strong><br>
+
+<if $text1>
+[t]Text1:[/t] <strong>{$text1|escape}</strong><br>
+</if>
+<if $text2>
+[t]Text2:[/t] <strong>{$text2|escape}</strong><br>
+</if>
+<if $text3>
+[t]Text3:[/t] <strong>{$text3|escape}</strong><br>
+</if>
+<if $text4>
+[t]Text4:[/t] <strong>{$text4|escape}</strong><br>
+</if>
+
+[t]Jouw opmerkingen:[/t]<br>
+<div style="font-weight:bold;">
+{$opmerkingen}
+</div>
+
+<p>[t]Wij nemen binnenkort contact met je op om de gegevens van de kandidaat met je te bespreken.[/t]</p>
+
+<p>[t]Met vriendelijke groet,[/t]</p>
+{$wgcp.wg_cp_voornaam} {$wgcp.wg_cp_tussenvoegsel} {$wgcp.wg_cp_achtern}<br>
+{$werkgever}<br>
+<!--uts:end inner-->
+</body>
+</html>

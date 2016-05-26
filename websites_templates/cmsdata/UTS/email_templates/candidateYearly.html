@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>
+    <if $tpl_salutation == "informal">
+        [t]Dear {$informalname|escape},[/t]  {*informal*}
+    <else>
+        [t]Dear {$formalname|escape},[/t]    {*formal*}
+    </if>    
+</p>
+<p>
+<if $krow._ycount == 1>
+    [tg]it has been already 1 year since you registered in our database.[/tg]
+<elseif $krow._ycount == 2>
+     [tg]it has been already 2 years since you registered in our database.[/tg]
+<else>
+    [tg]it has been already {$krow._ycount} years since you registered in our database.[/tg]
+</if>
+
+
+</p>
+<p>[t]If you want to go to your profile, please click {$hereLinkStart}here{$hereLinkEnd}. Alternatively, you can copy and paste the following URL into your browser:[/t]
+</p>
+<p>
+    {$loginLink}
+</p>
+    
+
+<if $signature>
+<p>{$signature}</p>
+<else>
+<p class="utsSignature">
+[t]Kind regards,[/t]<br>
+[t]{$contactPerson}[/t]
+</p>
+</if>
+
+<!--uts:end inner-->
+</body>
+</html>
+

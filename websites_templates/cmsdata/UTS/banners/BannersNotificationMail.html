@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>[t]Banners[/t]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+<!-- UTS Template /UTS/Banners/BannersNotificationMail.html -->
+<div class="outer bannerOuter">
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td width="40" style="">&nbsp;</td>
+<!--uts:begin logo-->
+<td style="" align="right">[uts:_logo]</td>
+<!--uts:end logo-->
+</tr>
+<tr>
+<td style="">&nbsp;</td>
+<td>
+            <p>
+            <p>[t]Dear[/t] {$FirstName} {$tussenvoegsel} {$LastName},
+            <p>[t]A new banner was uploaded by:[/t]</p> 
+            <p>[t]Customer:[/t] {$clientName}</p>
+            <p>[t]Contact:[/t] {$uploadConsultantFirstname} {$uploadConsultantTussenvoegsel} {$uploadConsultantLastname}</p>
+			<p>[t]Banner info[/t]</p>
+			<p>[t]Type[/t]: {$banner_type}</p>
+			<p>[t]Name[/t]: {$banner_name}</p>
+
+            <!--uts:begin disclaimer-->
+			  <p><font size="1"><b>[t]Disclaimer[/t]</b><br>
+              <br>
+              [t]1. This e-mail is for the intended recipient only. If you have received 
+              it by mistake please let us know by reply and then delete it from 
+              your system; access, disclosure, copying, distribution or reliance 
+              on any of it by anyone else is prohibited. [/t]<br>
+              <br>
+              [t]2. If you as intended recipient have received this e-mail incorrectly, 
+              please notify the sender [via e-mail] immediately. This e-mail is 
+              confidential and may be legally privileged. Medical Phit does not guarantee 
+              that the information sent and/or received by or with this e-mail 
+              is correct and does not accept any liability for damages related 
+              thereto.[/t]<br><br></font></p>
+            <!--uts:end disclaimer-->
+
+</td>
+</tr>
+</table>
+</div>
+<!--uts:end inner-->@
+</body>
+</html>

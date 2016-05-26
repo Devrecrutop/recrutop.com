@@ -1,0 +1,15 @@
+[t]Candidate {$applicantName} on job {$vacancyName} was changed by {$linemanagerName} on {$change_date_time}.[/t]
+
+{foreach from=$status_changes item=r}
+{if $r.type == "candidate"}
+[t]Status[/t] 
+{else}
+{$r.status_name}
+{/if}
+
+[t]changed from: {$r.from_status}, changed to: {$r.to_status}[/t]
+{/foreach}
+
+{if $lm_remarks}
+[t]comments: {$lm_remarks}[/t]       
+{/if}

@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<div class="outer blgouterSite blgListouterSite blogOuter"> 
+	<!-- /UTS/blog/articleList.html STANDARD -->
+	<h1 class="title blgTitle blgListTitle">[t]Blog[/t]</h1>
+
+    {if $enable_filters}
+    <script type="text/javascript">
+        var actvHandler='{$currenturl|escape:"javascript"}';
+        //{literal}
+        function changeSortBy(id) {
+            var val = $('#' + id).find(':selected').attr('value');
+            window.location=actvHandler+'/sortby/'+val;
+        }
+        function changeSortAscDesc(id) {
+            var val = $('#' + id).find(':selected').attr('value');
+            window.location=actvHandler+'/sortascdesc/'+val;
+        }
+        function filterCategory(id) {
+            var val = $('#' + id).find(':selected').attr('value');
+            window.location=actvHandler+'/blog_category/'+val;
+        }
+        //{/literal}
+    </script>
+    <div class="menuLink menuLinkLastChild actMl actMlLc actMlSb">
+        <label for="changeSortBy">[t]Sort by:[/t]</label>
+
+        <select id="changeSortBy" name="ctrl_sortby" onchange="changeSortBy($(this).attr('id'))" class="relevance">
+            <option value="date" {if $filter.sortby == "date"}selected{/if}>[th]Publication[/th]</option>
+            <option value="name" {if $filter.sortby == "name"}selected{/if}>[th]Name[/th]</option>
+        </select>
+
+        <select id="changeSortAscDesc" name="ctrl_sortascdesc" onchange="changeSortAscDesc($(this).attr('id'))" class="order">
+            <option value="asc" {if $filter.sortascdesc == "asc"}selected{/if}>[th]asc.[/th]</option>
+            <option value="desc" {if $filter.sortascdesc == "desc"}selected{/if}>[th]desc.[/th]</option>
+        </select>
+
+        <select id="filterCategory" name="filter_category" onchange="filterCategory($(this).attr('id'))" class="relevance">
+            <option value="all" {if $filter.blog_category == "all"}selected{/if}>[th]All Categories[/th]</option>
+            {foreach from=$blog_categories item=blog_category}
+            <option value="{$blog_category.id}" {if $filter.blog_category == $blog_category.id}selected{/if}>{$blog_category.name}</option>
+            {/foreach}
+        </select>
+    </div>
+    {/if}
+	<!-- SIZE2 : {$catlist|@count} -->
+	<foreach from=$catlist item=cat>
+        <if $catmode>
+            <div class="category blgCategory blgListCategory"><a href="{$cat.rss_link}" title="{$cat.name|escape}"><img src="{$website}/_images_global/rssicon.gif" border="0" alt="{$cat.name|escape}"></a> <a href="{$cat.rss_link}" title="{$cat.name|escape}">{$cat.name|escape}</a></div>
+        </if>
+    	<!-- SIZE : {$cat.articles|@count} -->
+    	<foreach from=$cat.articles item=a>
+      		<div class="itemContainer blgIc blcListIc">
+        		<h3 class="itemTitle blgIlink blgListIl"><a href="{$a._linkurl}" title="{$a.title|escape}" rel="external">{$a.title|escape}</a></h3>
+        		<div class="itemWord blgIword blgListIword blgListOn">
+                    {if $a._showpublisherimg == 1}<img src="{$a._publisherimage}" alt="{$a._username}" height="42" width="42"/>{/if}
+                    <span class="blgListBy">{$a._username}</span>{$a._date_published}
+                </div>
+				{if $a.thumbnail_image}
+					<div class="itemPhoto blogItemPhoto">
+						<a href="{$a._linkurl}" title="{$a.title|escape}" rel="external"><img src="{$a.thumbnail_image}"></a>
+					</div>
+				{/if}
+                <if !empty($a._categories)>
+                	<div class="itemWord blgIword blgListIword blgListCat"> <span>[t]Category[/t]:</span>
+               			<foreach from=$a._categories key=catid item=cat name=catlist> <a href="/blogs/{$currentLanguage}/category/{$catid}/{$cat}">{$cat}</a>{if !$smarty.foreach.catlist.last},&nbsp;{/if} </foreach>
+                	</div>
+                </if>
+				<div class="itemDescription blgIdesc blgListIdesc"> {$a._teaser}
+          			<div><a href="{$a._linkurl}" rel="external">[t]Read more[/t]</a></div>
+        		</div>
+				<!--start articlefooter-->
+        		<div class="itemFooter blgIfo blgListIfo">
+          			<div class="itemFooterWord iFoFirstChild iFoChild iFoBlogView"><span>{$a.viewcount}</span>[t]views[/t]</div>
+          			{if $a._reacnt}
+          				<div class="itemFooterWord iFoChild iFoBlogNumReact"><a href="{$a._linkurl}#reactions" rel="external"><span>{$a._reacnt}</span>[t]reactions[/t]</a></div>
+          			{else}
+          				<div class="itemFooterWord iFoChild iFoBlogNumReact">[t]No reactions[/t]</div>
+          			{/if}
+          			<if $a._allow_reactions>
+         				<div class="itemFooterWord iFoChild iFoBlogReact"><a href="{$a._linkurl}#react" rel="external">[t]React[/t]</a></div>
+          			</if>
+          			<div class="itemFooterWord iFoLastChild iFoChild blgIfoPrint"><a href="/index.php/page/blog/command/print/uid/{$a.uid}/bb/1" target="_blank" title="[th]This printing page will open in a new window[/th]">[t]Print[/t]</a></div>
+        		</div>
+				<!--end articlefooter-->         
+      		</div>
+    	</foreach>
+	</foreach>
+	{if $use_paging}
+        {if $maxpages|@count == 0 && $currentpage == 1}
+        {else} 
+        <!-- {$maxpages|@count} -->
+        <div style="clear:both;"></div>
+        <div>
+            <form action="/index.php/page/blog/bb/1/command/list/" name="pagingform" id="pagingform">
+                <input type="hidden" name="pagenr" id="pagenr" value="1">
+                <div class="pageNav actPageNav"> 
+                <!-- /UTS/advsearch/pagingControls.inc.html --> 
+                {if $is_prev} <a href="{$handler}?command=setpage&amp;pageno=1" class="pnFirst actFirst">[t]&lt;&lt;&nbsp;First[/t]</a> <a href="{$handler}?command=prevpage" class="pnPrev actPrev">[t]&lt;&nbsp;Previous[/t]</a> {/if}
+            
+                {* hide pagination if results fit on one page - Added by: Maikel *}
+                {if $page_array|@count > 1}
+                    <foreach from=$page_array item=p key=k> <a href="{$handler}?command=setpage&amp;pageno={$k}" {if $p}class="pnActive actActive"{/if}>{$k}</a> </foreach>
+                {/if}
+            
+                {if $is_next} <a href="{$handler}?command=nextpage" class="pnNext actNext">[t]Next&nbsp;&gt;[/t]</a> <a href="{$handler}?command=setpage&amp;pageno={$lastpage}" class="pnLast actLast">[t]Last&nbsp;&gt;&gt;[/t]</a> {/if} </div>
+                <div class="pageNav blgPagination">
+                	<ul>
+                    {if $previouspage}
+                        <li class="prev"><a href="#" onClick="document.getElementById('pagenr').value = '{$previouspage}'; document.getElementById('pagingform').submit();">[tg]Previous page[/tg]</a></li>
+                    {/if}
+                    {foreach from=$minpages item=minpage}
+                        <li><a href="#" onclick = "document.getElementById('pagenr').value = '{$minpage}'; document.getElementById('pagingform').submit();">{$minpage}</a></li>
+                    {/foreach}
+                        <li class="active_page"><a href="#">{$currentpage}</a></li>
+                    {foreach from=$maxpages item=maxpage}
+                        <li><a href="#" onclick = "document.getElementById('pagenr').value = '{$maxpage}'; document.getElementById('pagingform').submit();">{$maxpage}</a></li>
+                    {/foreach}
+                    {if $nextpage}
+                        <li class="next"><a href="#" onClick="document.getElementById('pagenr').value = '{$nextpage}'; document.getElementById('pagingform').submit();">[tg]Next page[/tg]</a></li>
+                    {/if}
+                    </ul>
+                </div>
+            </form>
+            <div style="clear:both;"></div>
+        </div>
+        {/if}
+	{/if}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

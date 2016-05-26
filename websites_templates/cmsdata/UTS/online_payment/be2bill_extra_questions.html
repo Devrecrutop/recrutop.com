@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+
+</head>
+<body>
+<!--uts:begin inner-->
+<!--system part-->
+
+<script type="text/javascript">
+// {literal}
+
+function accept_action(){
+    //Task #194632: Popup Extra options
+    //check_if_any_options_checked();
+    document.mainfrm.submit();
+}
+
+function returnback(){
+    history.back();
+}
+
+function check_if_any_options_checked(){
+    var cbc1 = $('#job_logo_visible').is(':checked'); 
+    var cbc2 = $('#job_shortlist_enabled').is(':checked');
+    var cbc3 = $('#job_premium_enabled').is(':checked');
+    var cbc4 = $('#job_publishing_extend_enabled').is(':checked');
+
+    
+    if (!cbc1 && !cbc2 && !cbc3 && !cbc4){
+    
+      var r=confirm("[th]Consider this job as a premium offer?[/th]");
+      if (r==true){
+         $('#job_premium_enabled').prop('checked', true);  
+      }
+    }  
+          
+}
+
+function calculateTotal(){
+
+    var bb_sum = $('#job_price').val(); 
+    bb_sum = parseFloat(bb_sum);
+    
+    var cbb1 = $('#job_logo_visible').is(':checked'); 
+    var cbb2 = $('#job_shortlist_enabled').is(':checked');
+    var cbb3 = $('#job_premium_enabled').is(':checked');
+    var cbb4 = $('#job_publishing_extend_enabled').is(':checked');
+    
+    var job_logo_price =  $('#job_logo_price').val();
+    job_logo_price = parseFloat(job_logo_price);
+    
+    var job_shortlist_price =  $('#job_shortlist_price').val();
+    job_shortlist_price = parseFloat(job_shortlist_price);
+    
+    var job_premium_price =  $('#job_premium_price').val();
+    job_premium_price = parseFloat(job_premium_price);
+    
+    var job_publishing_extend_price =  $('#job_publishing_extend_price').val();
+    job_publishing_extend_price = parseFloat(job_publishing_extend_price);
+    
+    
+    
+    
+    
+    if (cbb1){
+      bb_sum += job_logo_price;
+    } 
+    
+    if (cbb2){
+      bb_sum += job_shortlist_price;
+    } 
+    
+    if (cbb3){
+      bb_sum += job_premium_price;
+    } 
+    
+    if (cbb4) {
+      bb_sum += job_publishing_extend_price;
+    } 
+    
+    bb_sum = parseFloat(bb_sum).toFixed(2);
+    
+    
+    $('#be2billTotal').html("&euro; " + bb_sum);
+
+
+
+}
+
+
+    $(document).ready(function() {
+       calculateTotal();
+		
+    });
+
+// {/literal}
+</script>
+
+<!--display part-->
+<!-- /UTS/online_payment/be2bill_extra_questions.html -->
+<form name="mainfrm" id="frmMain" action="/index.php/page/be2bill/command/initialize_payment/paruk/{$paruk}/bb/1/" method="post">
+
+<input type="hidden" name="paruk" value="{$paruk}">
+<input type="hidden" name="from_additional_settings" value="1">
+
+<input type="hidden" name="job_price" id="job_price" value="{$extra_job_data.job_price}">
+<input type="hidden" name="job_publishing_days" id="job_publishing_days" value="{$extra_job_data.job_publishing_days}">
+<input type="hidden" name="job_logo_price" id="job_logo_price" value="{$extra_job_data.job_logo_price}">
+<input type="hidden" name="job_shortlist_price" id="job_shortlist_price" value="{$extra_job_data.job_shortlist_price}">
+<input type="hidden" name="job_premium_price" id="job_premium_price" value="{$extra_job_data.job_premium_price}">
+<input type="hidden" name="job_publishing_extend_price" id="job_publishing_extend_price" value="{$extra_job_data.job_publishing_extend_price}">
+<input type="hidden" name="job_publishing_extend_days" id="job_publishing_extend_days" value="{$extra_job_data.job_publishing_extend_days}">
+
+
+<div class="outer custOuter custFinOuter custFinConfirmOuter">
+
+	<h1 class="title">[t]Extra items[/t]</h1>
+
+	<h2 class="subHeader">[t]Details[/t]</h2>
+    <div class="text">[t]You can buy extra items[/t]</div>
+
+    <div class="formInput custFi custFiNotAgain">
+		<label>[t]Upload vacancy[/t] {if $extra_job_data.job_publishing_days} ({$extra_job_data.job_publishing_days} [t]days[/t]){/if}</label>
+    <div  style="float:right;">&euro; {$extra_job_data.job_price}</div>
+    </div>
+    
+    {if isset($extra_job_data.job_logo_price)}
+    <div class="formInput custFi custFiNotAgain">
+		<label>[t]Upload vacancy logo[/t]</label>
+		<input type="checkbox" value="1" name="job_logo_visible"  id="job_logo_visible" class="formInput checkboxFi" onClick="calculateTotal()" {if $pre_check_options.logo}checked{/if} >
+    <div style="float:right;">&euro; {$extra_job_data.job_logo_price}</div>
+    </div>
+    {/if}
+    
+    {if isset($extra_job_data.job_shortlist_price)}
+    <div class="formInput custFi custFiNotAgain">
+		<label>[t]Adding job to shortlist[/t]</label>
+		<input type="checkbox" value="1" name="job_shortlist_enabled"   id="job_shortlist_enabled" class="formInput checkboxFi"  onClick="calculateTotal()">
+    <div  style="float:right;">&euro; {$extra_job_data.job_shortlist_price}</div>
+    </div>
+    {/if}
+
+    {if isset($extra_job_data.job_premium_price)}
+    <div class="formInput custFi custFiNotAgain">
+		<label>[t]Adding job as premium job[/t]</label>
+		<input type="checkbox" value="1" name="job_premium_enabled" id="job_premium_enabled" class="formInput checkboxFi"  onClick="calculateTotal()" {if $pre_check_options.premium}checked{/if}>
+    <div  style="float:right;">&euro; {$extra_job_data.job_premium_price}</div>
+    </div>
+    {/if}
+
+    {if $extra_job_data.job_publishing_extend_days}
+    {if isset($extra_job_data.job_publishing_extend_price)}
+    <div class="formInput custFi custFiNotAgain">
+		<label>[t]Extending days of publishing with [/t]{$extra_job_data.job_publishing_extend_days} [t]days[/t] </label>
+		<input type="checkbox" value="1" name="job_publishing_extend_enabled" id="job_publishing_extend_enabled" class="formInput checkboxFi"  onClick="calculateTotal()">
+    <div  style="float:right;">&euro; {$extra_job_data.job_publishing_extend_price}</div>
+    </div>
+    {/if}
+    {/if}
+
+    <div class="formInput custFi custFiNotAgain">
+    &nbsp;
+    </div>
+
+
+    <div class="formInput custFi">
+		<label>[t]Total[/t]</label>
+    <div  style="float:right;"><div id="be2billTotal">&euro; {$extra_job_data.job_price}</div></div>
+    </div>
+    
+    <div class="buttonContainer custBc custFinBc custFinConfirmBc">
+	    <input type="button" value="[tb]Continue[/tb]" onClick="accept_action();" class="button custButton custFinButton">
+	    {*<input type="button" value="[tb]Back[/tb]" onClick="returnback();" class="button custButton custFinButton">*}
+    </div>
+</div>
+</form>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="nl">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Client mood report as of {$date}[/t]:</p>
+
+<table border="0">
+{foreach from=$client_moods item=item}
+<tr>
+<td>({$item.id})</td>
+<td>{$item.name} :</td>
+<td>{$item.mood}</td>
+</tr>
+{/foreach}
+</table>
+
+<!--uts:end inner-->
+</body>
+</html>

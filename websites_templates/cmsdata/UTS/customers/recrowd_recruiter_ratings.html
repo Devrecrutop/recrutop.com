@@ -1,0 +1,121 @@
+{* this is the template for the Ratings page of Recrowd  *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>whatever</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/customers/recrowd_recruiter_ratings.html -->
+
+<style type="text/css" media="screen">
+{literal}
+.itemContainer{width:100%;height:30px;}
+.itemContainer .recrowdItem .button{margin-top:0px;}
+
+.recrowdItem{width:15%;float:left;height:30px;text-align:center;}
+.recrowdHeader{border-bottom:1px solid gray;}
+.recrowdHeader .recrowdItem{width:15% !important;margin:0px;padding:0px;}
+
+.recrowdRows .recrowdItem{width:15% !important;margin:0px;padding:0px;}
+{/literal}
+</style>
+
+<script type="text/javascript">
+//{literal}
+
+$(document).ready( function() {
+$('.star').raty({
+  score: function() {
+    return $(this).attr('data-score');
+  },
+                half  : true,
+                path : '/_images_global/raty/',
+                space : false,
+                hints: ['[th]bad[/th]', '[th]poor[/th]', '[th]regular[/th]', '[th]good[/th]', '[th]excellent[/th]'],
+                width: 150,
+                readOnly : true,
+                noRatedMsg : '[th]not rated yet[/th]',
+});
+});
+
+//{/literal}
+</script>
+
+<div class="outer stsOuter">
+<h1 class="title stsTitle">[t]Ratings[/t]</h1>
+{$menu}
+
+<div class="intro">[t]Find below the ratings that have been given to you.[/t]</div>
+
+<h2 class="title stsTitle">[t]Main rating[/t]</h2>
+<div class="itemContainer recrowdHeader">
+  <div class="recrowdItem first">[t]Main rating[/t]</div>
+	<div class="cleaner"></div>
+</div>
+
+<div class="itemContaine recrowdRows">
+  <div class="recrowdItem star"  data-score="{$ratings.main_rating}">{$ratings.main_rating}</div>
+  <div class="cleaner"></div>
+</div>
+
+{if $ratings.cnt_rating > 0}
+
+<h2 class="title stsTitle">[t]Candidate rating[/t]</h2>
+<div class="itemContainer recrowdHeader">
+  <div class="recrowdItem first">[t]Main rating candidates[/t]</div>
+  {if $ratings.cnt_rating > 9}
+  <div class="recrowdItem">[t]Speed[/t]</div>
+  <div class="recrowdItem">[t]Communication[/t]</div>
+  <div class="recrowdItem">[t]Accessibility[/t]</div>
+  <div class="recrowdItem">[t]Quality[/t]</div>
+  {/if}
+	<div class="cleaner"></div>
+</div>
+
+<div class="itemContaine recrowdRows">
+  <div class="recrowdItem star"  data-score="{$ratings.candidate_rating}">{$ratings.candidate_rating}</div>
+  {if $ratings.cnt_rating > 9}
+  <div class="recrowdItem star"  data-score="{$ratings.candidate_speed_rating}">{$ratings.candidate_speed_rating}</div>
+  <div class="recrowdItem star"  data-score="{$ratings.candidate_communication_rating}">{$ratings.candidate_communication_rating}</div>
+  <div class="recrowdItem star"  data-score="{$ratings.candidate_accessibility_rating}">{$ratings.candidate_accessibility_rating}</div>
+  <div class="recrowdItem star"  data-score="{$ratings.candidate_quality_rating}">{$ratings.candidate_quality_rating}</div>
+  {/if}
+  <div class="cleaner"></div>
+</div>
+
+
+
+<h2 class="title stsTitle">[t]Company rating[/t]</h2>
+<div class="itemContainer recrowdHeader">
+  <div class="recrowdItem first">[t]Main rating company[/t]</div>
+  {if $ratings.cnt_rating > 9}
+  <div class="recrowdItem">[t]Speed[/t]</div>
+  <div class="recrowdItem">[t]Communication[/t]</div>
+  <div class="recrowdItem">[t]Accessibility[/t]</div>
+  <div class="recrowdItem">[t]Quality[/t]</div>
+  <div class="recrowdItem">[t]Refusals[/t]</div>
+  {/if}
+	<div class="cleaner"></div>
+</div>
+
+<div class="itemContainer recrowdRows">
+  <div class="recrowdItem star"  data-score="{$ratings.company_rating}">{$ratings.company_rating}</div>
+  {if $ratings.cnt_rating > 9}
+  <div class="recrowdItem star"  data-score="{$ratings.company_speed_rating}">{$ratings.company_speed_rating}</div>
+  <div class="recrowdItem star"  data-score="{$ratings.company_communication_rating}">{$ratings.company_communication_rating}</div>
+  <div class="recrowdItem star"  data-score="{$ratings.company_accessibility_rating}">{$ratings.company_accessibility_rating}</div>
+  <div class="recrowdItem star"  data-score="{$ratings.company_quality_rating}">{$ratings.company_quality_rating}</div>
+  <div class="recrowdItem star"  data-score="{$ratings.company_refusals_rating}">{$ratings.company_refusals_rating}</div>
+  {/if}
+  <div class="cleaner"></div>
+</div>
+
+{/if}
+
+</div>
+
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,115 @@
+ <!-- /UTS/advsearch/sectionBVacancies.inc.html -->
+<if $mobile_enabled>
+	<div class="title actTitle">Zoekopdracht verfijnen</div>
+	<div class="actMobileHeader">
+		<a class="btnActShowFacets">Sluiten</a>
+	</div>
+</if>
+<if $conlist.keywords>
+<div class="optionListContainer actLc actLcKeywords">
+<div class="optionListTitle">[t]Keywords[/t]</div>
+<div class="optionList">
+	<ul>
+    <li><a href="{$handler}/command/removeval/type/keywords" title="{$conlist.keywords.content|escape}">{$conlist.keywords.content|escape|truncate:[uts:truncate_facets]}</a></li>
+  </ul>
+</div>
+</div>
+</if>
+{* This moved into the list below - MEk 2010 - task 111777
+<if $conlist.categoriee>
+<div class="optionListContainer actLc actLcJobCat">
+<div class="optionListTitle">[t]Job Categories[/t]</div>
+<div class="optionList">
+  <ul>
+  <foreach from=$conlist.categorie.content.required item=mcv key=mck>
+    <li><a <if $mobile_enabled> rel="external"</if> href="{$handler}/command/removeval/type/categoryplus/id/{$mck}" title="{$mcv|escape}">{$mcv|escape|truncate:[uts:truncate_facets]}</a></li>
+  </foreach>
+  <foreach from=$conlist.categorie.content.prohibited item=mcv key=mck>
+    <li><a <if $mobile_enabled> rel="external"</if> href="{$handler}/command/removeval/type/categoryminus/id/{$mck}" title="{$mcv|escape}">{$mcv|escape:truncate:[uts:truncate_facets]}</a></li>
+  </foreach>
+  </ul>
+</div>
+</div>
+</if> *}
+
+<if $interactiveMatchCondition>
+	<div class="optionListContainer actLc actLcSemantic">
+	<div class="optionListTitle">[t]Semantic search[/t]</div>
+	<div class="optionList">
+	<ul>
+	    <li><a href="{$handler}/command/removeval/type/semantic">[t]Enabled[/t]</a></li>
+	</ul>
+	</div>
+	</div>
+</if>
+
+<if $conlist.matchcriteria>
+<div class="optionListContainer actLc actLcMcrit">
+<div class="optionListTitle">[t]Match Criteria[/t]</div><div class="optionList">
+		<ul>
+<if $conlist.categorie>
+{* required values *}<foreach from=$conlist.categorie.content.required item=mcv key=mck>
+			<li><a {if $mobile_enabled} rel="external"{/if} href="{$handler}/command/removeval/type/categoryplus/id/{$mck}" title="{$mcv|escape}">{$mcv|escape|truncate:[uts:truncate_facets]}</a></li></foreach>
+{* prohibited values *}<foreach from=$conlist.categorie.content.prohibited item=mcv key=mck>
+			<li><a {if $mobile_enabled} rel="external"{/if} href="{$handler}/command/removeval/type/categoryminus/id/{$mck}" title="{$mcv|escape}">{$mcv|escape:truncate:[uts:truncate_facets]}</a></li></foreach>
+</if>
+		  <foreach from=$conlist.matchcriteria.content item=mc key=crit>
+		    {* required values *}
+		    <foreach from=$mc.content.required item=mcv key=mck>
+		      <li><a {if $mobile_enabled} rel="external"{/if} href="{$handler}/command/removeval/type/mcplus/crit/{$crit}/id/{$mck}" title="{$mc.name|escape} / {$mcv|escape}">{$mcv|escape|truncate:[uts:truncate_facets]}</a></li>
+		    </foreach>
+		    {* prohibited values *}
+		    <foreach from=$mc.content.prohibited item=mcv key=mck>
+		      <li><a {if $mobile_enabled} rel="external"{/if} href="{$handler}/command/removeval/type/mcminus/crit/{$crit}/id/{$mck}" title="{$mc.name|escape} / {$mcv|escape}">{$mcv|escape:truncate:[uts:truncate_facets]}</a></li>
+		    </foreach>
+		  </foreach>
+		  </ul>
+	</div>
+</div>
+</if>
+
+<if $conlist.proximity>
+<div class="optionListContainer actLc actLcDist">
+<div class="optionListTitle">[t]Distance:[/t]</div>
+	<div class="optionList">
+		<ul>
+	<li><a {if $mobile_enabled} rel="external"{/if} href="{$handler}/command/removeval/type/proximity" title="[th]Country/ Zipcode/ Preferred/ Max distance, click to remove[/th]">{$conlist.proximity.content.countryCode|escape}/ {$conlist.proximity.content.zipCode|escape}/ {$conlist.proximity.content.preferredDistance|escape} km/ {$conlist.proximity.content.maxDistance|escape} km</a></li>
+  </ul>
+</div>
+</div>
+</if>
+
+<if $conlist.latitude_longitude>
+<div class="optionListContainer actLc actLcDist">
+<div class="optionListTitle">[t]Geographical location:[/t]</div>
+	<div class="optionList">
+		<ul>
+	<li><a {if $mobile_enabled} rel="external"{/if} href="{$handler}/command/removeval/type/latitude_longitude" title="[th]Latitude /Longitude / Distance, click to remove[/th]">{$conlist.latitude_longitude.content.latitude|escape}/ {$conlist.latitude_longitude.content.longitude|escape}/ {$conlist.latitude_longitude.content.preferredDistance|escape} km</a></li>
+  </ul>
+</div>
+</div>
+</if>
+
+<if $conlist.pubdate>
+<div class="optionListContainer actLc actLcPubl">
+<div class="optionListTitle">[t]Publication:[/t]</div>
+<div class="optionList">
+<ul>
+<li><a {if $mobile_enabled} rel="external"{/if} href="{$handler}/command/removeval/type/pubdate" title="[th]Click to remove the publication date condition[/th]">{$conlist.pubdate.content|escape}</a></li>
+</ul>
+</div>
+</div>
+</if>
+
+<if $conlist.competencies>
+<div class="optionListContainer actLc actLcComp">
+<div class="optionListTitle">[t]Competencies:[/t]</div>
+<div class="optionList">
+<ul>
+  <foreach from=$conlist.competencies.content item=cmp key=cmpk>
+    <li title="{$cmp|escape}"><a {if $mobile_enabled} rel="external"{/if} title="[th]Remove this competence from search[/th]" href="{$handler}/command/removeval/type/competence/id/{$cmpk}">{$cmp|escape:truncate:[uts:truncate_facets]}</a></li>
+  </foreach>
+  </ul>
+</div>
+</div>
+</if>

@@ -1,0 +1,121 @@
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+{assign var='columns_to_display' value=$multicolumn_settings.set_display_columns}
+{assign var='set_display_text' value=$multicolumn_settings.set_display_text}
+{assign var='set_display_mode' value=$multicolumn_settings.set_display_mode}
+{assign var='set_display_description' value=$multicolumn_settings.set_display_description}
+
+<div class="outer faceOuter candListOuter">
+	<!-- /UTS/candidates/viewPublicCandidateList.html STANDARD -->
+	<!-- HTML VALID MD -->
+	<h1 class="title faceTitle candListTitle">[t]Candidate List[/t]</h1>
+	<div class="intro faceIntro candListIntro">[t]Candidate list introduction text...[/t]</div>
+    
+	<!-- columns_to_display: {$columns_to_display} -->
+	<!-- set_display_text: {$set_display_text} -->
+	<!-- set_display_mode: {$set_display_mode} -->
+	<!-- set_display_description: {$set_display_description} -->
+	
+	{if $set_display_mode == 'columns'}
+		<div class="moduleTable faceListTable candListTable">
+	{/if}
+		{foreach from=$candidate_list_data item=ca_item name=cad}
+			{if $set_display_mode == 'columns'}
+				{if $smarty.foreach.cad.iteration==1 || $smarty.foreach.cad.iteration % $columns_to_display == 1}
+					<div class="moduleRowContainer faceListRowContainer faceListCol_n{$columns_to_display}">
+				{/if}
+					<div class="itemContainer faceIc candListIc{if $smarty.foreach.cad.iteration == $columns_to_display || $smarty.foreach.cad.iteration % $columns_to_display == 0} faceIcLast{/if}">
+						{if $set_display_text == 'y'}
+							<h3 class="itemTitle faceItitle">
+								{if $display_elements.show_more_information_link}
+									<a href="http://{$ca_item.candidate_detail_link}" title="[t]Details...[/t]">
+								{/if}
+								{if $display_elements.show_first_name}{$ca_item.first_name|escape}{/if}
+								{if $display_elements.show_middle_name} {$ca_item.middle_name|escape}{/if}
+								{if $display_elements.show_last_name} {$ca_item.last_name|escape}{/if}
+								{if $display_elements.show_more_information_link}
+									</a>
+								{/if}
+							</h3>
+						{/if}
+						{if $ca_item.ca_photo.photo != "" }
+							<div class="itemImage faceIimg">
+								{if $display_elements.show_more_information_link}
+									<a href="http://{$ca_item.candidate_detail_link}" title="
+									{if $display_elements.show_first_name}{$ca_item.first_name|escape}{/if}
+									{if $display_elements.show_middle_name} {$ca_item.middle_name|escape}{/if}
+									{if $display_elements.show_last_name} {$ca_item.last_name|escape}{/if}
+									- [t]Details...[/t]">
+								{/if}
+									<img src="http://{$ca_item.ca_photo_link}" border="0" alt="
+									{if $display_elements.show_first_name}{$ca_item.first_name|escape}{/if}
+									{if $display_elements.show_middle_name}{$ca_item.middle_name|escape}{/if}
+									{if $display_elements.show_last_name}{$ca_item.last_name|escape}{/if}
+									" {$ca_item.ca_photo_size}>
+								{if $display_elements.show_more_information_link}
+									</a>
+								{/if}
+							</div>
+						{/if}
+						{if $display_elements.show_short_description}
+							<div class="itemDescription faceDesc">{$ca_item.short_descr|truncate:$short_description_char_limit:"..."}</div>
+						{/if}
+						<div class="cleaner faceICleaner candListICleaner"></div>
+					</div>
+				{if $smarty.foreach.cad.last || $smarty.foreach.cad.iteration % $columns_to_display == 0}
+					</div>
+				{/if}
+			{else}
+				<div class="itemContainer faceIc candListIc">
+					{if $ca_item.ca_photo.photo !="" }
+						<div class="itemImage faceIimg">
+							{if $display_elements.show_more_information_link}
+								<a href="http://{$ca_item.candidate_detail_link}" title="
+								{if $display_elements.show_first_name}{$ca_item.first_name|escape}{/if}
+								{if $display_elements.show_middle_name} {$ca_item.middle_name|escape}{/if}
+								{if $display_elements.show_last_name} {$ca_item.last_name|escape}{/if}
+								- [t]Details...[/t]">
+							{/if}
+							<img src="http://{$ca_item.ca_photo_link}" border="0" alt="
+							{if $display_elements.show_first_name}{$ca_item.first_name|escape}{/if}
+							{if $display_elements.show_middle_name} {$ca_item.middle_name|escape}{/if}
+							{if $display_elements.show_last_name} {$ca_item.last_name|escape}{/if}
+							" {$ca_item.ca_photo_size}>
+							{if $display_elements.show_more_information_link}
+								</a>
+							{/if}
+						</div>
+					{/if}
+					<h3 class="itemTitle faceItitle">
+						{if $display_elements.show_more_information_link}
+							<a href="http://{$ca_item.candidate_detail_link}" title="[t]Details...[/t]">
+						{/if}
+						{if $display_elements.show_first_name}{$ca_item.first_name|escape}{/if}
+						{if $display_elements.show_middle_name} {$ca_item.middle_name|escape}{/if}
+						{if $display_elements.show_last_name} {$ca_item.last_name|escape}{/if}
+						{if $display_elements.show_more_information_link}
+							</a>
+						{/if}
+					</h3>
+					{if $display_elements.show_short_description}
+						<div class="itemDescription faceDesc">{$ca_item.short_descr|truncate:$short_description_char_limit:"..."}</div>
+					{/if}
+					<div class="cleaner faceICleaner candListICleaner"></div>
+				</div>
+			{/if}
+		{foreachelse}
+			<div class="approw faceApprow">[t]Candidate list is empty...[/t]</div>
+		{/foreach}
+	{if $set_display_mode == 'columns'}
+		</div>
+	{/if}
+	<div class="cleaner faceICleaner candList"></div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

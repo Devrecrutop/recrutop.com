@@ -1,0 +1,94 @@
+{* this template is used for displaying a contact form in CV Search *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer actouter candAdvDetailOuter">
+<h1>[t]Hire a candidate[/t]</h1>
+<form name="form1" action="{$handler}" method="post">
+<input type="hidden" name="id" value="{$cand.id}">
+<input type="hidden" name="command" value="submithireform">
+<input type="hidden" name="origin" value="{$origin|escape}">
+
+{* this is not yet needed
+<div class="itemLine actIl actIlCvs actIlCad">
+    <label>[t]Type of contact:[/t]</label>
+    <span><select name="how2contact">
+					<option value="directly">[thn]directly[/thn]</option>
+					<option value="consultant">[thn]via consultant[/thn]</option>
+				</select>
+				<input type="hidden" name="privileged" value="1"></span>
+    <div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+</div>
+*}
+
+<p>[t]Your details have already been entered. Do you want extra information about this candidate, or invite him/her for an interview? You can tell us what you wish using the remarks field. After receiving your message we will contact you as soon as possible.[/t]</p>
+
+
+<div class="itemLine actIl actIlCvs actIlCad">
+    <label>[t]Your details:[/t]</label>
+    <input name="myDetails" type="text" size="40" value="{$wgcp.wg_cp_voornaam|escape} {$wgcp.wg_cp_tussenvoegsel|escape} {$wgcp.wg_cp_achtern|escape} &lt;{$wgcp.wg_cp_email|escape}&gt;" readonly>
+    <div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+</div>
+<div class="itemLine actIl actIlCvs actIlCad">
+    <label>[t]Consultant:[/t]</label>
+    <input name="consultantDetails"  size="40" type="text" value="{$cprow.cp_voorn|escape} {$cprow.cp_achtern|escape} &lt;{$cprow.cp_email|escape}&gt;" readonly>
+    <div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+</div>
+<div class="itemLine actIl actIlCvs actIlCad">
+    <label>[t]Subject:[/t]</label>
+    <input name="subject" size="40" type="text" value="{if $useSubject == "classic"}{$cand.voornaam} [th]in[/th] {$cand.woonplaats}{else}[th]Candidate[/th] {$uid}{/if}" readonly>
+    <div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+</div>
+
+<if [uts:show_text_field_1] >
+<div class="itemLine actIl actIlCvs actIlCad">
+    <label>[t]Text1:[/t]</label>
+    <input name="text1" size="40" type="text" value="">
+    <div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+</div>
+</if>
+
+<if [uts:show_text_field_2] >
+<div class="itemLine actIl actIlCvs actIlCad">
+    <label>[t]Text2:[/t]</label>
+    <input name="text2" size="40" type="text" value="">
+    <div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+</div>
+</if>
+
+<if [uts:show_text_field_3] >
+<div class="itemLine actIl actIlCvs actIlCad">
+    <label>[t]Text3:[/t]</label>
+    <input name="text3" size="40" type="text" value="">
+    <div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+</div>
+</if>
+
+<if [uts:show_text_field_4] >
+<div class="itemLine actIl actIlCvs actIlCad">
+    <label>[t]Text4:[/t]</label>
+    <input name="text4" size="40" type="text" value="">
+    <div class="cleaner itemLineCleaner actCvsIlCleaner"></div>
+</div>
+</if>
+
+
+<div class="VQuestion">[t]Remarks:[/t]</div>
+<div class="FieldContainer"><textarea name="opmerkingen" style="width: 100%;" rows="6"></textarea></div>
+
+<div>
+<div style="float:left;"><input type="submit" value="[tb]Send message[/tb]" class="button">&nbsp;</div>
+<div style="float:left;"><input type="button" name="form" value="[tb]Back[/tb]" onClick="javascript:history.go(-1);" class="button"></div>
+</div>
+
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

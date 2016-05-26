@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+    <title>{$a.title|escape}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="robots" content="noindex, follow">
+<if $cssurl>
+<link rel="stylesheet" href="{$cssurl}" type="text/css">
+</if>
+
+<script type="text/javascript">
+//{literal}
+function printMe() {
+    window.print();
+}
+//{/literal}
+</script>
+
+</head>
+<body {if $print}onload="printMe()"{/if}>
+
+<div class="moduleOuter blogDetailOuter">
+<!-- /UTS/blog/articleDetailPrint.html CHANGED -->
+<h1 class="moduleHeader blogDetailHeader">{$a.title|escape}</h1>
+<if $errormode><div class="moduleError blogDetailError">[t]There were errors in the reaction data you attempted to post. Please correct them and post again.[/t] <a href="#react">&gt;&gt;</a></div></if>
+<p><span class="blogAuthorName">[t]By[/t]: {$a._username}</span> {$a._date_entered}</p>
+<if !empty($a._categories)><div class="moduleMultipleCategories blogDetailMultipleCategories"><span>[t]Categories[/t]:</span><foreach from=$a._categories item=cat>{$cat}, </foreach></div></if>
+<div class="moduleText blogDetailText">{$a._fullbody}</div>
+
+<!--ARTICLE FOOTER-->
+<div class="moduleItemFooterContainer blogDetailItemFooter">
+<div class="moduleItemFooterLink blogDetailFooterLink">{$a.viewcount} [t]views[/t] {if $reacnt}<a href="#reactions">{$reacnt} [t]reactions[/t]</a>{else}[t]No reactions[/t]{/if}</div>
+<if $allow_reactions><div class="moduleItemFooterLink blogDetailFooterLink"><a href="#react">[t]React[/t]</a></div></if>
+<div class="moduleItemFooterLink blogDetailFooterLink"><a href="/index.php/page/blog/command/print/uid/{$uid}/cms_categorie/{$cmsCategory}/CurrentLanguage/{$language}/bb/1" target="_blank" title="[th]This printing page will open in a new window[/th]">[t]Print[/t]</a></div>
+<div class="moduleItemFooterLink blogDetailFooterLink"><a href="/index.php/page/blog/command/mailafriend/uid/{$uid}/cms_categorie/{$cmsCategory}/CurrentLanguage/{$language}/bb/1">[t]Mail a friend[/t]</a></div>
+</div>
+<!--END ARTICLE FOOTER-->
+
+<!--REACTIONS OVERVIEW-->
+<if $reacnt>
+<div class="moduleItemContainer blogDetailItemContainer">
+<h3><a name="reactions">[t]Reactions[/t]</a></h3>
+<foreach from=$reactions item=re>
+<div class="moduleItemText blogDetailItemText"><a name="rea{$re.id}">[t]By[/t]</a>: {$re._name|escape} {$re._date_entered}</div>
+<div class="moduleItemText blogDetailItemText">[t]Subject[/t]: {$re.subject|escape}</div>
+<div class="moduleitemText blogDetailItemText">{$re.body}</div>
+</div>
+</foreach>
+</if>
+<!--END REACTIONS OVERVIEW-->
+</div>
+</body>
+</html>
+

@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Google Maps OTYS Wrapper</title>
+<STYLE type="text/css">
+{literal}
+body {
+margin:0px;
+padding:0px;
+}
+p.gmVacancyTitle {
+font-family:Arial;
+font-size:12px;
+color:#600000;
+margin: 2px;
+}
+        p.gmVacancyLocation {
+            font-family:Arial;
+            font-size:10px;
+            color:#000060;
+            margin: 2px;
+        }
+        p.gmVacancyDescription, p {
+            font-family:Arial;
+            font-size:9px;
+            color:black;
+            margin: 2px;
+        }
+
+        a.gmVacancyLink {
+            font-family:Arial;
+            font-size:9px;
+            color:#000070;
+            margin: 2px;
+        }
+    {/literal}
+    </STYLE>
+<script src="//maps.google.com/maps?file=api&amp;v=2&amp;key={$googleKey|escape}&sensor=false" type="text/javascript"></script>
+<script type="text/javascript">
+var map;
+var geocoder;
+var latlngbounds;
+var first=true;
+var baseIcon;
+var centeritem='{$centeritem|escape:"javascript"}';
+var website='{$website|escape:"javascript"}';
+var zoomOnClick='[uts:zoom_on_click]';
+var gmMode='{$gmmode|escape:"javascript"}';
+//{literal}
+function initialize() {
+  if (GBrowserIsCompatible()) {
+    map=new GMap2(document.getElementById("map_canvas"));
+    //map.setCenter(new GLatLng(37.4419, -122.1419), 13);
+	//map.getMinimumResolution = function(){return 6}; 
+    map.setUIToDefault();
+    geocoder = new GClientGeocoder();
+    latlngbounds = new GLatLngBounds();
+    baseIcon = new GIcon(G_DEFAULT_ICON);
+    //baseIcon.shadow = "http://www.google.com/mapfiles/shadow50.png";
+    baseIcon.shadow = "http://www.yourit.nl/_images_global/gm/shadow.png"
+    //baseIcon.iconSize = new GSize(20, 34);
+    baseIcon.iconSize = new GSize(21, 40);
+    //baseIcon.shadowSize = new GSize(37, 34);
+    baseIcon.shadowSize = new GSize(68, 42);
+    baseIcon.iconAnchor = new GPoint(9, 34);
+    baseIcon.infoWindowAnchor = new GPoint(9, 2);
+    displayMarkers();
+  }
+}
+
+function displayMarkers() {
+  //{/literal}
+  <foreach from=$items item=r>
+  <if $r.data._gmnumber>
+  var vacancy=new Object();
+  vacancy.gmnumber        = '{$r.data._gmnumber|escape:"javascript"}';
+  vacancy.gmaddress       = '{$r.data._gmaddress|escape:"javascript"}';
+  vacancy.geo_longitude   = parseFloat('{$r.data.geo_longitude|escape:"javascript"}');
+  vacancy.geo_latitude    = parseFloat('{$r.data.geo_latitude|escape:"javascript"}');
+  vacancy.name            = '{$r.data._name|escape:"javascript"}';
+  vacancy.location        = '{$r.data.locatie|escape:"javascript"}';
+  vacancy.description     = '{$r.data._description|truncate:[uts:truncate_description]|escape:"javascript"}';
+  vacancy.detail_link     = website+'/index.php/page/JobsRemote/command/detail/bb/1/vid/{$r.recid}';
+  //{literal}
+  if (vacancy.gmnumber) {
+    if (isFinite(vacancy.geo_longitude) && isFinite(vacancy.geo_latitude)) {
+      var point=new GLatLng(vacancy.geo_latitude, vacancy.geo_longitude);
+	  latlngbounds.extend(point);		// Add to collection
+	  
+	  
+      //alert(point);
+      if ((centeritem && centeritem==vacancy.gmnumber) || first) {
+        if ( centeritem && centeritem == vacancy.gmnumber) {
+          map.setCenter(point, 14);
+        } else {
+		  // Recalculations
+          map.setCenter(latlngbounds.getCenter(), map.getBoundsZoomLevel(latlngbounds));
+        }
+        if (first) first=false;
+      } else if( !centeritem ) {
+          map.setCenter(latlngbounds.getCenter(), map.getBoundsZoomLevel(latlngbounds));
+      }
+      
+      var marker=createMarker(point, vacancy);
+      map.addOverlay(marker);
+    } else if (vacancy.gmaddress) {
+      showAddress(vacancy);
+    } else {
+    //?
+    }
+  }
+  //{/literal}
+  </if>
+  </foreach>
+  //{literal}
+}
+function createMarker(point, vacancy) {
+  // Create a lettered icon for this point using our icon class
+  var letter=vacancy.gmnumber;
+  var letteredIcon = new GIcon(baseIcon);
+  //letteredIcon.image = "http://www.google.com/mapfiles/marker" + letter + ".png";
+  letteredIcon.image = "http://www.yourit.nl/_images_global/gm/image" + letter + ".png";
+  // Set up our GMarkerOptions object
+  markerOptions = { icon:letteredIcon };
+  var marker = new GMarker(point, markerOptions);
+  GEvent.addListener(marker, "click", function() {
+    if (zoomOnClick=='1' && gmMode!='1') {
+      marker.showMapBlowup();
+    }else{
+      marker.openInfoWindowHtml('<p class="gmVacancyTitle">'+vacancy.name+'</p><p class="gmVacancyLocation">'+vacancy.location+'</p><p class="gmVacancyDescription">'+vacancy.description+'</p><p><a href="'+vacancy.detail_link+'" class="gmVacancyLink" target="_top">[th]Go to job detail[/th]</a></p>', {maxWidth:200} );
+    }
+  });
+  return marker;
+}
+function showAddress(vacancy) {
+  geocoder.getLatLng(
+  vacancy.gmaddress,
+  function(point) {
+    if (!point) {
+      //alert(address + " not found");
+    } else {
+      if ((centeritem && centeritem==vacancy.gmnumber) || first) {
+        if (!centeritem || centeritem!=vacancy.gmnumber) {
+           map.setCenter(point, 5);
+        } else {
+          map.setCenter(point, 7);
+        }
+        if (first) first=false;
+      }
+      //var marker = new GMarker(point);
+      // 2012-03-20 LiTr - added correct center and zoom
+      latlngbounds.extend(point);
+      map.setCenter(latlngbounds.getCenter(), map.getBoundsZoomLevel(latlngbounds));
+      var marker=createMarker(point, vacancy);
+      map.addOverlay(marker);
+      //marker.openInfoWindowHtml(vacancy.gmaddress);
+    }
+  }
+);
+}
+//{/literal}
+</script>
+</head>
+<body onload="initialize()" onunload="GUnload()">
+ <!-- /UTS/advsearch/gmResults.html -->
+<div id="map_canvas" style="overflow:hidden;{if $iphone == 1}height:344px;width:292px;{else}height:300px;width:100%;{/if}"></div>
+</body>
+</html>

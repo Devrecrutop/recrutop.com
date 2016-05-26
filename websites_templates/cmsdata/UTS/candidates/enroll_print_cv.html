@@ -1,0 +1,74 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8559-1">
+<meta name="generator" content="PSPad editor, www.pspad.com">
+<title>
+</title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+
+<div class="outer">
+<!-- /UTS/candidates/enroll_print_cv.html -->
+
+{if $redirect}
+var winredir = "{$redirect}";
+{/if}
+
+
+<script type="text/javascript">
+var do_logout = "{$do_logout}";
+
+//{literal}
+
+function printCvContent(cvprinttype){
+    fsurl = "/index.php/page/applicants/command/print_candidate_cv/qsfor/"+cvprinttype;
+    window.open(fsurl,"print_cv_window","toolbar=0,location=0,status=0,scrollbars=1, width=800,height=800");
+    
+    /*
+    if (do_logout == "1") {
+      redirectToLogout();
+      //window.location = "/index.php/page/applicants/command/thank_you_light/";
+    }
+    else{
+      window.location = "/index.php/page/applicants/command/thank_you_light/";
+    }
+    */
+    //redirectToLogout();
+    
+}
+
+ 
+ 
+function redirectToLogout(){
+
+    if (do_logout == "1") {
+    
+    fsurl = "/index.php/page/applicants/command/logout/gohome/1/bb/1/";
+    window.location= fsurl;
+    }
+    else{
+    window.location = "/index.php/page/applicants/command/thank_you_light/";
+    }
+}
+  
+ 
+
+//{/literal}
+</script>
+
+<h1 class="title">[t]Print CV[/t]</h1>
+<div class="intro">
+<p>[t]Click here to print your CV[/t] [t](Popup will open)[/t]</p>
+
+<div>
+
+<div><input name="button" type="button" class="button" value="[th]Print CV.[/th]" onClick="printCvContent('{$printtype}');"></div>
+</div>
+</div>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

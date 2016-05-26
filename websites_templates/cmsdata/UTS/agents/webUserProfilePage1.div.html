@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>WebUserForm2</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/agents/webUserProfilePage1.html -->
+{literal}
+<SCRIPT>
+function check(){
+	var d = document.form
+	if (d.PassWord_new.value || d.PassWord_check.value){
+		if (d.PassWord_old.value=="") {
+			show("\n\n[t]System1[/t]\n\n")
+			setTimeout("document.form.PassWord_old.focus()", 1)
+			return false
+		}
+		if (d.PassWord_new.value != d.PassWord_check.value) {
+			show("\n\n[t]System2[/t]\n\n")
+			d.PassWord_new.value = "";
+			d.PassWord_check.value = "";
+			setTimeout("document.form.PassWord_new.focus()", 1)
+			return false
+		}
+	}
+	return true
+}
+function show(m){
+	setTimeout("alert(unescape(\"" + escape(m) + "\"))", 100)
+}
+</SCRIPT>
+{/literal}
+<div class="outer webUserProfilePage1Outer">
+<!-- /mnt/share/fotemplatesdiv/WebUserProfilePage1.html -->
+
+	<!--MENUBAR-->
+	<!--START_PageTitle-->
+	<h1 class="title">[t]PageTitle[/t]</h1>
+	<!--END_PageTitle-->
+	<div class="menuContainer WebUserProfile1Mc">
+		<div class="menuLink menuLinkFirstChild"><a href="/index.php/page/webuser/command/myprofile/WUpage/1/bb/1">[t]SingleWord1[/t]<!--SingleWordLink1--></a></div>
+		<div class="menuLink mlMpAgentsPersonalia"><a href="/index.php/page/webuser/command/myprofile/WUpage/2/bb/1">[t]SingleWord2[/t]<!--SingleWordLink2--></a></div>
+		<!--START_AGENTS_STUFF-->
+		<div class="menuLink mlMpAgents"><a href="/index.php/page/agents/command/myprofile/WUpage/3/bb/1">[t]SingleWord3[/t]<!--SingleWordLink3--></a></div>
+		<!--END_AGENTS_STUFF-->
+		<!--START_A-->
+		<div class="menuLink"><a href="[website]/index.php/bb/1/page/CandidatesAgenda">[t]SingleWord14[/t]</a><!--SingleWordLink14--></div>
+		<!--END_A-->
+		<div class="menuLink menuLinkLastChild"><a href="/index.php/page/webuser/command/logout/bb/1">[t]SingleWord4[/t]<!--SingleWordLink4--></a></div>
+	</div>
+	<!--START_Block1-->
+	<!--START_Title1-->
+	<h2 class="subHeader">[t]Title1[/t]</h2>
+	<!--END_Title1-->
+	<!--START_Text1-->
+	<div class="text">[t]Text1[/t]</div>
+	<!--END_Text1-->
+	<!--END_Block1-->
+
+	<form name="form" method="post" action="/index.php/page/webuser/command/savewebuser/WUpage/1/bb/1" onsubmit="return check();">
+		<div class="formInput">
+		<label>[t]SingleWord5[/t]</label><!--SingleWordLink5-->
+		<input type="text" name="Email" value="{$r.Email}">
+		</div>
+		<if !$ocdmode>
+		<div class="formInput">
+		<label>[t]SingleWord6[/t]</label><!--SingleWordLink6-->
+		<input type="password" name="PassWord_old" value="">
+		</div>
+		<div class="formInput">
+		<label>[t]SingleWord7[/t]</label><!--SingleWordLink7-->
+		<input type="password" name="PassWord_new">
+		</div>
+		<div class="formInput">
+		<label>[t]SingleWord8[/t]</label><!--SingleWordLink8-->
+		<input type="password" name="PassWord_check">
+		</div>
+		</if>
+		<div class="formInput">
+		<label>[t]SingleWord9[/t]</label><!--SingleWordLink9-->
+		<input type="text" name="FirstName" value="{$wum.FirstName}">
+		</div>
+		<div class="formInput">
+		<label>[t]SingleWord10[/t]</label><!--SingleWordLink10-->
+		<input type="text" name="InFix" value="{$wum.InFix}">
+		</div>
+		<div class="formInput">
+		<label>[t]SingleWord11[/t]</label><!--SingleWordLink11-->
+		<input type="LastName" name="LastName" value="{$wum.LastName}">
+		</div>
+		<div class="formInput formRadio">
+		<label>[t]SingleWord12[/t]</label><!--SingleWordLink12-->
+		<select name="Gender">
+		<option value="U">[t]System4[/t]</option>
+		<option value="M" {if $wum.Gender == "M"}selected{/if}>[t]System5[/t]</option>
+		<option value="F" {if $wum.Gender == "F"}selected{/if}>[t]System6[/t]</option>
+		</select>
+		</div>
+		<if ($LangSelect == true)>
+		<div class="formInput">
+		<label>[t]SingleWord13[/t]</label><!--SingleWordLink13-->
+		<select name="preferred_language">{html_options options=$langNames selected=$wum.preferred_language}</select>
+		</div>
+		</if>
+		<div class="error"><!--ERROR--></div>
+		<div class="buttonContainer"><input type="submit" name="Submit" value="[t]Button1[/t]" class="button"><!--ButtonLink1--></div>
+	</form>
+</div>
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+
+
+<!--uts:end inner-->
+</body>
+</html>

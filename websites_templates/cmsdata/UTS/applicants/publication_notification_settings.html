@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<link type="text/css" href="/_css_global/smoothness/jquery-ui-1.7.2.custom.css" rel="stylesheet">
+<script type="text/javascript" src="/_javascript_global/jquery-ui-1.7.2.custom.min.js"></script>
+
+<script type="text/javascript">
+
+is_data_saved = '{$is_data_saved}';
+
+
+//{literal}
+
+
+
+function availSaveMe() {
+    var f=$('#frmMain');
+    
+    f.submit();
+}
+    
+function updateMessage(){
+        $("#applProcessNotification").fadeIn(3000);
+        $("#applProcessNotification").fadeOut(7000);
+}
+
+$(document).ready(function() {
+
+    if (is_data_saved) {
+        updateMessage();
+    }
+});
+    
+
+//{/literal}
+</script>
+<div class="outer avaOuter">
+<!-- /UTS/applicants/availability.html -->
+<h1 class="title avaTitle">[t]Publication settings[/t]</h1>
+
+{$menu}
+
+
+{if $is_data_saved}
+	<div id="applProcessNotification"><div class="error">[t]Your update has been processed successfully[/t]</div></div>
+{/if}
+
+{if $avdata.av_publiceer_anoniem == 1}
+<div class="intro avaIntro">[t]Please indicate below that you want to be unpublished[/t]</div>
+{else}
+<div class="intro avaIntro">[t]Please indicate below that you want to be published[/t]</div>
+{/if}
+
+<form name="mainfrm" id="frmMain" action="{$handler}" method="post">
+
+<div class="formInput formRadio formSmallInput avaReminder">
+<input type="hidden" name="av_publiceer_anoniem" value="0" class="disIfAvailOrNaForever">
+<input type="checkbox" class="disIfAvailOrNaForever" name="av_publiceer_anoniem" value="1" id="av_publiceer_anoniem" {if $avdata.publiceer_anoniem}checked{/if}>
+{if $avdata.av_publiceer_anoniem == 1}
+[t]Uncheck, to unpublish profile[/t]
+{else}
+[t]Check, to publish profile[/t]
+{/if}
+
+</div>
+
+
+<div class="buttonContainer avaBc"><input type="button" name="bApplSubmit" value="[tb]Submit[/tb]" class="button" onclick="availSaveMe()"></div>
+
+<input type="hidden" name="command" value="applicant_pn_save">
+<input type="hidden" name="proceedto" value="{$proceedto}">
+</form>
+
+
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

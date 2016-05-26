@@ -1,0 +1,99 @@
+<html>
+<head>
+<title>FAQ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--uts:begin inner-->
+<!--START_9-->
+
+<!-- FOTEMPLATESDIV: faq_visitor_questions.html -->
+
+<div class="outer faqOuter faqROuter faqNewQ">
+<!-- /UTS/faq_fo/faqNewQuestion.html -->
+
+<!--START_PageTitle-->
+<h1 class="title faqRtitle">[t]Vraag sturen[/t]</h1>
+<!--END_PageTitle-->
+
+<!--START_Block1-->
+<form name="question_form" method="post" action="/index.php/page/faq_remote/bb/1/catid/{$catid}" onSubmit="return check_form();">
+<!--START_Title1-->
+
+<h2 class="subHeader faqRsubHeader"><!-- Title1 --></h2>
+
+<!--END_Title1-->
+
+<!--START_Text1-->
+
+<div class="text faqRtext">[t]Indien u het antwoord op uw vraag niet heeft kunnen vinden, kunt u hieronder uw eigen vraag stellen. We zullen hem dan binnen 24 uur beantwoorden én opnemen in onze database met vaak gestelde vragen.[/t]</div>
+
+<!--END_Text1-->
+<!--END_Block1-->
+
+<!--START_2-->
+
+<script language="JavaScript">
+{literal}
+function check_form()
+{
+	var errors = "";
+	var question = document.forms["question_form"].question.value;
+	var email = document.forms["question_form"].email.value;
+
+	if (question == "" || question == null) errors += "- [t]Question is empty.[/t]\n";
+	if (email == "" || email == null) errors += "- [t]Email is empty.[/t]\n";
+
+	if (errors == "") return true;
+	else
+	{
+		errors = "[t]De volgende fouten zijn opgetreden:[/t]\n"+errors;
+		alert(errors);
+		return false;
+	}
+}
+{/literal}
+</script>
+	<input type="hidden" name="command" value="submit_new">
+
+	<div class="text faqRtableContainer">
+		<!--START_CAPTCHA_ERROR-->
+		{if $error == 'captcha'}	
+		<div class="error">[t]De captcha is incorrect ingevoerd![/t]<!--SingleWordLink8--></div>
+		{/if}
+		<!--END_CAPTCHA_ERROR-->
+		<div class="formInput faqFi">
+			<label for="question">[t]Vraag:[/t]<!--SingleWordLink1--></label>
+			<textarea name="question" rows="4"></textarea>
+		</div>
+		<div class="formInput faqFi">
+			<label for="category">[t]Categorie:[/t]<!--SingleWordLink3--></label>
+			{html_options name=category options=$cats selected=$catid}
+		</div>
+		<div class="formInput faqFi">
+			<label for="email">[t]Uw e-mail adres:[/t]<!--SingleWordLink2--></label>
+			<input name="email" type="text">
+		</div>
+		<div class="formInput faqFi">
+			<img id="captcha" src="/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image" />
+			<a href="#" onclick="document.getElementById('captcha').src = '/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[t]Reload captcha[/t]" border="0" /></a><a href="/_javascript_global/securimage/securimage_play.php"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[t]Play captcha[/t]" border="0" /></a>
+			<br>
+			<label for="captcha">[t]Vul de captcha in:[/t]<!--SingleWordLink4--></label>
+			<input type="text" name="captcha" size="20">
+		</div>
+	</div>
+
+	<div class="buttonContainer faqRbuttonContainer">
+		<input type="submit" value="[tb]Versturen[/tb]" name="Button1" class="button"><!--ButtonLink1-->
+		<input type="button" value="[tb]Terug[/tb]" name="Button2" class="button" onclick="location='/index.php/page/faq_remote/bb/1/catid/{$catid}'"><!--ButtonLink2-->
+	</div>
+<!--END_2-->
+
+</form>
+</div>
+
+<!--END_9-->
+<!--uts:end inner-->
+</body>
+</html>

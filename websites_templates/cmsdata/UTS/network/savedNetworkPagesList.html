@@ -1,0 +1,46 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>[t]Saved Network Pages List[/t]</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/network/savedNetworkPagesList.html -->
+
+<script type="text/javascript" language="JavaScript">
+{literal}
+<!--
+
+{/literal}
+
+  var handler = '{$handler}'
+  
+{literal}
+
+  function deleteSnp(snpid)
+  {
+    if(confirm('[th]Really delete saved network page?[/th]'))
+    {
+      window.location  = handler + '/command/deletepage/snpid/' + snpid;
+    }
+  }
+
+//-->
+{/literal}
+</script>
+
+<div class="outer custOuter snpListBody">
+<h1 class="title snpListTitle">[t]Saved Network Pages[/t]</h1>
+{$menu}
+
+{foreach from=$data item=ntw}
+  <div class="snpItem">
+    <a href="/index.php/page/network/command/custdetail/connectionId/{$ntw.uid|escape}/bb/1">{$ntw.name|escape}</a>&nbsp;
+    <input type="button" name="bttnSnpDel" value="[tb]Delete[/tb]" onclick="deleteSnp('{$ntw.id|escape}')">      
+  </div>
+{/foreach}
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

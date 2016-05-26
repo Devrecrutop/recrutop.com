@@ -1,0 +1,40 @@
+{* tpl id: 679 *}
+{* uts properties are: display_logo, display_descr, display_ref, display_ntext, *} 
+<div class="hookOuter nwHookOuter nwBannerOuter">
+<!-- /UTS/advsearch/bannerHookCustomers.html -->
+	<div class="hookHeader nwHookHeader nwBhh">[t]Premium company[/t]</div>
+
+	<div class="hookSubHeader nwBhSh"><a href="{$cd.networkProfile}">{$cd.werkgever}</a></div>
+	{if [uts:display_logo]}
+	<div class="itemImage hookImage nwHookLogo">
+		{*$website*}
+		<a href="{$cd.networkProfile}"><img src='[website]/_images_upload/{if $cd.network_image == "Picture" && $cd.network_picture}{$cd.network_picture}{else}{$cd.network_logo}{/if}' alt="{$cd.werkgever|escape}" border="0" ></a>
+	</div>
+	{/if}
+
+	{if [uts:display_descr]}
+	<div class="hookText nwHookText nwHookTextPort">{$cd.portfolio_text}</div>
+	{/if}
+
+	{if [uts:display_ref]}
+	<div class="hookText nwHookText nwHookTextRef">{$cd.reference}</div>
+	{/if}
+
+	{if [uts:display_ntext]}
+	<div class="hookText nwHookText">{$cd.network_text}</div>
+	{/if}
+
+	{* start matchcriteria *}
+	{if $cd.criteria}
+	{foreach from=$cd.criteria item=crit}
+	<div class="hookItemContainer nwBhItC">
+		<div class="hookItemTitle nwBhItT">{$crit.naam}</div>
+		<div class="hookItemWord nwBhIw">{$crit.crits}</div>
+	</div>
+	{/foreach}
+	{/if}
+	{* end matchcriteria *}
+	
+	<div class="hookText nwHookTextExtra"><a href="{$cd.networkProfile}">[t]More information about {$cd.werkgever}[/t]</a></div>
+	<div class="cleaner"></div>
+</div>

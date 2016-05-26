@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplEnrollOuter">
+<!-- /UTS/applicants/enroll.html - STANDARD -->
+<h1 class="title aplTitle aplEnrollTitle">[t]Sign up[/t]</h1>
+<div class="intro aplIntro aplEnrollIntro">
+<p>[t]In order to sign up as an applicant, you need to fill data in your profile. Please fill as much fields as you can.[/t]</p>
+{if !$hide_links}
+<ul>
+{if $TKEnabled}
+<li class="aplAplyTk"><a href="{$handler}/command/signuptk/qsuid/{$qsuid}">[t]Use my CV to fill in the form[/t]</a></li>
+<!-- <li class="aplAplyTk"><a href="{$handler}/command/signuptk/">[t]Use my CV to fill in the form[/t]</a></li>-->
+<!-- <li class="aplAplyTk"><a href="{$handler}/command/applytksimple/vid/{$vid}/qsuid/{$qsuid}">[t]Use my CV to fill in the form[/t]</a></li>-->
+{/if}
+{if $linkedinEnabled}
+<li class="aplAplyLi"><a href="{$handler}/command/startsignuplinkedin/" rel="external">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
+<!--
+original
+<li class="aplAplyLi"><a href="/index.php/page/applicants/bb/1/command/startsignuplinkedin/">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
+<li class="aplAplyLi aplAplyLiJob"><a href="{$handler}/command/applylinkedinsimple/qsuid/">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
+-->
+{/if}
+{if $mobile_enabled}
+<li class="aplAplyLeave"><a href="{$handler}/command/startsignupleavecv/">[t]Leave your contacts[/t]</a></li>
+{/if}
+</ul>
+{/if}
+
+{if $OTYSCZ}
+{if $email_error.id}
+<div class="formText aplLink aplJlSLink">
+<a href="{$handler}/command/forgotpwdform/email/{$email_error.mail}">[t]I have forgotten my password[/t]</a>
+</div>
+{/if}
+{/if}
+
+{if $lastMcCommand && $lastMcData}
+<script type="text/javascript">
+  var mcCommand = '{$lastMcCommand}';
+  var itemType = '{$lastMcData.itemType}';
+  var questionClass = '{$lastMcData.questionClass}';
+  var selector = '';
+  var cvItemsCollapse = {$cvItemsCollapse};
+  var cvNewItemSelect = {$cvNewItemSelect};
+{literal}
+
+$(document).ready(function() {
+      if (mcCommand == 'addcvitem') {
+        if (itemType) {
+            // adding skills etc
+            switch (itemType) {
+                case 'soft':
+                    selector = '.aplSkillsSoftFg';
+                    break;
+                case 'language':
+                    selector = '.aplSkillsLangFG';
+                    break;
+                case 'computer':
+                    selector = '.aplSkillsCompFG';
+                    break;
+                default:
+                    selector = '';
+            }
+        } else {
+            switch (questionClass) {
+                case 'cVQuestionEmployment':
+                    selector = 'div[id^="empCont"]';
+                    break;
+                case 'cVQuestionEducation':
+                    selector = 'div[id^="eduCont"]';
+                    break;
+                default:
+                    selector = '';
+            }
+        }
+
+        if (selector !='') {
+            var divs = $(selector);
+            var last = divs[divs.length-1];
+            if (itemType == '') {   // education or employment history added
+                if (cvItemsCollapse == 1) {
+                    $.each(divs, function(i, val){
+                        console.log ( 'index: ' + i );
+                        if (i < divs.length-1) {
+                            $(val).hide();
+                        }
+                        else {
+                            $(val).show();
+                        }
+                    });
+                    }
+                }
+            }
+            if (cvNewItemSelect == 1) {
+                var txtinputs = $('input[type="text"]', last);
+                if (txtinputs.length>0) {
+                    txtinputs[0].focus();
+                }
+                $('html, body').animate({
+                  scrollTop: $(last).offset().top
+                }, 2000);
+            }
+        }
+      }
+    }
+);
+{/literal}
+
+</script>
+{/if}
+
+</div>
+
+{$questionSet}
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

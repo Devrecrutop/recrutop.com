@@ -1,0 +1,74 @@
+<html>
+<head></head>
+<body>
+<!--uts:begin inner-->
+
+{literal}
+<style type="text/css">
+.ocpIc {
+	background-color:#FFF;
+	float:left;
+	clear:none;
+	width:46%;
+	border:1px solid #eee;
+	margin-bottom:20px;
+	padding:10px;
+	width: auto;
+}
+.ocpIcOdd {}
+.ocpIcEven {
+	float:right;
+}
+.ocpIw {
+	float:left;
+}
+.ocpIw span {
+	display:inline-block;
+	width:140px;
+	font-weight:bold;
+	line-height:1.2em;
+}
+.ocpButtonContainer {
+	float:right;
+	clear:right;
+	margin-top:10px;
+}
+.ocpButton {
+	color:#fff;
+	font-size:14px;
+	padding:2px 10px;
+	cursor:pointer;
+}
+.ocpDetails {
+	background-color:#009900;
+}
+</style>
+{/literal}
+
+<div class="outer ocpOuter ocpList">
+<!-- /UTS/misc/customcv_list.html -->
+    <h1 class="title ocpTitle">[t]Custom CV list[/t]</h1>
+
+	{foreach from=$candidates item=candidate}
+   	<div class="itemContainer ocpIc ocpIc{cycle values='Odd,Even'}">
+		{if $candidate.foto}<div class="itemImage ocpItemImage ocpListItemImage ocpPhoto"><img src="{$candidate.foto}" /></div>{/if}
+		<h3 class="itemTitle ocpItemTitle">[t]Persoonlijke gegevens[/t]</h3>
+		<div class="itemWord ocpIw">
+			<div class="ocpPersonalName">
+				<span>[t]Naam[/t]</span>{$candidate.voornaam} {$candidate.tussenvoegsel} {$candidate.achternaam} {if $candidate.geslacht == 1}(Man){elseif $candidate.geslacht == 2}(Woman){else}{/if}
+			</div>
+			{if $candidate.geboortedatum}<div class="ocpPersonalDate"><span>[t]Geboortedatum[/t]</span>{$candidate.geboortedatum|date_format}</div>{/if}
+			{if $candidate.woonplaats}<div class="ocpPersonalLocation"><span>[t]Woonplaats[/t]</span>{$candidate.woonplaats}</div>{/if}
+		</div>
+		<div class="ocpButtonContainer">
+			<input class="ocpButton ocpDetails" type="button" value="[th]Details[/th]" onclick="window.location='/index.php/page/customcv/command/detail/cid/{$candidate.id}/vid/{$vid}/cp/{$cp}/lang/{$lang}{if $bb}/bb/1{/if}';">
+		</div>
+		<div class="cleaner"></div>
+	</div>
+	{/foreach}
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

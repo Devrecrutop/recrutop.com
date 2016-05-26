@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+
+</head>
+<body>
+<!--uts:begin inner-->
+<!--system part-->
+
+<script type="text/javascript">
+// {literal}
+
+// {/literal}
+</script>
+
+<style type="text/css" media="screen">
+{literal}
+.creditItem{width:150px;float:left;}
+.creditItemVal{width:150px;float:left;text-align:right;}
+.creditLineSeparate{border-bottom:1px solid gray;}
+{/literal}
+</style>
+
+<!--display part-->
+<div class="outer custOuter custFinOuter custFinDetOuter">
+<!-- UTS/finance/finance_financial_details.html -->
+	<h1 class="title">[t]Financial details[/t]</h1>
+
+	
+	{$CustomersMenu}
+	
+	{* FO CREDIT SYSTEM *}
+	
+    {if $credit_system eq 'fo_credits'}
+    		
+	<h2 class="subHeader">[t]Unlimited packages[/t]</h2>
+
+        {if $unlimited_packages}
+        <div class="itemContainer unlimitedPackagesList">
+            <table>
+                <tr>
+                    <td>[t]Package name[/t]</td>
+                    <td>[t]Number of slots[/t]</td>
+                    <td>[t]Days valid[/t]</td>
+                    <td>[t]Date[/t]</td>
+                </tr>
+                {foreach from=$unlimited_packages item=unlimited_package}
+
+                    <tr>
+                        <td>{$unlimited_package.package_name}</td>
+                        <td>{if $unlimited_package.number_of_slots==0}[t]unlimited[/t]{else}{$unlimited_package.number_of_slots}{/if}</td>
+                        <td>{if $unlimited_package.days_valid==0}[t]unlimited[/t]{else}{$unlimited_package.days_valid}{/if}</td>
+                        <td>{$unlimited_package.insert_time}</td>
+                    </tr>
+                {/foreach}
+            </table>
+        </div>
+        {/if}
+
+	<h2 class="subHeader">[t]Details[/t]</h2>
+    <div class="text">[t]Welcome to the financial page.[/t]</div>
+    {if $nocredits}
+    <div class="text"><b>[t]Please review your financial information and fill up your credit balance to continue![/t]</b></div>
+	{/if}
+    	
+	{foreach from=$credit_history item=r}
+	{if $r.payment_transaction_id > 0 || (!$r.payment_transaction_id && $r.credit_package_id )}
+	<div class="itemContainer custIc custFinIc custFinBoughtIc">
+		<div class="itemWord creditItem">{$r.insert_time|date_format:"%d-%m-%Y"}</div>
+		<div class="itemWord creditItem">[t]Credits bought[/t]</div>
+		<div class="itemWord creditItemVal">{$r.inc_credit}</div>
+	<div class="cleaner custCleaner custFinCleaner"></div>
+	</div>
+	{/if}
+        {foreachelse}
+	<div class="itemContainer custIc custFinIc custFinBoughtIc">
+		<div class="itemWord creditItem">&nbsp;</div>
+		<div class="itemWord creditItem">[t]No transactions[/t]</div>
+		<div class="itemWord creditItemVal">&nbsp;</div>
+	<div class="cleaner custCleaner custFinCleaner"></div>
+	</div>
+
+	{/foreach}
+    
+    <div class="itemContainer custIc custFinIc custFinSub1Ic">
+	    <div class="itemWord creditItem">&nbsp;</div>
+	    <div class="itemWord creditItem">[t]Subtotal[/t]</div>
+	    <div class="itemWord creditItemVal">{$credits.credits_bought}</div>
+	<div class="cleaner custCleaner custFinCleaner"></div>
+    </div>
+
+    <div class="itemContainer custIc custFinIc custFinManualIc">
+	    <div class="itemWord creditItem">&nbsp;</div>
+	    <div class="itemWord creditItem">[t]Manual changes[/t]</div>
+	    <div class="itemWord creditItemVal">{$credits.credits_manualy_sum}</div>
+	<div class="cleaner custCleaner custFinCleaner"></div>
+    </div>
+
+    <div class="itemContainer custIc custFinIc custFinSub2Ic">
+	    <div class="itemWord creditItem">&nbsp;</div>
+	    <div class="itemWord creditItem">[t]Subtotal[/t]</div>
+	    <div class="itemWord creditItemVal">{$credits.credits_subtotal}</div>
+	<div class="cleaner custCleaner custFinCleaner"></div>
+    </div>
+
+    <div class="itemContainer custIc custFinIc custFinSpentIc">
+	    <div class="itemWord creditItem">&nbsp;</div>
+	    <div class="itemWord creditItem">[t]Credits spent[/t]</div>
+	    <div class="itemWord creditItemVal">{$credits.credits_spent}</div>
+	<div class="cleaner custCleaner custFinCleaner"></div>
+    </div>
+
+    <div class="itemContainer custIc custFinIc custFinTotalIc">
+	    <div class="itemWord creditItem">&nbsp;</div>
+	    <div class="itemWord creditItem">[t]Current balance[/t]</div>
+	    <div class="itemWord creditItemVal">{$credits.credits_balance}</div>
+	<div class="cleaner custCleaner custFinCleaner"></div>
+    </div>
+
+    {if $credits_exp_display_on_cp == 1 && $credit_expire_date}
+    <div class="itemContainer custIc custFinIc custFinTotalIc">
+	    <div class="itemWord creditItem">&nbsp;</div>
+	    <div class="itemWord creditItem">[t]Credit expiration date[/t]</div>
+	    <div class="itemWord creditItemVal">{$credit_expire_date}</div>
+	<div class="cleaner custCleaner custFinCleaner"></div>
+    </div>
+    {/if}
+
+    {if $buy_credits_using_ogone == 1 || $sell_credits_without_ogone}
+    <div class="buttonContainer custBc custFinBc custFinDetBc">
+	    <input type="button" value="[th]Buy new credits[/th]" onClick="location='/index.php/page/finance/bb/1/command/show_package_list'" class="button custButton custFinButton">
+    </div>
+    {/if}
+    
+    {/if}
+    
+    {* JOBANGELS CREDIT SYSTEM *}
+    
+    {if $credit_system eq 'jobangels'}
+    		
+	<h2 class="subHeader">[t]Details[/t]</h2>
+    <div class="text">[t]Welcome to the financial page.[/t]</div>
+    {if $nocredits}
+    <div class="text"><b>[t]Please review your financial information and buy a new product in order to continue![/t]</b></div>
+	{/if}
+	
+	{foreach from=$credit_history item=r}
+	
+	<div class="itemContainer custIc custFinIc custFinBoughtIc">
+	    <div class="itemWord creditItem">{$r.history_product_name}</div>
+		<div class="itemWord creditItem">{if $r.product_expired}[t]Expired[/t]{else}[t]Active[/t]{/if}</div>
+		<div class="itemWord creditItem">{if !$r.product_expired}
+                                               {if $r.history_cv_number_type eq 'limited'}
+                                                    {$r.balance_left}/{$r.history_cv_number} [t]Views[/t]
+                                               {else}     
+                                                [t]Unlimited Views[/t]
+                                               {/if}
+                                         {else}      
+                                               {if $r.history_cv_number_type eq 'limited'}
+                                                    {$r.balance_left}/{$r.history_cv_number} [t]Views[/t]
+                                               {else}     
+                                                [t]Unlimited Views[/t]
+                                               {/if}
+                                         {/if}
+        </div>
+		<div class="itemWord creditItem">{*{if !$r.product_expired}*}
+                                                   {if $r.history_use_duration_limit eq '1'} [t]Valid to[/t]:{$r.date_of_expire} {else}&nbsp;{/if}
+                                         {*{/if}*}
+        </div>
+		<div class="itemWord creditItemVal">{$r.inc_credit}</div>
+		{if $r.payment_transaction_id > 0}<div class="itemWord creditItem">[t]Paid online[/t]</div>{/if}
+	<div class="cleaner custCleaner custFinCleaner"></div>
+	</div>
+	
+     {foreachelse}
+     {/foreach}	
+
+    {if !$active_package.id}
+    <div class="buttonContainer custBc custFinBc custFinDetBc">
+	    <input type="button" value="[th]Buy new product[/th]" onClick="location='/index.php/page/finance/bb/1/command/show_package_list'" class="button custButton custFinButton">
+    </div>
+    {/if}     
+
+    {if $continue_to_candidate}
+    <div class="buttonContainer custBc custFinBc custFinDetBc">
+	    <input type="button" value="[th]Back[/th]" onClick="location='{$continue_to_candidate_link}'" class="button custButton custFinButton">
+    </div>
+    {/if}     
+	
+	{/if}
+    
+	{if $continue_to_job_placement}
+    <div class="buttonContainer custBc custFinBc custFinDetBc">
+	    <input type="button" value="[th]Back to add a vacancy[/th]" onClick="location='{$continue_to_job_placement_link}'" class="button custButton custFinButton">
+    </div>
+    {/if}     
+
+	{if $continue_to_republish_job && $nocredits!=1}
+    <div class="buttonContainer custBc custFinBc custFinDetBc">
+	    <input type="button" value="[th]Back to publish the vacancy[/th]" onClick="location='{$continue_to_republish_job_link}'" class="button custButton custFinButton">
+    </div>
+    {/if}     
+
+    
+</div>
+<!--uts:end inner-->
+</body>
+</html>

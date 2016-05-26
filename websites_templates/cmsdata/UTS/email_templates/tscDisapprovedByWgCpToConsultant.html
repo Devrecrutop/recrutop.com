@@ -1,0 +1,22 @@
+{* If a contact person disapproves a timesheet, the following e-mail should be sent all consultants with new CSM user setting ‘Receive e-mail notification after customer disapproves timesheet in alternative timesheet behavior’ enabled. *}
+<!-- TPL: /UTS/email_templates/tscDisapprovedByWgCpToConsultant.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear {$rcpName|escape},[/t]</p>
+<p>[t]The contact person {$wgCpName|escape} of {$wgName|escape} has disapproved the timesheet of {$cndName|escape} for {$assName|escape} for period {$h.period_start|escape} until {$h.period_end|escape}.[/t]</p> 
+<p>[t]He left the following comments regarding this timesheet:[/t]</p>
+<p>{$disaprovalReason|escape}</p>
+<p>[t]You can check this timesheet by clicking the link below:[/t]</p>
+<p>{$tscHashLink}</p>
+<p>[t]You can check the assignment by clicking the link below:[/t]</p>
+<p>{$assHashLink}</p>
+<p>[t]If you have any questions, please let us know.[/t]</p>
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p><b></b>
+<!--uts:end inner-->
+</body>
+</html>

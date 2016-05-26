@@ -1,0 +1,225 @@
+{* google maps guide post module template *}
+{* required ext JS: JQueryBase, JQueryAutocomplete, JQueryMultiSelect *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+
+</head>
+<body>
+<!--uts:begin inner-->
+<if $gmkey>
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$gmkey|escape}&sensor=false" type="text/javascript"></script>
+</if>
+<script type="text/javascript">
+var map;
+var geocoder;
+var latlngbounds;
+var first=true;
+var baseIcon;
+var vUseGoogleMaps = true;
+var markerList=new Array();
+
+var zoomOnClick='0';
+//{literal}
+function initialize() {
+  if (GBrowserIsCompatible()) {
+    map=new GMap2(document.getElementById("map_canvas"));
+    //map.setCenter(new GLatLng(37.4419, -122.1419), 13);
+    map.setUIToDefault();
+    geocoder = new GClientGeocoder();
+    latlngbounds = new GLatLngBounds();
+    baseIcon = new GIcon(G_DEFAULT_ICON);
+    //baseIcon.shadow = "http://www.google.com/mapfiles/shadow50.png";
+    baseIcon.shadow = "http://www.yourit.nl/_images_global/gm/shadow.png"
+    //baseIcon.iconSize = new GSize(20, 34);
+    baseIcon.iconSize = new GSize(21, 40);
+    //baseIcon.shadowSize = new GSize(37, 34);
+    baseIcon.shadowSize = new GSize(68, 42);
+    baseIcon.iconAnchor = new GPoint(9, 34);
+    baseIcon.infoWindowAnchor = new GPoint(9, 2);
+    displayMarkers();
+  }
+}
+
+function displayMarkers() {
+  //{/literal}
+  <foreach from=$items item=r>
+  <if $r.data._gmnumber>
+  var vacancy=new Object();
+  vacancy.gmnumber        = '{$r.data._gmnumber|escape:"javascript"}';
+  vacancy.gmaddress       = '{$r.data._gmaddress|escape:"javascript"}';
+  vacancy.geo_longitude   = parseFloat('{$r.data.geo_longitude|escape:"javascript"}');
+  vacancy.geo_latitude    = parseFloat('{$r.data.geo_latitude|escape:"javascript"}');
+  vacancy.name            = '{$r.data._name|escape:"javascript"}';
+  vacancy.location        = '{$r.data.locatie|escape:"javascript"}';
+  vacancy.description     = '{$r.data._description|strip_tags|truncate:30|escape:"javascript"}';
+  vacancy.detail_link     = '{$indexPhpRoot|escape:javascript}page/JobsRemote/command/detail/bb/1/vid/{$r.recid}';
+  //{literal}
+  if (vacancy.gmnumber) {
+    if (isFinite(vacancy.geo_longitude) && isFinite(vacancy.geo_latitude)) {
+      var point=new GLatLng(vacancy.geo_latitude, vacancy.geo_longitude);
+      //alert(point);
+      if (first) {
+        //alert(vacancy.gmnumber+' '+vacancy.geo_latitude+' '+vacancy.geo_latitude);
+        map.setCenter(point, 5);
+
+        first=false;
+      }
+      latlngbounds.extend(point);
+      map.setCenter(latlngbounds.getCenter(), map.getBoundsZoomLevel(latlngbounds));
+      var marker=createMarker(point, vacancy);
+      markerList.push({point:point, gmnumber:vacancy.gmnumber});
+      map.addOverlay(marker);
+    } else if (vacancy.gmaddress) {
+      showAddress(vacancy);
+    } else {
+    //?
+    }
+  }
+  //{/literal}
+  </if>
+  </foreach>
+  //{literal}
+}
+
+
+function createMarker(point, vacancy) {
+  // Create a lettered icon for this point using our icon class
+  var letter=vacancy.gmnumber;
+  var letteredIcon = new GIcon(baseIcon);
+  //letteredIcon.image = "http://www.google.com/mapfiles/marker" + letter + ".png";
+  letteredIcon.image = "http://www.yourit.nl/_images_global/gm/image" + letter + ".png";
+  // Set up our GMarkerOptions object
+  markerOptions = { icon:letteredIcon };
+  var marker = new GMarker(point, markerOptions);
+  GEvent.addListener(marker, "click", function() {
+    if (zoomOnClick=='1' && gmMode!='1') {
+      marker.showMapBlowup();
+    }else{
+      marker.openInfoWindowHtml('<p class="gmVacancyTitle">'+vacancy.name+'</p><p class="gmVacancyLocation">'+vacancy.location+'</p><p class="gmVacancyDescription">'+vacancy.description+'</p><p><a href="'+vacancy.detail_link+'" class="gmVacancyLink" target="_top">[th]Go to job detail[/th]<'+'/a></p>', {maxWidth:200} );
+    }
+  });
+  return marker;
+}
+
+
+function showAddress(vacancy) {
+  geocoder.getLatLng(
+  vacancy.gmaddress,
+  function(point) {
+    if (!point) {
+      //alert(address + " not found");
+    } else {
+      if (first) {
+        map.setCenter(point, 5);
+        first=false;
+      }
+      //var marker = new GMarker(point);
+      latlngbounds.extend(point);
+      map.setCenter(latlngbounds.getCenter(), map.getBoundsZoomLevel(latlngbounds));
+      var marker=createMarker(point, vacancy);
+      markerList.push({point:point, gmnumber:vacancy.gmnumber});
+      map.addOverlay(marker);
+    }
+  }
+);
+}
+//{/literal}
+</script>
+ <!-- /UTS/advsearch/googleMaps.html -->
+<h1 class="title actTitle actGmTitle">[t]Vacancies[/t]</h1>
+<div class="intro actIntro actGmIntro">[t]Here you can see vacancies displayed on the map. You can narrow the search by using the keyword. Click on the markers to see the job detail.[/t]</div>
+
+<form name="advsearchform" method="post" action="{$handler}">
+<div class="formInput actFi actFiGm">
+<label>[t]Keywords[/t]</label>
+<input id="actQueryKeywords actQueryKeywordsGm" type="text" name="main_keywords" value="{$keywordsValue|escape}" />
+</div>
+{* criteria fields *}
+<foreach from=$critList item=crit>
+<div class="formInput actFi actFiSelect actFiGmSelect">
+<label>{$crit.name}</label>
+<if $crit.sm == "M">
+    {* multiselect *}
+    {*<select name="matchcriteria_{$crit.field}[]" multiple="multiple">*}
+    <select id="multisel_mc_{$crit.field}" name="matchcriteria_{$crit.field}[]" multiple="multiple" size="5">
+        <html_options options=$crit.options selected=$crit.curValues>
+    </select>
+<else>
+    {* single select *}
+    <select name="matchcriteria_{$crit.field}">
+        <option value="NULL">---</option>
+        <html_options options=$crit.options selected=$crit.curValue>
+    </select>
+</if>
+</div>
+</foreach>
+
+<div class="buttonContainer buttonContainerGm"><input type="submit" name="bApplSubmit" value="[tb]Search[/tb]" class="button"></div>
+<input type="hidden" name="command" value="submitrequest">
+<input type="hidden" name="origin" value="googlemaps">
+</form>
+
+{* start google map *}
+<div class="text actText actTextGm Gm actGm" id="actGoogleMaps">
+<if $gmkey>
+<div id="map_canvas" style="width: 100%; height: 300px"></div>
+<else>
+<p style="color:red;">[t]The google map cannot be displayed, as there is no proper Google Mapi API key available for this website.[/t]</p>
+</if>
+</div>
+{* end google map *}
+
+
+
+<script type="text/javascript">
+var vGmKey='{$gmkey|escape:javascript}';
+var kwAskURL='{$handler}/command/kwautocomplete/arg/';
+//{literal}
+// define ready function
+$(document).ready(function() {
+  // setup autocomplete for keyword
+  if ($('#actQueryKeywords').length) {
+    $('#actQueryKeywords').autocomplete({
+      serviceUrl:kwAskURL,
+      minChars:3,
+      //delimiter: /(,|;)\s*/, // regex or character
+      maxHeight:300,
+      width:200
+      //deferRequestBy: 0, //miliseconds
+      // callback function:
+      //onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+    });
+  }
+
+  if (vGmKey!='') initialize();
+
+  // setup match criteria multiselects
+    //{/literal}
+var reqScripts = "[uts:ext_javascripts]";
+     //{literal}
+ if(reqScripts.indexOf('JQueryMultiSelect') > -1){
+ //{/literal}
+    <foreach from=$critList item=crit>
+    <if $crit.sm == "M">
+        var critf='{$crit.field}';
+        //{literal}
+        if ($('#multisel_mc_'+critf).length) $('#multisel_mc_'+critf).multiSelect({
+            selectAllText: '[th]Select all[/th]',
+            noneSelected: '[th]Select criteria...[/th]',
+            oneOrMoreSelected: '[th]Select criteria (% selected)...[/th]'
+            });
+
+        //{/literal}
+    </if>
+    </foreach>
+    //{literal}
+   }
+
+});
+//{/literal}
+</script>
+<!--uts:end inner-->
+</body>
+</html>

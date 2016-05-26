@@ -1,0 +1,590 @@
+<html>
+<head>
+<style>
+{literal}
+h1 {
+	font-size:1.5em;border-bottom:1px solid;
+}
+h2 {
+	font-size: 1.2em;border-bottom:1px solid;
+}
+h3 {
+	font-size: 1.1em;
+}
+td {
+	padding:0.5em;
+	vertical-align:top;
+}
+table.innerTable td {
+    padding-top:0;
+    padding-bottom:0;
+}
+body {
+	font-family:sans;
+}
+{/literal}
+</style>
+</head>
+<body>
+
+<h1>{$form.name|escape}</h1>
+
+<p>{$form.description|escape}</p>
+
+{foreach from=$tabs key=tabId item=tab}
+
+	{if $tabId}<h2>{$tab|escape}</h2>{/if}
+	
+	{foreach from=$form.Fields key=fieldId item=field}
+
+        {assign var="answer" value=$answers[$field.uid]}
+
+        {* show question if filling in empty form, or question is non-empty and printing filled in form *}
+		{if $field.tabId == $tabId
+            && (
+                !$answers
+                || (in_array($field.typeUi, array('Textfield', 'Textarea', 'Select', 'Gender','DocumentNote' )) && strlen($answer))
+                || (in_array($field.typeUi, array('Radio')) && count($answer) > 0)
+                || (in_array($field.typeUi, array('YesNo', 'AcceptTerms')) && ($answer === true || $answer === false))
+                || (in_array($field.typeUi, array('Employment', 'Education', 'Publications', 'Competencies', 'Date', 'DateTime', 'Multiselect', 'Checkbox', 'Criteria','Select')) && $answer
+                || $field.typeUi == 'Other' && ($answer.Hobbies || $answer.References)
+                || $field.typeUi == 'Skills' && ($answer.LanguageSkills || $answer.ComputerSkills || $answer.SoftSkills))
+            )
+        }
+
+			{if $field.typeUi == 'Text'}
+
+				{if $field.name}<h3>{$field.name|escape}</h3>{/if}
+
+				{if $field.description}
+					<div style="margin-top: 0.5em;margin-bottom: 0.5em;">{$field.description|escape}</div>
+				{/if}
+
+			{elseif $field.typeUi != 'Captcha' && $field.typeUi != 'File'}
+
+				<table style="width:100%;">
+
+					<tr>
+
+						<td style="background-color:#eee;"
+                            {if $field.typeUi == 'Education'}rowspan="3"{/if}
+                            {if $field.typeUi == 'Skills'}rowspan="3"{/if}
+                            {if $field.typeUi == 'Employment'}rowspan="4"{/if}>
+
+							<div><strong>{$field.name|escape}{if $field.Validation.mandatory}*{/if}</strong></div>
+
+							{if $field.description}
+								<div style="font-size:0.2em;">&nbsp;</div>
+								<div style="font-size:0.8em;">{$field.description|escape}</div>
+							{/if}
+
+						</td>
+
+
+                        {if $field.typeUi == 'Education'}
+
+                            {if !$answers}
+                                {assign var="answer" value=$emptyCvItem}
+                            {/if}
+
+                            {foreach from=$answer item=item name=loopCount}
+
+                                {if $smarty.foreach.loopCount.index != 0}
+                                    <tr>
+                                {/if}
+
+
+                                <td style="width:67%;padding-left:0;background-color:#f4f4f4;">
+
+                                    <table class="innerTable">
+
+                                        {if !$answers || $item.degree}
+                                        <tr>
+                                            <td style="width:25%;font-size:0.8em;padding-top:0.2em;">[t]Name[/t]</td>
+                                            <td style="width:75%;">
+                                                {if $answers}
+                                                    {$item.degree|escape}
+                                                {else}
+                                                    &nbsp;
+                                                    <input type="text" style="width:42%;" value="" />
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                        {/if}
+                                        {if !$answers || $item.degreeDirection}
+                                        <tr>
+                                            <td style="font-size:0.8em;padding-top:0.2em;">[t]Direction[/t]</td>
+                                            <td>
+                                                {if $answers}
+                                                    {$item.degreeDirection|escape}
+                                                {else}
+                                                    &nbsp;
+                                                    <input type="text" style="width:42%;" />
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                        {/if}
+                                        {if !$answers || $item.institute}
+                                        <tr>
+                                            <td style="font-size:0.8em;padding-top:0.2em;">[t]Institute[/t]</td>
+                                            <td>
+                                                {if $answers}
+                                                    {$item.institute|escape}
+                                                {else}
+                                                    &nbsp;
+                                                    <input type="text" style="width:42%;" />
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                        {/if}
+                                        {if !$answers || $item.diploma}
+                                        <tr>
+                                            <td style="font-size:0.8em;padding-top:0.2em;">[t]Degree[/t]</td>
+                                            <td>
+                                                {if $answers}
+                                                    {$item.diploma|escape}
+                                                {else}
+                                                    &nbsp;
+                                                    <input type="text" style="width:42%;" />
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                        {/if}
+                                        {if !$answers || $item.startDate}
+                                            <tr>
+                                                <td style="font-size:0.8em;padding-top:0.2em;">[t]Start date[/t]</td>
+                                                <td>
+                                                    {if $answers}
+                                                        {$item.startDate|substr:6:2}-{$item.startDate|substr:4:2}-{$item.startDate|substr:0:4}
+                                                    {else}
+                                                        &nbsp;
+                                                        <input type="text" style="width:3%;" />&ndash;<input type="text" style="width:3%;" />&ndash;<input type="text" style="width:6%;" />
+                                                    {/if}
+                                                </td>
+                                            </tr>
+                                        {/if}
+                                        {if !$answers || $item.endDate}
+                                        <tr>
+                                            <td style="font-size:0.8em;padding-top:0.2em;">[t]End date[/t]</td>
+                                            <td>
+                                                {if $answers}
+                                                    {if $item.endDateFormat == 'today'}
+                                                        [t]still ongoing[/t]
+                                                    {else}
+                                                        {$item.startDate|substr:6:2}-{$item.startDate|substr:4:2}-{$item.startDate|substr:0:4}
+                                                    {/if}
+                                                {else}
+                                                   &nbsp;
+                                                    <input type="text" style="width:3%;" />&ndash;<input type="text" style="width:3%;" />&ndash;<input type="text" style="width:6%;" />
+                                                    <input type="checkbox" /> <span style="font-size:0.8em;">[t]Still ongoing[/t]</span>
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                        {/if}
+
+                                    </table>
+
+                                </td>
+
+                                {if !$smarty.foreach.loopCount.last}
+                                    </tr>
+                                {/if}
+
+                            {/foreach}
+
+                        {elseif $field.typeUi == 'Employment'}
+
+                            {if !$answers}
+                                {assign var="answer" value=$emptyCvItem}
+                            {/if}
+
+                            {foreach from=$answer item=item name=loopCount}
+
+                                {if $smarty.foreach.loopCount.index != 0}
+                                    <tr>
+                                {/if}
+
+                                <td style="width:67%;padding-left:0;background-color:#f4f4f4;">
+
+                                    <table class="innerTable">
+
+                                        {if !$answers || $item.experience}
+                                            <tr>
+                                                <td style="width:25%;font-size:0.8em;padding-top:0.2em;">[t]Position[/t]</td>
+                                                <td style="width:75%;">
+                                                    {if $answers}
+                                                        {$item.experience|escape}
+                                                    {else}
+                                                        &nbsp;
+                                                        <input type="text" style="width:42%;" />
+                                                    {/if}
+                                                </td>
+                                            </tr>
+                                        {/if}
+                                        {if !$answers || $item.employerNameAndPlace}
+                                            <tr>
+                                                <td style="font-size:0.8em;padding-top:0.2em;">[t]Employer[/t]</td>
+                                                <td>
+                                                    {if $answers}
+                                                        {$item.employerNameAndPlace|escape}
+                                                    {else}
+                                                        &nbsp;
+                                                        <input type="text" style="width:42%;" />
+                                                    {/if}
+                                                </td>
+                                            </tr>
+                                        {/if}
+                                        {if !$answers || $item.startDate}
+                                            <tr>
+                                                <td style="font-size:0.8em;padding-top:0.2em;">[t]Start date[/t]</td>
+                                                <td>
+                                                    {if $answers}
+                                                        {$item.startDate|substr:6:2}-{$item.startDate|substr:4:2}-{$item.startDate|substr:0:4}
+                                                    {else}
+                                                        &nbsp;
+                                                        <input type="text" style="width:3%;" />&ndash;<input type="text" style="width:3%;" />&ndash;<input type="text" style="width:6%;" />
+                                                    {/if}
+                                                </td>
+                                            </tr>
+                                        {/if}
+                                        {if !$answers || $item.endDate}
+                                        <tr>
+                                            <td style="font-size:0.8em;padding-top:0.2em;">[t]End date[/t]</td>
+                                            <td>
+                                                {if $answers}
+                                                    {if $item.endDateFormat == 'today'}
+                                                        [t]still ongoing[/t]
+                                                    {else}
+                                                        {$item.startDate|substr:6:2}-{$item.startDate|substr:4:2}-{$item.startDate|substr:0:4}
+                                                    {/if}
+                                                {else}
+                                                   &nbsp;
+                                                    <input type="text" style="width:3%;" />&ndash;<input type="text" style="width:3%;" />&ndash;<input type="text" style="width:6%;" />
+                                                    <input type="checkbox" /> <span style="font-size:0.8em;">[t]Still ongoing[/t]</span>
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                        {/if}
+
+                                        {if !$answers || $item.description}
+                                        <tr>
+                                            <td style="font-size:0.8em;padding-top:0.2em;">[t]Job description[/t]</td>
+                                            <td>
+                                                {if $answers}
+                                                    {$item.description|escape}
+                                                {else}
+                                                    &nbsp;
+                                                    <textarea style="width:44%;height:6em;"></textarea>
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                        {/if}
+                                        {if !$answers || $item.termination}
+                                        <tr>
+                                            <td style="font-size:0.8em;padding-top:0.2em;">[t]Reason for ending[/t]</td>
+                                            <td>
+                                                {if $answers}
+                                                    {$item.termination|escape}
+                                                {else}
+                                                    &nbsp;
+                                                    <textarea style="width:44%;height:3em;"></textarea>
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                        {/if}
+
+                                    </table>
+
+                                </td>
+
+                                {if !$smarty.foreach.loopCount.last}
+                                    </tr>
+                                {/if}
+
+                            {/foreach}
+
+                        {elseif $field.typeUi == 'Skills'}
+
+
+                                {if !$answers || $answer.ComputerSkills}
+                                    <td style="width:67%;background-color:#f4f4f4;">
+                                        [t]Computer skills[/t]
+                                        {if $answers}
+                                            {foreach from=$answer.ComputerSkills item=item}
+                                                <div>{$item.skill|escape}</div>
+                                            {/foreach}
+                                        {else}
+                                            <textarea style="width:64%;height:6em;"></textarea>
+                                        {/if}
+                                    </td>
+                                {/if}
+
+
+                            {if !$answers || ($answer.ComputerSkills && ($answer.LanguageSkills || $answer.SoftSkills))}
+                                </tr>
+
+                                <tr>
+                            {/if}
+
+                                {if !$answers || $answer.LanguageSkills}
+
+                                    <td style="width:67%;background-color:#f4f4f4;">
+                                        [t]Language skills[/t]
+
+                                        <table class="tableInner">
+                                            <tr>
+                                                <th style="width:58%;font-size:0.8em;">[t]Language[/t]</th>
+                                                <th style="width:14%;font-size:0.8em;">[t]Speak[/t]*</th>
+                                                <th style="width:14%;font-size:0.8em;">[t]Read[/t]*</th>
+                                                <th style="width:14%;font-size:0.8em;">[t]Write[/t]*</th>
+                                            </tr>
+                                            {if $answers}
+                                                {foreach from=$answer.LanguageSkills item=item}
+                                                    <tr>
+                                                        <td style="padding:0;margin:0;">{$item.language|escape}</td>
+                                                        <td style="padding:0;margin:0;">{$item.profLevelRead|escape}</td>
+                                                        <td style="padding:0;margin:0;">{$item.profLevelWrite|escape}</td>
+                                                        <td style="padding:0;margin:0;">{$item.profLevelSpoken|escape}</td>
+                                                    <tr>
+                                                {/foreach}
+                                            {else}
+                                                {section name=loopCount start=0 loop=5}
+                                                    <tr>
+                                                        <td style="padding:0;margin:0;"><input type="text" style="width:30%;" /></td>
+                                                        <td style="padding:0;margin:0;"><input type="text" style="width:9%;" /></td>
+                                                        <td style="padding:0;margin:0;"><input type="text" style="width:9%;" /></td>
+                                                        <td style="padding:0;margin:0;"><input type="text" style="width:9%;" /></td>
+                                                    <tr>
+                                                {/section}
+                                            {/if}
+                                        </table>
+
+                                        {if !$answers}
+                                            <span style="font-size:0.8em;">* [t]Level: one of excellent/very good/good/moderate.[/t]</span>
+                                        {/if}
+
+                                    </td>
+                                {/if}
+
+                            {if !$answers || ($answer.LanguageSkills && $answer.SoftSkills)}
+                                </tr>
+
+                                <tr>
+                            {/if}
+
+                                {if !$answers || $answer.SoftSkills}
+
+                                    <td style="width:67%;background-color:#f4f4f4;">
+                                        [t]Soft skills[/t]
+                                        {if $answers}
+                                            {foreach from=$answer.SoftSkills item=item}
+                                                <div>{$item.skill|escape}</div>
+                                            {/foreach}
+                                        {else}
+                                            <textarea style="width:64%;height:6em;"></textarea>
+                                        {/if}
+                                    </td>
+
+                                {/if}
+
+                        {else}
+
+                            <td style="width:67%;padding-left:0;background-color:#f4f4f4;">
+
+                                {if $field.typeUi == 'Textfield'}
+
+                                    {if $answers}
+                                        <div>{$answer|escape}</div>
+                                    {else}
+                                        &nbsp;
+                                        <input type="text" style="width:{if $field.type == 'int' || $field.type == 'double'}16%{else}62%{/if};" />
+                                    {/if}
+
+                                {elseif $field.typeUi == 'Date'}
+
+                                    {if $answers}
+                                        {$answer|substr:6:2}-{$answer|substr:4:2}-{$answer|substr:0:4}
+                                    {else}
+                                        &nbsp;
+                                        <input type="text" style="width:3%;" />&ndash;<input type="text" style="width:3%;" />&ndash;<input type="text" style="width:6%;" />
+                                    {/if}
+
+                                {elseif $field.typeUi == 'DateTime'}
+
+                                    {if $answers}
+                                        {$answer|substr:6:2}-{$answer|substr:4:2}-{$answer|substr:0:4} {$answer|substr:9:2}:{$answer|substr:11:2}
+                                    {else}
+                                        &nbsp;
+
+                                        <input type="text" style="width:3%;" />&ndash;<input type="text" style="width:3%;" />&ndash;<input type="text" style="width:6%;" />
+                                        <input type="text" style="width:3%;" />:<input type="text" style="width:3%;" />
+                                    {/if}
+
+                                {elseif $field.typeUi == 'Multiselect' || $field.typeUi == 'Checkbox'}
+                                    {if $answers}
+                                        {if $field.typeUi == 'Gender'}
+                                            {$field.Answers[$answer]}
+                                        {else}
+                                            {foreach from=$answer item=item name=itemLoop}
+                                                {$item|escape}{if !$smarty.foreach.itemLoop.last}, {/if}
+                                            {/foreach}
+                                        {/if}
+                                    {else}
+                                        {foreach from=$field.Answers item=answer}
+                                            <div>
+                                                &nbsp;<input type="checkbox" />&nbsp;{$answer.answer}
+                                            </div>
+                                        {/foreach}
+                                    {/if}
+
+                                {elseif $field.typeUi == 'Select' || $field.typeUi == 'Radio' || $field.typeUi == 'Gender'}
+                                    {if $answers}
+                                        {if $field.typeUi == 'Gender'}
+                                            {$field.Answers[$answer]}
+                                        {else}
+                                            {foreach from=$answer item=item name=itemLoop}
+                                                {$item|escape}{if !$smarty.foreach.itemLoop.last}, {/if}
+                                            {/foreach}
+                                        {/if}
+                                    {else}
+                                        {foreach from=$field.Answers item=answer}
+                                            <div>
+                                                &nbsp;<input type="radio" />&nbsp;{$answer.answer}
+                                            </div>
+                                        {/foreach}
+                                    {/if}
+
+                                {elseif $field.typeUi == 'Textarea' || $field.typeUi == 'DocumentNote'}
+
+                                    {if $answers}
+                                        <div>{$answer|escape}</div>
+                                    {else}
+                                        &nbsp;
+                                        <textarea style="width:64%;height:6em;">{$answers[$field.uid]|escape}</textarea>
+                                    {/if}
+
+                                {elseif $field.typeUi == 'Competencies'}
+
+                                    {if $answers}
+                                        {foreach from=$answer item=item name=itemLoop}
+                                            <div>{$item.competency|escape}</div>
+                                            {if $item.certificate || $item.level}
+                                                <div style="font-size:0.8em">{$item.certificate|escape}{if $item.certificate && $item.level}, {/if}{$item.level|escape}</div>
+                                            {/if}
+                                        {/foreach}
+                                    {else}
+                                        &nbsp;
+                                        <textarea style="width:64%;height:9em;"></textarea>
+                                    {/if}
+
+                                {elseif $field.typeUi == 'Publications'}
+
+                                    {if $answers}
+                                        {foreach from=$answer item=item}
+                                            <div>
+                                                {$item.publication}{if $item.publishedIn}. {$item.publishedIn}{/if}{if $item.publishedDate}. {$item.publishedDate|substr:6:2}-{$item.publishedDate|substr:4:2}-{$item.publishedDate|substr:0:4}.{/if}
+                                            </div>
+                                            {if $item.remarks}
+                                                <div style="font-size:0.8em;">
+                                                    {$item.remarks}
+                                                </div>
+                                            {/if}
+                                        {/foreach}
+                                    {else}
+                                        &nbsp;
+                                        <textarea style="width:64%;height:9em;"></textarea>
+                                    {/if}
+
+                                {elseif $field.typeUi == 'Other'}
+
+                                    <table class="innerTable">
+
+                                        {if !$answers || $answer.Hobbies}
+                                            <tr>
+                                                <td style="font-size:0.8em;padding-top:0.2em;width:25%;">[t]Hobbies[/t]</td>
+                                                <td style="width:75%;">
+                                                    {if $answers}
+                                                        {foreach from=$answer.Hobbies item=item}
+                                                            <div>{$item.hobby|escape}</div>
+                                                        {/foreach}
+                                                    {else}
+                                                        &nbsp;
+                                                        <textarea style="width:44%;height:3em;"></textarea>
+                                                    {/if}
+                                                </td>
+                                            </tr>
+                                        {/if}
+                                        {if !$answers || $answer.References}
+                                            <tr>
+                                                <td style="font-size:0.8em;padding-top:0.2em;">[t]References[/t]</td>
+                                                <td>
+                                                    {if $answers}
+                                                        {foreach from=$answer.References item=item}
+                                                            <div>{$item.reference|escape}</div>
+                                                        {/foreach}
+                                                    {else}
+                                                        &nbsp;
+                                                        <textarea style="width:44%;height:6em;"></textarea>
+                                                    {/if}
+                                                </td>
+                                            </tr>
+                                        {/if}
+
+                                    </table>
+
+                                {elseif $field.typeUi == 'Criteria'}
+
+                                    {if $answers}
+                                        {foreach from=$answer item=item name=itemLoop}
+                                            {$item|escape}{if !$smarty.foreach.itemLoop.last}, {/if}
+                                        {/foreach}
+                                    {else}
+
+                                        {foreach from=$field.Answers item=answer}
+                                            <div>
+                                                &nbsp;<input type="checkbox" />&nbsp;{$answer.answer}
+                                            </div>
+                                        {/foreach}
+
+                                    {/if}
+
+                                {elseif $field.typeUi == 'YesNo'}
+
+                                    {if $answers}
+                                        {if $answer}[t]Yes[/t]{else}[t]No[/t]{/if}
+                                    {else}
+                                        <div>
+                                            &nbsp;<input type="radio" />&nbsp;[t]Yes[/t]
+                                            &nbsp;<input type="radio" />&nbsp;[t]No[/t]
+                                        </div>
+                                    {/if}
+
+
+                                {elseif $field.typeUi == 'AcceptTerms'}
+
+                                    {if $answers}
+                                        {if $answer}[t]Yes[/t]{else}[t]No[/t]{/if}
+                                    {else}
+                                        &nbsp;<input type="checkbox" />&nbsp;[t]Yes[/t]
+                                    {/if}
+
+                                {/if}
+
+                            </td>
+
+                        {/if}
+
+					</tr>
+
+				</table>
+
+			{/if}
+
+		{/if}
+	
+	{/foreach}
+
+{/foreach}
+
+</body>
+</html>

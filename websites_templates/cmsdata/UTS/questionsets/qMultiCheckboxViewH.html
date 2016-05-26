@@ -1,0 +1,31 @@
+<!-- Multicheckbox view H-->
+<div class="formInput formMultiCheckbox aplMCheckInput" id="KQDIV_{$qd.id}">
+<label>{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+<div class="formCheckboxContainer aplMCheckContainer">
+<foreach from=$options item=opt>
+<span id="{$elementName}_{$opt.value}">
+<input type="checkbox" id="{$elementIdPrefix}_{$opt.value}" name="{$elementName}[]" value="{$opt.value}" {if $opt.selected}checked{/if} 
+{*onChange="processFieldValueChange('{$elementName}')"*}
+
+      {if $qd.killerFieldMaster && $question_show_based_on_answers}
+      onChange="processFieldValueChange('{$elementName}');killerQHandler('{$qd.id}','{$opt.value}','checkbox');"
+      {else}
+      onChange="processFieldValueChange('{$elementName}');"
+      {/if}
+
+>
+{$opt.text|escape}
+</span>
+</foreach>
+</div>
+</div>
+<if $qd.explanation>
+<div class="explain aplMCheckExplain explain_{$elementName}">
+    {$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplMCheckError error_{$elementName}">
+    {$currentErrorMessage}    
+</div>
+</if>

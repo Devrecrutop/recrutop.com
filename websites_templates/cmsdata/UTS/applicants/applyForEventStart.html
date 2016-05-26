@@ -1,0 +1,85 @@
+{* this template is used when the simple_registration=no *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
+</head>
+<body>
+<!--uts:begin inner-->
+<form name="mainfrm" action="{$handler}" method="post"{if $tkEnabled} enctype="multipart/form-data"{/if}>
+<div class="outer aplOuter aplJStartOuter">
+<!-- /UTS/applicants/applyForEventStart.html -->
+<h1 class="title  aplTitle aplJStartTitle">[t]Register for a event[/t]</h1>
+<div class="intro aplIntro aplJStartIntro">[t]You are about to register for the event "{$eventtitle|escape}". Please login or sign up to proceed.[/t]</div>
+
+<h2 class="subHeader aplSH aplJStartSHS">[t]Sign up[/t]</h2>
+<div class="text aplText aplJStartTextS">[t]If you don't have an applicant's account at {$companyName} yet, you have to sign up and fill your correct info in order to register for the selected event.[/t]</div>
+<!--start tk-->
+<if $tkEnabled>
+<div class="text aplText aplJStartTextSCv">[t]If you have a CV, you can provide it now. We will attempt to parse your CV automatically and prefill all forms for you in order to make the registration process faster. We accept .DOC, .DOCX, .PDF, .ODT and .RTF files. Please also type the text code you see in the image into the field below the image. You don't need to type the code if you decide not to provide your CV at the moment.[/t]</div>
+<div class="formInput aplInput aplJStartInputSCv">
+<label for="cv_file">[t]CV:[/t]</label>
+<input type="file" name="cv_file" id="cv_file">
+</div>
+<if $cvError>
+<div class="error aplError aplJStartErrorSCv">{$cvError}</div>
+</if>
+<div class="formInput aplInput aplJStartInputSCvl">
+<label for="selExtrLng">[t]CV language:[/t]</label>
+<select name="extrLng" id="selExtrLng">
+<html_options options=$extrLanguages selected=$prefillExtrLng>
+</select>
+</div>
+<div class="formInput aplInput aplCsc aplJStartCsc">
+<label for="captcha">[t]Security code:[/t]<span>*<span></label>
+<img id="captcha" src="/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image" >
+<a href="#" onclick="document.getElementById('captcha').src = '/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0" ></a>
+<a href="/_javascript_global/securimage/securimage_play.php"><img src="/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0" ></a>
+</div>
+<div class="formInput aplInput aplCic aplJStartCic">
+<label for="captchafield">[t]Code:[/t]</label>
+<input type="text" name="captchafield" id="captchafield" size="10">
+</div>
+<if $captchaError>
+<div class="error aplCaptchaError aplJStartCe">[t]Please enter the right security code![/t]</div>
+</if>
+<input type="hidden" name="tkmode" value="1">
+<input type="hidden" name="MAX_FILE_SIZE" value="5000000" >
+</if>
+<div class="buttonContainer aplBc aplJStartBcS"><input type="button" name="bApplSignUp" value="[tb]Sign up and register[/tb]" onClick="this.form.command.value='applyforevent'; this.form.submit()" class="button"></div>
+
+<h2 class="subHeader aplSH aplJStartShL">[t]Login[/t]</h2>
+<div class="text aplText aplJStartTextL">
+[t]If you already have an applicant's account at {$companyName} (you already registered for a job, event before, or you have signed up yourself), please login using your credentials and proceed.[/t]
+</div>
+<div class="formInput aplInput aplJStartInputLE">
+<label for="emailaddress">[t]E-mail / Username:[/t]</label>
+<input type="text" name="email" id="emailaddress">
+</div> 
+<div class="formInput aplInput aplJStartInputLpwd">
+<label for="userpassword">[t]Password:[/t]</label>
+<input type="password" name="password" id="userpassword">
+</div>
+<if $error>
+<div class="error aplError aplJStartErrorL">{$error}</div>
+</if>
+<div class="buttonContainer aplBc aplJStartBcL"><input type="submit" name="Submit" value="[tb]Login and apply[/tb]" class="button"></div>
+
+<h2 class="subHeader aplSh aplJStartShFpwd">[t]Forgot password?[/t]</h2>
+<div class="text aplText aplJStartTextFpwd">
+[t]If you already have an applicant's account, but you have forgot your password, you can request your password to be sent to your registered e-mail address by pressing the button below.[/t]
+</div>
+<div class="buttonContainer aplBc aplJStartBcFpwd">
+<input type="button" name="MailPassword" value="[tb]Send me my password[/tb]" onClick="this.form.command.value='applyforgotpwdsimple'; this.form.submit()" class="button">
+</div>
+<if $errormp>
+<div class="error aplError aplJStartErrorFpwd">{$errormp}</div>
+</if>
+<input type="hidden" name="command" value="applyloginformsimplesubmit">
+<input type="hidden" name="evid" value="{$evid}">
+</div>
+</form>
+<!--uts:end inner-->
+</body>
+</html>

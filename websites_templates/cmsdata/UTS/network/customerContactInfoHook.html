@@ -1,0 +1,35 @@
+
+<div class="customer_contact_info_hook">
+<h2 class="subHeader nwSh nwDSh nwTabHeader">[t]Testimonials[/t]</h2>
+
+<div class="text nwText nwDText">
+  {foreach from=$randomTestimonial item=cc}
+	<div class="itemContainer faceIc consListIc">
+		<h3 class="itemTitle faceItitle consListItemTitle">
+			{$cc.wg_cp_voornaam|escape} {$cc.wg_cp_tussenvoegsel|escape} {$cc.wg_cp_achtern|escape}
+		</h3>
+		{if $cc.pp_photo}
+		<div class="itemImage faceIimg consListItemImg">
+			<img src="/_images_upload/{$cc.pp_photo|escape}" border="0">
+		</div>
+		{/if}
+		{if $cc.wg_cp_functie}
+		<div class="itemWord faceIword consListItemWord">
+			<span>[t]Functie[/t]:</span>{$cc.wg_cp_functie|escape}
+		</div>
+		{/if}
+		{if $cc.education}
+		<div class="itemWord faceIword consListItemWord">
+			<span>[t]Opleiding[/t]:</span>{$cc.education|escape}
+		</div>
+		{/if}
+		{if $cc.long_descr}
+		<div class="itemDescription faceDesc consListItemDesc">
+			{$cc.long_descr}
+		</div>
+		{/if}
+		<div class="cleaner faceICleaner consListICleaner"></div>
+	</div>
+  {/foreach}
+</div>
+</div>

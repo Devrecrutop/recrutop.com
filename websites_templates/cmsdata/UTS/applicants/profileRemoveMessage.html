@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+<div class="outer aplOuter aplTyOuter">
+<!-- /UTS/applicants/profileRemoveMessage.html -->
+<if $messageId == "CANNOT_APPLY">
+<meta name="robots" content="noindex,follow" >
+<else>
+<h1 class="title apltitle aplTyTitle">[t]Remove my profile[/t]</h1>
+</if>
+
+<div class="intro aplIntro aplTyIntro">
+    [t]Goodbye - You will be automatically logged off our website in a few seconds.[/t]
+</div>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

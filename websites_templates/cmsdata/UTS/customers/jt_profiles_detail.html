@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!--system part-->
+
+<script type="text/javascript" src="/_javascript_global/jquery.js"></script>
+<link type="text/css" href="/_css_global/smoothness/jquery-ui-1.7.2.custom.css" rel="stylesheet">
+<script type="text/javascript" src="/_javascript_global/jquery-ui-1.7.2.custom.min.js"></script>
+<script type="text/javascript" src="/_javascript_global/jquery.multiSelect.js"></script>
+<script type="text/javascript" src="/_javascript_global/jquery.autocomplete.js"></script>
+<script type="text/javascript">
+// {literal}
+
+function delJtsPicture() {
+ok = confirm("[th]Are you sure you want to delete this logo?[/th]\n\n");
+
+if (ok) {
+    document.jtprofiles.command.value = "delete_logo";
+    document.jtprofiles.submit();
+}
+}
+
+
+
+// {/literal}
+</script>
+<script type="text/javascript">
+var custSearchCompURL="/index.php/page/jtprofiles/bb/1/command/companyautocomplete/nosmarthead/1/arg/";
+//{literal}
+// define ready function
+$(document).ready(function() {
+if ($('#asSearchRelation').length) {
+  $('#asSearchRelation').autocomplete({ 
+	serviceUrl:custSearchCompURL,
+	minChars:1, 
+	maxHeight:300,
+	width:200,
+    noCache: true, 	
+    onSelect: function(value, data){
+ document.jtprofiles.werkgever_id_selected.value=data;
+    }		 
+  });
+}
+
+});
+
+
+function submit_profile_screen(func){
+
+var  allow_submit = true;
+if (func == "insert") {
+    if (!document.jtprofiles.werkgever_id_selected.value) {
+    allow_submit = false;
+    alert('[th]Please select a relation![/th]');
+    }
+}
+
+if (allow_submit) {
+document.jtprofiles.command.value = "submit"; 
+document.jtprofiles.submit();
+}
+
+}
+
+//{/literal}
+</script>
+
+<!--display part-->
+<div class="outer custOuter custPpNewOuter">
+<!-- /UTS/customers/jt_profiles_detail.html -->
+{if $profile.id}
+<h1 class="title">[t]Edit Profile[/t]</h1>
+{else}
+<h1 class="title">[t]Create Profile[/t]</h1>
+{/if}
+
+<!--START_CAT_TBL-->
+{$CustomersMenu}
+
+<!--END_CAT_TBL-->
+<if $errormode>
+<div class="error">[t]There were errors in the reaction data you attempted to post. Please correct them and post again.[/t] <a href="#react">&gt;&gt;</a></div>
+</if>
+
+<form name="jtprofiles" action="[website]/index.php/page/jtprofiles/bb/1/" method="post" enctype="multipart/form-data">
+<input name="jts_id" type="hidden" value="{$profile.id}">
+<input name="command" type="hidden" value="submit">
+<input name="CurrentLanguage" type="hidden" value="{$language}">
+	
+<a name="react"></a>
+<h2 class="subHeader">[t]Details[/t]</h2>
+<div class="text">[t]Here you can edit profile details.[/t]</div>
+{$CustomersSubMenu}
+
+<table border="0" cellpadding="0" cellspacing="0" class="hqTbl">
+{if !$profile.id}
+<tr id="hqFlip">
+<td class="custPpNewLC">[t]Relation[/t]:<span>*</span></td>
+<td>{*werkgever_id_new*}<input type="text" id="asSearchRelation" name="werkgever_id_new" value="{$profile.werkgever_name|escape}" ><input name="werkgever_id_selected" type="hidden" value="{$werkgever_id_selected}"></td>
+</tr>
+{else}
+<tr id="hqFlip">
+<td class="custPpNewLC">[t]Relation[/t]:</td>
+<td>{$profile.werkgever_name|escape}</td>
+</tr>
+{/if}
+<tr id="hqFlop">
+<td>[t]Company name[/t]:</td>
+<td><input name="company_name" type="text" value="{if $profile.company_name}{$profile.company_name}{/if}"></td>
+</tr>
+<tr id="hqFlip">
+<td>[t]First name[/t]:</td>
+<td><input name="cp_firstname" type="text" value="{if $profile.cp_firstname}{$profile.cp_firstname}{/if}"></td>
+</tr>
+<tr id="hqFlop">
+<td>[t]Middle name[/t]:</td>
+<td><input name="cp_middlename" type="text" value="{if $profile.cp_middlename}{$profile.cp_middlename}{/if}"></td>
+</tr>
+<tr id="hqFlip">
+<td>[t]Last name[/t]:</td>
+<td><input name="cp_lastname" type="text" value="{if $profile.cp_lastname}{$profile.cp_lastname}{/if}"></td>
+</tr>
+<tr id="hqFlop">
+<td>[t]Phone number[/t]:</td>
+<td><input name="cp_phone_number" type="text" value="{if $profile.cp_phone_number}{$profile.cp_phone_number}{/if}"></td>
+</tr>
+<tr id="hqFlip">
+<td>[t]Mail adres[/t]:</td>
+<td><input name="cp_email" type="text" value="{if $profile.cp_email}{$profile.cp_email}{/if}"></td>
+</tr>
+<tr id="hqFlop">
+<td>[t]Profile name[/t]:</td>
+<td><input name="jts_name" type="text" value="{if $profile.jts_name}{$profile.jts_name}{/if}"></td>
+</tr>
+<tr id="hqFlip">
+<td>[t]Company profile[/t]:</td>
+<td><textarea name="company_profile" cols=30 rows="10">{if $profile.company_profile}{$profile.company_profile}{/if}</textarea></td>
+</tr>
+<tr id="hqFlop">
+<td>[t]Company culture[/t]:</td>
+<td><textarea name="company_culture" cols=30 rows="10">{if $profile.company_culture}{$profile.company_culture}{/if}</textarea></td>
+</tr>
+{if $profile.logo}
+<tr id="hqFlip">
+<td></td>
+<td><img src="[website]/_images_upload/{$profile.logo}" style="border: 1px solid #000000;">	
+<input class="button"  type="button" value="[tb]Delete[/tb]" onclick="delJtsPicture();"></td>
+</tr>
+{/if}
+<tr id="hqFlop">
+<td>[t]Upload logo[/t]</td>
+<td><input type="hidden" name="current_logo" value="{$profile.logo}"><input type="file" name="logo" size="25" ></td>
+</tr>
+<tr id="hqFlip">
+<td>[t]Show customer details[/t]</td>
+<td><input name="display_details" type="checkbox" value="1" {if $profile.display_details}checked{/if}></td>
+</tr>
+</table>
+
+{if !$jts_id || $allow_edit_profile}
+<br ><br >
+<div class="buttonContainer"><input type="button" value="[tb]Submit[/tb]" class="button" onclick="submit_profile_screen({if $jts_id}'update'{else}'insert'{/if});"></div>
+{/if}
+</form>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

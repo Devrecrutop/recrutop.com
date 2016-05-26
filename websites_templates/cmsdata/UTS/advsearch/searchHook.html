@@ -1,0 +1,77 @@
+<div class="hookOuter actSeOuter">
+ <!-- /UTS/advsearch/searchHook.html -->
+<h2 class="hookHeader">[t]Advanced search[/t]</h2>
+
+<form name="advsearchhookform" method="post" action="{$handler}">
+{* keyword field *}
+<if [uts:show_keyword_options]>
+<div class="hookInput">
+<label>[t]Keywords[/t]</label>
+<input type="text" name="main_keywords" value="{$keywordsValue|escape}">
+</div>
+</if>
+
+{* publication options *}
+<if [uts:show_publication_options]>
+<div class="hookInput">
+<label>[t]Show[/t]</label>
+<select name="main_pubdate">
+    <option value="">---</option>
+    <html_options options=$pubOpts selected=$pubOption>
+</select>
+</div>
+</if>
+
+{* distance options *}
+<if [uts:show_distance_matching]>
+<span class="actJshDist">
+<div class="hookInput">
+	<label for="idCountryCode">[t]Country[/t]</label>
+	<select id="idCountryCode" name="proximity_countryCode">
+		<html_options options=$proximityCountries selected=$proximity.countryCode>
+	</select>
+</div>
+
+<div class="hookInput">
+	<label for="idZipcode">[t]Zipcode[/t]</label>
+	<input type="text" id="idZipcode" name="proximity_zipCode" value="{$proximity.zipCode|escape}">
+</div>
+
+<div class="hookInput">
+	<label for="idPrefDist">[t]Preferred distance [km][/t]</label>
+	<input type="text" id="idPrefDist" name="proximity_preferredDistance" value="{$proximity.preferredDistance|escape}">
+</div>
+
+<div class="hookInput">
+	<label for="idMaxDist">[t]Maximum distance [km][/t]</label>
+	<input type="text" id="idMaxDist" name="proximity_maxDistance" value="{$proximity.maxDistance|escape}">
+</div>
+</span>
+</if>
+
+{* criteria fields *}
+<foreach from=$critList item=crit>
+<div class="hookInput">
+	<label>{$crit.name}</label>
+	<if $crit.sm == "M">
+    {* multiselect *}
+    	<select name="matchcriteria_{$crit.field}[]" multiple="multiple">
+        	<html_options options=$crit.options selected=$crit.curValues>
+	    </select>
+	<else>
+    {* single select *}
+    	<select name="matchcriteria_{$crit.field}">
+	        <option value="NULL">---</option>
+    	    <html_options options=$crit.options selected=$crit.curValue>
+	    </select>
+	</if>
+</div>
+</foreach>
+
+<div class="buttonContainer aplBc aplLdBc"><input type="submit" name="bApplSubmit" value="[tb]Search[/tb]" class="button"></div>
+
+<input type="hidden" name="command" value="submitrequest">
+</form>
+
+
+</div>

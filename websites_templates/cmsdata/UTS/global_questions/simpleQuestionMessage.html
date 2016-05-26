@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- /UTS/global_questions/simpleQuestionMessage.html -->
+<if $messageId>	
+<if $messageId == "ERR-1">
+[t]This is a required field![/t]
+<elseif $messageId == "ERR-2">
+[t]Initial character should be a capital.[/t]
+<elseif $messageId == "ERR-3">
+[t]All words must begin with a capital letter.[/t]
+<elseif $messageId == "ERR-4">
+[t]All letters must be capitals.[/t]
+<elseif $messageId == "ERR-5">
+[t]Datefield must be : dd-mm-yyyy or dd-mm-yy.[/t]
+<elseif $messageId == "ERR-6">
+[t]Invalid postcode, should be 9999XX.[/t]
+<elseif $messageId == "ERR-7">
+[t]Incorrect amount of digits.[/t]
+<elseif $messageId == "ERR-8">
+[t]Incorrect email address.[/t]
+<elseif $messageId == "ERR-9">
+[t]All letters must be capitals.[/t]
+<elseif $messageId == "ERR-10">
+[t]Incorrect phone number.[/t]
+<elseif $messageId == "ERR-11">
+[t]Incorrect amount of characters.[/t]
+<elseif $messageId == "ERR-12">
+[t]You must enter characters only.[/t]
+<elseif $messageId == "ERR-13">
+[t]Incorrect amount of minimal/maximal selection.[/t]
+<elseif $messageId == "ERR-14">
+[t]Text doesn't match to the regular expression.[/t]
+<elseif $messageId == "ERR-15">
+[t]Wrong file type (must be jpg, jpeg, png or gif).[/t]
+<elseif $messageId == "ERR-16">
+[t]Erro during procesing the file.[/t]
+</if>
+
+</if>
+
+<!--uts:end inner-->
+</body>
+</html>

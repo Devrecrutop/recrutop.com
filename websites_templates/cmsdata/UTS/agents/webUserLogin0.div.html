@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>WebUserForm2</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/agents/WebUserLogin0.div.html -->
+
+<div class="outer jsaOuter jsaStrtOuter">
+<!-- /fotemplatesdiv/WebUserForm0.html -->
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<h1 class="title jsaTitle jsaStrtTitle">[t]PageTitle[/t]</h1>
+<!--END_PageTitle-->
+<!--INTRO ITEM SHOULD BE ADDED HERE -->
+<!--APPLICATIONROW-->
+<form name="form" method="post" action="/index.php/page/agents/command/start/bb/1">
+<!--START_Block1-->
+<!--START_Title1-->
+<h2 class="subHeader jsaSH jsaStrtSh">[t]Title1[/t]</h2>
+<!--END_Title1-->
+<!--START_Text1-->
+<div class="text jsaText jsaStrtText">[t]Text1[/t]</div>
+<!--END_Text1-->
+<!--END_Block1-->
+<input type="hidden" name="Login" value="1">
+<div class="formInput jsaInputE jsaStrtE"><label>[t]SingleWord1[/t]</label><!--SingleWordLink1--><input type="text" name="Email"></div>
+<div class="formInput jsaInputPwd jsaStrtPwd"><label>[t]SingleWord2[/t]</label><!--SingleWordLink2--><input type="password" name="PassWord"></div>
+<div class="error jsaError jsaStrtError">{if $loginError}[t]loginError[/t]{/if}</div>
+<div class="buttonContainer jsaBC jsaStrtBcLogin"><input type="submit" name="Submit" value="[t]Button1[/t]" class="button"><!--ButtonLink1--></div>
+</form>
+
+
+<!--START_8-->
+<form name="form" method="post" action="/index.php/page/agents/command/start/bb/1">
+<!--START_Block2-->
+<!--START_Title2-->
+<h2 class="subHeader jsaSubHeader jsaStrtShReg">[t]Title2[/t]</h2>
+<!--END_Title2-->
+<!--START_Text2-->
+<div class="text jsaText jsaStrtTextReg">[t]Text2[/t]</div>
+<!--END_Text2-->
+<!--END_Block2-->
+<div class="buttonContainer jsaBC jsaStrtBcReg"><input type="button" name="[t]Button2[/t]" value="[t]Button2[/t]" onClick="location='/index.php/page/agents/command/enroll/bb/1';" class="button"><!--ButtonLink2--></div>
+</form>
+<!--END_8-->
+
+<!--START_Block3-->
+<form name="form" method="post" action="/index.php/page/agents/command/forgotpassword/bb/1">
+<!--START_Title3-->
+<h2 class="subHeader jsaSubHeader jsaStrtShFpwd">[t]Title3[/t]</h2>
+<!--END_Title3-->
+<!--START_Text3-->
+<div class="text jsaText jsaText jsaStrtTectFpwd">[t]Text3[/t]</div>
+<!--END_Text3-->
+<div class="formInput jsaInputE jsaStrtE"><label for="emailaddress_fp">E-mail / Username:</label><input type="text" id="emailaddress_fp" name="Email"></div>
+<div class="buttonContainer jsaBC jsaStrtBcFpwd"><input type="submit" name="MailPassword" value="[t]Button3[/t]" class="button"><!--ButtonLink3--></div>
+<!--END_Block3-->
+</div>
+</form>
+
+<!--uts:end inner-->
+</body>
+</html>

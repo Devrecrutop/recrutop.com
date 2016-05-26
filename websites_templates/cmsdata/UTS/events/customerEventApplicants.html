@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/customerEventsApplicants.html -->
+
+<script type="text/javascript">
+
+var emailOnImg = "{$website}/_images_global/email-on.gif";
+var emailOffImg = "{$website}/_images_global/email-off.gif";
+
+{literal}
+
+	function toggleBulkmail(enid)
+	{
+				
+		$.get('/index.php/page/foevents/command/toggle_bulkmail/enid/'+enid, null,		
+	  function(data){	    
+	  		//alert(data.status);
+				//alert(data.bulkmailEnabled);																			 
+				if(data.status == 'OK')
+				{					
+					if(data.bulkmailEnabled == '1')
+					{						
+						$("#emailIco_"+enid).attr("src", emailOnImg);
+					}
+					else
+					{
+						$("#emailIco_"+enid).attr("src", emailOffImg);
+					}					 	
+				}
+				//alert($("#emailIco_"+enid).attr("src")); 															 	    
+	  }, 'json');
+	  
+	}
+	
+	function toogleBulkmailAll(evid, toggle)
+	{
+		var strConfirm = "[th]Really unselect all e-mails?[/th]";
+		if(toggle == 1)
+		{
+			var strConfirm = "[th]Really select all e-mails?[/th]";
+		}
+		
+		if(!confirm(strConfirm))
+		{
+			return false;
+		}
+
+		$.get('/index.php/page/foevents/command/toggle_bulkmail_all/evid/'+evid+'/toggle/'+toggle, null,		
+	  function(data) {	    	  																									 
+				if(data.status == 'OK')
+				{					
+					if(data.bulkmailEnabled == '1')
+					{																																																					 							 					
+						$(".emailIco").each(function (i) {
+							$(this).attr("src", emailOnImg);
+						});						
+					}
+					else
+					{																		
+						$(".emailIco").each(function (i) {					
+						 	$(this).attr("src", emailOffImg);
+						});													
+					}					 	
+				}																		 	    
+	  }, 'json');	
+	
+	}	
+
+{/literal}
+</script>
+
+<style type="text/css">
+
+</style>
+
+<div class="outer aplOuter aplListOuter">
+<!-- UTS/events/customerEventApplicants.html Custom built for JobNet 2010 -->
+
+<h1 class="title aplTitle aplListTitle">[t]Event Applicant list[/t]</h1>
+{$menu}
+<div class="text aplText aplListText">[t]Here you can find Applicants of the event[/t] <b>{$applicantlist[0].Title}</b></div>
+
+
+<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+
+	<tr>
+		<th class="aplTblHeader">[t]Applicant[/t]</th>
+		<th class="aplTblHeader">[t]Action[/t]</th>
+	</tr>
+
+	{if $fo_event_bulkmail_candidate && $countApplicants > 0}
+		<tr>
+			<td class="aplListLink aplLLcandidate">&nbsp;</td>
+			<td class="aplListLink aplLLdel" style="padding-top: 4px;">			
+				&nbsp;
+				<a href="#" onClick="toogleBulkmailAll('{$evid}',1); return false;"><img src="{$website}/_images_global/email-on.gif" title="[thg]Select all e-mails[/thg]" border="0" ></a>
+				&nbsp;
+				<a href="#" onClick="toogleBulkmailAll('{$evid}',0); return false;"><img src="{$website}/_images_global/email-off.gif" title="[thg]Unselect all e-mails[/thg]" border="0" ></a>				
+			</td>
+		</tr>
+	{/if}
+	</table>
+
+	{foreach from=$applicantlist item=app}
+	<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+		<tr>
+			<th class="aplTblHeader">
+				<a href="/index.php/page/CustomersRemote/command/detail/userkid/{$app.CandidateId}/bb/1/">{$app.voornaam} {if $app.tussenvoegsel}{$app.tussenvoegsel} {/if}{$app.achternaam}</a>
+			</th>
+			<th class="aplTblHeader aplListLink aplLLdel">
+				<a href="/index.php/page/CustomersRemote/command/detail/userkid/{$app.CandidateId}/evid/{$evid}/bb/1/">[t]read more[/t]</a>
+				<a href="#" onClick="toggleBulkmail('{$app.id}'); return false;"><img id="emailIco_{$app.id}" name="emailIco_{$app.id}" class="emailIco" src="{$website}/_images_global/email-{if $app.bulkmailEnabled}on{else}off{/if}.gif" alt="[th]Email List Setting[/th]" border="0" ></a>
+			</th>
+		</tr>
+		<tr>
+			<td class="aplListLink aplLLcandPlace">
+				<div>
+					{if $app.woonplaats}
+						<div class="itemLine actIl actIlCvs">
+							<label>[t]City:[/t]</label>
+							<span>{$app.woonplaats|escape}</span>
+							<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+						</div>
+					{/if}
+					{if $app.opleidn_str}
+						<div class="itemLine actIl actIlCvs">
+							<label>[t]Education level:[/t]</label>
+							<span>{$app.opleidn_str|escape}</span>
+							<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+						</div>
+					{/if}
+					{if $app.graduationDate}
+						<div class="itemLine actIl actIlCvs">
+							<label>[t]Graduation date:[/t]</label>
+							<span>{$app.graduationDate|date_format:"%d-%m-%Y"|escape}</span>
+							<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+						</div>
+					{/if}
+					{if $app.chapo}
+						<div class="itemLine actIl actIlCvs">
+							<label>[t]Short description:[/t]</label>
+							<span>{$app.chapo|strip_tags|escape|truncate:1000}</span>
+							<div class="cleaner itemLineCleaner actCvsSRIlCleaner"></div>
+						</div>
+					{/if}
+				</div>
+			</td>
+			<td class="aplLLcandRemove">
+				<a href="/index.php/page/foevents/command/eventapplicantremove/evid/{$evid}/kid/{$app.CandidateId}/bb/1" onclick="return confirm('[th]Are you sure you want to remove this candidate?[/th]')"><img src="{$website}/_images_global/buttonClearFilter.gif" alt="[th]Remove Candidate[/th]" border="0" ></a>
+			</td>
+		</tr>
+
+	{foreachelse}
+		<tr>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan="2">[t]There are no applicants for this event...[/t]</td>
+		</tr>
+	{/foreach}
+</table>
+
+{if $fo_event_bulkmail_candidate && $countApplicants > 0}
+		<div class="aplBulkMail">
+			<a href="#" onClick="toogleBulkmailAll('{$evid}',0); return false;"><img src="{$website}/_images_global/email-off.gif" title="[thg]Unelect all e-mails[/thg]" border="0" >&nbsp;[tg]Unselect all e-mails[/tg]</a>
+			<a href="#" onClick="toogleBulkmailAll('{$evid}',1); return false;"><img src="{$website}/_images_global/email-on.gif" title="[thg]Select all e-mails[/thg]" border="0" >&nbsp;[tg]Select all e-mails[/tg]</a>
+		</div>
+	<div class="aplBulkMail"><a href="/index.php/page/foevents/command/bulkmailcreate/evid/{$evid}/bb/1/">[t]Email versturen naar selectie[/t]</a></div>
+{/if}
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

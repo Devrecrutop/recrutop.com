@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- /UTS/customers/recrowd_applicant_tk_preprocess.html -->
+<div class="outer">
+
+<h1 class="title">[t]CV process[/t]</h1>
+<div class="text">[t]Process uploaded CV.[/t]</div>
+
+
+<h2 class="subHeader">[t]Automatic Candidate Registration[/t]</h2><!--SingleWordLink1-->
+<div class="text">[t]You can automatically enter a candidate into our system using the options below. First, enter the
+candidate's e-mail address. Then, find the candidate's CV on your harddisk, using the file upload box. If we allready have the candidate
+in our system, we will notify you. If now, we will extract the CV automatically, and you can check and correct this after.[/t]
+</div>
+
+<!--START_CANDIDATE_FIELDS-->
+<script language="JavaScript" type="text/javascript">
+{literal}
+function checkform() {
+  form=document.form_cv;
+  if (form.c_email.value == "") {
+    alert( "[t]Please enter your email address.[/t]" );
+    form.c_email.focus();
+    return false ;
+  }
+  else{
+    if (emailcheck(form.c_email.value)==false){
+      form.c_email.focus();
+    }
+    else{
+     if (form.file.value !="") {
+     	  var ffv = form.file.value.toLowerCase();
+		  if (!(ffv.substring(ffv.length - 4) == '.doc' || ffv.substring(ffv.length - 5) == '.docx' || ffv.substring(ffv.length - 4) == '.pdf')) {
+	          alert( "[t]Only Word documents (.doc/.docx) or PDF files can be uploaded.[/t]" );
+          } else {
+            form.submit();
+            document.getElementById('progressbar').style.display="block";
+          }
+      }
+      else{
+        form.submit();
+      }
+    }
+  }
+  return true ;
+}
+function emailcheck(emailstr) {
+mess="[t]Invalid E-mail address[/t]";
+        apos=emailstr.indexOf("@")
+        dotpos=emailstr.lastIndexOf(".")
+        if (emailstr == "" || apos<1 || dotpos-apos<2) {
+			alert(mess);
+			return false;
+		}else{
+			return true;
+        }
+}
+{/literal}
+</script>
+
+<form name="form_cv" action="/index.php/page/spapplicants/bb/1/backcommand/detail" method="post" enctype="multipart/form-data">
+<input type="hidden" name="command" value="spapplyforjobtk">
+<input type="hidden" name="vid" value="{$vid}">
+<input type="hidden" name="code" value="{$code}">
+<input type="hidden" name="backcommand" value="detail">
+<input type="hidden" name="supplier" value="1">
+<input type="hidden" name="vendor_add_cv" value="1">
+<input type="hidden" name="recrowd_process" value="1">
+
+{if $added_email_already_exists neq ""}
+<div class="error">[t]this email already exists: [/t]{$added_email_already_exists}</div>
+{/if}
+
+{if $missing_cv}
+<div class="error">[t]Please provide applicant's CV.[/t]</div>
+{/if}
+
+<div class="formInput">
+<label>[t]CV[/t]:</label>
+<input type="hidden" name="MAX_FILE_SIZE" value="512000">
+<input type="file" name="file">
+</div>
+
+<div class="buttonContainer">
+<input class="button" type="button" name="Button4" value="[th]Automatic Candidate Registration[/th]" onClick="return checkform();">
+</div>
+<input type="hidden" name="c_email" id="c_email" size="35" value="candidate@email.nl">
+</form>
+
+<!--ButtonLink3-->
+{if $smarty.session.candidate_textkernel_went_wrong != 1}
+<div id="progressbar" style="display:none">
+  <img src="/_images_global/busy_bar.gif" />
+</div>
+{/if}
+<!--END_CANDIDATE_FIELDS-->
+
+
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

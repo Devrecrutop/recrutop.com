@@ -1,0 +1,13 @@
+<div class="hookOuter oJhOut">
+ <!-- /UTS/advsearch/recentQueriesHookCandidates.frag.html -->
+<if !empty($rqlist)>
+<div class="hookHeader oJhT">[t]Your recent CV searches:[/t]</div>
+<div class="hookText oJhTx">
+<ul>
+<foreach from=$rqlist item=rq>
+	<li><a href="{$rootpath}/page/advsearchcvs/bb/1/command/userecentquery/id/{$rq.id}">{$rq.simple_description|escape|truncate:[uts:truncate_descriptions]} ({$rq.result_count} [th]results[/th])</a></li>
+</foreach>
+</ul>
+</div>
+</if>
+</div>

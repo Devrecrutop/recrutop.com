@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/customers/candidates_matched.html -->
+
+<div class="outer candidatesMathedOuter">
+<h1 class="title">[t]Candidates matched for[/t]&nbsp;{$vacancy}</h1>
+
+{$customer_menu}
+
+{foreach from=$candidates item=cand key=kid}
+<div class="itemContainer">
+  {if $cand.foto}
+  <div class="itemImage" onClick="{$cand.fotoLink}">{$cand.foto}</div>
+  {/if}
+  <h3 class="itemTitle">
+      <a href="/index.php/page/customers_ext/command/detail_matched/bb/1/code/{$code}/mkid/{$cand.id}/vid/{$vid}">{$cand.voornaam}</a>
+
+      {if $cand.score}
+      <span class="candidate_match_score">
+      {$cand.score}% match
+      </span>
+      {/if}
+
+  </h3>
+
+  <!--START_KEYWORDS-->
+  <!--START_KEYWORD_ROW1-->
+  <!--START_Location-->
+  <div class="itemWord"><span>[t]City[/t]:<!--SingleWordLink1--></span>{$cand.woonplaats}</div>
+  <!--END_Location-->
+  <!--END_KEYWORD_ROW1-->
+  <!--START_KEYWORD_ROW2-->
+  <!--START_Region-->
+  <div class="itemWord"><span>[t]Region[/t]:<!--SingleWordLink2--></span>{$cand.regio}</div>
+  <!--END_Region-->
+  <!--END_KEYWORD_ROW2-->
+  <!--END_KEYWORDS-->
+  <!--START_ShortDescription-->
+  <div class="itemDescription">{$cand.ShortDescription}
+  {if $cand.ShortDescription}
+  	...<a href="/index.php/page/customers_ext/command/detail_matched/code/{$code}/mkid/{$cand.id}/bb/1/vid/{$vid}">[t]more[/t]</a>
+  {/if}
+  </div>
+  <!--END_ShortDescription-->
+{foreachelse}
+<div class="intro">[t]No matched candidates.[/t]</div>
+{/foreach}
+</div>
+<!--START_BUTTON2-->
+<div class="buttonContainer">
+<input type="button"  value="[th]Terug[/th]" onClick="window.location='{$backurl}';" name="button" class="button"><!--ButtonLink2-->
+</div>
+<!--END_BUTTON2-->
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

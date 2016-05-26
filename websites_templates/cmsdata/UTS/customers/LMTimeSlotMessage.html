@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+{*
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+*}
+<meta name="robots" content="noindex,follow" >
+<div class="outer aplOuter aplTyOuter">
+<!-- /UTS/customers/LMTimeSlotMessage.html -->
+
+{$menu}
+
+<h1 class="title apltitle aplTyTitle">[t]Appointments[/t]</h1>
+
+<if $messageId>
+<div class="intro aplIntro aplTyIntro">
+<if $messageId == "SEAT_SAVED">
+[t]Thank you for booking an appointment.[/t]
+<elseif $messageId == "ALREADY_BOOKED">
+[t]You have already made an appointment.[/t]
+<elseif $messageId == "INVITATION_ACTIVATED">
+[t]You have already made an appointment.[/t]
+<elseif $messageId == "INVITATION_REMOVED">
+[t]This invitation was cancelled.[/t]
+<elseif $messageId == "TIMESLOT_ALREADY_FILLED">
+[t]Sorry, this timeslot has already been filled. Please choose another.[/t]
+{if $params.bookfor}
+<div class="buttonContainer">
+{if $use_bo_timeslot}
+<input class="button" type="button"  value="[t]Back[/t]" onClick="window.location='/index.php/page/bo_timeslots/bb/1/command/bookAndGo/bookfor/{$params.bookfor}/'">
+{else}
+<input class="button" type="button"  value="[t]Back[/t]" onClick="window.location='/index.php/page/lm_timeslots/bb/1/command/bookASeat/bookfor/{$params.bookfor}/'">
+{/if}
+</div>
+{/if}
+<elseif $messageId == "RECONSIDER"> 
+[t]You have informed us that you were unable to plan an appointment of any of the given moments. 
+We will now reconsider your application and contact you about the further process[/t]
+{if $params.bookfor && 1==0}
+<div class="buttonContainer">
+{if $use_bo_timeslot}
+<input class="button" type="button"  value="[t]Back[/t]" onClick="window.location='/index.php/page/bo_timeslots/bb/1/command/bookAndGo/bookfor/{$params.bookfor}/'">
+{else}
+<input class="button" type="button"  value="[t]Back[/t]" onClick="window.location='/index.php/page/lm_timeslots/bb/1/command/bookASeat/bookfor/{$params.bookfor}/'">
+{/if}
+
+
+</div>
+{/if}
+<else>
+</if>
+</div>
+</if>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

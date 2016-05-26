@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>                
+</head>
+<body>
+<!--uts:begin inner-->
+
+<link type="text/css" href="/_css_global/candidateScheduleCalendar.css" rel="stylesheet" media="all">
+
+{literal}
+<script type="text/javascript">
+<!--
+{/literal}
+{* JS VARIABLES BEGIN *}  
+  var exceptionMsg = '{$exceptionMsg|escape:javascript}';
+  var exceptionCode = parseInt('{$exceptionCode|escape:javascript}');
+
+{* JS VARIABLES END *}  
+{literal}
+  
+  function addScheduleByDate(date)
+  {
+    //alert(date+', '+hour+', '+minute);
+    
+    $('#calPresetDate').val(date);
+    //$('#calPresetHour').val(7);
+    //$('#calPresetMinute').val(0);
+    
+    $('#calCommand').val('addschedulepreset');
+    $('#csc_cal_form').submit();        
+  }
+  
+  /**
+   * submit form and goto month
+   */     
+  function submitForm()
+  {  
+    $('#calCommand').val('calendar');
+    $('#csc_cal_form').submit();      
+  }
+  
+  /**
+   * sumbmit form and do not change month
+   */     
+  function submitFormNoDate()
+  {    
+    $('#calCommand').val('calendarnodate');
+    $('#csc_cal_form').submit();    
+  }
+  
+  /**
+   * got next/prew month
+   */     
+  function goToMonth(month, year)
+  {            
+     $('#gotoMonth').val(month);
+     $('#gotoYear').val(year);
+     $('#csc_cal_goto').submit();    
+  }
+  
+  /**
+   *
+   */     
+  function addSchedule()
+  {    
+    $('#calCommand').val('addschedule');
+    $('#csc_cal_form').submit();        
+  }  
+  
+  function finishPlanning()
+  {
+    $('#calCommand').val('finish');
+    $('#csc_cal_form').submit();        
+  }
+  
+  // initialize document	
+  $(document).ready(function () {
+  
+    if(exceptionMsg.length > 0 || !isNaN(exceptionCode))
+    {
+      var displayMsg = '[th]General planning error occurred[/th]'; 
+      
+      if(isNaN(exceptionCode))
+      {
+        // exception message from add/edit/delete dialogs if thre is not exception code
+        displayMsg = exceptionMsg;
+      }
+      else
+      {
+        switch(exceptionCode)
+        {
+          case 1000: displayMsg = '[th]General planning error occurred[/th]'; break;
+          case 1100: displayMsg = '[th]Job planning error occurred[/th]'; break;
+          case 1400: displayMsg = '[th]Job planning error occurred[/th]'; break;
+          case 1200: displayMsg = '[th]Candidate planning error occurred[/th]'; break;          
+          case 1201: displayMsg = '[th]Undefined shift[/th]'; break;
+          case 1202: displayMsg = '[th]Undefined job shift[/th]'; break;
+          case 1203: displayMsg = '[th]Undefined planning style[/th]'; break;
+          case 1204: displayMsg = '[th]This time range does not cover whole shift for job[/th]'; break;
+          case 1205: displayMsg = '[th]Range is not inside existing candidate shift[/th]'; break;          
+          case 1300: displayMsg = '[th]Candidate planning error occurred[/th]'; break;          
+          case 1301: displayMsg = '[th]You can not use this type of recurrence for weekend days[/th]'; break;
+          case 1302: displayMsg = '[th]Unknow day to repeat[/th]'; break;
+          case 1303: displayMsg = '[th]Unknown recurrence type[/th]'; break;
+          case 1304: displayMsg = '[th]There are no items to add, check your setup[/th]'; break;
+          case 1305: displayMsg = '[th]You are trying to add duplicate entry [/th]'; break;
+          case 1306: displayMsg = '[th]Unsupported view type[/th]'; break;          
+          case 2000: displayMsg = '[th]Invalid Date - Time format[/th]'; break;
+          case 3000: displayMsg = '[th]End precede to Start Date/Time[/th]'; break;
+          case 4000: displayMsg = '[th]Planning in historical data is not possible[/th]'; break;
+          case 5000: displayMsg = '[th]Missing or incorrect argument[/th]'; break;
+          case 6000: displayMsg = '[th]Incorrect or undefined entity[/th]'; break;
+          case 7000: displayMsg = '[th]Duplicate entry[/th]'; break;
+                                    
+          default : displayMsg = '[th]General planning error occurred[/th]';
+        }
+      }
+      
+      alert(displayMsg);
+    }
+    
+  });  
+  
+//-->
+</script>
+{/literal}
+
+<div class="outer aplOuter aplScCalOuter">
+	<!-- /UTS/applicants/candidateScheduleCalendarMonth.html -->
+	<h1 class="title aplTitle aplScCalTitle">[t]Candidate schedule[/t]</h1>
+	{$menu}
+	<div class="cScCalContainer" style="width:{if $cScViewType == 1 || $cScViewType == 2}520px;{else}700px;{/if}">
+		<form name="csc_cal_goto" id="csc_cal_goto" action="{$handler}" method="post">
+			<input type="hidden" name="command" id="gotoCommnd" value="setmonth">
+			<input type="hidden" name="goto_month" id="gotoMonth" value="">
+			<input type="hidden" name="goto_year" id="gotoYear" value="">
+		</form>
+		<div class="form aplScCalForm">
+			<form name="csc_cal_form" id="csc_cal_form" action="{$handler}" method="post">    
+				<input type="hidden" name="command" id="calCommand" value="calendar">
+				<input type="hidden" name="week_nr" id="calWeekNr" value="{$cScWeekInfo.weekNr}"> {* TO PRESET DATE IN ADD DIALOG BY ADD BUTTON *}
+				<input type="hidden" name="week_year" id="calWeekYear" value="{$cScWeekInfo.year}"> {* TO PRESET DATE IN ADD DIALOG BY ADD BUTTON *}
+				<input type="hidden" name="schedule_id" id="calScheduleId" value=""> {* USED FOR EDIT ITEM *}    
+				<input type="hidden" name="preset_date" id="calPresetDate" value=""> {* TO PRESET DATE IN ADD DIALOG BY DBL CLICK ACTION*}
+				<input type="hidden" name="preset_hour" id="calPresetHour" value=""> {* TO PRESET DATE IN ADD DIALOG BY DBL CLICK ACTION*}
+				<input type="hidden" name="preset_minute" id="calPresetMinute" value=""> {* TO PRESET DATE IN ADD DIALOG BY DBL CLICK ACTION*}
+
+				<div class="buttonContainer">
+					<input type="button" name="bttnAddSchedule" value="[th]Add Schedule[/th]" onclick="addSchedule()">
+					{if $enableFinishedButton}
+					<input type="button" name="bttnFinishPlanning" value="[th]Finish planning[/th]" onclick="finishPlanning()">
+					{/if}
+				</div>
+				<div class="formInput aplScCalInput">
+					<label>[t]Go to[/t]:</label>
+					{html_uts_select_date prefix="csc_date_" start_year=-5 end_year=+5 display_days=false all_extra='onChange="submitForm();"' time=$cScFromTs}
+				</div>
+				<div class="formInput aplScCalInput">
+					<label>[t]Show[/t]:</label>
+					<select name="csc_view_type" onChange="submitFormNoDate();">        
+						{if $utsTplProps.enable_view_work_week}
+							<option value="2" {if $cScViewType == 2}selected="selected"{/if}>[th]Work Week[/th]</option>
+						{/if}
+						{if $utsTplProps.enable_view_week}
+							<option value="3" {if $cScViewType == 3}selected="selected"{/if}>[th]Week[/th]</option>
+						{/if}
+						{if $utsTplProps.enable_view_month}
+							<option value="4" {if $cScViewType == 4}selected="selected"{/if}>[th]Month[/th]</option>
+						{/if}
+					</select>
+				</div>
+				<div class="cScCalPrev cScCalPrevMonth">
+					<a href="#" onClick="goToMonth('{$cScMonthInfo.prevMonth}', '{$cScMonthInfo.prevYear}'); return false;">[t]Previous Month[/t]</a>
+				</div>
+				<div class="cScCalNext cScCalNextMonth">
+					<a href="#" onClick="goToMonth('{$cScMonthInfo.nextMonth}', '{$cScMonthInfo.nextYear}'); return false;">[t]Next Month[/t]</a>
+				</div>
+			</form>
+		</div>  
+		<table border="0" cellpadding="0" cellspacing="0" class="cscmTblMnth">
+			{* HEADER *}
+			<tr class="cscmRw">
+				<td class="cscmDayHeaderCell noborder halfwidth">&nbsp;</td>
+				<td class="cscmDayHeaderCell">[tg]Mon[/tg]</td>
+				<td class="cscmDayHeaderCell">[tg]Tue[/tg]</td>
+				<td class="cscmDayHeaderCell">[tg]Wed[/tg]</td>
+				<td class="cscmDayHeaderCell">[tg]Thu[/tg]</td>
+				<td class="cscmDayHeaderCell">[tg]Fri[/tg]</td>
+				<td class="cscmDayHeaderCell">[tg]Sat[/tg]</td>
+				<td class="cscmDayHeaderCell">[tg]Sun[/tg]</td>
+			</tr>
+			{* WEEK ROWS *}    
+			{foreach from=$mwr item=wr name=week_loop}    
+				<tr class="cscmDaysRw">
+					<td class="cscmWeekCell halfwidth">{$wr.wnr}</td>
+					{foreach from=$wr.days item=d name=day_loop}
+						{if $smarty.foreach.week_loop.first}
+							{* PRECEEDING EMPTY DAYS *}
+							{if $smarty.foreach.day_loop.first}
+								{if $wr.empty_days != 0}                                                                      
+									{section name=tds loop=$wr.empty_days step=1}
+										<td class="cscmDayCell">&nbsp;</td>
+									{/section}                                                                      
+								{/if}
+							{/if}
+							<td class="cscmDayCell{if $d.date == $currentDate} today{/if}" onDblClick="addScheduleByDate('{$d.date}')">
+								<div class="cscmColors">
+									{if $d.statuses}
+										<table class="cscmColorTable" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+											<tr>
+												{foreach from=$d.statuses item=st}
+													<td style="background-color: {$baseBgColors[$st]};">&nbsp;</td>
+												{/foreach}
+											</tr>
+										</table>
+									{else}
+										&nbsp;
+									{/if}
+								</div>
+								<div class="cscmDayNr">{$d.day}</div>
+							</td>
+						{elseif $smarty.foreach.week_loop.last}
+							<td class="cscmDayCell{if $d.date == $currentDate} today{/if}" onDblClick="addScheduleByDate('{$d.date}')">
+								<div class="cscmColors">
+									{if $d.statuses}
+										<table class="cscmColorTable" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+											<tr>
+												{foreach from=$d.statuses item=st}
+													<td style="background-color: {$baseBgColors[$st]};">&nbsp;</td>
+												{/foreach}
+											</tr>
+										</table>
+									{else}
+										&nbsp;
+									{/if}
+								</div>
+								<div class="cscmDayNr">{$d.day}</div>
+							</td>
+							{* FOLLOWING EMPTY DAYS *}
+							{if $smarty.foreach.day_loop.last}
+								{if $wr.empty_days != 0}                                                                      
+									{section name=tds loop=$wr.empty_days step=1}
+										<td class="cscmDayCell">&nbsp;</td>
+									{/section}                                                                      
+								{/if}
+							{/if}
+						{else}
+							<td class="cscmDayCell{if $d.date == $currentDate} today{/if}" onDblClick="addScheduleByDate('{$d.date}')">
+								<div class="cscmColors">
+									{if $d.statuses}
+										<table class="cscmColorTable" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+											<tr>
+												{foreach from=$d.statuses item=st}
+													<td style="background-color: {$baseBgColors[$st]};">&nbsp;</td>
+												{/foreach}
+											</tr>
+										</table>
+									{else}
+										&nbsp;
+									{/if}
+								</div>
+								<div class="cscmDayNr">{$d.day}</div>
+							</td>
+						{/if}
+					{/foreach}
+				</tr>
+			{/foreach}  
+		</table>
+	</div>	
+	<div class="cScCalLegend">
+		{* DEFINITION OF ALL COLORS IS IN FILE class.CandidateSchiftSchedule*}     			 		        
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #00cc00;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]Available[/t]</div>
+		</div>              
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #ffff33;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]Maybe available[/t]</div>
+		</div>              
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #ff3333;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]Not Available[/t]</div>
+		</div>
+		<div class="cScCalLegendColor">
+			<div class="cScCalLegendColorSqr" style="background-color: #0099ff;">&nbsp;</div>
+			<div class="cScCalLegendColorTxt">[t]Assignment[/t]</div>
+		</div>
+	</div>      
+</div>
+<!--uts:end inner-->
+</body>
+</html>

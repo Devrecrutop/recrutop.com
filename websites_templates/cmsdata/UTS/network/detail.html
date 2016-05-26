@@ -1,0 +1,109 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>[t]Network Detail[/t]</title>
+	<style type="text/css">
+		/* {literal} */
+		a img
+		{
+			border: none;
+		}
+		.marginTop
+		{
+			margin-top: 1em;
+		}
+		.center
+		{
+			text-align: center; /* Only for IE */
+			margin: 0px auto; /* Other browsers */
+		}
+		*>.center /* Other browsers */
+		{
+			display: table; /* Allow resizing */
+			text-align: inherit; /* Disable IE centering */
+		}
+		ul.horizontalMenu,
+		.horizontalMenu ul
+		{
+			margin: 0em;
+			padding: 0em;
+		}
+		.horizontalMenu li
+		{
+			list-style: none;
+			display: inline;
+			margin: 0em;
+			padding: 0em 1em;
+		}
+		/* {/literal} */
+	</style>
+</head>
+<body>
+<!--uts:begin inner-->
+{assign var='websiteId' value=$website.id}
+{assign var='klantid' value=$website.klantid}
+<div class="outer nwOuter nwdOuter">
+<!-- /UTS/network/detail.html -->
+<h1 class="title" nwTitle nwdTitle>{$website.name}</h1>
+<div class="photo1 nwPhoto1 nwdPhoto1"><div class="photo2 nwPhoto1 nwdPhoto2"><a style="float:left;clear:right;margin:3px 15px 10px 0px;" href="{$website.website}" title="{$website.name}"><img src="{$clients.$klantid._website}/_images_upload/{if $website.network_image == "Picture" && $website.network_picture}{$website.network_picture}{else}{$website.network_logo}{/if}" alt="{$website.name}" border="0" ></a></div></div>
+<div class="text nwText nwdText">
+{if $websitesType.$websiteId}
+<!--
+<img src="/_images_upload/{$website.network_logo}" border="0">
+-->
+<div class="textWord nwTextWord nwdTextWord nwdActivity">
+<span>[t]Aktiviteit[/t]:</span>
+{foreach from=$websitesType.$websiteId key=i item=websiteType}
+	{if $i}, {/if}
+	{$websiteTypes.$websiteType}
+{/foreach}
+</div>
+{/if}
+<div class="textWord nwTextWord nwdTextWord nwdWebsite">
+<span>[t]Website[/t]:</span>
+<a href="{$website.website}" title="{$website.name} {foreach from=$websitesType.$websiteId key=i item=websiteType}{if $i}, {/if}{$websiteTypes.$websiteType}{/foreach}" target="_blank">{$website.name}</a>
+</div>
+
+</div>
+
+<div class="text nwText nwdText nwdNetworkText">{$website.network_text}</div>
+
+{if $useWiqets && $wiqet.wiqetCode}
+<div id="flashWiqet">[t]Wiqet wordt geladen...[/t]</div>
+<script src="http://www.introvoice.nl/2.0/Wiqet.js" type="text/javascript"></script>
+<script type="text/javascript">
+var IVWiqetCode = '{$wiqet.wiqetCode}';
+var IVplayerUrl = 'http://www.wiqet.nl/media/flash/player.swf';
+var IVwidth = '{$wiqet.width}px';
+var IVheight = '{$wiqet.height}px';
+var IValign = 'middle';
+var IVbgColor = '#ffffff';
+var IVdivPlayer = 'flashWiqet';
+var error = play_wiqet("", IVplayerUrl, 'player',
+IVWiqetCode, "", "",
+IVwidth, IVheight, IValign,
+IVbgColor, "", "",
+IVdivPlayer, "", "",
+"", "");
+if (error) document.write(error);
+</script>
+{/if}
+
+{if $shortlist}
+<h2 class="subHeader nwSubHeader nwdSubHeader nwdRecVacSh">[t]Recente vacatures van[/t] {$website.name}</h2>
+<div class="text nwText nwdText nwdRecVacText">[t]Hieronder vindt u een aantal van de meest recente vacatures die door dit bedrijf zijn gepubliceerd. Klik op de vacaturetitel om een uitgebreide beschrijving van de vacature te bekijken.[/t]</div>
+{/if}
+
+{foreach from=$shortlist key=i item=s}
+<div class="itemContainer nwIc nwdIc nwdVacIc">
+<h3 class="itemTitle nwItemTitle nwdItitle nwdIVacTitle"><a href="{$s.link}" target="_blank">{$s.name}</a></h3>
+{if $s.location}
+<div class="itemWord nwItemWord nwdItemWord nwdVacWord"><span>[t]in[/t]</span>{$s.location}</div>
+{/if}
+<div class="itemDescription nwItemDesc nwdItemDesc nwdVacDesc">{$s.ShortDescription}</div>
+</div>
+{/foreach}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

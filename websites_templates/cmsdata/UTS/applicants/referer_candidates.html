@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+
+<!-- template: referer_candidates.html -->
+<div class="outer referCandidate">
+<h1 class="title">[t]Supplied Candidates[/t]</h1>
+
+{$candidate_menu}
+
+<div class="menuContainer">
+<div class="menuLink"><a href="/index.php/page/applicantsreferapplicants/bb/1/command/vacancy_list/">[t]Job list[/t]</a></div>
+<div class="menuLink menuLinkLastChild"><a href="/index.php/page/applicantsreferapplicants/bb/1/command/candidate_list/">[t]Candidate list[/t]</a></div>
+<div style="clear:both;"></div>
+</div>
+
+
+
+<form method="post" action="{$script}">
+<div class="formInput">
+<label>[t]Vacancy[/t]:</label>
+{html_options name=vacancy options=$vacancies selected=$vacancy onchange="javascript:this.form.submit();"}
+</div>
+<div class="formInput formCheckbox">
+<input name="passive" type="hidden" value="N"><input name="passive" type="checkbox" value="Y" {if $passive=="Y"}checked{/if} onclick="javascript:this.form.vacancy.value='0';this.form.submit();">[t]Oude vacatures[/t]
+</div>
+</form>
+
+{foreach from=$candidates item=cand key=kid}
+<div class="itemContainer">
+<h3 class="itemTitle">{$cand.voornaam} {$cand.tussenvoegsel} {$cand.achternaam}</h3>
+<div class="itemWord custCandInsertDate"><span>[t]Supply date[/t]:</span>{$cand.invoerdatum|date_format:"%d.%m.%Y"}</div>
+<div class="itemWord custCandJob"><span>[t]Function[/t]:</span>{$cand.functie_o}</div>
+<div class="itemWord"><span>[t]Reference nr.[/t]:</span>{$cand.ref_nr}</div>
+{if $cand.werkgever && $cand.toon_opdrachtgever}
+<div class="itemWord"><span>[t]Employer[/t]:</span> {$cand.werkgever}</div>
+{/if}
+{if $cand.cand_status}
+<div class="itemWord"><span>[t]Status[/t]:</span>{$cand.cand_status}</div>
+{/if}
+{if $cand.status1}
+<div class="itemWord"><span>{$status1_name}:</span>{$cand.status1}</div>
+{/if}
+{if $cand.status2}
+<div class="itemWord"><span>{$status2_name}:</span>{$cand.status2}</div>
+{/if}
+{if $cand.status3}
+<div class="itemWord"><span>{$status3_name}:</span>{$cand.status3}</div>
+{/if}
+{if $staffing}
+<div class="itemWord"><span>[t]Staffing[/t]:</span>{$cand.staffing_status}</div>
+{/if}
+<div class="itemFooter">
+&nbsp;
+</div>
+</div>
+{/foreach}
+
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

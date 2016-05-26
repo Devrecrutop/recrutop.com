@@ -1,0 +1,118 @@
+{* req. ext. javascript: JQueryBase *}
+
+<script type="text/javascript" src="/_javascript_global/jquery.js"></script>
+<script type="text/javascript">
+//{literal}
+
+
+function getLocation(){
+
+
+  if (navigator.geolocation){
+  
+    navigator.geolocation.getCurrentPosition(showPosition, geoErrorHandler);
+  }
+  else{
+    //alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position){
+  //var geo_latitude=document.getElementById("geo_latitude");///
+  //var geo_longitude=document.getElementById("geo_longitude");///
+  var coordinates_latitude=document.getElementById("coordinates_latitude");
+  var coordinates_longitude=document.getElementById("coordinates_longitude");
+  
+  var curr_latitude = new Number(14.12);
+  var curr_longitude = new Number(14.12);
+  
+  curr_latitude = position.coords.latitude;
+  curr_longitude = position.coords.longitude;
+
+  if (!isNaN(curr_latitude) && !isNaN(curr_longitude)) {  
+    curr_latitude = curr_latitude.toPrecision(7);
+    curr_longitude = curr_longitude.toPrecision(7);
+    
+    //geo_latitude.innerHTML =  curr_latitude;///
+    //geo_longitude.innerHTML =  curr_longitude; ///
+    coordinates_latitude.value =  curr_latitude;
+    coordinates_longitude.value =  curr_longitude;
+  }
+}
+  
+function geoErrorHandler(error){
+  switch(error.code){
+    case error.PERMISSION_DENIED:
+      //"User denied the request for Geolocation."
+      break;
+    case error.POSITION_UNAVAILABLE:
+      //"Location information is unavailable."
+      break;
+    case error.TIMEOUT:
+      //"The request to get user location timed out."
+      break;
+    case error.UNKNOWN_ERROR:
+      //"An unknown error occurred."
+      break;
+    }
+}
+  
+  
+
+// define ready function
+
+
+
+$(document).ready(function() {
+ getLocation();
+});
+
+
+//{/literal}
+</script>
+
+<div class="hookOuter actJshOuter">
+	<!-- /UTS/advsearch/jobSearchGeolocationHook.html -->
+	<div class="hookHeader actJshHeader">[t]Search job around you[/t]</div>
+
+  <form name="advsearchhookform" method="post" action="/index.php/page/advsearchvacs/bb/1" id="advgeosearchhookform">
+  
+      
+      {*
+      <div id="yourCurrentLocation" style="display:none;">
+      <div id="geo_latitude"></div>
+      <div id="geo_longitude"></div>
+      </div>
+      *}
+      
+  
+			<div class="hookWord actJshKw"><label for="asSearchHookKeywords">[t]Keywords[/t]</label></div>
+			<div class="hookInput actJshKw"><input type="text" id="asSearchHookKeywords" name="main_keywords" value="{$keywordsValue|escape}"></div>
+		
+    
+			<if   [uts:show_distance_options] >
+				<div class="hookWord actJshPrefDist"><label for="idPrefDistSrchHook">[t]Preferred distance [km][/t]</label></div>
+				<div class="hookInput actHInput actHIPrefDist">
+					<select id="idPrefDistSrchHook" name="coordinates_preferredDistance">
+						<option value="">---</option>
+						<html_options options=$distOpts selected=$default_distance >
+					</select>
+				</div>
+			<else>
+        <input type="hidden" name="coordinates_preferredDistance" id="coordinates_preferredDistance" value="{$default_distance}">
+      </if>    
+
+
+
+	
+		{* !!! end extended controls *}
+		<div class="hookButton actJshButton"><input type="submit" name="bJshSubmit" value="[tb]Search around me[/tb]" class="button" ></div>
+		<input type="hidden" name="command" value="submitrequest">
+		<input type="hidden" name="origin" value="hook">
+    <input type="hidden" name="tesst" id="tesst" value="">
+    <input type="hidden" name="coordinates_latitude" id="coordinates_latitude" value="">
+    <input type="hidden" name="coordinates_longitude" id="coordinates_longitude" value="">
+	</form>
+
+	<div class="cleaner actHCleaner"></div>
+</div>

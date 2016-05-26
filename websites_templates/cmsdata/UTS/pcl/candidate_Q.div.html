@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title> CustomersCandidatesDetail
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+<!--
+function hidestatus(){
+window.status='Otys e-Recruiting Systems'
+return true
+}
+if (document.layers)
+document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+document.onmouseover=hidestatus
+document.onmouseout=hidestatus
+-->
+</SCRIPT>
+</head>
+<body>
+<!--uts:begin inner-->
+<script language="Javascript1.2">
+{literal}
+function check_formstate(tabcode){
+layerShow(tabcode);
+//switch_tab(tabcode);
+}
+function printWindow(){
+browserVersion = parseInt(navigator.appVersion)
+if (browserVersion >= 4) window.print()
+}
+function print_it() {
+{/literal}
+//document.frames.actionframe.location = '/index.php/page/CustomersRemote/bb/1/exp//command/detail/kid/{$kid}/option/print&amp;vid={$vid}';
+f = document.getElementById("actionframe");
+f.src = "/index.php/page/CustomersRemote/bb/1/exp//command/detail/kid/{$kid}/option/print&amp;vid={$vid}";
+{literal}
+}
+{/literal}
+// -->
+</script>
+
+<div class="outer pclOuter pclOuterDetail">
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<h1 class="title">[t]Candidate[/t]:&nbsp;{$uid}</h1>
+<!--END_PageTitle-->
+
+<!--START CV-->
+{if !$nodata}
+<h2 class="subHeader">[t]Resume[/t]</h2>
+
+
+{foreach from=$data item=record}
+{if $record.value}
+<!--START_RECORD-->
+<h2 class="subHeader">{$record.name}</h2>
+{if $record.part=="TXT" || $record.part=="PER" || $record.part=="CRIT"}
+<!--START_TEXT_PART-->
+<div class="text">{$record.value}</div>
+<!--END_TEXT_PART-->
+{/if}
+{if $record.part=="OTH"}
+<!--START_ITEM_PART-->
+	{foreach from=$record.value key=subkey item=subvalue}
+	<div class="">
+		<!--START_SUBITEM-->
+		{$subkey}
+	
+		{if is_array($subvalue) && count($subvalue) > 0}
+			{foreach from=$subvalue item=subv}
+				{$subv.data}
+			{/foreach}
+		{else}
+			{$subvalue}
+		{/if}
+		<!--END_SUBITEM-->
+	</div>
+	{/foreach}
+<!--END_ITEM_PART-->
+{/if}
+
+{if $record.part=="SKI"}
+<!--START_ITEM_PART-->
+	{foreach from=$record.value key=subkey item=subvalue}
+	<div class="">
+	<!--START_SUBITEM-->
+	{$subkey}
+	
+		{foreach from=$subvalue item=skill}
+			{$skill.skill}
+		
+		{if $skill.proficiency}
+			{$skill.proficiency}
+		{/if}
+		
+		{if $skill.lezen || $skill.schrijven || $skill.spreken}
+			{if $skill.lezen}
+				[t]Read[/t]:{$skill.lezen}
+			{/if}
+			{if $skill.schrijven}
+				[t]Write[/t]:{$skill.schrijven}
+			{/if}
+			{if $skill.spreken}
+				[t]Speak[/t]:{$skill.spreken}
+			{/if}
+		{/if}
+		{/foreach}
+	<!--END_SUBITEM-->
+	</div>
+	{/foreach}
+<!--END_ITEM_PART-->
+{/if}
+
+{if $record.part=="WER"}
+	{foreach from=$record.value key=subkey item=item}
+	<div class="itemContainer">
+		<h3 class="itemTitle">{$item.EmployerNameAndPlace}</h3>
+		<!--START_HISTORY_ITEM-->
+		<div class="itemWord">
+		<span>[t]Van/tot[/t]</span>
+		<!--SingleWordLink2-->
+		{$item.StartDate} - {$item.EndDate}
+		</div>	
+		<div class="itemWord">
+		<span>[t]Experience[/t]</span>
+		{$item.ExperienceDescription}
+		<!--END_HISTORY_ITEM-->
+		</div>
+	</div>
+	{/foreach}
+{/if}
+
+{if $record.part=="OPL"}
+	{foreach from=$record.value key=subkey item=item}
+	<div class="itemContainer">
+		<h3 class="itemTitle">{$item.Degree}</h3>
+		<div class="itemWord">
+		<!--START_HISTORY_ITEM-->
+		<span>[t]Van/tot[/t]</span>
+		<!--SingleWordLink2-->
+		{$item.StartDate} - {$item.EndDate}
+		</div>
+
+		<div class="itemWord">
+		<!--SingleWordLink2-->
+		<span>[t]Degree direction[/t]</span>
+		{$item.InstituteNameAndPlace}
+		</div>
+
+		<div class="itemWord">
+		<!--SingleWordLink2-->
+		<span>[t]Diploma[/t]</span>
+		{$item.Diploma}
+		</div>
+
+		<div class="itemWord">
+		<!--SingleWordLink2-->
+		<span>[t]Diploma date[/t]</span>
+		{$item.DiplomaDate}
+		</div>
+		
+		<div class="itemWord">
+		<!--SingleWordLink2-->
+		<span>[t]Subjects[/t]</span>
+		{$item.Subjects}
+		<!--END_HISTORY_ITEM-->
+		</div>
+	</div>
+	{/foreach}
+{/if}
+<!--END_RECORD-->
+{/if}
+{/foreach}
+
+{else}
+<div class="intro">[t]It seems you have no rights to see any candidates details.[/t]</div>
+{/if}
+<!--END CV-->
+<!--DOCUMENTS-->
+{if count($docs)>0}
+<h2 class="subHeader">[t]Documents[/t]</h2>
+<div class="text">
+{foreach from=$docs item=doc }
+<a href = "[website]/index.php/page/viewcv/bypass_smartlink/1/bb/1/nr/{$doc.nr}" target="actionframe">{$doc.name}</a>
+{/foreach}
+</div>
+{/if}
+<!--END_DOCUMENTS-->
+
+<!--NOTES-->
+{if count($notes)>0}
+<h2 class="subHeader">[t]notes[/t]</h2>
+<div class="text">
+{foreach from=$notes item=note }
+{$note.date}
+{$note.note}
+{/foreach}
+</div>
+{/if}
+<!--END_NOTES-->
+
+<div class="buttonContainer">
+<input type="button" class="button" name="form" value="[th]Terug[/th]" onClick="document.location='{$terug}';"><!--ButtonLink3-->
+</div>
+</div>
+<iframe name="actionframe" id="actionframe" width="1" height="1" border="0" frameborder="NO"></iframe>
+<!--uts:end inner-->
+</body>
+</html>

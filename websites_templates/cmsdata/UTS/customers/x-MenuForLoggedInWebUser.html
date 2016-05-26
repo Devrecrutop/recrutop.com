@@ -1,0 +1,60 @@
+{if $supplier_portal}
+<div class="menuContainer mCCustomer mCCustomerSp">
+{if $suppliers_job_list_allowed}
+<div class="menuLink mLjbl"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/list">[t]Jobs List[/t]</a></div>
+{/if}
+{if $suppliers_candidates_list_allowed}
+<div class="menuLink mLcandList"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/c_list">[t]Candidates List[/t]</a></div>
+{/if}
+<div class="menuLink menuLinkLastChild mLlogout"><a href="[website]/index.php/page/customers_ext/bb/1/command/logout">[t]Logout[/t]</a><!--SingleWordLink3--></div>
+</div>
+{else}
+<div class="menuContainer mCCustomer DIVCustomerMenu">
+{if $allow_search_cand}
+<div class="menuLink menuLinkFirstChild mLcandSearch"><a href="[website]/index.php/page/CustomersRemote/bb/1/command/buildform">[t]Search[/t]</a></div>
+{/if}
+{if $show_job_list}
+<div class="menuLink mLjbl"><a href="[website]/index.php/page/customers_ext/bb/1">[t]Jobs list[/t]</a></div>
+{/if}
+{if $direct_vacancy_adding}
+<div class="menuLink mLaddavacancy"><a href="[website]/index.php/page/customers_ext/bb/1/command/addavacancy/bb/1">[t]Add vacancy[/t]</a></div>
+{/if}
+{if $jobboards_allowed}
+<div class="menuLink mLjbmanager"><a href="[website]/index.php/page/customers_ext/bb/1/command/jbmanager/bb/1">[t]Job boards[/t]</a></div>
+{/if}
+{if $auto_agents_customers}
+<div class="menuLink mLagents"><a href="/index.php/page/agentsCustomers/bb/1">[t]Agents[/t]</a></div>
+{/if}
+{if $use_banner_manager}
+<div class="menuLink mLbanner"><a href="/index.php/page/banner_engine/bb/1">[t]Banners[/t]</a></div>
+{/if}
+{if $allow_add_wiqet_to_job}
+<div class="menuLink mLwiqets"><a href="/index.php/page/wiqets/bb/1">[t]Wiqets[/t]</a></div>
+{/if}
+{if $fin_info}
+<div class="menuLink mLfininfo"><a href="[website]/index.php/page/customers_ext/bb/1/command/fininfo">[t]Statistics[/t]</a></div>
+{/if}
+{if $subscriptions}
+<div class="menuLink mLsubscriptions"><a href="[website]/index.php/page/customers_ext/bb/1/command/subscriptions">[t]Subscriptions[/t]</a></div>
+{/if}
+{if $use_new_event_applicant_module}
+<div class="menuLink mLevents"><a href="/index.php/page/foevents/command/customerevents/bb/1/">[t]Events[/t]</a></div>
+{/if}
+{if $enable_network_edit}
+<div class="menuLink mLnetwork"><a href="/index.php/page/network/command/editCustomerDetails/bb/1/">[t]Network[/t]</a></div>
+{/if}
+{if $view_jt_profiles}
+<div class="menuLink mLnetwork"><a href="/index.php/page/jtprofiles/command/list/bb/1/">[t]Profiles[/t]</a></div>
+{/if}
+{if $add_jt_profiles}
+<div class="menuLink mLnetwork"><a href="/index.php/page/jtprofiles/command/add/bb/1/">[t]New Profile[/t]</a></div>
+{/if}
+{if $show_financial_page}
+<div class="menuLink mLfinancial"><a href="/index.php/page/finance/command/startup/bb/1/">[t]Financial information[/t]</a></div>
+{/if}
+{if $statistics}
+<div class="menuLink mLnetwork"><a href="/index.php/page/custstats/command/start/bb/1/">[t]Statistics[/t]</a></div>
+{/if}
+<div class="menuLink menuLinkLastChild mLlogout"><a href="[website]/index.php/page/customers_ext/bb/1/command/logout">[t]Logout[/t]</a></div>
+</div>
+{/if}

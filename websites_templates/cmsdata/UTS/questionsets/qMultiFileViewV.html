@@ -1,0 +1,20 @@
+<!-- UTS/questionsets/qMultiFileViewV.html ORIGINAL -->
+<div class="formInput aplMFileInput">
+<label>{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+<input id="{$elementIdPrefix}_NEW" type="file" name="{$elementNamePrefix}_NEW">
+</div>
+<foreach from=$items item=item key=key>
+<div class="formInput formSmallInput aplMFileLink aplFileButton">
+<label class="labelFile"><a href="{$item._displayLink}" target="_blank" title="{$item.mime_type}">{$item.filename}</a></label>
+<input class="smallButton aplSB aplFileSb" type="button" value="[th]X[/th]" onclick="qsDeleteFile('{$qd.id}', '{$key}')">
+</div>
+</foreach>
+<div class="formInput formSmallInput aplMFileButton">
+<label>&nbsp;</label>
+<input class="button" type="button" value="[tb]Upload[/tb]" onclick="qsUploadFile('{$qd.id}')">
+</div>
+<if $qd.explanation>
+<div class="explain aplMFileExplain">
+    {$qd.explanation|escape}
+</div>
+</if>

@@ -1,0 +1,30 @@
+{* use %s in subject to insert vacancy title *}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<p>
+	[t]Dear[/t] {$userName|escape}[t],[/t]
+</p>
+
+{if $matchCount > 0}
+	<p>
+		[t]You have posted the job[/t] {$vacancyTitle|escape}[t]. We have automatched {$matchCount} candidates to this job. Please click on the following link to view them:[/t]
+	</p>
+{else}
+	<p>
+		[t]You have posted the job[/t] {$vacancyTitle|escape}[t]. We have run an automatch. Unfortunately no candidates have been found that match its criteria. Please click on the following link to view the job:[/t]
+	</p>
+{/if}
+
+<p>
+	<a href="{$url|escape}">{$urlDescription|escape}</a>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

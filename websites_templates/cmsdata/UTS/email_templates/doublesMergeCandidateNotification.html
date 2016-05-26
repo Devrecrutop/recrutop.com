@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+
+<p>[t]Dear {$candidateName},[/t]</p>
+
+<p>[t]We have found more than one record of you in our database. We have now merged your records into one.
+This means that if you had more than one password to login, only one is left that will work.
+Below you can find a link with which you can directly login to your profile and change your password to the one you want to keep.
+If you have used different e-mail addresses, the e-mail address via which you have received this e-mail serves now as your username.[/t]</p>
+
+{if $showPassword}
+<p>[t]Your current password is: {$password}[/t]</p>
+{/if}
+
+<p><a href="{$loginUrl}">[t]Click here to login to your profile.[/t]</a></p>
+
+<p class="utsSignature">
+[t]Regards[/t]<br>
+{$consultantName}<br>
+{$clientName}<br>
+{$websiteDescription}
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

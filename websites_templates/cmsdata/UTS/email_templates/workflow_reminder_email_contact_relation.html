@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>             
+    <br>
+    
+
+        <p>
+            <b>[t]Workflow name:[/t] {$workflow_name|escape:'htmlall'}</b>
+        </p>
+
+         <br><br>
+         
+        {foreach from=$items item=d}
+         <p>   
+
+            [t]The candidate {$d.candidate_name} linked to the vacancy {$d.vacancy_name} {$d.vacancy_ref} didn't recieve any update.[/t]
+         </p>   
+         <br><br>
+        {/foreach}        
+        <br><br>
+
+    
+</p>
+   
+<p>[t]OTYS INTERACTIVE CLERQ[/t]</p>
+
+
+<!--uts:end inner-->
+</body>
+</html>

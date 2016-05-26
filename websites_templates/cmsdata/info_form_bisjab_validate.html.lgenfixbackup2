@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>REACTIEFORMULIER BISJAB</title>
+<link rel="stylesheet" type="text/css" href="http://www.otys.nl/_css_global/globalStyling.css">
+<link rel="stylesheet" type="text/css" href="http://www.yourit.nl/insta6/_css/style2.css">
+<!-- FORM SENDER CHANGE CODES AND HIDDEN FIELDS FOR EACH CUSTOMER -->
+</head>
+<style>
+body{
+background:none;
+margin:10px;
+}
+</style>
+<body>
+
+
+<!--START_9-->
+<!--START-->
+<div class="outer contentContactOuter">
+<h1 class="title contentContactHeader">[titel]</h1>
+
+<!--START_1-->
+<div class="intro contentContactIntro">[introfoto][introtekst]<!--INTROLINKS--></div>
+<!--END_1-->
+
+<!--COL1-->
+<div class="contentContactItemContainer">
+<h2 class="subHeader contentContactSubHeader">[kop]</h2>
+<div class="text contentContactText">{foto}[body]</div>
+<!--LINKS-->
+</div>
+<!--ENDCOL1-->
+
+<!-- these fields are free, except Email -->
+<form id="commentForm" class="moduleForm cmxform contentContactForm" action="http://213.206.122.28/mailer/mailer_fl2.php?command=mail&code=[code]" method="post" enctype="multipart/form-data">
+<input type="hidden" name="code" value="[code]">
+<input type="hidden" name="thankyoupage" value="info_form_thankyou.html">
+<div style="position: absolute; width: 0px; height: 0px; overflow: hidden;"><label>Leave this field EMPTY!<input type="text" name="email" /></label></div>
+<input type="hidden" name="to_email" value="mickael.dopatrocinio@otys.fr">
+<input type="hidden" name="to_naam" value="[klantnaam]">
+<input type="hidden" name="email_onderwerp" value="">
+<input type="hidden" name="header_consultant" value="Informatie aanvraag">
+<input type="hidden" name="footer_consultant" value=" ">
+<input type="hidden" name="header_customer" value="<p>Geachte heer/mevrouw,</p><p>We hebben uw informatieaanvraag ontvangen, waarvoor onze dank.<br>Wij zullen zo spoedig mogelijk contact met u opnemen.</p><p>&nbsp;</p>">
+<input type="hidden" name="footer_customer" value="Met vriendelijke groet,<br><br>[klantnaam]">
+<input type="hidden" name="notify_subject_consultant" value="Informatie aanvraag vanaf de website">
+<input type="hidden" name="notify_subject_customer" value="Uw aanvraag bij [klantnaam]">
+
+<div class="formInput contentContactFormInput"><label class="contactName" for="Naam">Naam</label><input type="text" name="Naam" id="Naam" class="required"></div>
+<div class="formInput contentContactFormInput"><label class="contactFunction" for="Functie">Functie</label><input type="text" name="Functie" id="Functie"  class="required"></div>
+<div class="formInput contentContactFormInput"><label class="contactOrganistation" for="Organisatie">Organisatie</label><input type="text" name="Organisatie" id="Organisatie"  class="required"></div>
+<div class="formInput contentContactFormInput"><label class="contactEmail" for="cemail">E-Mail</label><input type="text" name="Email" id="cemail" class="required email"></div>
+<div class="formInput contentContactFormInput"><label class="contactRemarks" for="Opmerkingen">Opmerkingen</label><textarea name="Opmerkingen" rows="6" id="Opmerkingen"></textarea></div>
+<div class="formButton contentContactButton"><input class="button" type="submit" name="Submit" value="Versturen"></div>
+</form>
+
+</div>
+
+  <script type="text/javascript" src="http://www.yourit.nl/insta6/_javascript/jquery.validate.js"></script>
+
+  <script>
+  $(document).ready(function(){
+    $("#commentForm").validate();
+  });
+  </script>
+
+<!--END-->
+<!--END_9-->
+
+</body>
+</html>

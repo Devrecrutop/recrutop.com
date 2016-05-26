@@ -1,0 +1,31 @@
+<!-- UTS/questionsets/qMultiLineAddressViewH.html STANDARD -->
+<div class="formInput aplMAdreInput L1">
+<label for="{$elementIdPrefix}_l1">[t]Address[/t]{if $required}<span>*</span>{/if}</label>
+<input type="text" value="{$currentValue.l1|escape}" name="{$elementNamePrefix}_l1" id="{$elementIdPrefix}_l1">
+</div>
+<if $perFieldErrorMessages.l1>
+<div class="error aplMAdreError E1">{$perFieldErrorMessages.l1}</div>
+</if>
+
+<div class="formInput aplMAdreInput L2">
+<label for="{$elementIdPrefix}_l2">[t]Address line 2[/t]</label>
+<input type="text" value="{$currentValue.l2|escape}" name="{$elementNamePrefix}_l2" id="{$elementIdPrefix}_l2">
+<if $perFieldErrorMessages.l2>
+<div class="error aplMAdreError E2">{$perFieldErrorMessages.l2}</div>
+</if>
+
+<div class="formInput aplMAdreInput L3">
+<label for="{$elementIdPrefix}_l3">[t]Address line 3[/t]</label>
+<input type="text" value="{$currentValue.l3|escape}" name="{$elementNamePrefix}_l3" id="{$elementIdPrefix}_l3">
+</div>
+<if $perFieldErrorMessages.l3>
+<div class="error aplMAdreError E3">{$perFieldErrorMessages.l3}</div>
+</if>
+
+<if $qd.explanation>
+<div class="explain aplMAdreExplain explain_{$elementName}">{$qd.explanation|escape}</div>
+</if>
+
+<if $currentErrorMessage>
+<div class="error aplMAdreError error_{$elementName}">{$currentErrorMessage}</div>
+</if>

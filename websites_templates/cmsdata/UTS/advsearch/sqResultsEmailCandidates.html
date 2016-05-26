@@ -1,0 +1,118 @@
+{* this email is sent to the to the stored query victim *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<style type="text/css">
+<literal>
+.itemContainer{
+clear:both;
+margin-bottom:10px;
+}
+.itemImage{
+float:right;
+}
+.itemImage a{}
+.itemImage img{
+margin-left:15px;
+margin-bottom:15px;
+}
+.itemTitle{}
+.itemWord{}
+.itemWord span{
+padding-right:2px;
+}
+.itemDescription{
+padding-bottom:15px;
+}
+.itemFooter{
+padding-bottom:15px;
+}
+.itemFooterWord{
+display:inline;
+padding-right:4px;
+margin-right:4px;
+border-right:1px solid;
+}
+.itemFooterWord span{
+padding-right:2px;
+}
+.iFoFirstChild{}
+.iFoChild{}
+.iFoLastChild{
+border-right:none;
+}
+</literal>
+</style>
+<p>[t]Dear Madam / Sir,[/t]</p>
+<p>[t]this is the list of results currently matching your stored query:[/t]</p>
+<div>
+   <!-- /UTS/advsearch/sqResultsEmailCandidates.html -->  
+{* actual result list *}
+<foreach from=$items item=r>
+<div class="itemContainer">
+
+<h3 class="itemTitle">
+<a title="{$r.data.kb_uid|escape}" href="{$r._detail_link}">
+<if "[uts:display_in_link]" == "230"> {*candidateuid*}
+  {if $r.data.kb_uid}{$r.data.kb_uid|escape}{else}[t]Candidate[/t]{/if}    
+<elseif "[uts:display_in_link]" == "229"> {*cvtitle*}
+  {if $r.data.public_cv_title}
+    {$r.data.public_cv_title|escape}
+  {elseif $r.data.kb_uid}
+    {$r.data.kb_uid|escape}
+  {else}
+    [t]Candidate[/t]
+  {/if}
+<else>
+  {*FALLBACK*}
+  {if $r.data.kb_uid}{$r.data.kb_uid|escape}{else}[t]Candidate[/t]{/if}
+</if>
+
+</a>
+</h3>
+
+<if $r.data.woonplaats>
+<div class="itemDescription actItemDescr" style="color:#802020;">{$r.data.woonplaats|escape}</div>
+</if>
+<div class="itemDescription">{$r.data.chapo|strip_tags|truncate:200}</div>
+
+<div class="itemFooter">
+<div class="itemFooterWord"><img src="{$site}/_images_global/stars/{$r.starsImg}" alt="{$r.scorep}%" title="[th]Score[/th]: {$r.scorep}%"></div>
+<div class="itemFooterWord">
+<span>[t]Registered:[/t]</span>
+{* start registration date *}
+{if $r.data._registered_days_ago == 0}
+	[th]today[/th]
+{elseif $r.data._registered_days_ago == 1}
+	[th]yesterday[/th]
+{elseif $r.data._registered_days_ago le 5}
+	{t 1=$r.data._registered_days_ago count=$r.data._registered_days_ago}%1 days ago{/t}
+{else}
+	{$r.data._registered}
+{/if}
+{* end registration date *}
+</div>
+
+
+</div>
+</div>
+</foreach>
+
+</div>
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<p><a href="{$r._delete_link}">[t]Delete this stored query[/t]</a></p>
+<p><a href="{$r._use_link}">[t]Use this stored query to start a new search.[/t]</a></p>
+
+<p>[t]Regards,[/t]</p>
+<p>
+{$client.klant}<br />
+<a href="{$site}">{$site}</a><br />
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

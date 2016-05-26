@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+
+<p>
+[t]Dear[/t] [t],[/t]
+</p>
+
+<p>
+[t]We would like to ask you to reconfirm the granted access to your LinkedIn profile, please click on the link below:[/t]
+</p>
+
+<p>
+<a href="{$continueUrl}">[t]Click here to go to LinkedIn and grant us access to your LinkedIn information[/t]</a><br>
+<a href="{$rejectUrl}">[t]I don't want to grant access[/t]</a>
+</p>
+
+<p>
+[t]Regards,[/t]
+</p>
+
+<p>
+{if {$consultantName}[t]{$consultantName}[/t]<br>{/if}
+[t]{$clientName}[/t]
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

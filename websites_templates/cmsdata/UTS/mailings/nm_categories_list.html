@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>News Categories</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+<!-- UTS/mailings/nm_categories_list.html -->
+
+<table border="0" cellspacing="0" cellpadding="0" class="vacsTable">
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]PageTitle[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+<!--START_Block1-->
+
+<!--START_Title1-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Text1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+
+
+
+<tr>
+<td class="nwsSearchFormContainer">
+<form name="srchfrm" action="[website]/index.php/page/mailings/bb/1/cms_categorie/{$cms_categorie}" method="post">
+
+<table border="0" cellpadding="0" cellspacing="0" class="nwsSearchFormTbl">
+<tr>
+<td class="nwsSearchFormQuestion">[t]SingleWord1[/t]<!--SingleWordLink1--></td>
+<td class="nwsSearchFormFieldContainer"><input type="text" name="query" value="" ></td>
+<td class="nwsSearchFormButton"><input type="submit" class="button" value="[t]Button1[/t]" ><!--ButtonLink1--></td>
+</tr>
+</table>
+
+<input type="hidden" name="catid" value="" >
+<input type="hidden" name="command" value="search" >
+</form>
+</td>
+</tr>
+
+<tr>
+<td class="nwsCatListItemContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="nwsCatListItemTbl">
+<foreach from=$clist item=c>
+<tr>
+<td class="nwsCatListLink">
+<a href="/index.php/page/mailings/command/listarticles/bb/1/catid/{$c.id}">{$c.ml_mg_public_subject}</a>
+</td>
+
+<if $display_cat_rss>
+<td>
+<a href="/index.php/page/news_feed/bb/1/catid/{$c.id}" title="{$c.ml_mg_public_subject}"><div class="actMlCrssSimple"></div></a>
+</td>
+</if>
+
+</tr>
+</foreach>
+</table>
+
+<if $alist>
+
+<script>
+var code = '{$code}';
+{literal}
+function popup_newsletter(aid,cid){
+	url = 'mailings.php?code=' + code + '&command=showarticle&artid='+aid+'&catid='+cid+'';
+	var popupwindow = window.open(url,'newspopup', 'width=700,height=700,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes');
+	popupwindow.focus();
+}
+{/literal}
+</script>
+
+<div id="nwsArtSlOuter">
+<h3 class="nwsArtSlTitle">[t]SingleWord3[/t]<!--SingleWordLink3--></h3>
+<foreach from=$alist item=ar>
+<div class="nwsArtSlItem">
+
+	<if $fo_news_as_popup>
+	<a href="#" onclick="popup_newsletter('{$ar.id}', '{$c.id}'); return false;">{$ar.ml_Name}</a>
+	<else>
+	<a href="/index.php/page/mailings/command/showarticle/artid/{$ar.id}/bb/1/catid/">{$ar.ml_Name}</a>
+	</if>
+
+</div>
+</foreach>
+</div>
+</if>
+
+</td>
+</tr>
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">{$rcnt} [t]SingleWord2[/t]<!--SingleWordLink2--></td>
+</tr>
+</table>
+
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="formTblButtonCell"><input name="subscribe" type="button" value="[t]Button2[/t]" class="button" onclick="document.forms.subfrm.submit()"><!--ButtonLink2-->
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+</table>
+
+<form name="subfrm" action="/index.php/page/mailings/bb/1/cms_categorie/{$cms_categorie}" method="post">
+<input type="hidden" name="command" value="subform" >
+<input type="hidden" name="preselect" value="" >
+<input type="hidden" name="register_get" value="1" >
+</form>
+
+<!--uts:end inner-->
+</body>
+</html>

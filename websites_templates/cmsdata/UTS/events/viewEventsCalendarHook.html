@@ -1,0 +1,134 @@
+<!-- /UTS/events/viewEventsCalendarHook.html -->
+<script type="text/javascript">
+
+var eventDays = new Array();
+var cid = '{$cid}';
+var cLang = '{$cLang}';
+var cmsCat = '{$cmsCat}';
+
+var d = parseInt('{$day}', 10);
+var m = parseInt('{$month}', 10);
+var y = parseInt('{$year}', 10);
+
+var dt = new Date();
+
+//{literal}
+
+/*
+	// test events
+	eventDays = [
+		[2009, 10, 1], [2009, 10, 8], [2009, 10, 23], [2009, 10, 24],
+		[2009, 11, 2], [2009, 11, 4], [2009, 11, 23], [2009, 11, 22],
+		[2009, 12, 12], [2009, 12, 14], [2009, 12, 23], [2009, 12, 22] 
+	];
+*/			
+			
+
+$(document).ready(function() {
+						
+	try
+	{			
+		$('#eventCalendar').datepicker({
+			inline: true,
+			dateFormat: 'yy-mm-dd',
+			firstDay: 1,			
+																				
+			onSelect: goToPage,			
+			onChangeMonthYear: chMY, 			
+			beforeShowDay: eventDaysCheck,
+															
+			dayNames: ['[thg]Sunday[/thg]', '[thg]Monday[/thg]', '[thg]Tuesday[/thg]', '[thg]Wednesday[/thg]', '[thg]Thursday[/thg]', '[thg]Friday[/thg]', '[thg]Saturday[/thg]'],
+			dayNamesMin: ['[thg]Su[/thg]', '[thg]Mo[/thg]', '[thg]Tu[/thg]', '[thg]We[/thg]', '[thg]Th[/thg]', '[thg]Fr[/thg]', '[thg]Sa[/thg]'],
+			dayNameShort: ['[thg]Sun[/thg]', '[thg]Mon[/thg]', '[thg]Tue[/thg]', '[thg]Wed[/thg]', '[thg]Thu[/thg]', '[thg]Fri[/thg]', '[thg]Sat[/thg]'],
+			monthNames: ['[thg]January[/thg]', '[thg]February[/thg]', '[thg]March[/thg]', '[thg]April[/thg]', '[thg]May[/thg]', '[thg]June[/thg]', '[thg]July[/thg]', '[thg]August[/thg]', '[thg]September[/thg]', '[thg]October[/thg]', '[thg]November[/thg]', '[thg]December[/thg]'],			
+			monthNamesShort: ['[thg]Jan[/thg]', '[thg]Feb[/thg]', '[thg]Mar[/thg]', '[thg]Apr[/thg]', '[thg]May[/thg]', '[t]Jun[/t]', '[t]Jul[/t]', '[t]Aug[/t]', '[t]Sep[/t]', '[t]Oct[/t]', '[t]Nov[/t]', '[t]Dec[/t]']													
+		});
+		
+		
+		if(!isNaN(d) && !isNaN(m) && !isNaN(y))
+		{
+			dt.setFullYear(y,m-1,d);
+			//alert(dt.toString());
+			$('#eventCalendar').datepicker('setDate', dt);
+		}
+		
+	}
+	catch(e)
+	{
+		//$('#testMB').html('Error name: ' + e.name + ' message: ' + e.message);				 		
+	}		
+	
+	/**
+	 * go to detail page
+	 */	 	
+	function goToPage(dateText, inst) 
+	{ 
+		//alert('goto: '+dateText);
+		var arrDate = dateText.split('-');
+		window.location = '/index.php/page/eventsfo/command/list/bb/1/cms_categorie/'+cmsCat+'/CurrentLanguage/'+cLang+'/sm/'+arrDate[1]+'/sy/'+arrDate[0]+'/year/'+arrDate[0]+'/month/'+arrDate[1]+'/day/'+arrDate[2]; 
+	}	
+	
+	/**
+	 * mark days with events and disable other days
+	 */	 		
+	function eventDaysCheck(date) 
+	{								
+		for (i = 0; i < eventDays.length; i++) 
+		{					
+      if (date.getFullYear() == eventDays[i][0] && date.getMonth() == eventDays[i][1] - 1 && date.getDate() == eventDays[i][2])
+			{
+        return [true, 'eventDay'];
+      }
+		}				    
+		return [false, ''];	// disable non event days
+		//return [true, ''];	
+	}	
+	
+	/**
+	 * get data from db
+	 */	 	
+	function chMY(year, month, inst)
+	{			
+		/*	
+		$.post('/_php_global/get_client_events.php', { m: month, y: year },
+	  function(data){	    
+			eventDays = data;												  															 	    
+	  }, 'json');	  	  	  
+	  */
+		
+		// we need synchronous ajax query here
+		$.ajax({
+    	url: '/_php_global/get_client_events.php',      	
+    	type: 'POST',
+    	async: false,
+    	data: ({ m: month, y: year, cid: cid }),
+			dataType: 'json',
+			success: function(data){ 
+				eventDays = data;				
+			}                  
+    });                    	  	  	  
+  }
+	
+});
+
+//{/literal}
+</script>
+
+<style type="text/css">			
+{literal}				
+	/* mark event days */
+	.eventDay a { color: black !important; font-weight: bold !important;}	
+{/literal}							   			
+</style>
+
+<div class="hookOuter hContainer">
+	
+	<div class="hookTitle jcdhHeader">
+		<h1>[t]Event calendar[/t]</h1>
+	</div>			
+
+	<div class="hookDetailsContainer jcdhDetailsContainer" style="font: 7pt sans-serif;">					  	
+  	<div id="eventCalendar"></div>  	  	
+  </div>  
+		
+</div>

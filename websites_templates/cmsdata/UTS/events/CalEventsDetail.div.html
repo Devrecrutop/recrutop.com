@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>medica evenementen detail</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer eveOuter evdOuter">
+<!-- /UTS/events/CalEventsDetail.div.html -->
+<h1 class="title eveTitle evdTitle">{$e.Title}<if "[uts:show_publication_status]">{if $e._publicationStatus}<span class="evdStatPub">{$e._publicationStatus|escape}</span>{/if}</if></h1>
+
+{if $vw_top}
+<div class="evdVWtop">
+{$vw_top}
+</div>
+{/if}
+
+{if $wd_top}
+<div class="evdWDtop">
+{$wd_top}
+</div>
+{/if}
+
+<div class="photo1 evePhoto1 evdPhoto1"><div class="photo2 evePhoto2 evdPhoto2">{if $e.Photo}<img src="{$path_http}{$e.Photo}" border="0">{/if}</div></div>
+{if $e.categoryName}
+<h2 class="subHeader eveSh evdSh evdShCat">[t]Category[/t]</h2>
+<div class="text eveText evdText evdTextCat">{$e.categoryName}</div>
+{/if}
+{if $e.Location}
+<h2 class="subHeader eveSh evdSh evdShLoc">[t]Locatie[/t]</h2>
+<div class="text eveText evdText evdTextLoc">{$e.Location}</div>
+{/if}
+<h2 class="subHeader eveSh evdSh evdShDate">[t]Date[/t]</h2>
+{if $e.shortListText}
+<div class="text eveText evdText evdTextShort">{$e.shortListText}
+	{if [uts:display_time] }
+		{if $e.StartTime}&nbsp;{$e.StartTime|date_format:"%H:%M"}{/if}
+		{if $e.EndTime}&nbsp;-&nbsp;{$e.EndTime|date_format:"%H:%M"}{/if}
+	{/if}
+</div>
+{else}
+<div class="text textWord">
+{if $e.Start_Date}<!-- <span class="startDate eveSd evdSd"> -->{$e.Start_Date|date_format:"%d-%m-%Y"}{if $e.StartTime && [uts:display_time] }&nbsp;{$e.StartTime|date_format:"%H:%M"}{/if}<!-- </span> -->{else}<!-- <span class="startDate eveSd evdSd"> -->[t]Unknown[/t]<!-- </span> -->{/if}{if $e.End_Date != $e.Start_Date}&nbsp;-&nbsp;{if $e.End_Date}<!-- <span class="endDate eveEd evdEd"> -->{$e.End_Date|date_format:"%d-%m-%Y"}{if $e.EndTime && [uts:display_time] }&nbsp;{$e.EndTime|date_format:"%H:%M"}{/if}<!-- </span> -->{else}<!-- <span class="endDate eveEd evdEd"> -->[t]Unknown[/t]<!-- </span> -->{/if}{/if}
+</div>
+{/if}
+{if $e.Expiration_Date}
+<h2 class="subHeader eveSh evdSh evdShLastDate">[t]Uiterste inschrijfdatum[/t]</h2>
+<div class="text eveText evdText evdTextLastDate">{$e.Expiration_Date|date_format:"%d-%m-%Y"}</div>
+{/if}
+{if $program}
+<h2 class="subHeader eveSh evdSh evdShProg">[t]Program[/t]</h2>
+<div class="text eveText evdText evdTextProg">
+{foreach from=$program item=prg}
+<div class="textItemContainer eveIc evdIc">
+<div class="textItemTitle eveIt evdIt">{$prg.day}</div>
+<div class="textItemWord eveIw evdIw evdIwProgDate">{$prg.displayProgDate}</div>
+<div class="textItemWord eveIw evdIw evdIwTime"><span class="startDate eveSd evdSd evdSdProg">{$prg.prog_start_time|date_format:"%H:%M"}</span>-<span class="endDate eveEd evdEd evdEdProg">{$prg.prog_end_time|date_format:"%H:%M"}</span>{if $prg.note}&nbsp;&nbsp;<span class="startDate eveSd eveDetSd eveDetSdProg">{$prg.note}</span>{/if}</div>
+</div>
+{/foreach}
+</div>
+{/if}
+{if $consultant}
+<h2 class="subHeader eveSh evdSh evdShCp">[t]Contactpersoon[/t]</h2>
+<div class="text eveText evdText evdTextCp">{$consultant}</div>
+{/if}
+{if $e.File}
+<h2 class="subHeader eveSh evdSh evdShInfo">[t]Uitgebreide informatie[/t]</h2>
+<div class="text eveText evdText evdTextInfo"><span><a href="{$path_http}{$e.File}" target="_blank">{$e.File}</a></span></div>
+{/if}
+<!-- Extra text fields -->
+{foreach from=$textFields item=tf}
+<h2 class="subHeader eveSh evdSh evdShDesc">{$tf.title}</h2>
+<div class="text eveText evdText evdTextDesc">{$tf.text}</div>
+{/foreach}
+
+{if $vw_bottom}
+<div class="evdVWbottom">
+{$vw_bottom}
+</div>
+{/if}
+
+{if $wd_bottom}
+<div class="evdWDbottom">
+{$wd_bottom}
+</div>
+{/if}
+
+<div class="buttonContainer eveBc evdBc">
+<input class="button eveBut evdBut evdButPrint" type="button"  name="Button" value="[tb]Afdrukken[/tb]" onClick="document.getElementById('printframe').src = '/index.php/page/eventsfo/command/detail/evid/{$e.id}/option/print/code/{$code}/bb/1';">
+<input class="button eveBut evdBut evdButBack" type="button"  value="[tb]Terug[/tb]" onClick="location='/index.php/page/eventsfo/command/list/code/{$code}/bb/1'" name="button">
+{if $new_applicant_login_module && !$eventIsStopped}
+<input type="button"  name="Button4" value="[tb]Inschrijven[/tb]" onClick="location='/index.php/page/eventsapplicants/command/applyforevent/evid/{$e.id}/ConsultantId/{$e.ConsultantId}/code/{$code}/bb/1';" class="button">
+{else}
+{if !$eventIsStopped}
+<input class="button eveBut evdBut evdButSubscr" type="button"  name="Button4" value="[tb]Inschrijven[/tb]" onClick="location='/index.php/page/participantsfo/command/participate/evid/{$e.id}/ConsultantId/{$e.ConsultantId}/code/{$code}/bb/1';">
+{/if}
+{/if}
+<input class="button eveBut evdBut evdButMaf" type="button"  name="mailfriend" value="[tb]Mail-a-friend[/tb]"  onClick="location='/index.php/page/eventsfo/command/mailfriend/evid/{$e.id}/code/{$code}/bb/1';">
+
+{if $exhibitorsforclient}
+<input type="button"  name="button" value="[tb]Exhibitors[/tb]" onClick="location='/index.php/page/eventsfo/command/exhibitorslist/evid/{$e.id}/code/{$code}/bb/1';" class="button">
+{/if}
+
+{if $sourcelab_module}
+<input type="button"  name="button" value="[tb]Fairmap[/tb]" onClick="location='/index.php/page/sourcelab/command/fairmap/eventId/{$e.id}/bb/1';" class="button">
+{/if}
+
+</div>
+</div>
+<iframe name="printframe" id="printframe" width="0" height="0" frameborder="0" scrolling="No"></iframe>
+<!--uts:end inner-->
+
+</body>
+</html>

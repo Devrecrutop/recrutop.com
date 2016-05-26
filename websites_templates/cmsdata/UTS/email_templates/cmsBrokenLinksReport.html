@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>EMAIL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--uts:begin inner-->
+
+<div style="padding:1em;font-family:Arial,sans-serif">
+
+<h2 style="margin:0.3em;font-size:15px;font-weight:bold">[t]The Link Checker has detected broken links in the CMS[/t]</h2>
+
+<h3 style="margin:0.3em;font-size:12px;font-weight:normal">[t]The following links were not working when tested:[/t]</h3>
+
+<table style="font:10px Tahoma,Arial,sans-serif">
+<thead>
+<tr><th style="text-align: left;">[t]Site[/t]</th><th style="text-align: left;">[t]Language[/t]</th><th style="text-align: left;">[t]Page[/t]</th><th style="text-align: left;">[t]Link[/t]</th></tr>
+</thead>
+<tbody>
+
+{foreach from=$brokenlinks item=i}
+
+<tr>
+<th style="text-align: left;">{$i.site}</th>
+<th style="text-align: left;">{if $i.language}{$langs[$i.language]}{/if}</th>
+<th style="text-align: left;">{if $i.title}{$i.title}{else}{$i.page_id}{/if}</th>
+<td>{$i.link}</td>
+</tr>
+
+{/foreach}
+
+</tbody>
+</table>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

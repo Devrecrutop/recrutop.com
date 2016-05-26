@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<!-- 
+id: {$network_data.id}
+name: {$network_data.werkgever}
+logo: <img src="{$network_data.network_logo}">
+screenshot: <img src="{$network_data.network_picture}"><br>
+description_long: {$network_data.network_text}<br>
+description_short: {$network_data.portfolio_text}<br>
+-->
+<body>
+<!--uts:begin inner-->
+<div class="hookOuter networkHookOuter">
+<!-- /UTS/network/viewNetworkHook.html -->
+<div class="hookHeader">[t]Our customers[/t]</div>
+
+{foreach from=$data item=network_data}
+<div class="hookItemContainer networkHookItemContainer">
+
+<div class="hookItemLink networkHookItemLink"><a href="{$network_data.url}" target="{$network_data.target}">{$network_data.werkgever}</a></div>
+
+{if $display_elements.show_selected_image && $network_data.network_image != ''}
+<div class="hookItemLogo hookNetworkLogo"><img src="{$network_data.network_image}"></div>
+{/if}
+
+{if $display_elements.show_description_long}
+<div class="hookText hookNetworkText">{$network_data.network_text}</div>
+{/if}
+
+{if $display_elements.show_description_short}
+<div class="hookText hookNetworkShortDescription">{$network_data.portfolio_text}</div>
+{/if}
+</div>
+{/foreach}
+
+</div>
+<iframe name="actionframe" width="0" height="0" frameborder="0" scrolling="No"></iframe>
+<!--uts:end inner-->
+</body>
+</html>

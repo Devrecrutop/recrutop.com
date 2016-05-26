@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Vacature Lijst</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<!-- /UTS/customers/jobList.html custom -->
+<style type="text/css">
+	/* {literal} */
+	.thin-column {
+		width: 32px;
+		text-align: center;
+	}
+
+	.thin-column img {
+		border: none;
+		margin: 0.25em;
+	}
+	/* {/literal} */
+</style>
+
+
+<!--uts:begin inner-->
+<!--UT: Jobslist-->
+
+
+
+<!--START_9-->
+<div class="outer custOuter custJblOuter">
+<!-- /UTS/customers/jobListSemantic.html -->
+
+	<!--MENUBAR-->
+	<!--START_PageTitle-->
+	<h1 class="title jblTitle">[t]Semantical match[/t]</h1>
+	<!--END_PageTitle-->
+	[CustomersMenu]
+	[CustomersSubMenu]
+
+        <p>[t]You can do a semantical match for previously entered vacancies below[/t]</p>
+
+  {if $customer_jobname_filter}
+	<div class="outer custOuter custPpOuter">
+		<form name="advsearchform" method="post" action="/index.php/page/customers_ext/bb/1" >
+			<div> 
+				<div class="formInput actFi">
+					<label>[t]Search vacancy by title[/t]</label>
+					<input value="{$job_name_filter_keyword}" type="text" name="job_name_filter_keyword">
+				</div>
+
+				<div class="buttonContainer">
+					<input name="bApplSubmit" value="[t]Zoek[/t]" class="button" type="submit">
+				</div>
+
+				<input name="command" value="default" type="hidden">
+				<input name="search_jobtitle_by_keyword" value="1" type="hidden">
+			</div>
+		</form>              
+	</div>
+  {/if}    
+  
+	<div class="intro jblIntro">[last_update]</div>
+
+	{if $allow_jobs_amount_period || $allow_jobs_amount_publish}
+	<div class="text custPublishPeriod">
+	{if $allow_jobs_amount_period}
+		{if $jobs_period == "month"}
+			{assign var=period value="[t]month[/t]"}
+		{elseif $jobs_period == "year"}
+			{assign var=period value="[t]year[/t]"}
+		{else}
+			{assign var=period value="[t]unknown period[/t]"}
+		{/if}
+		[t]You have {$jobsCount} jobs inserted this {$period} from {$jobs_amount_period} possible jobs.[/t]<br >
+	{/if}
+	{if $allow_jobs_amount_publish}
+		[t]You have {$publicCount} published jobs from {$jobs_amount_publish} possible publicable jobs.[/t]<br >
+	{/if}
+	</div>
+	{/if}
+	<!--START_Block1-->
+	<!--START_Title1-->
+	<h2 class="subHeader jblSh jblTopSh">[`Title1]</h2>
+	<!--END_Title1-->
+	<!--START_Text1-->
+	<div class="text jblText jblTopText">[`Text1]</div>
+	<!--END_Text1-->
+	<!--END_Block1-->
+
+	<!--START_CAT_TBL-->
+	<div class="category jblCat">[categorie]</div>
+	<!--END_CAT_TBL-->
+
+	<!--START_VACANCY_TBL-->
+	<div class="itemContainer jblItemContainer">
+		<!--START_ThumbnailLeft-->
+		<div class="itemImage jblItemImage" style="width: [`ThumbnailWidth]; cursor:hand;" onClick="[`ThumbnailLink]">[`Thumbnail]</div>
+		<!--END_ThumbnailLeft-->
+		<h3 class="itemTitle jblItemTitle semanticTitle"><a href="[website]/index.php/page/customers_ext/command/detail/vid/[id]/bb/1/temp/[`temp]"><span class="publish_[publish_status]">[functie_o] - [locatie]</span></a><inactive>[t]- inactive[/t]<inactive></h3>
+		<div style="float:right;" class="buttonContainer semanticSearchButton"><input class="button" value="[th]Start semanitcal match[/th]" type="submit" onclick="document.location='[website]/index.php/page/customers_ext/bb/1/command/cand_matches/vid/[id]';"></div>
+		<!--START_KEYWORDS-->
+		<!--START_KEYWORD_ROW1-->
+		<!--START_Location-->
+		<div class="itemWord jblItemWord jblWordLoc"><span>[SingleWord1]<!--SingleWordLink1--></span>[locatie]</div>
+		<!--END_Location-->
+		<!--END_KEYWORD_ROW1-->
+		<!--START_KEYWORD_ROW2-->
+		<!--START_Region-->
+		<div class="itemWord jblItemWord jblWordReg"><span>[SingleWord2]<!--SingleWordLink2--></span>[regio]</div>
+		<!--END_Region-->
+		<!--END_KEYWORD_ROW2-->
+		<!--START_KEYWORD_ROW3-->
+		<!--START_Company-->
+		<div class="itemWord jblItemWord jblWordEmpl"><span>[SingleWord3]<!--SingleWordLink3--></span>[werkgeverid]</div>
+		<!--END_Company-->
+		<!--END_KEYWORD_ROW3-->
+		<!--END_KEYWORDS-->
+		<!--START_ShortDescription-->
+		<div class="itemDescription jblItemDescr">[ShortDescription]</div>
+		<!--END_ShortDescription-->
+		<!--START_TEMPWARNING-->
+		<div class="error">[SingleWord4]<!--SingleWordLink4--></div>
+		<!--END_TEMPWARNING-->
+	</div>
+<!--END_VACANCY_TBL-->
+
+<!--START_JobsListPageNav-->
+<div class="pageNav jblPageNav">
+	<!--START_JobsListPrevious-->
+	<a class="pnPrev jblPrev" href="[previous_link]">[th]Previous page[/th]</a>
+	<!--END_JobsListPrevious-->
+	
+	<!--START_JobsListPageLinks-->
+	<a href="[page_link]" style="[active]">[PageNumber]</a>
+	<!--END_JobsListPageLinks-->
+
+
+	<!--START_JobsListNext-->
+	<a class="pnNext jblNext" href="[next_link]">[th]Next page[/th]</a>
+	<!--END_JobsListNext-->
+</div>
+<!--END_JobsListPageNav-->
+
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+<!--END_9-->
+<!--uts:end inner-->
+
+</body>
+</html>

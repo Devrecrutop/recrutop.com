@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/misc/emailCVmodificationApproval.html -->
+<p>[t]Dear {$candname|escape},[/t]</p>
+<p>[t]Your profile modification have been {$accepted_or_rejected}.[/t]</p>
+{if $approvedint == 0}
+<p>[t]Comments:[/t]
+<br>
+{$reason}
+<br>
+[t]Please login to your portal and do the modification.[/t]
+</p>
+{/if}
+
+<p></p>
+<p>{$signature}</p>
+<!--uts:end inner-->
+</body>
+</html>

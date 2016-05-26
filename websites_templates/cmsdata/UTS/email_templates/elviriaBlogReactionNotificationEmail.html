@@ -1,0 +1,20 @@
+<!-- TPL: /UTS/email_templates/elviriaBlogReactionNotificationEmail.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- TPL: /UTS/email_templates/elviriaBlogReactionNotificationEmail.html -->
+<p>[t]Dear {$name|escape},[/t]</p>
+<p>[t]There is a new reaction on the blog article you commented on:[/t]<a href="[uts:elviriabaseurl]/{$blog_detail_link}">{$blog_article_name}</a></p>
+<p>[t]If you do not want to receive notifications for other reactions click here: [/t]</p>
+
+<p><a href="[uts:elviriabaseurl]/index.php?option=com_elviria&task=blogarticlesreaction.unsubscribeReactionNotification&reactionId={$reaction_id}&articleId={$article_id}&articleIdentificator={$article_identificator}&token={$token}">[t]unsubscribe[/t]</a></p>
+
+
+<p>[t]Best regards[/t],<br />Elviria</p>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!-- TPL: /UTS/email_templates/elviriaRegisterUserEmail.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]Dear {$name|escape},[/t]</p>
+<p>[t]Thank you for creating an account with Elviria. We have created an account for you, however you will need to activate your account before you can use it.[/t]</p>
+<p>[t]Please activate your account using the following link:[/t]</p>
+<p><a href="[uts:elviriabaseurl]/index.php?option=com_elviria&view=registerperson&task=registerperson.activate&token={$token}">{$token}</a></p>
+<p>[t]If you have any questions, please let us know.[/t]</p>
+<p>[t]Best regards[/t],<br />Elviria</p>
+<!--uts:end inner-->
+</body>
+</html>

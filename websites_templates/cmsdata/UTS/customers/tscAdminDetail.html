@@ -1,0 +1,1004 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+{*
+IMPORTANT NOTE IF YOU WILL DO SOME STYLING CHANGES
+DO NOT REMOVE ANY CLASS FROM HTML ELEMENTS, THESE ARE USED AS SELECTORS IN JQUERY,
+ALSO DO NOT ADD ANY HTML ELMENTS INTO TD WHICH CONTAINS INPUTS BECAUSE JQUERY EXPECTS
+THEM ON THIS SPECIFIC LEVEL, SEE FUNCTION setRowTotals()
+PLEASE DO NOT REMOVE INDENTION SINCE IT IMPROVES CODE READABILITY AND SAVES PROGRAMMERS TIME
+*}
+
+{literal}
+<script type="text/javascript">
+<!--
+{/literal}
+{* JS VARIABLES BEGIN *}
+
+  var appHandler = '{$handler}';
+  var tsId = '{$id}';
+  var availCols = new Array(); // available columns for initial totals counting
+  var vEnableInputs = parseInt('{$enableInputs}');
+
+{* JS VARIABLES END *}
+{literal}
+
+
+  /**
+   * count countable values (hours) per row
+   */
+  function setRowTotals(rid)
+  {
+    var rowTotal = 0;
+
+    $('#'+rid).children('td').children('.countable').each(function()
+    {
+      var fv = parseFloat($(this).val().replace(',','.'));
+      if(!isNaN(fv))
+      {
+        rowTotal += fv;
+      }
+    });
+
+    $('#colorBox_'+rid).removeClass('flagNone');
+    $('#colorBox_'+rid).removeClass('flagGreen');
+    $('#colorBox_'+rid).removeClass('flagOrange');
+    $('#colorBox_'+rid).removeClass('flagRed');
+
+    if(rowTotal == 0)
+    {
+      $('#colorBox_'+rid).addClass('flagNone');
+    }
+    else if(rowTotal < 8)
+    {
+      $('#colorBox_'+rid).addClass('flagGreen');
+    }
+    else if(rowTotal <= 10)
+    {
+      $('#colorBox_'+rid).addClass('flagOrange');
+    }
+    else if(rowTotal > 10)
+    {
+      $('#colorBox_'+rid).addClass('flagRed');
+    }
+
+    $('#totalRowBox_'+rid).text(rowTotal.toFixed(2));
+  }
+
+  /**
+   * set totals per columnt, for example hrs_100 in assignment
+   * string: inputName html attribute name of saved field
+   *
+   */
+  function setColumnTotals(inputName)
+  {
+    var totalId = '#total_'+inputName;
+    var colTotal = 0;
+
+    $('input[name='+inputName+']').each(function()
+    {
+      var fv = parseFloat($(this).val().replace(',','.'));
+      if(!isNaN(fv))
+      {
+        colTotal += fv;
+      }
+
+    });
+
+    $(totalId).text(colTotal.toFixed(2));
+  }
+
+  /**
+   * int recId: database record id (PK)
+   * float val: value to save in db
+   * string rid: row id html attribute
+   * htmlFldName: html field name used in one column
+   */
+  function saveField(recId, val, rid, htmlFldName)
+  {
+    $('#busyRowBox_'+rid).addClass('lookBusy');
+
+  	$.post(appHandler,
+  		   {command: 'save_fld', ts_id: tsId, rec_id: recId, val: val, rid: rid, html_fld_name: htmlFldName},
+         saveFieldCB,
+  		   'json');
+  }
+
+  function saveFieldCB(data)
+  {
+    $('#busyRowBox_'+data.rid).removeClass('lookBusy');
+
+    if(data.ok)
+    {
+      // recalculate row totals
+      setRowTotals(data.rid);
+
+      // recalculate column totals
+      setColumnTotals(data.html_fld_name);
+
+      if(data.update_status)
+      {
+        updateStatus();
+      }
+    }
+    else
+    {
+      alert(data.msg);
+    }
+  }
+
+  function updateStatus()
+  {
+     // reload info and history iframes in mainframe when status changes
+     var context = parent.document;
+     $('#historyIfrm', context).attr('src', $('#historyIfrm', context).attr('src')) ;
+     $('#infoIfrm', context).attr('src', $('#infoIfrm', context).attr('src')) ;
+  }
+
+  function setupAvailCols()
+  {
+    $('.gridInput').each(function()
+    {
+      if(jQuery.inArray($(this).attr('name'), availCols) == -1)
+      {
+        availCols.push($(this).attr('name'));
+      }
+    });
+  }
+
+  function enableInputs(b)
+  {
+    if(b)
+    {
+      //alert('enable');
+      $('.gridInput').removeAttr('disabled');
+    }
+    else
+    {
+      //alert('disable');
+      $('.gridInput').attr('disabled', 'disabled');
+    }
+  }
+
+  function enableEditNotes(b)
+  {
+    if(b)
+    {
+      $('.editNotes').css('display', 'block');
+      $('.viewNotes').css('display', 'none');
+    }
+    else
+    {
+      $('.editNotes').css('display', 'none');
+      $('.viewNotes').css('display', 'block');
+    }
+  }
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+  function disapproveTsc(_tscId, _message)
+  {
+    _message = _message.replace(/^\s+|\s+$/gm,''); // remove whitespaces from both sides
+
+    if(_message.length == 0)
+    {
+      alert('[th]Please specify why you are disapproving this timesheet.[/th]');
+      return;
+    }
+
+    $.post(appHandler,
+           {command: 'disapprove_tsc_proceed', tscid: _tscId, message: _message},
+           disapproveTscCB,
+          'json');
+
+    $(document).trigger('hideCluetip');
+
+  }
+
+  // callback function
+  function disapproveTscCB(data)
+  {
+    statusButtonsDisable();
+    statusButtonsEnable();
+    alert(data.msg);
+  }
+
+  function setStatus(st)
+  {
+    statusButtonsDisable();
+
+    $.post(appHandler,
+           {command: 'set_status_wg_cp', id: tsId, status: st},
+           setStatusCB,
+          'json');
+  }
+
+  // set status callback
+  function setStatusCB(data)
+  {
+    statusButtonsEnable();
+
+    if(data.ok)
+    {
+      // refresh all iframes
+      if(data.approved_msg)
+      {
+        alert(data.approved_msg);
+      }
+    }
+    else
+    {
+      alert(data.msg);
+    }
+  }
+
+  // disable all status buttons
+  function statusButtonsDisable()
+  {
+    $('.statusBttn').attr('disabled','disabled');
+    $('.statusBttn').css('display','none');
+  }
+
+  // enable all allowed status buttons
+  function statusButtonsEnable()
+  {
+    //$('.statusBttn').removeAttr('disabled');
+    $.post(appHandler,
+           {command: 'enable_buttons', id: tsId},
+           statusButtonsEnableCB,
+           'json');
+  }
+
+  // callback function
+  // enable all allowed status buttons
+  function statusButtonsEnableCB(data)
+  {
+    enableInputs(data['enbl']);
+    enableEditNotes(data['enbl']);
+
+    if(data['bttns'])
+    {
+      for(id in data['bttns'])
+      {
+        if(data['bttns'][id])
+        {
+          //alert('enable: ' + id);
+          $('#'+id).removeAttr('disabled');
+          $('#'+id).css('display', 'inline');
+        }
+        else
+        {
+          //alert('disable: ' + id);
+          $('#'+id).attr('disabled', 'disabled');
+          $('#'+id).css('display', 'none');
+        }
+      }
+    }
+    else
+    {
+      //alert('enable buttons error');
+      // in case of error
+      //$('.statusBttn').removeAttr('disabled');
+    }
+  }
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+function printTscTableWord(tscId, empty)
+{
+
+  var tscId = parseInt(tscId);
+  if(isNaN(tscId))
+  {
+    return false;
+  }
+
+  try
+  {
+    window.frames['actionFrame'].location.href = appHandler + '/command/printw/tscid/' + tscId;
+  }
+  catch(e)
+  {
+  }
+
+}
+
+function printTscTablePDF(tscId, empty)
+{
+
+  var tscId = parseInt(tscId);
+  if(isNaN(tscId))
+  {
+    return false;
+  }
+
+  try
+  {
+    window.frames['actionFrame'].location.href = appHandler + '/command/printpdf/tscid/' + tscId;
+  }
+  catch(e)
+  {
+  }
+
+}
+
+  /**
+   * print one tsc table
+   * deprecated
+   */
+  function printTscTable(tscId, empty)
+  {
+    var tscId = parseInt(tscId);
+    if(isNaN(tscId))
+    {
+      return false;
+    }
+
+    var w = document.getElementById('actionFrame').contentWindow.document;
+    w.open();
+
+    // css style
+    w.write('<style type="text/css">');
+    w.write('input {border: none; width: 40pt;}');
+    //w.write('input {visibility: hidden;}');
+    w.write('table {border-left: solid 1pt black; border-top: solid 1pt black; width: 100%;}');
+    w.write('td, th {border-right: solid 1pt black; border-bottom: solid 1pt black; padding: 2pt;}');
+    w.write('.doNotPrint {display: none;}');// hide notes
+    w.write('</style>');
+
+    // html content
+    w.write($('#timesheetWeekSubmit').html()); //set iframe content
+    w.close();
+
+    // also possible with jquery
+    //$('#actionFrame').contents().find('html').html($('#tablePrintWrapper_'+tscId).html());
+
+    try
+    {
+      window.frames['actionFrame'].focus();
+      window.frames['actionFrame'].print();
+    }
+    catch(e)
+    {
+    }
+    //alert('print: ' + tscId);
+  }
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+  // initialize document
+  $(document).ready(function () {
+
+    $('.dataGridRowCountable').each(function()
+    {
+      // count total hours per rows
+      setRowTotals($(this).attr('id'));
+    });
+
+    // setup available columns for totals
+    setupAvailCols();
+
+    if(availCols.length > 0)
+    {
+      for(i in availCols)
+      {
+        // count totals per columns
+        setColumnTotals(availCols[i]);
+      }
+    }
+
+    // enable / disable inputs
+    enableInputs(0);
+    enableInputs(vEnableInputs);
+
+    enableEditNotes(0);
+    enableEditNotes(vEnableInputs);
+
+    // bind functions
+    $('#bttnForApproval').click(function(){setStatus('forapproval');});
+    $('#bttnApprove').click(function(){setStatus('approved');});
+    $('#bttnCorrect').click(function(){setStatus('correction');});
+    $('#bttnDisapprove').cluetip({width:      360,
+                               height:     280,
+                               activation: 'click',
+                               cursor:     'pointer',
+                               sticky:     true,    // keep visible until manually closed
+                               closeText:  '[th]Cancel[/th]',
+                               ajaxCache:   false
+                              });
+
+    // initial enable/disable status buttons
+    statusButtonsDisable();
+    statusButtonsEnable();
+
+    // use cluetip for add / edit notes
+    $('img.tscNotes').cluetip({width:      360,
+                               height:     260,
+                               activation: 'click',
+                               cursor:     'pointer',
+                               sticky:     true,    // keep visible until manually closed
+                               closeText:  '[th]Close[/th]',
+                               ajaxCache:   false
+                              });
+
+  });
+
+
+  /**
+   * save note by ajax
+   * called from tscAdminNoteDlg.html displayed by cluetip
+   */
+  function asyncSaveNote(_tscId, _date, _noteId, _noteText)
+  {
+    $.post(appHandler,
+           {command: 'async_save_note', tscid: _tscId, date: _date, note_id: _noteId, note_text:  _noteText},
+           noteSavedCB,
+          'json');
+
+    $(document).trigger('hideCluetip');
+  }
+
+  /**
+   * callback for asyncSaveNote
+   */
+  function noteSavedCB(data)
+  {
+    var noteId = parseInt(data.note_id);
+    if(!isNaN(noteId))
+    {
+      // replace add element if needed
+      if($('#addNoteImg-'+data.tscid+'-'+data.date).length != 0)
+      {
+        // note was added
+        $('#addNoteImg-'+data.tscid+'-'+data.date).replaceWith('<img id="editNoteImg-'+data.tscid+'-'+data.date+'" src="/_images_global/notepad_green.gif" border="0" title="[th]Edit Note[/th]" class="tscNotes editNotes" rel="'+appHandler+'/command/edit_note/tscid/'+data.tscid+'/date/'+data.date+'/note_id/'+data.note_id+'/bb/1" style="cursor: pointer;">');
+
+        // init cluetip for this element
+        $('#editNoteImg-'+data.tscid+'-'+data.date).cluetip({width:      360,
+                                    height:     260,
+                                    activation: 'click',
+                                    cursor:     'pointer',
+                                    sticky:     true,    // keep visible until manually closed
+                                    closeText:  '[th]Close[/th]',
+                                    ajaxCache:   false
+                                  });
+
+      }
+    }
+  }
+
+//-->
+</script>
+{/literal}
+
+{*debug*}
+
+<div class="outer custOuter custFinOuter custFinDetOuter">
+<!-- /UTS/customers/tscAdminDetail.html -->
+
+{if 0}
+    [tg]booked[/tg]
+    [tg]forapproval[/tg]
+    [tg]approved[/tg]
+    [tg]correction[/tg]
+{/if}
+	<h1 class="title aplTitle aplProfTitle">[t]Timesheets Candidates[/t]</h1>
+
+{$menu}
+	<div class="timesheetMainContainer" style="clear:both;" id="timesheetMainContainer">
+
+		<div class="TsBttns" id="TsBttns">
+  {* DO NOT REMOVE CLASS statusBttn FROM IT IS USED BY JQUERY TO ENABLE/DISABLE BUTTONS! *}
+  		<input type="button" name="bttnForApproval" id="bttnForApproval" class="statusBttn button" value="[tb]For Approval[/tb]">
+  		<input type="button" name="bttnApprove" id="bttnApprove" class="statusBttn button" value="[tb]Approve[/tb]">
+      <input type="button" name="bttnDisapprove" id="bttnDisapprove" class="statusBttn button" value="[tb]Disapprove[/tb]" rel="{$handler}/command/disapprove_tsc_dlg/tscid/{$id}/bb/1" title="[th]Disapprove timesheet[/th]">
+  		<input type="button" name="bttnCorrect" id="bttnCorrect" class="statusBttn button" value="[tb]Correction[/tb]">
+      {* DISABLED FOR NOW
+  		<input type="Button" name="bttnPrint_{$id}" value="[t]Print[/t]" onClick="printTscTable('{$id}', false);">
+      *}
+      <input type="button" name="bttnPrintWord_{$id}" class="button" value="[t]Print to Word[/t]" onClick="printTscTableWord('{$id}', false);">
+
+      {if $__stPrintPdfFo}
+        <input type="button" name="bttnPrintPDF_{$id}" class="button"  value="[t]Print to PDF[/t]" onClick="printTscTablePDF('{$id}', false);">
+      {/if}
+          {if [uts:show_forward_backward]}
+            {if $prev_id}
+              <div class="show_backward"><a href="{$handler}/command/detail/tscid/{$prev_id}">[t]Previous[/t]</a></div>
+            {/if}
+            {if $next_id}
+              <div class="show_forward"><a href="{$handler}/command/detail/tscid/{$next_id}">[t]Next[/t]</a></div>
+            {/if}
+          {/if}
+		  
+		  {if [uts:show_current_status] || [uts:show_weeknum]}
+			  <div class="details">
+				{if [uts:show_current_status]}
+					<div class="field show_current_status">
+						<label>[t]Status:[/t]</label>
+						{$status_translated}
+					</div>
+					<div class="field show_current_status_date">
+						<label>[t]Date:[/t]</label>
+						{$status_date}
+					</div>
+					<div class="field show_current_status_cp">
+						<label>[t]Contact person:[/t]</label>
+                        {if ($status != 'forapproval')}
+						  {$status_cp}
+                        {else}
+                          -
+                        {/if}
+					</div>
+				{/if}
+				{if [uts:show_weeknum] && $weekNum}
+					<div class="field show_weeknum">
+						<label>[tg]Week:[/tg]</label>
+						{$weekNum}
+					</div>
+				{/if}
+			  </div>
+		  {/if}
+
+		</div>
+      {if $__stInvoicing_by_candidates}
+        <div><label>[t]Internal tariff[/t]: <input type="text" name="internal_tariff" value="{$internal_tariff|escape}"></label></div>
+      {/if}
+	<div id="TsDgWs">
+
+		<div id="timesheetWeekSubmit" style="overflow:auto;">
+
+  			<table border="0" cellpadding="0" cellspacing="0" class="hqTbl">
+  {*HEADER BEGIN*}
+  			<tr>
+    {*DATE*}
+		    <th>[t]Day/Date[/t]</th>
+
+    {*ASSIGNMENTS*}
+    {foreach from=$dataGridHeader.assignment item=h key=ascol}
+    		<th colspan="{$assignment_columns_array.$ascol}" title="{$h.name},&nbsp;{$h.wg_name}">{$h.name},&nbsp;{$h.wg_name}</th>
+    {/foreach}
+
+    {*INTERNAL*}
+    {foreach from=$dataGridHeader.internal item=h}
+    		<th colspan="{$internal_columns}">[t]Internal[/t]</th>
+    {/foreach}
+
+    {*NOTES*}
+    		<th class="doNotPrint">[t]Notes[/t]</th>
+
+    {*INFO*}
+    		<th>[t]Info[/t]</th>
+  			</tr>
+  {*HEADER END*}
+
+
+
+  {*CAPTIONS BEGIN*}
+  <tr valign="middle" class="dataGridRow" id='captions'>
+    {*DATE*}
+    <td>&nbsp;</td>
+
+    {*ASSIGNMENTS*}
+    {foreach from=$dataGridHeader.assignment item=h}
+
+      {*CALCULATIONS*}
+      {foreach from=$h.flds.calculation item=fld name=calcfld}
+		      <td>
+
+            {if $fld.clc_hour_type_name == "Normal"}
+              {assign var="currentHeaderName" value="[thg]Normal[/thg]"}
+              {assign var="currentHeaderTitle" value="[thg]Normal[/thg]"}
+            {elseif $fld.clc_hour_type_name == "C-Hol"}
+              {assign var="currentHeaderName" value="[thg]C-Hol[/thg]"}
+              {assign var="currentHeaderTitle" value="[thg]C-Hol[/thg]"}
+            {elseif $fld.clc_hour_type_name == "P-Hol"}
+              {assign var="currentHeaderName" value="[thg]P-Hol[/thg]"}
+              {assign var="currentHeaderTitle" value="[thg]P-Hol[/thg]"}
+            {elseif $fld.clc_hour_type_name == "Sick"}
+              {assign var="currentHeaderName" value="[thg]Sick[/thg]"}
+              {assign var="currentHeaderTitle" value="[thg]Sick[/thg]"}
+            {else}
+              {assign var="currentHeaderTitle" value=$fld.clc_name|escape}
+              {assign var="currentHeaderName" value=$fld.clc_hour_type_name|escape|truncate:10}
+            {/if}
+
+            <span class="spanHeader" style="height:70px;" title="{$currentHeaderTitle}">{if $currentHeaderName}{$currentHeaderName}{else}{$currentHeaderTitle}{/if}</span>
+		        {* ORIGINAL ROW <span class="spanHeader" style="height:70px;" title="{$fld.clc_name|escape}">{$fld.clc_hour_type_name|escape|truncate:10}</span> *}
+
+		      </td>
+      {/foreach}
+
+      {*COMPENSATIONS*}
+      {foreach from=$h.flds.compensation item=fld}
+      <td>
+        <span class="spanHeader" style="height:70px;" title="{$fld.dcm_description|escape}">{$fld.dcm_ded_com_type_name|escape|truncate:10}</span>
+      </td>
+      {/foreach}
+
+      {*DEDUCTIONS*}
+      {foreach from=$h.flds.deduction item=fld}
+      <td>
+        <span class="spanHeader" style="height:70px;" title="{$fld.dcm_description|escape}">{$fld.dcm_ded_com_type_name|escape|truncate:10}</span>
+      </td>
+      {/foreach}
+
+    {/foreach}
+
+    {*INTERNAL*}
+    {foreach from=$dataGridHeader.internal item=h}
+
+      {*CALCULATIONS*}
+      {foreach from=$h.flds.calculation item=fld}
+        <td>
+
+          {if $fld.clc_hour_type_name == "Normal"}
+            {assign var="currentHeaderName" value="[thg]Normal[/thg]"}
+            {assign var="currentHeaderTitle" value="[thg]Normal[/thg]"}
+          {elseif $fld.clc_hour_type_name == "C-Hol"}
+            {assign var="currentHeaderName" value="[thg]C-Hol[/thg]"}
+            {assign var="currentHeaderTitle" value="[thg]C-Hol[/thg]"}
+          {elseif $fld.clc_hour_type_name == "P-Hol"}
+            {assign var="currentHeaderName" value="[thg]P-Hol[/thg]"}
+            {assign var="currentHeaderTitle" value="[thg]P-Hol[/thg]"}
+          {elseif $fld.clc_hour_type_name == "Sick"}
+            {assign var="currentHeaderName" value="[thg]Sick[/thg]"}
+            {assign var="currentHeaderTitle" value="[thg]Sick[/thg]"}
+          {else}
+            {assign var="currentHeaderTitle" value=$fld.clc_name|escape}
+            {assign var="currentHeaderName" value=$fld.clc_hour_type_name|escape|truncate:10}
+          {/if}
+
+	        <span class="spanHeader" title="{$currentHeaderTitle}">{if $currentHeaderName}{$currentHeaderName}{else}{$currentHeaderTitle}{/if}</span>
+	        {* ORIGINAL ROW<span class="spanHeader" title="{$fld.clc_name|escape}">{$fld.clc_hour_type_name|escape|truncate:10}</span> *}
+
+        </td>
+      {/foreach}
+
+      {*COMPENSATIONS*}
+      {foreach from=$h.flds.compensation item=fld}
+      <td>
+        <span class="spanHeader" title="{$fld.dcm_description|escape}">{$fld.dcm_ded_com_type_name|escape|truncate:10}</span>
+      </td>
+      {/foreach}
+
+      {*DEDUCTIONS*}
+      {foreach from=$h.flds.deduction item=fld}
+      <td>
+      |&nbsp;<span class="spanHeader" title="{$fld.dcm_description|escape}">{$fld.dcm_ded_com_type_name|escape|truncate:10}</span>
+      </td>
+      {/foreach}
+
+    {/foreach}
+
+    {*NOTES*}
+    <td class="doNotPrint">&nbsp;</td>
+
+    {*INFO*}
+    <td style="text-align: right;" >&nbsp;</td>
+
+  {*CAPTIONS END*}
+  </tr>
+
+
+  {*DATA BEGIN*}
+  {foreach from=$dataGrid item=ts key=rid}
+
+    <tr valign="middle" class="dataGridRow dataGridRowCountable" id='{$rid}'>
+    {*DATE*}
+
+      <td style="padding-right: 15px;" >{$ts.date|date_format:$smartyDateFormat} &nbsp; {$dayNames[$ts.d_nr]}</td>
+
+      {*ASSIGNMENTS*}
+      {foreach from=$dataGridHeader.assignment item=h key=ascol}
+
+      {if $ts.assignment[$h.assignment_id]}{*ONLY IF SUCH ASSIGNMENT RECORD EXISTS*}
+
+        {*CALCULATIONS*}
+        {foreach from=$h.flds.calculation item=fld}
+        <td>
+          {if $ts.assignment[$h.assignment_id][$fld.id]}
+
+            {if $fld.clc_hour_type_name == "Normal"}
+              {assign var="currentInputTitle" value="[thg]Normal[/thg]"}
+            {elseif $fld.clc_hour_type_name == "C-Hol"}
+              {assign var="currentInputTitle" value="[thg]C-Hol[/thg]"}
+            {elseif $fld.clc_hour_type_name == "P-Hol"}
+              {assign var="currentInputTitle" value="[thg]P-Hol[/thg]"}
+            {elseif $fld.clc_hour_type_name == "Sick"}
+              {assign var="currentInputTitle" value="[thg]Sick[/thg]"}
+            {else}
+              {assign var="currentInputTitle" value=$fld.clc_name|escape}
+            {/if}
+
+            <input type="text" title="{$currentInputTitle}" name="clc_{$h.assignment_id}_{$fld.id}" class="gridInput countable {if $ts.d_nr > 5}gridInputWeekend{/if}" value="{if $ts.assignment[$h.assignment_id][$fld.id].val > 0}{$ts.assignment[$h.assignment_id][$fld.id].val}{/if}" onBlur="saveField('{$ts.assignment[$h.assignment_id][$fld.id].id}', this.value, '{$rid}', 'clc_{$h.assignment_id}_{$fld.id}');" >
+          {else}
+            <span class="missingInput">?</span>
+          {/if}
+        </td>
+        {/foreach}
+
+        {*COMPENSATIONS*}
+        {foreach from=$h.flds.compensation item=fld}
+        <td>
+        {if $ts.assignment[$h.assignment_id][$fld.id]}
+          <input type="text" title="{$fld.dcm_description|escape}" name="cmp_{$h.assignment_id}_{$fld.id}" class="gridInput {if $ts.d_nr > 5}gridInputWeekend{/if}" value="{if $ts.assignment[$h.assignment_id][$fld.id].val > 0}{$ts.assignment[$h.assignment_id][$fld.id].val}{/if}" onBlur="saveField('{$ts.assignment[$h.assignment_id][$fld.id].id}', this.value, '{$rid}', 'cmp_{$h.assignment_id}_{$fld.id}');" >
+        {else}
+          <span class="missingInput">?</span>
+        {/if}
+        </td>
+        {/foreach}
+
+        {*DEDUCTIONS*}
+        {foreach from=$h.flds.deduction item=fld}
+        <td>
+        {if $ts.assignment[$h.assignment_id][$fld.id]}
+          <input type="text" title="{$fld.dcm_description|escape}" name="ddc_{$h.assignment_id}_{$fld.id}" class="gridInput {if $ts.d_nr > 5}gridInputWeekend{/if}" value="{if $ts.assignment[$h.assignment_id][$fld.id].val > 0}{$ts.assignment[$h.assignment_id][$fld.id].val}{/if}" onBlur="saveField('{$ts.assignment[$h.assignment_id][$fld.id].id}', this.value, '{$rid}', 'ddc_{$h.assignment_id}_{$fld.id}');" >
+        {else}
+          <span class="missingInput">?</span>
+        {/if}
+        </td>
+        {/foreach}
+
+      {else}
+
+        {assign var=end value=$assignment_columns_array.$ascol}
+        {if $end < 1}
+          <td>&nbsp; </td>
+        {else}
+          {section name=tds loop=$end step=1}
+            <td>&nbsp; </td>
+          {/section}
+        {/if}
+
+      {/if}
+      {/foreach}
+
+
+      {*INTERNAL*}
+      {foreach from=$dataGridHeader.internal item=h}
+
+      {if $ts.internal[0]}{*ONLY IF SUCH ASSIGNMENT RECORD EXISTS*}
+
+        {*CALCULATIONS*}
+
+        {foreach from=$h.flds.calculation item=fld}
+
+          <td>
+            {if $ts.internal[0][$fld.id]}
+
+              {if $fld.clc_hour_type_name == "Normal"}
+                {assign var="currentInputTitle" value="[thg]Normal[/thg]"}
+              {elseif $fld.clc_hour_type_name == "C-Hol"}
+                {assign var="currentInputTitle" value="[thg]C-Hol[/thg]"}
+              {elseif $fld.clc_hour_type_name == "P-Hol"}
+                {assign var="currentInputTitle" value="[thg]P-Hol[/thg]"}
+              {elseif $fld.clc_hour_type_name == "Sick"}
+                {assign var="currentInputTitle" value="[thg]Sick[/thg]"}
+              {else}
+                {assign var="currentInputTitle" value=$fld.clc_name|escape}
+              {/if}
+
+              <input type="text" title="{$currentInputTitle}" name="clc_0_{$fld.id}" class="gridInput countable {if $ts.d_nr > 5}gridInputWeekend{/if}" value="{if $ts.internal[0][$fld.id].val > 0}{$ts.internal[0][$fld.id].val}{/if}" onBlur="saveField('{$ts.internal[0][$fld.id].id}', this.value, '{$rid}', 'clc_0_{$fld.id}');" >
+            {else}
+              <span class="missingInput">_?</span>
+            {/if}
+          </td>
+
+        {/foreach}
+
+        {*COMPENSATIONS*}
+        {foreach from=$h.flds.compensation item=fld}
+        <td>
+        {if $ts.internal[0][$fld.id]}
+          <input type="text" title="{$fld.dcm_description|escape}" name="cmp_0_{$fld.id}" class="gridInput {if $ts.d_nr > 5}gridInputWeekend{/if}" value="{if $ts.internal[0][$fld.id].val > 0}{$ts.internal[0][$fld.id].val}{/if}" onBlur="saveField('{$ts.internal[0][$fld.id].id}', this.value, '{$rid}', 'cmp_0_{$fld.id}');" >
+        {else}
+          <span class="missingInput">?</span>
+        {/if}
+        </td>
+        {/foreach}
+
+        {*DEDUCTIONS*}
+        {foreach from=$h.flds.deduction item=fld}
+        <td>
+        {if $ts.internal[0][$fld.id]}
+          <input type="text" title="{$fld.dcm_description|escape}" name="ddc_0_{$fld.id}" class="gridInput {if $ts.d_nr > 5}gridInputWeekend{/if}" value="{if $ts.internal[0][$fld.id].val > 0}{$ts.internal[0][$fld.id].val}{/if}" onBlur="saveField('{$ts.internal[0][$fld.id].id}', this.value, '{$rid}', 'ddc_0_{$fld.id}');" >
+        {else}
+          <span class="missingInput">?</span>
+        {/if}
+        </td>
+        {/foreach}
+
+      {/if}
+
+      {/foreach}
+
+      {*NOTES*}
+      <td align="left" class="doNotPrint">
+
+      {if $settings.tsc_edit}
+
+        {if $ts.note.id}
+        {*todo edit note with ajax*}
+          <img id="editNoteImg-{$id}-{$ts.date}" src="/_images_global/notepad_green.gif" border="0" title="[th]Edit Note[/th]" class="tscNotes editNotes" rel="{$handler}/command/edit_note/tscid/{$id}/date/{$ts.date}/note_id/{$ts.note.id}/bb/1" style="cursor: pointer; display: none;">
+          <img src="/_images_global/notepad_green.gif" border="0" title="[th]View Note[/th]" class="tscNotes viewNotes" rel="{$handler}/command/view_note/tscid/{$id}/note_id/{$ts.note.id}/bb/1" style="cursor: pointer; display: none;">
+        {else}
+        {*todo add note with ajax*}
+          <img id="addNoteImg-{$id}-{$ts.date}" src="/_images_global/notepad_blue.gif" border="0" title="[th]Add Note[/th]" class="tscNotes editNotes" rel="{$handler}/command/add_note/tscid/{$id}/date/{$ts.date}/bb/1" style="cursor: pointer; display: none;" >
+          <img src="/_images_global/notepad_blue.gif" border="0" title="[th]Without Note[/th]" class="tscNotes viewNotes" style="display: none;">
+        {/if}
+
+      {else}
+
+        {if $ts.note.id}
+          <img src="/_images_global/notepad_green.gif" border="0" title="[th]View Note[/th]" class="tscNotes" rel="{$handler}/command/view_note/tscid/{$id}/note_id/{$ts.note.id}/bb/1" style="cursor: pointer;">
+        {else}
+          <img src="/_images_global/notepad_blue.gif" border="0" title="[th]Without Note[/th]" class="tscNotes">
+        {/if}
+
+      {/if}
+      </td>
+
+      {*INFO*}
+      <td  align="left" >
+        <span class="spanBox flagNone" id="colorBox_{$rid}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="spanBox" style="width: 30px; text-align: right;" id="totalRowBox_{$rid}" >0</span>
+        <span class="spanBox" id="busyRowBox_{$rid}" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      </td>
+
+    </tr>
+    {/foreach}
+
+  {*DATA END*}
+
+  {*TOTALS BEGIN*}
+  <tr valign="middle" class="dataGridRow" id='totals'>
+  {*DATE*}
+
+  <td>[t]Totals[/t]</td>
+  {*ASSIGNMENTS*}
+  {foreach from=$dataGridHeader.assignment item=h}
+
+    {*CALCULATIONS*}
+    {foreach from=$h.flds.calculation item=fld}
+
+      {if $fld.clc_hour_type_name == "Normal"}
+        {assign var="currentTotalTitle" value="[thg]Normal[/thg]"}
+      {elseif $fld.clc_hour_type_name == "C-Hol"}
+        {assign var="currentTotalTitle" value="[thg]C-Hol[/thg]"}
+      {elseif $fld.clc_hour_type_name == "P-Hol"}
+        {assign var="currentTotalTitle" value="[thg]P-Hol[/thg]"}
+      {elseif $fld.clc_hour_type_name == "Sick"}
+        {assign var="currentTotalTitle" value="[thg]Sick[/thg]"}
+      {else}
+        {assign var="currentTotalTitle" value=$fld.clc_name|escape}
+      {/if}
+
+      <td title="{$currentTotalTitle}"><span class="spanTotals" title="{$currentTotalTitle}" id="total_clc_{$h.assignment_id}_{$fld.id}">0</span></td>
+    {/foreach}
+
+    {*COMPENSATIONS*}
+    {foreach from=$h.flds.compensation item=fld}
+      <td title="{$fld.dcm_description|escape}"><span class="spanTotals" title="{$fld.dcm_description|escape}" id="total_cmp_{$h.assignment_id}_{$fld.id}">0</span></td>
+    {/foreach}
+
+    {*DEDUCTIONS*}
+    {foreach from=$h.flds.deduction item=fld}
+      <td title="{$fld.dcm_description|escape}"><span class="spanTotals" title="{$fld.dcm_description|escape}" id="total_ddc_{$h.assignment_id}_{$fld.id}">0</span></td>
+    {/foreach}
+
+  {/foreach}
+
+  {*INTERNAL*}
+  {foreach from=$dataGridHeader.internal item=h}
+
+    {*CALCULATIONS*}
+    {foreach from=$h.flds.calculation item=fld}
+
+      {if $fld.clc_hour_type_name == "Normal"}
+        {assign var="currentTotalTitle" value="[thg]Normal[/thg]"}
+      {elseif $fld.clc_hour_type_name == "C-Hol"}
+        {assign var="currentTotalTitle" value="[thg]C-Hol[/thg]"}
+      {elseif $fld.clc_hour_type_name == "P-Hol"}
+        {assign var="currentTotalTitle" value="[thg]P-Hol[/thg]"}
+      {elseif $fld.clc_hour_type_name == "Sick"}
+        {assign var="currentTotalTitle" value="[thg]Sick[/thg]"}
+      {else}
+        {assign var="currentTotalTitle" value=$fld.clc_name|escape}
+      {/if}
+
+      <td title="{$currentTotalTitle}"><span class="spanTotals" title="{$currentTotalTitle}" id="total_clc_0_{$fld.id}">0</span></td>
+
+    {/foreach}
+
+    {*COMPENSATIONS*}
+    {foreach from=$h.flds.compensation item=fld}
+      <td title="{$fld.dcm_description|escape}"><span class="spanTotals" title="{$fld.dcm_description|escape}" id="total_cmp_0_{$fld.id}">0</span></td>
+    {/foreach}
+
+    {*DEDUCTIONS*}
+    {foreach from=$h.flds.deduction item=fld}
+      <td title="{$fld.dcm_description|escape}"><span class="spanTotals" title="{$fld.dcm_description|escape}" id="total_ddc_0_{$fld.id}">0</span></td>
+    {/foreach}
+
+  {/foreach}
+
+    {* NOTES + INFO *}
+    <td class="doNotPrint" style="text-align: right;">&nbsp;</td>
+    <td style="text-align: right;">&nbsp;</td>
+
+  </tr>
+
+  {*TOTALS END*}
+</table>
+
+</div>
+
+</div>
+
+{if $edit_internal_tariff}
+<div id="internal_tariff">
+</div>
+{/if}
+{if $isAssignmentTsc}
+<div id="tscHolidays">
+	{*NOTE: THESE HOURS ARE NOT ONLY FOR THIS TSC BUT FOR WHOLE ASSIGNMENT*}
+	<table border="0">
+		<tr>
+			<td>[t]Holiday hours total[/t]:</td>
+			<td>{$alocatedCHol}</td>
+		</tr>
+		<tr>
+			<td>[t]Holiday hours booked[/t]:</td>
+			<td>{$bookedCHol}</td>
+		</tr>
+		<tr>
+			<td>[t]Holiday hours remaining[/t]:</td>
+			<td>{$remainingCHol}</td>
+		</tr>
+	</table>
+</div>
+<br>
+{/if}
+
+{if $isAssignmentTsc && $settings.tsc_use_wtr}
+	<div id="tscWtrHrs">
+		{*NOTE: WTR HOURS ARE NOT ONLY FOR THIS TSC BUT FOR WHOLE ASSIGNMENT*}
+		<table border="0">
+			<tr>
+				<td>[t]WTR hours total[/t]:</td>
+				<td>{$alocatedWTR|string_format:"%.2f"}</td>
+			</tr>
+			<tr>
+				<td>[t]WTR hours booked[/t]:</td>
+				<td>{$bookedWTR|string_format:"%.2f"}</td>
+			</tr>
+			<tr>
+				<td>[t]WTR hours remaining[/t]:</td>
+				<td>{$remainingWTR|string_format:"%.2f"}</td>
+			</tr>
+		</table>
+	</div>
+  <br>
+{/if}
+
+{if [uts:show_remark]}
+  <div id="tscRemark">[t]Remark[/t]</div>
+  <br>
+{/if}
+
+</div>
+
+<iframe application="yes" name="actionFrame" id="actionFrame" width="0" height="0" scrolling="no" frameborder="no"></iframe>
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

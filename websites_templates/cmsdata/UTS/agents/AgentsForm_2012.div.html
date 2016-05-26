@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>WebUserForm2</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/agents/AgentsForm_2012.div.html -->
+{literal}
+<script>
+function del_agent() {
+	document.form1.command.value="delagent";
+	document.form1.submit();
+}
+</script>
+{/literal}
+<div class="outer myProfileAgentsOuter newAgentOuter">
+<!-- /fotemplatesdiv/AgentsForm.html -->
+
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<h1 class="title">[t]PageTitle[/t]</h1>
+<!--END_PageTitle-->
+
+<!--START_Block1-->
+<!--START_Title1-->
+<div class="subHeader">[t]Title1[/t]</div>
+<!--END_Title1-->
+{if $useOwnMenu}
+{$ownMenu}
+{/if}
+<!--START_Text1-->
+<div class="text">[t]Text1[/t]</div>
+<!--END_Text1-->
+<!--END_Block1-->
+
+<form name="form1" action="[website]/index.php/page/agents/bb/1" method="POST">
+<input type="hidden" name="command" value="{$postcommand}">
+<input type="hidden" name="WUstep" value="4">
+<input type="hidden" name="agentId" value="{$r.id}">
+
+<div class="formInput">
+<label for="{$r.Name}">[t]SingleWord1[/t]<!--SingleWordLink1--></label>
+<input type="Text" name="Name" size=35 value="{$r.Name}" id="{$r.Name}">
+</div>
+
+<div class="formInput">
+<label for="{$r.Name}">[t]SingleWord3[/t]<!--SingleWordLink1--></label>
+<input type="hidden" value="0" name="active">
+<input class="radioButton" type="checkbox" value="1" name="active" {if $r.active}checked{/if}>
+</div>
+
+
+{foreach item=fn from=$criterias}
+<div class="formInput" >
+<label for="{$fn.field}">{$fn.name}</label>
+<select name="{$fn.field}" id="{$fn.field}">
+<option value="">---</option>
+<html_options options=$fn.options selected=$fn.value>
+</select>
+{if $disable_mandatory_checks}
+<input class="radioButton" type="hidden" name="Required[]" value="{$fn.field}" checked title="[t]System14[/t]">
+{else}
+<input class="radioButton" type="checkbox" name="Required[]" value="{$fn.field}" {if $fn.Required == "Y"}checked{/if} title="[t]System14[/t]">
+{/if}
+</div>
+{/foreach}
+
+<!--START_auto_agents-->
+{if isset($setting_auto_agents) && $setting_auto_agents}
+<div class="formInput">
+<label for="schedule_agent">[t]SingleWord2[/t]<!--SingleWordLink2--></label>
+<select name="schedule_agent" id="schedule_agent">
+<option value="0" {if $agent_schedule == 0} selected {/if}>---</option>
+<option value="4" {if $agent_schedule == 4} selected {/if}>[t]System4[/t]</option>
+<option value="5" {if $agent_schedule == 5} selected {/if}>[t]System5[/t]</option>
+<option value="6" {if $agent_schedule == 6} selected {/if}>[t]System6[/t]</option>
+<option value="7" {if $agent_schedule == 7} selected {/if}>[t]System7[/t]</option>
+<option value="8" {if $agent_schedule == 8} selected {/if}>[t]System8[/t]</option>
+<option value="9" {if $agent_schedule == 9} selected {/if}>[t]System9[/t]</option>
+<option value="10" {if $agent_schedule == 10} selected {/if}>[t]System10[/t]</option>
+<option value="11" {if $agent_schedule == 11} selected {/if}>[t]System11[/t]</option>
+<option value="12" {if $agent_schedule == 12} selected {/if}>[t]System12[/t]</option>
+<option value="13" {if $agent_schedule == 13} selected {/if}>[t]System13[/t]</option>
+</select>
+</div>
+{/if}
+<!--END_auto_agents-->
+
+<div class="buttonContainer">
+<input name="Submit" type="Submit" value="[t]Button1[/t]" class="button" id="[t]Button1[/t]"><!--ButtonLink1-->
+{if $postcommand == "saveagent" && $r.id}
+<input name="Delete" type="button" value="[t]Button2[/t]" class="button" id="[t]Button2[/t]" onclick="del_agent();"><!--ButtonLink2-->
+{/if}
+</div>
+
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+</form>
+</div>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>FIM - Notification after creating daughter company</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/misc/create_daughter_notify.html -->
+<p>[t]Dear {$name},[/t]</p>
+<p>[t]A new daughter company[/t] ({$daughter_company.wg_name}) [t]has been created for[/t] {$customer_name} [t]with the following parameters: [/t]
+</p><p>
+    [t]Name:[/t] {$daughter_company.wg_name}<br>
+    [t]Project code:[/t] {$daughter_company.project_code}<br>
+    [t]Project information:[/t] {$daughter_company.project_info}<br>
+    [t]Country:[/t] {if $daughter_company.country_name}{$daughter_company.country_name}{else}{$daughter_company.country_id}{/if}<br>
+    [t]Location:[/t] {$daughter_company.location}<br>
+    [t]Startdate:[/t] {$daughter_company.start_date}<br>
+    [t]Length:[/t] {$daughter_company.project_length}<br>
+    [t]Work scope:[/t] {$daughter_company.scope}<br>
+    [t]Project manager:[/t] {$daughter_company.manager_name}<br>
+</p>
+{if $login_link}
+    <p>
+        Click  here  to  log  in  to  your  account:
+        <a href="{$login_link}">{$login_link}</a>
+    </p>
+{/if}
+<p>
+    [t]Kind regards,[/t]<br />
+    {$username}
+</p>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<p>[t]The Line Manager {$linemanagerName|escape} has uploaded a document for the candidate {$applicantName|escape} linked to the job {$vacancyName|escape} on {$changeDateTime|escape}.[/t]</p> 
+{if $toStatus1}<p>[t]Status {$statusName1|escape} changed to: {$toStatus1|escape}[/t]</p>{/if}
+{if $toStatus2}<p>[t]Status {$statusName2|escape} changed to: {$toStatus2|escape}[/t]</p>{/if}
+{if $toStatus3}<p>[t]Status {$statusName3|escape} changed to: {$toStatus3|escape}[/t]</p>{/if}
+
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<!--uts:end inner-->
+</body>
+</html>

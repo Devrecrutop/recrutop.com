@@ -1,0 +1,57 @@
+{* this is the template for the Statistics page of Recrowd  *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>whatever</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/customers/recrowd_recruiter_statistics.html -->
+
+<div class="outer stsOuter">
+<h1 class="title stsTitle">[t]Statistics[/t]</h1>
+{$menu}
+
+
+<table border="0" cellpadding="0" cellspacing="0" class="stsGenTbl">
+<tr>
+<td>[t]Amount of profile page views:[/t]</td>
+<td align="right">{$recrowd_stats.detail_views_cnt}</td>
+</tr>
+<tr>
+<td>[t]Amount of profile page shares:[/t]</td>
+<td align="right">{$recrowd_stats.clicked_shared_cnt}</td>
+</tr>
+<tr>
+<td>[t]Selected for a recruitment trajectory:[/t]</td>
+<td align="right">{$recrowd_stats.select_for_recruitment_cnt}  ({$recrowd_stats.select_for_recruitment_percentage}%)</td>
+</tr>
+<tr>
+<td>[t]Selected for a tender:[/t]</td>
+<td align="right">{$recrowd_stats.select_for_tender_cnt} ({$recrowd_stats.select_for_tender_percentage}%)</td>
+</tr>
+<tr>
+<td>[t]Accepted tenders:[/t]</td>
+<td align="right">{$recrowd_stats.accepted_tenders_cnt}</td>
+</tr>
+
+<tr>
+<td>[t]Number of times found in search results:[/t]</td>
+<td align="right">{$recrowd_stats.in_searchlist_cnt}</td>
+</tr>
+
+<tr>
+<td>[t]Number of successfull assignments:[/t]</td>
+<td align="right">{$recrowd_stats.successfull_assignments_cnt}</td>
+</tr>
+
+
+</table>
+
+
+</div>
+
+
+<!--uts:end inner-->
+</body>
+</html>

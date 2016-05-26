@@ -1,0 +1,24 @@
+{* this is the master template for candidate results *}
+{* req.ext.js: JQueryBase,JQueryAutocomplete,JQueryMultiSelect,JQueryAnimatedCollapse,JQueryPrettyPopin,JQueryScrollTo,JQueryClueTip *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>whatever</title>
+</head>
+<body>
+<!--uts:begin inner-->
+{* common init *}
+<include file="candidateResultsCommon.inc.html">
+
+{* pick up the right template, ID 44 = left *}
+<if "[uts:facets_location]" == "44">
+    <include file="candidateResults1.html">
+<else>
+    <include file="candidateResults2.html">
+</if>
+
+{* common end *}
+<include file="jsFootCandidates.inc.html">
+<!--uts:end inner-->
+</body>
+</html>

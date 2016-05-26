@@ -1,0 +1,176 @@
+/* INSTALL OTYS 4 WEB STYLE SHEET */
+/* W3C VERIFIED CSS 2.0 */
+/* COPYRIGHT OTYS CORP 2005 */
+/* Here you will place all the empty / unused styles */
+
+
+/* MENUS */
+
+/* knoppen */
+
+.knoptable{
+background:url(http://www.yourit.nl/detail/_images/achtergrond_link.gif) no-repeat center left;
+height:23px;
+padding:3px 0px 3px 4px;
+text-decoration:none;
+width:147px;
+}
+.knoptable a{
+color:#FFFFFF;
+font-size:12px;
+font-weight:bold;
+text-decoration:none
+}
+.knoptable a:hover{
+color:#FFFFFF;
+text-decoration:none
+}
+.knoptableactive{
+background:url(http://www.yourit.nl/detail/_images/achtergrond_link_active.gif) no-repeat top left;
+height:23px;
+padding:3px 0px 3px 4px;
+text-decoration:none;
+width:147px;
+}
+.knoptableactive a{
+color:#FFFFFF;
+font-size:12px;
+font-weight:bold;
+text-decoration:none
+}
+.knoptableactive a:hover{
+color:#FFFFFF;
+text-decoration:none
+}
+
+/* flight */
+
+.flightrow{
+background:transparent;
+height:1px
+}
+.flightrow2{
+background:transparent;
+height:1px
+}
+.flightContainer{
+padding-top:0px
+}
+.flightlayer{
+display:none;
+position:absolute;
+width:145px
+}
+.flightlayer2{
+bottom:1px;
+display:none;
+position:absolute
+}
+.flightlayercontainer{
+height:1px;
+overflow:visible;
+position:relative
+}
+.flightHolderTbl{
+border-bottom:1px solid #3243B4
+}
+.flightTbl{
+border-left:1px solid #3243B4;
+border-right:1px solid #3243B4;
+border-top:1px solid #3243B4;
+color:#000000;
+cursor:pointer;
+height:20px;
+padding:2px 6px 2px 6px;
+width:145px
+}
+.flightTbl a{
+color:#000000;
+font-size:11px;
+font-weight:bold;
+text-decoration:none
+}
+.flightTbl a:hover{
+color:#000000;
+font-size:11px;
+font-weight:bold;
+text-decoration:none
+}
+.flightTblactive{
+border-left:1px solid #3243B4;
+border-right:1px solid #3243B4;
+border-top:1px solid #3243B4;
+color:#000000;
+cursor:pointer;
+height:20px;
+padding:2px 6px 2px 6px;
+width:145px
+}
+.flightTblactive a{
+color:#000000;
+font-size:11px;
+font-weight:bold;
+text-decoration:none
+}
+.flightTblactive a:hover{
+color:#000000;
+font-size:11px;
+font-weight:bold;
+text-decoration:none
+}
+
+/* FIRST LINK BLOCK */
+
+.hlb1{
+background:transparent;
+padding:0px 10px 0px 10px
+}
+.hlb1 a{
+color:#666666;
+font-size:11px
+}
+.hlb1 a:hover{
+color:#666666;
+text-decoration:underline
+}
+.hlb1active{
+background:transparent;
+padding:0px 10px 0px 10px
+}
+.hlb1active a{
+color:#000000;
+font-size:11px;
+text-decoration:underline
+}
+.hlb1active a:hover{
+color:#000000;
+text-decoration:underline
+}
+
+/* SECOND LINK BLOCK */
+
+.hlb2{
+background:transparent;
+padding:0px 10px 0px 10px
+}
+.hlb2 a{
+color:#666666;
+font-size:11px
+}
+.hlb2 a:hover{
+color:#666666;
+text-decoration:underline
+}
+.hlb2active{
+background:transparent;
+padding:0px 10px 0px 10px
+}
+.hlb2active a{
+color:#000000;
+font-size:11px;
+text-decoration:underline
+}
+.hlb2active a:hover{
+color:#000000;
+text-decoration:underline
+}

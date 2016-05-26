@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/customers/jt_profile_notification.html -->
+<p>
+[t]A new profile has been created by {$profile_contact} from {$profile_relation}.[/t]<br> 
+[t]The following details have been added:[/t]<br>
+[t]Profile name:[/t] {$profile.jts_name}<br>
+[t]Logo:[/t] {if $profile.logo}<img src="http://{$website}/_images_upload/{$profile.logo}" >{/if}<br>
+[t]Company name:[/t]{$profile.company_name}<br>
+[t]Contact name:[/t]{$profile.cp_firstname} {$profile.cp_middlename} {$profile.cp_lastname}<br>
+[t]Phone number:[/t] {$profile.cp_phone_number}<br>
+[t]Email:[/t] {$profile.cp_email}<br>
+[t]Company profile:[/t] {$profile.company_profile}<br>
+[t]Company culture:[/t] {$profile.company_culture}<br>
+<!--JTS_APPROVAL_LINK:{$jts_id}--><!--JTS_INPUTLINK-->
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="generator" content="PSPad editor, www.pspad.com">
+		<title>
+		</title>
+	</head>
+	<body>
+		<!--uts:begin inner-->
+		<table border="0" cellpadding="0" cellspacing="0" class="vacsTable">
+		<!-- UTS/pcl/candidates.html -->
+			<tr>
+				<td class="formHeaderContainer">
+					<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+						<tr>
+							<td class="formHeader">
+								[t]Public candidates list[/t]</td>
+						</tr>
+					</table></td>
+			</tr>
+
+			<tr>
+				<td class="formTextContainer"></td>
+			</tr>
+			 {if $use_filter_in_pcl && count($filter)>0}
+			<tr>
+				<td class="formText">
+					<form method="post">
+					<input type="hidden" name="command" value="set_filter">
+						<!-- place for filter form-->
+						<table border="0" cellpadding="0" cellspacing="0" class="formTbl">
+						{foreach from=$filter item=item }
+							<tr>
+								<td class="HQuestion">{$item.name}</td>
+								<td class="FieldContainer">
+									<select name="filter[{$item.field}]">
+									{$item.options}
+									</select>
+								</td>
+							</tr>
+						{/foreach}
+						   	<tr>
+						  	  <td class="formButton"><input type="submit" name="Submit" value="Search" class="button"></td>							</tr>
+						</table>
+					</form>
+				</td>
+			</tr>
+			 {/if}
+
+			<tr>
+				<td class="vacancyListContainer">
+					<table cellspacing="0" cellpadding="0" border="0" width="100%" class="vacancyListTbl">
+					{foreach from=$candidates item=rec key=id}
+							<tr>
+								<td>
+								   <a href="{$pageurlb}/command/cand_detail/candcode/{$rec.hash}">{$rec.uid}</a>
+								</td>
+								<td>
+								   {$rec.woonplaats}
+								</td>
+								<td>
+								   {if $rec.age}
+								   [t]Age:[/t]{$rec.age}
+								   {/if}
+								</td>
+							</tr>
+							{/foreach}
+					</table></td>
+			</tr>
+
+
+			{if $pages>1}
+			<tr>
+				<td class="listNavContainer">
+					<table border="0" cellpadding="0" cellspacing="0" class="listNavTbl">
+						<tr>
+							<td class="listNavPrevious">
+							<a href="{$pageurl}/currpage/1">[t]First[/t]</a>
+							&nbsp;
+							</td>
+							<td class="listNavPrevious">
+							{if $currPage>1}
+								<a href="{$pageurl}/currpage/{$currPage-1}">[t]Previous[/t]</a>
+							{/if}
+							&nbsp;
+							</td>
+							<td class="listNavPageNumberContainer">
+								<table border="0" cellpadding="0" cellspacing="0" class="listNavPageNumberTbl">
+									<tr>
+										<td class="listNavPageNumberHolder">
+										{foreach from=$paging key=page item=show}
+											{if ($show == 1)}
+												{if ($page != $currPage)}
+													<span class="listNavPageNumber">
+														<a href="{$pageurl}/currpage/{$page}">{$page}</a>
+													</span>
+													<span>
+														&nbsp;&nbsp;
+													</span>
+												{/if}
+												{if ($page == $currPage)}
+													<span class="listNavPageNumberactive">
+														<a href="{$pageurl}/currpage/{$page}">{$page}</a>
+													</span>
+													<span>
+														&nbsp;&nbsp;
+													</span>
+												{/if}
+											{/if}
+											{if ($show == 0)}
+												<span class="listNavPageNumberactive">
+													...
+												</span>
+												<span>
+													&nbsp;&nbsp;
+												</span>
+											{/if}
+										{/foreach}
+										</td>
+									</tr>
+								</table></td>
+							<td class="listNavNext">
+								{if $currPage<$pages}
+									&nbsp;
+									<a href="{$pageurl}/currpage/{$currPage+1}">[t]Next[/t]</a>
+								{/if}
+							</td>
+							<td class="listNavNext">
+								&nbsp;
+								<a href="{$pageurl}/currpage/{$pages}">[t]Last[/t]</a>
+							</td>
+						</tr>
+					</table></td>
+			</tr> {/if}
+		</table>
+		<!--uts:end inner-->
+	</body>
+</html>

@@ -1,0 +1,160 @@
+{* req.ext.js: JQueryBase,JQueryUI *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Public Invitation - Step 1</title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!--/UTS/AGENDA/PublicInvitationStart.html-->
+<script language="javascript" type="text/javascript">
+{literal} 
+$(document).ready
+(
+	function()
+	{
+		$('#itemTypeSwitch').change
+		(
+			function()
+			{
+				{/literal}
+				var itemType = document.forms['searchsuggestionsf'].id_itemtype.value;
+				
+				{foreach from=$itemTypes key=itemTypeId item=itemType}
+				$('#id_consultant_container_' + {$itemTypeId}).css('display', 'none');
+				{/foreach}
+				$('#id_consultant_container_' + itemType).css('display', 'block');
+				if ({foreach from=$itemTypes key=itemTypeId item=itemType}{if $itemType.open}itemType == "{$itemTypeId}" || {/if}{/foreach}false) {literal} {
+					$("#duration_container").css('display', 'none');
+					$("#description_container").css('display', 'none');
+				}
+				else {
+					$("#duration_container").css('display', 'block');
+					$("#description_container").css('display', 'block');
+				}
+			}
+		);
+	}
+);
+{/literal}
+
+{literal}
+
+$(document).ready
+(
+	function()
+	{
+		$( "#public_invitation_datepicker" ).datepicker({
+	
+			dateFormat: 'dd-mm-yy',
+			firstDay: 1,		
+			minDate: 0,
+			dayNames: ['[thg]Sunday[/thg]', '[thg]Monday[/thg]', '[thg]Tuesday[/thg]', '[thg]Wednesday[/thg]', '[thg]Thursday[/thg]', '[thg]Friday[/thg]', '[thg]Saturday[/thg]'],
+			dayNamesMin: ['[thg]Su[/thg]', '[thg]Mo[/thg]', '[thg]Tu[/thg]', '[thg]We[/thg]', '[thg]Th[/thg]', '[thg]Fr[/thg]', '[thg]Sa[/thg]'],
+			dayNameShort: ['[thg]Sun[/thg]', '[thg]Mon[/thg]', '[thg]Tue[/thg]', '[thg]Wed[/thg]', '[thg]Thu[/thg]', '[thg]Fri[/thg]', '[thg]Sat[/thg]'],
+			monthNames: ['[thg]January[/thg]', '[thg]February[/thg]', '[thg]March[/thg]', '[thg]April[/thg]', '[thg]May[/thg]', '[thg]June[/thg]', '[thg]July[/thg]', '[thg]August[/thg]', '[thg]September[/thg]', '[thg]October[/thg]', '[thg]November[/thg]', '[thg]December[/thg]'],			
+			monthNamesShort: ['[thg]Jan[/thg]', '[thg]Feb[/thg]', '[thg]Mar[/thg]', '[thg]Apr[/thg]', '[thg]May[/thg]', '[thg]Jun[/thg]', '[thg]Jul[/thg]', '[thg]Aug[/thg]', '[thg]Sep[/thg]', '[thg]Oct[/thg]', '[thg]Nov[/thg]', '[thg]Dec[/thg]']
+		
+		});
+	}
+);
+
+{/literal}
+
+</script>
+
+<div class="outer pInStOuter">
+<h1 class="title pInStTitle">[t]Plan an appointment[/t]</h1>
+<div class="text pInStText">[t]Select your appointment details.[/t]</div>
+<div class="pInStItem">
+
+<form name="searchsuggestionsf" action="{$handler}/command/searchorinvite/bb/1" method="post">
+{if count($itemTypes) == 1}
+	<input type="hidden" name="id_itemtype" value="{$itemTypeSelected}" >
+
+	{if {$itemTypes[$itemTypeSelected].open}
+		{*<div class="formInput"><label>[t]Item type[/t]</label>{$itemTypes[$itemTypeSelected].name|escape}</div>*}
+		{if $itemTypes[$itemTypeSelected].default_title}
+			<div class="formInput"><label>[t]Title[/t]</label>{$itemTypes[$itemTypeSelected].default_title|escape}</div>
+		{/if}
+		{if $itemTypes[$itemTypeSelected].default_location}
+			<div class="formInput"><label>[t]Location[/t]</label>{$itemTypes[$itemTypeSelected].default_location|escape}</div>
+		{/if}
+		{if $itemTypes[$itemTypeSelected].default_description}
+			<div class="formInput pInStDesc"><label>[t]Description[/t]</label>{$itemTypes[$itemTypeSelected].default_description|escape}</div>
+		{/if}
+
+	{/if}
+
+{else}
+	<div class="formInput"><label>[t]Item type[/t]<span>*</span></label><select name="id_itemtype" id="itemTypeSwitch">
+	{foreach from=$itemTypes item=t}
+		<option value="{$t.id}" {if $itemTypeSelected == $t.id}selected="selected"{/if}>{$t.name|escape}</option>
+	{/foreach}
+	</select></div>
+{/if}
+
+{foreach from=$itemTypes key=itemTypeId item=itemType}
+	{if $limit_id_consultant}
+		<input type="hidden" name="id_consultant_{$itemTypeId}" value="{$force_id_consultant|escape}">
+	{else}
+		<div class="formInput" {if $itemTypeSelected != $itemTypeId}style="display: none;"{/if} id="id_consultant_container_{$itemTypeId}">
+		<label>[th]Consultant[/th]<span>*</span></label>
+		<select name="id_consultant_{$itemTypeId}">
+		<option value="0">[th]No preference[/th]</option>
+		<option disabled="disabled">-- [th]consultants[/th]</option>
+		{foreach from=$consultants item=c}
+			{if in_array($itemTypeId, $c.itemtypes)}
+				<option value="{$c.id}" {if $id_consultant == $c.id}selected="selected"{/if}>{$c.name|escape}</option>
+			{/if}
+		{/foreach}
+		</select>
+		</div>
+	{/if}
+{/foreach}
+
+{if $limit_duration}
+	<input type="hidden" name="duration" value="{$force_duration|escape}">
+{else}
+	<div class="formInput" {if $itemTypes[$itemTypeSelected].open}style="display: none;"{/if} id="duration_container">
+			<label>[t]Duration[/t]<span>*</span></label>
+		<select name="duration">
+
+                    {if $clientid == 1942 || $clientid == 966}
+			<option value="5" {if $duration == 5}selected="selected"{/if}>5 [th]minutes[/th]</option>
+			<option value="10" {if $duration == 10}selected="selected"{/if}>10 [th]minutes[/th]</option>
+			<option value="15" {if $duration == 15}selected="selected"{/if}>15 [th]minutes[/th]</option>
+			<option value="20" {if $duration == 20}selected="selected"{/if}>20 [th]minutes[/th]</option>
+
+                    {/if}
+
+			<option value="30" {if $duration == 30}selected="selected"{/if}>30 [th]minutes[/th]</option>
+			<option value="45" {if $duration == 45}selected="selected"{/if}>45 [th]minutes[/th]</option>
+			<option value="60" {if $duration == 60}selected="selected"{/if}>1 [th]hour[/th]</option>
+                        <option value="90" {if $duration == 90}selected="selected"{/if}>1,5 [th]hour[/th]</option>
+		</select>	
+	</div>
+{/if}
+
+
+<div class="formInput" {if $itemTypes[$itemTypeSelected].open}style="display: none;"{/if} id="description_container">
+	<label>[t]Description[/t]</label><textarea name="description">{$description|escape}</textarea>
+</div>
+
+
+<div class="formInput">
+	<label>[t]Start date[/t]<span>*</span></label><input id="public_invitation_datepicker" type="text" name="date" value="{if $date}{$date}{else}{$today}{/if}">
+</div>
+
+{if $uid}
+<input type="hidden" name="uid" value="{$uid}" >
+{/if}
+
+<div class="buttonContainer pInStButton"><input type="submit" value="[tb]Search for suggestions[/tb]" class="button"></div>
+</form>
+
+</div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

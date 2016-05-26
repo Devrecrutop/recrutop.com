@@ -1,0 +1,434 @@
+<html>
+<head>
+<title>questionsform</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/QuestionForm.html -->
+<form name="form" method="post" enctype="multipart/form-data" action="/index.php/page/participantsfo/code/[code]/bb/1/command/participate">
+<input type="hidden" name="command" value="participate">
+
+<table border="0" cellpadding="0" cellspacing="0" class="vacstable">
+<tr> 
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Inschrijving[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Vul in de onderstaande velden uw persoonlijke contactgegevens en dergelijke in.[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<!--START-->
+
+<!--HORIZONTAL-->
+
+<!--START_H_Vast-->
+<tr>
+<td>
+<table border="0" id="H_Vast">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td align="left"><input type="text" name="Answers[[QuestionId]]" value="[AnswerValue]"></td>
+<td class="error">[Error]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_Vast-->
+
+
+<!--START_H_Document-->
+<tr>
+<td>
+<table border="0" id="H_Document">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td align="left"><input type="file" name="Answers[[QuestionId]]" value="[AnswerValue]"></td>
+<td class="error">[Error]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_Document-->
+
+
+<!--START_H_DateSelect-->
+<tr>
+<td>
+<table border="0" id="H_DateSelect">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td align="left">[DateSelects]</td>
+<td class="error">[Error]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_DateSelect-->
+
+<!--START_H_Textfield-->
+<tr>
+<td>
+<table border="0" id="H_Textfield">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td align="left"><input type="text" name="Answers[[QuestionId]]" value="[AnswerValue]"></td>
+<td class="error">[Error]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_Textfield-->
+
+<!--START_H_Textarea-->
+<tr>
+<td>
+<table border="0" id="H_Textarea">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td align="left"><textarea name="Answers[[QuestionId]]" rows="[NumRows]">[AnswerValue]</textarea></td>
+<td class="error">[Error]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_H_Textarea-->
+
+<!--START_H_Select-->
+<tr>
+<td>
+<table border="0"  cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td class="FieldContainer">
+<select name="Answers[[QuestionId]]">
+<option value="">---</option>
+<!--START_H_Select_Answers-->
+<option value="[AnswerId]" [selected]>[Answer]</option>
+<!--END_H_Select_Answers-->
+</select></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td class="error">[Error]</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+<!--END_H_Select-->
+
+
+
+<!--START_H_Checkbox-->
+<tr>
+<td class="questionContainer">
+
+<table border="0"  cellpadding="0" cellspacing="0">
+<tr>
+<td class="HQuestion">[Question]</td>
+
+<td class="FieldContainer">
+
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<!--START_H_Checkbox_Answers-->
+<td>
+
+<table border="0" class="fieldTbl">
+<tr>
+<td align="left" class="radiobuttons">
+<input type="hidden"   name="Answers[[QuestionId]][[AnswerId]]" value="0">
+<input type="checkbox" name="Answers[[QuestionId]][[AnswerId]]" value="1" [checked]>
+</td>
+<td class="answer">[Answer]</td>
+</tr>
+</table>
+
+</td>
+
+<!--END_H_Checkbox_Answers-->
+</tr>
+</table>
+
+</td>
+</tr>
+
+<tr>
+<td colspan="2" class="error">[Error]</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+<!--END_H_Checkbox-->
+
+
+<!--START_H_Radio-->
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<tr>
+<td class="questionContainer">
+
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td class="HQuestion">[Question]</td>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<!--START_H_Radio_Answers-->
+<td align="left">
+
+<table border="0">
+<tr>
+<td class="radiobuttons"><input type="radio" name="Answers[[QuestionId]]" value="[AnswerId]" [checked]></td>
+<td class="answer">[Answer]</td>
+</tr>
+</table>
+
+</td>
+<!--END_H_Radio_Answers-->
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+
+<tr>
+<td class="error">[Error]</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+<!--END_H_Radio-->
+
+
+<!--VERTICAL-->
+
+<!--START_V_Vast-->
+<tr>
+<td>
+<table border="0" id="V_Vast">
+<tr>
+<td colspan="2" class="VQuestion">[Question]</td>
+</tr>
+<tr>
+<td><input type="text" name="Answers[[QuestionId]]" value="[AnswerValue]"></td>
+<td class="error">[Error]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Vast-->
+
+<!--START_V_Document-->
+<tr>
+<td>
+<table border="0" id="V_Document">
+<tr>
+<td colspan="2" class="VQuestion">[Question]</td>
+</tr>
+<tr>
+<td><input type="file" name="Answers[[QuestionId]]" value="[AnswerValue]"></td>
+<td class="error">[Error]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Document-->
+
+<!--START_V_DateSelect-->
+<tr>
+<td>
+<table border="0" id="V_DateSelect">
+<tr>
+<td colspan="2" class="VQuestion">[Question]</td>
+</tr>
+<tr>
+<td>[DateSelects]</td>
+<td class="error">[Error]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_DateSelect-->
+
+<!--START_V_Textfield-->
+<tr>
+<td>
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+<tr>
+<td class="VQuestion">[Question]</td>
+</tr>
+
+<tr>
+<td class="ItemFieldContainer"><input type="text" style="width:100%;" name="Answers[[QuestionId]]" value="[AnswerValue]"></td>
+</tr>
+
+<tr>
+<td class="error">[Error]</td>
+</tr>
+
+</table>
+</td>
+</tr>
+<!--END_V_Textfield-->
+
+<!--START_V_Textarea-->
+<tr>
+<td class="itemContainer">
+<table border="0" cellpadding="0" cellspacing="0" class="itemHolder">
+<tr>
+<td class="itemHeader">[Question]</td>
+</tr>
+
+<tr>
+<td class="ItemFieldContainer"><textarea style="width: 100%" name="Answers[[QuestionId]]" rows="[NumRows]">[AnswerValue]</textarea></td>
+</tr>
+
+<tr>
+<td class="error">[Error]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Textarea-->
+
+<!--START_V_Select-->
+<tr>
+<td>
+<table border="0" id="H_Select">
+<tr>
+<td colspan="2" class="VQuestion">[Question]</td>
+</tr>
+<tr>
+<td>
+<select name="Answers[[QuestionId]]">
+<option value="">---</option>
+<!--START_V_Select_Answers-->
+
+<option value="[AnswerId]" [selected]>[Answer]</option>
+<!--END_V_Select_Answers-->
+</select>
+</td>
+<td class="error">[Error]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Select-->
+
+
+<!--START_V_Checkbox-->
+<tr>
+<td>
+<table border="0" id="V_Checkbox">
+<tr>
+<td class="VQuestion">[Question]</td>
+<td class="error">[Error]</td>
+</tr>
+<!--START_V_Checkbox_Answers-->
+<tr>
+<td colspan="2">
+<table border="0" id="V_Checkbox_Answers">
+<tr>
+<td class="radiobuttons">
+<input type="hidden"   name="Answers[[QuestionId]][[AnswerId]]" value="0">
+<input type="checkbox" name="Answers[[QuestionId]][[AnswerId]]" value="1" [checked]>
+</td>
+<td class="Vanswer">[Answer]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Checkbox_Answers-->
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Checkbox-->
+
+
+<!--START_V_Radio-->
+<tr>
+<td>
+<table border="0" id="V_Radio">
+<tr>
+<td class="VQuestion">[Question]</td>
+<td class="error">[Error]</td>
+</tr>
+<!--START_V_Radio_Answers-->
+<tr>
+<td colspan="2">
+<table border="0" id="V_Radio_Answers">
+<tr>
+<td class="radiobuttons">
+<input type="radio" name="Answers[[QuestionId]]" value="[AnswerId]" [checked]>
+</td>
+<td class="VAnswer">[Answer]</td>
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Radio_Answers-->
+</tr>
+</table>
+</td>
+</tr>
+<!--END_V_Radio-->
+
+<!--END-->
+<tr>
+<td class="vacatureButtonContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="vacatureButtonTbl">
+<tr>
+<td class="vacatureButton"><input type="submit" value="[tb]Bewaren[/tb]" class="button"></td>
+<td>&nbsp;</td>
+<td class="vacatureButton"><input type="button" value="[tb]Reset[/tb]" onclick="window.location='/index.php/page/participantsfo/command/clearform/evid/[evid]/code/[code]/bb/1'" class="button"></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+</form>
+<!--uts:end inner-->
+</body>
+</html>

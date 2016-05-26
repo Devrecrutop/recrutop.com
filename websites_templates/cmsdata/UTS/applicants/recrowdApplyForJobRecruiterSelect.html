@@ -1,0 +1,85 @@
+{* this template is used by recrowd *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
+</head>
+<body>
+<!--uts:begin inner-->
+
+<style type="text/css" media="screen">
+{literal}
+.recrowdItem{width:15%;float:left;height:30px;}
+.recrowdHeader{border-bottom:1px solid gray;}
+.itemContainer{width:100%;height:30px;}
+.itemContainer .recrowdItem .button{margin-top:0px;}
+{/literal}
+</style>
+
+
+<script type="text/javascript">
+//{literal}
+
+$(document).ready( function() {
+$('.star').raty({
+  score: function() {
+    return $(this).attr('data-score');
+  },
+                half  : true,
+                path : '/_images_global/raty/',
+                space : false,
+                hints: ['[th]bad[/th]', '[th]poor[/th]', '[th]regular[/th]', '[th]good[/th]', '[th]excellent[/th]'],
+                width: 150,
+                readOnly : true,
+                noRatedMsg : '[th]not rated yet[/th]',
+});
+});
+
+//{/literal}
+</script>
+
+
+<div class="outer aplOuter aplJStartOuter">
+<!-- /UTS/applicants/recrowdApplyForJobRecruiterSelect.html -->
+	<h1 class="title  aplTitle aplJStartTitle">[t]Choose a recruiter[/t]</h1>
+	<div class="intro aplIntro aplJStartIntro">[t]Please select one of the Recruiters below:[/t]
+	<form name="mainfrm" action="{$handler}" method="post" id="aplJStartSignF">
+  
+  
+  <div class="itemContainer recrowdHeader">
+    <div class="recrowdItem first">[t]Name[/t]</div>
+    <div class="recrowdItem">[t]Rating[/t]</div>
+    <div class="recrowdItem">[t]Apply[/t]</div>
+  	<div class="cleaner"></div>
+  </div>
+      
+      
+      
+	{foreach from=$recruiters item=r}
+  	<div class="itemContainer">
+      <div class="recrowdItem first">{if $r.url}<a href="{$r.url}" target="_blank">{$r.recruiter_name}</a>{else}{$r.recruiter_name}{/if}</div>
+      <div class="recrowdItem star"  data-score="{$r.rating}">{$r.rating}</div>
+  		<div class="recrowdItem"><input type="button" name="bSelectRecruitment" value="[t]Apply[/t]"  class="button" onclick="location='/index.php/page/applicants/command/applyforjob/vid/{$vid}/bb/1/recruiters_mode/recrowd/wgcpid/{$r.id}/'"></div>
+      <div class="cleaner"></div>
+    </div>
+
+      
+  {foreachelse}  
+  	<div class="itemContainer">
+  		<div class="itemWord recrowdItem first">&nbsp;</div>
+  		<div class="itemWord recrowdItem">[t]No recruiters[/t]</div>
+  		<div class="itemWord recrowdItem">&nbsp;</div>
+    	<div class="cleaner"></div>
+  	</div>
+
+	{/foreach}  
+    
+
+	</form>
+		
+		
+</div>
+<!--uts:end inner-->
+</body>
+</html>

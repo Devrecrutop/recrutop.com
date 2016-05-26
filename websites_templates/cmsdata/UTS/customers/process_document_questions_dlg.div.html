@@ -1,0 +1,117 @@
+{* req.ext.js: JQueryBase,JQueryUI,JQueryValidate *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<!-- /UTS/customers/process_document_questions_dlg.div.html -->
+<link rel="stylesheet" type="text/css" href="/_css_global/timePicker.css">
+<link rel="stylesheet" type="text/css" href="/_css_global/smoothness/jquery.ui.css">
+
+<script type="text/javascript" src="/_javascript_global/timepick/jquery.timePicker.min.js"></script>
+<script type="text/javascript" src="/_javascript_global//jquery.ui.js"></script>
+
+{literal}
+<script type="text/javascript">
+<!--
+
+//{/literal}
+   var dateFormatJs = '{$dateFormatJs}';  
+//{literal}
+
+   if(dateFormatJs.length == 0)
+   {
+      dateFormatJs = 'd-m-yy';
+   }
+
+  $(document).ready(function(){
+
+	$('.calendar_input').datepicker({
+		inline: true,
+		dateFormat: dateFormatJs,
+		firstDay: 1,
+
+
+		dayNames: ['[thg]Sunday[/thg]', '[thg]Monday[/thg]', '[thg]Tuesday[/thg]', '[thg]Wednesday[/thg]', '[thg]Thursday[/thg]', '[thg]Friday[/thg]', '[thg]Saturday[/thg]'],
+		dayNamesMin: ['[thg]Su[/thg]', '[thg]Mo[/thg]', '[thg]Tu[/thg]', '[thg]We[/thg]', '[thg]Th[/thg]', '[thg]Fr[/thg]', '[thg]Sa[/thg]'],
+		dayNameShort: ['[thg]Sun[/thg]', '[thg]Mon[/thg]', '[thg]Tue[/thg]', '[thg]Wed[/thg]', '[thg]Thu[/thg]', '[thg]Fri[/thg]', '[thg]Sat[/thg]'],
+		monthNames: ['[thg]January[/thg]', '[thg]February[/thg]', '[thg]March[/thg]', '[thg]April[/thg]', '[thg]May[/thg]', '[thg]June[/thg]', '[thg]July[/thg]', '[thg]August[/thg]', '[thg]September[/thg]', '[thg]October[/thg]', '[thg]November[/thg]', '[thg]December[/thg]'],
+		monthNamesShort: ['[thg]Jan[/thg]', '[thg]Feb[/thg]', '[thg]Mar[/thg]', '[thg]Apr[/thg]', '[thg]May[/thg]', '[t]Jun[/t]', '[t]Jul[/t]', '[t]Aug[/t]', '[t]Sep[/t]', '[t]Oct[/t]', '[t]Nov[/t]', '[t]Dec[/t]']
+	});
+
+    $('.time_input').timePicker({step: 15});
+
+    /* ------ */
+
+    $('#frmDocQuestions').validate();
+
+    // add rule required to each question
+    $('.docqs').each(function(){
+
+      $(this).rules('add', {
+  			 	 required: true,
+  			 	 messages: {
+  			     required: '[th]Answer question please.[/th] '
+  			 }
+  		});
+
+  	});
+
+  });
+
+//-->
+</script>
+{/literal}
+
+<form action="{$handler}" id="frmDocQuestions" method="POST">
+<input type="hidden" name="command" value="docmicrocall">
+<input type="hidden" name="docmicrocmd" value="docquestionsprocess">
+<input type="hidden" name="docid" value="{$docId}">
+
+<div class="outer docQuestions">
+<h1 class="title">[t]Questions[/t]</h1>
+{$customer_menu}
+
+{*<!--<h2 class="subHeader">[t]Questions[/t]</h2>-->*}
+{foreach from=$questions item=Q}
+{* ALL THE QUESTIONS ARE TEXTAREAS *}
+<div class="docQuestionBox">
+  <div class="docQuestionName">{$Q.QuestionName|escape}</div>
+  <div class="docQuestion">{$Q.Question|escape}</div>
+  <div class="docQuestionInput">
+{if $Q.Type=='text_area'}
+    <textarea class="docqs" name="docqs[{$Q.QuestionCode}]" rows="4" cols="20"></textarea>
+{/if}
+{if $Q.Type=='short_text'}
+    <input type="text" name="docqs[{$Q.QuestionCode}]"  style="width:100%" >
+{/if}
+{if $Q.Type=='date'}
+    <input type="text" name="docqs[{$Q.QuestionCode}]" class="calendar_input" size="10">
+{/if}
+{if $Q.Type=='time'}
+    <input type="text" name="docqs[{$Q.QuestionCode}]" class="time_input" size="4" >
+{/if}
+  </div>
+</div>
+{/foreach}
+
+
+<div class="buttonContainer">
+<!--START_BUTTON2-->
+<input type="submit" value="[th]Submit[/th]" name="bttnDocQuestions" class="button">
+<!--END_BUTTON2-->
+</div>
+
+
+</div>
+
+</form>
+
+
+<!--uts:end inner-->
+</body>
+</html>

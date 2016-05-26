@@ -1,0 +1,27 @@
+<!--select view V-->
+<div class="formInput aplSelInput" id="KQDIV_{$qd.id}">
+<label for="{$elementId}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+<select name="{$elementName}" id="{$elementId}" 
+      
+
+      {if $qd.killerFieldMaster && $question_show_based_on_answers}
+      onChange="processFieldValueChange('{$elementName}');killerQHandler('{$qd.id}','','select');"
+      {else} 
+      onChange="processFieldValueChange('{$elementName}');"
+      {/if}
+
+>
+<option value="NULL">---</option>
+<html_options options=$options selected=$currentValue>
+</select>
+</div>
+<if $qd.explanation>
+<div class="explain aplSelExplain">
+    {$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplSelError">
+    {$currentErrorMessage}
+</div>
+</if>

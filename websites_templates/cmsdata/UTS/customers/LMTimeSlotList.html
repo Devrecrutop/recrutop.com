@@ -1,0 +1,370 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>                
+</head>
+<body>
+<!--uts:begin inner-->
+
+
+<script type="text/javascript">
+{literal}
+<!--
+jQuery(function($){
+	$.datepicker.regional.nl = {
+		closeText: '[th]Sluiten[/th]',
+		prevText: 'â†�',
+		nextText: 'â†’',
+		currentText: '[th]Vandaag[/th]',
+		monthNames: ['[th]januari[/th]', '[th]februari[/th]', '[th]maart[/th]', '[th]april[/th]', '[th]mei[/th]', '[th]juni[/th]',
+		'[th]juli[/th]', '[th]augustus[/th]', '[th]september[/th]', '[th]oktober[/th]', '[th]november[/th]', '[th]december[/th]'],
+		monthNamesShort: ['[th]jan[/th]', '[th]feb[/th]', '[th]mrt[/th]', '[th]apr[/th]', '[th]mei[/th]', '[th]jun[/th]',
+		'[th]jul[/th]', '[th]aug[/th]', '[th]sep[/th]', '[th]okt[/th]', '[th]nov[/th]', '[th]dec[/th]'],
+		dayNames: ['[th]zondag[/th]', '[th]maandag[/th]', '[th]dinsdag[/th]', '[th]woensdag[/th]', '[th]donderdag[/th]', '[th]vrijdag[/th]', '[th]zaterdag[/th]'],
+		dayNamesShort: ['[th]zon[/th]', '[th]maa[/th]', '[th]din[/th]', '[th]woe[/th]', '[th]don[/th]', '[th]vri[/th]', '[th]zat[/th]'],
+		dayNamesMin: ['[th]zo[/th]', '[th]ma[/th]', '[th]di[/th]', '[th]wo[/th]', '[th]do[/th]', '[th]vr[/th]', '[th]za[/th]'],
+		weekHeader: 'Wk',
+		dateFormat: 'dd-mm-yy',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: false,
+		yearSuffix: ''};
+	$.datepicker.setDefaults($.datepicker.regional.nl);
+});
+//-->
+</script>
+{/literal}
+
+{*<script type="text/javascript" src="/_javascript_global/jquery.ui.datepicker-nl.js"></script>*}
+<script type="text/javascript" src="/_javascript_global/timepick/jquery.timepicker.1.1.12.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/_javascript_global/timepick/jquery.timepicker.css">
+{literal}
+<script type="text/javascript">
+{/literal}
+var limited_time_interval = '{$limited_time_interval}';
+{literal}
+<!--
+
+/**
+ *
+ */
+  
+$(function() {
+  $("#start_date").datepicker($.datepicker.regional['nl']);
+  $("#flt_start_date").datepicker($.datepicker.regional['nl']);
+  $("#flt_end_date").datepicker($.datepicker.regional['nl']);
+  if (limited_time_interval == 1) {
+    $('#start_time').timepicker({'timeFormat': 'H:i', 'step':15, 'disableTextInput':true, 'minTime': '8:00am', 'maxTime': '10:00pm' });
+    $('#end_time').timepicker({'timeFormat': 'H:i', 'step':15, 'disableTextInput':true, 'minTime': '8:00am', 'maxTime': '10:00pm'  });
+  }
+  else{
+    $('#start_time').timepicker({'timeFormat': 'H:i', 'step':15, 'disableTextInput':true});
+    $('#end_time').timepicker({'timeFormat': 'H:i', 'step':15, 'disableTextInput':true });
+  }
+  
+});
+
+
+function deleteTimeslot(tid){
+
+  checkLinkedCandidates(tid,'delete');
+
+}
+
+function saveTimeslot(){
+    document.frm_ts_data.command.value="saveTimeslot";
+    //document.frm_ts_data.dosubmit.value="1";
+    document.frm_ts_data.submit();  
+}
+
+function addNewTimeslot(){
+    document.frm_ts_data.command.value="saveTimeslot";
+    document.frm_ts_data.id.value="";
+    document.frm_ts_data.title.value="";
+    
+    document.frm_ts_data.seats.value="1";
+    document.frm_ts_data.start_date.value="";
+    document.frm_ts_data.start_time.value="";
+    document.frm_ts_data.end_time.value="";
+    document.frm_ts_data.vacancy_id.value="";
+    
+}
+
+function getTimeslot(tid){
+
+    checkLinkedCandidates(tid,'change');
+      
+}
+
+function getTimeslotData(tid){
+
+    document.frm_ts_data.command.value="getTimeslot";
+    document.frm_ts_data.id.value=tid;
+    document.frm_ts_data.submit();
+}                     
+
+
+function deleteTimeslotData(tid){
+
+    document.frm_ts_data.command.value="deleteTimeslot";
+    document.frm_ts_data.id.value=tid;        
+    document.frm_ts_data.submit();  
+}                                 
+
+
+function cleanFilter(){
+  document.getElementById("flt_start_date").value="";
+  document.getElementById("flt_end_date").value="";
+}
+
+function checkLinkedCandidates(tid,xmode){
+
+//$(document).ready(function() {
+        	$.post('/index.php/page/lm_timeslots/command/checkLinkedCandidates', 		   				   				   
+        	   {'command':'checkLinkedCandidates','timeslot_id':tid},
+             xmode=='change'?TimeslotModifyFeedbackChange:TimeslotModifyFeedbackDelete,   			  
+        	   'json');
+//});             
+
+}
+
+function TimeslotModifyFeedbackChange(data){
+      
+     if (data.status=="LINKED_CANDIDATES"){
+        
+        var r=confirm("[th]There are candidates linked to this timeslot.\nIf you modify the date and time, all reservations will be cancelled and candidates will be informed.\nThere will automaticly be an new invite send to the candidate. Do you want to continue?[/th]");
+        if (r==true){
+          // do nothing  
+          getTimeslotData(data.tid);
+             
+        }        
+        else{
+          // do nothing
+        }
+        
+        
+     }
+     else{
+      getTimeslotData(data.tid);
+     }
+}
+
+
+function TimeslotModifyFeedbackDelete(data){
+      
+
+      
+     if (data.status=="LINKED_CANDIDATES"){
+        
+        var r=confirm("[th]You are about to delete this timeslot, there are candidates linked to this timeslot. \nWhen deleting a timeslot all candidates are notified and will be reinvited to reserve a seat. \nDo you want to continue?[/th]");
+        if (r==true){
+          deleteTimeslotData(data.tid);
+        }      
+        
+        
+     }
+     else{
+        deleteTimeslotData(data.tid);
+     }
+}
+
+//-->
+</script>
+{/literal}
+
+
+<style type="text/css">
+//{literal}
+	.tsFormDateSelect {
+		width: 32px;
+		text-align: center;
+	}
+  .timeSelect{width:80px;}
+//{/literal}
+</style>
+
+<div class="outer custOuter custLinOuter">
+<!-- /UTS/customers/LMTimeSlotList.html -->
+	<h1 class="title custTitle custLinTitle">[t]Timeslots[/t]</h1>
+	{$menu}
+  
+  <div class="intro">[t]Manage your timeslots underneath.[/t]</div>
+
+	<h2 class="title custTitle custLinTitle">[t]Add a new timeslot[/t]</h2>
+
+<div class="newTimeslotFormDiv">
+    <form action="{$handler}/command/list" id="frm_ts_data" name="frm_ts_data" method="post">
+    <input type="hidden" id="timeslot_id" name="id" value="{$timeslot.id}" >
+    <input type="hidden" name="command" value="" >
+    <input type="hidden" name="dosubmit" value="1" >
+      
+    <div class="formInput">
+		<label>[t]Title[/t]</label>
+                {if $jobTitles}
+                    <select name="title" id="timeslot_title">
+                        <option value="">---</option>
+                        {foreach from=$jobTitles item=jobTitle}
+                        <option value="{$jobTitle}" {if $timeslot.title==$jobTitle} selected {/if}>{$jobTitle}</option>
+                        {/foreach}
+                    </select>
+                {else}
+                    <input type="text" name="title" id="timeslot_title" value="{$timeslot.title|escape}">
+                {/if}
+    </div>
+    
+    
+    
+    <div class="formInput">
+		<label>[t]Link to vacancy[/t]</label>
+          <select name="vacancy_id" id="timeslot_vacancy">
+              {if !$required_link_to_vacancy}
+              <option value="">---</option>
+              {/if}
+              {foreach from=$vacancy_list item=vacancyItem}
+              <option value="{$vacancyItem.id}" {if $timeslot.vacancy_id==$vacancyItem.id} selected {/if}>{$vacancyItem.JobTitle} {$vacancyItem.JobId}</option>
+              {/foreach}
+          </select>
+    </div>
+    
+    
+
+    <div class="formInput">
+		<label>[t]Seats[/t]</label>
+    <select name="seats" id="seats">
+    {section name=seats start=1 loop=51 step=1}
+		<option value="{$smarty.section.seats.index}" {if $timeslot.seats eq $smarty.section.seats.index}selected{/if}>{$smarty.section.seats.index}</option>
+    {/section}
+    </select>	
+    </div>
+	
+    <div class="formInput">
+		<label>[t]Date[/t]</label>
+    <input type="text" id="start_date" name="start_date" value="{$timeslot.start_date_formatted}" readonly/>    
+	  </div>
+    
+    <div class="formInput">
+		<label>[t]From[/t]</label>
+    <input type="text" id="start_time" name="start_time" class="timeSelect"  value="{$timeslot.start_time}" size="15"/>    
+    </div>
+    
+    <div class="formInput">
+		<label>[t]To[/t]</label>
+    <input type="text" id="end_time" name="end_time" class="timeSelect" value="{$timeslot.end_time}" size="15" />
+    </div>
+	
+     
+  	<div class="buttonContainer">
+  		<input class="button" type="button" value="[t]Clear form[/t]" onClick="addNewTimeslot()">
+  	</div>
+  	<div class="buttonContainer">
+  		<input class="button" type="button"  value="[t]Save[/t]" onClick="saveTimeslot()">
+  	</div>
+
+	</form>
+</div>
+
+<div style="clear:both;">&nbsp;</div>	
+
+<h2 class="title custTitle custLinTitle">[t]List of timeslot[/t]</h2>
+	  
+{*FILTER FORM BEGIN*}
+<div class="tscFilterDiv">
+    <form action="{$handler}" id="frm_flt" name="frm_flt" method="post">
+    <input type="hidden" name="command" value="setfilter">  
+	
+    <div class="formInput">
+		<label>[t]From[/t]</label>
+    <input type="text" id="flt_start_date" name="flt[start_date]" value="{$flt.start_date}" readonly/>
+	</div>
+    <div class="formInput">
+		<label>[t]To[/t]</label>
+    <input type="text" id="flt_end_date" name="flt[end_date]" value="{$flt.end_date}" readonly/>	
+	</div>
+	
+     
+	<div class="buttonContainer">
+		<input class="button" type="submit" name="flt_bttn" value="[t]Filter[/t]">
+	</div>
+	<div class="buttonContainer">
+		<input class="button" type="button" name="flt_bttn" value="[t]Clear Filter[/t]" onClick="cleanFilter();">
+	</div>
+
+	</form>
+</div>
+{*FILTER FORM END*}	  	
+
+<div style="clear:both;">&nbsp;</div>	
+
+	
+<form name="frmChCh" id="frmChCh" action="/index.php/page/lm_timeslots/bb/1" method="post">
+  {*
+	<input type="hidden" name="command" value="setstatuses">
+	<input type="hidden" name="returnapp" value="linemanager">
+	<input type="hidden" name="returncmd" value="appstart">
+	<input type="hidden" name="returnparams" value="">
+  *}
+
+
+	
+	<table border="0" cellpadding="0" cellspacing="0" class="custLinTbl" width="100%">
+		<tr>
+			<th class="custLinC1">[t]Date[/t]</th>
+			<th class="custLinC2">[t]Title[/t]</th>
+			<th class="custlinC3">[t]Start time[/t]</th>
+			<th class="custLinC4">[t]End time[/t]</th>
+			<th class="custLinC5">[t]Seats (taken/available)[/t]</th>         
+      <th class="custLinC6">[t]Delete[/t]</th>
+      <th class="custLinC7">[t]Edit[/t]</th>
+      <th class="custLinC8">[t]Agenda[/t]</th>
+		</tr>
+		{foreach from=$LMList item=u}
+			<tr class="{cycle values='odd,even'}">
+        
+				<td class="custLinC1">{$u.start_date} {if $u.end_date && $u.end_date neq $u.start_date}- {$u.end_date}{/if}</td>
+				<td class="custLinC2">{$u.title|escape}</td>
+				<td class="custlinC3">{$u.start_time}</td>
+				<td class="custlinC4">{$u.end_time}</td>
+				<td class="custlinC5">{$u.seats_taken} / {$u.seats}</td>
+				<td class="custlinC6">
+				<div><img src="{$website}/_images_global/buttonClearFilter.gif" alt="[th]delete[/th]" onClick="deleteTimeslot('{$u.id}')" ></div>
+        </td>
+				<td class="custlinC7">
+				<div><img src="{$website}/_images_global/zoeken.gif" alt="[th]edit[/th]" onClick="getTimeslot('{$u.id}')" ></div>
+        </td>
+				<td class="custlinC8">
+				<div><a href="/index.php/page/lm_timeslots/bb/1/command/invitesstart/timeslot_id/{$u.id}" title="[th]calendar[/th]"><img src="{$website}/_images_global/calendar_button.gif" alt="[th]calendar[/th]" ></a></div>
+        </td>
+			</tr>
+		{foreachelse}
+			<tr>
+				<td nowrap="custlinAvad" colspan="5">[t]No Records Available[/t]</td>
+			</tr>
+		{/foreach}
+	</table>
+	
+
+	</form>
+
+	
+	{*PAGING BEGIN*}
+	<div class="pageNav custLinPageNav">
+		{if $is_prev}
+			<a href="{$handler}/command/setpage/pageno/1" class="pnFirst custLinFirst">[t]&lt;&lt;&nbsp;First[/t]</a>
+			<a href="{$handler}/command/prevpage" class="pnPrev custLinPrev">[t]&lt;&nbsp;Previous[/t]</a>
+		{/if}
+		
+		<foreach from=$page_array item=p key=k>
+			<a href="{$handler}/command/setpage/pageno/{$k}" {if $p}class="pnActive custLinActive"{/if}>{$k}</a>
+		</foreach>
+		
+		{if $is_next}
+			<a href="{$handler}/command/nextpage" class="pnNext custLinNext">[t]Next&nbsp;&gt;[/t]</a>
+			<a href="{$handler}/command/setpage/pageno/{$lastpage}" class="pnLast custLinLast">[t]Last&nbsp;&gt;&gt;[/t]</a>
+		{/if}
+	</div>
+	{*PAGING END*}
+</div>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,28 @@
+<if !empty($list)>
+<div class="hookOuter oJhOut">
+
+ <!-- /UTS/advsearch/jobDetailOtherJobsHook.html -->
+	<div class="hookHeader oJhT">[t]Other jobs of this company:[/t]</div>
+	<div class="hookText oJhTx">
+		{assign var='ul_open' value=false}
+
+		{foreach from=$list item=i}
+			{if $i instanceof jobDetailOtherJobsHook_viewableItem_category}
+				{if $ul_open}</ul>{assign var='ul_open' value=false}{/if}
+				<div class="hookCategory">{$i->get_name()}</div>
+			{elseif $i instanceof jobDetailOtherJobsHook_viewableItem_job}
+				{if !$ul_open}<ul>{assign var='ul_open' value=true}{/if}
+				<li>
+					<a href="/index.php/page/JobsRemote/command/detail/vid/{$i->get_id()}/bb/1">{$i->get_title()|escape}</a>
+				</li>
+			{/if}
+		{/foreach}
+
+		{if $ul_open}</ul>{/if}
+		
+		<if $netinfo>
+			<a href="{$rootpath}index.php/network/cust/{$netinfo.id|escape}">[t]More about[/t] {$netinfo.werkgever|escape}</a>
+		</if>
+	</div>
+</div>
+</if>

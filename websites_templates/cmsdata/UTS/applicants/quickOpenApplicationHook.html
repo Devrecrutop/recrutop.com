@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<script type="text/javascript">
+var disable_captcha = '{$disable_captcha}';
+//{literal}
+function qahSubmitHandler(f) {
+	// check if the email is filled
+	if (!f.email.value) {
+		alert("[th]Please specify an e-mail![/th]");
+		return(false);
+	}
+	// check if the email looks valid
+	if (!f.email.value.match(/^[\w\.\-\#\$\%\&\*\+\=]+\@[\w\-\.]+\.[A-Za-z]{2,6}$/)) {
+		alert("[th]The e-mail address is invalid.[/th]");
+		return(false);
+	}
+	// check if security code is filled
+	if (!f.captchafield.value && !disable_captcha) {
+		alert("[th]Please enter a security code.[/th]");
+		return(false);
+	}
+	return(true);
+}
+//{/literal}
+</script>
+
+<if $kid>
+	{* start applicant logged in mode *}
+	<!-- /UTS/applicants/quickOpenApplicationHook.html - the applicant is alredy logged in -->
+	{* end applicant logged in mode *}
+<else>
+	<div class="hookOuter qAplOuter">
+		<!-- /UTS/applicants/quickOpenApplicationHook.html -->
+		<form name="qapphookform" action="[website]/index.php/page/applicants/bb/1" enctype="multipart/form-data" method="post" onSubmit="return qahSubmitHandler(this)">
+			<div class="hookHeader hookTitle qAplTitle">[t]Sign up today![/t]</div>
+			{* start nobody logged in mode *}
+			<div class="hookText qAplText qAplTAplNl">
+				<p>[t]Enter your e-mail address, provide your CV and sign up for the applicant's account now to get an instant access to interesting jobs.[/t]</p>
+				{if $linkedinEnabled}
+					<ul>
+						<li class="aplAplyLi"><a href="[website]/index.php/page/applicants/command/startsignuplinkedin/">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
+					</ul>
+				{/if}
+			</div>
+			<div class="hookInput qAplInput qAplInputE">
+				<label for="qaphEmail">[t]E-mail:[/t]</label>
+				<input type="text" name="email" id="qaphEmail">
+			</div>
+			<div class="hookInput qAplInput qAplInputCv">
+				<label for="qaphCV">[t]CV:[/t]</label>
+				<input type="file" name="cv_file" id="qaphCV">
+			</div>
+			<div class="hookInput qAplInput qAplInputCvl">
+				<label for="selExtrLng">[t]CV language:[/t]</label>
+				<select name="extrLng" id="selExtrLng">
+					<html_options options=$extrLanguages selected=$prefillExtrLng>
+				</select>
+			</div>
+			<if !$disable_captcha>
+				<div class="hookInput qAplInput qAplInputCsc">
+					<label>[t]Security code:[/t]</label>
+					<img id="captcha" src="[website]/_javascript_global/securimage/securimage_show.php?sid={$random}" alt="CAPTCHA Image">
+					<a href="#" onclick="document.getElementById('captcha').src = '[website]/_javascript_global/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="[website]/_javascript_global/securimage/images/refresh.gif" alt="[th]Reload captcha[/th]" border="0"></a>
+					<a href="[website]/_javascript_global/securimage/securimage_play.php"><img src="[website]/_javascript_global/securimage/images/audio_icon.gif" alt="[th]Play captcha[/th]" border="0"></a>
+				</div>
+				<div class="hookInput qAplInput qAplInputCic">
+					<label for="qaphCaptcha">[t]Code:[/t]</label>
+					<input type="text" name="captchafield" id="qaphCaptcha">
+				</div>
+			</if>
+			<if $error>
+				<div class="hookError qAplError">
+					<if $error == "MSG_QH_PROVIDE_CV">
+						[t]Please provide a CV.[/t]
+					<elseif $error == "MSG_QH_INVALID_EMAIL">
+						[t]The e-mail address entered is empty or invalid.[/t]
+					<elseif $error == "MSG_QH_EMAIL_EXISTS">
+						[t]There is already an applicant registered under this e-mail address![/t]
+					<elseif $error == "MSG_WRONG_CAPTCHA">
+						[t]Invalid security code.[/t]
+					<elseif $error == "MSG_SP_INVALID_FORMAT">
+						[t]Unsupported CV format.[/t]
+					</if>
+				</div>
+			</if>
+			<div class="hookButtonContainer qAplBC qAplBcApl">
+				<input type="submit" value="[tb]Sign up now![/tb]" class="button"> 
+				{if $signup_from_qoaHook}
+					{* 2009-10-09 15:10 JMa: button soup IMO, but Bert's task #72288: "Open application modifications" specifically requested this *}
+					<input type="button" onclick="window.location='[website]/index.php/page/applicants/bb/1/command/startsignup'" value="[tb]Entry form[/tb]" class="button">
+				{/if}
+			</div>
+			<input type="hidden" name="originURI" value="{$originURI}">
+			<input type="hidden" name="vid" value="{$vrec.id}">
+			<input type="hidden" name="command" value="{$command}">
+			<input type="hidden" name="MAX_FILE_SIZE" value="5000000">
+		</form>
+	</div>
+	{* end nobody logged in mode *}
+</if>
+<!--uts:end inner-->
+</body>
+</html>

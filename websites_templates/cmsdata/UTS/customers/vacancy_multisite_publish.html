@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title></title>
+</head>
+<body>
+<!--uts:begin inner-->
+{literal}
+<script type="text/javascript" language="JavaScript">
+<!--
+function checkUncheckAll(field){
+    if (document.getElementById("websites_check_all").checked) {
+    checkAll(field);
+    }
+    else{
+    uncheckAll(field);
+    }
+}
+
+function checkAll(field){
+  for (i = 0; i < field.length; i++)
+	 field[i].checked = true ;
+}
+
+function uncheckAll(field){
+  for (i = 0; i < field.length; i++)
+	 field[i].checked = false ;
+}
+
+//-->
+</script>
+{/literal}
+
+<div class="outer custOuter custMsPublish">
+<!-- /UTS/customers/vacancy_multisite_publish.html -->
+	<h1 class="title">[t]Multisite publish[/t]</h1>
+	<div class="intro">[t]Please select on which sites your job will be published.[/t]</div>
+
+	<form action="[website]/index.php/page/customers_ext/command/publish_multisite_execute/bb/1/" name="publishmultisiteform" id="publishmultisiteform" method="POST">
+		<input type="hidden" name="vid" value="{$vid}">
+		<input type="hidden" name="command" value="publish_multisite_execute">
+
+        {if $websites}
+        <div class="formInput">
+			<label>[t]Check All[/t]</label>
+			<input type="checkbox" name="websites_check_all"  id="websites_check_all" value="1" onClick="checkUncheckAll(document.publishmultisiteform['multi_websites_selected[]'])">
+        </div>
+        {/if}
+        
+		{foreach from=$websites item=r}
+        <div class="formInput">
+			<label>{$r.Name}</label>
+			<input type="checkbox" name="multi_websites_selected[]" value="{$r.SiteId}" {if $r.selected}checked{/if}>
+		</div>
+		{foreachelse}
+		<div class="text">
+			[t]There are no websites to select from...[/t]
+		</div>
+		{/foreach}
+		
+        <div class="buttonContainer">
+			{if $websites}
+			<input class="button" type="submit" name="bSubmit" id="bSubmit" value="[tb]Submit[/tb]">
+	        {else}
+			<input class="button" type="button" name="bBack" id="bBack" value="[tb]Back[/tb]" onclick="history.go(-1);">
+	        {/if}
+        </div>
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

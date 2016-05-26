@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title><!-- Insert your title here --></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+{* req.ext.js: JQueryBase *}
+<script type="text/javascript" language="JavaScript">
+var v_handler = '{$handler}';
+// {literal}	
+  function sumbitForm()
+  {
+    $("#holOvFrm").submit();
+  }	
+// {/literal}
+</script>
+
+<!--display part-->
+<div class="outer custOuter custFinOuter custFinDetOuter">
+<!-- /UTS/candidates/candidate_tsc_holidays_overview.html STANDARD -->
+<!-- Template Webdevelopment validated 10-2013 -->
+<h1 class="title">[t]Holiday overview[/t]</h1>
+{$menu}
+
+<div class="holidayOverviewMainContainer" style="clear:both;" id="holidayOverviewMainContainer">
+	<form method="POST" action="{$handler}" name="holOvFrm" id="holOvFrm">
+	<input type="hidden" name="command" id="command" value="detail">
+	<div id="yearSelect">[t]Year[/t]:
+		<select name="year"id="year" onchange="sumbitForm();">
+		{html_options options=$yearsList selected=$year}
+		</select>
+	</div>
+	</form>
+	
+	<div id="oveview">
+		<!-- OVERVIEW TBL BEGIN-->
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<tr>
+			<td width="40%" valign="top">
+				<!--1 COL BEGIN-->
+				<div class="text cHTcol1">
+					<div class="textWord holTw holTwEmplName">
+						<span>[t]Name employee[/t]:</span>
+						{$data.candidate.name|escape}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplPlace">
+						<span>[t]Place[/t]:</span>
+						{$data.candidate.place|escape}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplStrtDate">
+						<span>[t]Employment Start Date[/t]:</span>
+						{$data.candidate.employment_start_date|date_format:$dateFormat}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplType">
+						<span>[t]Job Type[/t]:</span>
+						{$data.candidate.job_type|escape}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplBalLYr">
+						<span>[t]Balance holiday hours last year[/t]:</span>
+						{$data.overview.last_year_holiday_hrs|escape}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplHol">
+						<span>[t]Holiday hours[/t]:</span>
+						{$data.overview.curr_year_holiday_hrs|escape}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplWht">
+						<span>[t]Total[/t]&nbsp;{if $data.overview.year|escape}{$data.overview.year|escape}{else}{$year}{/if}:</span>
+						<label id="total_holiday_hrs">{$data.overview.total_holiday_hrs|string_format:"%.2f"}</label>
+						<div class="cleaner"></div>
+				    </div>
+					
+					{foreach from=$data.aggregated.calc.calcTypeIdsOU item=calcTypeId}
+					<div class="textWord holTw holTwEmplBal">
+						<span>{$data.aggregated.c.$calcTypeId|escape}:</span>
+						<label id="{$calcTypeId}">{$data.aggregated.t.$calcTypeId|string_format:"%.2f"}</label>
+						<div class="cleaner"></div>
+				    </div>
+					{/foreach}
+					
+					<div class="textDescription holTd holTDEmplExpl">
+						<span>[t]Explanation[/t]:</span>
+						<textarea disabled>{$data.overview.explanation|escape}</textarea>
+				    </div>
+				</div>   
+			  <!--1 COL END-->
+			</td>
+			<td width="2%" valign="top">&nbsp;</td>
+			<td valign="top">
+			  <!--2 COL BEGIN-->
+				<div class="text cHTcol2">
+					<div class="textWord holTw holTwEmplNr">
+						<span>[t]Employee number[/t]:</span>
+						{$data.candidate.emplyee_nr|escape}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplYr">
+						<span>[t]Year[/t]:</span>
+						{if $data.overview.year|escape}{$data.overview.year|escape}{else}{$year}{/if}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplDate">
+						<span>[t]From Date[/t]:</span>
+						{$data.overview.from_date|date_format:$dateFormat}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplTothol">
+						<span>[t]Holiday total[/t]:</span>{* total used holiday *}
+						<label id="used_holiday_hrs">{$data.aggregated.calc.holidays_total|string_format:"%.2f"}</label>
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplUnphol">
+						<span>[t]Unpaid holidays[/t]:</span>
+						{$data.overview.unpaid_holiday_hrs|escape}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplPhol">
+						<span>[t]Paid holidays[/t]:</span>
+						{$data.overview.paid_holiday_hrs|escape}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplWht">
+						<span>[t]Working hours total[/t]:</span>
+						{$data.aggregated.calc.working_total|string_format:"%.2f"}
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textWord holTw holTwEmplBal">
+						<span>[t]Balance[/t]&nbsp{if $data.overview.year|escape}{$data.overview.year|escape}{else}{$year}{/if}:</span>
+						<label id="year_holiday_balance">{$data.overview.year_holiday_balance|string_format:"%.2f"}</label>
+						<div class="cleaner"></div>
+				    </div>
+					<div class="textDescription holTd holTwEmplCom">
+						<span>[t]Comments[/t]:</span>
+						<textarea disabled>{$data.overview.comments|escape}</textarea>
+				    </div>
+				</div>
+			  <!--2 COL END-->
+			</td>
+		</tr>
+		  
+		<!-- WEEKS TBL BEGIN-->  
+		<tr>
+			<td colspan="3">
+				<table border="0" cellpadding="0" cellspacing="0" width="100%" class="hqTbl">
+
+				{*HEADER BEGIN*}
+				<tr>				
+				  <th class="tabelkop" width="60">[t]Week[/t]</th>
+				  
+        	{foreach from=$data.aggregated.c item=c key=k}
+        	 <th class="tabelkop" width="60">{$c|escape}</th>
+        	{/foreach} 				  
+					
+				</tr>
+				{*HEADER END*}
+
+				{*DATA BEGIN*}
+				{foreach from=$data.aggregated.w item=wr key=wk}
+				<tr valign="top" >
+					<td height="20" width="60">
+						<div id="Layer3" style="z-index:3;" class="tekstdiv">{$wk}</div>
+					</td>
+					
+        	{foreach from=$wr item=hrs}
+        	 <td height="20" width="60">
+      	   <div id="Layer3" style="z-index:3;" class="tekstdiv">{$hrs|string_format:"%.2f"}</div>
+      	   </td>
+        	{/foreach}
+            															
+				</tr>  
+				{/foreach}  	
+				{*DATA END*}
+
+				{* COLUMNS TOTAL BEGIN *}  
+				<tr valign="top" >
+					<td height="20" width="60">
+						<div id="Layer3" style="z-index:3;" class="tekstdiv">[tg]Total[/tg]</div>
+					</td>
+					
+        	{foreach from=$data.aggregated.t item=ct}
+        	 <td height="20" width="60">
+      	   <div id="Layer3" style="z-index:3;" class="tekstdiv">{$ct|string_format:"%.2f"}</div>
+      	   </td>
+        	{/foreach}  						
+					
+				</tr>
+				{* COLUMNS TOTAL END *}
+
+				</table>
+			</td>
+		</tr>
+		<!-- WEEKS TBL END-->
+		
+		</table>
+	<!-- OVERVIEW TBL END-->
+	</div> {*overview end*}
+</div>{*overview container end*}
+</div>{*main container end*}
+
+<!--uts:end inner-->
+</body>
+</html>

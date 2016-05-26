@@ -1,0 +1,38 @@
+<!-- /UTS/customers/SubMenuForLoggedInWebUser.html-->
+
+<div class="subMenuLink">
+{if $switch_add}
+    <div class="menuLink mLvL"><a href="/index.php/page/customers_ext/command/addavacancy/bb/1/">[t]Add a vacancy[/t]</a></div>
+    {if $add_jt_profiles}
+    <div class="menuLink mLpP"><a href="/index.php/page/jtprofiles/command/add/bb/1/">[t]New Profile[/t]</a></div>
+    {/if}
+{elseif $switch_list}
+    <div class="menuLink mLvL"><a href="/index.php/page/customers_ext/bb/1/">[t]Vacancy list[/t]</a></div>
+{else}
+    {if $view_jt_profiles}
+    <div class="menuLink mLpP"><a href="/index.php/page/jtprofiles/command/list/bb/1/">[t]Profiles[/t]</a></div>
+    {if $add_jt_profiles}
+    <div class="menuLink mLvL"><a href="/index.php/page/customers_ext/command/addavacancy/bb/1/">[t]Add a vacancy[/t]</a></div>
+    <div class="menuLink mLpP"><a href="/index.php/page/jtprofiles/command/add/bb/1/">[t]New Profile[/t]</a></div>
+    {/if}
+    {/if}
+{/if}
+
+    {if $allow_recrowd_trajectories}  
+        
+      {if $show_active_trajectories}  
+        <div class="menuLink mLtrajectActiveJobs"><a href="/index.php/page/recrowd_trajectories/command/active_trajectories/option/active_vacancies/bb/1/">[t]Active vacancies[/t]</a></div>
+        <div class="menuLink mLtrajectActiveTenders"><a href="/index.php/page/recrowd_trajectories/command/active_trajectories/option/active_tenders/bb/1/">[t]Active tenders[/t]</a></div>
+      {/if}  
+      {if $show_archived_trajectories}  
+        <div class="menuLink mLtrajectArchiveJobs"><a href="/index.php/page/recrowd_trajectories/command/archived_trajectories/option/archived_vacancies/bb/1/">[t]Archived vacancies[/t]</a></div>
+        <div class="menuLink mLtrajectArchiveTenders"><a href="/index.php/page/recrowd_trajectories/command/archived_trajectories/option/archived_tenders/bb/1/">[t]Archived tenders[/t]</a></div>
+      {/if}  
+    {/if}
+
+{if $profile_edit}ja{/if}
+{if $switch_add}sA{/if}
+{if $switch_list}sL{/if}
+
+</div>
+

@@ -1,0 +1,17 @@
+<script type="text/javascript">
+var actCstHandler='{$handler|escape:"javascript"}';
+//{literal}
+function actCstChangeSortBy(val) {	
+    window.location=actCstHandler+'/command/setsortby/param/'+val;
+}
+
+function actCstChangeSortAscDesc(val) {
+    window.location=actCstHandler+'/command/setsortascdesc/param/'+val;
+}
+
+function actCstChangePageLimit(val) {
+  window.location=actCstHandler+'/command/setresultsperpage/param/'+val;
+}
+
+//{/literal}
+</script>

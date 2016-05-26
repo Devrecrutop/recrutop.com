@@ -1,0 +1,20 @@
+{* this email is sent to the applicant after he applied for a job *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/applicants/applyLeaveCVEmailConsultant.html -->
+<p>[t]Dear {$contactPerson|escape},[/t]</p>
+<p>[t]A candidate left his details for a job: {$jobtitle|escape}[/t]</p>
+<p>[t]You can see the jobdetails here: <a href="{$joburl|escape}">{$joburl|escape}</a>[/t]</p>
+<p>[t]Name: {$name|escape}[/t]</p>
+<p>[t]Email: {$email|escape}[/t]</p>
+<p>[t]Attached to this mail you will find the (optitional) CV[/t]</p>
+
+<p><i>[t]Remark: this e-mail message has been automatically generated[/t]</i></p>
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,107 @@
+{* req. ext. javascript: JQueryBase,JQueryClueTip *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<style type="text/css">
+{literal}
+tr.sqlTblRowHovered {background-color:#e0e0e0;}
+{/literal}
+</style>
+
+<div class="outer aplOuter aplProfOuter">
+	 <!-- /UTS/customers/userEditAdd.html -->
+	<h1 class="title aplTitle aplProfTitle">
+		{if $user.id}
+		{$user.wg_cp_voornaam} {$user.wg_cp_tussenvoegsel} {$user.wg_cp_achtern}
+		{else}
+		[t]New user[/t]
+		{/if}
+	</h1>
+	{$menu}
+
+	<div class="intro">
+		{if $user.id}
+		[t]Below you can manage the account of [/t]
+		{$user.wg_cp_voornaam} {$user.wg_cp_tussenvoegsel} {$user.wg_cp_voornaam}.
+		[t]If you want to change the password fill in a new password twice.[/t]
+		{else}
+		[t]Fill in the fields below to create a new user[/t]
+		{/if}
+	</div>
+
+	{if $errors}
+	<div class="error">
+		{foreach from=$errors item=error}
+
+		{if $error == 'PASSWORDS_DONT_MATCH'}
+			<br>[t]Passwords don't match.[/t]
+		{/if}
+
+		{if $error == 'USERNAME_EXISTS'}
+			<br>[t]Username is already taken.[/t]
+		{/if}
+
+		{if $error == 'NO_PASSWORDS_GIVEN'}
+			<br>[t]No password given.[/t]
+		{/if}
+
+		{/foreach}
+	</div>
+	{/if}
+
+	<form action="{$urlroot}/index.php/page/customers_ext/command/editAddUsersSubmit/bb/1" method="post">
+
+
+		<div class="formInput inputFirstname">
+			<label>[t]Firstname[/t]</label>
+			<input type="text" name="wg_cp_voornaam" value="{$user.wg_cp_voornaam}" >
+		</div>
+		<div class="formInput inputSuffix">
+			<label>[t]Suffix[/t]</label>
+			<input type="text" name="wg_cp_tussenvoegsel" value="{$user.wg_cp_tussenvoegsel}" >
+		</div>
+		<div class="formInput inputLastname">
+			<label>[t]Lastname[/t]</label>
+			<input type="text" name="wg_cp_achtern" value="{$user.wg_cp_achtern}" />
+		</div>
+		<div class="formInput inputEmail">
+			<label>[t]Email[/t]</label>
+			<input type="text" name="wg_cp_email" value="{$user.wg_cp_email}">
+			
+		</div>
+		<div class="formInput inputUsername">
+			<label>[t]Username[/t]</label>
+			<input type="text" name="webuser_name" value="{$user.is_webuser}">
+			
+		</div>
+		<div class="formInput inputPassword">
+			<label>[t]Password[/t]</label>
+			<input type="text" name="password" value="">
+		</div>
+		<div class="formInput inputRepeat">
+			<label>[t]Repeat password[/t]</label>
+			<input type="text" name="password_repeat" value="" />
+		</div>
+		
+		<div class="formInput inputActive">
+			<label>[t]Active[/t]</label>
+			<input type="hidden" name="active" value="0" />
+			<input type="checkbox" name="active" value="1" {if $user.allow_www_login && $user.is_webuser} checked {/if} />
+		</div>
+
+		<input class="button" type="hidden" name="command" value="editAddUsersSubmit" />
+		<input class="button" type="hidden" name="ouid" value="{$user.ouid}" />
+		<input class="button" type="hidden" name="user_id" value="{$user.id}" />
+		
+		<div class="buttonContainer">
+			<input class="button" type="submit" value="[th]Save[/th]">
+		</div>
+	</form>
+</div>
+<!--uts:end inner-->    
+</body>
+</html>

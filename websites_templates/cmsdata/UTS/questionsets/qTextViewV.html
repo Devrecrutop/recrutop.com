@@ -1,0 +1,47 @@
+<!--text view V pavel -->
+<div class="formInput aplTextInput">
+<label for="{$elementId}">{$qd.question|escape}{if $required}<span>*</span>{/if}</label>
+<input type="text" value="{$currentValue|escape}" name="{$elementName}" id="{$elementId}">
+</div>
+
+<if $email_retype_check>
+<div class="formInput aplTextInput">
+<label for="EMAIL_RETYPE_CHECK">[t]Retype e-mail:[/t]<span>*</span></label>
+<input type="text" value="" name="EMAIL_RETYPE_CHECK_VALUE" id="EMAIL_RETYPE_CHECK">
+</div>
+
+<script type="text/javascript">
+//{literal}
+$(document).ready(function(){
+
+    //{/literal}
+		var __emailQid = '{$qd.id}';		
+		//{literal}
+
+$("[name=qsForm]").submit(function(e) {
+
+    //var email = $("#QEID_-1").val(),
+    var email = $("#QEID_"+__emailQid).val(),
+        confirm = $("#EMAIL_RETYPE_CHECK").val();
+
+    if (email!=confirm) {
+       alert('[th]The first and the second e-mail address do not match![/th]');
+       e.preventDefault(); //form will not be submitted
+    }
+});
+
+});
+//{/literal}
+</script>
+</if> 
+
+<if $qd.explanation>
+<div class="explain aplTextExplain">
+    {$qd.explanation|escape}
+</div>
+</if>
+<if $currentErrorMessage>
+<div class="error aplTextError">
+    {$currentErrorMessage}    
+</div>
+</if>

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/email_templates/hrm_intergation_file_problem.html -->
+
+<p>[t]HRM integration for {$clientName}[/t]</p>
+
+{if $vacancy_import_files_cnt != 1}
+<p>[t]Vacancy import:[/t]</p>
+<p>[t]There is a problem with the HRM integration. You have {$vacancy_import_files_cnt} files on FTP instead of one.[/t]</p>
+<br>
+{/if}
+
+{if $status_import_files_cnt != 1}
+<p>[t]Status import:[/t]</p>
+<p>[t]There is a problem with the HRM integration. You have {$status_import_files_cnt} files on FTP instead of one.[/t]</p>
+<br>
+{/if}
+
+{if $candidate_export_files_cnt >= 1}
+<p>[t]Candidate export:[/t]</p>
+<p>[t]There is a problem with the HRM integration. You have {$candidate_export_files_cnt} files waiting for pick up on the ftp storage.[/t]</p>
+<br>
+{/if}
+
+
+<p>
+[t]Regards,[/t]<br>
+OTYS INTERACTIVE CLERQ<br>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

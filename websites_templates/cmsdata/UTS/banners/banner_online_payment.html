@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>
+ONLINE PAYMENT
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+<!--
+function hidestatus(){
+window.status='Otys e-Recruiting Systems'
+return true
+}
+if (document.layers)
+document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+document.onmouseover=hidestatus
+document.onmouseout=hidestatus
+-->
+</SCRIPT>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- UTS Template /UTS/Banners/banner_online_payment.html -->
+<div class="outer bannerOuter">
+<script language="Javascript1.2">
+
+{literal}
+function check_formstate(tabcode){
+layerShow(tabcode);
+//switch_tab(tabcode);
+}
+
+function printWindow(){
+	browserVersion = parseInt(navigator.appVersion)
+	if (browserVersion >= 4) window.print()
+}
+
+function request() {
+{/literal}
+	location = 'http://www.youreit.nl/index.php/page/CustomersRemote/bb/1/exp//command/prerequest/kid/{$kid}';
+{literal}
+}
+
+function pay() {
+alert('PAY');
+}
+
+function print_it() {
+{/literal}
+//	document.frames.actionframe.location = '/index.php/page/CustomersRemote/bb/1/exp//command/detail/kid/{$kid}/option/print&amp;vid={$vid}';
+f = document.getElementById("actionframe");
+
+f.src = "/index.php/page/CustomersRemote/bb/1/exp//command/detail/kid/{$kid}/option/print&amp;vid={$vid}";
+{literal}
+}
+
+function submit_payment(){
+
+
+    {/literal}
+    var u_website = "{$website_name}";
+    var u_index = "{$index}";
+    var u_page = "{$page}";
+    var u_bb = "{$bb}";
+    var u_accept = "{$accepturl}";
+    var u_decline = "{$declineurl}";
+    var u_cancel = "{$cancelurl}";
+    var u_exception = "{$exceptionurl}";
+    var u_bs = "/";
+    var u_and = "&";
+    var u_what = "?";
+    document.forms.form_payment.accepturl.value = u_website + u_bs + u_index + u_what + u_page + u_and +  u_bb + u_and + u_accept;
+    document.forms.form_payment.declineurl.value = u_website + u_bs + u_index + u_what + u_page + u_and +  u_bb + u_and + u_decline;
+    document.forms.form_payment.exceptionurl.value = u_website + u_bs + u_index + u_what + u_page + u_and +  u_bb + u_and + u_exception;
+    document.forms.form_payment.cancelurl.value = u_website + u_bs + u_index + u_what + u_page + u_and +  u_bb + u_and + u_cancel;
+
+    document.forms.form_payment.homeurl.value = u_website + u_bs + u_index + u_what + u_page + u_and +  u_bb + u_and;
+    document.forms.form_payment.catalogurl.value = u_website + u_bs + u_index + u_what + u_page + u_and +  u_bb + u_and;
+
+    document.forms.form_payment.submit();
+
+    {literal}
+}
+
+function add_item(){
+
+alert('add');
+
+}
+
+{/literal}
+// -->
+</script>
+
+
+<table border="0" cellspacing="0" cellpadding="0" class="vacsTable" height="100%">
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader">[t]Banners - Pay online[/t]: </td>
+<td class="formHeader"></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+<tr>
+<td class="pageLinkContainer">{$customer_menu}</td>
+</tr>
+
+<tr>
+<td>
+
+
+<!--START PAYMENT/OVERVIEW-->
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<form method="post" action="">
+<tr>
+<td>
+
+</td>
+</tr>
+<input type="hidden" name="vid" value="{$reactie.vacatureid}">
+<input type="hidden" name="rid" value="{$reactie.id}">
+</form>
+</table>
+<!--END STATUS CHANGE/OVERVIEW-->
+
+</td>
+</tr>
+<tr>
+<td class="shCDstatusContainer">
+
+</td>
+</tr>
+
+
+<tr>
+<td>
+<table border="0">
+<tr>
+<td>
+<select name=""  >
+{foreach key=bn_key item=bn from=$banner_jobboard_items}
+<option value="{$bn.id}">{$bn.id} - {$bn.item_name}</option>
+{/foreach}
+</select>
+</td>
+<td align="left">
+<input name="button_add" class="button" type="button" onClick="add_item();" value="[t]Add his item[/t]">
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+
+
+{*
+<tr>
+	<td class="itemContainer" >
+	    <fieldset><legend>[t]Order Details[/t]</legend>
+		<table cellpadding="0" cellspacing="0" class="ItemTbl" border="0" >
+			<tr >
+				<td  align="left" colspan="5">&nbsp;[t]Order #[/t]: &nbsp;{$payment_item_info.id}</td>
+			</tr>
+		    <tr>
+		        <td colspan="5">&nbsp;</td>
+		    </tr>
+		</table>
+		</fieldset>
+    </td>
+
+</tr>
+*}
+
+
+
+<tr>
+	<td class="itemContainer">
+		<table cellpadding="0" cellspacing="0" class="ItemTbl" border="0" >
+
+		    <tr>
+		    <th align="left">[t]Item[/t]</th>
+		    <th align="center">[t]Currency[/t]</th>
+		    <th align="right">[t]Price[/t]</th>
+		    <th align="right">[t]Discount[/t]</th>
+		    <th align="right">[t]Subtotal[/t]</th>
+		    </tr>
+
+		    <tr>
+		        <td colspan="5">&nbsp;</td>
+		    </tr>
+			<tr>
+				<td  align="left" >&nbsp;{$payment_item_info.item_name}</td>
+				<td  align="center" >&nbsp;{$payment_item_info.currency_symbol}</td>
+				<td  align="right" >&nbsp;{$payment_item_info.subtotal}</td>
+				<td  align="right" >&nbsp;{$payment_item_info.discount}</td>
+				<td  align="right" >&nbsp;{$payment_item_info.total}</td>
+			</tr>
+		    <tr>
+				<td  align="left" colspan="5" style="border-bottom:1px solid black;">&nbsp;</td>
+			</tr>
+		    <tr>
+		        <td  align="left" colspan="3" >[t]Total[/t]</td>
+				<td  align="right" colspan="3" >{$payment_item_info.total}</td>
+			</tr>
+		    </tr>
+		    <tr>
+		        <td colspan="5">&nbsp;</td>
+		    </tr>
+		</table>
+    </td>
+
+</tr>
+
+<tr>
+<td class="formButton">
+
+<FORM METHOD="post" ACTION="https://secure.ogone.com/ncol/test/orderstandard.asp" id=form_payment name=form_payment>
+	<INPUT type="hidden" NAME="PSPID" value="{$payment_item_info.merchant_id}">
+	<INPUT type="hidden" NAME="orderID" VALUE="{$payment_item_info.id}">
+	<INPUT type="hidden" NAME="amount" VALUE="{$payment_item_info.total_payment}">
+	<INPUT type="hidden" NAME="currency" VALUE="{$payment_item_info.currency_code}">
+	<INPUT type="hidden" NAME="language" VALUE="en_US">
+	<!-- lay out information -->
+
+	<INPUT type="hidden" NAME="TITLE" VALUE="[t]Make a payment[/t]">
+
+	<INPUT type="hidden" NAME="BGCOLOR" VALUE="white">
+	<INPUT type="hidden" NAME="TXTCOLOR" VALUE="black">
+	<INPUT type="hidden" NAME="TBLBGCOLOR" VALUE="">
+	<INPUT type="hidden" NAME="TBLTXTCOLOR" VALUE="">
+	<INPUT type="hidden" NAME="BUTTONBGCOLOR" VALUE="">
+	<INPUT type="hidden" NAME="BUTTONTXTCOLOR" VALUE="">
+	<INPUT type="hidden" NAME="FONTTYPE" VALUE="">
+
+	<INPUT type="hidden" NAME="LOGO" VALUE="{$payment_item_info.client_logo}">
+
+	<!-- or dynamic template page -->
+	<INPUT type="hidden" NAME="TP" VALUE="">
+	<!-- post-payment redirection -->
+	<INPUT type="hidden" NAME="accepturl" VALUE="">
+	<INPUT type="hidden" NAME="declineurl" VALUE="">
+	<INPUT type="hidden" NAME="exceptionurl" VALUE="">
+	<INPUT type="hidden" NAME="cancelurl" VALUE="">
+	<!-- miscellanous -->
+	<INPUT type="hidden" NAME="homeurl" VALUE="">
+	<INPUT type="hidden" NAME="catalogurl" VALUE="">
+	<INPUT type="hidden" NAME="CN" VALUE="{$payment_item_info.customer_name}">
+	<INPUT type="hidden" name="EMAIL" value="{$payment_item_info.customer_email}">
+	<INPUT type="hidden" NAME="PM" VALUE="">
+	<INPUT type="hidden" NAME="BRAND" VALUE="">
+	<INPUT type="hidden" NAME="ownerZIP" VALUE="{$payment_item_info.customer_postcode}">
+	<INPUT type="hidden" NAME="owneraddress" VALUE="{$payment_item_info.customer_address}">
+	<INPUT type="hidden" NAME="SHASign" VALUE="{$payment_item_info.sha_sign}">
+	<INPUT type="hidden" NAME="Alias" VALUE="">
+	<INPUT type="hidden" NAME="AliasUsage" VALUE="">
+	<INPUT type="hidden" NAME="AliasOperation" VALUE="">
+	<INPUT type="hidden" NAME="COM" VALUE="">
+	<INPUT type="hidden" NAME="COMPLUS" VALUE="">
+	<INPUT type="hidden" NAME="PARAMPLUS" VALUE="">
+	<INPUT type="hidden" NAME="USERID" VALUE="">
+	<INPUT type="hidden" NAME="CreditCode" VALUE="">
+	<!--<input type="submit" value="Make a payment" id=submit2 name=submit2>-->
+	<input name="button" class="button" type="button" onClick="submit_payment();" value="[t]Make a payment[/t]">
+	</form>
+
+{*
+<table border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td><input name="button" class="button" type="button" onClick="pay();" value="[t]Make Payment[/t]"></td>
+<td>&nbsp;</td>
+
+</tr>
+</table>
+*}
+</td>
+</tr>
+</table>
+<iframe name="actionframe" id="actionframe" width="1" height="1" border="0" frameborder="NO"></iframe>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

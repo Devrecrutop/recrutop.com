@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<div class="outer custOuter recrowdOuter rcwdRecrCandListOuter">
+	<!-- /UTS/customers/recrowdRecruiterMyCandidatesList.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->       
+	<h1 class="title">[t]Candidates[/t]</h1>
+	{$CustomersMenu}
+
+  <h2 class="title">[t]Job applications[/t]</h2>
+	<div class="text">[t]List of job applications.[/t]</div>
+
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<thead>
+		<tr>
+			<th>[t]Name[/t]</th>
+			<th>[t]Entry date[/t]</th>
+			<th>[t]Job title[/t]</th>
+			<th>[t]Company[/t]</th>
+		</tr>
+		</thead>
+		
+		<tbody>
+		{foreach from=$job_applications item=cand1}
+		<tr>
+			<td><a href="/index.php/page/recrowd/bb/1/command/joinedCandidates/subcmd/detail/canid/{$cand1.id}/vacid/{$cand1.vacancy_id}/openfrom/mycandidates/">{$cand1.candidate_name|escape}</a></td>
+			<td>{$cand1.entry_date|date_format:"%d-%m-%Y"}</td>
+			<td>{if $cand1.vacancyUrl}<a href="{$cand1.vacancyUrl}">{$cand1.job_title|escape}</a>{else}{$cand1.job_title|escape}{/if}</td>
+			<td>{if $cand1.profileUrl}<a href="{$cand1.profileUrl}">{$cand1.company_name|escape}</a>{else}{$cand1.company_name|escape}{/if}</td>     
+		</tr>
+		{foreachelse}  
+		<tr>
+			<td>&nbsp;</td>
+			<td>[t]No candidates[/t]</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		{/foreach}
+		</tbody> 
+	</table>
+  
+  <div>&nbsp;</div>
+  
+  <h2 class="title">[t]Open applications[/t]</h2>  
+	<div class="text">[t]List of open applications.[/t]</div>
+
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<thead>
+		<tr>
+			<th>[t]Name[/t]</th>
+			<th>[t]Registration date[/t]</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+      
+		</tr>
+		</thead>
+		
+		<tbody>
+		{foreach from=$open_applications item=cand2}
+		<tr>
+			<td><a href="/index.php/page/recrowd/bb/1/command/joinedCandidates/subcmd/detail/canid/{$cand2.id}/vacid/{$cand2.vacancy_id}/openfrom/mycandidates/">{$cand2.candidate_name|escape}</a></td>
+			<td>{$cand2.entry_date|date_format:"%d-%m-%Y"}</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+      
+		</tr>
+		{foreachelse}  
+		<tr>
+			<td>&nbsp;</td>
+			<td>[t]No candidates[/t]</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		{/foreach}
+		</tbody> 
+	</table>  
+  
+</div>
+<!--uts:end inner-->
+</body>
+</html>

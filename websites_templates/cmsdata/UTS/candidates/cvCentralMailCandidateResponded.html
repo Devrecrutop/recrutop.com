@@ -1,0 +1,58 @@
+<!--START-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8;">
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0">
+<!--END-->
+<!--uts:begin inner-->
+<!-- /UTS/candidates/cvCentralMailCandidateResponded.html -->
+<!--
+<subject>{if $action == 'accept'}[th]Candidate {$r.candidate_uid} has accepted the offer[/th]{elseif $action == 'reject'}[th]Candidate {$r.candidate_uid} has rejected the offer[/th]{/if}</subject>
+-->
+
+<!--START_Block1-->
+
+<!--START_Title1-->
+
+<!--END_Title1-->
+<!--START_Text1-->
+<div style="font-family: verdana, arial, sans-serif; font-size:12x;">
+
+<p></p>
+
+{if $identity == 'seller'}
+
+	<p><b>[t]Dear {$seller_consultant_name}[/t]</b></p>
+
+	{if $action == 'accept'}
+		<p>[t]Candidate <b>{$r.candidate_name} ({$r.candidate_uid})</b> has <b>accepted</b> the offer to be copied to the client <b>{$r.buyer_name}.</b> The client has received
+		candidate's CV and details.[/t]</p>
+	{elseif $action == 'reject'}
+		<p>[t]Candidate <b>{$r.candidate_name} ({$r.candidate_uid})</b> has <b>rejected</b> the offer to be copied to the client <b>{$r.buyer_name}.</b>[/t]</p>
+	{/if}
+
+{elseif $identity == 'buyer'}
+
+	<p><b>[t]Dear {$buyer_consultant_name}[/t]</b></p>
+
+	{if $action == 'accept'}
+		<p>[t]Candidate <b>{$r.candidate_uid}</b> has <b>accepted</b> the offer to be copied from the client <b>{$r.seller_name}.</b> You have received
+		candidate's CV and details.[/t]</p>
+	{elseif $action == 'reject'}
+		<p>[t]Candidate <b>{$r.candidate_uid}</b> has <b>rejected</b> the offer to be copied from the client <b>{$r.seller_name}.</b>[/t]</p>
+	{/if}
+
+{/if}
+
+<p>[t]Kind regards[/t]</p>
+<p><b>[t]cvCentral Team[/t]</b></p>
+
+</div>
+<!--END_Text1-->
+
+<!--END_Block1-->
+
+<!--uts:end inner-->
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+
+<p>
+[t]Form has been filled on the website.[/t]
+</p>
+
+{if $candidate || $relContact}
+<p>
+<b>[t]Filled by:[/t]</b>
+{if $candidate}{$candidate.name|escape}{/if}
+{if $relContact}{$relContact.name|escape} ({$relContact.company|escape}){/if}
+</p>
+{/if}
+
+{foreach from=$questions item=q}
+<p>
+<b>{$q.question}</b><br>
+{$q.answer}
+</p>
+{/foreach}
+
+
+<!--uts:end inner-->
+</body>
+</html>

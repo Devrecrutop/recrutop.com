@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<title><!-- Insert your title here --></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/customers/customers_logininfo_notification_mail.html -->
+<P>[t]Dear  {$cp.wg_cp_voornaam} {$cp.wg_cp_tussenvoegsel} {$cp.wg_cp_achtern},[/t]</P>
+
+{if $display_elements.show_login_data == 1}
+<P>[t]Below you will find the login data for the customer portal of our website:[/t]</P>
+<P>[t]Your login data:[/t]</P>
+<P>[t]Username:[/t] {$cp.wg_cp_username}<BR>[t]Password:[/t] {$cp.wg_cp_password}</P>
+{/if}
+
+{if $display_elements.show_login_link == 1}   
+<P>[t]You can use the link below to access your profile:[/t]<a href="{$website}/index.php/page/CustomersRemote/bb/1/command/remotelogin/userhash/{$remote_user}/accessby/{$sha_sign}" target="_blank">[t]Login to your profile[/t]</a></P>
+{/if}
+
+<P>[t]If you experience any troubles logging into our site, please let us know.[/t]</P>
+  
+<P>[t]Kind regards,[/t]<BR>[t]<b>{$website_name}</b>[/t]</P>
+
+<P><a href="{$website}/" target="_blank">[t]{$website}[/t]</a></P>
+
+<P>[t]Remark: this e-mail message has been automatically generated[/t]</P><BR>
+
+<!--uts:end inner-->
+</body>
+</html>

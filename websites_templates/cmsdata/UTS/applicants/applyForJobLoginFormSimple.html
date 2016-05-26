@@ -1,0 +1,37 @@
+{* used when user clicks on Already registered link in simple registration page when applying to job *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplJlSOuter">
+<!-- /UTS/applicants/applyForJobLoginFormSimple.html -->
+	<h1 class="title aplTitle aplJlSTitle">[t]Apply for a job[/t]</h1>
+	<div class="text aplText aplJlSText">[t]Please enter your e-mail and password to login and apply for the job selected[/t]</div>
+	<form name="mainfrm" action="{$handler}" method="post">
+		<if $error>
+		<div class="error aplError aplJlSError">{$error}</div>
+		</if>
+		<div class="formInput aplInput aplJlSInputEmail">
+			<label for="emailaddress">[t]E-mail / Username:[/t]</label>
+			<input type="text" name="email" id="emailaddress">
+		</div> 
+		<div class="formInput aplInput aplJlSInputPwd">
+			<label for="userpassword">[t]Password:[/t]</label>
+			<input type="password" name="password" id="userpassword">
+		</div>
+		<div class="buttonContainer aplBc aplJlSBcSubmit"><input type="submit" name="Submit" value="[tb]Login and apply[/tb]" class="button"></div>
+		<div class="buttonContainer aplBc aplJlSBcBack"><input type="button" name="bBack" value="[tb]Back[/tb]" class="button" onclick="window.location='{$handler}/command/applyforjobfull/vid/{$vid}'"></div>
+		<div class="formText aplLink aplJlSLink">
+			<a href="{$handler}/command/applyforgotpwdformsimple/vid/{$vid}">[t]I have forgotten my password[/t]</a>
+		</div>
+		<input type="hidden" name="command" value="applyloginformsimplesubmit">
+		<input type="hidden" name="vid" value="{$vid}">
+	</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

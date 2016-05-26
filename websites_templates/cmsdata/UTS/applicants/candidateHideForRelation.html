@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="outer aplOuter aplListOuter">
+<!-- /UTS/applicants/candidateHideForRelation.html -->
+<!-- Template Webdevelopment validated 09-2013 -->
+	<h1 class="title aplTitle aplListTitle">[t]Hide profile for employer[/t]</h1>
+	{$menu}
+	
+	<div class="intro aplIntro">[t]Please search and find our relations with the filter underneath. Select the relations you want to hide your profile for.[/t]</div>
+	<div class="formInput">
+		<label>[t]Relation name[/t]:</label>
+		<input type="text" name="relation_name" id="relation_name" value="" onkeypress="if(enterPressed(event))getRelations();" />
+	</div>
+	<div class="buttonContainer">
+		<input class="button" id="getRelations" name="getRelations" type="button" value="[th]Search[/th]" onclick="getRelations();" />
+	</div>
+    <table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+		<thead>
+        <tr>
+            <th class="aplTblHeader aplTblHeaderDate" width="10%">[t]Hide[/t]</th>
+            <th class="aplTblHeader aplTblHeaderJob" width="65%">[t]Relation[/t]</th>
+            <th class="aplTblHeader aplTblHeaderJob" width="25%">[t]City[/t]</th>
+        </tr>
+		</thead>
+        <tbody id="relationResults">
+
+        </tbody>
+    </table>
+	<div class="text"></div>
+	
+	{if $currentlyHiddenFor}
+	<h2>[t]Currently selected[/t]:</h2>
+	<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
+		<thead>
+		<tr>
+            <th class="aplTblHeader aplTblHeaderDate" width="10%">[t]Hide[/t]</th>
+            <th class="aplTblHeader aplTblHeaderJob" width="65%">[t]Relation[/t]</th>
+            <th class="aplTblHeader aplTblHeaderJob" width="25%">[t]City[/t]</th>
+        </tr>
+		</thead>
+        <tbody id="relationResultsSelected">
+		{foreach from=$currentlyHiddenFor item=hiddenFor name=aplList}
+		<tr class="{cycle values='aplListItemOdd,aplListItemEven'} {if $smarty.foreach.aplList.last}aplListItemLast{else}{/if}">
+			<td>
+				<input type="checkbox" name="hidefor_{$hiddenFor.id}" checked onclick="markRelation(this);" />
+			</td>
+			<td>{$hiddenFor.werkgever}</td>
+			<td>{if $hiddenFor.wg_plaats}{$hiddenFor.wg_plaats}{else}&nbsp;{/if}</td>
+		</tr>
+		{/foreach}
+		</tbody>
+	</table>
+	{/if}
+
+	<script>
+		//{literal}
+		/*
+        $.ajaxSetup ({
+            cache: false
+        });
+		*/
+		
+		function enterPressed(e) {
+			if (e.which == 13 || e.keyCode == 13) {
+				return true;
+			}
+			return false;
+		}
+
+		function markRelationAjax(onOrOff, elementName ) {
+			var request = $.ajax({
+				url: "[website]/index.php/page/applicants/command/markRelation/onOff/"+onOrOff+"/werkgeverid/"+elementName,
+				type: "GET",
+				dataType: "html"
+			});
+			request.done(function(msg) {
+				if ( msg != 'OK' ) {
+                    alert("[th]Something went wrong[/th]");
+                } else {
+                    // All went well, reload the list of selected relations
+                    getSelectedRelationsAjax();
+                }
+            });
+            request.fail(function(jqXHR, textStatus) {
+                alert( "Request failed: " + textStatus );
+            });
+        }
+
+        function callAjax(value) {
+            var request = $.ajax({
+                url: "[website]/index.php/page/applicants/command/searchRelation/search/"+value,
+                type: "GET",
+                dataType: "html"
+            });
+            request.done(function(msg) {
+                $("#relationResults").html(msg);
+            });
+            request.fail(function(jqXHR, textStatus) {
+                alert( "Request failed: " + textStatus );
+            });
+        }
+
+        function getSelectedRelationsAjax() {
+            var request = $.ajax({
+                url: "[website]/index.php/page/applicants/command/getSelectedRelationsAjax",
+                type: "GET",
+                dataType: "html"
+            });
+            request.done(function(msg) {
+                $("#relationResultsSelected").html(msg);
+            });
+            request.fail(function(jqXHR, textStatus) {
+                alert( "Request failed: " + textStatus );
+            });
+        }
+
+        function markRelation(element) {
+            if ( element.checked ) {
+                markRelationAjax(1, element.name);
+            } else {
+                markRelationAjax(0, element.name);
+            }
+        }
+
+        function getRelations() {
+            searchFor = document.getElementById('relation_name').value;
+
+            if ( searchFor.length < 3 ) {
+                alert('[th]you  must  at  least  fill  in  3  characters  to  search  our  database[/th]');
+            }
+
+            callAjax(searchFor);
+
+            return false;
+        }
+	//{/literal}
+	</script>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

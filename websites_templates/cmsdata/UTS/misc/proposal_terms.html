@@ -1,0 +1,60 @@
+<html>
+<head> 
+<title>Proposal terms</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body bgcolor="#FFFFFF" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0"> 
+
+<!--uts:begin inner-->
+<script>
+{literal}
+function confirmSubmit()
+{
+	var agreecheck = document.getElementById('agreedterms').checked;
+	var acceptcheck = document.getElementById('acceptproposals').checked;
+	if(agreecheck && acceptcheck)
+	{
+		return true;
+	}
+	else
+	{
+		alert('[th]You have to accept the terms and proposal before continuing.[/th]');
+		return false;
+	}
+}
+{/literal}
+</script>
+<div class="outer oPrTeOuter">
+<h1 class="title oPrTeTitle">[t]Terms of agreement[/t]</h1>
+<div class="text oPrTeText">
+[t]Before you can confirm this order, please read the General Terms &amp; Conditions below. Then check both boxes, to indicate that you have read and agree with the proposal and the Terms & Conditions[/t]
+</div>
+<div class="oPrTeConditions"><p>[t]Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer consequat elit arcu, at dignissim risus. Donec consequat turpis sit amet nibh blandit tempor. Pellentesque malesuada auctor posuere. Sed ut velit ac elit venenatis pharetra. Cras accumsan magna eu lectus lobortis sollicitudin suscipit turpis imperdiet. Sed sed congue quam. Proin vitae tellus risus, ut pretium eros. Vivamus vitae placerat enim. Nunc fringilla pharetra sem, quis rhoncus lacus volutpat commodo. Phasellus vitae magna sed orci laoreet vehicula. Pellentesque adipiscing hendrerit sapien, a molestie felis posuere eu. Aenean eu leo eu arcu adipiscing consequat. Ut ac lectus arcu, vel viverra est. Morbi bibendum sem eu mi cursus tristique. Morbi cursus libero id lacus pretium cursus.
+Fusce tempus purus a diam porta lacinia. Praesent aliquet condimentum diam at aliquet. Sed at lacus dolor, sed posuere ante. Donec volutpat eleifend nisl, at condimentum nibh euismod eget. Suspendisse in justo in mi ultricies tincidunt. Cras tristique pellentesque quam eu pharetra. Phasellus lorem mauris, ornare in pulvinar sed, interdum quis justo. Vivamus hendrerit egestas sapien, nec auctor orci placerat in. Vestibulum vitae quam velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum lacus ligula, ultrices sed vulputate at, accumsan vel turpis.
+Vestibulum ullamcorper lacus est, at molestie urna. Curabitur libero sapien, facilisis eu pellentesque in, placerat ac urna. Nulla facilisi. Sed odio risus, venenatis ut accumsan vel, tincidunt in felis. Pellentesque elit ipsum, faucibus sit amet bibendum laoreet, dictum eget arcu. Cras mollis, mi vel ornare aliquet, nunc eros malesuada mi, in rhoncus metus velit a dolor. Sed sed enim nisl. Sed sagittis adipiscing ante at consequat. Nullam id nunc et nunc vehicula pretium quis a sem. Phasellus ac sapien non ligula dapibus tempor. Nullam egestas sollicitudin posuere.
+Mauris vitae nisi nisi, vel imperdiet velit. Donec sed nisi quis risus posuere venenatis. Quisque neque urna, gravida in dictum quis, varius id diam. Donec consequat viverra quam in interdum. Suspendisse eu viverra nisl. Integer eget nulla arcu. In pharetra metus id urna porta et fringilla ipsum mollis. Aliquam a justo sapien, a mollis ligula. Mauris tristique tempus condimentum. Integer semper sodales auctor. Aenean vitae dui ipsum, ut laoreet nunc. Integer volutpat ante fringilla eros dictum sagittis. Cras hendrerit auctor faucibus. Phasellus eu nunc lectus, eget vulputate felis. Nulla vulputate odio vel nunc tempor pulvinar.
+Aliquam pretium turpis augue. Nunc consequat luctus est, quis tempor dui sollicitudin et. Vivamus sed est quis quam pellentesque lobortis. Duis blandit ultrices ligula a porta. Maecenas non lectus augue, eu accumsan lacus. Suspendisse in odio ligula. Duis scelerisque tellus eget ligula feugiat non hendrerit augue porta. Mauris sit amet felis id nibh iaculis lacinia. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In nec metus odio, eleifend ultrices nisi. Morbi tristique felis et justo sollicitudin nec blandit leo euismod. Sed varius leo sit amet magna pretium quis egestas felis pellentesque. In elementum dapibus mi, nec feugiat lectus iaculis in. Integer tristique pretium purus, sit amet lacinia arcu bibendum quis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam imperdiet dolor ac justo gravida ac accumsan dui aliquet. [/t]</p>
+</div>
+
+<div class="oPrTeChecks">
+<form name="form2" method="post" action="/index.php/page/proposals/command/acceptOrder/bb/1/">
+<div class="oPrTeCheckConditions">
+<input type="checkbox" name="agreedterms" value="1" id="agreedterms" class="logintblinput">
+<span>[t]I have read and agree to the terms and conditions[/t]</span>
+</div>
+<div class="oPrTeCheckProposal">
+<input type="checkbox" name="acceptproposals" value="1" id="acceptproposals" class="logintblinput">
+<span>[t]I accept the proposal and want to order[/t]</span>
+</div>
+<div class="oPrTeButton">
+	<input type="hidden" name="pid" value="{$id}" class="logintblinput">
+	<input type="submit" name="Submit" value="[th]Finalize order[/th]" class="button" onClick="return confirmSubmit()">
+</div>
+</form>
+</div>
+
+
+</div>
+<!--uts:end inner-->
+</body>
+</html>

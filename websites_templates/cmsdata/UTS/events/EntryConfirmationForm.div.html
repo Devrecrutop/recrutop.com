@@ -1,0 +1,191 @@
+<html>
+<head>
+<title>questionsform</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/events/EntryConfirmationForm.div.html -->
+<script>
+//{literal}
+function cancel() {
+ ok = confirm('[th]Weet u zeker dat u deze inschrijving wilt annuleren ?\nAls u op OK klikt, wordt u teruggeleid naar de lijst met evenementen.[/th]');
+ if(ok) window.location='/index.php/page/eventsfo/command/clearsession/code/[code]/bb/1';
+}
+//{/literal}
+</script>
+<div class="outer eventConfirm">
+
+<form name="form" method="post" action="/index.php/page/participantsfo/code/[code]/bb/1">
+<input type="hidden" name="command" value="participate">
+<input type="hidden" name="Answers[Step]" value="finalize">
+
+<h1 class="title">[t]Inschrijving[/t]</h1>
+<div class="intro">[t]Hieronder vindt u de details van uw inschrijving. Als alle gegevens kloppen, drukt u op bevestigen.[/t]</div>
+<h2 class="subHeader">[t]Details[/t]</h2>
+<div class="text">
+<!--START-->
+<!--HORIZONTAL-->
+<!--START_H_Vast-->
+<div class="textWord">
+<span>[Question]</span>
+[AnswerValue]
+<div class="cleaner"></div>
+</div>
+<!--END_H_Vast-->
+
+<!--START_H_Document-->
+<div class="textWord">
+<span>[Question]</span>
+[AnswerValue]
+<div class="cleaner"></div>
+</div>
+<!--END_H_Document-->
+
+<!--START_H_DateSelect-->
+<div class="textWord">
+<span>[Question]</span>
+[AnswerValue]
+<div class="cleaner"></div>
+</div>
+<!--END_H_DateSelect-->
+
+<!--START_H_Textfield-->
+<div class="textWord">
+<span>[Question]</span>
+[AnswerValue]
+<div class="cleaner"></div>
+</div>
+<!--END_H_Textfield-->
+
+<!--START_H_Textarea-->
+<div class="textWord">
+<span>[Question]</span>
+[AnswerValue]
+<div class="cleaner"></div>
+</div>
+<!--END_H_Textarea-->
+
+<!--START_H_Select-->
+<div class="textWord">
+<span>[Question]</span>
+<!--START_H_Select_Answers-->
+[Answer]
+<!--END_H_Select_Answers-->
+<div class="cleaner"></div>
+</div>
+<!--END_H_Select-->
+
+<!--START_H_Checkbox-->
+<div class="textWord">
+<span>[Question]</span>
+<!--START_H_Checkbox_Answers-->
+[Answer]
+<!--END_H_Checkbox_Answers-->
+<div class="cleaner"></div>
+</div>
+<!--END_H_Checkbox-->
+
+
+<!--START_H_Radio-->
+<div class="textWord">
+<span>[Question]</span>
+<!--START_H_Radio_Answers-->
+[Answer]
+<!--END_H_Radio_Answers-->
+<div class="cleaner"></div>
+</div>
+<!--END_H_Radio-->
+
+<!--VERTICAL-->
+<!--START_V_Vast-->
+<div class="textWord">
+<span>[Question]</span>
+[AnswerValue]
+<div class="cleaner"></div>
+</div>
+<!--END_V_Vast-->
+
+<!--START_V_Document-->
+<div class="textWord">
+<span>[Question]</span>
+[AnswerValue]
+<div class="cleaner"></div>
+</div>
+<!--END_V_Document-->
+
+<!--START_V_DateSelect-->
+<div class="textWord">
+<span>[Question]</span>
+[AnswerValue]
+<div class="cleaner"></div>
+</div>
+<!--END_V_DateSelect-->
+
+<!--START_V_Textfield-->
+<div class="textWord">
+<span>[Question]</span>
+[AnswerValue]
+<div class="cleaner"></div>
+</div>
+<!--END_V_Textfield-->
+
+<!--START_V_Textarea-->
+<div class="textWord">
+<span>[Question]</span>
+[AnswerValue]
+<div class="cleaner"></div>
+</div>
+<!--END_V_Textarea-->
+
+<!--START_V_Select-->
+<div class="textWord">
+<span>[Question]</span>
+<!--START_V_Select_Answers-->
+[Answer]
+<!--END_V_Select_Answers-->
+<div class="cleaner"></div>
+</div>
+<!--END_V_Select-->
+
+
+<!--START_V_Checkbox-->
+<div class="textWord">
+<span>[Question]</span>
+<!--START_V_Checkbox_Answers-->
+[Answer]
+<!--END_V_Checkbox_Answers-->
+<div class="cleaner"></div>
+</div>
+<!--END_V_Checkbox-->
+
+<!--START_V_Radio-->
+<div class="textWord">
+<span>[Question]</span>
+<!--START_V_Radio_Answers-->
+[Answer]
+<!--END_V_Radio_Answers-->
+<div class="cleaner"></div>
+</div>
+<!--END_V_Radio-->
+
+<!--END-->
+<div class="cleaner"></div>
+</div>
+
+<!--uts:begin button confirm-->
+<div class="buttonContainer">
+<input type="submit" value="[tb]Bevestigen[/tb]" class="button">
+<!--uts:end button confirm-->
+<!--uts:begin button edit-->
+<input class="button" type="button" value="[tb]Wijzigen[/tb]" onclick="window.location='/index.php/page/participantsfo/command/participate/evid/[evid]/code/[code]/resume/1/bb/1'">
+<!--uts:end button edit-->
+<!--uts:begin button cancel-->
+<input class="button" type="button" value="[tb]Annuleren[/tb]" onclick="cancel()">
+<!--uts:end button confirm-->
+</div>
+</form>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

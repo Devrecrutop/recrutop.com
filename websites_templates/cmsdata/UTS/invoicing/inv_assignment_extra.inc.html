@@ -1,0 +1,19 @@
+{*INVOICE ASSIGNMENT CUSTOM DETAIL WITH EXTRA TEXT*}  
+  <div id="inv-assignment">
+  
+  <table width="100%" border="0" cellspacing="0" cellpadding="4" id="tbl-assignment">
+
+  {if $settings.invoicingCostAllocation}
+  <tr>
+    <td width="160">[t]Cost Allocation[/t]:</td>
+    <td>{$data.optional_table.cost_centre|escape}</td>                  
+  </tr>
+  {/if}    
+                      
+  <tr>
+    <td colspan="2">[t]Write your extra text here.[/t]</td>                  
+  </tr>              
+  </table>
+  
+  </div>  
+  <hr>       

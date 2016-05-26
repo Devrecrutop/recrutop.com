@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>
+PAYBOX ONLINE PAYMENT
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+<SCRIPT LANGUAGE="Javascript" type="text/javascript">
+<!--
+function hidestatus(){
+window.status='Otys e-Recruiting Systems'
+return true
+}
+if (document.layers)
+document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+document.onmouseover=hidestatus
+document.onmouseout=hidestatus
+-->
+</SCRIPT>
+</head>
+<body>
+<!--uts:begin inner-->
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script language="Javascript1.2">
+
+
+{literal}
+
+function returnback() {
+{/literal}
+	location = '{$returnurl}';
+{literal}
+}
+
+function submit_payment(){
+    {/literal}
+    document.forms.form_payment.submit();
+    {literal}
+}
+
+function set_form(){
+    {/literal}
+
+    //var catalogurl = "{$catalogurl}";
+    {literal}
+}
+
+
+
+function SetButtonDisabled() {
+    $('#submitpayment').attr('disabled', true);
+}
+function SetButtonEnabled() {
+    $('#submitpayment').attr('disabled', false);
+}
+
+$(document).ready(function() {
+    set_form();
+});
+
+
+
+
+
+
+{/literal}
+// -->
+</script>
+
+
+
+<!--MENUBAR-->
+<!--START_PageTitle-->
+<div class="outer">
+<h1 class="title">[t]Pay online[/t]:</h1>
+<!--END_PageTitle-->
+{$customer_menu}
+<!--START PAYMENT/OVERVIEW-->
+<form method="post" action="">
+<input type="hidden" name="vid" value="{$reactie.vacatureid}">
+<input type="hidden" name="rid" value="{$reactie.id}">
+</form>
+<!--END STATUS CHANGE/OVERVIEW-->
+
+<fieldset>
+<legend>[t]Order Details[/t]</legend>
+<div class="text">
+<span>[t]Order #[/t]:</span>{$orderId}
+</div>
+</fieldset>
+
+<table cellpadding="0" cellspacing="0" class="ItemTbl" border="0" >
+<tr>
+<td align="left">&nbsp;<b>[t]Item[/t]</b></th>
+<td align="right"><b>[t]Price[/t]</b></th>
+{if $payment_item_info.discount}
+<td align="right"><b>[t]Discount[/t]</b></th>
+{/if}
+<td align="right"><b>[t]Subtotal[/t]</b></th>
+</tr>
+<tr>
+{if $payment_item_info.discount}
+<td colspan="4">&nbsp;</td>
+{else}
+<td colspan="3">&nbsp;</td>
+{/if}
+</tr>
+<tr>
+<td  align="left" >&nbsp;{$payment_item_info.item_name}</td>
+<td  align="right" >&nbsp;{$payment_item_info.currency_symbol} {$payment_item_info.subtotal}</td>
+{if $payment_item_info.discount}
+<td  align="right" >&nbsp;{$payment_item_info.currency_symbol} {$payment_item_info.discount}</td>
+{/if}
+<td  align="right" >&nbsp;{$payment_item_info.currency_symbol} {$payment_item_info.total_normal}</td>
+</tr>
+<tr>
+<td  align="left" {if $payment_item_info.discount}colspan="4"{else}colspan="3"{/if} style="border-bottom:1px solid black;">&nbsp;</td>
+</tr>
+<tr>
+<td  align="left" {if $payment_item_info.discount}colspan="3"{else}colspan="2"{/if} >&nbsp;[t]Total[/t]</td>
+<td  align="right" {if $payment_item_info.discount}colspan="3"{else}colspan="2"{/if} >{$payment_item_info.currency_symbol} {$payment_item_info.total_normal}</td>
+</tr>
+<tr>
+<td {if $payment_item_info.discount}colspan="4"{else}colspan="3"{/if}>&nbsp;</td>
+</tr>
+</table>
+
+{*IMPORTANT!!!:  DO NOT modify any hidden fields below! If you modify them, then SHA signature can be calculated incorrectly, which results error in payment!!! *}
+
+{if $is_successfull_payment}
+
+<fieldset>
+<legend>[t]Item is already paid[/t]</legend>
+<div class="text">
+<span>[t]This item was already paid[/t]</span>
+</div>
+</fieldset>
+
+
+{else}
+                                                             
+{*https://www.youreit.nl/payboxsvc/modulev2.cgi*}                                                                                    
+<FORM ACTION = "{$website}payboxsvc/modulev2.cgi" METHOD = "POST">
+<INPUT TYPE = "hidden" NAME = "PBX_MODE" VALUE = "13"> <!-- passage par formulaire -->
+<INPUT TYPE = "hidden" NAME = "PBX_OPT" VALUE = "/opt/data/{$code}/files/{$optionFile}"> 
+<INPUT TYPE = "submit" NAME = "bouton_paiement" VALUE = "[tb]Make a payment[/tb]">
+{if $returnurl}
+<input name="button" class="button" type="button" onClick="returnback();" value="[tb]Return[/tb]">
+{/if}
+</FORM>
+
+{/if}
+
+</div>
+
+<iframe name="actionframe" id="actionframe" width="1" height="1" border="0" frameborder="NO"></iframe>
+
+<!--uts:end inner-->
+</body>
+</html>

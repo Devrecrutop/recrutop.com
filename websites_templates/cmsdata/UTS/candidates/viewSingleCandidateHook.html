@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<div class="hookOuter cvhContainer">
+<!-- /UTS/candidates/viewSingleCandidateHook.html -->
+	{if $candidate_info.candidate_full_name}
+	<div class="hookTitle cvhHeader">
+		<h1>
+			<a href="http://{$candidate_detail}" title="[t]Details...[/t]">
+				{if $display_elements.show_first_name}{$ca_item.first_name|escape}{/if}
+				{if $display_elements.show_middle_name} {$ca_item.middle_name|escape}{/if}
+				{if $display_elements.show_last_name} {$ca_item.last_name|escape}{/if}
+			</a>
+		</h1>
+	</div>
+	{/if}
+
+	<div class="hookDetailsContainer cvhDetailsContainer">
+
+		{if $candidate_photo !="" && $display_elements.show_photo}
+		<div class="hookPhoto cvhPhoto"><div class="hookPhoto2 cvhPhoto2"><a href="http://{$candidate_detail}" title="[t]Details...[/t]"><img src="http://{$candidate_photo_link}" border="0" alt="{$candidate_info.candidate_full_name|escape}" {$candidate_photo_size}></a></div></div>
+		{/if}
+
+		{if $short_descr !="" && $display_elements.show_short_text}
+		<div class="hookShortDescription cvhShortDescription">{$short_descr|truncate:200}</div>
+		{/if}
+		<div class="cvhNawContainer">
+
+			{if $candidate_info.candidate_email && $display_elements.show_email}
+			<div class="hookWord cvhWord">[t]E-mail:[/t]</div>
+			<div class="hookValue cvhValue"><a href="mailto:{$candidate_info.candidate_email}" tile="{$candidate_info.candidate_email}  ">{$candidate_info.candidate_email}</a></div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if   $display_elements.show_address  && ($candidate_info.candidate_adres || $candidate_info.postcode || $candidate_info.woonplaats)}
+			<div class="hookWord cvhWord">[t]Address:[/t]</div>
+			<div class="hookValue cvhValue">
+			{if $candidate_info.adres}{$candidate_info.adres|escape},&nbsp;{/if}
+			{if $candidate_info.postcode}{$candidate_info.postcode|escape}&nbsp;{/if}
+			{if $candidate_info.woonplaats}{$candidate_info.woonplaats|escape}{/if}
+			{if $candidate_info.home_country}<br >{$candidate_info.home_country|escape}{/if}
+
+			</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $candidate_info.phone_consultant && $display_elements.show_home_phone}
+			<div class="hookWord cvhWord">[t]Phone primary:[/t]</div>
+			<div class="hookValue cvhValue">{$candidate_info.phone_consultant}</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $candidate_info.phone_mobile && $display_elements.show_cell_phone}
+			<div class="hookWord cvhWord">[t]Cell phone:[/t]</div>
+			<div class="hookValue cvhValue">{$candidate_info.phone_mobile}</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $candidate_info.phone_work && $display_elements.show_work_phone}
+			<div class="hookWord cvhWord">[t]Work phone:[/t]</div>
+			<div class="hookValue cvhValue">{$candidate_info.phone_work}</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $candidate_info.phone_fax && $display_elements.show_fax}
+			<div class="hookWord cvhWord">[t]Fax:[/t]</div>
+			<div class="hookValue cvhValue">{$candidate_info.phone_fax}</div>
+			<div class="hookCleaner"></div>
+			{/if}
+
+			{if $candidate_info.phone_skype && $display_elements.show_skype}
+			<div class="hookWord cvhWord">[t]Skype:[/t]</div></td>
+			<div class="hookValue cvhValue">{$candidate_info.phone_skype}</div>
+			<div class="hookCleaner"></div>
+			{/if}
+		</div>
+
+		{if $candidate_media && $display_elements.show_wiqet}
+		<div class="hookVTV cvhMedia">{$candidate_media}</div>
+		{/if}
+
+		{if $candidate_widget && $display_elements.show_widget}
+		<div class="hookVTV cvhWidget">{$candidate_widget}</div>
+		{/if}
+
+		{if $candidate_documents_cnt > 0 && $display_elements.show_documents}
+		{foreach from=$candidate_documents item=i}
+		<div class="hookVTV cvhDocumentDownload">{$i.document_download_link}</div>
+		{/foreach}
+		{/if}
+		<div class="hookLink cvhDetailsLink"><a href="http://{$candidate_detail}" title="[t]Details...[/t]">[t]Details...[/t]</a></div>
+
+	</div>
+
+</div>
+<iframe name="actionframe" width="0" height="0" frameborder="0" scrolling="No"></iframe>
+<!--uts:end inner-->
+</body>
+</html>

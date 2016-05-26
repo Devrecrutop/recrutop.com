@@ -1,0 +1,32 @@
+{* this email is sent to the enroll admin after a new vacancy was supplied by a candidate *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/applicants/vacancyAddedByCandidateNotificationEmail.html -->
+<p>
+    [t]A new vacancy has been added by {$applicantName}.[/t]<br>
+</p>
+<p>
+    [t]Applicant name[/t]:  <strong>{$applicantName|escape}</strong><br>
+    [t]E-mail[/t]: <strong>{$applicantEmail|escape}</strong><br>
+    [t]Website[/t]: <strong>{$website}</strong><br>
+    [t]Vacancy name[/t]: <strong>{$vacancyName}</strong><br>
+</p>
+
+
+<p>
+[t]This applicant receives {$credits} credits for adding a vacancy.[/t] 
+</p>
+
+
+<p>
+<i>[t]Remark: this e-mail message has been automatically generated[/t]</i>
+</p>
+
+<!--uts:end inner-->
+</body>
+</html>

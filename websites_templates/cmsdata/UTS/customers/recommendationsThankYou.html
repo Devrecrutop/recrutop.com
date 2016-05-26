@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+
+<body>
+<!--uts:begin inner-->
+<if $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL='{$redirecturl}'/">
+</if>
+
+<div class="outer custOuter recommendOuter rcmdThankOuter">
+	<!-- /UTS/customers/recommendationsThankYou.html -->
+	<!-- Template Webdevelopment validated 04-2013 -->
+    <h1 class="title">[t]Thank You![/t]</h1>
+    <div class="text">
+		{if $send_action == "send_request"}
+        [t]Thank you for sending a recommendation.[/t]
+        {elseif $send_action == "send_answer"}
+        [t]Thank you for filling in this recommendation.[/t]
+        {else}
+        [t]Thank you.[/t]
+        {/if}
+    </div>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

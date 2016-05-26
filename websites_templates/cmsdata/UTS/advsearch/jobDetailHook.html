@@ -1,0 +1,67 @@
+ <!-- /UTS/advsearch/jobDetailHook.html -->
+<div class="hookOuter mDhOut">
+	<div class="hookHeader mDhT">[t]Other details[/t]</div>
+	
+	<if $vac.address>
+	<div class="hookSubHeader mDhSh mDhShAddress">[t]Address[/t]</div>
+	<div class="hookText mDhTx mDhTxAddress">
+		<span>{$vac.address|escape}</span>,
+		<span>{$vac.zipcode|escape} {$vac.city|escape}</span>
+	</div>
+	</if>
+	
+	
+	{* start assignment, duration, tarif *}
+	<if $vac.start_assignment>
+	<div class="hookSubHeader mDhSh mDhShAssignment">[t]|Assignment[/t]</div>
+	<div class="hookText mDhTx mDhTxAssignment">
+		<span>[t]Start:[/t] {$vac.start_assignment|escape}</span>
+		<span>[t]Duration:[/t] {$vac.duration_assignment|escape}</span>
+		<span>[t]Tarif:[/t] {$vac.tariff_assignment|escape}</span>
+	</div>
+	</if>
+	
+	{* start matchcriteria *}
+	<if $critList>
+	<div class="hookSubHeader mDhSh">[t]Match criteria[/t]</div>
+	<foreach from=$critList item=crit>
+	<if !empty($crit._crvlist)>
+	<div class="hookItemContainer mDhItC">
+		<div class="hookItemTitle mDhItT">{$crit.name|escape}</div>
+		<div class="hookItemWord mDhIw">
+			<ul>
+			<foreach from=$crit._crvlist item=crval>
+				<li>{$crval|escape}</li>
+			</foreach>
+			</ul>
+		</div>
+	</div>
+	</if>
+	</foreach>
+	</if>
+	{* end matchcriteria *}
+	
+	{if [uts:display_cp_email]}
+	{if $vac.contact_email}
+	<div class="hookItemContainer mDhItC">
+		<div class="hookItemTitle mDhItT" >[t]Contactperson email[/t]</div>
+		<div class="hookItemWord mDhIw">
+			<span><a href="mailto:{$vac.contact_email|escape}">{$vac.contact_email|escape}</a></span>
+		</div>
+	</div>
+	{/if}
+	{/if}
+	
+	{if [uts:display_wg_network_link]}
+	{if $vac.customer_network}
+	<div class="hookItemContainer mDhItC mDhItCNw">
+		<div class="hookItemTitle mDhItT">[t]Network[/t]</div>
+		<div class="hookItemWord mDhIw">
+			<span><a href="{if $vac.customer_network_link}{$vac.customer_network_link}{else}{$vac.customer_network_website}{/if}" >[t]Link to customer page[/t]</a></span>
+		</div>
+	</div>
+	{/if}
+	{/if}
+
+	<div class="cleaner"></div>
+</div>

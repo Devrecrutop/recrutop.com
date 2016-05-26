@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>WebUserForm2</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/agents/webUserProfilePage2.html -->
+
+
+<form name="form" method="post" action="/index.php/page/webuser/command/savewebuser/WUpage/2/bb/1">
+
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<h1 class="title">[t]PageTitle[/t]</h1>
+<!--END_PageTitle-->
+
+<div class="menuContainer WebUserProfile2Mc">
+<div class="menuLink menuLinkFirstChild"><a href="/index.php/page/webuser/command/myprofile/WUpage/1/bb/1">[t]SingleWord1[/t]<!--SingleWordLink1--></a></div>
+<div class="menuLink"mlMpAgentsPersonalia><a href="/index.php/page/webuser/command/myprofile/WUpage/2/bb/1">[t]SingleWord2[/t]<!--SingleWordLink2--></a></div>
+<div class="menuLink mlMpAgents"><a href="/index.php/page/webuser/command/myprofile/WUpage/3/bb/1">[t]SingleWord3[/t]<!--SingleWordLink3--></a></div>
+<!--START_VIDEOBOARD-->
+<!-- <div class="menuLink"><a href="/index.php/page/CandidatesRemote/command/myprofile/page/4/bb/1 code]">[t] SingleWord9[/t]<! --SingleWordLink9-- ></a> </div> Commented out WV & SvdB 09122009 -->
+<!--END_VIDEOBOARD-->
+<div class="menuLink menuLinkLastChild"><a href="/index.php/page/webuser/command/logout/bb/1">[t]SingleWord4[/t]<!--SingleWordLink4--></a></div>
+</div>
+
+<!--START_Block1-->
+
+<!--START_Title1-->
+<h2 class="subHeader">[t]Title1[/t]</h2>
+<!--END_Title1-->
+
+<!--START_Text1-->
+<div class="text">[t]Text1[/t]</div>
+<!--END_Text1-->
+
+<!--END_Block1-->
+<div class="formInput"><label>[t]SingleWord5[/t]<!--SingleWordLink5--></label><input type="text" name="FirstName" value="{$wum.FirstName}"></div>
+<div class="formInput"><label>[t]SingleWord6[/t]<!--SingleWordLink6--></label><input type="text" name="InFix" value="{$wum.InFix}"></div>
+<div class="formInput"><label>[t]SingleWord7[/t]<!--SingleWordLink7--></label><input type="LastName" name="LastName" value="{$wum.LastName}"></div>
+
+<div class="formInput"><label>[t]SingleWord8[/t]<!--SingleWordLink8--></label>
+
+<select name="Gender">
+<option value="U">[t]System1[/t]</option>
+<option value="M" {if $wum.Gender == "M"}selected{/if}>[t]System2[/t]</option>
+<option value="F" {if $wum.Gender == "F"}selected{/if}>[t]System3[/t]</option>
+</select>
+
+</div>
+
+<div class="formInput"><label>[t]SingleWord9[/t]<!--SingleWordLink9--></label>
+<select name="preferred_language">
+	 {html_options options=$langNames selected=$wum.preferred_language}
+</select>
+</div>
+
+<div class="error"><!--ERROR--></div>
+<div class="formButton"><input type="submit" name="Submit" value="[t]Button1[/t]" class="button"><!--ButtonLink1--></div>
+
+</form>
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+
+
+<!--uts:end inner-->
+</body>
+</html>

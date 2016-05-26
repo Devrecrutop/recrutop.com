@@ -1,0 +1,272 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>WebUserForm2</title>
+<link href="formstyles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+<!--uts:begin inner-->
+
+<!-- UTS/agents/AgentsForm_2012.html -->
+{literal}
+<script>
+function del_agent() {
+	document.form1.command.value = "delagent";
+	document.form1.submit();
+}
+
+</script>
+{/literal}
+<table class="vacsTable" border="0" cellpadding="0" cellspacing="0">
+
+<!-- OLD TEMPLATE -->
+
+
+<form name="form1" action="/index.php/page/agents/bb/1" method="POST">
+<input type="hidden" name="command" value="{$postcommand}">
+<input type="hidden" name="WUstep" value="4">
+<input type="hidden" name="agentId" value="{$r.id}">
+
+<!--MENUBAR-->
+
+<!--START_PageTitle-->
+<tr>
+<td class="formHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+<tr>
+<td class="formHeader"><h1>[t]PageTitle[/t]</h1></td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_PageTitle-->
+
+<tr>
+<td>
+
+<table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+
+<!--START_Block1-->
+<!--START_Title1-->
+<tr>
+<td class="formSubHeaderContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+<tr>
+<td class="formSubHeader">[t]Title1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Title1-->
+<if $useOwnMenu>
+{$ownMenu}
+</if>
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<!--START_Text1-->
+<tr>
+<td class="formTextContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+<tr>
+<td class="formText">[t]Text1[/t]</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<!--END_Text1-->
+</table>
+
+</td>
+</tr>
+<!--END_Block1-->
+
+<tr>
+<td class="itemContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="ItemTbl">
+<td class="HQuestion">[t]SingleWord1[/t]<!--SingleWordLink1--></td>
+<td class="FieldContainer"><label for="{$r.Name}"><input type="Text" name="Name" size=35 value="{$r.Name}" id="{$r.Name}"></td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+
+<tr>
+<td class="itemContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="ItemTbl">
+<td class="HQuestion">[t]SingleWord3[/t]<!--SingleWordLink3--></td>
+<td class="FieldContainer radiobuttons"><input type="hidden" value="0" name="active">
+<input type="checkbox" value="1" name="active" {if $r.active}checked{/if}>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td class="itemContainer">
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="ItemTbl">
+{literal}
+<script>
+function filter_setOption(filterName) {
+	var fel = document.getElementById(filterName);
+	var ffel = document.getElementById(filterName + '_filter');
+	fel.options.length = 1;
+	if (ffel.value) {
+		var part = window['parts_' + filterName][ffel.value];
+		for (var c = 0; c < part.length; c++) {
+			fel.options[fel.options.length] = new Option(part[c][1],part[c][0]);
+		}
+		var fcont = document.getElementById(filterName + '_filtercont');
+		fcont.style.display='';
+	}
+}
+
+function filter_setOptionStart(filterName, cat, value) {
+	var ffel = document.getElementById(filterName + '_filter');
+	ffel.value = cat;
+	filter_setOption(filterName);
+	var fv = document.getElementById(filterName);
+	fv.value = value;
+}
+
+ function addEvent(obj, event, funct) {
+   if (obj.attachEvent) { //IE
+     obj['e' + event + funct] = funct;
+     obj['x' + event + funct] = function() {
+           obj['e' + event + funct](window.event);
+         }
+     obj.attachEvent('on' + event, obj['x' + event + funct]);
+   } else // other browser
+     obj.addEventListener(event, funct, false);
+ }
+
+</script>
+{/literal}
+{foreach item=fn from=$criterias}
+<tr>
+<td class="HQuestion">{$fn.name}</td>
+<td class="FieldContainer">
+{if $fn.filtered}
+
+	<script>
+		var parts_{$fn.field} = new Array();
+		<foreach from=$fn.options key=filterId item=parts>parts_{$fn.field}['{$filterId|escape:javascript}'] = new Array(<foreach from=$parts key=fieldId item=field name=parts_fe>new Array('{$fieldId|escape:javascript}', '{$field|escape:javascript}'){if !$smarty.foreach.parts_fe.last},{/if}</foreach>);
+		</foreach>
+
+		addEvent(window, 'load', new Function('filter_setOptionStart("{$fn.field|escape:javascript}","{$fn.catid|escape:javascript}","{$fn.value|escape:javascript}")'));
+	</script>
+	<label for="{$fn.veld}_filter">
+		<select name="{$fn.field}_filter" id="{$fn.field}_filter" onchange="filter_setOption('{$fn.field|escape:javascript}')">
+	<option value="">---</option>
+	<html_options options=$fn.critcats>
+	</select>
+	</label>
+	<span id="{$fn.field}_filtercont" style="display:none">
+	<label for="{$fn.field}">
+	<br>
+	<select name="{$fn.field}" id="{$fn.field}">
+		<option value="">---</option>
+	</select>
+	</label>
+{else}
+	<label for="{$fn.field}">
+	<select name="{$fn.field}" id="{$fn.field}">
+		{if $auto_agents_no_value_allowed}
+        <option value="">---</option>
+        {/if}
+		<html_options options=$fn.options selected=$fn.value>
+	</select>
+	</label>
+	</span>
+{/if}
+</td>
+<td class="radiobuttons jsaRequired" align="right"><input type="checkbox" name="Required[]" value="{$fn.veld}" {if $fn.Required == "Y"}checked{/if}  title="[t]System14[/t]">
+</tr>
+</foreach>
+
+</table>
+
+</td>
+</tr>
+
+<!--START_auto_agents-->
+{if isset($setting_auto_agents) && $setting_auto_agents}
+<tr>
+  <td class="itemContainer" >
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="ItemTbl">
+    <td class="HQuestion">[t]SingleWord2[/t]<!--SingleWordLink2--></td>
+    <td class="FieldContainer">
+	  <label for="schedule_agent">
+      <select name="schedule_agent" id="schedule_agent">
+          <option value="0" {if $agent_schedule == 0} selected {/if}>---</option>
+          <option value="4" {if $agent_schedule == 4} selected {/if}>[t]System4[/t]</option>
+          <option value="5" {if $agent_schedule == 5} selected {/if}>[t]System5[/t]</option>
+          <option value="6" {if $agent_schedule == 6} selected {/if}>[t]System6[/t]</option>
+          <option value="7" {if $agent_schedule == 7} selected {/if}>[t]System7[/t]</option>
+          <option value="8" {if $agent_schedule == 8} selected {/if}>[t]System8[/t]</option>
+          <option value="9" {if $agent_schedule == 9} selected {/if}>[t]System9[/t]</option>
+          <option value="10" {if $agent_schedule == 10} selected {/if}>[t]System10[/t]</option>
+          <option value="11" {if $agent_schedule == 11} selected {/if}>[t]System11[/t]</option>
+          <option value="12" {if $agent_schedule == 12} selected {/if}>[t]System12[/t]</option>
+          <option value="13" {if $agent_schedule == 13} selected {/if}>[t]System13[/t]</option>
+
+      </select>
+	  </label>
+    </td>
+    </tr>
+    </table>
+  </td>
+</tr>
+{/if}
+<!--END_auto_agents-->
+
+
+
+<tr>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>
+
+<table border="0">
+<tr>
+<td class="formTblButtonCell"><label for="[t]Button1[/t]"><input name="Submit" type="Submit" value="[t]Button1[/t]" class="button" id="[t]Button1[/t]"></label><!--ButtonLink1--></td>
+{if $postcommand == "saveagent" && $r.id}
+<td class="formTblButtonCell"><label for="[t]Button2[/t]"><input name="Delete" type="button" value="[t]Button2[/t]" class="button" id="[t]Button2[/t]" onclick="del_agent();"></label><!--ButtonLink2--></td>
+{/if}
+</tr>
+</table>
+
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<!--START_SystemBlock-->
+<!--SystemLinks-->
+<!--END_SystemBlock-->
+</form>
+</table>
+
+<!--uts:end inner-->
+</body>
+</html>

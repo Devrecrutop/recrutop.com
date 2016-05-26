@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+</head>
+<body>
+<!--uts:begin inner-->
+<!-- /UTS/customers/thankYou.html -->
+<if "[uts:metatime]" && $redirecturl>
+<meta http-equiv="refresh" content="[uts:metatime];URL={$redirecturl}">
+</if>
+<div class="outer custOuter custLogoutOuter">
+<h1 class="title">[t]Thank you![/t]</h1>
+
+<if $messageId>
+<div class="intro">
+<if $messageId == "SUBSCRIPTION_OK">
+<p>[t]Thank you! You have subscribed to the newsletter.[/t]</p>
+<elseif $messageId == "UNSUBSCRIPTION_OK">
+<p>[t]Thank you! You have unsubscribed from the newsletter.[/t]</p>
+</if>
+</div>
+</if>
+
+{* insert custom client's measuring snippets *}
+<if $snippets>
+{$snippets}
+</if>
+</div>
+<!--uts:end inner-->
+</body>
+</html>

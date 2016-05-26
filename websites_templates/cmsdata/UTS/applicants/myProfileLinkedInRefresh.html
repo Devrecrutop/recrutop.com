@@ -1,0 +1,53 @@
+{* BKo: this performs background refresh of candidate's LinkedIn token *}
+
+<!-- /UTS/applicants/myProfileLinkedInRefresh.html -->
+{if $linkedInRefreshSilently}
+
+<script type="text/javascript" src="http://platform.linkedin.com/in.js">/*
+  api_key: {$linkedInApiKey}
+  onLoad: linkedInRefreshCheck
+  authorize: true
+  scope: r_fullprofile,r_emailaddress,r_contactinfo
+  credentials_cookie: true
+*/</script>
+
+<script type="text/javascript">
+{literal}
+
+function linkedInRefreshCheck() {
+	if (IN.User.isAuthorized()) {
+	    //alert('true');
+	    IN.API.Profile("me").result(linkedInRefreshAsync);
+	}
+	else {
+		//alert('false');
+	}
+}
+
+function linkedInRefreshAsync(profiles) {
+	{/literal}
+	var currentMemberId = '{$linkedInMemberId|escape:'javascript'}';
+	{literal}
+    member = profiles.values[0];
+	if (currentMemberId != member.id) {
+		// different user is logged to LinkedIn
+		return;
+	}
+	//$.get('/index.php/page/linkedInRefresh/command/jsToServerToken');
+	
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		xmlhttp=new XMLHttpRequest();
+	}
+	else {
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.open("GET","/index.php/page/linkedInRefresh/command/jsToServerToken",true);
+	xmlhttp.send();
+	
+}
+
+{/literal}
+</script>
+
+{/if}
