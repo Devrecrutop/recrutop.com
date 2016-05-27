@@ -57,18 +57,6 @@ function app(opts) {
   );
 
 
-  search.addWidget(
-    instantsearch.widgets.refinementList({
-      container: '#type',
-      attributeName: 'type',
-      limit: 10,
-      operator: 'and',
-      templates: {
-        header: getHeader('Type')
-      }
-    })
-  );
-
   search.start();
 }
 
