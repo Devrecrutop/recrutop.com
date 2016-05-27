@@ -49,12 +49,48 @@
 
   search.addWidget(
     instantsearch.widgets.refinementList({
-      container: '#category',
+      container: '#Lieu',
       attributeName: 'Lieu',
       limit: 10,
       operator: 'or',
       templates: {
         header: getHeader('Lieu')
+      }
+    })
+  );
+
+  search.addWidget(
+    instantsearch.widgets.refinementList({
+      container: '#Recruteur',
+      attributeName: 'Recruteur',
+      limit: 10,
+      operator: 'or',
+      templates: {
+        header: getHeader('Recruteur')
+      }
+    })
+  );
+
+  search.addWidget(
+    instantsearch.widgets.refinementList({
+      container: '#Référence',
+      attributeName: 'Référence',
+      limit: 10,
+      operator: 'or',
+      templates: {
+        header: getHeader('Référence')
+      }
+    })
+  );
+
+   search.addWidget(
+    instantsearch.widgets.refinementList({
+      container: '#Société',
+      attributeName: 'Société',
+      limit: 10,
+      operator: 'or',
+      templates: {
+        header: getHeader('Société')
       }
     })
   );
