@@ -1,7 +1,9 @@
-app({
+var search = instantsearch({
+  // Replace with your own values
   appId: 'JP7LP38V57',
-  apiKey: '0236170a81d35359b1ad085398332ff3',
-  indexName: 'postes'
+  apiKey: '60236170a81d35359b1ad085398332ff3', // search only API key, no ADMIN key
+  indexName: 'postes',
+  urlSync: true
 });
 
 function app(opts) {
