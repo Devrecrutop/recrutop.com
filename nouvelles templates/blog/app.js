@@ -98,10 +98,12 @@
 
   search.start();
 
+}
+
 function getTemplate(templateName) {
   return document.querySelector('#' + templateName + '-template').innerHTML;
-};
+}
 
 function getHeader(title) {
   return '<h5>' + title + '</h5>';
-};
+}
