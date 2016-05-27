@@ -88,9 +88,7 @@ var search = instantsearch({
   );
 
 
-  search.start();
 
-}
 
 function getTemplate(templateName) {
   return document.querySelector('#' + templateName + '-template').innerHTML;
@@ -99,3 +97,6 @@ function getTemplate(templateName) {
 function getHeader(title) {
   return '<h5>' + title + '</h5>';
 }
+
+
+search.start();
