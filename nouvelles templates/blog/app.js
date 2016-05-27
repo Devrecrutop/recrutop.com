@@ -1,8 +1,8 @@
 var search = instantsearch({
   // Replace with your own values
-  appId: 'JP7LP38V57',
-  apiKey: '60236170a81d35359b1ad085398332ff3', // search only API key, no ADMIN key
-  indexName: 'postes',
+  appId: 'latency',
+  apiKey: '6be0576ff61c053d5f9a3225e2a90f76', // search only API key, no ADMIN key
+  indexName: 'instant_search',
   urlSync: true
 });
 
