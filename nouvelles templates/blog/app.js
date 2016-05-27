@@ -6,6 +6,15 @@
  });
 
 
+ function app(opts) {
+   var search = instantsearch({
+     appId: opts.appId,
+     apiKey: opts.apiKey,
+     indexName: opts.indexName,
+      urlSync: true
+    });
+
+
   search.addWidget(
     instantsearch.widgets.searchBox({
       container: '#search-input',
@@ -52,7 +61,6 @@
 
 
   search.start();
-}
 
 function getTemplate(templateName) {
   return document.querySelector('#' + templateName + '-template').innerHTML;
