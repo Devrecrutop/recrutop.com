@@ -36,19 +36,6 @@ function app(opts) {
     })
   );
 
-  search.addWidget(
-    instantsearch.widgets.sortBySelector({
-      container: '#sort-by',
-      autoHideContainer: true,
-      indices: [{
-        name: opts.indexName, label: 'Most relevant'
-      }, {
-        name: opts.indexName + '_price_asc', label: 'Lowest price'
-      }, {
-        name: opts.indexName + '_price_desc', label: 'Highest price'
-      }]
-    })
-  );
 
   search.addWidget(
     instantsearch.widgets.pagination({
