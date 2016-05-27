@@ -15,7 +15,7 @@ function app(opts) {
   search.addWidget(
     instantsearch.widgets.searchBox({
       container: '#search-input',
-      placeholder: 'Search for products'
+      placeholder: 'Recherche ici fdp'
     })
   );
 
@@ -56,17 +56,6 @@ function app(opts) {
     })
   );
 
-  search.addWidget(
-    instantsearch.widgets.refinementList({
-      container: '#brand',
-      attributeName: 'brand',
-      limit: 10,
-      operator: 'or',
-      templates: {
-        header: getHeader('Brand')
-      }
-    })
-  );
 
   search.addWidget(
     instantsearch.widgets.refinementList({
