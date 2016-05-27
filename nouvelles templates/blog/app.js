@@ -1,6 +1,6 @@
 app({
   appId: 'JP7LP38V57',
-  apiKey: '67ae1c2ac05e7dfc1538609da8e4d223',
+  apiKey: '0236170a81d35359b1ad085398332ff3',
   indexName: 'postes'
 });
 
