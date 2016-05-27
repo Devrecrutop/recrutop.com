@@ -1,7 +1,7 @@
 app({
-  appId: 'latency',
-  apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
-  indexName: 'instant_search'
+  appId: 'JP7LP38V57',
+  apiKey: '67ae1c2ac05e7dfc1538609da8e4d223',
+  indexName: 'postes'
 });
 
 function app(opts) {
