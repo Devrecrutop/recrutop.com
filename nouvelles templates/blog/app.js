@@ -1,8 +1,8 @@
 
 var search = instantsearch({
   appId: 'JP7LP38V57',
-  apiKey: '0236170a81d35359b1ad085398332ff3',
-  indexName: 'postes',
+  apiKey: 'a1d878bd8848b980077d9c2d59a93a1e',
+  indexName: 'search-job',
   urlSync: true
 });
 
@@ -39,53 +39,7 @@ var search = instantsearch({
     })
   );
 
-  search.addWidget(
-    instantsearch.widgets.refinementList({
-      container: '#Lieu',
-      attributeName: 'Lieu',
-      limit: 10,
-      operator: 'or',
-      templates: {
-        header: getHeader('Lieu')
-      }
-    })
-  );
 
-  search.addWidget(
-    instantsearch.widgets.refinementList({
-      container: '#Recruteur',
-      attributeName: 'Recruteur',
-      limit: 10,
-      operator: 'or',
-      templates: {
-        header: getHeader('Recruteur')
-      }
-    })
-  );
-
-  search.addWidget(
-    instantsearch.widgets.refinementList({
-      container: '#Référence',
-      attributeName: 'Référence',
-      limit: 10,
-      operator: 'or',
-      templates: {
-        header: getHeader('Référence')
-      }
-    })
-  );
-
-   search.addWidget(
-    instantsearch.widgets.refinementList({
-      container: '#Société',
-      attributeName: 'Société',
-      limit: 10,
-      operator: 'or',
-      templates: {
-        header: getHeader('Société')
-      }
-    })
-  );
 
 
 
