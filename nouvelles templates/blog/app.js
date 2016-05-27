@@ -1,18 +1,10 @@
 
- app({
-   appId: 'JP7LP38V57',
-   apiKey: '0236170a81d35359b1ad085398332ff3',
-   indexName: 'postes'
- });
-
-
- function app(opts) {
-   var search = instantsearch({
-     appId: opts.appId,
-     apiKey: opts.apiKey,
-     indexName: opts.indexName,
-      urlSync: true
-    });
+var search = instantsearch({
+  appId: 'JP7LP38V57',
+  apiKey: '0236170a81d35359b1ad085398332ff3',
+  indexName: 'postes',
+  urlSync: true
+});
 
 
   search.addWidget(
