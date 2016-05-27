@@ -1,9 +1,7 @@
-var search = instantsearch({
-  // Replace with your own values
+app({
   appId: 'latency',
-  apiKey: '6be0576ff61c053d5f9a3225e2a90f76', // search only API key, no ADMIN key
-  indexName: 'instant_search',
-  urlSync: true
+  apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
+  indexName: 'instant_search'
 });
 
 function app(opts) {
