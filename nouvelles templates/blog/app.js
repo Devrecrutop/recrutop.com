@@ -51,7 +51,7 @@ function app(opts) {
       limit: 10,
       operator: 'or',
       templates: {
-        header: getHeader('Category')
+        header: getHeader('Categorie')
       }
     })
   );
