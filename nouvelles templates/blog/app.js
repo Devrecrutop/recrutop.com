@@ -69,16 +69,6 @@ function app(opts) {
   );
 
   search.addWidget(
-    instantsearch.widgets.rangeSlider({
-      container: '#price',
-      attributeName: 'price',
-      templates: {
-        header: getHeader('Price')
-      }
-    })
-  );
-
-  search.addWidget(
     instantsearch.widgets.refinementList({
       container: '#type',
       attributeName: 'type',
