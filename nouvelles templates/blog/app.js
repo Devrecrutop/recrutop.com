@@ -43,11 +43,11 @@ var search = instantsearch({
   search.addWidget(
     instantsearch.widgets.refinementList({
       container: '#category',
-      attributeName: 'categories',
+      attributeName: 'Lieu',
       limit: 10,
       operator: 'or',
       templates: {
-        header: getHeader('Categorie')
+        header: getHeader('Lieu')
       }
     })
   );
