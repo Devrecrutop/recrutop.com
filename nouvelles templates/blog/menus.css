@@ -5,6 +5,17 @@
     position: relative;
     display: block;
 }
+.nav>li:last-child {
+    background-color: rgba(237, 226, 17, 1.00);
+    box-shadow: 1px 1px 2px black;
+    border-radius : 10px;
+}
+.nav>li:last-child :hover {
+    background-color: rgba(237, 226, 17, 1.00);
+    border-radius : 10px;
+    font-color: #000;
+}
+
 .nav>li>a:hover {
     color: #000000;
     border-radius:5px;
@@ -33,6 +44,7 @@
     text-decoration: none;
     text-transform: uppercase;
 }
+
 .navbar-nav li:hover>ul {
     display: block;
 }
