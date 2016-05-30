@@ -8,6 +8,7 @@
 .nav>li>a:hover {
     color: #000000;
     border-radius:5px;
+    text-shadow : none;
 }
 .navbar-nav>li>.dropdown-menu {
     background-color: rgba(18, 70, 126, 1.00);
@@ -18,6 +19,9 @@
     color: #fff;
     border-radius: 3px;
     text-shadow: 1px 1px 2px black;
+}
+.menulist, ul {
+    float: right;
 }
 .menulist ul li {
   margin-bottom: 9px;
