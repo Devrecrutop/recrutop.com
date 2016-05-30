@@ -1,0 +1,52 @@
+.menulist, .menulist ul {
+margin: 0;
+padding: 0;
+width: 150px;
+list-style: none;
+}
+.menulist ul {
+display: none;
+position: absolute;
+top: -1px;
+left: 148px;
+}
+.menulist li {
+position: relative;
+border: 1px solid #330;
+background: #FED;
+margin-bottom: -1px;
+}
+.menulist ul>li:last-child {
+margin-bottom: 1px;
+}
+.menulist a {
+display: block;
+padding: 3px;
+color: #000;
+text-decoration: none;
+}
+.menulist a:hover, .menulist a.highlighted:hover, .menulist a:focus {
+color: #FFF;
+background-color: #A64;
+}
+.menulist a.highlighted {
+color: #FFF;
+background-color: #C86;
+}
+.menulist a .subind {
+float: right;
+}
+*:first-child+html .menulist li {
+float: left;
+width: 100%;
+}
+* html .menulist li {
+float: left;
+height: 1%;
+}
+* html .menulist a {
+height: 1%;
+}
+.menulist li:hover>ul {
+display: block;
+}

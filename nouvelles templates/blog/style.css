@@ -1,8 +1,23 @@
- h1 {
+body {
+  background-color:rgba(18, 70, 126, 1.00);
+  font-family: "Maven Pro", sans-serif;
+  color:#fff;
+  box-shadow: 1px 1px 2px black;
+}
+
+body a{
+  color: #fff;
+  text-shadow: 1px 1px 2px black;
+  font-weight: 500;
+}
+
+h1 {
   color: #fff;
   text-align: center;
   text-shadow: 1px 1px 2px black;
   font-size : 3em;
+  margin-bottom: 1em;
+  margin-top: 1.5em;
 }
 
 p {
@@ -17,7 +32,4 @@ p {
   text-align: center;
   text-shadow: 1px 1px 2px black;
   font-size: 1.4em;
-}
-body {
-  background-color:RGBA(18, 70, 126, 1.00);
 }
