@@ -27,7 +27,10 @@ var search = instantsearch({
 
   search.addWidget(
     instantsearch.widgets.stats({
-      container: '#stats'
+      container: '#stats',
+      templates: {
+    body: getTemplate('stats')
+  }
     })
   );
 
