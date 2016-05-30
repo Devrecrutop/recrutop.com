@@ -10,7 +10,9 @@ var search = instantsearch({
   search.addWidget(
     instantsearch.widgets.searchBox({
       container: '#search-input',
-      placeholder: 'Que Recherchez vous ?'
+      placeholder: 'Que Recherchez vous ?',
+      wrapInput: false,
+      autofocus: false
     })
   );
 
