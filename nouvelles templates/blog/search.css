@@ -1,0 +1,27 @@
+.event>a {
+  color: #FFFFFF;
+  font-weight: 500;
+  font-size: 25px;
+ }
+.hit-content >p{
+  color:#fff;
+}
+.hit-description a {
+  color:#fff;
+  text-decoration : underline;
+}
+#stats{
+  color:#FFFFFF;
+  text-align:center;
+  padding-top:1.25em;
+  font-size:1.25em;
+}
+.ais-search-box >input {
+  width: 700px;
+  height: 50px;
+  border-radius:15px;
+  border:none;
+}
+.ais-search-box >placeholder {
+  color: black;
+}

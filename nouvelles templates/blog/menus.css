@@ -1,7 +1,9 @@
+.navbar {
+  padding : 2%;
+}
 .nav>li>a {
     position: relative;
     display: block;
-    padding: 20px;
 }
 .nav>li>a:hover {
     color: #000000;

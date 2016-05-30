@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+  <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+  <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+  <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+  <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<html lang="fr">
+   <!-- head -->
+      <head>
+            <title>Recrutop - L'humain au centre du recrutement</title>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="description" content="Agences d'emploi, spécialisées par secteur ou par régions, pour répondre à vos besoins. Inscrivez-vous! ">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+          <!-- bootstrap -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+          <!-- Feuille de Style de Philippe & Frantz -->
+            <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/particle.css">
+            <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/menus.css">
+            <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/search.css">
+          <!-- JS Otys -->
+            <script type="text/javascript" src="http://www.recrutop.com/_javascript/script.js"></script>
+          <!-- JQuery -->
+            <script src="http://code.jquery.com/jquery-latest.js"></script>
+          <!-- Template Algolia -->
+            <script src="https://cdn.jsdelivr.net/algoliasearch/3.14.5/algoliasearch.min.js"></script>
+            <script type="text/html" id="no-results-template">
+              <div id="no-results-message">
+                <p>Nous n'avons trouvé aucune annonce pour votre recherche<em>"{{query}}"</em>.</p>
+                <a href="http://www.recrutop.com/" class="clear-all">Nouvelle recherche</a>
+              </div>
+            </script>
+            <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.css" />
+            <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
+      </head>
+   <!-- body -->
+      <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <!-- Outer -->
+            <div id="outer" class="noevent">
+                      <nav class="navbar navbar-light" style="background-color: rgba(227, 242, 253, 0);">
+                        <div class="container-fluid">
+                              <a href="." title="Home" class="event"><img src="https://github.com/Devrecrutop/recrutop.com/blob/master/nouvelles%20templates/blog/Recrutoplogoblanc.png?raw=true" style="height:50px;padding-top:5px;"/></a>
+                              <!--START_FLIGHT MENU-->
+                              <ul class="nav navbar-nav menulist event" id="listMenuRoot">
+                              <!--START_HLB_1--><li class="s[active]">[hoofdcat]
+                              <!--START_SLB_FM--><ul class="dropdown-menu sousmenu">
+                              <!--START_SLB_FMROW--><li class="dropdown"> <a href="[fm_row_url]">[fm_row_name]</a>
+                              <!--START_SLB_FM_level_1--><ul>
+                              <!--START_level_1--><li><a href="[fm_row_url_1]">[fm_row_name_1]</a></li>
+                              <!--END_level_1--></ul>
+                              <!--END_SLB_FM_level_1--></li>
+                              <!--END_SLB_FMROW--></ul>
+                              <!--END_SLB_FM--></li></li>
+                              <!--END_HLB_1--></ul>
+                              <!--END_FLIGHT MENU-->
+                              <div class="cleaner"></div>
+                        </div>
+                      </nav>
+              <!-- Module de recherche Algolia -->
+                  <div class="container noevent col-sm-6 col-sm-offset-3 col-md-6 col-md-offset 3 col-lg-6 col-lg-offset-3">
+                      <header>
+                        <div id="search-input" class="event"></div>
+                        <div id="search-input-icon"></div>
+                      </header>
+                      <main>
+                      <div id="right-column">
+                        <div id="stats"></div>
+                        <div id="hits"></div>
+                        <div id="pagination" class="event"></div>
+                      </div>
+                    </main>
+                  </div>
+            </div>
+        <!-- Scripts -->
+            <!-- particles.js container -->
+                <div id="particles-js"></div>
+
+                <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+            <!-- Bootstrap -->
+              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+            <!-- Js Philippe & Frantz -->
+              <script src="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/index.js"></script>
+            <!-- Menus OTYS -->
+            <script type="text/javascript">
+              var listMenu = new FSMenu('listMenu', true, 'display', 'block', 'none');
+              listMenu.animations[listMenu.animations.length] = FSMenu.animFade;
+              listMenu.animations[listMenu.animations.length] = FSMenu.animSwipeDown;
+              var arrow = null;
+              addEvent(window, 'load', new Function('listMenu.activateMenu("listMenuRoot", arrow)'));
+            </script>
+          <!-- Template de Recherche Algolia -->
+              <script type="text/html" id="hit-template">
+                <div class="hit">
+                  <div class="hit-content">
+                    <h3 class="hit-name event"></h3>
+                    <h2 class="hit-name event"><a href="{{url}}">{{nomduspote}}</a></h2>
+                    <p class="hit-description noevent">{{descriptioncourte}}... <a href="{{url}}" class="event">En savoir plus</a></p>
+                  </div>
+                </div>
+              </script>
+              <script type="text/html" id="stats-template">
+    <div data-reactroot="" class="ais-root ais-stats">
+      <div class="ais-body ais-stats--body">
+        <div>
+          {{nbHits}} Offres correspondent à votre recherche
+        </div>
+      </div>
+    </div>
+</script>
+              <script src="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.js"></script>
+              <script src="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/app.js"></script>
+      </body>
+</html>
