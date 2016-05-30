@@ -4,7 +4,10 @@ var search = instantsearch({
   apiKey: 'a1d878bd8848b980077d9c2d59a93a1e',
   indexName: 'search-job',
   urlSync: true
+});
 
+
+var search = instantsearch({
   searchFunction(helper) {
     if (helper.state.query === '') {
       return;
