@@ -1,19 +1,4 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @Opulon
- Watch 256
-  Star 5,933
- Fork 746 VincentGarreau/particles.js
- Code  Issues 45  Pull requests 8  Wiki  Pulse  Graphs
-Branch: master Find file Copy pathparticles.js/particles.js
-677c14c  May 9, 2015
-@VincentGarreau VincentGarreau init particles.js 2.0.0
-7 contributors @VincentGarreau @calvintennant @icodeforlove @LevChurakov @pborreli @Aweary @Arturszott
-RawBlameHistory     1541 lines (1192 sloc)  42 KB
+
 /* -----------------------------------------------
 /* Author : Vincent Garreau  - vincentgarreau.com
 /* MIT license: http://opensource.org/licenses/MIT
