@@ -74,9 +74,8 @@ canvas {
     z-index: 100;
 }
 
-
-
 #outer{
   position: absolute;
   z-index: 1;
+  width: 100%;
 }
