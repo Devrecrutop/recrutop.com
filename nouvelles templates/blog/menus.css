@@ -11,11 +11,13 @@
 }
 .navbar-nav>li>.dropdown-menu {
     background-color: rgba(18, 70, 126, 1.00);
-    color: #FFFFFF;
+    color: #fff;
+    text-shadow: 1px 1px 2px black;
 }
 .dropdown-menu>li>a {
-    color: #FFFFFF;
+    color: #fff;
     border-radius: 3px;
+    text-shadow: 1px 1px 2px black;
 }
 .menulist, ul {
     float: right;
@@ -24,7 +26,8 @@
   margin-bottom: 9px;
 }
 .menulist a {
-    color: #FFFFFF;
+    color: #fff;
+    text-shadow: 1px 1px 2px black;
     text-decoration: none;
     text-transform: uppercase;
 }
