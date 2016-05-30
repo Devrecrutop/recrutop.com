@@ -17,11 +17,16 @@
   font-size:1.25em;
 }
 .ais-search-box >input {
-  width: 700px;
-  height: 50px;
+  width: 100%;
+  height: 3em;
   border-radius:15px;
   border:none;
+  font-size : 1.5em;
+  padding-left : 2em;
 }
 .ais-search-box >placeholder {
   color: black;
+}
+li> .ais-pagination--link {
+  color: #ffffff;
 }
