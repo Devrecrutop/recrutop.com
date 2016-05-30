@@ -11,6 +11,7 @@ var search = instantsearch({
     }
 
     helper.search();
+  }
 });
 
   search.addWidget(
