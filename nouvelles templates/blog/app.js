@@ -10,14 +10,14 @@ var search = instantsearch({
   search.addWidget(
     instantsearch.widgets.searchBox({
       container: '#search-input',
-      placeholder: 'Recherche ici fdp'
+      placeholder: 'Que Recherchez vous ?'
     })
   );
 
   search.addWidget(
     instantsearch.widgets.hits({
       container: '#hits',
-      hitsPerPage: 10,
+      hitsPerPage: 5,
       templates: {
         item: getTemplate('hit'),
         empty: getTemplate('no-results')
