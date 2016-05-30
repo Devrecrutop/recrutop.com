@@ -1,4 +1,9 @@
 
+/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+particlesJS.load('particles-js', 'assets/particles.json', function() {
+  console.log('callback - particles.js config loaded');
+});
+
 var search = instantsearch({
   appId: 'JP7LP38V57',
   apiKey: 'a1d878bd8848b980077d9c2d59a93a1e',
