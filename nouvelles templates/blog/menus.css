@@ -1,0 +1,31 @@
+.nav>li>a {
+    position: relative;
+    display: block;
+    padding: 20px;
+}
+.nav>li>a:hover {
+    color: #000000;
+    border-radius:5px;
+}
+.navbar-nav>li>.dropdown-menu {
+    background-color: rgba(18, 70, 126, 1.00);
+    color: #FFFFFF;
+}
+.dropdown-menu>li>a {
+    color: #FFFFFF;
+    border-radius: 3px;
+}
+.menulist, ul {
+    float: right;
+}
+.menulist ul li {
+  margin-bottom: 9px;
+}
+.menulist a {
+    color: #FFFFFF;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.menulist li:hover>ul {
+display: block;
+}
