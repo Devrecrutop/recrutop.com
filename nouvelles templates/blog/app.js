@@ -4,8 +4,14 @@ var search = instantsearch({
   apiKey: 'a1d878bd8848b980077d9c2d59a93a1e',
   indexName: 'search-job',
   urlSync: true
-});
 
+  searchFunction(helper) {
+    if (helper.state.query === '') {
+      return;
+    }
+
+    helper.search();
+});
 
   search.addWidget(
     instantsearch.widgets.searchBox({
