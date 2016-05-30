@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="fr">
+<head>
+<title>OTYS DEVELOPMENT</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta http-equiv="Content-Script-Type" content="text/Javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<link type="text/css" href="[website]/_css_global/globalStyling.css" rel="stylesheet">
+<link type="text/css" href="[website]/_css/style2.css" rel="stylesheet">
+<link href="[website]/_css/listmenu_h.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="[website]/_images/[code].ico">
+
+<!-- ACMSBUSJAB<Home> / <[code] - Home> / <5> MENUS / <Farah Belkadi> -->
+
+<!--jsrepository:require(JQueryBase, JQueryMagicSelect, JQueryInputDescr, JsFsMenu, JQueryEasing,JQueryCycleAll)-->
+
+</head>
+<body>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+    $('select').magicSelect();
+
+    inputDescr('#IdName','Value Description');
+
+	$('#level1 .teaser3Outer .teaserTitle').remove();
+	$('#level1 .contentOuter')
+    .cycle({
+  	  fx: 'fade',
+  	  speed: 1500,
+  	  delay: 8000,
+  	  random:  1,
+  	  pager:  '#slideNav'
+    });
+
+
+    });
+</script>
+
+<div id="outer">
+	<div id="header">
+		<a href="[website]/" title="[klantnaam]" target="_self" id="logoLink"><img alt="[klantnaam]" src="[website]/_images/logo-baseline.png" border="0"></a>
+
+		<div id="connexion">
+			[ocdLoginHook]
+      <!--START_HLB_5-->[hoofdcat]<!--END_HLB_5-->
+		</div>
+
+		<div class="cleaner"></div>
+	</div>
+	<div id="menu">
+		<!--START_FLIGHT MENU-->
+		<ul class="menulist" id="listMenuRoot">
+		<!--START_HLB_1--><li class="s[active]">[hoofdcat]
+		<!--START_SLB_FM--><ul class="sousmenu">
+		<!--START_SLB_FMROW--><li><a href="[fm_row_url]">[fm_row_name]</a>
+		<!--START_SLB_FM_level_1--><ul>
+		<!--START_level_1--><li><a href="[fm_row_url_1]">[fm_row_name_1]</a></li>
+		<!--END_level_1--></ul>
+		<!--END_SLB_FM_level_1--></li>
+		<!--END_SLB_FMROW--></ul>
+		<!--END_SLB_FM--></li>
+		<!--END_HLB_1--></ul>
+		<!--END_FLIGHT MENU-->
+		<div class="cleaner"></div>
+	</div>
+	<div id="content">
+
+		<div id="level1">
+			[bisjab]
+		</div>
+
+		<div id="level2">
+
+			<div id="JobCat">
+				[JobCatHook]
+				<!--START_HLB_3-->
+				<span class="jobLink">[hoofdcat]</span>
+				<!--END_HLB_3-->
+			</div>
+
+			<div id="tsr1">
+				[teaser1]
+			</div>
+
+			<div class="cleaner"></div>
+
+		</div>
+
+		<div id="level3">
+
+			<div id="blocCandidatReseau">
+
+				<div id="candidat">
+
+					[JobSearchHook]
+
+					<!--START_HLB_4-->
+					<div class="candidatLink">[hoofdcat]</div>
+					<!--END_HLB_4-->
+
+					[teaser2]
+
+				</div>
+
+				<div id="tsr5">
+
+					[teaser5]
+
+
+
+				</div>
+
+			</div>
+
+			<div id="twitter">
+				<a class="twitter-timeline" href="https://twitter.com/RECRUTOP_Bourse" data-widget-id="359949701690318848">Tweets de @RECRUTOP_Bourse</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
+
+			</div>
+
+			<div id="tsr3" class="floatLeft">
+				[teaser3]
+			</div>
+
+			<div id="tsr4" class="floatLeft">
+				[teaser4]
+
+				<div id="rss">
+				[FeedReaderHook]
+				</div>
+			</div>
+
+		<div class="cleaner"></div>
+		</div>
+
+	</div>
+	<div id="footer">
+		<!--START_HLB_2-->
+		[hoofdcat] |
+		<!--END_HLB_2-->
+		Copyright &copy; <a href="[website]" title="[klantnaam]" target="_self">[klantnaam] [yearnow]</a>
+		<a href="http://www.otys.fr" title="OTYS Recruiting Technology" target="_blank"><img src="[website]/_images/otys.gif" border="0" alt="OTYS Recruiting Technology" style="margin-bottom:-1px"></a>
+	</div>
+</div>
+
+<script type="text/javascript">
+    var listMenu = new FSMenu('listMenu', true, 'display', 'block', 'none');
+
+    listMenu.animations[listMenu.animations.length] = FSMenu.animFade;
+
+    listMenu.animations[listMenu.animations.length] = FSMenu.animSwipeDown;
+
+    var arrow = null;
+
+    addEvent(window, 'load', new Function('listMenu.activateMenu("listMenuRoot", arrow)'));
+
+</script>
+</body>
+</html>

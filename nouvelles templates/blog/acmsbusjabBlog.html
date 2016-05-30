@@ -28,7 +28,7 @@
             <script type="text/html" id="no-results-template">
               <div id="no-results-message">
                 <p>Nous n'avons trouvé aucune annonce pour votre recherche<em>"{{query}}"</em>.</p>
-                <a href="http://www.recrutop.com/" class="clear-all">Nouvelle recherche</a>
+                <a href="http://www.recrutop.com/" class="clear-all event">Nouvelle recherche</a>
               </div>
             </script>
             <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.css" />
@@ -51,9 +51,9 @@
                                 <span class="icon-bar"></span>
                               </button>
                               <a class="navbar-brand" href="http://www.recrutop.com/">
-                                <img alt="Recrutop" src="https://github.com/Devrecrutop/recrutop.com/blob/master/nouvelles%20templates/blog/Recrutoplogoblanc.png?raw=true" class="event">
+                                  <img alt="Recrutop" src="https://github.com/Devrecrutop/recrutop.com/blob/master/nouvelles%20templates/blog/Recrutoplogoblanc.png?raw=true" class="event">
                               </a>
-                          </div> <!-- header -->
+                          </div> <!-- navbar-header -->
                           <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
                               <!--START_FLIGHT MENU-->
                               <ul class="nav navbar-nav navbar-right menulist event" id="listMenuRoot">
@@ -65,12 +65,12 @@
                               <!--END_level_1--></ul>
                               <!--END_SLB_FM_level_1--></li>
                               <!--END_SLB_FMROW--></ul>
-                              <!--END_SLB_FM--></li></li>
+                              <!--END_SLB_FM--></li>
                               <!--END_HLB_1--></ul>
                               <!--END_FLIGHT MENU-->
-                              <div class="cleaner"></div>
+                          <button type="submit" class="btn btn-default">Submit</button>
                           </div><!-- collapse -->
-                        </div>
+                        </div> <!-- container-fluid -->
                       </nav>
               <div class="container">
                 <div class="col-xs-12">
@@ -97,7 +97,6 @@
         <!-- Scripts -->
             <!-- particles.js container -->
                 <div id="particles-js"></div>
-
                 <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
             <!-- Bootstrap -->
               <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -122,14 +121,14 @@
                 </div>
               </script>
               <script type="text/html" id="stats-template">
-    <div data-reactroot="" class="ais-root ais-stats">
-      <div class="ais-body ais-stats--body">
-        <div>
-          {{nbHits}} Offres correspondent à votre recherche
-        </div>
-      </div>
-    </div>
-</script>
+                  <div data-reactroot="" class="ais-root ais-stats">
+                    <div class="ais-body ais-stats--body">
+                      <div>
+                        {{nbHits}} Offres correspondent à votre recherche
+                      </div>
+                    </div>
+                  </div>
+              </script>
               <script src="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.js"></script>
               <script src="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/app.js"></script>
       </body>
