@@ -9,8 +9,9 @@
     color: #000000;
     border-radius:5px;
     text-shadow : none;
+    display: block;
 }
-.navbar-nav>li>.dropdown-menu {
+.dropdown-menu {
     background-color: rgba(18, 70, 126, 1.00);
     color: #fff;
     text-shadow: 1px 1px 2px black;
@@ -20,18 +21,18 @@
     border-radius: 3px;
     text-shadow: 1px 1px 2px black;
 }
-.menulist, ul {
+.navbar-nav, ul {
     float: right;
 }
-.menulist ul li {
+.navbar-nav ul li {
   margin-bottom: 9px;
 }
-.menulist a {
+.navbar-nav a {
     color: #fff;
     text-shadow: 1px 1px 2px black;
     text-decoration: none;
     text-transform: uppercase;
 }
-.menulist li:hover>ul {
-display: block;
+.navbar-nav li:hover>ul {
+    display: block;
 }
