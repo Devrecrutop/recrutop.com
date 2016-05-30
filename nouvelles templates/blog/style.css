@@ -3,3 +3,8 @@ h1 {
   text-align: center;
   text-shadow: 1px 1px 2px black;
 }
+.navbar-brand>img {
+    display: block;
+    height: 66px;
+    padding-top: 0px;
+}

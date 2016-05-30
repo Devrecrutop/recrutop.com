@@ -19,9 +19,6 @@
     border-radius: 3px;
     text-shadow: 1px 1px 2px black;
 }
-.menulist, ul {
-    float: right;
-}
 .menulist ul li {
   margin-bottom: 9px;
 }
