@@ -10,7 +10,7 @@ var search = instantsearch({
   search.addWidget(
     instantsearch.widgets.searchBox({
       container: '#search-input',
-      placeholder: 'Que Recherchez vous ?'
+      placeholder: 'Recherchez parmi nos offres d&rsquo;emploi, par lieu, par poste, etc...'
     })
   );
 
