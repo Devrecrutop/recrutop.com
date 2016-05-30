@@ -79,3 +79,12 @@ canvas {
   z-index: 1;
   width: 100%;
 }
+
+
+.noevent{
+  pointer-events: none;
+}
+
+.event{
+  pointer-events: all;
+}
