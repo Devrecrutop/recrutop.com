@@ -1,4 +1,3 @@
-
 var search = instantsearch({
   appId: 'JP7LP38V57',
   apiKey: 'a1d878bd8848b980077d9c2d59a93a1e',
