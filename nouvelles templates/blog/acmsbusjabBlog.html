@@ -14,6 +14,8 @@
             <meta name="viewport" content="width=device-width, initial-scale=1">
           <!-- bootstrap -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+          <!-- JQuery -->
+            <script src="http://code.jquery.com/jquery-latest.js"></script>
           <!-- Style de Philippe & Frantz -->
             <link href='https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700' rel='stylesheet' type='text/css'>
             <link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
@@ -21,10 +23,9 @@
             <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/menus.css">
             <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/search.css">
             <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/style.css">
+            <script src="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/homejquery.js"></script>
           <!-- JS Otys -->
             <script type="text/javascript" src="http://www.recrutop.com/_javascript/script.js"></script>
-          <!-- JQuery -->
-            <script src="http://code.jquery.com/jquery-latest.js"></script>
           <!-- Template Algolia -->
             <script src="https://cdn.jsdelivr.net/algoliasearch/3.14.5/algoliasearch.min.js"></script>
             <script type="text/html" id="no-results-template">
@@ -36,7 +37,7 @@
             <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.css" />
             <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
       </head>
-            <script src="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/homejquery.js"></script>
+
    <!-- body -->
       <body>
         <!--[if lt IE 7]>
@@ -77,15 +78,14 @@
               <div class="row">
               <div class="container">
                 <div class="col-xs-12">
-                  <h1 id="headline"> L'humain, au cœur du recrutement</h1>
-                  <br><br>
+                  <h1 id="headline" class="inactive-on-search"> L'humain, au cœur du recrutement</h1>
                   <p>Recherchez parmi nos offres d'emploi, par postes, métiers, lieux, etc. </p>
                 </div>
               </div>
               <!-- Module de recherche Algolia -->
                   <div class="container noevent col-xs-12 col-md-6 col-md-offset-3">
                       <header>
-                        <div id="search-input" class="event clickable"></div>
+                        <div id="search-input" class="event"></div>
                         <div id="search-input-icon"></div>
                       </header>
                       <main>
@@ -98,7 +98,7 @@
                   </div>
                 </div>
               <!-- Mosaïque des métiers  -->
-              <div class="mosaique">
+              <div class="mosaique inactive-on-search">
                 <div class="row">
                     <h2 style="text-align:center; margin-top:6em; margin-bottom:1.5em;">Nous sommes ultra spécialistes sur ces métiers  </h2>
                 </div>
@@ -150,8 +150,7 @@
               <script type="text/html" id="hit-template">
                 <div class="hit">
                   <div class="hit-content">
-                    <h2 class="hit-name event"><a href="{{url}}" target="_blank">{{nomduspote}}</a></h2>
-                    <p class="hit-description noevent">{{lieu}}</p>
+                    <h2 class="hit-name event"><a href="{{url}}" target="_blank">{{nomduspote}} - {{lieu}} </a></h2>
                     <p class="hit-description noevent">{{descriptioncourte}}... <a href="{{url}}" class="event" target="_blank">En savoir plus</a></p>
                   </div>
                 </div>
