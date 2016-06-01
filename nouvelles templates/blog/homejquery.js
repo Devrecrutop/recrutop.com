@@ -1,3 +1,5 @@
-function addClassByClick(search-input){
-  $(headline).addClass("active")
-}
+$(function() {                       
+  $(".clickable").click(function() {
+    $(headline).addClass("active");      
+  });
+});
