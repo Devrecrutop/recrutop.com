@@ -14,14 +14,6 @@ var search = instantsearch({
 });
 
   search.addWidget(
-    instantsearch.widgets.searchbox({
-      queryHook: function(helper) {
-      if (helper.query === '') showHitsReplacement(); // same, show "hello world" instead of hits, no more query
-    }
-    })
-  );
-
-  search.addWidget(
     instantsearch.widgets.searchBox({
       container: '#search-input',
       placeholder: 'Exemple : Chargé de Clientèle Boulogne',
