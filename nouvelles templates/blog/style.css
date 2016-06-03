@@ -63,7 +63,6 @@ p {
   bottom: 0;
   width: 100%;
   content: "";
-  background-color: #ffffff;
   z-index: 2;
 }
 
