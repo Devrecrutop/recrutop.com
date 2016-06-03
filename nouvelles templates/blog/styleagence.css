@@ -40,13 +40,6 @@ body {
 html {
   height: 100%;
 }
-body {
-  font-size: 15px;
-  line-height: 1.46666667;
-  color: #777777;
-  background-color: #ffffff;
-  font-weight: 300;
-}
 body.canvas-sliding,
 body.canvas-slid {
   overflow-x: hidden;
