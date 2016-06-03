@@ -35,6 +35,7 @@ p {
 }
 .mosaique img {
   margin : 0.4em;
+  width:10em;
 }
 .mosaique h2 {
   margin-top: 1em;
