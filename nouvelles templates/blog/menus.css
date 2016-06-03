@@ -69,3 +69,25 @@
     background-color: rgba(18, 70, 126, 1.00);
     border-color:rgba(18, 70, 126, 1.00);
 }
+.login{
+ text-align:right;
+}
+.login input {
+   width: auto;
+   border-radius:10px;
+   border:none;
+   height:2.5em;
+   padding-left:1em;
+ }
+.login .btn input {
+  border-radius : 10%;
+  background-color: rgba(237, 226, 17, 1.00);
+  box-shadow: 1px 1px 2px black;
+  border-radius : 10px;
+  text-shadow: 1px 1px 2px black;
+  height: 3em;
+  text-transform: uppercase;
+  width:10em;
+  padding-left:0em;
+
+}
