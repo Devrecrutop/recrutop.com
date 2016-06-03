@@ -11,14 +11,6 @@ var search = instantsearch({
 
     helper.search();
   }
-
-  search.addWidget(
-  instantsearch.widgets.searchbox({
-    queryHook: function(query, search) {
-      if (helper.query === '') return showHitsReplacement(); // same, show "hello world" instead of hits, no more query
-    }
-  })
-)
 });
 
   search.addWidget(
