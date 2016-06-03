@@ -5,9 +5,11 @@ $(function(){
 });
 
 
+$(function(){
 $('.ais-search-box').blur(function()
 {
     if( !$(this).val() ) {
           $("#MerciPhilippepourlejquery").show(400);
     }
+})
 });
