@@ -48,6 +48,18 @@ var search = instantsearch({
     })
   );
 
+  search.addWidget(
+  instantsearch.widgets.toggle({
+    container: '#Lieu',
+    attributeName: 'lieu',
+    label: 'Lieu',
+    values: {
+      on: true,
+      off: false
+    }
+  })
+);
+
 
 
 
