@@ -69,9 +69,6 @@
     background-color: rgba(18, 70, 126, 1.00);
     border-color:rgba(18, 70, 126, 1.00);
 }
-.login{
- text-align:right;
-}
 .login input {
    width: auto;
    border-radius:10px;
@@ -89,5 +86,8 @@
   text-transform: uppercase;
   width:10em;
   padding-left:0em;
+}
 
+.hookText a {
+  text-align: left;
 }
