@@ -267,7 +267,11 @@ p {
   max-width: 100%;
   height: auto;
 }
-
+.logo {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
 .logo img{
       width: 10em;
     height: 10em;
