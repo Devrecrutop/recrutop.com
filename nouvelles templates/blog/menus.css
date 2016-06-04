@@ -1,27 +1,59 @@
 .navbar {
-  margin :  1.5% 1.5%;
-  font-size:1.2em;
+    margin :  1.5% 1.5%;
+    font-size:1.2em;
 }
-.nav>li>a {
-    position: relative;
+.navbar-nav ul li {
+    margin-bottom: 9px;
+}
+.navbar-nav li:hover>ul {
     display: block;
 }
-.nav>li:last-child {
+
+.nav>li:last-child, .nav>li:last-child :hover {
     background-color: rgba(237, 226, 17, 1.00);
     box-shadow: 1px 1px 2px black;
     border-radius : 10px;
 }
-.nav>li:last-child :hover {
-    background-color: rgba(237, 226, 17, 1.00);
-    border-radius : 10px;
-    font-color: #000;
-}
-.nav>li>a:hover {
-    color: #000;
+.navbar .btn, .navbar-nav, .nav>li>a {
+    color: #fff;
     border-radius:5px;
-    text-shadow : none;
     display: block;
-    /* background-color: rgba(255, 255, 255, 0.87); */
+    text-decoration: none;
+    text-transform: uppercase;
+    position: relative;
+    display: block;
+    float: right;
+    height: 3em;
+}
+.navbar .btn:hover, .navbar-nav, .nav>li>a:hover {
+  text-shadow: none;
+  color:#000;
+}
+.navbar .btn{
+    background-color: rgba(18, 70, 126, 0);
+    border-width: 0px;
+    padding: 15px;
+    text-shadow: 1px 1px 2px black;
+}
+.navbar .btn:hover {
+  background-color: rgba(238, 238, 238, 1.00);
+  color: #000;
+  text-shadow:none;
+}
+.navbar-brand>img {
+    display: block;
+    height: 50px;
+}
+.navbar-brand{
+    padding-top: 0px;
+}
+.navbar-default .navbar-toggle {
+    border-color: #fff;
+    z-index: 1000;
+    box-shadow: 1px 1px 2px black;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #fff;
 }
 .dropdown-menu {
     background-color: rgba(18, 70, 126, 1.00);
@@ -33,61 +65,4 @@
 }
 .dropdown-menu>li :hover {
     text-shadow: none;
-}
-.navbar-nav, ul {
-    float: right;
-}
-.navbar-nav ul li {
-  margin-bottom: 9px;
-}
-.navbar-nav a {
-    text-decoration: none;
-    text-transform: uppercase;
-}
-
-.navbar-nav li:hover>ul {
-    display: block;
-}
-.navbar-brand>img {
-    display: block;
-    height: 50px;
-}
-.navbar-brand{
-    padding-top: 0px;
-}
-.navbar-default .navbar-toggle .icon-bar {
-    background-color: #fff;
-}
-.navbar-default .navbar-toggle {
-    border-color: #fff;
-    z-index: 1000;
-    box-shadow: 1px 1px 2px black;
-}
-
-.btn-default {
-    color: rgba(18, 70, 126, 1.00);
-    background-color: rgba(18, 70, 126, 1.00);
-    border-color:rgba(18, 70, 126, 1.00);
-}
-.login input {
-   width: auto;
-   border-radius:10px;
-   border:none;
-   height:2.5em;
-   padding-left:1em;
- }
-.login .btn input {
-  border-radius : 10%;
-  background-color: rgba(237, 226, 17, 1.00);
-  box-shadow: 1px 1px 2px black;
-  border-radius : 10px;
-  text-shadow: 1px 1px 2px black;
-  height: 3em;
-  text-transform: uppercase;
-  width:10em;
-  padding-left:0em;
-}
-
-.hookText a {
-  text-align: left;
 }
