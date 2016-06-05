@@ -1,40 +1,47 @@
 .ais-search-box >input {
-  width: 100%;
-  height: 3em;
-  border-radius:15px;
-  border:none;
-  font-size : 1.5em;
-  padding-left : 2em;
-  color:#000;
+    width: 100%;
+    height: 3em;
+    border-radius: 15px;
+    border: none;
+    font-size: 1.5em;
+    padding-left: 2em;
+    color: #000;
 }
+
 .ais-search-box > input:focus {
     outline-width: 0;
 }
-#stats{
-  text-shadow: 1px 1px 2px black;
-  text-align:center;
-  padding-top:1.25em;
-  font-size:1.25em;
+
+#stats {
+    text-shadow: 1px 1px 2px black;
+    text-align: center;
+    padding-top: 1.25em;
+    font-size: 1.25em;
 }
+
 .hit-name {
-  font-size : 1.4em;
-  text-transform: uppercase;
+    font-size: 1.4em;
+    text-transform: uppercase;
 }
+
 .hit-description {
-  font-size : 1.1em;
-  text-align:left;
-  font-weight : 300;
-  font-family : lato, sans-serif;
+    font-size: 1.1em;
+    text-align: left;
+    font-weight: 300;
+    font-family: lato, sans-serif;
 }
+
 .hit-description a {
-  text-decoration : underline;
+    text-decoration: underline;
 }
+
 #no-results-message {
-  font-size : 1em;
-  padding-top : 0.9em;
+    font-size: 1em;
+    padding-top: 0.9em;
 }
+
 #no-results-message a {
-  font-size : 1.5em;
-  text-align: center;
-  text-decoration : underline;
+    font-size: 1.5em;
+    text-align: center;
+    text-decoration: underline;
 }

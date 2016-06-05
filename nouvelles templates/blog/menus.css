@@ -9,7 +9,7 @@
     display: block;
 }
 
-.nav>li:last-child, .nav>li:last-child :hover {
+.nav>button:last-child, .nav>button:last-child:hover {
     background-color: rgba(237, 226, 17, 1.00);
     box-shadow: 1px 1px 2px black;
     border-radius : 10px;
