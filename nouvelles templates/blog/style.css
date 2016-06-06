@@ -115,6 +115,7 @@ p {
 
 .uppercase {
     text-transform: uppercase;
+    text-align: center;
 }
 
 .navbar .btn {
@@ -230,4 +231,10 @@ p {
 #no-results-message a {
     font-size: 1.5em;
     text-decoration: underline;
+}
+
+
+.nav>li { 
+display: inline-block;
+text-align: center;
 }
