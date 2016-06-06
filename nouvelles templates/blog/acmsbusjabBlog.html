@@ -18,11 +18,10 @@
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <!-- Style de Philippe & Frantz -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.6.1/less.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/particle.css">
-    <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/menus.css">
-    <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/search.css">
     <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/style.css">
     <script src="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/homejquery.js"></script>
     <!-- JS Otys -->
@@ -48,25 +47,25 @@
 
 <body>
     <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-      <![endif]-->
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
     <!-- Outer -->
-    <div id="outer" class="noevent shadow">
-        <nav class="navbar navbar-light">
+    <div id="outer" class="noevent white">
+        <nav class="navbar  navbar-light shadow">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-default navbar-toggle collapsed event" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <button type="button" class="navbar-default navbar-toggle collapsed event bg-white" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <span class="icon-bar black"></span>
+                        <span class="icon-bar black"></span>
+                        <span class="icon-bar black "></span>
                     </button>
                     <a class="navbar-brand" href="http://www.recrutop.com/">
                         <img alt="Recrutop" src="https://github.com/Devrecrutop/recrutop.com/blob/master/nouvelles%20templates/blog/Recrutoplogoblanc.png?raw=true" class="event">
                     </a>
                 </div>
-                <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right event">
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="nav navbar-nav navbar-right event uppercase">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nos Agences <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -81,27 +80,7 @@
                             </ul>
                         </li>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#login">
-                            Connexion
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog modal-sm" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        [ocdLoginHook]
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#recruteur">
+                        <button type="button" class="btn btn-primary btn-lg uppercase bg-yellow radius shadow" data-toggle="modal" data-target="#recruteur">
                             Recruteurs
                         </button>
                         <!-- Modal -->
@@ -170,12 +149,32 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg uppercase bg-blue shadow" data-toggle="modal" data-target="#login">
+                            Connexion
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        [ocdLoginHook]
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- Baseline -->
-        <div class="row inactive-on-search center">
+        <div class="row inactive-on-search center shadow">
             <div class="container">
                 <div class="col-xs-12">
                     <h1 id="headline"> L'humain, au cœur du recrutement</h1>
@@ -183,9 +182,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row shadow">
             <!-- Module de recherche Algolia -->
-            <div class="container noevent col-xs-12 col-md-6 col-md-offset-3">
+            <div class="container noevent col-xs-12 col-md-6 col-md-offset-3 radius-l">
                 <header>
                     <div id="search-input" class="event"></div>
                     <div id="search-input-icon"></div>
@@ -199,7 +198,7 @@
                 </main>
             </div>
         </div>
-        <div class="row inactive-on-search">
+        <div class="row inactive-on-search shadow">
             <div class="container event">
                 <div class="col-xs-12 ">
                     <!-- Tabs and Pills start -->
@@ -210,7 +209,7 @@
                     <!-- tabs start -->
                     <!-- ================ -->
                     <!-- Nav tabs -->
-                    <ul class="nav nav-tabs style-1" role="tablist">
+                    <ul class="nav nav-tabs style-1 uppercase" role="tablist">
                         <li class="active"><a href="#htab1" role="tab" data-toggle="tab"><i class="fa fa-home pr-10"></i>Art &amp; Interim</a></li>
                         <li><a href="#htab2" role="tab" data-toggle="tab"><i class="fa fa-user pr-10"></i>event audiovisuel</a></li>
                         <li><a href="#htab3" role="tab" data-toggle="tab"><i class="fa fa-envelope pr-10"></i>Garden</a></li>
@@ -225,11 +224,11 @@
                         <div class="tab-pane fade in active" id="htab1">
                             <div class="row">
                                 <div class="col-md-5 margin-m">
-                                    <img src="https://source.unsplash.com/category/nature/400x200" class="radius">
+                                    <img src="https://source.unsplash.com/category/nature/400x200" class="radius-m">
                                 </div>
                                 <div class="col-md-5 left margin-m">
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque eos sint hic, odio sequi eaque, earum, quas unde numquam explicabo ullam praesentium amet a. Odit, suscipit, ratione. Maiores, mollitia cupiditate.</p>
-                                    <a href="http://www.artetinterim.fr" class="btn btn-default">En savoir plus</a>
+                                    <a href="http://www.artetinterim.fr" class="btn btn-default bg-yellow">En savoir plus</a>
                                 </div>
                             </div>
                         </div>
