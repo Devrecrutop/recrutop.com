@@ -3,9 +3,8 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html class="no-js" lang="fr">
 <!--<![endif]-->
-<html lang="fr">
 
 <head>
     <title>Recrutop - L'humain au cœur du recrutement</title>
@@ -18,7 +17,6 @@
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <!-- Style de Philippe & Frantz -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.6.1/less.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/particle.css">
@@ -79,6 +77,7 @@
                                 <li><a href="http://hotels-and-tables.recrutop.com">Hotels &amp; Tables</a></li>
                             </ul>
                         </li>
+                        <li><a href="http://www.recrutop.com/index.php/page/applicants/bb/1/command/enrollqs/qsuid/6aa7e0c3d843121ab8efc36a03972237/cms_categorie/82247">Inscription</a></li>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary btn-lg uppercase bg-yellow radius shadow" data-toggle="modal" data-target="#recruteur">
                             Recruteurs
@@ -156,15 +155,10 @@
                         <!-- Modal -->
                         <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog modal-sm" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    </div>
+                                <div class="modal-content bg-blue-1 center radius-m">
                                     <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         [ocdLoginHook]
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
                                     </div>
                                 </div>
                             </div>
@@ -198,13 +192,13 @@
                 </main>
             </div>
         </div>
-        <div class="row inactive-on-search shadow">
+        <div class="row inactive-on-search">
             <div class="container event">
                 <div class="col-xs-12 ">
                     <!-- Tabs and Pills start -->
                     <!-- ============================================================================== -->
                     <br>
-                    <h2 class="center">Nos agences hyper spécialisées</h2>
+                    <h2 class="center shadow">Nos agences hyper spécialisées</h2>
                     <br>
                     <!-- tabs start -->
                     <!-- ================ -->
@@ -295,14 +289,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <!-- Js Philippe & Frantz -->
     <script src="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/index.js"></script>
-    <!-- Menus OTYS -->
-    <script type="text/javascript">
-    var listMenu = new FSMenu('listMenu', true, 'display', 'block', 'none');
-    listMenu.animations[listMenu.animations.length] = FSMenu.animFade;
-    listMenu.animations[listMenu.animations.length] = FSMenu.animSwipeDown;
-    var arrow = null;
-    addEvent(window, 'load', new Function('listMenu.activateMenu("listMenuRoot", arrow)'));
-    </script>
     <!-- Template de Recherche Algolia -->
     <script type="text/html" id="hit-template">
         <div class="hit">

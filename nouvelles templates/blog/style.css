@@ -16,7 +16,7 @@ p {
     font-size: 1.4em;
 }
 
-.shadow{
+.shadow {
     text-shadow: 1px 1px 2px black;
 }
 
@@ -91,10 +91,11 @@ p {
 .white a {
     color: #ffffff;
 }
-.black
-{
-  color : #000;
+
+.black {
+    color: #000;
 }
+
 .navbar {
     font-size: 1.2em;
     margin: 1.5% 1.5%;
@@ -103,9 +104,15 @@ p {
 .bg-blue {
     background-color: rgba(18, 70, 126, 0);
 }
-.bg-white {
-  background-color: white;
+
+.bg-blue-1 {
+    background-color: rgba(18, 70, 126, 1);
 }
+
+.bg-white {
+    background-color: white;
+}
+
 .uppercase {
     text-transform: uppercase;
 }
@@ -175,8 +182,9 @@ p {
 .dropdown-menu {
     background-color: #12467e;
 }
+
 .dropdown-menu li>a {
-  color:white;
+    color: white;
 }
 
 .ais-search-box > input {
