@@ -237,4 +237,5 @@ p {
 .nav>li { 
 display: inline-block;
 text-align: center;
+float:none;
 }
