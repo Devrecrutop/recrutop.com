@@ -1,6 +1,8 @@
 body {
     font-family: "Maven Pro", sans-serif;
     background-color: rgba(18, 70, 126, 1);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 body a {
@@ -244,27 +246,26 @@ p {
 }
 
 footer {
-    margin-top:2.5em;
+    margin-top: 2.5em;
 }
 
 footer li {
-    display:inline;
+    display: inline;
 }
 
-footer li a{
-    color:white;
-    text-decoration:none;
-    color:white;text-shadow: 3px 3px 9px rgba(0, 0, 0, 1);
-    font-size:1em;
-    text-transform:uppercase;
+footer li a {
+    color: white;
+    text-decoration: none;
+    color: white;
+    text-shadow: 3px 3px 9px rgba(0, 0, 0, 1);
+    font-size: 1em;
+    text-transform: uppercase;
 }
 
 footer ul {
-
-    list-style-type:none;
-
+    list-style-type: none;
 }
 
 .marginbas {
-    margin-bottom:3em;
+    margin-bottom: 3em;
 }
