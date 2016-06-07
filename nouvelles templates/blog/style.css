@@ -281,3 +281,11 @@ footer ul {
 .navbar-toggle {
     background-color: rgba(18, 70, 126, 0);
 }
+
+.bisjab {
+    margin: 3em 3em 5em;
+}
+
+.candidat {
+    height: 100vh;
+}
