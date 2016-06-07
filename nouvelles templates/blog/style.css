@@ -269,3 +269,15 @@ footer ul {
 .marginbas {
     margin-bottom: 3em;
 }
+
+.navbar-collapse {
+    height: 400px;
+}
+
+.icon-bar {
+    background-color: white;
+}
+
+.navbar-toggle {
+    background-color: rgba(18, 70, 126, 0);
+}
