@@ -36,6 +36,16 @@ p {
     text-align: center;
 }
 
+.justify {
+    text-align: justify;
+}
+
+.font-light {
+    font-family: lato;
+    font-weight: 100;
+    font-size: 0.9em;
+}
+
 .radius-s,
 .radius-s input {
     border-radius: 5px;
@@ -231,15 +241,4 @@ p {
 #no-results-message a {
     font-size: 1.5em;
     text-decoration: underline;
-}
-
-
-.nav>li { 
-display: inline-block;
-text-align: center;
-float:none;
-}
-
-.nav-tabs>li {
-float:none;
 }

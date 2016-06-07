@@ -22,8 +22,6 @@
     <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/particle.css">
     <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/style.css">
     <script src="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/homejquery.js"></script>
-    <!-- JS Otys -->
-    <script type="text/javascript" src="http://www.recrutop.com/_javascript/script.js"></script>
     <!-- Template Algolia -->
     <script src="https://cdn.jsdelivr.net/algoliasearch/3.14.5/algoliasearch.min.js"></script>
     <script type="text/html" id="no-results-template">
@@ -54,9 +52,9 @@
                 <div class="navbar-header">
                     <button type="button" class="navbar-default navbar-toggle collapsed event bg-white" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar black"></span>
-                        <span class="icon-bar black"></span>
-                        <span class="icon-bar black "></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="http://www.recrutop.com/">
                         <img alt="Recrutop" src="https://github.com/Devrecrutop/recrutop.com/blob/master/nouvelles%20templates/blog/Recrutoplogoblanc.png?raw=true" class="event">
@@ -67,7 +65,9 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nos Agences <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="http://www.artetinterim.fr/"></a></li>
+                                <li>
+                                    <a href="http://www.artetinterim.fr/"></a>
+                                </li>
                                 <li><a href="http://btp.recrutop.com/">BTP</a></li>
                                 <li><a href="http://audiovisuel-event.recrutop.com/">Event & Audiovisuel</a></li>
                                 <li><a href="http://garden.recrutop.com/">Garden </a></li>
@@ -78,7 +78,7 @@
                                 <li><a href="http://hotels-and-tables.recrutop.com/">Hotels &amp; Tables</a></li>
                             </ul>
                         </li>
-                        <li><a href="http://www.recrutop.com/index.php/page/applicants/bb/1/command/enrollqs/qsuid/6aa7e0c3d843121ab8efc36a03972237/cms_categorie/82247">Inscription</a></li>
+                        <li><a href="http://www.recrutop.com/index.php/page/applicants/bb/1/command/startsignup/cms_categorie/82247">Inscription</a></li>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary btn-lg uppercase bg-yellow radius shadow" data-toggle="modal" data-target="#recruteur">
                             Recruteurs
@@ -205,25 +205,35 @@
                     <!-- ================ -->
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs style-1 uppercase" role="tablist">
-                        <li class="active"><a href="#htab1" role="tab" data-toggle="tab"><i class="fa fa-home pr-10"></i>Art &amp; Interim</a></li>
-                        <li><a href="#htab2" role="tab" data-toggle="tab"><i class="fa fa-user pr-10"></i>Event audiovisuel</a></li>
-                        <li><a href="#htab3" role="tab" data-toggle="tab"><i class="fa fa-envelope pr-10"></i>Garden</a></li>
-                        <li><a href="#htab4" role="tab" data-toggle="tab"><i class="fa fa-envelope pr-10"></i>Gros-Oeuvre</a></li>
-                        <li><a href="#htab5" role="tab" data-toggle="tab"><i class="fa fa-envelope pr-10"></i>Hotels&Tables</a></li>
-                        <li><a href="#htab6" role="tab" data-toggle="tab"><i class="fa fa-envelope pr-10"></i>Informatique</a></li>
-                        <li><a href="#htab7" role="tab" data-toggle="tab"><i class="fa fa-envelope pr-10"></i>Métiers Supports</a></li>
-                        <li><a href="#htab8" role="tab" data-toggle="tab"><i class="fa fa-envelope pr-10"></i>Réhabilitation</a></li>
-                        <li><a href="#htab9" role="tab" data-toggle="tab"><i class="fa fa-envelope pr-10"></i>Second-Oeuvre</a></li>
-                        <li><a href="#htab10" role="tab" data-toggle="tab"><i class="fa fa-envelope pr-10"></i>TP&GC</a></li>
+                        <li class="active"><a href="#htab1" role="tab" data-toggle="tab">Art   &amp; Interim</a></li>
+                        <li><a href="#htab2" role="tab" data-toggle="tab">Event audiovisuel</a></li>
+                        <li>
+                            <a href="#htab3" role="tab" data-toggle="tab"></i>Garden</a>
+                        </li>
+                        <li>
+                            <a href="#htab5" role="tab" data-toggle="tab"></i>Hotels &amp; Tables</a>
+                        </li>
+                        <li>
+                            <a href="#htab6" role="tab" data-toggle="tab"></i>Infogérance</a>
+                        </li>
+                        <li>
+                            <a href="#htab7" role="tab" data-toggle="tab"></i>Métiers Supports</a>
+                        </li>
+                        <li>
+                            <a href="#htab9" role="tab" data-toggle="tab"></i>Second-Oeuvre</a>
+                        </li>
+                        <li>
+                            <a href="#htab10" role="tab" data-toggle="tab"></i>TP &amp; GC</a>
+                        </li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="htab1">
                             <div class="row">
-                                <div class="col-md-5 margin-m">
+                                <div class="col-md-5 margin-m center ">
                                     <img src="https://rawgit.com/Devrecrutop/recrutop.com/fdd56dee278d060795789da0d8a4e032d777820f/nouvelles%20templates/blog/homeArt.png" class="radius-m">
                                 </div>
-                                <div class="col-md-5 left margin-m">
+                                <div class="col-md-5 justify margin-m font-light">
                                     <p>Françoise, conductrice de travaux, experte des métiers d’arts, vous accompagne dans votre développement. Concentrez-vous sur vos projets, nous staffons vos équipes : staffeurs, mosaïstes, restaurateurs, décorateurs,etc.</p>
                                     <a href="http://www.artetinterim.fr" class="btn btn-default bg-yellow">En savoir plus</a>
                                 </div>
@@ -232,10 +242,10 @@
                         <div class="tab-pane fade" id="htab2">
                             <h3></h3>
                             <div class="row">
-                            <div class="col-md-5 margin-m">
+                                <div class="col-md-5 margin-m center ">
                                     <img src="https://rawgit.com/Devrecrutop/recrutop.com/688e4eeb92eb700296673c1577b86c079104d507/nouvelles%20templates/blog/Recrutopevent.png" class="radius-m">
                                 </div>
-                                <div class="col-md-5 left margin-m">
+                                <div class="col-md-5 justify margin-m font-light">
                                     <p>Joris, Responsable commercial MICE & Chef de projets Event pendant près de 10 ans pour diverses sociétés, vous accompagne dans vos opérations. Concentrez vous sur l'essentiel, nous staffons vos ressources ponctuelles sur événement (road, chauffeur, assistant, PL..) mais également sur des contrats plus longue durée.</p>
                                     <a href="http://www.audiovisuel-event.recrutop.com/" class="btn btn-default bg-yellow">En savoir plus</a>
                                 </div>
@@ -243,32 +253,21 @@
                         </div>
                         <div class="tab-pane fade" id="htab3">
                             <div class="row">
-                                <div class="col-md-5 margin-m">
+                                <div class="col-md-5 margin-m center ">
                                     <img src="https://source.unsplash.com/category/nature/400x200" class="radius-m">
                                 </div>
-                                <div class="col-md-5 left margin-m">
+                                <div class="col-md-5 justify margin-m font-light">
                                     <p>Mathias, spécialiste du milieu de l'environnement, vous accompagne dans votre développement. Concentrez vous sur vos projets, nous renforçons vos équipes : Paysagistes, élageurs, jardiniers</p>
                                     <a href="http://garden.recrutop.com/" class="btn btn-default bg-yellow">En savoir plus</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="htab4">
-                            <div class="row">
-                                <div class="col-md-5 margin-m">
-                                    <img src="https://source.unsplash.com/category/nature/400x200" class="radius-m">
-                                </div>
-                                <div class="col-md-5 left margin-m">
-                                    <p>Françoise, conductrice de travaux, experte des métiers d’arts, vous accompagne dans votre développement. Concentrez-vous sur vos projets, nous staffons vos équipes : staffeur, mosaïste, staffeur, mosaïste, staffeur, mosaïste, etc.</p>
-                                    <a href="http://www.artetinterim.fr" class="btn btn-default bg-yellow">Site en Construction !</a>
-                                </div>
-                            </div>
-                        </div>
                         <div class="tab-pane fade" id="htab5">
                             <div class="row">
-                                <div class="col-md-5 margin-m">
+                                <div class="col-md-5 margin-m center ">
                                     <img src="https://source.unsplash.com/category/nature/400x200" class="radius-m">
                                 </div>
-                                <div class="col-md-5 left margin-m">
+                                <div class="col-md-5 justify margin-m font-light">
                                     <p>Jonathan, 15 ans d'expérience dans l'hôtellerie de luxe, met son expertise à votre service pour votre développement. Concentrez vous sur vos projets, nous renforçons vos équipes : Chefs, gouvernantes, assistances, etc...</p>
                                     <a href="http://hotels-and-tables.recrutop.com/" class="btn btn-default bg-yellow">En savoir plus</a>
                                 </div>
@@ -276,10 +275,10 @@
                         </div>
                         <div class="tab-pane fade" id="htab6">
                             <div class="row">
-                                <div class="col-md-5 margin-m">
+                                <div class="col-md-5 margin-m center ">
                                     <img src="https://source.unsplash.com/category/nature/400x200" class="radius-m">
                                 </div>
-                                <div class="col-md-5 left margin-m">
+                                <div class="col-md-5 justify margin-m font-light">
                                     <p>Ludovic, spécialiste du milieu depuis plus de 15 ans, vous accompagne dans votre développement. Concentrez vous sur vos projets, nous renforçons vos équipes : Administrateurs Systèmes, Développeurs, experts sécurité, etc...</p>
                                     <a href="http://tertiaire.recrutop.com/" class="btn btn-default bg-yellow">En savoir plus</a>
                                 </div>
@@ -287,32 +286,21 @@
                         </div>
                         <div class="tab-pane fade" id="htab7">
                             <div class="row">
-                                <div class="col-md-5 margin-m">
+                                <div class="col-md-5 margin-m center ">
                                     <img src="https://source.unsplash.com/category/nature/400x200" class="radius-m">
                                 </div>
-                                <div class="col-md-5 left margin-m">
-                                    <p>Ludovic, spécialiste du milieu depuis plus de 15 ans, vous accompagne dans votre développement. Concentrez vous sur vos projets, nous renforçons vos équipes : Administrateurs Systèmes, Développeurs, experts sécurité, etc...</p>
+                                <div class="col-md-5 justify margin-m font-light">
+                                    <p>Ludovic, spécialiste du milieu depuis plus de 15 ans, vous accompagne dans votre développement. Concentrez vous sur vos projets, nous renforçons vos équipes : Comptables, commerciaux, téléprospecteurs, etc...</p>
                                     <a href="http://tertiaire.recrutop.com/" class="btn btn-default bg-yellow">En savoir plus</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="htab8">
-                            <div class="row">
-                                <div class="col-md-5 margin-m">
-                                    <img src="https://source.unsplash.com/category/nature/400x200" class="radius-m">
-                                </div>
-                                <div class="col-md-5 left margin-m">
-                                    <p>Françoise, conductrice de travaux, experte des métiers d’arts, vous accompagne dans votre développement. Concentrez-vous sur vos projets, nous staffons vos équipes : staffeur, mosaïste, staffeur, mosaïste, staffeur, mosaïste, etc.</p>
-                                    <a href="http://www.artetinterim.fr" class="btn btn-default bg-yellow">Site en construction</a>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="htab9">
                             <div class="row">
-                                <div class="col-md-5 margin-m">
+                                <div class="col-md-5 margin-m center ">
                                     <img src="https://source.unsplash.com/category/nature/400x200" class="radius-m">
                                 </div>
-                                <div class="col-md-5 left margin-m">
+                                <div class="col-md-5 justify margin-m font-light">
                                     <p>Ludovic, artisan menuisier pendant 10 ans, vous accompagne dans votre développement. Concentrez vous sur vos projets, nous aidons vos équipes : Menuisiers, charpentiers, couvreurs, etc...</p>
                                     <a href="http://batiment-second-oeuvre.recrutop.com/" class="btn btn-default bg-yellow">En savoir plus</a>
                                 </div>
@@ -320,10 +308,10 @@
                         </div>
                         <div class="tab-pane fade" id="htab10">
                             <div class="row">
-                                <div class="col-md-5 margin-m">
+                                <div class="col-md-5 margin-m center ">
                                     <img src="https://source.unsplash.com/category/nature/400x200" class="radius-m">
                                 </div>
-                                <div class="col-md-5 left margin-m">
+                                <div class="col-md-5 justify margin-m font-light">
                                     <p>Lounès, consultant en recrutement depuis plus de 10 ans, vous accompagne dans votre développement. Concentrez vous sur vos projets, nous staffons vos équipes : chef de chantier, chef d'equipe, maçon, coffreur, conducteur d'engins, terrassier, couvreurs, ferrailleur, plaquiste, electricien, plombier,etc...</p>
                                     <a href="http://www.jpsi-interim.com/" class="btn btn-default bg-yellow">En savoir plus</a>
                                 </div>
