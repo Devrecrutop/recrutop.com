@@ -102,7 +102,7 @@ p {
     color: #ffffff;
 }
 
-.black {
+.black, .black a {
     color: #000;
 }
 
