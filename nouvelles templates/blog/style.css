@@ -283,44 +283,54 @@ footer ul {
 }
 
 .bisjab {
-    margin: 3em 3em 5em;
+    margin: 3em auto 5em;
 }
 
 .candidat {
-    min-height: 100vh;
+    min-height: 90vh;
 }
 
-.text {
-    font-size: 1.5em;
-    text-align: center;
-    margin: 3em;
-}
-
-.aplListTbl {
-    font-size: 1.5em;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.menuContainer {
-    font-size: 1.5em;
-}
-
-.menuLink {
-    float: left;
-    width: auto;
+.menuContainer,
+.aplListTbl,
+.text,
+.menuContainer,
+.menuLink,
+.buttonContainer,
+.itemContainer,
+.aplTitle,
+.title,
+.aplIntro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 1em;
+    text-align: center;
 }
-
-.menuContainer {
-    margin-bottom: 9em;
-    margin-left: 3em;
+.candidat form {
+    text-align: center;
 }
-
+.aplTitle,
+.title{font-size:3em;color: ;}
+.buttonContainer, .intro, .menuContainer , .text, .formInput{
+    font-size:1.5em;
+}
 td {
     padding-right: 2em;
 }
 
-.aplTitle {
-    text-align: center;
+.buttonContainer,
+.itemContainer {
+    text-transform: capitalize;
+}
+
+.buttonContainer >input {
+    background-color: #12467E;
+    border-radius: 50px;
+    border: 0px none;
+    color: white;
+    padding: 1em;
+}
+form {
+margin: 0 auto;
+
 }
