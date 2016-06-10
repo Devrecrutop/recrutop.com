@@ -295,7 +295,6 @@ footer ul {
 .menuContainer,
 .menuLink,
 .buttonContainer,
-.itemContainer,
 .aplTitle,
 .title,
 .aplIntro {
@@ -303,10 +302,6 @@ footer ul {
     justify-content: center;
     align-items: center;
     margin: 1em;
-    text-align: center;
-}
-
-.candidat form {
     text-align: center;
 }
 
@@ -325,7 +320,9 @@ footer ul {
 
 .myProfileAgentsOuter .text,
 .aplOuter .text,
-.myProfileAgentsOuter .itemContainer {
+.myProfileAgentsOuter .itemContainer,
+.jbMafOuter .text,
+.aplProfTitle .text {
     font-size: 1.5em;
     text-align: center;
 }
@@ -333,6 +330,11 @@ footer ul {
 .jbdStatPub,
 .jbdTextLoc {
     font-size: 1.5em;
+}
+
+.itemWord,
+.itemDescription {
+    font-size: 1.2em;
 }
 
 td {
@@ -354,12 +356,19 @@ td {
     padding: 1em;
 }
 
-form {
+.candidat form {
     margin-right: 30%;
+    text-align: center;
+}
+
+.jbMafOuter h2 {
+    padding: 1.1em;
+    float: left;
 }
 
 .aplOuter .formInput,
-.aplOuter .buttonContainer {
+.aplOuter .buttonContainer,
+.jbMafOuter .formInput {
     float: right;
     margin-right: 4em;
 }
@@ -386,7 +395,8 @@ form {
     }
 }
 
-.formInput input {
+.formInput input,
+textarea {
     border: thin solid #DCDADA;
 }
 
@@ -404,4 +414,15 @@ form {
     .aplListTbl td {
         padding: 0.5em;
     }
+    form textarea {
+        min-width: 19em;
+    }
+    .jbMafOuter .buttonContainer {
+        padding-top: 41vh;
+        padding-left: 6vh;
+    }
+}
+
+.jblOuter .category {
+    display: none;
 }
