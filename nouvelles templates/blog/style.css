@@ -347,12 +347,6 @@ td {
     /* text-align: center; */
 }
 
-.jbdOuter .buttonContainer >input,
-.displayNone >input {
-    margin: 1em;
-    padding: 0.8em
-}
-
 .buttonContainer >input,
 .displayNone >input {
     background-color: #12467E;
@@ -431,4 +425,19 @@ textarea {
 
 .jblOuter .category {
     display: none;
+}
+
+.bisjab .vacstable .formHeaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 42px;
+}
+.bisjab .vacstable .pageLinkContainer{
+    font-size: 11px;
+}
+
+.bisjab .vacstable tr {
+    font-size:1.1em;
 }
