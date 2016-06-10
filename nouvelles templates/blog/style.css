@@ -306,14 +306,25 @@ footer ul {
     margin: 1em;
     text-align: center;
 }
+
 .candidat form {
     text-align: center;
 }
+
 .aplTitle,
-.title{font-size:3em;color: ;}
-.buttonContainer, .intro, .menuContainer , .text, .formInput{
-    font-size:1.5em;
+.title {
+    font-size: 3em;
+    color: ;
 }
+
+.buttonContainer,
+.intro,
+.menuContainer,
+.text,
+.formInput {
+    font-size: 1.5em;
+}
+
 td {
     padding-right: 2em;
 }
@@ -330,7 +341,41 @@ td {
     color: white;
     padding: 1em;
 }
-form {
-margin: 0 auto;
 
+form {
+    margin-right: 30%;
+}
+
+.formInput,
+.buttonContainer {
+    float: right;
+    margin-right: 4em;
+}
+
+
+
+.buttonContainer {
+    padding-right: 5em;
+    margin-right: 5em;
+}
+
+@media (max-width: 700px) {
+    form {
+        margin-right: 0%;
+    }
+    .menuContainer,
+    .aplListTbl,
+    .text,
+    .menuContainer,
+    .menuLink,
+    .buttonContainer,
+    .itemContainer,
+    .aplTitle,
+    .title,
+    .aplIntro {
+        display: inherit;
+    }
+    .formInput input {
+  border : medium solid #DCDADA;
+}
 }
