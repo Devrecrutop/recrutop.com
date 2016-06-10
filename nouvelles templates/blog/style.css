@@ -292,7 +292,6 @@ footer ul {
 
 .menuContainer,
 .aplListTbl,
-.text,
 .menuContainer,
 .menuLink,
 .buttonContainer,
@@ -320,8 +319,19 @@ footer ul {
 .buttonContainer,
 .intro,
 .menuContainer,
-.text,
 .formInput {
+    font-size: 1.5em;
+}
+
+.myProfileAgentsOuter .text,
+.aplOuter .text,
+.myProfileAgentsOuter .itemContainer {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.jbdStatPub,
+.jbdTextLoc {
     font-size: 1.5em;
 }
 
@@ -332,9 +342,11 @@ td {
 .buttonContainer,
 .itemContainer {
     text-transform: capitalize;
+    /* text-align: center; */
 }
 
-.buttonContainer >input {
+.buttonContainer >input,
+.displayNone >input {
     background-color: #12467E;
     border-radius: 50px;
     border: 0px none;
@@ -346,20 +358,17 @@ form {
     margin-right: 30%;
 }
 
-.formInput,
-.buttonContainer {
+.aplOuter .formInput,
+.aplOuter .buttonContainer {
     float: right;
     margin-right: 4em;
 }
 
-
-
-.buttonContainer {
-    padding-right: 5em;
-    margin-right: 5em;
+.jbdOuter .addthis_button {
+    display: none;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 990px) {
     form {
         margin-right: 0%;
     }
@@ -375,7 +384,24 @@ form {
     .aplIntro {
         display: inherit;
     }
-    .formInput input {
-  border : medium solid #DCDADA;
 }
+
+.formInput input {
+    border: thin solid #DCDADA;
+}
+
+@media (min-width: 990px) {
+    .aplListTbl {
+        margin-left: 15%;
+        font-size: 1.3em;
+        display: inline-block;
+    }
+    .aplListTbl th {
+        text-align: center;
+        text-transform: uppercase;
+        padding: 1em;
+    }
+    .aplListTbl td {
+        padding: 0.5em;
+    }
 }
