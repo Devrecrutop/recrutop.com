@@ -347,6 +347,12 @@ td {
     /* text-align: center; */
 }
 
+.jbdOuter .buttonContainer >input,
+.displayNone >input {
+    margin: 1em;
+    padding: 0.8em
+}
+
 .buttonContainer >input,
 .displayNone >input {
     background-color: #12467E;
