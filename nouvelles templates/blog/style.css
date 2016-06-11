@@ -315,7 +315,7 @@ footer ul {
 .intro,
 .menuContainer,
 .formInput {
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 .myProfileAgentsOuter .text,
@@ -440,4 +440,19 @@ textarea {
 
 .bisjab .vacstable tr {
     font-size:1.1em;
+}
+
+.bisjab .menuLink . aplProfOuter {    font-size: 1.2em;
+}
+
+.listFunctionContainer td{
+    font-size:large;
+    padding-top: 2em;
+    text-transform: uppercase
+}
+
+.custAddJobOuter  label, .custAddJobOuter .formInput input,  .custAddJobOuter textarea input, .custAddJobOuter .formInput textarea{
+    float:right;
+    width : 30em;
+    height: 2em
 }

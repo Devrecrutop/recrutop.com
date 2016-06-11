@@ -1,6 +1,6 @@
 <!-- UTS/ocdapps/loginHook.html -->
 <if $ouid>
-    <div class="hookOuter webUserHookOuter ocdHookOuter ocdHOlogged">
+    <div class="hookOuter webUserHookOuter ocdHookOuter ocdHOlogged margin-m" style="font-size: 1.5em;">
         <else>
             <div class="hookOuter webUserHookOuter ocdHookOuter">
 </if>
@@ -10,15 +10,17 @@
     </div>
     <if $ouid>
         {* we are logged in already *}
-        <div class="hookText webUserHookText ocdHookText logged">[t]Welcome back,[/t] <span class="ocdLoggedName">{$name}</span></div>
+        <div  class="hookText webUserHookText ocdHookText logged white shadow">[t]Welcome back,[/t] <span class="ocdLoggedName">{$name}</span></div>
         <div class="hookButton webUserHookButton ocdHookButton wuhLoggedinProfile form-group">
-            <input type="button" value="[tb]Profile page[/tb]" class="button" onclick="window.location='{$basePath}index.php/page/ocdapp/bb/1/command/profile'">
+            <input type="button" value="[tb]Profile page[/tb]" class="bg-yellow btn btn-lg button shadow uppercase white" onclick="window.location='{$basePath}index.php/page/ocdapp/bb/1/command/profile'">
         </div>
         <div class="form-group hookButton webUserHookButton ocdHookButton wuhLoggedinOut">
-            <input type="button" value="[tb]Log out[/tb]" class="button" onclick="window.location='{$basePath}index.php/page/ocdapp/bb/1/command/logout/x/{$rnd}'">
+            <input type="button" value="[tb]Log out[/tb]" class="btn btn-danger btn-lg button margin-m shadow uppercase" onclick="window.location='{$basePath}index.php/page/ocdapp/bb/1/command/logout/x/{$rnd}'">
         </div>
         <else>
             {* not logged in!!! *}
+                    <h2 class="margin-s shadow white uppercase">Connexion</h2>
+
             <div class="form-group">
                 <div class="hookWord webUserHookKeyWord ocdHookKeyWord">
                     <label class="sr-only" for="CandidateLoginEmail">[t]User name / e-mail[/t]</label>
@@ -34,13 +36,13 @@
                 <div class="form-group hookInput webUserHookInput ocdHookInput">
                     <input type="password" name="ocd_password" value="" id="PassWord" placeholder="Mot de passe">
                 </div>
-                    <div class="form-group hookText webUserHookText ocdHookText"><span>[t]Not registered?[/t]</span> <a href="{$basePath}index.php/page/applicants/bb/1/command/startsignup">[t]Sign up now[/t]</a></div>
+                <div class="form-group hookText webUserHookText ocdHookText"><span>[t]Not registered?[/t]</span> <a href="{$basePath}index.php/page/applicants/bb/1/command/startsignup">[t]Sign up now[/t]</a></div>
             </div>
             <div class=" form-group hookButton webUserHookButton ocdHookButton wuhNotLoggedIn btn">
-                <input type="submit" name="bOcdSubmit" value="[tb]Submit[/tb]" class="form-group button">
+                <input type="submit" name="bOcdSubmit" value="[tb]Submit[/tb]" class="form-group button bg-yellow btn btn-lg button form-group shadow uppercase white">
             </div>
             <if [uts:show_forgot_pwd]>
-                <div class="hookText webUserHookText ocdHookText ocdFrgtPswrd">
+                <div class="hookText webUserHookText ocdHookText ocdFrgtPswrd white">
                     <a href="{$basePath}index.php/page/applicants/bb/1/command/forgotpwdform">[t]Forgot password?[/t]</a>
                 </div>
             </if>
@@ -51,7 +53,7 @@
 </form>
 <if [uts:show_forgot_pwd_email] && !$ouid>
     <form name="ocdForgotPasswordForm" method="post" action="{$basePath}index.php/page/applicants/bb/1/" onsubmit="">
-        <div class="form-group hookText webUserHookText ocdHookText ocdFrgtPswrd">
+        <div class="form-group hookText webUserHookText ocdHookText ocdFrgtPswrd white shadow" style="font-size: 1.5em;">
             <a href="{$basePath}index.php/page/applicants/bb/1/command/forgotpwdform">[t]Forgot password?[/t]</a>
         </div>
         <div class="form-group hookWord webUserHookKeyWord ocdHookKeyWord">
