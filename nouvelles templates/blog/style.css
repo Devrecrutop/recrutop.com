@@ -462,3 +462,9 @@ textarea {
     width: 30em;
     height: 2em
 }
+
+.login{
+     height:3em;
+    border:0;
+    width:15em
+}
