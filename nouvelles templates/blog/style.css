@@ -357,8 +357,9 @@ td {
 }
 
 .candidat form {
-    margin-right: 30%;
-    text-align: center;
+    display: table-caption;
+    border-left-width: 500px;
+    margin-left: 40em;
 }
 
 .jbMafOuter h2 {
@@ -434,25 +435,30 @@ textarea {
     text-align: center;
     font-size: 42px;
 }
-.bisjab .vacstable .pageLinkContainer{
+
+.bisjab .vacstable .pageLinkContainer {
     font-size: 11px;
 }
 
 .bisjab .vacstable tr {
-    font-size:1.1em;
+    font-size: 1.1em;
 }
 
-.bisjab .menuLink . aplProfOuter {    font-size: 1.2em;
+.bisjab .menuLink . aplProfOuter {
+    font-size: 1.2em;
 }
 
-.listFunctionContainer td{
-    font-size:large;
+.listFunctionContainer td {
+    font-size: large;
     padding-top: 2em;
     text-transform: uppercase
 }
 
-.custAddJobOuter  label, .custAddJobOuter .formInput input,  .custAddJobOuter textarea input, .custAddJobOuter .formInput textarea{
-    float:right;
-    width : 30em;
+.custAddJobOuter label,
+.custAddJobOuter .formInput input,
+.custAddJobOuter textarea input,
+.custAddJobOuter .formInput textarea {
+    float: right;
+    width: 30em;
     height: 2em
 }

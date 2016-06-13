@@ -19,11 +19,13 @@
                 <li class="aplAplyTk"><a href="{$handler}/command/signuptk/qsuid/{$qsuid}">[t]Use my CV to fill in the form[/t]</a></li>
                 <!-- <li class="aplAplyTk"><a href="{$handler}/command/signuptk/">[t]Use my CV to fill in the form[/t]</a></li>-->
                 <!-- <li class="aplAplyTk"><a href="{$handler}/command/applytksimple/vid/{$vid}/qsuid/{$qsuid}">[t]Use my CV to fill in the form[/t]</a></li>-->
-                {/if}
+                {/if} {if $linkedinEnabled}
                 <li class="aplAplyLi"><a href="{$handler}/command/startsignuplinkedin/" rel="external">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
+                <!--original
                 <li class="aplAplyLi"><a href="/index.php/page/applicants/bb/1/command/startsignuplinkedin/">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
                 <li class="aplAplyLi aplAplyLiJob"><a href="{$handler}/command/applylinkedinsimple/qsuid/">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
-                {if $mobile_enabled}
+                -->
+                {/if} {if $mobile_enabled}
                 <li class="aplAplyLeave"><a href="{$handler}/command/startsignupleavecv/">[t]Leave your contacts[/t]</a></li>
                 {/if}
             </ul>
