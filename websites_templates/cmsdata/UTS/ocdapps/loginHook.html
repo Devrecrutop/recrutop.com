@@ -26,7 +26,7 @@
                     <label class="sr-only" for="CandidateLoginEmail">[t]User name / e-mail[/t]</label>
                 </div>
                 <div class="hookInput webUserHookInput ocdHookInput">
-                    <input type="text" name="ocd_username" value="" id="CandidateLoginEmail" placeholder="Email">
+                    <input type="text" name="ocd_username" value="" id="CandidateLoginEmail" placeholder="Email" class="login">
                 </div>
             </div>
             <div class="form-group">
@@ -34,15 +34,15 @@
                     <label class="sr-only" for="PassWord">[t]Password[/t]</label>
                 </div>
                 <div class="form-group hookInput webUserHookInput ocdHookInput">
-                    <input type="password" name="ocd_password" value="" id="PassWord" placeholder="Mot de passe">
+                    <input type="password" name="ocd_password" value="" id="PassWord" placeholder="Mot de passe" class="login">
                 </div>
-                <div class="form-group hookText webUserHookText ocdHookText"><span>[t]Not registered?[/t]</span> <a href="{$basePath}index.php/page/applicants/bb/1/command/startsignup">[t]Sign up now[/t]</a></div>
+                <div class="form-group hookText webUserHookText ocdHookText white shadow"><span>[t]Not registered?[/t]</span> <a href="{$basePath}index.php/page/applicants/bb/1/command/startsignup">[t]Sign up now[/t]</a></div>
             </div>
             <div class=" form-group hookButton webUserHookButton ocdHookButton wuhNotLoggedIn btn">
                 <input type="submit" name="bOcdSubmit" value="[tb]Submit[/tb]" class="form-group button bg-yellow btn btn-lg button form-group shadow uppercase white">
             </div>
             <if [uts:show_forgot_pwd]>
-                <div class="hookText webUserHookText ocdHookText ocdFrgtPswrd white">
+                <div class="hookText webUserHookText ocdHookText ocdFrgtPswrd white shadow">
                     <a href="{$basePath}index.php/page/applicants/bb/1/command/forgotpwdform">[t]Forgot password?[/t]</a>
                 </div>
             </if>
