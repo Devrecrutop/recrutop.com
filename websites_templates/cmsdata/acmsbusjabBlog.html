@@ -1,163 +1,407 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="fr">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="fr">
+<!--<![endif]-->
+
 <head>
-<title>OTYS DEVELOPMENT</title>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<meta http-equiv="Content-Script-Type" content="text/Javascript">
-<meta http-equiv="Content-Style-Type" content="text/css">
-<link type="text/css" href="[website]/_css_global/globalStyling.css" rel="stylesheet">
-<link type="text/css" href="[website]/_css/style2.css" rel="stylesheet">
-<link href="[website]/_css/listmenu_h.css" rel="stylesheet" type="text/css">
-<link rel="shortcut icon" href="[website]/_images/[code].ico">
-
-<!-- ACMSBUSJAB<Home> / <[code] - Home> / <5> MENUS / <Farah Belkadi> -->
-
-<!--jsrepository:require(JQueryBase, JQueryMagicSelect, JQueryInputDescr, JsFsMenu, JQueryEasing,JQueryCycleAll)-->
-
+    <title>Recrutop - L'humain au cœur du recrutement</title>
+    <meta charset="utf-8">
+    <meta name="google-site-verification" content="fvlg6Pkfm6muhjNrby0z5bpoNgzx29hyk5cqkos8vKw" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Le groupe Recrutop est réparti en agences ultra spécialisées pour accompagner votre croissance. Concentrez-vous sur vos projets, nous staffons vos équipes">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='[website]/_images/favicon_ugxu0q.png' rel='shortcut icon' type='image/x-icon'>
+    <link href="[website]/_images/logo-recrutop_xzngd7.png" rel="apple-touch-icon" sizes="60x60" />
+    <link href="[website]/_images/logo-recrutop_xzngd7-1.png" rel="apple-touch-icon" sizes="76x76" />
+    <link href="[website]/_images/logo-recrutop_xzngd7-2.png" sizes="120x120" />
+    <link href="[website]/_images/logo-recrutop_xzngd7-3.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta content='Recrutop' property='og:title'>
+    <meta content='http://www.recrutop.com/' property='og:url'>
+    <meta content='[website]/_images/logo-recrutop_xzngd7-4.png' property='og:image'>
+    <meta content='Recrutop' property='og:site_name'>
+    <meta content="Le groupe Recrutop est réparti en agences ultra spécialisées pour accompagner votre croissance. Concentrez-vous sur vos projets, nous staffons vos équipes" property='og:description'>
+    <meta content='Recrutop ' itemprop='name'>
+    <meta content="Le groupe Recrutop est réparti en agences ultra spécialisées pour accompagner votre croissance. Concentrez-vous sur vos projets, nous staffons vos équipes" itemprop='description'>
+    <meta content='http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_630,q_90,w_1200/v1/697512/logo-recrutop_xzngd7.png' itemprop='image'>
+    <meta content='summary' name='twitter:card'>
+    <meta content='Recrutop' name='twitter:title'>
+    <meta content="Le groupe Recrutop est réparti en agences ultra spécialisées pour accompagner votre croissance. Concentrez-vous sur vos projets, nous staffons vos équipes" name='twitter:description'>
+    <meta content='[website]/_images/logo-recrutop_xzngd7-4.png' name='twitter:image'>
+    <meta content="Le groupe Recrutop est réparti en agences ultra spécialisées pour accompagner votre croissance. Concentrez-vous sur vos projets, nous staffons vos équipes" name='description'>
+    <link rel="canonical" href="http://www.recrutop.com/" />
+    <meta name="google-site-verification" content="" />
+    <!-- JQuery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <!-- Style de Philippe & Frantz -->
+    <link href='https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700|Lato:100' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/particle.css" />
+    <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/style.css" />
+    <script src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/homejquery.js"></script>
+    <!-- Template Algolia -->
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3.14.5/algoliasearch.min.js"></script>
+    <script type="text/html" id="no-results-template">
+        <div id="no-results-message">
+            <p>Désolé, nous n'avons trouvé aucune annonce pour votre recherche<em>"{{query}}"</em> aujourd'hui.</p>
+            <p>
+                Vous voulez gérer vos candidatures en un seul endroit et être mis au courant en cas de nouvelles annonces ?</p>
+            <div class="col-xs-2 col-xs-offset-4">
+                <a href="http://www.recrutop.com/index.php/page/applicants/bb/1/command/startsignup/cms_categorie/82247">
+                    <button class="btn cta event marginbas">Inscrivez-vous</button>
+                </a>
+            </div>
+        </div>
+        </div>
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.css" />
+    <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
 </head>
+
 <body>
-<script type="text/javascript">
-
-    $(document).ready(function(){
-
-    $('select').magicSelect();
-
-    inputDescr('#IdName','Value Description');
-
-  $('#level1 .teaser3Outer .teaserTitle').remove();
-  $('#level1 .contentOuter')
-    .cycle({
-      fx: 'fade',
-      speed: 1500,
-      delay: 8000,
-      random:  1,
-      pager:  '#slideNav'
-    });
-
-
-    });
-</script>
-
-<div id="outer">
-  <div id="header">
-    <a href="[website]/" title="[klantnaam]" target="_self" id="logoLink"><img alt="[klantnaam]" src="[website]/_images/logo-baseline.png" border="0"></a>
-
-    <div id="connexion">
-      [ocdLoginHook]
-      <!--START_HLB_5-->[hoofdcat]<!--END_HLB_5-->
-    </div>
-
-    <div class="cleaner"></div>
-  </div>
-  <div id="menu">
-    <!--START_FLIGHT MENU-->
-    <ul class="menulist" id="listMenuRoot">
-    <!--START_HLB_1--><li class="s[active]">[hoofdcat]
-    <!--START_SLB_FM--><ul class="sousmenu">
-    <!--START_SLB_FMROW--><li><a href="[fm_row_url]">[fm_row_name]</a>
-    <!--START_SLB_FM_level_1--><ul>
-    <!--START_level_1--><li><a href="[fm_row_url_1]">[fm_row_name_1]</a></li>
-    <!--END_level_1--></ul>
-    <!--END_SLB_FM_level_1--></li>
-    <!--END_SLB_FMROW--></ul>
-    <!--END_SLB_FM--></li>
-    <!--END_HLB_1--></ul>
-    <!--END_FLIGHT MENU-->
-    <div class="cleaner"></div>
-  </div>
-  <div id="content">
-
-    <div id="level1">
-      [bisjab]
-    </div>
-
-    <div id="level2">
-
-      <div id="JobCat">
-        [JobCatHook]
-        <!--START_HLB_3-->
-        <span class="jobLink">[hoofdcat]</span>
-        <!--END_HLB_3-->
-      </div>
-
-      <div id="tsr1">
-        [teaser1]
-      </div>
-
-      <div class="cleaner"></div>
-
-    </div>
-
-    <div id="level3">
-
-      <div id="blocCandidatReseau">
-
-        <div id="candidat">
-
-          [JobSearchHook]
-
-          <!--START_HLB_4-->
-          <div class="candidatLink">[hoofdcat]</div>
-          <!--END_HLB_4-->
-
-          [teaser2]
-
+    <!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+    <!-- Outer -->
+    <div id="outer" class="noevent white">
+        <nav class="navbar  navbar-light shadow">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-default navbar-toggle collapsed event bg-white" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="http://www.recrutop.com/">
+                        <img alt="Recrutop" src="http://www.recrutop.com/_images_upload/_tn_6b234b07fa61318c.png" class="event">
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="nav navbar-nav navbar-right event uppercase">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nos Agences <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="http://artetinterim.fr/">Art &amp; Intérim</a></li>
+                                <li><a href="http://batiment-second-oeuvre.recrutop.com/">Bâtiment Second Œuvre</a></li>
+                                <li><a href="http://btp.recrutop.com/">BTP</a></li>
+                                <li><a href="http://chartres.recrutop.com/">Chartres</a></li>
+                                <li><a href="http://audiovisuel-event.recrutop.com/">Event &amp; Audiovisuel</a></li>
+                                <li><a href="http://garden.recrutop.com/">Garden</a></li>
+                                <li><a href="http://hotels-and-tables.recrutop.com/">Hotels &amp; Tables</a></li>
+                                <li><a href="http://rambouillet.recrutop.com/">Rambouillet</a></li>
+                                <li><a href="http://tertiaire.recrutop.com/">Tertiaire &amp; Informatique </a></li>
+                            </ul>
+                        </li>
+                        [ocdLoginHook]
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Baseline -->
+        <div class="row">
+            <div class="container">[bisjab]</div>
         </div>
-
-        <div id="tsr5">
-
-          [teaser5]
-
-
-
+        <div class="row center shadow">
+            <div class="container">
+                <div class="col-xs-12">
+                    <h1 id="headline" class="inactive-on-search "> L'humain, au cœur du recrutement</h1>
+                    <p>Recherchez parmi nos offres d'emploi, par postes, métiers, lieux, etc. </p>
+                </div>
+            </div>
         </div>
-
-      </div>
-
-      <div id="twitter">
-        <a class="twitter-timeline" href="https://twitter.com/RECRUTOP_Bourse" data-widget-id="359949701690318848">Tweets de @RECRUTOP_Bourse</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-
-
-      </div>
-
-      <div id="tsr3" class="floatLeft">
-        [teaser3]
-      </div>
-
-      <div id="tsr4" class="floatLeft">
-        [teaser4]
-
-        <div id="rss">
-        [FeedReaderHook]
+        <div class="row shadow">
+            <!-- Module de recherche Algolia -->
+            <div class="container noevent col-xs-12 col-md-6 col-md-offset-3 radius-l">
+                <header>
+                    <div id="search-input" class="event"></div>
+                    <div id="search-input-icon"></div>
+                </header>
+                <main>
+                    <div id="right-column">
+                        <div id="stats"></div>
+                        <div id="hits"></div>
+                        <div id="pagination" class="event"></div>
+                    </div>
+                </main>
+            </div>
         </div>
-      </div>
-
-    <div class="cleaner"></div>
+        <div class="row inactive-on-search">
+            <div class="container">
+                <div class="col-xs-12 ">
+                    <br>
+                    <h2 class="center shadow">Nos agences hyper spécialisées</h2>
+                    <br>
+                    <!-- tabs start -->
+                    <!-- ================ -->
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs style-1 uppercase event" role="tablist">
+                        <li class="active"><a href="#htab1" role="tab" data-toggle="tab">Art   &amp; Interim</a></li>
+                        <li><a href="#htab2" role="tab" data-toggle="tab">Event audiovisuel</a></li>
+                        <li>
+                            <a href="#htab3" role="tab" data-toggle="tab">Garden</a>
+                        </li>
+                        <li>
+                            <a href="#htab5" role="tab" data-toggle="tab">Hotels &amp; Tables</a>
+                        </li>
+                        <li>
+                            <a href="#htab6" role="tab" data-toggle="tab">Infogérance</a>
+                        </li>
+                        <li>
+                            <a href="#htab7" role="tab" data-toggle="tab">Métiers Supports</a>
+                        </li>
+                        <li>
+                            <a href="#htab9" role="tab" data-toggle="tab">Second-Oeuvre</a>
+                        </li>
+                        <li>
+                            <a href="#htab10" role="tab" data-toggle="tab">TP &amp; GC</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="htab1">
+                            <div class="row">
+                                <br>
+                                <div class="col-md-5 margin-m center event">
+                                    <a href="http://www.artetinterim.fr"><img src="http://www.recrutop.com/_images_upload/_tn_241f637603ec85f3.png" style="width:300px;height:150px;" class="radius-m"></a>
+                                </div>
+                                <div class="col-md-5 justify margin-m font-light">
+                                    <p>Françoise, conductrice de travaux, experte des métiers d’arts, vous accompagne dans votre développement. Concentrez-vous sur vos projets, nous staffons vos équipes : staffeurs, mosaïstes, restaurateurs, décorateurs,etc.</p>
+                                    <a href="http://www.artetinterim.fr" class="btn btn-default bg-yellow event" style="color:black;">En savoir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="htab2">
+                            <div class="row">
+                                <br>
+                                <div class="col-md-5 margin-m center event">
+                                    <a href="http://www.audiovisuel-event.recrutop.com/"><img src="http://www.recrutop.com/_images_upload/_tn_a8fe357694fcb86a.jpg" style="width:300px;height:150px;" class="radius-m"></a>
+                                </div>
+                                <div class="col-md-5 justify margin-m font-light">
+                                    <p>Joris, Responsable commercial MICE & Chef de projets Event pendant près de 10 ans pour diverses sociétés, vous accompagne dans vos opérations. Concentrez vous sur l'essentiel, nous staffons vos ressources ponctuelles sur événement (road, chauffeur, assistant, PL..) mais également sur des contrats plus longue durée.</p>
+                                    <a href="http://www.audiovisuel-event.recrutop.com/" class="btn btn-default bg-yellow event" style="color:black;">En savoir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="htab3">
+                            <div class="row">
+                                <br>
+                                <div class="col-md-5 margin-m center event">
+                                    <a href="http://garden.recrutop.com/"><img src="http://www.recrutop.com/_images_upload/_tn_762d891aa16bcfc5.jpg" style="width:300px;height:150px;" class="radius-m"></a>
+                                </div>
+                                <div class="col-md-5 justify margin-m font-light">
+                                    <p>Mathias, spécialiste du milieu de l'environnement, vous accompagne dans votre développement. Concentrez vous sur vos projets, nous renforçons vos équipes : Paysagistes, élageurs, jardiniers</p>
+                                    <a href="http://garden.recrutop.com/" class="btn btn-default bg-yellow event" style="color:black;">En savoir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="htab5">
+                            <div class="row">
+                                <br>
+                                <div class="col-md-5 margin-m center event">
+                                    <a href="http://hotels-and-tables.recrutop.com/"><img src="http://www.recrutop.com/_images_upload/_tn_d255d1fbd45d0133.jpg" style="width:300px;height:150px;" class="radius-m"></a>
+                                </div>
+                                <div class="col-md-5 justify margin-m font-light">
+                                    <p>Jonathan, 15 ans d'expérience dans l'hôtellerie de luxe, met son expertise à votre service pour votre développement. Concentrez vous sur vos projets, nous renforçons vos équipes : Cuisiniers, maîtres d'hôtels, gouvernantes, femmes de chambres... etc...</p>
+                                    <a href="http://hotels-and-tables.recrutop.com/" class="btn btn-default bg-yellow event" style="color:black;">En savoir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="htab6">
+                            <div class="row">
+                                <br>
+                                <div class="col-md-5 margin-m center event">
+                                    <a href="http://tertiaire.recrutop.com/"><img src="http://www.recrutop.com/_images_upload/_tn_6d5a4cb9d1d489c8.jpg" style="width:300px;height:150px;" class="radius-m"></a>
+                                </div>
+                                <div class="col-md-5 justify margin-m font-light">
+                                    <p>Ludovic, spécialiste du milieu depuis plus de 15 ans, vous accompagne dans votre développement. Concentrez vous sur vos projets, nous renforçons vos équipes : Administrateurs Systèmes, Développeurs, experts sécurité, etc...</p>
+                                    <a href="http://tertiaire.recrutop.com/" class="btn btn-default bg-yellow event" style="color:black;">En savoir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="htab7">
+                            <div class="row">
+                                <br>
+                                <div class="col-md-5 margin-m center event">
+                                    <a href="http://tertiaire.recrutop.com/"><img src="http://www.recrutop.com/_images_upload/_tn_67aaee5915fba39f.jpg" style="width:300px;height:150px;" class="radius-m"></a>
+                                </div>
+                                <div class="col-md-5 justify margin-m font-light">
+                                    <p>Ludovic, spécialiste du milieu depuis plus de 15 ans, vous accompagne dans votre développement. Concentrez vous sur vos projets, nous renforçons vos équipes : Comptables, commerciaux, téléprospecteurs, etc...</p>
+                                    <a href="http://tertiaire.recrutop.com/" class="btn btn-default bg-yellow event" style="color:black;">En savoir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="htab9">
+                            <div class="row">
+                                <br>
+                                <div class="col-md-5 margin-m center event">
+                                    <a href="http://batiment-second-oeuvre.recrutop.com/"><img src="http://www.recrutop.com/_images_upload/_tn_a17f8a2c91d57bc8.jpg" style="width:300px;height:150px;" class="radius-m"></a>
+                                </div>
+                                <div class="col-md-5 justify margin-m font-light">
+                                    <p>Ludovic, artisan menuisier pendant 10 ans, vous accompagne dans votre développement. Concentrez vous sur vos projets, nous aidons vos équipes : Menuisiers, charpentiers, couvreurs, etc...</p>
+                                    <a href="http://batiment-second-oeuvre.recrutop.com/" class="btn btn-default bg-yellow event" style="color:black;">En savoir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="htab10">
+                            <div class="row">
+                                <br>
+                                <div class="col-md-5 margin-m center event">
+                                    <a href="http://www.jpsi-interim.com/"><img src="http://www.recrutop.com/_images_upload/_tn_2fd37762aee2e1b5.jpg" style="width:300px;height:150px;" class="radius-m"></a>
+                                </div>
+                                <div class="col-md-5 justify margin-m font-light">
+                                    <p>Lounès, consultant en recrutement depuis plus de 10 ans, vous accompagne dans votre développement. Concentrez vous sur vos projets, nous staffons vos équipes : chef de chantier, chef d'equipe, maçon, coffreur, conducteur d'engins, terrassier, couvreurs, ferrailleur, plaquiste, electricien, plombier,etc...</p>
+                                    <a href="http://www.jpsi-interim.com/" class="btn btn-default bg-yellow event" style="color:black;">En savoir plus</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- tabs end -->
+                </div>
+            </div>
+        </div>
+        <footer class="event center">
+            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+                <nav>
+                    <ul>
+                        <li><a href="http://legal.recrutop.com">Mentions légales</a></li>
+                        <li><a href="http://faq.recrutop.com">FAQ</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </footer>
     </div>
+    <!-- Scripts -->
+    <!-- Template de Recherche Algolia -->
+    <script type="text/html" id="hit-template">
+        <div class="hit">
+            <div class="hit-content">
+                <h2 class="hit-name event"><a href="{{url}}" target="_blank">{{nomduspote}} - {{lieu}} </a></h2>
+                <p class="hit-description noevent">{{descriptioncourte}}... <a href="{{url}}" class="event" target="_blank">En savoir plus</a></p>
+            </div>
+        </div>
+    </script>
+    <script type="text/html" id="stats-template">
+        <div data-reactroot="" class="ais-root ais-stats">
+            <div class="ais-body ais-stats--body">
+                <div>
+                    {{nbHits}} Offres correspondent à votre recherche
+                </div>
+            </div>
+        </div>
+    </script>
+    <!-- particles.js container -->
+    <div id="particles-js"></div>
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/particles.js"></script>
+    <script src="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.js"></script>
+    <script src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/app.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/modernizr.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/jquery.browser.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/SmoothScroll.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/template.js"></script>
+    <script>
+    (function() {
+        var qs, js, q, s, d = document,
+            gi = d.getElementById,
+            ce = d.createElement,
+            gt = d.getElementsByTagName,
+            id = 'typef_orm',
+            b = 'https://s3-eu-west-1.amazonaws.com/share.typeform.com/';
+        if (!gi.call(d, id)) {
+            js = ce.call(d, 'script');
+            js.id = id;
+            js.src = b + 'share.js';
+            q = gt.call(d, 'script')[0];
+            q.parentNode.insertBefore(js, q)
+        }
+    })()
+    </script>
+    <script type="text/javascript">
+    window._chatlio = window._chatlio || [];
+    ! function() {
+        var t = document.getElementById("chatlio-widget-embed");
+        if (t && window.ChatlioReact && _chatlio.init) return void _chatlio.init(t, ChatlioReact);
+        for (var e = function(t) {
+                return function() {
+                    _chatlio.push([t].concat(arguments))
+                }
+            }, i = ["configure", "identify", "track", "show", "hide", "isShown", "isOnline"], a = 0; a < i.length; a++) _chatlio[i[a]] || (_chatlio[i[a]] = e(i[a]));
+        var n = document.createElement("script"),
+            c = document.getElementsByTagName("script")[0];
+        n.id = "chatlio-widget-embed", n.src = "https://w.chatlio.com/w.chatlio-widget.js", n.async = !0, n.setAttribute("data-embed-version", "2.1");
+        n.setAttribute('data-widget-id', '93b369e7-61ae-4d28-650c-1f0bde40cd0c');
+        c.parentNode.insertBefore(n, c);
+    }();
+    </script>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-11566180-1']);
+    _gaq.push(['_trackPageview']);
 
-  </div>
-  <div id="footer">
-    <!--START_HLB_2-->
-    [hoofdcat] |
-    <!--END_HLB_2-->
-    Copyright &copy; <a href="[website]" title="[klantnaam]" target="_self">[klantnaam] [yearnow]</a>
-    <a href="http://www.otys.fr" title="OTYS Recruiting Technology" target="_blank"><img src="[website]/_images/otys.gif" border="0" alt="OTYS Recruiting Technology" style="margin-bottom:-1px"></a>
-  </div>
-</div>
-
-<script type="text/javascript">
-    var listMenu = new FSMenu('listMenu', true, 'display', 'block', 'none');
-
-    listMenu.animations[listMenu.animations.length] = FSMenu.animFade;
-
-    listMenu.animations[listMenu.animations.length] = FSMenu.animSwipeDown;
-
-    var arrow = null;
-
-    addEvent(window, 'load', new Function('listMenu.activateMenu("listMenuRoot", arrow)'));
-
-</script>
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    <script>
+    window['_fs_debug'] = false;
+    window['_fs_host'] = 'www.fullstory.com';
+    window['_fs_org'] = '1CP7P';
+    window['_fs_namespace'] = 'FS';
+    (function(m, n, e, t, l, o, g, y) {
+        if (e in m && m.console && m.console.log) {
+            m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');
+            return;
+        }
+        g = m[e] = function(a, b) {
+            g.q ? g.q.push([a, b]) : g._api(a, b);
+        };
+        g.q = [];
+        o = n.createElement(t);
+        o.async = 1;
+        o.src = 'https://' + _fs_host + '/s/fs.js';
+        y = n.getElementsByTagName(t)[0];
+        y.parentNode.insertBefore(o, y);
+        g.identify = function(i, v) {
+            g(l, {
+                uid: i
+            });
+            if (v) g(l, v)
+        };
+        g.setUserVars = function(v) {
+            g(l, v)
+        };
+        g.identifyAccount = function(i, v) {
+            o = 'account';
+            v = v || {};
+            v.acctId = i;
+            g(o, v)
+        };
+        g.clearUserCookie = function(d, i) {
+            d = n.domain;
+            while (1) {
+                n.cookie = 'fs_uid=;domain=' + d +
+                    ';path=/;expires=' + new Date(0);
+                i = d.indexOf('.');
+                if (i < 0) break;
+                d = d.slice(i + 1)
+            }
+        }
+    })(window, document, window['_fs_namespace'], 'script', 'user');
+    </script>
 </body>
+
 </html>
