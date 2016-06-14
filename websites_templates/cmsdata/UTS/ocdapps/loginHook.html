@@ -1,10 +1,14 @@
 <!-- UTS/ocdapps/loginHook.html -->
-<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content bg-blue-1 center radius-m">
-            <div class="modal-body ">
-                <button type="button" class="close white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <if $ouid>
+<if $ouid>
+    <li><a href="http://www.recrutop.com">Trouver un job </a></li>
+    <li>
+        <a class="uppercase shadow bg-yellow radius-m" data-toggle="modal" data-target="#login"> <i class="fa fa-user" aria-hidden="true"></i>Mon Espace Personnel</a>
+    </li>
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-blue-1 center radius-m">
+                <div class="modal-body ">
+                    <button type="button" class="close white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <div class="hookOuter webUserHookOuter ocdHookOuter ocdHOlogged margin-m" style="font-size: 1.5em;">
                         <form name="ocdloginform" method="post" action="{$basePath}index.php/page/ocdapp/bb/1/" onsubmit="">
                             {* we are logged in already *}
@@ -15,60 +19,95 @@
                             <div class="form-group hookButton webUserHookButton ocdHookButton wuhLoggedinOut">
                                 <input type="button" value="[tb]Log out[/tb]" class="btn btn-danger btn-lg button margin-m shadow uppercase" onclick="window.location='{$basePath}index.php/page/ocdapp/bb/1/command/logout/x/{$rnd}'">
                             </div>
-                            <else>
-                                <div class="hookOuter webUserHookOuter ocdHookOuter ocdHOlogged margin-m" style="font-size: 1.5em;">
-                                    <form name="ocdloginform" method="post" action="{$basePath}index.php/page/ocdapp/bb/1/" onsubmit="">
-                                        {* not logged in!!! *}
-                                        <h2 class="margin-s shadow white uppercase">Connexion</h2>
-                                        <div class="form-group">
-                                            <div class="hookWord webUserHookKeyWord ocdHookKeyWord">
-                                                <label class="sr-only" for="CandidateLoginEmail">[t]User name / e-mail[/t]</label>
-                                            </div>
-                                            <div class="hookInput webUserHookInput ocdHookInput">
-                                                <input type="text" name="ocd_username" value="" id="CandidateLoginEmail" placeholder="Email" class="login">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="form-group hookWord webUserHookKeyWord ocdHookKeyWord">
-                                                <label class="sr-only" for="PassWord">[t]Password[/t]</label>
-                                            </div>
-                                            <div class="form-group hookInput webUserHookInput ocdHookInput">
-                                                <input type="password" name="ocd_password" value="" id="PassWord" placeholder="Mot de passe" class="login">
-                                            </div>
-                                            <div class="form-group hookText webUserHookText ocdHookText white shadow"><span>[t]Not registered?[/t]</span> <a href="{$basePath}index.php/page/applicants/bb/1/command/startsignup">[t]Sign up now[/t]</a></div>
-                                        </div>
-                                        <div class=" form-group hookButton webUserHookButton ocdHookButton wuhNotLoggedIn btn">
-                                            <input type="submit" name="bOcdSubmit" value="[tb]Submit[/tb]" class="form-group button bg-yellow btn btn-lg button form-group shadow uppercase white">
-                                        </div>
-                                        <if [uts:show_forgot_pwd]>
-                                            <div class="hookText webUserHookText ocdHookText ocdFrgtPswrd white shadow">
-                                                <a href="{$basePath}index.php/page/applicants/bb/1/command/forgotpwdform">[t]Forgot password?[/t]</a>
-                                            </div>
-                                        </if>
-                </if>
-                <input type="hidden" name="command" value="login">
-                <input type="hidden" name="origin" value="ocdhook">
-                <input type="hidden" name="lastURI" value="{$lastURI|escape}">
-                </form>
-                <if [uts:show_forgot_pwd_email] && !$ouid>
-                    <form name="ocdForgotPasswordForm" method="post" action="{$basePath}index.php/page/applicants/bb/1/" onsubmit="">
-                        <div class="form-group hookText webUserHookText ocdHookText ocdFrgtPswrd white shadow" style="font-size: 1.5em;">
-                            <a href="{$basePath}index.php/page/applicants/bb/1/command/forgotpwdform">[t]Forgot password?[/t]</a>
-                        </div>
-                        <div class="form-group hookWord webUserHookKeyWord ocdHookKeyWord">
-                            <label for="forgot_password_email">[t]User name / e-mail[/t]</label>
-                        </div>
-                        <div class="form-group hookInput webUserHookInput ocdHookInput">
-                            <input type="text" name="email" value="" id="forgot_password_email">
-                        </div>
-                        <div class="form-group hookButton webUserHookButton ocdHookButton wuhNotLoggedIn">
-                            <input type="submit" name="bForgotPasswordSubmit" value="[tb]Send password[/tb]" class="button">
-                        </div>
-                        <input type="hidden" name="command" value="forgotpwd">
-                        <input type="hidden" name="retryCmd" value="start">
-                    </form>
-                </if>
-                </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</if>
+<else>
+    <li><a href="http://www.recrutop.com/index.php/page/applicants/bb/1/command/startsignup/cms_categorie/82247">Inscription</a></li>
+    <li><a class="uppercase shadow" data-toggle="modal" data-target="#myspace">Connexion</a></li>
+    <!-- modal -->
+    <div class="modal fade" id="myspace" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-blue-1 center radius-m">
+                <div class="modal-body ">
+                    <button type="button" class="close white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="hookOuter webUserHookOuter ocdHookOuter ocdHOlogged margin-m" style="font-size: 1.5em;">
+                        <form name="ocdloginform" method="post" action="{$basePath}index.php/page/ocdapp/bb/1/" onsubmit="">
+                            {* not logged in!!! *}
+                            <h2 class="margin-s shadow white uppercase">Connexion</h2>
+                            <div class="form-group">
+                                <div class="hookWord webUserHookKeyWord ocdHookKeyWord">
+                                    <label class="sr-only" for="CandidateLoginEmail">[t]User name / e-mail[/t]</label>
+                                </div>
+                                <div class="hookInput webUserHookInput ocdHookInput">
+                                    <input type="text" name="ocd_username" value="" id="CandidateLoginEmail" placeholder="Email" class="login">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group hookWord webUserHookKeyWord ocdHookKeyWord">
+                                    <label class="sr-only" for="PassWord">[t]Password[/t]</label>
+                                </div>
+                                <div class="form-group hookInput webUserHookInput ocdHookInput">
+                                    <input type="password" name="ocd_password" value="" id="PassWord" placeholder="Mot de passe" class="login">
+                                </div>
+                                <div class="form-group hookText webUserHookText ocdHookText white shadow"><span>[t]Not registered?[/t]</span> <a href="{$basePath}index.php/page/applicants/bb/1/command/startsignup">[t]Sign up now[/t]</a></div>
+                            </div>
+                            <div class=" form-group hookButton webUserHookButton ocdHookButton wuhNotLoggedIn btn">
+                                <input type="submit" name="bOcdSubmit" value="[tb]Submit[/tb]" class="form-group button bg-yellow btn btn-lg button form-group shadow uppercase white">
+                            </div>
+                            <if [uts:show_forgot_pwd]>
+                                <div class="hookText webUserHookText ocdHookText ocdFrgtPswrd white shadow">
+                                    <a href="{$basePath}index.php/page/applicants/bb/1/command/forgotpwdform">[t]Forgot password?[/t]</a>
+                                </div>
+                            </if>
+                            <input type="hidden" name="command" value="login">
+                            <input type="hidden" name="origin" value="ocdhook">
+                            <input type="hidden" name="lastURI" value="{$lastURI|escape}">
+                            <if [uts:show_forgot_pwd_email] && !$ouid>
+                                <form name="ocdForgotPasswordForm" method="post" action="{$basePath}index.php/page/applicants/bb/1/" onsubmit="">
+                                    <div class="form-group hookText webUserHookText ocdHookText ocdFrgtPswrd white shadow" style="font-size: 1.5em;">
+                                        <a href="{$basePath}index.php/page/applicants/bb/1/command/forgotpwdform">[t]Forgot password?[/t]</a>
+                                    </div>
+                                    <div class="form-group hookWord webUserHookKeyWord ocdHookKeyWord">
+                                        <label for="forgot_password_email">[t]User name / e-mail[/t]</label>
+                                    </div>
+                                    <div class="form-group hookInput webUserHookInput ocdHookInput">
+                                        <input type="text" name="email" value="" id="forgot_password_email">
+                                    </div>
+                                    <div class="form-group hookButton webUserHookButton ocdHookButton wuhNotLoggedIn">
+                                        <input type="submit" name="bForgotPasswordSubmit" value="[tb]Send password[/tb]" class="button">
+                                    </div>
+                                    <input type="hidden" name="command" value="forgotpwd">
+                                    <input type="hidden" name="retryCmd" value="start">
+                                </form>
+                            </if>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <li><a class="typeform-share link uppercase bg-yellow radius-m shadow" href="https://philippesiguret.typeform.com/to/uJ3d3Q" data-mode="1" target="_blank">Recruteurs</a>
+        <script>
+        (function() {
+            var qs, js, q, s, d = document,
+                gi = d.getElementById,
+                ce = d.createElement,
+                gt = d.getElementsByTagName,
+                id = 'typef_orm',
+                b = 'https://s3-eu-west-1.amazonaws.com/share.typeform.com/';
+            if (!gi.call(d, id)) {
+                js = ce.call(d, 'script');
+                js.id = id;
+                js.src = b + 'share.js';
+                q = gt.call(d, 'script')[0];
+                q.parentNode.insertBefore(js, q)
+            }
+        })()
+        </script>
+    </li>
+</else>
