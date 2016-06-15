@@ -218,14 +218,16 @@ h1 {
     font-size: 20px; }
     .candidat .bisjab h1 {
       font-size: 47px; }
+    .candidat .bisjab .jblOuter .jblItemContainer {
+      text-transform: capitalize; }
+      .candidat .bisjab .jblOuter .jblItemContainer .jblItemDescr {
+        text-transform: none; }
   .candidat .menuContainer, .candidat .aplListTbl, .candidat .menuContainer, .candidat .menuLink, .candidat .buttonContainer, .candidat .aplTitle, .candidat .title {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 1em;
     text-align: center; }
-  .candidat .buttonContainer, .candidat .itemContainer {
-    text-transform: capitalize; }
   .candidat .buttonContainer > input, .candidat .displayNone > input {
     background-color: #12467e;
     border-radius: 50px;
