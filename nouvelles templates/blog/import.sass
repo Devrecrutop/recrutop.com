@@ -57,6 +57,10 @@ $white: #fff
 
 /*----------------------------------------
 
+html
+  position: relative
+  min-height: 100%
+
 body
   font-family: "Maven Pro", sans-serif
   overflow-y: scroll
@@ -69,9 +73,6 @@ h1
   font-size: 3em
   margin: 1em
 
-html
-  position: relative
-  min-height: 100%
 
 
 /*----------------------------------------
@@ -143,8 +144,10 @@ html
 
 .bg-white
   background-color: $white
+
 .bg-blue-1
   background-color: $blue
+
 .uppercase
   text-transform: uppercase
   text-align: center
@@ -158,7 +161,6 @@ html
 .ais-search-box > input
   border: none
   color: $black
-  font-size: 1.5em
   height: 3em
   padding-left: 2em
   width: 100%
@@ -166,27 +168,22 @@ html
     outline-width: 0
 
 #stats
-  font-size: 1.25em
   padding-top: 1.25em
   text-align: center
 
 .hit-name
-  font-size: 1.4em
   text-transform: uppercase
 
 .hit-description
   font-family: lato, sans-serif
-  font-size: 1.1em
   font-weight: 300
   text-align: left
   a
     text-decoration: underline
 
 #no-results-message
-  font-size: 1em
   padding-top: 0.9em
   a
-    font-size: 1.5em
     text-decoration: underline
 
 /*----------------------------------------
@@ -215,6 +212,31 @@ html
 .candidat
   min-height: 90vh
   padding-top: 60px
+
+#outer
+  position: absolute
+  z-index: 1
+  width: 100%
+  canvas
+    display: block
+    vertical-align: bottom
+  .noevent
+  pointer-events: none
+  .event
+    pointer-events: all
+
+#particles-js
+  position: absolute
+  width: 100%
+  height: 100%
+  background-color: #12467e
+  background-image: url("")
+  background-repeat: no-repeat
+  background-size: cover
+  background-position: 50% 50%
+
+
+
 
 /*----------------------------------------
 
