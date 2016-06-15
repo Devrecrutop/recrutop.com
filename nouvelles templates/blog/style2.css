@@ -279,6 +279,7 @@ p {
 
 .candidat {
     min-height: 90vh;
+    padding-top: 60px;
 }
 
 .candidat form {
