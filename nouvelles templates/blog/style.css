@@ -186,13 +186,16 @@ h1 {
 #outer {
   position: absolute;
   z-index: 1;
-  width: 100%;
-  pointer-events: none; }
+  width: 100%; }
   #outer canvas {
     display: block;
     vertical-align: bottom; }
+  #outer .noevent {
+    pointer-events: none; }
   #outer .event {
     pointer-events: all; }
+  #outer .algolia p {
+    font-size: 20px; }
 
 #particles-js {
   position: absolute;
