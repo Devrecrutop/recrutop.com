@@ -22,7 +22,7 @@
     $(document).ready(function(){
 
     $('select').magicSelect();
-    
+
     inputDescr('#IdName','Value Description');
 
     });
@@ -31,7 +31,7 @@
 <div id="outerCustomer">
 	<div id="header">
 		<a href="[website]/" title="[klantnaam]" target="_self" id="logoLink"><img alt="[klantnaam]" src="[website]/_images/logo-baseline.png" border="0"></a>
-		
+
 		<div id="connexion">
 			[ocdLoginHook]
 			<!--START_HLB_5-->[hoofdcat]<!--END_HLB_5-->
@@ -55,60 +55,60 @@
 		<!--END_FLIGHT MENU-->
 		<div class="cleaner"></div>
 	</div>
-	
+
 	<div id="contenu">
-	
+
 	<div id="sidebar" class="floatLeft">
-	
+
 		<div id="contact">
 			[teaser6]
 		</div>
-		
+
 		<div id="JobCat">
 			[JobCatHook]
 			<!--START_HLB_3-->
 			<span class="jobLink">[hoofdcat]</span>
 			<!--END_HLB_3-->
 		</div>
-		
+
 			<div id="blocCandidatReseau">
-			
+
 				<div id="candidat">
-				
+
 					[JobSearchHook]
-				
+
 					<!--START_HLB_4-->
 					<div class="candidatLink">[hoofdcat]</div>
 					<!--END_HLB_4-->
-				
+
 					[teaser2]
-				
+
 				</div>
-				
+
 				<div id="tsr5">
-					
+
 					[teaser5]
-				
+
 				</div>
-				
-			</div>	
-	
+
+			</div>
+
 	</div>
 	<div id="content" class="floatLeft">
-	
+
 			[bisjab]
-		
-		
-		
+
+
+
 		<div class="cleaner"></div>
-		
+
 	</div>
-	
+
 		<div class="cleaner"></div>
 	</div>
 	<div id="footer">
 		<!--START_HLB_2-->
-		[hoofdcat] | 
+		[hoofdcat] |
 		<!--END_HLB_2-->
 		Copyright &copy; <a href="[website]" title="[klantnaam]" target="_self">[klantnaam] [yearnow]</a>
 		<a href="http://www.otys.fr" title="OTYS Recruiting Technology" target="_blank"><img src="[website]/_images/otys.gif" border="0" alt="OTYS Recruiting Technology" style="margin-bottom:-1px"></a>
@@ -127,5 +127,51 @@
     addEvent(window, 'load', new Function('listMenu.activateMenu("listMenuRoot", arrow)'));
 
 </script>
+    <script>
+    window['_fs_debug'] = false;
+    window['_fs_host'] = 'www.fullstory.com';
+    window['_fs_org'] = '1CP7P';
+    window['_fs_namespace'] = 'FS';
+    (function(m, n, e, t, l, o, g, y) {
+        if (e in m && m.console && m.console.log) {
+            m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');
+            return;
+        }
+        g = m[e] = function(a, b) {
+            g.q ? g.q.push([a, b]) : g._api(a, b);
+        };
+        g.q = [];
+        o = n.createElement(t);
+        o.async = 1;
+        o.src = 'https://' + _fs_host + '/s/fs.js';
+        y = n.getElementsByTagName(t)[0];
+        y.parentNode.insertBefore(o, y);
+        g.identify = function(i, v) {
+            g(l, {
+                uid: i
+            });
+            if (v) g(l, v)
+        };
+        g.setUserVars = function(v) {
+            g(l, v)
+        };
+        g.identifyAccount = function(i, v) {
+            o = 'account';
+            v = v || {};
+            v.acctId = i;
+            g(o, v)
+        };
+        g.clearUserCookie = function(d, i) {
+            d = n.domain;
+            while (1) {
+                n.cookie = 'fs_uid=;domain=' + d +
+                    ';path=/;expires=' + new Date(0);
+                i = d.indexOf('.');
+                if (i < 0) break;
+                d = d.slice(i + 1)
+            }
+        }
+    })(window, document, window['_fs_namespace'], 'script', 'user');
+    </script>
 </body>
 </html>

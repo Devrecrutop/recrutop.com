@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Title</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
 <!--uts:begin inner-->
@@ -17,8 +17,14 @@ InGoedeBanenTracker.start(document.getElementById('igb_reference').value);
 </script>
 {/if}
 	{if $showJobLogo}<div class="photo1 jbdPhoto1"><div class="photo2 jbdPhoto2"><img src="http://{$showJobLogo}" alt=""></div></div>{/if}
-	<h1 class="title aplTitle aplAplSTitle">[t]Job Application[/t]</h1>    
-	<div class="intro aplLink aplAplSLink">
+	<h1 class="title aplTitle aplAplSTitle">Candidatez au poste : {$jobtitle|escape}</h1>
+	<div class="choice-candidates">
+   <button class="btn">
+      <a href="{$handler}/command/applyloginformsimple/vid/{$vid}">[t]I have registered before[/t]</a></li>
+   </button>
+
+  </div>
+  <div class="intro aplLink aplAplSLink">
 		<ul>
 			<li class="aplAplyLogin"><a href="{$handler}/command/applyloginformsimple/vid/{$vid}">[t]I have registered before[/t]</a></li>
 			<li class="aplAplyPass"><a href="{$handler}/command/applyforgotpwdformsimple/vid/{$vid}">[t]I have forgotten my password[/t]</a></li>
@@ -29,13 +35,13 @@ InGoedeBanenTracker.start(document.getElementById('igb_reference').value);
 			<li class="aplAplyLi aplAplyLiJob"><a href="{$handler}/command/applylinkedinsimple/vid/{$vid}/qsuid/{$qsuid}" rel="external">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
 			</if>
             <if $mobile_enabled>
-            <li class="aplAplyLeave"><a href="{$handler}/command/applyleavecv/vid/{$vid}/qsuid/{$qsuid}">[t]Leave your contacts[/t]</a></li>    
+            <li class="aplAplyLeave"><a href="{$handler}/command/applyleavecv/vid/{$vid}/qsuid/{$qsuid}">[t]Leave your contacts[/t]</a></li>
             </if>
 		</ul>
 		<div class="cleaner"></div>
 	</div>
     <!--CAT ID: {$vacancy_main_category_id} -->{*cat id is not available in multiAppMode*}
-	<div class="appRow aplAr aplAplSAr aplAplSAr{$vacancy_main_category_id}"><span>[t]Application for:[/t]</span> {if $multiAppMode}{$applicationsList}{else}"{$jobtitle|escape}"{/if}</div>
+	<div class="appRow aplAr aplAplSAr aplAplSAr{$vacancy_main_category_id}"><span>[t]Application for:[/t]</span> {if $multiAppMode}{$applicationsList}{else} "{$jobtitle|escape}" {/if}</div>
 	{$questionSet}
 
     {if $back_to_vacancy_detail && $vacancyDetailLink}
