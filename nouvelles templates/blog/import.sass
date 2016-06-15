@@ -209,10 +209,6 @@ h1
   border: 0
   width: 15em
 
-.candidat
-  min-height: 90vh
-  padding-top: 60px
-
 #outer
   position: absolute
   z-index: 1
@@ -227,7 +223,7 @@ h1
   .algolia p
     font-size: 20px
   .tab-content
-    font-size:17px
+    font-size: 17px
 
 #particles-js
   position: absolute
@@ -247,81 +243,83 @@ h1
 /*-OTYS
 
 /*----------------------------------------
+.candidat
+  min-height: 90vh
+  padding-top: 60px
+  .bisjab
+    margin: 3em auto 5em
+    font-size: 20px
+    h1
+      font-size: 47px
 
-.bisjab
-  margin: 3em auto 5em
-  font-size: 20px
-  h1
-    font-size: 47px
-
-.menuContainer, .aplListTbl, .menuContainer, .menuLink, .buttonContainer, .aplTitle, .title, .aplIntro
-  display: flex
-  justify-content: center
-  align-items: center
-  margin: 1em
-  text-align: center
-
-.buttonContainer, .itemContainer
-  text-transform: capitalize
-
-.buttonContainer > input, .displayNone > input
-  background-color: $blue
-  border-radius: 50px
-  border: 0px none
-  color: $white
-  padding: 1em
-
-.jbMafOuter h2
-  padding: 1.1em
-  float: left
-
-.jbMafOuter .formInput
-  float: right
-  margin-right: 4em
-
-.jbdOuter .addthis_button
-  display: none
-
-@media (max-width: 990px)
-  form
-    margin-right: 0%
-  .menuContainer, .aplListTbl, .text, .menuContainer, .menuLink, .buttonContainer, .itemContainer, .aplTitle, .title, .aplIntro
-    display: inherit
-
-.formInput input, textarea
-  border: thin solid $grey
-
-@media (min-width: 990px)
-  .aplListTbl
-    margin-left: 15%
-    display: inline-block
-    th
-      text-align: center
-      text-transform: uppercase
-      padding: 1em
-    td
-      padding: 0.5em
-  form textarea
-    min-width: 19em
-  .jbMafOuter .buttonContainer
-    padding-top: 41vh
-    padding-left: 6vh
-
-.jblOuter .category
-  display: none
-
-.bisjab .vacstable
-  .formHeaderContainer
+  .menuContainer, .aplListTbl, .menuContainer, .menuLink, .buttonContainer, .aplTitle, .title
     display: flex
     justify-content: center
     align-items: center
+    margin: 1em
     text-align: center
 
-.listFunctionContainer td
-  padding-top: 2em
-  text-transform: uppercase
+  .buttonContainer, .itemContainer
+    text-transform: capitalize
 
-.custAddJobOuter
-  label, .formInput input, textarea input, .formInput textarea
-    width: 30em
-    height: 2em
+  .buttonContainer > input, .displayNone > input
+    background-color: $blue
+    border-radius: 50px
+    border: 0px none
+    color: $white
+    padding: 1em
+
+  .jbMafOuter h2
+    padding: 1.1em
+    float: left
+
+  .jbMafOuter .formInput
+    float: right
+    margin-right: 4em
+
+  .jbdOuter .addthis_button
+    display: none
+
+  @media (max-width: 990px)
+    form
+      margin-right: 0%
+    .menuContainer, .aplListTbl, .text, .menuContainer, .menuLink, .buttonContainer, .itemContainer, .aplTitle, .title, .aplIntro
+      display: inherit
+
+  .formInput input, textarea
+    border: thin solid $grey
+
+  @media (min-width: 990px)
+    .aplListTbl
+      margin-left: 15%
+      display: inline-block
+      th
+        text-align: center
+        text-transform: uppercase
+        padding: 1em
+      td
+        padding: 0.5em
+    form textarea
+      min-width: 19em
+    .jbMafOuter .buttonContainer
+      padding-top: 41vh
+      padding-left: 6vh
+
+  .jblOuter .category
+    display: none
+
+  .bisjab .vacstable
+    .formHeaderContainer
+      display: flex
+      justify-content: center
+      align-items: center
+      text-align: center
+
+  .listFunctionContainer td
+    padding-top: 2em
+    text-transform: uppercase
+
+  .custAddJobOuter
+    label, .formInput input, textarea input, .formInput textarea
+      width: 30em
+      height: 2em
