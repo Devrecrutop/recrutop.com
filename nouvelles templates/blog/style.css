@@ -212,6 +212,9 @@ h1 {
   background-size: cover;
   background-position: 50% 50%; }
 
+.btn-linkedin {
+  background-color: RGBA(0, 115, 178, 1); }
+
 /*---------------------------------------- */
 /*-OTYS */
 /*---------------------------------------- */
@@ -228,7 +231,8 @@ h1 {
       .candidat .bisjab .jblOuter .jblItemContainer .jblItemDescr {
         text-transform: none; }
   .candidat .choice-candidates button {
-    box-shadow: 1px 1px 2px black; }
+    box-shadow: 1px 1px 2px black;
+    margin: 20px; }
   .candidat .menuContainer, .candidat .aplListTbl, .candidat .menuContainer, .candidat .menuLink, .candidat .buttonContainer, .candidat .aplTitle, .candidat .title {
     display: flex;
     justify-content: center;
