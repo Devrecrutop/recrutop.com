@@ -1,54 +1,60 @@
-{* this template is used when the simple_registration=yes *}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+{* this template is used when the simple_registration=yes *}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html lang="en">
+
 <head>
-<title>Title</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
+
 <body>
-<!--uts:begin inner-->
-
-<div class="outer aplOuter aplAplSOuter">
-<!-- /UTS/applicants/applyForJobSimple.html STANDARD2 -->
-{if $ingoedebanen_tracker}
-<script src="https://beheer.ingoedebanen.nl/js/tracker.js" type="text/javascript"></script>
-<input type="hidden" name="igb_reference" id="igb_reference" value="{$ref_nr_varchar}">
-<script type="text/javascript">
-InGoedeBanenTracker.start(document.getElementById('igb_reference').value);
-</script>
-{/if}
-	{if $showJobLogo}<div class="photo1 jbdPhoto1"><div class="photo2 jbdPhoto2"><img src="http://{$showJobLogo}" alt=""></div></div>{/if}
-	<h1 class="title aplTitle aplAplSTitle">Candidatez au poste : {$jobtitle|escape}</h1>
-	<div class="choice-candidates">
-   <button class="btn">
-      <a href="{$handler}/command/applyloginformsimple/vid/{$vid}">[t]I have registered before[/t]</a></li>
-   </button>
-
-  </div>
-  <div class="intro aplLink aplAplSLink">
-		<ul>
-			<li class="aplAplyLogin"><a href="{$handler}/command/applyloginformsimple/vid/{$vid}">[t]I have registered before[/t]</a></li>
-			<li class="aplAplyPass"><a href="{$handler}/command/applyforgotpwdformsimple/vid/{$vid}">[t]I have forgotten my password[/t]</a></li>
-			<if $tkEnabled  && !$always_use_vacancy_specific_qs>
-			<li class="aplAplyTk"><a href="{$handler}/command/applytksimple/vid/{$vid}/qsuid/{$qsuid}">[t]Use my CV to fill in the form[/t]</a></li>
-			</if>
-			<if $linkedinEnabled && !$always_use_vacancy_specific_qs>
-			<li class="aplAplyLi aplAplyLiJob"><a href="{$handler}/command/applylinkedinsimple/vid/{$vid}/qsuid/{$qsuid}" rel="external">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
-			</if>
-            <if $mobile_enabled>
-            <li class="aplAplyLeave"><a href="{$handler}/command/applyleavecv/vid/{$vid}/qsuid/{$qsuid}">[t]Leave your contacts[/t]</a></li>
-            </if>
-		</ul>
-		<div class="cleaner"></div>
-	</div>
-    <!--CAT ID: {$vacancy_main_category_id} -->{*cat id is not available in multiAppMode*}
-	<div class="appRow aplAr aplAplSAr aplAplSAr{$vacancy_main_category_id}"><span>[t]Application for:[/t]</span> {if $multiAppMode}{$applicationsList}{else} "{$jobtitle|escape}" {/if}</div>
-	{$questionSet}
-
-    {if $back_to_vacancy_detail && $vacancyDetailLink}
-    <div class="buttonContainer aplBc aplJlSBcBack"><input type="button" name="bBack" value="[tb]Back[/tb]" class="button" onclick="window.location='{$vacancyDetailLink}'"></div>
-    {/if}
-</div>
-
-<!--uts:end inner-->
+    <!--uts:begin inner-->
+    <div class="outer aplOuter aplAplSOuter">
+        <!-- /UTS/applicants/applyForJobSimple.html STANDARD2 -->
+        {if $ingoedebanen_tracker}
+        <script src="https://beheer.ingoedebanen.nl/js/tracker.js" type="text/javascript"></script>
+        <input type="hidden" name="igb_reference" id="igb_reference" value="{$ref_nr_varchar}">
+        <script type="text/javascript">
+        InGoedeBanenTracker.start(document.getElementById('igb_reference').value);
+        </script>
+        {/if} {if $showJobLogo}
+        <div class="photo1 jbdPhoto1">
+            <div class="photo2 jbdPhoto2"><img src="http://{$showJobLogo}" alt=""></div>
+        </div>{/if}
+        <h1 class="title aplTitle aplAplSTitle">Candidatez au poste : {$jobtitle|escape}</h1>
+        <div class="choice-candidates">
+            <button class="btn btn-lg btn-success shadow uppercase white">
+                <a href="{$handler}/command/applyloginformsimple/vid/{$vid}">[t]I have registered before[/t]</a></li>
+            </button>
+            <button class="btn btn-lg shadow uppercase white">
+                <a href="{$handler}/command/applylinkedinsimple/vid/{$vid}/qsuid/{$qsuid}"><i class="fa fa-linkedin-square" aria-hidden="true"></i>Inscription Linkedin</a></li>
+            </button>
+        </div>
+        <!-- <div class="intro aplLink aplAplSLink">
+            <ul>
+                <li class="aplAplyLogin"><a href="{$handler}/command/applyloginformsimple/vid/{$vid}">[t]I have registered before[/t]</a></li>
+                <li class="aplAplyPass"><a href="{$handler}/command/applyforgotpwdformsimple/vid/{$vid}">[t]I have forgotten my password[/t]</a></li>
+                <if $tkEnabled && !$always_use_vacancy_specific_qs>
+                    <li class="aplAplyTk"><a href="{$handler}/command/applytksimple/vid/{$vid}/qsuid/{$qsuid}">[t]Use my CV to fill in the form[/t]</a></li>
+                </if>
+                <if $linkedinEnabled && !$always_use_vacancy_specific_qs>
+                    <li class="aplAplyLi aplAplyLiJob"><a href="{$handler}/command/applylinkedinsimple/vid/{$vid}/qsuid/{$qsuid}" rel="external">[t]Use my LinkedIn profile to fill in the form[/t]</a></li>
+                </if>
+                <if $mobile_enabled>
+                    <li class="aplAplyLeave"><a href="{$handler}/command/applyleavecv/vid/{$vid}/qsuid/{$qsuid}">[t]Leave your contacts[/t]</a></li>
+                </if>
+            </ul>
+            <div class="cleaner"></div>
+        </div> -->
+        <!--CAT ID: {$vacancy_main_category_id} -->{*cat id is not available in multiAppMode*}
+        <div class="appRow aplAr aplAplSAr aplAplSAr{$vacancy_main_category_id}"><span>[t]Application for:[/t]</span> {if $multiAppMode}{$applicationsList}{else} "{$jobtitle|escape}" {/if}</div>
+        {$questionSet} {if $back_to_vacancy_detail && $vacancyDetailLink}
+        <div class="buttonContainer aplBc aplJlSBcBack">
+            <input type="button" name="bBack" value="[tb]Back[/tb]" class="button" onclick="window.location='{$vacancyDetailLink}'">
+        </div>
+        {/if}
+    </div>
+    <!--uts:end inner-->
 </body>
+
 </html>

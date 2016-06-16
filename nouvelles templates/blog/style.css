@@ -227,6 +227,8 @@ h1 {
       text-transform: capitalize; }
       .candidat .bisjab .jblOuter .jblItemContainer .jblItemDescr {
         text-transform: none; }
+  .candidat .choice-candidates button {
+    box-shadow: 1px 1px 2px black; }
   .candidat .menuContainer, .candidat .aplListTbl, .candidat .menuContainer, .candidat .menuLink, .candidat .buttonContainer, .candidat .aplTitle, .candidat .title {
     display: flex;
     justify-content: center;
