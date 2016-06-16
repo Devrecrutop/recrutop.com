@@ -23,7 +23,7 @@ var search = instantsearch({
   search.addWidget(
     instantsearch.widgets.hits({
       container: '#hits',
-      hitsPerPage: 5,
+      hitsPerPage: 25,
       templates: {
         item: getTemplate('hit'),
         empty: getTemplate('no-results')
