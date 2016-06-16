@@ -39,6 +39,8 @@
       color: #fff; }
       .navbar .dropdown-menu li > a:hover {
         color: #000; }
+  .navbar .dropdown:hover .dropdown-menu {
+    display: block; }
 
 /*---------------------------------------- */
 /*-GENERAL */
