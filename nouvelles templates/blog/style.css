@@ -137,7 +137,8 @@ h1 {
 .ais-search-box > input {
   border: none;
   color: #000;
-  height: 3em;
+  height: 70px;
+  font-size: 20px;
   padding-left: 2em;
   width: 100%; }
   .ais-search-box > input:focus {
