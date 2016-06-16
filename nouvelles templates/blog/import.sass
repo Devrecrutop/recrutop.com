@@ -43,13 +43,18 @@ $white: #fff
     background-color: $grey
     color: $black
     display: block
-  .nav > li > a:hover
+  .nav > li > a:hover, .nav .open>a, .nav .open>a:focus, .nav .open>a:hover,  .nav .open>a:active
     color: $black
     border-radius: 10px
   .dropdown-menu
     background-color: $blue
     li > a
       color: $white
+      &:hover
+        color: $black
+
+
+
 
 /*----------------------------------------
 
@@ -83,7 +88,7 @@ h1
 
 .shadow
   text-shadow: 1px 1px 2px black
-  &:hover
+  &:hover, &:active, &:focus
     text-shadow: none
 
 .left
