@@ -272,7 +272,6 @@ h1 {
     border: thin solid #DCDADA; }
   @media (min-width: 990px) {
     .candidat .aplListTbl {
-      margin-left: 15%;
       display: inline-block; }
       .candidat .aplListTbl th {
         text-align: center;
