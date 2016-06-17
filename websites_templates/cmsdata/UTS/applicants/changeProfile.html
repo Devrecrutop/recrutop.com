@@ -2,46 +2,55 @@
 {if $editor_exp_description || $editor_exp_extrafields}
 <script language="javascript" type="text/javascript" src="/_javascript_global/editor/TinyMCE/tiny_mce.js"></script>
 <script language="javascript" type="text/javascript">
-    var lang = "{$uts.lng}";
-    var elements = "";
-    if({$editor_exp_description}) elements = "functionTxt";
-    if({$editor_exp_description} && {$editor_exp_extrafields}) elements = /(functionTxt|fieldTxtArea)/;
-    //{literal}
-    tinyMCE.init({
-        theme : "advanced",
-        mode : "specific_textareas",
-        editor_selector: elements,
-        skin : "o2k7",
-        plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
-        editor_deselector : "noeditor",
-        theme_advanced_buttons1 : "bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,cut,copy,paste,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo",
-        theme_advanced_buttons2 : "",
-        theme_advanced_buttons3 : "",
-        theme_advanced_buttons4 : "",
-        theme_advanced_toolbar_location : "top",
-        theme_advanced_toolbar_align : "left",
-        content_css : "css/content.css",
-        height:"100px",
-        width:"226px",
-        language : lang
-    });
+var lang = "{$uts.lng}";
+var elements = "";
+if ({
+        $editor_exp_description
+    }) elements = "functionTxt";
+if ({
+        $editor_exp_description
+    } && {
+        $editor_exp_extrafields
+    }) elements = /(functionTxt|fieldTxtArea)/;
+//{literal}
+tinyMCE.init({
+    theme: "advanced",
+    mode: "specific_textareas",
+    editor_selector: elements,
+    skin: "o2k7",
+    plugins: "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+    editor_deselector: "noeditor",
+    theme_advanced_buttons1: "bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,cut,copy,paste,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo",
+    theme_advanced_buttons2: "",
+    theme_advanced_buttons3: "",
+    theme_advanced_buttons4: "",
+    theme_advanced_toolbar_location: "top",
+    theme_advanced_toolbar_align: "left",
+    content_css: "css/content.css",
+    height: "100px",
+    width: "226px",
+    language: lang
+});
 
-    //{/literal}
+//{/literal}
 </script>
-{/if}
-
-{if $lastMcCommand && $lastMcData}
+{/if} {if $lastMcCommand && $lastMcData}
 <script type="text/javascript">
-  var mcCommand = '{$lastMcCommand}';
-  var itemType = '{$lastMcData.itemType}';
-  var questionClass = '{$lastMcData.questionClass}';
-  var selector = '';
-  var cvItemsCollapse = {$cvItemsCollapse};
-  var cvNewItemSelect = {$cvNewItemSelect};
-{literal}
+var mcCommand = '{$lastMcCommand}';
+var itemType = '{$lastMcData.itemType}';
+var questionClass = '{$lastMcData.questionClass}';
+var selector = '';
+var cvItemsCollapse = {
+    $cvItemsCollapse
+};
+var cvNewItemSelect = {
+    $cvNewItemSelect
+}; {
+    literal
+}
 
 $(document).ready(function() {
-      if (mcCommand == 'addcvitem') {
+    if (mcCommand == 'addcvitem') {
         if (itemType) {
             // adding skills etc
             switch (itemType) {
@@ -70,146 +79,109 @@ $(document).ready(function() {
             }
         }
 
-        if (selector !='') {
+        if (selector != '') {
             var divs = $(selector);
-            var last = divs[divs.length-1];
-            if (itemType == '' && cvItemsCollapse == 1) {   // education or employment history added
+            var last = divs[divs.length - 1];
+            if (itemType == '' && cvItemsCollapse == 1) { // education or employment history added
                 $(last).show();
             }
             if (cvNewItemSelect == 1) {
                 var txtinputs = $('input[type="text"]', last);
-                if (txtinputs.length>0) {
+                if (txtinputs.length > 0) {
                     txtinputs[0].focus();
                 }
                 $('html, body').animate({
-                  scrollTop: $(last).offset().top
+                    scrollTop: $(last).offset().top
                 }, 2000);
             }
         }
-      }
     }
-);
-{/literal}
-
+}); {
+    /literal}
 </script>
 {/if}
-
-
 <div class="outer aplOuter aplCpOuter">
-<!-- /UTS/applicants/changeProfile.html -->
-<h1 class="title aplTitle aplCptitle">{if $falseApplication}[t]Job Application[/t]{else}[t]Change my profile[/t]{/if}</h1>
-{$menu}
+    <!-- /UTS/applicants/changeProfile.html -->
+    <h1 class="title aplTitle aplCptitle">{if $falseApplication}[t]Job Application[/t]{else}[t]Change my profile[/t]{/if}</h1> {$menu} {$questionSet} {if $display_saved == 1} {if $falseApplication}
+    <div>[t]Thank you for your application.[/t]</div>
+    {else} {if $cand_profile_req_approval}
+    <div class="approw aplApprow">[t]Your changes has been saved and sent to approval.[/t]</div>
+    {else}
+    <div class="approw aplApprow">[t]Your profile has been successfully updated[/t]</div>
+    {/if} {/if} {/if} {if $allow_candidate_fo_cv_printout}
+    <script type="text/javascript">
+    //{literal}
 
+    function printCvContent() {
+        //{/literal}
 
+        {
+            if $uts.clientid == 1960
+        }
 
-{$questionSet}
-
-
-{if $display_saved == 1}
-{if $falseApplication}
-<div>[t]Thank you for your application.[/t]</div>
-{else}
-  {if $cand_profile_req_approval}
-<div class="approw aplApprow">[t]Your changes has been saved and sent to approval.[/t]</div>
-  {else}
-<div class="approw aplApprow">[t]Your profile has been successfully updated[/t]</div>
-  {/if}
-
-{/if}
-{/if}
-
-
-
-{if $allow_candidate_fo_cv_printout}
-
-
-<script type="text/javascript">
-//{literal}
-
-function printCvContent(){
-    //{/literal}
-
-    {if $uts.clientid == 1960 }
-    
-        {* This client wants to print to MS Word *}
+        { * This client wants to print to MS Word *
+        }
 
         var fsurl = "/index.php/page/applicants/command/print_candidate_cv/qsfor/myprofile/format/doc";
         window.location.href = fsurl;
-        
-    {else}
+
+        {
+            else
+        }
 
         var fsurl = "/index.php/page/applicants/command/print_candidate_cv/qsfor/myprofile/";
-        window.open(fsurl,"print_cv_window","toolbar=0,location=0,status=0,scrollbars=1, width=800,height=800");
-        
-    {/if}
+        window.open(fsurl, "print_cv_window", "toolbar=0,location=0,status=0,scrollbars=1, width=800,height=800");
 
+        {
+            /if}
+
+            //{literal}
+
+        }
+
+        function redirectToLogout() {
+            fsurl = "/index.php/page/applicants/command/logout/gohome/1/bb/1/";
+            window.location = fsurl;
+        }
+
+
+        //{/literal}
+    </script>
+    {if $display_saved == 1 && !$falseApplication}
+    <script type="text/javascript">
+    //{literal}
+    var answer = confirm("[th]Do you want to print your CV[/th]");
+    if (answer) {
+        printCvContent();
+    }
+    //{/literal}
+    </script>
+    {/if}
+    <div>
+        <input name="button" type="button" class="button" value="[th]Print CV[/th]" onClick="printCvContent('{$printtype}');">
+    </div>
+    {/if} {if [uts:print_cv_preview] && $printCvPreviewId}
+    <script type="text/javascript">
+    var appHandler = '{$handler}';
     //{literal}
 
-}
+    function printCvPreview() {
+        var proceed = confirm('[th]Before previewing you cv, you must save changes you have just made. Are you sure you want to continue?[/th]');
+        if (proceed) {
 
-function redirectToLogout(){
-    fsurl = "/index.php/page/applicants/command/logout/gohome/1/bb/1/";
-    window.location= fsurl;
-}
- 
+            try {
+                window.frames['cvPreviewFrame'].location.href = appHandler + '/command/print_cv_peview';
+            } catch (e) {}
 
-//{/literal}
-</script>
-
-{if $display_saved == 1 && !$falseApplication}
-<script type="text/javascript">
-//{literal}
-	var answer = confirm("[th]Do you want to print your CV[/th]");
-	if (answer){
-		printCvContent();
-	}
-//{/literal}
-</script>
-{/if}
-
-
-
-
-
-		<div>
-			<input name="button" type="button" class="button" value="[th]Print CV[/th]" onClick="printCvContent('{$printtype}');">
-		</div>
-{/if}    
-
-{if [uts:print_cv_preview] && $printCvPreviewId}
-
-<script type="text/javascript">
-  var appHandler = '{$handler}';   
-//{literal}
-
-  function printCvPreview()
-  {
-    var proceed = confirm('[th]Before previewing you cv, you must save changes you have just made. Are you sure you want to continue?[/th]');
-    if(proceed)
-    {
-
-    try
-    {        
-      window.frames['cvPreviewFrame'].location.href = appHandler + '/command/print_cv_peview';    
+        }
     }
-    catch(e)
-    {
-    }     
-    
-    }
-  }
- 
-//{/literal}
-</script>
 
-
-		<div>
-			<input name="button" type="button" class="button bttnPrintCvPreview" value="[th]Print CV Preview[/th]" onClick="printCvPreview();">
-		</div>
-		
-    <iframe application="yes" name="cvPreviewFrame" id="cvPreviewFrame" width="0" height="0" scrolling="no" frameborder="no"></iframe> 
-{/if}
-
-
+    //{/literal}
+    </script>
+    <div>
+        <input name="button" type="button" class="button bttnPrintCvPreview" value="[th]Print CV Preview[/th]" onClick="printCvPreview();">
+    </div>
+    <iframe application="yes" name="cvPreviewFrame" id="cvPreviewFrame" width="0" height="0" scrolling="no" frameborder="no"></iframe>
+    {/if}
 </div>
 <!--uts:end inner-->
