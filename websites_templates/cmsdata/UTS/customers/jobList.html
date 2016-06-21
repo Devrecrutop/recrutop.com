@@ -1,390 +1,316 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
+
 <head>
-<title>Vacature Lijst</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link href="formstyles.css" rel="stylesheet" type="text/css">
+    <title>Vacature Lijst</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link href="formstyles.css" rel="stylesheet" type="text/css">
 </head>
+
 <body>
-<!-- /UTS/customers/jobList.html -->
-<!--uts:begin inner-->
-<style type="text/css">
-	/* {literal} */
-	.thin-column {
-		width: 32px;
-		text-align: center;
-	}
-
-	.thin-column img {
-		border: none;
-		margin: 0.25em;
-	}
-	/* {/literal} */
-</style>
-
-<!--UT: Jobslist-->
-<!-- [t]month[/t]
+    <!-- /UTS/customers/jobList.html -->
+    <!--uts:begin inner-->
+    <!--UT: Jobslist-->
+    <!-- [t]month[/t]
 [t]year[/t]
 [t]unknown period[/t] -->
-<!-- /UTS/customers/JobList.html -->
-<!--START_9-->
-<table border="0" cellpadding="0" cellspacing="0" class="vacsTable">
-<!--MENUBAR-->
-<!--START_PageTitle-->
-<tr>
-	<td class="formHeaderContainer">
-		<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
-		<tr>
-			<td class="formHeader">[PageTitle]</td>
-			<td class="lastupdate">[last_update]</td>
-		</tr>
-		</table>
-	</td>
-</tr>
-<!--END_PageTitle-->
-<tr>
-	<td class="pageLinkContainer">
-		[CustomersMenu]
-		[CustomersSubMenu]
-	</td>
-</tr>
+    <!-- /UTS/customers/JobList.html -->
+    <!--START_9-->
+    <h1>Mes annonces </h1>
+    [CustomersMenu]
+    <p>[last_update]</p>
+     {if $customer_jobname_filter} {/if} {if $allow_jobs_amount_period || $allow_jobs_amount_publish}
+    <tr>
+        <td>
+            {if $allow_jobs_amount_period} {if $jobs_period == "month"} {assign var=period value="[t]month[/t]"} {elseif $jobs_period == "year"} {assign var=period value="[t]year[/t]"} {else} {assign var=period value="[t]unknown period[/t]"} {/if} [t]You have {$jobsCount} jobs inserted this {$period} from {$jobs_amount_period} possible jobs.[/t]
+            <br> {/if} {if $allow_jobs_amount_publish} [t]You have {$publicCount} published jobs from {$jobs_amount_publish} possible publicable jobs.[/t]
+            <br> {/if}
+        </td>
+    </tr>
+    {/if}
+    <table border="0" cellpadding="0" cellspacing="0" class=" table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Poste</th>
+                <th>Description </th>
+                <th>Candidats liés </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="[website]/index.php/page/customers_ext/command/detail/vid/[id]/bb/1/temp/[`temp]"><span class="publish_[publish_status]">[functie_o]</span></a>
+                </td>
+                <td>[ShortDescription]</td>
+                <td><a href="[website]/index.php/page/customers_ext/command/candlist/bb/1/vid/[id]">[SingleWord5]</a></td>
+            </tr>
+        </tbody>
+    </table>
 
 
-{if $customer_jobname_filter}
-<tr>
-  <td>
-    <div class="outer custOuter custPpOuter">
-      <form name="advsearchform" method="post" action="/index.php/page/customers_ext/bb/1" >
-      <div> 
-      <div class="formInput actFi">
-      <label>[t]Search vacancy by title[/t]</label>
-      <input value="{$job_name_filter_keyword}" type="text" name="job_name_filter_keyword">
-      </div>
-      
-      <div class="buttonContainer">
-        <input name="bApplSubmit" value="[t]Zoek[/t]" class="button" type="submit">
-      </div>
-            
-      <input name="command" value="default" type="hidden">
-      <input name="search_jobtitle_by_keyword" value="1" type="hidden">
-      </div>
-      </form>              
-    </div>
-  </td>
-</tr>  
-{/if} 
 
-{if $allow_jobs_amount_period || $allow_jobs_amount_publish}
-<tr>
-	<td>
-		{if $allow_jobs_amount_period}
-			{if $jobs_period == "month"}
-				{assign var=period value="[t]month[/t]"}
-			{elseif $jobs_period == "year"}
-				{assign var=period value="[t]year[/t]"}
-			{else}
-				{assign var=period value="[t]unknown period[/t]"}
-			{/if}
+    <table>
 
-			[t]You have {$jobsCount} jobs inserted this {$period} from {$jobs_amount_period} possible jobs.[/t]<br >
-		{/if}
-		{if $allow_jobs_amount_publish}
-			[t]You have {$publicCount} published jobs from {$jobs_amount_publish} possible publicable jobs.[/t]<br >
-		{/if}
-	</td>
-</tr>
-{/if}
-<!--START_Block1-->
-<tr>
-	<td valign="top" class="smallTblContainer">
-		<table border="0" cellpadding="0" cellspacing="0" class="smallTbl">
-		<!--START_Title1-->
-		<tr>
-			<td class="formSubHeader">[`Title1]</td>
-		</tr>
-		<!--END_Title1-->
-		<!--START_Text1-->
-		<tr>
-			<td class="formText">[`Text1]</td>
-		</tr>
-		<!--END_Text1-->
-		</table>
-	</td>
-</tr>
-<!--END_Block1-->
-<!--START_CAT_TBL-->
-<tr>
-	<td class="listCatContainer">
-	<table border="0" cellpadding="0" cellspacing="0" class="listCatTbl">
-	<tr>
-		<td class="listCat">[categorie]</td>
-	</tr>
-	</table>
-	</td>
-</tr>
-<!--END_CAT_TBL-->
-<!--START_VACANCY_TBL-->
-<tr>
-	<td class="vacancyItemContainer" valign="top">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="vacancyItemTbl">
-		<tr>
-			<!--START_ExpanderImage-->
-			<td valign="top" style="width: [ExpanderImageWidth];cursor:hand;" onClick="[ExpanderImageLink]">[ExpanderImage]</td>
-			<!--END_ExpanderImage-->
-			<td valign="top">
-				<table width="100%" border="0" cellpadding="0" cellspacing="0">
-				<tr>
-					<!--START_ThumbnailLeft-->
-					<td valign="top" style="width: [`ThumbnailWidth]; cursor:hand;" onClick="[`ThumbnailLink]">[`Thumbnail]</td>
-					<!--END_ThumbnailLeft-->
-					<td valign="top">
-						<table width="100%" border="0" cellspacing="0" cellpadding="0">
-						<tr>
-							<td>
-								<table width="100%" border="0" cellspacing="0" cellpadding="0">
-								<tr>
-									<td class="listFunctionContainer">
-										<table border="0" cellpadding="0" cellspacing="0" class="listFunctionTbl">
-										<tr>
-											<td class="listFunctionName"><a href="[website]/index.php/page/customers_ext/command/detail/vid/[id]/bb/1/temp/[`temp]"><span class="publish_[publish_status]">[functie_o]</span></a><inactive>[t]- inactive[/t]<inactive></td>
-										</tr>
-										</table>
-									</td>
-								</tr>
-								<!--START_KEYWORDS-->
-								<tr>
-									<td>
-										<table border="0" cellpadding="0" cellspacing="0" width="100%">
-											<!--START_KEYWORD_ROW1-->
-											<tr>
-												<td>
-													<table border="0" cellpadding="0" cellspacing="0" class="listKeywordTbl">
-													<tr>
-													<!--START_Location-->
-														<td class="listKeywordTitle">[SingleWord1]<!--SingleWordLink1--></td>
-														<td class="listKeyword">[locatie]</td>
-													<!--END_Location-->
-													</tr>
-													</table>
-												</td>
-											</tr>
-											<!--END_KEYWORD_ROW1-->
-											<!--START_KEYWORD_ROW2-->
-											<tr>
-												<td>
-													<table border="0" cellpadding="0" cellspacing="0" class="listKeywordTbl">
-													<tr>
-													<!--START_Region-->
-														<td class="listKeywordTitle">[SingleWord2]<!--SingleWordLink2--></td>
-														<td class="listKeyword">[regio]</td>
-													<!--END_Region-->
-													</tr>
-													</table>
-												</td>
-											</tr>
-											<!--END_KEYWORD_ROW2-->
-											<!--START_KEYWORD_ROW3-->
-											<tr>
-												<td>
-													<table border="0" cellpadding="0" cellspacing="0" class="listKeywordTbl">
-													<tr>
-													<!--START_Company-->
-														<td class="listKeywordTitle">[SingleWord3]<!--SingleWordLink3--></td>
-														<td class="listKeyword">[werkgeverid]</td>
-													<!--END_Company-->
-													</tr>
-													</table>
-												</td>
-											</tr>
-											<!--END_KEYWORD_ROW3-->
-										</table>
-									</td>
-								</tr>
-								<!--END_KEYWORDS-->
-								</table>
-							</td>
-						</tr>
-						<!--START_ShortDescription-->
-						<tr>
-							<td class="listChapoContainer">
-								<table width="100%" border="0" cellspacing="0" cellpadding="0" class="listChapoTbl">
-								<tr>
-									<td class="listChapo">[ShortDescription]</td>
-								</tr>
-								</table>
-							</td>
-						</tr>
-						<!--END_ShortDescription-->
-						<!--START_TEMPWARNING-->
-						<tr>
-							<td class="listChapoContainer">
-								<table width="100%" border="0" cellspacing="0" cellpadding="0" class="listChapoTbl">
-								<tr>
-									<td class="listChapo"><span style="color:red;">[SingleWord4]<!--SingleWordLink4--></span></td>
-								</tr>
-								</table>
-							</td>
-						</tr>
-						<!--END_TEMPWARNING-->
-						<!--START_CANDLIST_LINK-->
-						<tr>
-							<td class="candListLinkContainer">
-								<table border="0" cellpadding="0" cellspacing="0" class="canListLinkTbl">
-								<tr>
-									{if !$jobslist_icons}
-									{if $new_candidates_list_in_jobslist}
-										<td class="candListLink1"><a href="{$website}/index.php/page/customers/bb/1/command/candjob_list/vid/[id]">[SingleWord5]</a><!--SingleWordLink5--></td>
-									{else}
-										<td class="candListLink1"><a href="[website]/index.php/page/customers_ext/command/candlist/bb/1/vid/[id]">[SingleWord5]</a><!--SingleWordLink5--></td>
-									{/if}
-									{/if}
-									<!--START_MATCH_BUTTON-->
-										<td class="candListLinkSpacer">|</td>
-										<td class="candListLink2"><a href="[website]/index.php/page/customers_ext/command/matchjob/bb/1/vid/[id]">[SingleWord6]</a><!--SingleWordLink6--></td>
-									<!--END_MATCH_BUTTON-->
-									<!--START_change_availability-->
-										<td class="candListLinkSpacer">|</td>
-										<td class="candListLink3"><a href="[website]/index.php/page/CustomersAgenda/command//bb/1/vid/[id]">[SingleWord7]</a><!--SingleWordLink7--></td>
-										<!--START_match_fetch-->
-											<!--START_match_fetch_skills-->
-											<td class="candListLinkSpacer">|</td>
-											<td class="candListLink3"><a href="[website]/index.php/page/CustomersMatchVacancySkills/command//bb/1/vid/[id]">[SingleWord8]</a><!--SingleWordLink8--></td>
-											<!--END_match_fetch_skills-->
-											<!--start_match_fetch_time-->
-											<td class="candListLinkSpacer">|</td>
-											<td class="candListLink3"><a href="[website]/index.php/page/CustomersAgendaAssignedList/command//bb/1/vid/[id]">[SingleWord9]</a><!--SingleWordLink9--></td>
-											<!--END_match_fetch_time-->
-										<!--END_match_fetch-->
-										<!--START_match_cand_fo-->
-										<td class="candListLinkSpacer">|</td>
-										<td class="candListLink3"><a href="[website]/index.php/page/customers_ext/command/cand_matches/bb/1/code/[code]/vid/[id]/retvac/1">[t]Number of Matches[/t]: [mc]</a><!--SingleWordLink9--></td>
-										<!--END_match_cand_fo-->
-									<!--END_change_availability-->
-								</tr>
-								</table>
-							</td>
-						</tr>
-						<!--END_CANDLIST_LINK-->
-						</table>
-					</td>
-					<!--START_ThumbnailRight-->
-					<td style="width: [`ThumbnailWidth]; cursor:hand;" onClick="[`ThumbnailLink]">[`Thumbnail]</td>
-					<!--END_ThumbnailRight-->
-				</tr>
-				</table>
-			</td>
-			<!--START_ApplicationImage-->
-			<td valign="top" style="width: [ApplicationImageWidth]; cursor:hand;" onClick="[ApplicationImageLink]">[ApplicationImage]</td>
-			<!--END_ApplicationImage-->
-			{if $jobslist_icons}
-			<td class="thin-column">
-				<!--START_EDIT_BUTTON-->
-				<a href="[website]/index.php/page/customers_ext/command/editjob/vid/[id]/contactpersoon//bb/1/tmpjob/0" style="float:right;" title="[th]edit[/th]"><img src="{$website}/_images_global/zoeken.gif" alt="[th]edit[/th]" ></a>
-				<!--END_EDIT_BUTTON-->
-				{if $allow_publishing_jobs}
-					<!--START_PUBLISH_BUTTON-->
-					<a href="[website]/index.php/page/customers_ext/command/publish/vid/[id]/contactpersoon//bb/1/retvac/1" style="float:right;" title="[th]publish[/th]" {if OTYSCZ === 1}onclick="javascript: if (!confirm('[th]Are you sure you want to publish this vacancy?[/th]')) return false;"{/if} ><img src="{$website}/_images_global/actief.gif" alt="[th]publish[/th]" ></a>
-					<!--END_PUBLISH_BUTTON-->
-				{/if}
-				{if $allow_withdraw}
-					<!--START_WITHDRAW_BUTTON-->
-						<a href="[website]/index.php/page/customers_ext/command/withdraw/vid/[id]/bb/1/contactpersoon/" style="float:right;" title="[th]withdraw[/th]" {if OTYSCZ === 1}onclick="javascript: if (!confirm('[th]Are you sure you want to unpublish this vacancy?[/th]')) return false;"{/if} ><img src="{$website}/_images_global/buttonClearFilter.gif" alt="[th]withdraw[/th]" ></a>
-					<!--END_WITHDRAW_BUTTON-->
-				{/if}
-				{if $allow_job_copying && $direct_vacancy_adding}
-					<!--START_JOBCOPY_BUTTON-->
-						<a href="[website]/index.php/page/customers_ext/command/copy_job/vid/[id]/contactpersoon//bb/1/prefix/[th]copy-[/th]" style="float:right;" title="[th]copy[/th]"><img src="{$website}/_images_global/copy-16x16.gif" alt="[th]copy[/th]" ></a>
-					<!--END_JOBCOPY_BUTTON-->
-				{/if}
-				{if $new_candidates_list_in_jobslist}
-					<nobr>
-						[number_of_candidates] <a href="{$website}/index.php/page/customers/bb/1/command/candjob_list/vid/[id]" title="[th]candidates[/th]"><img src="{$website}/_images_global/candidatemanager_icon.gif" alt="[th]candidates[/th]"  style="vertical-align: middle" ></a>
-					</nobr>
-				{else}
-					<a href="[website]/index.php/page/customers_ext/command/candlist/bb/1/vid/[id]" title="[th]candidates[/th]"><img src="{$website}/_images_global/candidatemanager_icon.gif" style="float:right;" alt="[th]candidates[/th]" ></a>
-				{/if}
-				{if $allow_add_wiqet_to_job}
-				    <br><a href="{$website}/index.php/page/wiqets/bb/1/command/select_wiqet/vid/[id]" title="wiqet" style="float:right;"><b><img src="{$website}/_images_global/wiqet.gif" alt="wiqet" ></b></a>
-				{/if}				
-				{if $shortlist_sx_extended}
-					<img src="{$website}/_images_global/euro.gif" title="[th]Total views[/th]: [JobTotalViews] | [th]Maximum views[/th]: [JobMaximumViews]" style="float:right;" >
-				{/if}									
-				{if $allow_renew_publication_startdate}
-				<!-- START_REFRESH_PUBLICATION_DATE -->
-				<a href="[website]/index.php/page/customers_ext/command/refresh_publish_date/bb/1/vid/[id]" title="[th]Start publication date will be reset to today[/th]"><img src="{$website}/_images_global/refresh.gif" title="[th]Start publication date will be reset to today[/th]" ></a>
-				<!-- END_REFRESH_PUBLICATION_DATE -->
-				{/if}
-				
-				{if $planningModule && OTYSCZ}
-				<!-- START_PLANNING_CALENDAR -->
-				  <a href="[website]/index.php/page/jobschedule/bb/1/code/[code]/vid/[id]/" title="[th]Planning calendar[/th]"><img src="{$website}/_images_global/calendar_button.gif" style="float:right;" alt="[th]Planning calendar[/th]" ></a>
-        <!-- END_PLANNING_CALENDAR -->				  
-        {/if}
-				{if $recrowdMode}
-				<!--START_MAKE_SPLITZ_JOB-->
-				<a href="[website]/index.php/page/recrowd/bb/1/command/vacFormInit/vacid/[id]/prefillSplitz/1"><img src="{$website}/_images_global/euro.gif" title="[thn]Make Spl!tz Job[/thn]" style="float:right;"></a>
-				<!--END_MAKE_SPLITZ_JOB-->
-				
-				<!--START_RECRUITERS-->
-				<a href="[website]/index.php/page/recrowd/bb/1/command/vacRecruiters/vacid/[id]/ref/customerVacList"><img src="{$website}/_images_global/euro.gif" title="[thn]Recruiters[/thn]" style="float:right;"></a>
-				<!--END_RECRUITERS-->
-				
-				<!--START_TENDER_OVERVIEW-->
-				<a href="[website]/index.php/page/recrowd/bb/1/command/vacTenderOverview/vacid/[id]/ref/customerVacList"><img src="{$website}/_images_global/euro.gif" title="[thn]Tender Overview[/thn]" style="float:right;"></a>
-				<!--END_TENDER_OVERVIEW-->
-				{/if}
-
-                		
-			{/if}
-			</td>
-		</tr>
-		</table>
-
-	</td>
-</tr>
-<!--END_VACANCY_TBL-->
-<!--START_JobsListPageNav-->
-<tr>
-<td class="listNavContainer">
-
-<table border="0" cellpadding="0" cellspacing="0" class="listNavTbl">
-<tr>
-<td class="listNavPrevious">
-<!--START_JobsListPrevious-->
-<a href="[previous_link]">[th]Previous page[/th]</a>
-<!--END_JobsListPrevious-->
-&nbsp;</td>
-<td class="listNavPageNumberContainer">
-<table border="0" cellpadding="0" cellspacing="0" class="listNavPageNumberTbl">
-<tr>
-<td class="listNavPageNumberHolder">
-
-<!--START_JobsListPageLinks-->
-
-<span class="listNavPageNumber[active]"><a href="[page_link]">[PageNumber]</a></span><span>&nbsp;&nbsp;</span>
-
-
-<!--END_JobsListPageLinks-->
-</td>
-</tr>
-</table>
-</td>
-
-<td class="listNavNext">&nbsp;<!--START_JobsListNext--><a href="[next_link]">[th]Next page[/th]</a>  <!--END_JobsListNext--></td>
-</tr>
-</table>
-
-</td>
-</tr>
-<!--END_JobsListPageNav-->
-<!--START_SystemBlock-->
-<!--SystemLinks-->
-<!--END_SystemBlock-->
-
-</table>
-
-<!--END_9-->
-<!--uts:end inner-->
-
+    <!--START_VACANCY_TBL-->
+    <tr>
+        <td class="vacancyItemContainer" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="vacancyItemTbl">
+                <tr>
+                    <!--START_ExpanderImage-->
+                    <td valign="top" style="width: [ExpanderImageWidth];cursor:hand;" onClick="[ExpanderImageLink]">[ExpanderImage]</td>
+                    <!--END_ExpanderImage-->
+                    <td valign="top">
+                        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <!--START_ThumbnailLeft-->
+                                <td valign="top" style="width: [`ThumbnailWidth]; cursor:hand;" onClick="[`ThumbnailLink]">[`Thumbnail]</td>
+                                <!--END_ThumbnailLeft-->
+                                <td valign="top">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td class="listFunctionContainer">
+                                                            <table border="0" cellpadding="0" cellspacing="0" class="listFunctionTbl">
+                                                                <tr>
+                                                                    <td class="listFunctionName"><a href="[website]/index.php/page/customers_ext/command/detail/vid/[id]/bb/1/temp/[`temp]"><span class="publish_[publish_status]">[functie_o]</span></a>
+                                                                        <inactive>[t]- inactive[/t]
+                                                                            <inactive>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <!--START_KEYWORDS-->
+                                                    <tr>
+                                                        <td>
+                                                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                                <!--START_KEYWORD_ROW1-->
+                                                                <tr>
+                                                                    <td>
+                                                                        <table border="0" cellpadding="0" cellspacing="0" class="listKeywordTbl">
+                                                                            <tr>
+                                                                                <!--START_Location-->
+                                                                                <td class="listKeywordTitle">[SingleWord1]
+                                                                                    <!--SingleWordLink1-->
+                                                                                </td>
+                                                                                <td class="listKeyword">[locatie]</td>
+                                                                                <!--END_Location-->
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <!--END_KEYWORD_ROW1-->
+                                                                <!--START_KEYWORD_ROW2-->
+                                                                <tr>
+                                                                    <td>
+                                                                        <table border="0" cellpadding="0" cellspacing="0" class="listKeywordTbl">
+                                                                            <tr>
+                                                                                <!--START_Region-->
+                                                                                <td class="listKeywordTitle">[SingleWord2]
+                                                                                    <!--SingleWordLink2-->
+                                                                                </td>
+                                                                                <td class="listKeyword">[regio]</td>
+                                                                                <!--END_Region-->
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <!--END_KEYWORD_ROW2-->
+                                                                <!--START_KEYWORD_ROW3-->
+                                                                <tr>
+                                                                    <td>
+                                                                        <table border="0" cellpadding="0" cellspacing="0" class="listKeywordTbl">
+                                                                            <tr>
+                                                                                <!--START_Company-->
+                                                                                <td class="listKeywordTitle">[SingleWord3]
+                                                                                    <!--SingleWordLink3-->
+                                                                                </td>
+                                                                                <td class="listKeyword">[werkgeverid]</td>
+                                                                                <!--END_Company-->
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <!--END_KEYWORD_ROW3-->
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <!--END_KEYWORDS-->
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!--START_ShortDescription-->
+                                        <tr>
+                                            <td class="listChapoContainer">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listChapoTbl">
+                                                    <tr>
+                                                        <td class="listChapo">[ShortDescription]</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!--END_ShortDescription-->
+                                        <!--START_TEMPWARNING-->
+                                        <tr>
+                                            <td class="listChapoContainer">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="listChapoTbl">
+                                                    <tr>
+                                                        <td class="listChapo"><span style="color:red;">[SingleWord4]<!--SingleWordLink4--></span></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!--END_TEMPWARNING-->
+                                        <!--START_CANDLIST_LINK-->
+                                        <tr>
+                                            <td class="candListLinkContainer">
+                                                <table border="0" cellpadding="0" cellspacing="0" class="canListLinkTbl">
+                                                    <tr>
+                                                        {if !$jobslist_icons} {if $new_candidates_list_in_jobslist}
+                                                        <td class="candListLink1"><a href="{$website}/index.php/page/customers/bb/1/command/candjob_list/vid/[id]">[SingleWord5]</a>
+                                                            <!--SingleWordLink5-->
+                                                        </td>
+                                                        {else}
+                                                        <td class="candListLink1"><a href="[website]/index.php/page/customers_ext/command/candlist/bb/1/vid/[id]">[SingleWord5]</a>
+                                                            <!--SingleWordLink5-->
+                                                        </td>
+                                                        {/if} {/if}
+                                                        <!--START_MATCH_BUTTON-->
+                                                        <td class="candListLinkSpacer">|</td>
+                                                        <td class="candListLink2"><a href="[website]/index.php/page/customers_ext/command/matchjob/bb/1/vid/[id]">[SingleWord6]</a>
+                                                            <!--SingleWordLink6-->
+                                                        </td>
+                                                        <!--END_MATCH_BUTTON-->
+                                                        <!--START_change_availability-->
+                                                        <td class="candListLinkSpacer">|</td>
+                                                        <td class="candListLink3"><a href="[website]/index.php/page/CustomersAgenda/command//bb/1/vid/[id]">[SingleWord7]</a>
+                                                            <!--SingleWordLink7-->
+                                                        </td>
+                                                        <!--START_match_fetch-->
+                                                        <!--START_match_fetch_skills-->
+                                                        <td class="candListLinkSpacer">|</td>
+                                                        <td class="candListLink3"><a href="[website]/index.php/page/CustomersMatchVacancySkills/command//bb/1/vid/[id]">[SingleWord8]</a>
+                                                            <!--SingleWordLink8-->
+                                                        </td>
+                                                        <!--END_match_fetch_skills-->
+                                                        <!--start_match_fetch_time-->
+                                                        <td class="candListLinkSpacer">|</td>
+                                                        <td class="candListLink3"><a href="[website]/index.php/page/CustomersAgendaAssignedList/command//bb/1/vid/[id]">[SingleWord9]</a>
+                                                            <!--SingleWordLink9-->
+                                                        </td>
+                                                        <!--END_match_fetch_time-->
+                                                        <!--END_match_fetch-->
+                                                        <!--START_match_cand_fo-->
+                                                        <td class="candListLinkSpacer">|</td>
+                                                        <td class="candListLink3"><a href="[website]/index.php/page/customers_ext/command/cand_matches/bb/1/code/[code]/vid/[id]/retvac/1">[t]Number of Matches[/t]: [mc]</a>
+                                                            <!--SingleWordLink9-->
+                                                        </td>
+                                                        <!--END_match_cand_fo-->
+                                                        <!--END_change_availability-->
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!--END_CANDLIST_LINK-->
+                                    </table>
+                                </td>
+                                <!--START_ThumbnailRight-->
+                                <td style="width: [`ThumbnailWidth]; cursor:hand;" onClick="[`ThumbnailLink]">[`Thumbnail]</td>
+                                <!--END_ThumbnailRight-->
+                            </tr>
+                        </table>
+                    </td>
+                    <!--START_ApplicationImage-->
+                    <td valign="top" style="width: [ApplicationImageWidth]; cursor:hand;" onClick="[ApplicationImageLink]">[ApplicationImage]</td>
+                    <!--END_ApplicationImage-->
+                    {if $jobslist_icons}
+                    <td class="thin-column">
+                        <!--START_EDIT_BUTTON-->
+                        <a href="[website]/index.php/page/customers_ext/command/editjob/vid/[id]/contactpersoon//bb/1/tmpjob/0" style="float:right;" title="[th]edit[/th]"><img src="{$website}/_images_global/zoeken.gif" alt="[th]edit[/th]"></a>
+                        <!--END_EDIT_BUTTON-->
+                        {if $allow_publishing_jobs}
+                        <!--START_PUBLISH_BUTTON-->
+                        <a href="[website]/index.php/page/customers_ext/command/publish/vid/[id]/contactpersoon//bb/1/retvac/1" style="float:right;" title="[th]publish[/th]" {if OTYSCZ===1 }onclick="javascript: if (!confirm('[th]Are you sure you want to publish this vacancy?[/th]')) return false;" {/if}><img src="{$website}/_images_global/actief.gif" alt="[th]publish[/th]"></a>
+                        <!--END_PUBLISH_BUTTON-->
+                        {/if} {if $allow_withdraw}
+                        <!--START_WITHDRAW_BUTTON-->
+                        <a href="[website]/index.php/page/customers_ext/command/withdraw/vid/[id]/bb/1/contactpersoon/" style="float:right;" title="[th]withdraw[/th]" {if OTYSCZ===1 }onclick="javascript: if (!confirm('[th]Are you sure you want to unpublish this vacancy?[/th]')) return false;" {/if}><img src="{$website}/_images_global/buttonClearFilter.gif" alt="[th]withdraw[/th]"></a>
+                        <!--END_WITHDRAW_BUTTON-->
+                        {/if} {if $allow_job_copying && $direct_vacancy_adding}
+                        <!--START_JOBCOPY_BUTTON-->
+                        <a href="[website]/index.php/page/customers_ext/command/copy_job/vid/[id]/contactpersoon//bb/1/prefix/[th]copy-[/th]" style="float:right;" title="[th]copy[/th]"><img src="{$website}/_images_global/copy-16x16.gif" alt="[th]copy[/th]"></a>
+                        <!--END_JOBCOPY_BUTTON-->
+                        {/if} {if $new_candidates_list_in_jobslist}
+                        <nobr>
+                            [number_of_candidates]
+                            <a href="{$website}/index.php/page/customers/bb/1/command/candjob_list/vid/[id]" title="[th]candidates[/th]"><img src="{$website}/_images_global/candidatemanager_icon.gif" alt="[th]candidates[/th]" style="vertical-align: middle"></a>
+                        </nobr>
+                        {else}
+                        <a href="[website]/index.php/page/customers_ext/command/candlist/bb/1/vid/[id]" title="[th]candidates[/th]"><img src="{$website}/_images_global/candidatemanager_icon.gif" style="float:right;" alt="[th]candidates[/th]"></a>
+                        {/if} {if $allow_add_wiqet_to_job}
+                        <br><a href="{$website}/index.php/page/wiqets/bb/1/command/select_wiqet/vid/[id]" title="wiqet" style="float:right;"><b><img src="{$website}/_images_global/wiqet.gif" alt="wiqet" ></b></a> {/if} {if $shortlist_sx_extended}
+                        <img src="{$website}/_images_global/euro.gif" title="[th]Total views[/th]: [JobTotalViews] | [th]Maximum views[/th]: [JobMaximumViews]" style="float:right;"> {/if} {if $allow_renew_publication_startdate}
+                        <!-- START_REFRESH_PUBLICATION_DATE -->
+                        <a href="[website]/index.php/page/customers_ext/command/refresh_publish_date/bb/1/vid/[id]" title="[th]Start publication date will be reset to today[/th]"><img src="{$website}/_images_global/refresh.gif" title="[th]Start publication date will be reset to today[/th]"></a>
+                        <!-- END_REFRESH_PUBLICATION_DATE -->
+                        {/if} {if $planningModule && OTYSCZ}
+                        <!-- START_PLANNING_CALENDAR -->
+                        <a href="[website]/index.php/page/jobschedule/bb/1/code/[code]/vid/[id]/" title="[th]Planning calendar[/th]"><img src="{$website}/_images_global/calendar_button.gif" style="float:right;" alt="[th]Planning calendar[/th]"></a>
+                        <!-- END_PLANNING_CALENDAR -->
+                        {/if} {if $recrowdMode}
+                        <!--START_MAKE_SPLITZ_JOB-->
+                        <a href="[website]/index.php/page/recrowd/bb/1/command/vacFormInit/vacid/[id]/prefillSplitz/1"><img src="{$website}/_images_global/euro.gif" title="[thn]Make Spl!tz Job[/thn]" style="float:right;"></a>
+                        <!--END_MAKE_SPLITZ_JOB-->
+                        <!--START_RECRUITERS-->
+                        <a href="[website]/index.php/page/recrowd/bb/1/command/vacRecruiters/vacid/[id]/ref/customerVacList"><img src="{$website}/_images_global/euro.gif" title="[thn]Recruiters[/thn]" style="float:right;"></a>
+                        <!--END_RECRUITERS-->
+                        <!--START_TENDER_OVERVIEW-->
+                        <a href="[website]/index.php/page/recrowd/bb/1/command/vacTenderOverview/vacid/[id]/ref/customerVacList"><img src="{$website}/_images_global/euro.gif" title="[thn]Tender Overview[/thn]" style="float:right;"></a>
+                        <!--END_TENDER_OVERVIEW-->
+                        {/if} {/if}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <!--END_VACANCY_TBL-->
+    <!--START_JobsListPageNav-->
+    <tr>
+        <td class="listNavContainer">
+            <table border="0" cellpadding="0" cellspacing="0" class="listNavTbl">
+                <tr>
+                    <td class="listNavPrevious">
+                        <!--START_JobsListPrevious-->
+                        <a href="[previous_link]">[th]Previous page[/th]</a>
+                        <!--END_JobsListPrevious-->
+                        &nbsp;</td>
+                    <td class="listNavPageNumberContainer">
+                        <table border="0" cellpadding="0" cellspacing="0" class="listNavPageNumberTbl">
+                            <tr>
+                                <td class="listNavPageNumberHolder">
+                                    <!--START_JobsListPageLinks-->
+                                    <span class="listNavPageNumber[active]"><a href="[page_link]">[PageNumber]</a></span><span>&nbsp;&nbsp;</span>
+                                    <!--END_JobsListPageLinks-->
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="listNavNext">&nbsp;
+                        <!--START_JobsListNext--><a href="[next_link]">[th]Next page[/th]</a>
+                        <!--END_JobsListNext-->
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <!--END_JobsListPageNav-->
+    <!--START_SystemBlock-->
+    <!--SystemLinks-->
+    <!--END_SystemBlock-->
+    </table>
+    <!--END_9-->
+    <!--uts:end inner-->
 </body>
+
 </html>

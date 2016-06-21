@@ -1,177 +1,151 @@
 {* this is the template for the Statistics page of the customer portal *}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html lang="en">
+
 <head>
-<title>whatever</title>
+    <title>whatever</title>
 </head>
+
 <body>
-<!--uts:begin inner-->
-<!-- /UTS/customers/statistics.html -->
-
-<div class="outer stsOuter">
-<h1 class="title stsTitle">[t]Statistics[/t]</h1>
-{$menu}
-
-
-	{if $finInfoIsClient && $finInfoShowFinInfoFo}		
-	<h2 class="subheader stsSH">[t]Aankopen:[/t]</h2>
-	
-	<table id="t-credit-stats" class="hqTbl stsVacTbl" border="0" cellspacing="0" cellpadding="0">
-		<thead>
-			<tr>
-				<th>[t]Date[/t]</th>
-				<th>[t]Description[/t]</th>
-				{if $finInfoSxType == 1}<th>[t]Aantal Clicks[/t]</th>{/if}
-				<th>[t]Price[/t]</th>
-				<th>[t]Price/Click[/t]</th>
-			</tr>	
-		</thead>
-		<tbody>	
-			{foreach from=$finInfoCredits item=c}
-				<tr>
-					<td>{$c.start_date|date_format:"%d/%m/%Y"}</td>
-					<td>{$c.entity_name}&nbsp;[thg]Views credit[/thg]</td>			
-					{if $finInfoSxType == 1}<td>{$c.entity_clicks}</td>{/if}						
-					<td>{$c.entity_price_total}</td>
-					<td>{$c.entity_price_per_click}</td>			
-				</tr>
-			{/foreach}	
-		</tbody>
-	</table>
-  <br>  		
-		
-	{if $finInfoSxType == 1}
-	{*TYPE 1 IS LIMIT*}
-	 
-	  <h2 class="subheader stsSH">[t]Totalen:[/t]</h2>
-     
-	<table cellspacing="0" cellpadding="0" border="0" class="vTbl">
-		<tr>
-			<th>[th]Totaal clicks gekocht[/th]:</th>
-			<td>{$finInfoTotals.clicks_boutht}</td>
-		</tr>
-		<tr>
-			<th>[th]Clicks verbruikt[/th]:</th>
-			<td>{$finInfoTotals.clicks_used}</td>
-		</tr>
-		<tr>
-			<th>[th]Clicks tegoed[/th]:</th>
-			<td>{$finInfoTotals.clicks_remaining}</td>
-		</tr>
-		<tr>
-			<th>[th]Clicks toegekend aan vacatures[/th]:</th>
-			<td>{$finInfoTotals.clicks_jobs}</td>
-		</tr>
-		<tr>
-			<th>[th]Clicks nog toe te kennen aan vacatures[/th]:</th>
-			<td>{$finInfoTotals.clicks_free}</td>
-		</tr>        
-	</table>			
-				
-	{else}
-	{* NOT USED HERE
-	<td colspan="3" align="center">[th]Total views[/th]:&nbsp;{$finInfoTotals.clicks}&nbsp;[th]Views amount[/th]:&nbsp;{$finInfoTotals.amount|string_format:"%.4f"|regex_replace:"/\./":","}&nbsp;[th]Current balance[/th]:&nbsp;{$finInfoTotals.balance|string_format:"%.4f"|regex_replace:"/\./":","}</td>
-	*}
-	{/if}			
-										
-	
-	{/if}				
-
-
-
-
-
-
-<h2 class="subheader stsSH">[t]General statistics:[/t]</h2>
-
-<table border="0" cellpadding="0" cellspacing="0" class="stsGenTbl">
-	<tr>
-		<th>[t]Total jobs[/t]</th>
-		<td>{$gstats.totalJobs}</td>
-	</tr>
-	<tr>
-		<th>[t]Active published jobs[/t]</th>
-		<td>{$gstats.activeJobs}</td>
-	</tr>
-	<tr>
-		<th>[t]Inactive or unpublished jobs[/t]</th>
-		<td>{$gstats.inactiveJobs}</td>
-	</tr>
-	<tr>
-		<th>[t]Total applicants[/t]</th>
-		<td>{$gstats.applicants}</td>
-	</tr>
-	<tr>
-		<th>[t]Applicants on active and published jobs[/t]</th>
-		<td>{$gstats.applicantsActive}</td>
-	</tr>
-	<tr>
-		<th>[t]Applicants on inactive/unpublished jobs[/t]</th>
-		<td>{$gstats.applicantsInactive}</td>
-	</tr>
-	{if $recrowdMode}
-	<tr>
-		<th>[t]Amount of profile page views:[/t]</th>
-		<td>{$recrowd_stats.detail_views_cnt}</td>
-	</tr>
-	<tr>
-		<th>[t]Amount of profile page shares:[/t]</th>
-		<td>{$recrowd_stats.clicked_shared_cnt}</td>
-	</tr>
-	{/if}
-
-</table>
-
-<h2 class="subHeader stsSH">[t]Job list[/t]</h2>
-
-<table border="0" cellpadding="0" cellspacing="0" class="hqTbl stsVacTbl">
-	<thead>
-		<tr>
-			<th class="title">[t]Title[/t]</th>
-			<th class="location">[t]Location[/t]</th>
-			{if $sxLimitType == 1}
-			<th class="usage" title="[th]Clicks verbruikt op betreffende vacature[/th]">[t]CV[/t]</th>
-			<th class="limit" title="[th]Click Limiet van betreffende vacature[/th]">[t]CL[/t]</th>
-			<th class="remaining" title="[th]Click restant van betreffende vacature[/th]">[t]CR[/t]</th>
-			{/if}
-			<th class="views" title="[th]Total job views[/t]">[t]VI[/t]</th>
-			<th class="enroll" title="[th]Applications - via enroll forms[/t]">[t]AF[/th]</th>
-			<th class="apply" title="[th]Applications - via apply online link to other website[/th]">[t]AO[/t]</th>
-			<th class="mailto" title="[th]Applications - via email link (mailto command) to other email client (outlook etc.)[/th]">[t]AL[/t]</th>
-			<th class="outgoing" title="[th]Clicks on outgoing links in job description[/th]">[t]KL[/t]</th>
-			<th class="mailafriend" title="[th]E-mails sent using the mail-a-friend button[/th]">[t]MAF[/t]</th>
-		</tr>
-	</thead>
-	<tbody>
-		<foreach from=$jobs item=j>
-			<tr class="{cycle values="odd,even"}">
-				<td><a href="/index.php/page/customers_ext/bb/1/command/detail/vid/{$j.id}/temp/{$j.temp}">{$j._title|escape}</a></td>
-				<td>{if $j.locatie|escape}{$j.locatie|escape}{else}&nbsp;{/if}</td>
-				{if $sxLimitType == 1}
-					<td>{$j._click_count}</td>
-					<td>{$j._click_limit}</td>
-					<td>{$j._click_remaining}</td>
-				{/if}
-				<td>{if $j._view_count}{$j._view_count}{else}&nbsp;{/if}</td>
-				<td>{$j._acnt}</td>
-				<td>{$j._aocnt}</td>
-				<td>{$j._alcnt}</td>
-				<td>{$j._clcnt}</td>
-				<td>{$j.maf_count}</td>
-			</tr>
-		<foreachelse>
-			<tr>
-				<td class="hqNoItems stsVacNoItems" colspan="8">[t]No items can be displayed[/t]</td>
-			</tr>
-		</foreach>
-	</tbody>
-</table>
-
-<div class="text stsLegend">[t]Hover the table headers to find out what the abbreviations mean[/t]</div>
-
-</div>
-
-
-<!--uts:end inner-->
+    <!--uts:begin inner-->
+    <!-- /UTS/customers/statistics.html -->
+    <div class="outer stsOuter">
+        <h1 class="title stsTitle">[t]Statistics[/t]</h1> {$menu} {if $finInfoIsClient && $finInfoShowFinInfoFo}
+        <h2 class="subheader stsSH">[t]Aankopen:[/t]</h2>
+        <table id="t-credit-stats" class="hqTbl stsVacTbl table table-bordered table-hover table-responsive table-striped" border="0" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th>[t]Date[/t]</th>
+                    <th>[t]Description[/t]</th>
+                    {if $finInfoSxType == 1}
+                    <th>[t]Aantal Clicks[/t]</th>{/if}
+                    <th>[t]Price[/t]</th>
+                    <th>[t]Price/Click[/t]</th>
+                </tr>
+            </thead>
+            <tbody>
+                {foreach from=$finInfoCredits item=c}
+                <tr>
+                    <td>{$c.start_date|date_format:"%d/%m/%Y"}</td>
+                    <td>{$c.entity_name}&nbsp;[thg]Views credit[/thg]</td>
+                    {if $finInfoSxType == 1}
+                    <td>{$c.entity_clicks}</td>{/if}
+                    <td>{$c.entity_price_total}</td>
+                    <td>{$c.entity_price_per_click}</td>
+                </tr>
+                {/foreach}
+            </tbody>
+        </table>
+        <br> {if $finInfoSxType == 1} {*TYPE 1 IS LIMIT*}
+        <h2 class="subheader stsSH">[t]Totalen:[/t]</h2>
+        <table cellspacing="0" cellpadding="0" border="0" class="vTbl table table-bordered table-hover table-responsive table-striped">
+            <tr>
+                <th>[th]Totaal clicks gekocht[/th]:</th>
+                <td>{$finInfoTotals.clicks_boutht}</td>
+            </tr>
+            <tr>
+                <th>[th]Clicks verbruikt[/th]:</th>
+                <td>{$finInfoTotals.clicks_used}</td>
+            </tr>
+            <tr>
+                <th>[th]Clicks tegoed[/th]:</th>
+                <td>{$finInfoTotals.clicks_remaining}</td>
+            </tr>
+            <tr>
+                <th>[th]Clicks toegekend aan vacatures[/th]:</th>
+                <td>{$finInfoTotals.clicks_jobs}</td>
+            </tr>
+            <tr>
+                <th>[th]Clicks nog toe te kennen aan vacatures[/th]:</th>
+                <td>{$finInfoTotals.clicks_free}</td>
+            </tr>
+        </table>
+        {else} {* NOT USED HERE
+        <td colspan="3" align="center">[th]Total views[/th]:&nbsp;{$finInfoTotals.clicks}&nbsp;[th]Views amount[/th]:&nbsp;{$finInfoTotals.amount|string_format:"%.4f"|regex_replace:"/\./":","}&nbsp;[th]Current balance[/th]:&nbsp;{$finInfoTotals.balance|string_format:"%.4f"|regex_replace:"/\./":","}</td>
+        *} {/if} {/if}
+        <h2 class="subheader stsSH">[t]General statistics:[/t]</h2>
+        <table border="0" cellpadding="0" cellspacing="0" class="stsGenTbl table table-bordered table-hover table-responsive table-striped">
+            <tr>
+                <th>[t]Total jobs[/t]</th>
+                <td>{$gstats.totalJobs}</td>
+            </tr>
+            <tr>
+                <th>[t]Active published jobs[/t]</th>
+                <td>{$gstats.activeJobs}</td>
+            </tr>
+            <tr>
+                <th>[t]Inactive or unpublished jobs[/t]</th>
+                <td>{$gstats.inactiveJobs}</td>
+            </tr>
+            <tr>
+                <th>[t]Total applicants[/t]</th>
+                <td>{$gstats.applicants}</td>
+            </tr>
+            <tr>
+                <th>[t]Applicants on active and published jobs[/t]</th>
+                <td>{$gstats.applicantsActive}</td>
+            </tr>
+            <tr>
+                <th>[t]Applicants on inactive/unpublished jobs[/t]</th>
+                <td>{$gstats.applicantsInactive}</td>
+            </tr>
+            {if $recrowdMode}
+            <tr>
+                <th>[t]Amount of profile page views:[/t]</th>
+                <td>{$recrowd_stats.detail_views_cnt}</td>
+            </tr>
+            <tr>
+                <th>[t]Amount of profile page shares:[/t]</th>
+                <td>{$recrowd_stats.clicked_shared_cnt}</td>
+            </tr>
+            {/if}
+        </table>
+        <h2 class="subHeader stsSH">[t]Job list[/t]</h2>
+        <table border="0" cellpadding="0" cellspacing="0" class="hqTbl stsVacTbl table table-bordered table-hover table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th>Poste</th>
+                    <th class="location">[t]Location[/t]</th>
+                    {if $sxLimitType == 1}
+                    <th class="usage" title="[th]Clicks verbruikt op betreffende vacature[/th]">[t]CV[/t]</th>
+                    <th class="limit" title="[th]Click Limiet van betreffende vacature[/th]">[t]CL[/t]</th>
+                    <th class="remaining" title="[th]Click restant van betreffende vacature[/th]">[t]CR[/t]</th>
+                    {/if}
+                    <th class="views" title="[th]Total job views[/t]">[t]VI[/t]</th>
+                    <th class="enroll" title="[th]Applications - via enroll forms[/t]">[t]AF[/th]</th>
+                    <th class="apply" title="[th]Applications - via apply online link to other website[/th]">[t]AO[/t]</th>
+                    <th class="mailto" title="[th]Applications - via email link (mailto command) to other email client (outlook etc.)[/th]">[t]AL[/t]</th>
+                    <th class="outgoing" title="[th]Clicks on outgoing links in job description[/th]">[t]KL[/t]</th>
+                    <th class="mailafriend" title="[th]E-mails sent using the mail-a-friend button[/th]">[t]MAF[/t]</th>
+                </tr>
+            </thead>
+            <tbody>
+                <foreach from=$jobs item=j>
+                    <tr class="{cycle values=" odd,even "}">
+                        <td><a href="/index.php/page/customers_ext/bb/1/command/detail/vid/{$j.id}/temp/{$j.temp}">{$j._title|escape}</a></td>
+                        <td>{if $j.locatie|escape}{$j.locatie|escape}{else}&nbsp;{/if}</td>
+                        {if $sxLimitType == 1}
+                        <td>{$j._click_count}</td>
+                        <td>{$j._click_limit}</td>
+                        <td>{$j._click_remaining}</td>
+                        {/if}
+                        <td>{if $j._view_count}{$j._view_count}{else}&nbsp;{/if}</td>
+                        <td>{$j._acnt}</td>
+                        <td>{$j._aocnt}</td>
+                        <td>{$j._alcnt}</td>
+                        <td>{$j._clcnt}</td>
+                        <td>{$j.maf_count}</td>
+                    </tr>
+                    <foreachelse>
+                        <tr>
+                            <td class="hqNoItems stsVacNoItems" colspan="8">[t]No items can be displayed[/t]</td>
+                        </tr>
+                </foreach>
+            </tbody>
+        </table>
+        <div class="text stsLegend">[t]Hover the table headers to find out what the abbreviations mean[/t]</div>
+    </div>
+    <!--uts:end inner-->
 </body>
+
 </html>

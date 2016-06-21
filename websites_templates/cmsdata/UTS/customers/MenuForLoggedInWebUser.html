@@ -2,16 +2,16 @@
 {if !$traceAndTrack} {if $supplier_portal}
 <div class="customerMenu mCCustomer mCCustomerSp">
     <div class="customerMenu mCCustomer DIVCustomerMenu {if $loggedinuser}mCCustomerLoggedIn{else}mCCustomerLoggedOut{/if}">
-        <nav class="navbar navbar-default">
+        <nav class="navbar">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar-right">
                         <li class="mLhome"><a href="/index.php/page/CustomersRemote/bb/1/command/clientlogin/bb/1/option/start/level/supplier">[t]Home[/t]</a></li>
                         <li class="mLjbl"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/list">[t]Jobs List[/t]</a></li>
                         {*MBL*} {if $linemanag_cand_update}
                         <li class="mLmng mblA"><a href="/index.php/page/linemanager/bb/1/command/appstart/">[t]Updates[/t]</a></li>
                         {/if}
-                        <li class="mLcandList"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/c_list">[t]Candidates[/t]</a></li>
+                        <!-- <li class="mLcandList"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/c_list">[t]Candidates[/t]</a></li> -->
                         {if $show_ocd_logindata}
                         <li class="aplMlink aplMCLoginData"><a href="/index.php/page/ocdapp/bb/1/command/logindata/redirectback/2">[t]Login data[/t]</a></li>
                         {/if} {if $procReports}
@@ -36,91 +36,105 @@
                 <span class="icon-bar"></span>
             </button>
             <div class="collapse navbar-collapse" id="secondNavbar">
-                <ul class="nav navbar-nav">
-                    {if $allow_search_cand} {if $enable_cv_search}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-suitcase" aria-hidden="true"></i> ANNONCES <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            {if $show_job_list}
+                            <li class="mLjbl"><a href="[website]/index.php/page/customers_ext/bb/1">Vos annonces</a></li>
+                            {*MBL*} {/if} {if $direct_vacancy_adding}
+                            <li class="mLaddavacancy"><a href="{if $recrowd_mode}[website]/index.php/page/recrowd/bb/1/command/addVacancy{else}[website]/index.php/page/customers_ext/command/addavacancy/bb/1{/if}">[t]Add vacancy[/t]</a></li>
+                            {/if} {if $allow_timeslots && $lineman_timeslots_and_invites}
+                            <li class="mLTimeslots"><a href="[website]/index.php/page/lm_timeslots/bb/1/command/appstart">[t]Timeslots[/t]</a></li>
+                            <li class="mLInvites"><a href="[website]/index.php/page/lm_timeslots/bb/1/command/invitesstart">[t]Invites[/t]</a></li>
+                            {/if} {if $jobboards_allowed}
+                            <li class="mLjbmanager"><a href="[website]/index.php/page/customers_ext/command/jbmanager/bb/1">[t]Job boards[/t]</a></li>
+                            {/if} {if $use_banner_manager && !$ocd_block}
+                            <li class="mLbanner"><a href="/index.php/page/banner_engine/bb/1">[t]Banners[/t]</a></li>
+                            {/if} {if $allow_add_wiqet_to_job}
+                            <li class="mLwiqets"><a href="/index.php/page/wiqets/bb/1">[t]Wiqets[/t]</a></li>
+                            {/if} {if $fin_info || $allow_statistics}
+                            <li class="mLfininfo"><a href="/index.php/page/custstats/command/start/bb/1/">[t]Financial Statistics[/t]</a></li>
+                            {/if} {if $allow_recrowd_statistics}
+                            <li class="mLrecrwdStats"><a href="[website]/index.php/page/recrowd_statistics/command/recruiter_statistics/bb/1">[t]Recruiter statistics[/t]</a></li>
+                            {/if}
+                        </ul>
+                    </li>
+                    {if $linemanag_cand_update}
+                    <li class="mLmng mblB"><a href="/index.php/page/linemanager/bb/1/command/appstart/"><i class="fa fa-users" aria-hidden="true"></i> CANDIDATS</a></li>
+                    {/if} {if $allow_search_cand} {if $enable_cv_search}
                     <li class="menuLinkFirstChild mLcandSearch hidden"><a href="/index.php/page/advsearchcvs/bb/1/command/editrequest">[t]Search[/t]</a></li>
                     {if $loggedinuser}
                     <li class="mLcandSavedq hidden"><a href="/index.php/page/advsearchcvs/bb/1/command/sqlist">[t]Saved queries[/t]</a></li>{/if} {else}
                     <li class="menuLinkFirstChild mLcandSearch"><a href="[website]/index.php/page/CustomersRemote/command/buildform/bb/1">[t]Search[/t]</a></li>
-                    {/if} {/if} {if $show_job_list}
-                    <li class="mLjbl"><a href="[website]/index.php/page/customers_ext/bb/1">[t]Jobs list[/t]</a></li>
-                    {*MBL*} {if $linemanag_cand_update}
-                    <li class="mLmng mblB"><a href="/index.php/page/linemanager/bb/1/command/appstart/">[t]Updates[/t]</a></li>
-                    {/if} {/if} {if $direct_vacancy_adding}
-                    <li class="mLaddavacancy"><a href="{if $recrowd_mode}[website]/index.php/page/recrowd/bb/1/command/addVacancy{else}[website]/index.php/page/customers_ext/command/addavacancy/bb/1{/if}">[t]Add vacancy[/t]</a></li>
-                    {/if} {if $allow_timeslots && $lineman_timeslots_and_invites}
-                    <li class="mLTimeslots"><a href="[website]/index.php/page/lm_timeslots/bb/1/command/appstart">[t]Timeslots[/t]</a></li>
-                    <li class="mLInvites"><a href="[website]/index.php/page/lm_timeslots/bb/1/command/invitesstart">[t]Invites[/t]</a></li>
-                    {/if} {if $jobboards_allowed}
-                    <li class="mLjbmanager"><a href="[website]/index.php/page/customers_ext/command/jbmanager/bb/1">[t]Job boards[/t]</a></li>
+                    {/if} {/if} {if $tsc && $tsc_list}
+                    <li class="mTscList"><a href="/index.php/page/tscadmin/command/appstart/bb/1/">[t]Timesheets Candidates[/t]</a></li>
                     {/if} {if $auto_agents_customers && !$ocd_block} {if $enable_cv_search}
                     <li class="mLagents"><a href="/index.php/page/advsearchcvs/bb/1/command/sqlist">[t]Agents[/t]</a></li>
                     {else}
                     <li class="mLagents"><a href="/index.php/page/agentsCustomers/bb/1">[t]Agents[/t]</a></li>
-                    {/if} {/if} {if $use_banner_manager && !$ocd_block}
-                    <li class="mLbanner"><a href="/index.php/page/banner_engine/bb/1">[t]Banners[/t]</a></li>
-                    {/if} {if $allow_add_wiqet_to_job}
-                    <li class="mLwiqets"><a href="/index.php/page/wiqets/bb/1">[t]Wiqets[/t]</a></li>
-                    {/if} {if $fin_info || $allow_statistics}
-                    <li class="mLfininfo"><a href="/index.php/page/custstats/command/start/bb/1/">[t]Financial Statistics[/t]</a></li>
-                    {/if} {if $show_subscriptions}
+                    {/if} {/if} {if $show_subscriptions}
                     <li class="mLsubscriptions"><a href="[website]/index.php/page/customers_ext/command/subscriptions/bb/1">[t]Subscriptions[/t]</a></li>
                     {/if} {if $use_new_event_applicant_module}
                     <li class="mLevents"><a href="/index.php/page/foevents/command/customerevents/bb/1/">[t]Events[/t]</a></li>
-                    {/if} {if $enable_network_edit}
-                    <li class="mLnetwork"><a href="/index.php/page/network/command/editCustomerDetails/bb/1/">[t]Network[/t]</a></li>
-                    {/if} {if $enable_network_edit && $networkstyling}
-                    <li class="mLnetworkStyling"><a href="/index.php/page/networkstyling/bb/1/">[t]Customers Network Styling[/t]</a></li>
-                    {/if} {if $show_financial_page}
-                    <li class="mLfinancial"><a href="/index.php/page/finance/command/startup/bb/1/">[t]Financial information[/t]</a></li>
-                    {/if} {if $tsc && $tsc_list}
-                    <li class="mTscList"><a href="/index.php/page/tscadmin/command/appstart/bb/1/">[t]Timesheets Candidates[/t]</a></li>
-                    {/if} {if $show_ocd_logindata}
-                    <li class="aplMlink aplMCLoginData"><a href="/index.php/page/ocdapp/bb/1/command/logindata/redirectback/2">[t]Login data[/t]</a></li>
-                    {/if} {if $customer_portal_show_tasks}
-                    <li class="mLTasks"><a href="/index.php/page/trackandtrace/bb/1/command/list">[t]Tasks[/t]</a></li>
-                    {/if} {if $web_shop_my_products}
-                    <li class="mLproducts"><a href="/index.php/page/webshop/bb/1/command/myProducts">[t]My products[/t]</a></li>
+                    {/if} {if $allow_supplied_candidates} {* task id 190293 - Supplier functionality in customer portal (Werkdesk) *} {* if wgcp has Customer portal AND Allow loging as supplier CHECKED ,otherwise client has to be supplier_portal to see this *}
+                    <!--                     <li class="mLcandList"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/c_list">[t]Candidates[/t]</a></li>-->
+                    {/if} {if $allow_shortlist_sx}
+                    <li class="mLsxList"><a href="[website]/index.php/page/customer_sx_shortlist/command/editItem/bb/1">[t]Shortlist SX[/t]</a></li>
+                    {/if} {if $allow_recrowd_candidates_list}
+                    <li class="mLrecrwdCandList"><a href="[website]/index.php/page/recrowd_my_candidates/command/listCandidates/bb/1">[t]My candidates[/t]</a></li>
+                    {/if} {if $allow_recrowd_recruiter_ratings}
+                    <li class="mLrecrwdRate"><a href="[website]/index.php/page/recrowd_statistics/command/recruiter_ratings/bb/1">[t]Ratings[/t]</a></li>
                     {/if}
                     <if [uts:show_create_candidate_link]>
                         {if $show_ocd_candidate_create}
                         <li class="aplMlink mLaddCand"><a href="/index.php/page/ocdapp/command/createcandidate">[t]Create a candidate for this user[/t]</a></li>
                         {/if}
                     </if>
-                    {if $procReports}
-                    <li class="mLprocReport"><a href="/index.php/page/procReports/bb/1/command/start/portalType/{$procReportsPortalType}">[t]Procedure reports[/t]</a></li>
-                    {/if} {if $show_join_status_overview}
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-user" aria-hidden="true"></i> PROFIL <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            {if $displAppList}
+                            <li class="menuLink"><a href="/index.php/page/CustomersRemote/bb/1/command/activeapplications">[t]Active applications[/t]</a></li>
+                            {/if} {if $allow_linkedin_groups}
+                            <li class="mLlinkedInGrp"><a href="[website]/index.php/page/linkedin_groups/command/default/bb/1">[t]LinkedIn groups[/t]</a></li>
+                            {/if} {if $useRecommendations}
+                            <li class="mLrecomm"><a href="/index.php/page/recommendations/command/genericEntityRecommendations/subcommand/start/bb/1">[t]Recommendations[/t]</a></li>
+                            {/if} {if $foCustomerEditDaughterCompanies}
+                            <li class="mLrecomm"><a href="/index.php/page/daughterCompanies/command/list/bb/1">{if $foCustomerDaughterCompanyMenu}{$foCustomerDaughterCompanyMenu}{else}[t]Daughter companies[/t]{/if}</a></li>
+                            {/if} {if $enable_network_edit}
+                            <li class="mLnetwork"><a href="/index.php/page/network/command/editCustomerDetails/bb/1/">[t]Network[/t]</a></li>
+                            {/if} {if $enable_network_edit && $networkstyling}
+                            <li class="mLnetworkStyling"><a href="/index.php/page/networkstyling/bb/1/">[t]Customers Network Styling[/t]</a></li>
+                            {/if} {if $show_financial_page}
+                            <li class="mLfinancial"><a href="/index.php/page/finance/command/startup/bb/1/">[t]Financial information[/t]</a></li>
+                            {/if} {if $show_ocd_logindata}
+                            <li class="aplMlink aplMCLoginData"><a href="/index.php/page/ocdapp/bb/1/command/logindata/redirectback/2">[t]Login data[/t]</a></li>
+                            {/if} {if $customer_portal_show_tasks}
+                            <li class="mLTasks"><a href="/index.php/page/trackandtrace/bb/1/command/list">[t]Tasks[/t]</a></li>
+                            {/if} {if $web_shop_my_products}
+                            <li class="mLproducts"><a href="/index.php/page/webshop/bb/1/command/myProducts">[t]My products[/t]</a></li>
+                            {/if} {if $procReports}
+                            <li class="mLprocReport"><a href="/index.php/page/procReports/bb/1/command/start/portalType/{$procReportsPortalType}">[t]Procedure reports[/t]</a></li>
+                            {/if} {if $allow_recrowd_settings}
+                            <li class="mLrecrwdSetup"><a href="[website]/index.php/page/recrowd/bb/1/command/recruiterSettings">[t]Recruiter Settings[/t]</a></li>
+                            {/if} {if $allow_recrowd_customer_settings}
+                            <li class="mLrecrwdCustSetup"><a href="[website]/index.php/page/recrowd/bb/1/command/customerSettings">[t]Customer Settings[/t]</a></li>
+                            {/if} {if !$ocd_block}
+                            <li class="menuLinkLastChild mLlogout"><a href="[website]/index.php/page/customers_ext/command/logout/bb/1"><i class="fa fa-sign-out" aria-hidden="true"></i>[t]Logout[/t]</a></li>
+                            {/if}
+                        </ul>
+                    </li>
+                    <!-- {if $show_join_status_overview}
                     <li class="mLoverview"><a href="/index.php/page/joinStatusOverview/bb/1/command/start">[t]Join statusses[/t]</a></li>
-                    {/if} {if $allow_supplied_candidates} {* task id 190293 - Supplier functionality in customer portal (Werkdesk) *} {* if wgcp has Customer portal AND Allow loging as supplier CHECKED ,otherwise client has to be supplier_portal to see this *}
-                    <li class="mLcandList"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/c_list">[t]Candidates[/t]</a></li>
-                    {/if} {if $allow_shortlist_sx}
-                    <li class="mLsxList"><a href="[website]/index.php/page/customer_sx_shortlist/command/editItem/bb/1">[t]Shortlist SX[/t]</a></li>
-                    {/if} {if $allow_recommendations}
+                    {/if}  -->
+                    {if $allow_recommendations}
                     <li class="mLrecomm"><a href="[website]/index.php/page/recommendations/command/default/bb/1">[t]Recommendations[/t]</a></li>
-                    {/if} {if $allow_linkedin_groups}
-                    <li class="mLlinkedInGrp"><a href="[website]/index.php/page/linkedin_groups/command/default/bb/1">[t]LinkedIn groups[/t]</a></li>
                     {/if} {if $allow_recrowd_trajectories}
                     <li class="mLtrajectActive"><a href="[website]/index.php/page/recrowd_trajectories/command/active_trajectories/bb/1">[t]Active trajectories[/t]</a></li>
                     {/if} {if $allow_recrowd_trajectories}
                     <li class="mLtrajectArchive"><a href="[website]/index.php/page/recrowd_trajectories/command/archived_trajectories/bb/1">[t]Archived trajectories[/t]</a></li>
-                    {/if} {if $allow_recrowd_settings}
-                    <li class="mLrecrwdSetup"><a href="[website]/index.php/page/recrowd/bb/1/command/recruiterSettings">[t]Recruiter Settings[/t]</a></li>
-                    {/if} {if $allow_recrowd_customer_settings}
-                    <li class="mLrecrwdCustSetup"><a href="[website]/index.php/page/recrowd/bb/1/command/customerSettings">[t]Customer Settings[/t]</a></li>
-                    {/if} {if $allow_recrowd_candidates_list}
-                    <li class="mLrecrwdCandList"><a href="[website]/index.php/page/recrowd_my_candidates/command/listCandidates/bb/1">[t]My candidates[/t]</a></li>
-                    {/if} {if $allow_recrowd_statistics}
-                    <li class="mLrecrwdStats"><a href="[website]/index.php/page/recrowd_statistics/command/recruiter_statistics/bb/1">[t]Recruiter statistics[/t]</a></li>
-                    {/if} {if $allow_recrowd_recruiter_ratings}
-                    <li class="mLrecrwdRate"><a href="[website]/index.php/page/recrowd_statistics/command/recruiter_ratings/bb/1">[t]Ratings[/t]</a></li>
-                    {/if} {if $useRecommendations}
-                    <li class="mLrecomm"><a href="/index.php/page/recommendations/command/genericEntityRecommendations/subcommand/start/bb/1">[t]Recommendations[/t]</a></li>
-                    {/if} {if $foCustomerEditDaughterCompanies}
-                    <li class="mLrecomm"><a href="/index.php/page/daughterCompanies/command/list/bb/1">{if $foCustomerDaughterCompanyMenu}{$foCustomerDaughterCompanyMenu}{else}[t]Daughter companies[/t]{/if}</a></li>
-                    {/if} {if $displAppList}
-                    <li class="menuLink"><a href="/index.php/page/CustomersRemote/bb/1/command/activeapplications">[t]Active applications[/t]</a></li>
-                    {/if} {if !$ocd_block}
-                    <li class="menuLinkLastChild mLlogout"><a href="[website]/index.php/page/customers_ext/command/logout/bb/1">[t]Logout[/t]</a></li>
                     {/if}
                 </ul>
             </div>
