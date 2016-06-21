@@ -256,6 +256,10 @@ h1 {
     background-color: #fff; }
     .candidat .customerMenu nav .navbar-nav > li > a {
       color: #12467e; }
+    .candidat .customerMenu nav .navbar-toggle {
+      border-color: #000; }
+      .candidat .customerMenu nav .navbar-toggle .icon-bar {
+        background-color: #000; }
   .candidat .buttonContainer > input, .candidat .displayNone > input {
     background-color: #12467e;
     border-radius: 50px;

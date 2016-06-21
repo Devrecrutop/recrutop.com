@@ -29,12 +29,18 @@
 <div class="customerMenu mCCustomer DIVCustomerMenu {if $loggedinuser}mCCustomerLoggedIn{else}mCCustomerLoggedOut{/if}">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-default navbar-toggle collapsed event bg-white" data-toggle="collapse" data-target="#secondNavbar" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="secondNavbar">
                 <ul class="nav navbar-nav">
                     {if $allow_search_cand} {if $enable_cv_search}
-                    <li class="menuLinkFirstChild mLcandSearch"><a href="/index.php/page/advsearchcvs/bb/1/command/editrequest">[t]Search[/t]</a></li>
+                    <li class="menuLinkFirstChild mLcandSearch hidden"><a href="/index.php/page/advsearchcvs/bb/1/command/editrequest">[t]Search[/t]</a></li>
                     {if $loggedinuser}
-                    <li class="mLcandSavedq"><a href="/index.php/page/advsearchcvs/bb/1/command/sqlist">[t]Saved queries[/t]</a></li>{/if} {else}
+                    <li class="mLcandSavedq hidden"><a href="/index.php/page/advsearchcvs/bb/1/command/sqlist">[t]Saved queries[/t]</a></li>{/if} {else}
                     <li class="menuLinkFirstChild mLcandSearch"><a href="[website]/index.php/page/CustomersRemote/command/buildform/bb/1">[t]Search[/t]</a></li>
                     {/if} {/if} {if $show_job_list}
                     <li class="mLjbl"><a href="[website]/index.php/page/customers_ext/bb/1">[t]Jobs list[/t]</a></li>
