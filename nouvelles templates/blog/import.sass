@@ -279,13 +279,21 @@ h1
     .text
       padding: 25px 25px
 
-
-  .menuContainer, .aplListTbl, .menuContainer, .menuLink, .buttonContainer, .aplTitle, .title
+  .menuContainer, .aplListTbl, .menuLink, .buttonContainer, .aplTitle, .title
     display: flex
     justify-content: center
     align-items: center
     margin: 1em
     text-align: center
+
+  .customerMenu nav
+    margin: 0
+    display: inherit
+    font-size: 20px
+    background-color: $white
+
+    .navbar-nav>li>a
+      color: $blue
 
 
   .buttonContainer > input, .displayNone > input

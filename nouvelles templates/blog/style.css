@@ -243,12 +243,19 @@ h1 {
     margin: 5px; }
   .candidat .qaPageDocUpload .text {
     padding: 25px 25px; }
-  .candidat .menuContainer, .candidat .aplListTbl, .candidat .menuContainer, .candidat .menuLink, .candidat .buttonContainer, .candidat .aplTitle, .candidat .title {
+  .candidat .menuContainer, .candidat .aplListTbl, .candidat .menuLink, .candidat .buttonContainer, .candidat .aplTitle, .candidat .title {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 1em;
     text-align: center; }
+  .candidat .customerMenu nav {
+    margin: 0;
+    display: inherit;
+    font-size: 20px;
+    background-color: #fff; }
+    .candidat .customerMenu nav .navbar-nav > li > a {
+      color: #12467e; }
   .candidat .buttonContainer > input, .candidat .displayNone > input {
     background-color: #12467e;
     border-radius: 50px;
