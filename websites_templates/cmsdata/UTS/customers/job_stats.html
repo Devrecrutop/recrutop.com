@@ -1,50 +1,33 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <!--uts:begin inner-->
 <!-- /UTS/customers/job_stats.html -->
 <!--START_9-->
 <!--UT: Startpage-->
 <table class="vacstable" cellpadding="0" cellspacing="0" border="0">
-
-<!--MENUBAR-->
-
-<!--START_PageTitle-->
-<tr>
-<td class="formHeaderContainer">
-
-<table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
-<tr>
-<td class="formHeader">[t]Werkgever statistics[/t]</td>
-</tr>
+    <!--MENUBAR-->
+    <!--START_PageTitle-->
+    <tr>
+        <td class="formHeaderContainer">
+            <table border="0" cellpadding="0" cellspacing="0" class="formHeaderTbl">
+                <tr>
+                    <td class="formHeader">[t]Werkgever statistics[/t]</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <!--END_PageTitle-->
+    <tr>
+        <td class="pageLinkContainer">
+            [CustomersMenu]
+        </td>
+    </tr>
 </table>
-
-</td>
-</tr>
-<!--END_PageTitle-->
-
-<tr>
-<td class="pageLinkContainer">
-[CustomersMenu]
-</td>
-</tr>
-
-</table>
-
-[t]Number of views[/t]: {$stats.show_count}<br>
-[t]Number of applicants[/t]: {$stats.applicants}<br>
-[t]Apply ratio[/t]: {$stats.apply_ratio}%<br>
-
-{if $option_stats_2 == 'all_portals'}
-[t]Portals[/t]:
-{else}
-[t]Top portals[/t]:
-{/if}
+[t]Number of views[/t]: {$stats.show_count}
+<br> [t]Number of applicants[/t]: {$stats.applicants}
+<br> [t]Apply ratio[/t]: {$stats.apply_ratio}%
+<br> {if $option_stats_2 == 'all_portals'} [t]Portals[/t]: {else} [t]Top portals[/t]: {/if}
+<br> {foreach from=$stats.portals_top key=i item=portal} {$i+1}. {$portal.name}
+<br> {/foreach} {if $option_stats_2 != 'all_portals'}<a href="{$website}/index.php/page/customers_ext/bb/1/command/job_stats/vid/{$vid}/option_stats_2/all_portals">[t]Show all[/t]</a>{/if}
 <br>
-{foreach from=$stats.portals_top key=i item=portal}
-{$i+1}. {$portal.name}<br>
-{/foreach}
-{if $option_stats_2 != 'all_portals'}<a href="{$website}/index.php/page/customers_ext/bb/1/command/job_stats/vid/{$vid}/option_stats_2/all_portals">[t]Show all[/t]</a>{/if}
-<br>
-
 <!--END_9-->
 <!--uts:end inner-->

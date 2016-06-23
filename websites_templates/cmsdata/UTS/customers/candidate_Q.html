@@ -197,92 +197,77 @@
                 }
 
             });
+            // Candidates appointment invitation
+            function timeslot_invite() {
+                if (trigger_timeslot_invite == 1) {
+
+                    $(document).ready(function() {
+
+                        status_changed = false;
+
+                        olvs = $('#old_vb_procedures_status').val();
+                        olvs2 = $('#old_vb_procedures_status2').val();
+                        olvs3 = $('#old_vb_procedures_status3').val();
+
+                        nvs = $('#vb_procedures_status').val();
+                        nvs2 = $('#vb_procedures_status2').val();
+                        nvs3 = $('#vb_procedures_status3').val();
+                        if (olvs != nvs || olvs2 != nvs2 || olvs3 != nvs3) {
+                            status_changed = true;
+                        }
 
 
-            {
-                /literal}
-                //
-    </script>
-    {literal}
-    <script type="text/javascript" language="JavaScript">
-    <!--
+                        if (status_changed == true) {
 
-    function timeslot_invite() {
-        if (trigger_timeslot_invite == 1) {
-
-            $(document).ready(function() {
-
-                status_changed = false;
-
-                olvs = $('#old_vb_procedures_status').val();
-                olvs2 = $('#old_vb_procedures_status2').val();
-                olvs3 = $('#old_vb_procedures_status3').val();
-
-                nvs = $('#vb_procedures_status').val();
-                nvs2 = $('#vb_procedures_status2').val();
-                nvs3 = $('#vb_procedures_status3').val();
-                if (olvs != nvs || olvs2 != nvs2 || olvs3 != nvs3) {
-                    status_changed = true;
-                }
+                            $.post('/index.php/page/lm_timeslots/command/timeslotCheck',
+                                $("#candForm").serialize(),
+                                TimeslotFeedback,
+                                'json');
 
 
-                if (status_changed == true) {
+                        }
 
-                    $.post('/index.php/page/lm_timeslots/command/timeslotCheck',
-                        $("#candForm").serialize(),
-                        TimeslotFeedback,
-                        'json');
-
+                    });
 
                 }
-
-            });
-
-        }
-
-    }
-
-
-    function TimeslotFeedback(data) {
-
-        if (data.status == "OK" && data.popup == "show") {
-
-            var r = confirm("[th]Do you want to invite this candidate for an appointment?[/th]");
-            if (r == true) {
-                // save invitation
-                $.post('/index.php/page/lm_timeslots/command/timeslotSingleInvitationSaveInBackground',
-                    $("#candForm").serialize(),
-                    InvitationFeedback,
-                    'html');
-
-            } else {
-                /// dont save invitation only continue...
-                $('#candForm').submit();
             }
 
+            function TimeslotFeedback(data) {
 
-        } else {
+                if (data.status == "OK" && data.popup == "show") {
 
-            $('#candForm').submit();
-        }
-    }
+                    var r = confirm("[th]Do you want to invite this candidate for an appointment?[/th]");
+                    if (r == true) {
+                        // save invitation
+                        $.post('/index.php/page/lm_timeslots/command/timeslotSingleInvitationSaveInBackground',
+                            $("#candForm").serialize(),
+                            InvitationFeedback,
+                            'html');
 
-    function InvitationFeedback(data) {
-        $('#candForm').submit();
-    }
+                    } else {
+                        /// dont save invitation only continue...
+                        $('#candForm').submit();
+                    }
 
-    //-->
+
+                } else {
+
+                    $('#candForm').submit();
+                }
+            }
+
+            function InvitationFeedback(data) {
+                $('#candForm').submit();
+            }
     </script>
     {/literal}
     <!-- /UTS/customers/candidate_Q.html -->
-    <h1>Candidat: {$candidate.name}  {$u.candidate_name|escape}</h1>
-    {if $customer_menu} {$customer_menu} {/if}
+    <h1>Candidat: {$candidate.name}  {$u.candidate_name|escape}</h1> {if $customer_menu} {$customer_menu} {/if}
     <table border="0" cellspacing="0" cellpadding="0" class="vacsTable">
         <tr>
             <td colspan="2" class="formtext">
                 <table border="0" cellpadding="0" cellspacing="0" class="formtbl">
-                    {foreach from=$data item=record name=personal} {if $record.part=="PER"} {* Honza M.: A quick fix for translating - added here so that the UTSMAN sees the names, but in a always-false condition so that they are not displayed; FIXME: implement some kind of PHP hook, if record.name can be known in advance *}
-                    {if 0}
+                    {foreach from=$data item=record name=personal} {if $record.part=="PER"} {* Honza M.: A quick fix for translating - added here so that the UTSMAN sees the names, but in a always-false condition so that they are not displayed; FIXME: implement some kind of PHP hook, if record.name can be known in advance *} {if 0}
                     <h2>These fields are generated dynamically ($record.name) - to be recognized by UTS, they must be inserted into a never-executed block, such as this one</h2> [ti]Voornaam[/ti]
                     <br> [ti]Tussenvoegsel[/ti]
                     <br> [ti]Achternaam[/ti]

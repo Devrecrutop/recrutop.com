@@ -1,19 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-
-<head>
-    <title>Vos annonces </title>
-</head>
-
 <body>
     <!-- /UTS/customers/jobList.html -->
     <!--uts:begin inner-->
     <!--START_9-->
-    <h1>Mon espace recruteur</h1>
+    <h1 class="center">Mes annonces en ligne </h1>
     <!-- /UTS/customers/jobList.html -->
     [CustomersMenu]
-    <h2>Mes annonces </h2>
-    <p>[last_update] - <a href="/index.php/page/custstats/command/start/bb/1/">Voir les statistiques de mes annonces </a></p>
+    <p class="center margin-m">[last_update] - <a href="/index.php/page/custstats/command/start/bb/1/">Voir les statistiques de mes annonces </a></p>
     <table border="0" cellpadding="0" cellspacing="0" class=" table table-bordered table-hover table-responsive table-striped">
         <thead>
             <tr>
@@ -23,19 +17,20 @@
             </tr>
         </thead>
         <tbody>
+            <!--START_VACANCY_TBL-->
             <tr>
-                <!--START_VACANCY_TBL-->
                 <td>
                     <a href="[website]/index.php/page/customers_ext/command/detail/vid/[id]/bb/1/temp/[`temp]"><span class="publish_[publish_status]">[functie_o]</span></a>
                 </td>
+                <td>[locatie]</td>
                 <td>
                     <nobr>
                         <a href="{$website}/index.php/page/customers/bb/1/command/candjob_list/vid/[id]" title="[th]candidates[/th]">
                             <i class="fa fa-users" aria-hidden="true"></i> Voir les [number_of_candidates] candidats </a>
                     </nobr>
                 </td>
-                <!--END_VACANCY_TBL-->
             </tr>
+            <!--END_VACANCY_TBL-->
         </tbody>
     </table>
     <!--END_9-->

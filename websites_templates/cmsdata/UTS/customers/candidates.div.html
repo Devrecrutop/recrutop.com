@@ -290,34 +290,21 @@
                 {else} &nbsp; {/if} {/if} {if $cand.cand_status || $cand.status1 || $cand.status2 || $cand.status3 || $staffing }
                 <div class="custCandStatusCont">
                     {if $cand.cand_status}
-                    <span class="itemWord custCandStatus">
-  <span>[t]Status[/t]:</span> {$cand.cand_status}
+                    <span class="itemWord custCandStatus"><span>[t]Status[/t]:</span> {$cand.cand_status}
                     </span>
                     {/if} {if $cand.status1}
-                    <span class="itemWord custCandStatus1Name">
-  <span>{$status1_name}:</span> {$cand.status1}
+                    <span class="itemWord custCandStatus1Name"><span>{$status1_name}:</span> {$cand.status1}
                     </span>
                     {/if} {if $cand.status2}
-                    <span class="itemWord custCandStatus2Name">
-  <span>{$status2_name}:</span> {$cand.status2}
+                    <span class="itemWord custCandStatus2Name"><span>{$status2_name}:</span> {$cand.status2}
                     </span>
                     {/if} {if $cand.status3}
-                    <span class="itemWord custCandStatus3Name">
-  <span>{$status3_name}:</span> {$cand.status3}
+                    <span class="itemWord custCandStatus3Name"><span>{$status3_name}:</span> {$cand.status3}
                     </span>
                     {/if} {if $staffing}
-                    <span class="itemWord custCandStaffingStatus">
-  <span>[t]Staffing[/t]:</span> {$cand.staffing_status}
+                    <span class="itemWord custCandStaffingStatus"><span>[t]Staffing[/t]:</span> {$cand.staffing_status}
                     </span>
                     {/if}
-                    <!-- MBL -->
-                    <div class="itemFooter">
-                        <div class="itemFooterWord custCandItemFooterWord" title="[th]Send e-mail to[/th] {$cand.contactpersoon}"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/mailform/id/{$cand.reactieid}/alt/1">[th]E-mail[/th] {$cand.contactpersoon}</a></div>
-                        {if $allow_passive_status_change}
-                        <div class="itemFooterWord custCandItemFooterWord" title="[th]Set to[/th] {if $cand.passive=='N'}[th]Passive[/th]{/if} {if $cand.passive=='Y'}[th]Active[/th]{/if}"><a href="/index.php/page/customers/bb/1/command/candjob_list/option/change_status/kid/{$kid}/vid/{$vid}/">[th]Set to[/th] {if $cand.passive=='N'}[th]Passive[/th]{/if} {if $cand.passive=='Y'} [th]Active[/th]{/if}</a></div>
-                        {/if}
-                    </div>
-                    <div class="cleaner cstIc"></div>
                 </div>
                 {/if}
             </div>
