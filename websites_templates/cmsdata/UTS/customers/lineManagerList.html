@@ -73,24 +73,21 @@
     {/literal}
     <div class="outer custOuter custLinOuter">
         <!-- /UTS/customers/lineManagerList.html -->
-        <h1 class="title custTitle custLinTitle">[t]Updates[/t]</h1> {$menu}
-        <div class="intro">
-            [t]Line managers portal with a list of candidates[/t]
-        </div>
+        <h1 class="title custTitle custLinTitle">Derniers candidats </h1> {$menu}
         {*FILTER FORM BEGIN*}
         <div class="tscFilterDiv">
-            <form action="{$handler}" id="frm_flt" name="frm_flt" method="post">
+            <form action="{$handler}" id="frm_flt" name="frm_flt" method="post" class="center form-inline margin-l">
                 <input type="hidden" name="command" value="setfilter">
-                <div class="formInput">
-                    <label>[t]Candidate[/t]</label>
-                    <input type="text" name="flt[candidate]" value="{$flt.candidate|escape}">
+                <div class="formInput form-group"">
+                    <label>Nom du candidat </label>
+                    <input type="text" name="flt[candidate]" value="{$flt.candidate|escape}" placeholder=" John Doe" class="radius-m">
                 </div>
-                <div class="formInput">
+                <div class="formInput form-group"">
                     <label>[t]Vacancy[/t]</label>
-                    <input type="text" name="flt[vacancy]" value="{$flt.vacancy|escape}">
+                    <input type="text" name="flt[vacancy]" value="{$flt.vacancy|escape}" placeholder=" Téléprospecteur" class="radius-m">
                 </div>
                 {if $stChangeAllowed} {if $eStatuses.cs}
-                <div class="formInput">
+                <div class="formInput form-group"">
                     <label>[t]Status[/t]</label>
                     <select name="flt[status]">
                         <option value="">---</option>
@@ -98,7 +95,7 @@
                     </select>
                 </div>
                 {/if} {if $eStatuses.ps1}
-                <div class="formInput">
+                <div class="formInput form-group"">
                     <label>{$sts.name1}</label>
                     <select name="flt[vb_procedures_status]">
                         <option value="">---</option>
@@ -106,7 +103,7 @@
                     </select>
                 </div>
                 {/if} {if $eStatuses.ps2}
-                <div class="formInput">
+                <div class="formInput form-group"">
                     <label>{$sts.name2}</label>
                     <select name="flt[vb_procedures_status2]">
                         <option value="">---</option>
@@ -114,7 +111,7 @@
                     </select>
                 </div>
                 {/if} {if $eStatuses.ps3}
-                <div class="formInput">
+                <div class="formInput form-group"">
                     <label>{$sts.name3}</label>
                     <select name="flt[vb_procedures_status3]">
                         <option value="">---</option>
@@ -122,13 +119,14 @@
                     </select>
                 </div>
                 {/if} {/if}
-                <div class="buttonContainer">
-                    <input class="button" type="submit" name="flt_bttn" value="[t]Filter[/t]">
-                </div>
+                <button type="submit" class="btn btn-primary">Rechercher </button>
             </form>
         </div>
         {*FILTER FORM END*} {if $lmBatchSttatuses && $stChangeAllowed}
         <!-- SET BATCH STATUSES SELECTS -->
+        <div class="intro center">
+            [t]Line managers portal with a list of candidates[/t]
+        </div>
         <form name="frmChCh" id="frmChCh" action="/index.php/page/lmbsreacties/bb/1" method="post">
             <input type="hidden" name="command" value="setstatuses">
             <input type="hidden" name="returnapp" value="linemanager">
@@ -136,7 +134,7 @@
             <input type="hidden" name="returnparams" value="">
             <div class="LMCandDetailStatus">
                 <h2 class="subHeader">[t]Change Status[/t]</h2> {if $eStatuses.cs}
-                <div class="formInput fiStatus">
+                <div class="formInput form-group" fiStatus">
                     <label>[t]Status[/t]</label>
                     <select name="status" id="stSel0" onChange="saveButtonEnable()">
                         <option value="">---</option>
@@ -145,7 +143,7 @@
                     </select>
                 </div>
                 {/if} {if $eStatuses.ps1}
-                <div class="formInput fiProcedures1">
+                <div class="formInput form-group" fiProcedures1">
                     <label>{$sts.name1}</label>
                     <select name="vb_procedures_status" id="stSel1" onChange="saveButtonEnable()">
                         <option value="">---</option>
@@ -153,7 +151,7 @@
                     </select>
                 </div>
                 {/if} {if $eStatuses.ps2}
-                <div class="formInput fiProcedures1">
+                <div class="formInput form-group" fiProcedures1">
                     <label>{$sts.name2}</label>
                     <select name="vb_procedures_status2" id="stSel2" onChange="saveButtonEnable()">
                         <option value="">---</option>
@@ -161,7 +159,7 @@
                     </select>
                 </div>
                 {/if} {if $eStatuses.ps3}
-                <div class="formInput fiProcedures1">
+                <div class="formInput form-group" fiProcedures1">
                     <label>{$sts.name3}</label>
                     <select name="vb_procedures_status3" id="stSel3" onChange="saveButtonEnable()">
                         <option value="">---</option>
