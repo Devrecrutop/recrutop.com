@@ -1,846 +1,808 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
+
 <head>
-<title>questionsform</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link href="formstyles.css" rel="stylesheet" type="text/css">
-<SCRIPT LANGUAGE="Javascript" type="text/javascript">
-<!--
-//function hidestatus() { window.status='Otys e-Recruiting Systems'return true}
-//if (document.layers)document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
-//document.onmouseover=hidestatusdocument.onmouseout=hidestatus
--->
-</SCRIPT>
+    <title>questionsform</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link href="formstyles.css" rel="stylesheet" type="text/css">
+    <SCRIPT LANGUAGE="Javascript" type="text/javascript">
+    <!--
+    //function hidestatus() { window.status='Otys e-Recruiting Systems'return true}
+    //if (document.layers)document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+    //document.onmouseover=hidestatusdocument.onmouseout=hidestatus
+    -->
+    </SCRIPT>
 </head>
+
 <body>
-<!--START_9-->
-<script>{javascript}</script>
-
-<div class="outer custOuter custAddJobOuter">
-	<!-- /fotemplatesdiv/QuestionsFormVacCust.html -->
-	<!-- Template verified by: Maikel Doeze - VALID -->
-	
-	<h1 class="title jblTitle">{Title}</h1>
-	[CustomersMenu]
-	[CustomersSubMenu]
-	<div class="intro">{IntroText}</div>
-	<form name="form1" method="post" action="[website]/index.php/page/customers_ext/bb/1" enctype="multipart/form-data">
-		<input type="hidden" name="command" value="[submitcommand]">
-		<input type="hidden" name="vid" value="[vid]">
-		<input type="hidden" name="tmpjob" value="[tmpjob]">
-		<input type="hidden" name="NewQuestionId" value="">
-		<input type="hidden" name="NewType" value="">
-		<input type="hidden" name="NewSoort" value="">
-		<input type="hidden" name="step" value="[step]">
-		<input type="hidden" name="register_get" value="1">
-		<input type="hidden" name="jobcategory_in_questionset" value="[jobcategory_in_questionset]">
-		<input type="hidden" name="jts_id" value="[jts_id]">
-		<!--MENUBAR-->
-		
-		<!--not used APPLICATIONROW-->
-		<!--START_MYPROFILE_LINKS-->
-			<a href="[website]/index.php/page/CandidatesRemote/command/myprofile/page/1/bb/1">Login Gegevens</a>
-		<!--START_PAGELINKS-->
-			<a href="[website]/index.php/page/CandidatesRemote/command/myprofile/page/2/subpage/[Page]/bb/1">[PageName]</a>
-		<!--END_PAGELINKS-->
-			<a href="[website]/index.php/page/CandidatesRemote/command/logout/bb/1">Uitloggen</a>
-		<!--END_MYPROFILE_LINKS-->
-
-		<!--START_PHOTO-->
-			<!-- <img src="[photo]"> -->
-		<!--END_PHOTO-->
-
-		<!--START-->
-			<!--HORIZONTAL-->
-			<div class="formGroup">
-				<!--START_H_Personalia-->
-					<div class="formInput cstFi cstFiI">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<input type="text" name="Answers[[QuestionId]]" size="35" value="[AnswerValue]">
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_Personalia-->
-				
-				<!--START_H_Leeg-->
-					<div class="formInput cstFi cstFiL">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						[FormField]
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_Leeg-->	
-				
-				<!--START_H_File-->
-					<div class="formInput cstFi cstFiF">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<input type="hidden" name="MAX_FILE_SIZE" value="512000">
-						<input type="file" name="file">
-						<input type="hidden" name="FileQuestionId" value="[QuestionId]">
-						<input type="hidden" name="Answers[[QuestionId]]" value="[AnswerValue]">
-					</div>
-					<!--START_VIEW_FILE-->
-						<div class="formInput">
-							<label>Huidig bestand:</label>
-							[FileViewLink]
-						</div>
-					<!--END_VIEW_FILE-->
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_File-->
-				
-				<!--START_H_Textfield-->
-					<div class="formInput cstFi cstFiTf">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<input type="text" name="Answers[[QuestionId]]" value="[AnswerValue]">
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_Textfield-->
-
-				<!--START_H_Datefield-->
-					<div class="formInput cstFi cstFiTf">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<!--START_H_Datefield_Answers-->
-							[dayselect]
-						<!--END_H_Datefield_Answers-->
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_Datefield-->
-				
-				<!--START_H_Textarea-->
-					<div class="formInput cstFi cstFiTa">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<textarea name="Answers[[QuestionId]]" rows="[NumRows]">[AnswerValue]</textarea>
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_Textarea-->	
-				
-				<!--START_H_CV-->
-					<div class="formInput cstFi cstFiCv">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain csiCvExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<textarea name="Answers[[QuestionId]]" rows="[NumRows]">[AnswerValue]</textarea>
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_CV-->
-
-				<!--START_H_Select-->
-					<div class="formInput cstFi">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<select name="Answers[[QuestionId]]">
-							<option value="">---</option>
-							<!--START_H_Select_Answers-->
-								<option value="[AnswerId]" [selected]>[Answer]</option>
-							<!--END_H_Select_Answers-->
-						</select>
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_Select-->
-			
-				<!--START_H_Checkbox-->
-					<div class="formInput cstFi">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<!--START_H_Checkbox_Answers-->
-							<input type="hidden"   name="Answers[[QuestionId]][[AnswerId]]" value="0">
-							<input type="checkbox" name="Answers[[QuestionId]][[AnswerId]]" value="1" [checked]>
-							[Answer]
-						<!--END_H_Checkbox_Answers-->
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_Checkbox-->
-
-				<!--START_H_Radio-->
-					<div class="formInput cstFi">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<!--START_H_Radio_Answers-->
-							<input type="radio" name="Answers[[QuestionId]]" value="[AnswerId]" [checked]>[Answer]
-						<!--END_H_Radio_Answers-->
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_Radio-->
-
-				<!--START_H_OPL-->
-					<div class="formInput formSmallInput aplEduSubTitle">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<input type="button" class="smallButton aplSB aplEduSb" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-
-					<!--START_H_OPL_Answers-->
-						<div class="formGroup aplEduFormGroup">
-							<div class="formInput aplEduEducation">
-								<label>Opleiding</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{Degree}" type="text"  value="[Degree]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Education}" value="[Education]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{EducationGroup}" value="[EducationGroup]">
-							</div>
-							<div class="formInput aplEduDirection">
-								<label>Richting</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{DegreeDirection}" type="text" value="[DegreeDirection]">
-							</div>
-							<div class="formInput aplEduInstitute">
-								<label>Instituut</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{InstituteNameAndPlace}" type="text" value="[InstituteNameAndPlace]">
-							</div>
-							<div class="formInput aplEduDegree">
-								<label>Diploma</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{Diploma}" type="text"  value="[Diploma]">
-							</div>
-							<div class="formInput formSmallInput aplEduStartDate">
-								<label>Begin</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{StartDate}" type="text"  value="[StartDate]">
-							</div>
-							<div class="formInput formSmallInput aplEduEndDate">
-								<label>Eind</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{EndDate}" type="text"  value="[EndDate]">
-							</div>
-							<div class="formInput formSmallInput alpEduDeleteButton">
-								<label>&nbsp;</label>
-								<input name="button" type="button" class="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
-							</div>
-						</div>
-
-						<!--these hiddens are necessary because fields are commented out-->
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{DiplomaDate}" value="[DiplomaDate]" size="18">
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Subjects}" value="[Subjects]">
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{ThesisSubject}" value="[ThesisSubject]">
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{ThesisResult}" value="[ThesisResult]">
-					<!--END_H_OPL_Answers-->
-				<!--END_H_OPL-->
-
-				<!--START_H_WER-->
-					<div class="formInput formSmallInput aplWorkSubHeader">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<input type="button" class="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-					
-					<!--START_H_WER_Answers-->
-						<div class="formGroup aplWorkFormGroup">
-							<div class="formInput aplWorkPosition">
-								<label>Functie</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{Experience}" type="text" value="[Experience]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{PositionGroup}" value="[PositionGroup]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{PositionType}" value="[PositionType]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Industry}" value="[Industry]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Duration}" value="[Duration]">
-							</div>
-							<div class="formInput aplWorkEmployer">
-								<label>Bedrijf</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{EmployerNameAndPlace}" type="text" value="[EmployerNameAndPlace]">
-							</div>
-							<div class="formInput formSmallInput aplWorkStartDate">
-								<label>Begin</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{StartDate}" type="text"  value="[StartDate]">
-							</div>
-							<div class="formInput formSmallInput aplWorkEndDate">
-								<label>Eind</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{EndDate}" type="text"  value="[EndDate]">
-								<div class="formInput aplWorkDescription">
-									<label>Functieomschrijving</label>
-									<textarea class="functionTxt" name="Answers[[QuestionId]][[AnswerId]]{ExperienceDescription}" cols="72" rows="4">[ExperienceDescription]</textarea>
-								</div>
-								<div class="formInput aplWorkReasonEnd">
-									<label>Reden be&euml;indiging</label>
-									<textarea class="fieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{Termination}" cols="44">[Termination]</textarea>
-								</div>
-								<div class="formInput formSmallInput formDeleteButton aplWorkDeleteButton">
-									<label>&nbsp;</label>
-									<input type="button" class="smallButton aplSB aplWorkSb" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
-								</div>
-							</div>
-						</div>
-					<!--END_H_WER_Answers-->
-				<!--END_H_WER-->
-
-				<!--START_H_SKI-->
-					<!--START_EXPLANATION-->
-						<div class="explain cstExplain">[Explanation]</div>
-					<!--END_EXPLANATION-->
-					<div class="formInput formSmallInput aplSkillsLangSH">
-						<label>[Question]</label>
-					</div>
-				
-					<!--START_H_SKI_SOORT-->
-						<div class="formInput formSmallInput aplSoftSkillsSH">
-							<label>[soort]</label>
-							<input type="button" class="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
-						</div>
-					<!--END_H_SKI_SOORT-->
-			
-					<!--START_H_SKI_Answers-->
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{soort}" value="[soort]">
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{proficiency}" value="[proficiency]">
-						<textarea class="fieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{skill}" >[skill]</textarea>
-						<input type="button" class="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
-					<!--END_H_SKI_Answers-->
-
-					<!--START_H_SKI_PROFICIENCY-->
-						<div class="formInput aplSkillsLlInput">
-							<label></label>
-							<table cellspacing="0" cellpadding="0" border="0" class="aplSkilsLlTbl">
-								<tr> 
-									<td>Spreken</td>
-									<td>Lezen</td>
-									<td>Schrijven</td>
-								</tr>
-								<tr> 
-									<td>[spreken_select]</td>
-									<td>[lezen_select]</td>
-									<td>[schrijven_select]</td>
-								</tr>
-							</table>
-						</div>
-					<!--END_H_SKI_PROFICIENCY-->
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_SKI-->
-	
-				<!--START_H_OTH-->
-					<h3 class="formTitle aplOtherFormTitle">[Question]</h3>
-					<!--START_EXPLANATION-->
-						<div class="explain cstExplain">[Explanation]</div>
-					<!--END_EXPLANATION-->
-					<!--START_H_OTH_VELD-->
-						<div class="formInput formSmallInput AplOtherHobbys">
-							<label>[veld]</label>
-							<input class="button" type="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
-						</div>
-					<!--END_H_OTH_VELD-->
-					
-					<!--START_H_OTH_Answers-->
-						<div class="formInput aplOtherHobby">
-							<label></label>
-							<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{veld}" value="[veld]">
-							<textarea class="FieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{data}" >[data]</textarea>
-						</div>
-						<div class="formInput formSmallInput aplOtherHobbyDB">
-							<label>&nbsp;</label>
-							<input class="smallButton aplSB aplOtherHobbysSb" type="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
-						</div>
-					<!--END_H_OTH_Answers-->
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_OTH-->
-						
-				<!--START_H_Customer-->
-					<!--START_H_Checkbox-->
-						<div class="formInput formInputId1">
-							<label for="Answers[[QuestionId]][]">[Question]</label>														
-							<input type="hidden"   name="Answers[[QuestionId]][[AnswerId]]" value="0">
-							<input  style="width:auto" type="checkbox" name="Answers[[QuestionId]][[AnswerId]]" value="1" [checked]>							
-							<p class="explain cstExplain">[Explanation]</p>
-						</div>
-					<!--END_H_Checkbox-->
-					
-					<!--START_H_Textarea-->
-					<div class="formInput formInputId2">
-						<label for="Answers[[QuestionId]][]">[Question]</label>
-						<input type="input" name="Answers[[QuestionId]][]" value="" style="height:50px" onFocus="ta=document.createElement('textarea');ta.setAttribute('name',this.name);ta.style.height='50px';ta.appendChild(document.createTextNode(this.value));this.parentNode.replaceChild(ta,this);ta.focus()">
-						<p class="explain cstExplain" style="width:140px">[Explanation]</p>
-					</div>
-					<!--END_H_Textarea-->
-				<!--END_H_Customer-->
-
-				<!--START_H_CRIT-->
-					<!--HIER BEGIN -->
-					<div class="formInput formInputSelect" id="formInputId[QuestionId]">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<!--START_H_CRIT_CRITCAT-->
-							<select name="CritCat[[QuestionId]]" onChange="this.form.command.value='changecritcat'; this.form.submit();">[options]</select>
-							<input type="hidden" name="CritCat_SM[[QuestionId]]" value="[SM]">
-						<!--END_H_CRIT_CRITCAT-->
-						<!--START_H_CRIT_SELECT-->
-							<select name="Answers[[QuestionId]][[AnswerId]]">[options]</select>
-						<!--END_H_CRIT_SELECT-->
-						<!--START_H_CRIT_MULTISELECT-->
-							<!-- Specialcomment-->
-							<select name="Answers[[QuestionId]][[AnswerId]]" size="5" multiple>[options]</select>
-							<input type="hidden" name="Answers[[QuestionId]][]" value="">
-						<!--END_H_CRIT_MULTISELECT-->
-						<!--START_H_CRIT_Checkbox-->
-							<input type="checkbox" class="radiobutton" name="Answers[[QuestionId]][]" value="[AnswerId]" [checked]>[Answer]
-						<!--END_H_CRIT_Checkbox-->
-						<!--START_H_CRIT_Radio-->
-							<input type="radio" class="radiobutton" name="Answers[[QuestionId]]" value="[AnswerId]" [checked]>[Answer]
-						<!--END_H_CRIT_Radio-->
-					</div>
-					<!--HIER EIND -->
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_H_CRIT-->
-				
-				<!--VERTICAL--><!--VERTICAL--><!--VERTICAL--><!--VERTICAL-->
-
-				<!--START_V_Personalia-->
-					<div class="formInput cstFi">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<input type="text" name="Answers[[QuestionId]]" size="35" value="[AnswerValue]">
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_V_Personalia-->
-
-				<!--START_V_Leeg-->
-					<div class="formInput cstFi">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						[FormField]
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_V_Leeg-->
-
-				<!--START_V_File-->
-					<div class="formInput cstFi">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<input type="hidden" name="MAX_FILE_SIZE" value="512000">
-						<input type="file" name="file">
-						<input type="hidden" name="FileQuestionId" value="[QuestionId]">
-						<input type="hidden" name="Answers[[QuestionId]]" value="[AnswerValue]">
-					</div>
-					<!--START_VIEW_FILE-->
-						<div class="formInput cstFi">
-							<label>Huidig bestand:</label>
-							[FileViewLink]
-						</div>
-					<!--END_VIEW_FILE-->
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_V_File-->
-				
-				<!--START_V_Textfield-->
-					<div class="formInput cstFi cstFiTf">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<input type="text" name="Answers[[QuestionId]]" value="[AnswerValue]">
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_V_Textfield-->
-
-				<!--START_V_Datefield-->
-					<!-- <div class="formInput cstFi cstFiTf"> -->
-						<!-- <label>[Question]</label> -->
-						<!--START_EXPLANATION-->
-						<!-- <div class="explain small cstExplain">[Explanation]</div> -->
-						<!--END_EXPLANATION-->
-						<!--START_V_Datefield_Answers-->
-						<!-- [Dates%elect] -->
-						<!--END_V_Datefield_Answers-->
-					<!-- </div> -->
-					<!--START_ERROR-->
-						<!-- <div class="error">[Error]</div> -->
-					<!--END_ERROR-->
-				<!--END_V_Datefield-->
-
-				<!--START_V_Textarea-->
-					<div class="formInput cstFi cstFiTa">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<textarea name="Answers[[QuestionId]]" rows="[NumRows]">[AnswerValue]</textarea>
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_V_Textarea-->
-
-				<!--START_V_CV-->
-					<div class="formInput cstFi">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<textarea name="Answers[[QuestionId]]" rows="[NumRows]">[AnswerValue]</textarea>
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_V_CV-->
-
-				<!--START_V_Select-->
-					<div class="formInput cstFi">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<select name="Answers[[QuestionId]]">
-							<option value="">---</option>
-							<!--START_H_Select_Answers-->
-								<option value="[AnswerId]" [selected]>[Answer]</option>
-							<!--END_H_Select_Answers-->
-						</select>
-						<!--START_ERROR-->
-							<div class="error">[Error]</div>
-						<!--END_ERROR-->
-					</div>
-				<!--END_V_Select-->
-
-				<!--START_V_Checkbox-->
-					<div class="formInput cstFi">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<!--START_H_Checkbox_Answers-->
-							<input type="hidden"   name="Answers[[QuestionId]][[AnswerId]]" value="0">
-							<input type="checkbox" name="Answers[[QuestionId]][[AnswerId]]" value="1" [checked]>
-							[Answer]
-						<!--END_H_Checkbox_Answers-->
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_V_Checkbox-->
-
-				<!--START_V_OPL-->
-					<!--START_EXPLANATION-->
-						<div class="explain cstExplain">[Explanation]</div>
-					<!--END_EXPLANATION-->
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-					<div class="formInput formSmallInput aplEduSubTitle">
-						<label>[Question]</label>
-						<input type="button" class="smallButton aplSB aplEduSb" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
-					</div>
-
-					<!--START_V_OPL_Answers-->
-						<div class="formGroup aplEduFormGroup">
-							<div class="formInput aplEduEducation">
-								<label>Opleiding</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{Degree}" type="text"  value="[Degree]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Education}" value="[Education]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{EducationGroup}" value="[EducationGroup]">
-							</div>
-							<div class="formInput aplEduDirection">
-								<label>Richting</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{DegreeDirection}" type="text" value="[DegreeDirection]">
-							</div>
-							<div class="formInput aplEduInstitute">
-								<label>Instituut</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{InstituteNameAndPlace}" type="text" value="[InstituteNameAndPlace]">
-							</div>
-							<div class="formInput aplEduDegree">
-								<label>Diploma</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{Diploma}" type="text"  value="[Diploma]">
-							</div>
-							<div class="formInput formSmallInput aplEduStartDate">
-								<label>Begin</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{StartDate}" type="text"  value="[StartDate]">
-							</div>
-							<div class="formInput formSmallInput aplEduEndDate">
-								<label>Eind</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{EndDate}" type="text"  value="[EndDate]">
-							</div>
-							<div class="formInput formSmallInput alpEduDeleteButton">
-								<label>&nbsp;</label>
-								<input name="button" type="button" class="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
-							</div>
-						</div>
-
-						<!--these hiddens are necessary because fields are commented out-->
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{DiplomaDate}" value="[DiplomaDate]" size="18">
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Subjects}" value="[Subjects]">
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{ThesisSubject}" value="[ThesisSubject]">
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{ThesisResult}" value="[ThesisResult]">
-					<!--END_V_OPL_Answers-->
-				<!--END_V_OPL-->
-
-				<!--START_V_WER-->
-					<div class="formInput formSmallInput aplWorkSubHeader">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<input type="button" class="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-					
-					<!--START_V_WER_Answers-->
-						<div class="formGroup aplWorkFormGroup">
-							<div class="formInput aplWorkPosition">
-								<label>Functie</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{Experience}" type="text" value="[Experience]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{PositionGroup}" value="[PositionGroup]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{PositionType}" value="[PositionType]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Industry}" value="[Industry]">
-								<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Duration}" value="[Duration]">
-							</div>
-							<div class="formInput aplWorkEmployer">
-								<label>Bedrijf</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{EmployerNameAndPlace}" type="text" value="[EmployerNameAndPlace]">
-							</div>
-							<div class="formInput formSmallInput aplWorkStartDate">
-								<label>Begin</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{StartDate}" type="text"  value="[StartDate]">
-							</div>
-							<div class="formInput formSmallInput aplWorkEndDate">
-								<label>Eind</label>
-								<input name="Answers[[QuestionId]][[AnswerId]]{EndDate}" type="text"  value="[EndDate]">
-								<div class="formInput aplWorkDescription">
-									<label>Functieomschrijving</label>
-									<textarea class="functionTxt" name="Answers[[QuestionId]][[AnswerId]]{ExperienceDescription}" cols="72" rows="4">[ExperienceDescription]</textarea>
-								</div>
-								<div class="formInput aplWorkReasonEnd">
-									<label>Reden be&euml;indiging</label>
-									<textarea class="fieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{Termination}" cols="44">[Termination]</textarea>
-								</div>
-								<div class="formInput formSmallInput formDeleteButton aplWorkDeleteButton">
-									<label>&nbsp;</label>
-									<input type="button" class="smallButton aplSB aplWorkSb" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
-								</div>
-							</div>
-						</div>
-					<!--END_V_WER_Answers-->
-				<!--END_V_WER-->
-				
-				<!--START_V_SKI-->
-					<!--START_EXPLANATION-->
-						<div class="explain cstExplain">[Explanation]</div>
-					<!--END_EXPLANATION-->
-					
-					<div class="formInput formSmallInput aplSkillsLangSH">
-						<label>[Question]</label>
-					</div>
-					
-					<!--START_V_SKI_SOORT-->
-						<div class="formInput formSmallInput aplSoftSkillsSH">
-							<label>[soort]</label>
-							<input type="button" class="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
-						</div>
-					<!--END_V_SKI_SOORT-->
-
-					<!--START_V_SKI_Answers-->
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{soort}" value="[soort]">
-						<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{proficiency}" value="[proficiency]">
-						<textarea class="fieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{skill}" >[skill]</textarea>
-						<input type="button" class="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
-					<!--END_V_SKI_Answers-->
-
-					<!--START_V_SKI_PROFICIENCY-->
-						<div class="formInput aplSkillsLlInput">
-							<label></label>
-							<table cellspacing="0" cellpadding="0" border="0" class="aplSkilsLlTbl">
-								<tr> 
-									<td>Spreken</td>
-									<td>Lezen</td>
-									<td>Schrijven</td>
-								</tr>
-								<tr> 
-									<td>[spreken_select]</td>
-									<td>[lezen_select]</td>
-									<td>[schrijven_select]</td>
-								</tr>
-							</table>
-						</div>
-					<!--END_V_SKI_PROFICIENCY-->
-					
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-					
-				<!--END_V_SKI-->
-
-				<!--START_V_OTH-->
-					<h3 class="formTitle aplOtherFormTitle">[Question]</h3>
-					<!--START_EXPLANATION-->
-						<div class="explain cstExplain">[Explanation]</div>
-					<!--END_EXPLANATION-->
-					<!--START_V_OTH_VELD-->
-						<div class="formInput formSmallInput AplOtherHobbys">
-							<label>[veld]</label>
-							<input class="button" type="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
-						</div>
-					<!--END_V_OTH_VELD-->
-					<!--START_V_OTH_Answers-->
-						<div class="formInput aplOtherHobby">
-							<label></label>
-							<input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{veld}" value="[veld]">
-							<textarea class="FieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{data}" >[data]</textarea>
-						</div>
-						<div class="formInput formSmallInput aplOtherHobbyDB">
-							<label>&nbsp;</label>
-							<input class="smallButton aplSB aplOtherHobbysSb" type="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
-						</div>
-					<!--END_V_OTH_Answers-->
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_V_OTH-->
-				
-				<!--START_V_Customer-->
-					<!--START_V_Logo-->
-						<div class="formInput cstULo">
-							<label>[Question]</label>
-							<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-							<!--END_EXPLANATION-->
-							<input type="hidden" name="MAX_FILE_SIZE" value="2097152">
-							<input type="file" name="Photo">
-						</div>
-					<!--START_VIEW_Logo-->
-						[Huidig Bestand]
-						[LogoPreview]
-					<!--END_VIEW_Logo-->
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-					<!--END_V_Logo-->
-					<!--START_V_PremiumJob-->
-						<!-- <div class="formInput cstCLo">
-							<label>[Question]</label>
-							<input type="checkbox" name="Answers[[QuestionId]][]" value="[AnswerId]" [checked]>[Answer]
-						</div> -->
-					<!--END_V_PremiumJob-->
-				<!--END_V_Customer-->
-
-				<!--START_V_CRIT-->
-					<div class="formInput cst6">
-						<label>[Question]</label>
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<!--START_V_CRIT_CRITCAT-->
-							<select name="CritCat[[QuestionId]]" onChange="this.form.command.value='changecritcat'; this.form.submit();">[options]</select>
-							<input type="hidden" name="CritCat_SM[[QuestionId]]" value="[SM]">
-						<!--END_V_CRIT_CRITCAT-->
-						<!--START_V_CRIT_SELECT-->
-							<select name="Answers[[QuestionId]][[AnswerId]]">[options]</select>
-						<!--END_V_CRIT_SELECT-->
-						<!--START_V_CRIT_MULTISELECT-->
-							<select name="Answers[[QuestionId]][[AnswerId]]" size="5" multiple>[options]</select>
-						<!--END_V_CRIT_MULTISELECT-->
-						<!--START_V_CRIT_Checkbox-->
-						<!--<input type="hidden"   name="Answers[[QuestionId]][[AnswerId]]" value="0">-->
-							<input type="checkbox" name="Answers[[QuestionId]][]" value="[AnswerId]" [checked]>[Answer]
-						<!--END_V_CRIT_Checkbox-->
-						<!--START_V_CRIT_Radio-->
-							<input type="radio" name="Answers[[QuestionId]]" value="[AnswerId]" [checked]>[Answer]
-						<!--END_V_CRIT_Radio-->
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_V_CRIT-->
-
-				<!--START_V_Radio-->
-					<div class="formInput cst7">
-						<!--START_EXPLANATION-->
-							<div class="explain small cstExplain">[Explanation]</div>
-						<!--END_EXPLANATION-->
-						<label>[Question]</label>
-						<!--START_V_Radio_Answers-->
-							<input type="radio" name="Answers[[QuestionId]]" value="[AnswerId]" [checked]>[Answer]
-						<!--END_V_Radio_Answers-->
-					</div>
-					<!--START_ERROR-->
-						<div class="error">[Error]</div>
-					<!--END_ERROR-->
-				<!--END_V_Radio-->
-			</div>
-		<!--END-->
-		
-		<!--START_APPLY_OPTIONS-->
-			<div class="formInput cst[SingleWord24]">
-				<script type="text/javascript">[APPLY_OPTIONS_JAVASCRIPT]</script>
-				<label>[SingleWord24]<!--SingleWordLink24--></label>
-				<select name="ApplyOptionsId" id="ApplyOptionsId"  <!--START_APPLY_OPTIONS_JS-->onFocus="website_option_select();"<!--END_APPLY_OPTIONS_JS-->>
-					<option value="relation" [ApplyOptionsRelationSelected]>[SingleWord25]<!--SingleWordLink25--></option>
-					<option value="profile" [ApplyOptionsProfileSelected]>[SingleWord26]<!--SingleWordLink26--></option>
-					<option value="website" [ApplyOptionsWebsiteSelected] disabled>[SingleWord27]<!--SingleWordLink27--></option>
-				</select>
-			</div>
-		<!--END_APPLY_OPTIONS-->
-		
-		<!--START_OPEN_ENTRY_CAPTCHA-->
-			<!--DISPLAY_OPEN_ENTRY_CAPTCHA-->
-			<div class="error"><!--OPEN_ENTRY_CAPTCHA_ERROR--></div>
-		<!--END_OPEN_ENTRY_CAPTCHA-->
-		<input type="submit" class="button" value="[Button9]">
-	</form>
-</div>
-<iframe name="actionframe" width="0" height="0" frameborder="0" scrolling="No" contentEditable=false></iframe>
-<!--END_9-->
+    <!--START_9-->
+    <script>
+    {
+        javascript
+    }
+    </script>
+    <div class="outer custOuter custAddJobOuter">
+        <!-- /fotemplatesdiv/QuestionsFormVacCust.html -->
+        <!-- Template verified by: Maikel Doeze - VALID -->
+        <h1 class="title jblTitle">{Title}</h1> [CustomersMenu] [CustomersSubMenu]
+        <div class="intro">{IntroText}</div>
+        <form name="form1" method="post" action="[website]/index.php/page/customers_ext/bb/1" enctype="multipart/form-data" class="center">
+            <input type="hidden" name="command" value="[submitcommand]">
+            <input type="hidden" name="vid" value="[vid]">
+            <input type="hidden" name="tmpjob" value="[tmpjob]">
+            <input type="hidden" name="NewQuestionId" value="">
+            <input type="hidden" name="NewType" value="">
+            <input type="hidden" name="NewSoort" value="">
+            <input type="hidden" name="step" value="[step]">
+            <input type="hidden" name="register_get" value="1">
+            <input type="hidden" name="jobcategory_in_questionset" value="[jobcategory_in_questionset]">
+            <input type="hidden" name="jts_id" value="[jts_id]">
+            <!--MENUBAR-->
+            <!--not used APPLICATIONROW-->
+            <!--START_MYPROFILE_LINKS-->
+            <a href="[website]/index.php/page/CandidatesRemote/command/myprofile/page/1/bb/1">Login Gegevens</a>
+            <!--START_PAGELINKS-->
+            <a href="[website]/index.php/page/CandidatesRemote/command/myprofile/page/2/subpage/[Page]/bb/1">[PageName]</a>
+            <!--END_PAGELINKS-->
+            <a href="[website]/index.php/page/CandidatesRemote/command/logout/bb/1">Uitloggen</a>
+            <!--END_MYPROFILE_LINKS-->
+            <!--START_PHOTO-->
+            <!-- <img src="[photo]"> -->
+            <!--END_PHOTO-->
+            <!--START-->
+            <!--HORIZONTAL-->
+            <div class="formGroup">
+                <!--START_H_Personalia-->
+                <div class="formInput cstFi cstFiI">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <input type="text" name="Answers[[QuestionId]]" size="35" value="[AnswerValue]">
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_Personalia-->
+                <!--START_H_Leeg-->
+                <div class="formInput cstFi cstFiL">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    [FormField]
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_Leeg-->
+                <!--START_H_File-->
+                <div class="formInput cstFi cstFiF">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <input type="hidden" name="MAX_FILE_SIZE" value="512000">
+                    <input type="file" name="file">
+                    <input type="hidden" name="FileQuestionId" value="[QuestionId]">
+                    <input type="hidden" name="Answers[[QuestionId]]" value="[AnswerValue]">
+                </div>
+                <!--START_VIEW_FILE-->
+                <div class="formInput">
+                    <label>Huidig bestand:</label>
+                    [FileViewLink]
+                </div>
+                <!--END_VIEW_FILE-->
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_File-->
+                <!--START_H_Textfield-->
+                <div class="formInput cstFi cstFiTf">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <input type="text" name="Answers[[QuestionId]]" value="[AnswerValue]">
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_Textfield-->
+                <!--START_H_Datefield-->
+                <div class="formInput cstFi cstFiTf">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <!--START_H_Datefield_Answers-->
+                    [dayselect]
+                    <!--END_H_Datefield_Answers-->
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_Datefield-->
+                <!--START_H_Textarea-->
+                <div class="formInput cstFi cstFiTa">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <textarea name="Answers[[QuestionId]]" rows="[NumRows]">[AnswerValue]</textarea>
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_Textarea-->
+                <!--START_H_CV-->
+                <div class="formInput cstFi cstFiCv">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain csiCvExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <textarea name="Answers[[QuestionId]]" rows="[NumRows]">[AnswerValue]</textarea>
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_CV-->
+                <!--START_H_Select-->
+                <div class="formInput cstFi">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <select name="Answers[[QuestionId]]">
+                        <option value="">---</option>
+                        <!--START_H_Select_Answers-->
+                        <option value="[AnswerId]" [selected]>[Answer]</option>
+                        <!--END_H_Select_Answers-->
+                    </select>
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_Select-->
+                <!--START_H_Checkbox-->
+                <div class="formInput cstFi">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <!--START_H_Checkbox_Answers-->
+                    <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]" value="0">
+                    <input type="checkbox" name="Answers[[QuestionId]][[AnswerId]]" value="1" [checked]> [Answer]
+                    <!--END_H_Checkbox_Answers-->
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_Checkbox-->
+                <!--START_H_Radio-->
+                <div class="formInput cstFi">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <!--START_H_Radio_Answers-->
+                    <input type="radio" name="Answers[[QuestionId]]" value="[AnswerId]" [checked]>[Answer]
+                    <!--END_H_Radio_Answers-->
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_Radio-->
+                <!--START_H_OPL-->
+                <div class="formInput formSmallInput aplEduSubTitle">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <input type="button" class="smallButton aplSB aplEduSb" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--START_H_OPL_Answers-->
+                <div class="formGroup aplEduFormGroup">
+                    <div class="formInput aplEduEducation">
+                        <label>Opleiding</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{Degree}" type="text" value="[Degree]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Education}" value="[Education]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{EducationGroup}" value="[EducationGroup]">
+                    </div>
+                    <div class="formInput aplEduDirection">
+                        <label>Richting</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{DegreeDirection}" type="text" value="[DegreeDirection]">
+                    </div>
+                    <div class="formInput aplEduInstitute">
+                        <label>Instituut</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{InstituteNameAndPlace}" type="text" value="[InstituteNameAndPlace]">
+                    </div>
+                    <div class="formInput aplEduDegree">
+                        <label>Diploma</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{Diploma}" type="text" value="[Diploma]">
+                    </div>
+                    <div class="formInput formSmallInput aplEduStartDate">
+                        <label>Begin</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{StartDate}" type="text" value="[StartDate]">
+                    </div>
+                    <div class="formInput formSmallInput aplEduEndDate">
+                        <label>Eind</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{EndDate}" type="text" value="[EndDate]">
+                    </div>
+                    <div class="formInput formSmallInput alpEduDeleteButton">
+                        <label>&nbsp;</label>
+                        <input name="button" type="button" class="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
+                    </div>
+                </div>
+                <!--these hiddens are necessary because fields are commented out-->
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{DiplomaDate}" value="[DiplomaDate]" size="18">
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Subjects}" value="[Subjects]">
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{ThesisSubject}" value="[ThesisSubject]">
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{ThesisResult}" value="[ThesisResult]">
+                <!--END_H_OPL_Answers-->
+                <!--END_H_OPL-->
+                <!--START_H_WER-->
+                <div class="formInput formSmallInput aplWorkSubHeader">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <input type="button" class="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--START_H_WER_Answers-->
+                <div class="formGroup aplWorkFormGroup">
+                    <div class="formInput aplWorkPosition">
+                        <label>Functie</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{Experience}" type="text" value="[Experience]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{PositionGroup}" value="[PositionGroup]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{PositionType}" value="[PositionType]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Industry}" value="[Industry]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Duration}" value="[Duration]">
+                    </div>
+                    <div class="formInput aplWorkEmployer">
+                        <label>Bedrijf</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{EmployerNameAndPlace}" type="text" value="[EmployerNameAndPlace]">
+                    </div>
+                    <div class="formInput formSmallInput aplWorkStartDate">
+                        <label>Begin</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{StartDate}" type="text" value="[StartDate]">
+                    </div>
+                    <div class="formInput formSmallInput aplWorkEndDate">
+                        <label>Eind</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{EndDate}" type="text" value="[EndDate]">
+                        <div class="formInput aplWorkDescription">
+                            <label>Functieomschrijving</label>
+                            <textarea class="functionTxt" name="Answers[[QuestionId]][[AnswerId]]{ExperienceDescription}" cols="72" rows="4">[ExperienceDescription]</textarea>
+                        </div>
+                        <div class="formInput aplWorkReasonEnd">
+                            <label>Reden be&euml;indiging</label>
+                            <textarea class="fieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{Termination}" cols="44">[Termination]</textarea>
+                        </div>
+                        <div class="formInput formSmallInput formDeleteButton aplWorkDeleteButton">
+                            <label>&nbsp;</label>
+                            <input type="button" class="smallButton aplSB aplWorkSb" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
+                        </div>
+                    </div>
+                </div>
+                <!--END_H_WER_Answers-->
+                <!--END_H_WER-->
+                <!--START_H_SKI-->
+                <!--START_EXPLANATION-->
+                <div class="explain cstExplain">[Explanation]</div>
+                <!--END_EXPLANATION-->
+                <div class="formInput formSmallInput aplSkillsLangSH">
+                    <label>[Question]</label>
+                </div>
+                <!--START_H_SKI_SOORT-->
+                <div class="formInput formSmallInput aplSoftSkillsSH">
+                    <label>[soort]</label>
+                    <input type="button" class="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
+                </div>
+                <!--END_H_SKI_SOORT-->
+                <!--START_H_SKI_Answers-->
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{soort}" value="[soort]">
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{proficiency}" value="[proficiency]">
+                <textarea class="fieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{skill}">[skill]</textarea>
+                <input type="button" class="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
+                <!--END_H_SKI_Answers-->
+                <!--START_H_SKI_PROFICIENCY-->
+                <div class="formInput aplSkillsLlInput">
+                    <label></label>
+                    <table cellspacing="0" cellpadding="0" border="0" class="aplSkilsLlTbl">
+                        <tr>
+                            <td>Spreken</td>
+                            <td>Lezen</td>
+                            <td>Schrijven</td>
+                        </tr>
+                        <tr>
+                            <td>[spreken_select]</td>
+                            <td>[lezen_select]</td>
+                            <td>[schrijven_select]</td>
+                        </tr>
+                    </table>
+                </div>
+                <!--END_H_SKI_PROFICIENCY-->
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_SKI-->
+                <!--START_H_OTH-->
+                <h3 class="formTitle aplOtherFormTitle">[Question]</h3>
+                <!--START_EXPLANATION-->
+                <div class="explain cstExplain">[Explanation]</div>
+                <!--END_EXPLANATION-->
+                <!--START_H_OTH_VELD-->
+                <div class="formInput formSmallInput AplOtherHobbys">
+                    <label>[veld]</label>
+                    <input class="button" type="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
+                </div>
+                <!--END_H_OTH_VELD-->
+                <!--START_H_OTH_Answers-->
+                <div class="formInput aplOtherHobby">
+                    <label></label>
+                    <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{veld}" value="[veld]">
+                    <textarea class="FieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{data}">[data]</textarea>
+                </div>
+                <div class="formInput formSmallInput aplOtherHobbyDB">
+                    <label>&nbsp;</label>
+                    <input class="smallButton aplSB aplOtherHobbysSb" type="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
+                </div>
+                <!--END_H_OTH_Answers-->
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_OTH-->
+                <!--START_H_Customer-->
+                <!--START_H_Checkbox-->
+                <div class="formInput formInputId1">
+                    <label for="Answers[[QuestionId]][]">[Question]</label>
+                    <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]" value="0">
+                    <input style="width:auto" type="checkbox" name="Answers[[QuestionId]][[AnswerId]]" value="1" [checked]>
+                    <p class="explain cstExplain">[Explanation]</p>
+                </div>
+                <!--END_H_Checkbox-->
+                <!--START_H_Textarea-->
+                <div class="formInput formInputId2">
+                    <label for="Answers[[QuestionId]][]">[Question]</label>
+                    <input type="input" name="Answers[[QuestionId]][]" value="" style="height:50px" onFocus="ta=document.createElement('textarea');ta.setAttribute('name',this.name);ta.style.height='50px';ta.appendChild(document.createTextNode(this.value));this.parentNode.replaceChild(ta,this);ta.focus()">
+                    <p class="explain cstExplain" style="width:140px">[Explanation]</p>
+                </div>
+                <!--END_H_Textarea-->
+                <!--END_H_Customer-->
+                <!--START_H_CRIT-->
+                <!--HIER BEGIN -->
+                <div class="formInput formInputSelect" id="formInputId[QuestionId]">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <!--START_H_CRIT_CRITCAT-->
+                    <select name="CritCat[[QuestionId]]" onChange="this.form.command.value='changecritcat'; this.form.submit();">[options]</select>
+                    <input type="hidden" name="CritCat_SM[[QuestionId]]" value="[SM]">
+                    <!--END_H_CRIT_CRITCAT-->
+                    <!--START_H_CRIT_SELECT-->
+                    <select name="Answers[[QuestionId]][[AnswerId]]">[options]</select>
+                    <!--END_H_CRIT_SELECT-->
+                    <!--START_H_CRIT_MULTISELECT-->
+                    <!-- Specialcomment-->
+                    <select name="Answers[[QuestionId]][[AnswerId]]" size="5" multiple>[options]</select>
+                    <input type="hidden" name="Answers[[QuestionId]][]" value="">
+                    <!--END_H_CRIT_MULTISELECT-->
+                    <!--START_H_CRIT_Checkbox-->
+                    <input type="checkbox" class="radiobutton" name="Answers[[QuestionId]][]" value="[AnswerId]" [checked]>[Answer]
+                    <!--END_H_CRIT_Checkbox-->
+                    <!--START_H_CRIT_Radio-->
+                    <input type="radio" class="radiobutton" name="Answers[[QuestionId]]" value="[AnswerId]" [checked]>[Answer]
+                    <!--END_H_CRIT_Radio-->
+                </div>
+                <!--HIER EIND -->
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_H_CRIT-->
+                <!--VERTICAL-->
+                <!--VERTICAL-->
+                <!--VERTICAL-->
+                <!--VERTICAL-->
+                <!--START_V_Personalia-->
+                <div class="formInput cstFi">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <input type="text" name="Answers[[QuestionId]]" size="35" value="[AnswerValue]">
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_Personalia-->
+                <!--START_V_Leeg-->
+                <div class="formInput cstFi">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    [FormField]
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_Leeg-->
+                <!--START_V_File-->
+                <div class="formInput cstFi">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <input type="hidden" name="MAX_FILE_SIZE" value="512000">
+                    <input type="file" name="file">
+                    <input type="hidden" name="FileQuestionId" value="[QuestionId]">
+                    <input type="hidden" name="Answers[[QuestionId]]" value="[AnswerValue]">
+                </div>
+                <!--START_VIEW_FILE-->
+                <div class="formInput cstFi">
+                    <label>Huidig bestand:</label>
+                    [FileViewLink]
+                </div>
+                <!--END_VIEW_FILE-->
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_File-->
+                <!--START_V_Textfield-->
+                <div class="formInput cstFi cstFiTf">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <input type="text" name="Answers[[QuestionId]]" value="[AnswerValue]">
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_Textfield-->
+                <!--START_V_Datefield-->
+                <!-- <div class="formInput cstFi cstFiTf"> -->
+                <!-- <label>[Question]</label> -->
+                <!--START_EXPLANATION-->
+                <!-- <div class="explain small cstExplain">[Explanation]</div> -->
+                <!--END_EXPLANATION-->
+                <!--START_V_Datefield_Answers-->
+                <!-- [Dates%elect] -->
+                <!--END_V_Datefield_Answers-->
+                <!-- </div> -->
+                <!--START_ERROR-->
+                <!-- <div class="error">[Error]</div> -->
+                <!--END_ERROR-->
+                <!--END_V_Datefield-->
+                <!--START_V_Textarea-->
+                <div class="formInput cstFi cstFiTa">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <textarea name="Answers[[QuestionId]]" rows="[NumRows]">[AnswerValue]</textarea>
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_Textarea-->
+                <!--START_V_CV-->
+                <div class="formInput cstFi">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <textarea name="Answers[[QuestionId]]" rows="[NumRows]">[AnswerValue]</textarea>
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_CV-->
+                <!--START_V_Select-->
+                <div class="formInput cstFi">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <select name="Answers[[QuestionId]]">
+                        <option value="">---</option>
+                        <!--START_H_Select_Answers-->
+                        <option value="[AnswerId]" [selected]>[Answer]</option>
+                        <!--END_H_Select_Answers-->
+                    </select>
+                    <!--START_ERROR-->
+                    <div class="error">[Error]</div>
+                    <!--END_ERROR-->
+                </div>
+                <!--END_V_Select-->
+                <!--START_V_Checkbox-->
+                <div class="formInput cstFi">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <!--START_H_Checkbox_Answers-->
+                    <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]" value="0">
+                    <input type="checkbox" name="Answers[[QuestionId]][[AnswerId]]" value="1" [checked]> [Answer]
+                    <!--END_H_Checkbox_Answers-->
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_Checkbox-->
+                <!--START_V_OPL-->
+                <!--START_EXPLANATION-->
+                <div class="explain cstExplain">[Explanation]</div>
+                <!--END_EXPLANATION-->
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <div class="formInput formSmallInput aplEduSubTitle">
+                    <label>[Question]</label>
+                    <input type="button" class="smallButton aplSB aplEduSb" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
+                </div>
+                <!--START_V_OPL_Answers-->
+                <div class="formGroup aplEduFormGroup">
+                    <div class="formInput aplEduEducation">
+                        <label>Opleiding</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{Degree}" type="text" value="[Degree]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Education}" value="[Education]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{EducationGroup}" value="[EducationGroup]">
+                    </div>
+                    <div class="formInput aplEduDirection">
+                        <label>Richting</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{DegreeDirection}" type="text" value="[DegreeDirection]">
+                    </div>
+                    <div class="formInput aplEduInstitute">
+                        <label>Instituut</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{InstituteNameAndPlace}" type="text" value="[InstituteNameAndPlace]">
+                    </div>
+                    <div class="formInput aplEduDegree">
+                        <label>Diploma</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{Diploma}" type="text" value="[Diploma]">
+                    </div>
+                    <div class="formInput formSmallInput aplEduStartDate">
+                        <label>Begin</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{StartDate}" type="text" value="[StartDate]">
+                    </div>
+                    <div class="formInput formSmallInput aplEduEndDate">
+                        <label>Eind</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{EndDate}" type="text" value="[EndDate]">
+                    </div>
+                    <div class="formInput formSmallInput alpEduDeleteButton">
+                        <label>&nbsp;</label>
+                        <input name="button" type="button" class="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
+                    </div>
+                </div>
+                <!--these hiddens are necessary because fields are commented out-->
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{DiplomaDate}" value="[DiplomaDate]" size="18">
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Subjects}" value="[Subjects]">
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{ThesisSubject}" value="[ThesisSubject]">
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{ThesisResult}" value="[ThesisResult]">
+                <!--END_V_OPL_Answers-->
+                <!--END_V_OPL-->
+                <!--START_V_WER-->
+                <div class="formInput formSmallInput aplWorkSubHeader">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <input type="button" class="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--START_V_WER_Answers-->
+                <div class="formGroup aplWorkFormGroup">
+                    <div class="formInput aplWorkPosition">
+                        <label>Functie</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{Experience}" type="text" value="[Experience]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{PositionGroup}" value="[PositionGroup]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{PositionType}" value="[PositionType]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Industry}" value="[Industry]">
+                        <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{Duration}" value="[Duration]">
+                    </div>
+                    <div class="formInput aplWorkEmployer">
+                        <label>Bedrijf</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{EmployerNameAndPlace}" type="text" value="[EmployerNameAndPlace]">
+                    </div>
+                    <div class="formInput formSmallInput aplWorkStartDate">
+                        <label>Begin</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{StartDate}" type="text" value="[StartDate]">
+                    </div>
+                    <div class="formInput formSmallInput aplWorkEndDate">
+                        <label>Eind</label>
+                        <input name="Answers[[QuestionId]][[AnswerId]]{EndDate}" type="text" value="[EndDate]">
+                        <div class="formInput aplWorkDescription">
+                            <label>Functieomschrijving</label>
+                            <textarea class="functionTxt" name="Answers[[QuestionId]][[AnswerId]]{ExperienceDescription}" cols="72" rows="4">[ExperienceDescription]</textarea>
+                        </div>
+                        <div class="formInput aplWorkReasonEnd">
+                            <label>Reden be&euml;indiging</label>
+                            <textarea class="fieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{Termination}" cols="44">[Termination]</textarea>
+                        </div>
+                        <div class="formInput formSmallInput formDeleteButton aplWorkDeleteButton">
+                            <label>&nbsp;</label>
+                            <input type="button" class="smallButton aplSB aplWorkSb" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
+                        </div>
+                    </div>
+                </div>
+                <!--END_V_WER_Answers-->
+                <!--END_V_WER-->
+                <!--START_V_SKI-->
+                <!--START_EXPLANATION-->
+                <div class="explain cstExplain">[Explanation]</div>
+                <!--END_EXPLANATION-->
+                <div class="formInput formSmallInput aplSkillsLangSH">
+                    <label>[Question]</label>
+                </div>
+                <!--START_V_SKI_SOORT-->
+                <div class="formInput formSmallInput aplSoftSkillsSH">
+                    <label>[soort]</label>
+                    <input type="button" class="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
+                </div>
+                <!--END_V_SKI_SOORT-->
+                <!--START_V_SKI_Answers-->
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{soort}" value="[soort]">
+                <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{proficiency}" value="[proficiency]">
+                <textarea class="fieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{skill}">[skill]</textarea>
+                <input type="button" class="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
+                <!--END_V_SKI_Answers-->
+                <!--START_V_SKI_PROFICIENCY-->
+                <div class="formInput aplSkillsLlInput">
+                    <label></label>
+                    <table cellspacing="0" cellpadding="0" border="0" class="aplSkilsLlTbl">
+                        <tr>
+                            <td>Spreken</td>
+                            <td>Lezen</td>
+                            <td>Schrijven</td>
+                        </tr>
+                        <tr>
+                            <td>[spreken_select]</td>
+                            <td>[lezen_select]</td>
+                            <td>[schrijven_select]</td>
+                        </tr>
+                    </table>
+                </div>
+                <!--END_V_SKI_PROFICIENCY-->
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_SKI-->
+                <!--START_V_OTH-->
+                <h3 class="formTitle aplOtherFormTitle">[Question]</h3>
+                <!--START_EXPLANATION-->
+                <div class="explain cstExplain">[Explanation]</div>
+                <!--END_EXPLANATION-->
+                <!--START_V_OTH_VELD-->
+                <div class="formInput formSmallInput AplOtherHobbys">
+                    <label>[veld]</label>
+                    <input class="button" type="button" value="Toevoegen" onClick="AddItem([QuestionId],'[Type]','[cur_soort]');">
+                </div>
+                <!--END_V_OTH_VELD-->
+                <!--START_V_OTH_Answers-->
+                <div class="formInput aplOtherHobby">
+                    <label></label>
+                    <input type="hidden" name="Answers[[QuestionId]][[AnswerId]]{veld}" value="[veld]">
+                    <textarea class="FieldTxtArea" name="Answers[[QuestionId]][[AnswerId]]{data}">[data]</textarea>
+                </div>
+                <div class="formInput formSmallInput aplOtherHobbyDB">
+                    <label>&nbsp;</label>
+                    <input class="smallButton aplSB aplOtherHobbysSb" type="button" value="X" onClick="DelItem([QuestionId],'[AnswerId]');">
+                </div>
+                <!--END_V_OTH_Answers-->
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_OTH-->
+                <!--START_V_Customer-->
+                <!--START_V_Logo-->
+                <div class="formInput cstULo">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
+                    <input type="file" name="Photo">
+                </div>
+                <!--START_VIEW_Logo-->
+                [Huidig Bestand] [LogoPreview]
+                <!--END_VIEW_Logo-->
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_Logo-->
+                <!--START_V_PremiumJob-->
+                <!-- <div class="formInput cstCLo">
+              <label>[Question]</label>
+              <input type="checkbox" name="Answers[[QuestionId]][]" value="[AnswerId]" [checked]>[Answer]
+            </div> -->
+                <!--END_V_PremiumJob-->
+                <!--END_V_Customer-->
+                <!--START_V_CRIT-->
+                <div class="formInput cst6">
+                    <label>[Question]</label>
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <!--START_V_CRIT_CRITCAT-->
+                    <select name="CritCat[[QuestionId]]" onChange="this.form.command.value='changecritcat'; this.form.submit();">[options]</select>
+                    <input type="hidden" name="CritCat_SM[[QuestionId]]" value="[SM]">
+                    <!--END_V_CRIT_CRITCAT-->
+                    <!--START_V_CRIT_SELECT-->
+                    <select name="Answers[[QuestionId]][[AnswerId]]">[options]</select>
+                    <!--END_V_CRIT_SELECT-->
+                    <!--START_V_CRIT_MULTISELECT-->
+                    <select name="Answers[[QuestionId]][[AnswerId]]" size="5" multiple>[options]</select>
+                    <!--END_V_CRIT_MULTISELECT-->
+                    <!--START_V_CRIT_Checkbox-->
+                    <!--<input type="hidden"   name="Answers[[QuestionId]][[AnswerId]]" value="0">-->
+                    <input type="checkbox" name="Answers[[QuestionId]][]" value="[AnswerId]" [checked]>[Answer]
+                    <!--END_V_CRIT_Checkbox-->
+                    <!--START_V_CRIT_Radio-->
+                    <input type="radio" name="Answers[[QuestionId]]" value="[AnswerId]" [checked]>[Answer]
+                    <!--END_V_CRIT_Radio-->
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_CRIT-->
+                <!--START_V_Radio-->
+                <div class="formInput cst7">
+                    <!--START_EXPLANATION-->
+                    <div class="explain small cstExplain">[Explanation]</div>
+                    <!--END_EXPLANATION-->
+                    <label>[Question]</label>
+                    <!--START_V_Radio_Answers-->
+                    <input type="radio" name="Answers[[QuestionId]]" value="[AnswerId]" [checked]>[Answer]
+                    <!--END_V_Radio_Answers-->
+                </div>
+                <!--START_ERROR-->
+                <div class="error">[Error]</div>
+                <!--END_ERROR-->
+                <!--END_V_Radio-->
+            </div>
+            <!--END-->
+            <!--START_APPLY_OPTIONS-->
+            <div class="formInput cst[SingleWord24]">
+                <script type="text/javascript">
+                [APPLY_OPTIONS_JAVASCRIPT]
+                </script>
+                <label>[SingleWord24]
+                    <!--SingleWordLink24-->
+                </label>
+                <select name="ApplyOptionsId" id="ApplyOptionsId" <!--START_APPLY_OPTIONS_JS-->onFocus="website_option_select();"
+                    <!--END_APPLY_OPTIONS_JS-->>
+                    <option value="relation" [ApplyOptionsRelationSelected]>[SingleWord25]
+                        <!--SingleWordLink25-->
+                    </option>
+                    <option value="profile" [ApplyOptionsProfileSelected]>[SingleWord26]
+                        <!--SingleWordLink26-->
+                    </option>
+                    <option value="website" [ApplyOptionsWebsiteSelected] disabled>[SingleWord27]
+                        <!--SingleWordLink27-->
+                    </option>
+                </select>
+            </div>
+            <!--END_APPLY_OPTIONS-->
+            <!--START_OPEN_ENTRY_CAPTCHA-->
+            <!--DISPLAY_OPEN_ENTRY_CAPTCHA-->
+            <div class="error">
+                <!--OPEN_ENTRY_CAPTCHA_ERROR-->
+            </div>
+            <!--END_OPEN_ENTRY_CAPTCHA-->
+            <input type="submit" class="button" value="[Button9]">
+        </form>
+    </div>
+    <iframe name="actionframe" width="0" height="0" frameborder="0" scrolling="No" contentEditable=false></iframe>
+    <!--END_9-->
 </body>
+
 </html>
