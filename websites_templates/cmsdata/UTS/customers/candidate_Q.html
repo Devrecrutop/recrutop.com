@@ -263,8 +263,7 @@
     {/literal}
     <!-- /UTS/customers/candidate_Q.html -->
     <h1>Candidat: {$candidate.name}  {$u.candidate_name|escape}</h1> {if $customer_menu} {$customer_menu} {/if}
-    <table border="0" cellspacing="0" cellpadding="0" class="vacsTable">
-
+    
            
                
                     {foreach from=$data item=record name=personal} {if $record.part=="PER"} {* Honza M.: A quick fix for translating - added here so that the UTSMAN sees the names, but in a always-false condition so that they are not displayed; FIXME: implement some kind of PHP hook, if record.name can be known in advance *} {if 0}
@@ -279,24 +278,22 @@
                     <br> [ti]Werkervaring[/ti]
                     <br> [ti]Geboortedatum[/ti]
                     <br> {/if}
-                    <tr>
-                        <div class="HQuestion" valign="top">{$record.name}:</div>
+                        <div class="HQuestion" valign="top">Télécharger le {$record.name}:</div>
                         <div class="HAnswer" valign="top">{$record.value}</div>
                         {if $smarty.foreach.personal.first}
-                        <td valign="top" align="right" rowspan="{$smarty.foreach.personal.total}">
+                        <div valign="top" align="right" rowspan="{$smarty.foreach.personal.total}">
                             {$picHtml}
-                        </td>
+                        </div>
                         {/if}
-                    </tr>
+
                     {/if} {/foreach}
 
             
  
         {if $killerQuestions}
-        <tr>
-            <td colspan="2" class="formtext">
+
                 <div class="custCandDtlKillerQuestions">
-                    <h2 class="subHeader">[t]Questions[/t]</h3>
+                    <h2 class="subHeader">[t]Questions[/t]</h2>
   <div class="text">
   {foreach from=$killerQuestions item=kq}
     {if $kq.qq && $kq.qa}
@@ -307,8 +304,7 @@
   </div>
 </div>
 
-</td>
-</tr>
+
 {/if}
 
 
@@ -480,7 +476,7 @@
   <input type="hidden" id="note_id" name="note_id" value="">{*value is set by loadEvalNote function*}
 
 
-  <td class="shCDtblHeader">[t]Evaluation History[/t]</td>
+  <div class="shCDtblHeader">[t]Evaluation History[/t]</div>
 
 
   <div id="evalHistoryList">
@@ -516,13 +512,13 @@
 
 
 
-    <td class="shCDtblHeader">[t]Evaluation History[/t]</td>
+    <div class="shCDtblHeader">[t]Evaluation History[/t]</div>
 
 
 
 
       <div style="min-height:100%;width:100%;overflow:auto;padding-bottom:5%;">
-        <td class="shCDStatusHistory">{$reactie.quick_evaluation|nl2br}</td>
+        <div class="shCDStatusHistory">{$reactie.quick_evaluation|nl2br}</div>
       </div>
 
 
