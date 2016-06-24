@@ -454,28 +454,22 @@
     <tr>
     <td colspan="2" class="shCDtblHeader">[t]Status History[/t]</td>
     </tr>
-    <tr>
-    <td colspan="2" class="shCDdivContainer">
+    <br>
 
-      <div Id="history" style="height:80px;width:100%;overflow:auto;">
-      <table border="0" cellpadding="0" cellspacing="0" width="100%" class="shCandListNameTbl">
+      
+      <div Id="history" style="min-height:250px;width:100%;overflow:auto;" border="0" cellpadding="0" cellspacing="0" width="100%" class="shCandListNameTbl">
       {foreach from=$history item=row key=count}
-      <tr>
-      <td class="shCDStatusHistory">
+      <div class="shCDStatusHistory">
         <span class="shCDhistoryDate" style="margin-top:0px;">{$row.changetime|date_format:"%d-%m-%Y"}</span>
         {if $row.status}<span class="shCandListStatus1"><span class="shCandListStatusLabel">[t]Status[/t]:</span> {$row.status} </span>{/if}
         {if $row.vb_procedures_status}<span class="shCandListStatus2"><span class="shCandListStatusLabel">{$status1_name}:</span> {$row.vb_procedures_status} </span>{/if}
         {if $row.vb_procedures_status2}<span class="shCandListStatus3"><span class="shCandListStatusLabel">{$status2_name}:</span> {$row.vb_procedures_status2} </span>{/if}
         {if $row.vb_procedures_status3}<span class="shCandListStatus4"><span class="shCandListStatusLabel">{$status3_name}:</span> {$row.vb_procedures_status3} </span>{/if}
         {if $staffing}<span class="shCandListStatus5"><span class="shCandListStatusLabel">[t]Note[/t]:</span> {$row.note} </span>{/if}
-      </td>
-      </tr>
+      </div>
       {/foreach}
-      </table>
       </div>
 
-    </td>
-    </tr>
     </table>
 
   </td>
@@ -539,7 +533,7 @@
     <tr>
     <td>
 
-      <div style="height:80px;width:100%;overflow:auto;">
+      <div style="min-height:250px;width:100%;overflow:auto;">
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
         <td class="shCDStatusHistory">{$reactie.quick_evaluation|nl2br}</td>
@@ -600,10 +594,7 @@
 <td class="shCDstatusContainer">
   <!--START CV-->
   {if !$nodata}
-  <table border="0" cellpadding="0" cellspacing="0" width="100%" class="shCDstatusTbl shCDResumeTbl">
-  <tr>
-  <td class="shCDtblHeader">[t]Resume[/t]</td>
-  </tr>
+  <br>
   <tr>
   <td>
 
@@ -842,32 +833,6 @@
     </tr>
     {/if}
     <!--END_DOCUMENTS-->
-    <tr>
-        <td>
-            <div class="LMPCandDetailUpload">
-                <h2 class="subHeader">[t]Document upload[/t]</h2>
-                <div class="formInput fiSubject">
-                    <label>[t]Subject[/t]</label>
-                    <input type="text" style="width:150px;" name="doc_subject" value="{if $upload_status &&  $upload_status!= " OK "}{$postback.doc_subject}{/if}">
-                </div>
-                <div class="formInput fiFile">
-                    <label>[t]File[/t]</label>
-                    <input type="file" style="width:150px;" name="doc_file" id="doc_file">
-                </div>
-                <div class="formInput fiType">
-                    <label>[t]Type[/t]</label>
-                    <select name="doc_type" style="width:150px;">
-                        <option value="">--[t]Please select[/t]</option>
-                        {if $upload_status && $upload_status!= "OK"} {html_options options=$document_types selected=$postback.doc_type} {else} {html_options options=$document_types} {/if}
-                    </select>
-                </div>
-                <div class="formInput fiDescr">
-                    <label>[t]Description[/t]</label>
-                    <textarea name="doc_desc" id="doc_desc" style="width:150px;">{if $upload_status && $upload_status!= "OK"}{$postback.doc_desc}{/if}</textarea>
-                </div>
-            </div>
-        </td>
-    </tr>
     <!--NOTES-->
     {if count($notes)>0}
     <tr>
@@ -963,7 +928,7 @@
                     <tr>
                         <!--<td class="shCDbutton_1"><input type="button" class="button" name="form" value="[th]Terug[/th]" onClick="document.location='{$site}/index.php/bb/1/page/{$terug}/command/{$terug_cmd}/{$ext_args}';"></td>-->
                         <td class="shCDbutton_1">
-                            <input type="button" class="button" name="form" value="[th]Terug[/th]" onClick="document.location='{$terug}/{$ext_args}';">
+                            <input type="button" class="button btn btn-primary" name="form" value="[th]Terug[/th]" onClick="document.location='{$terug}/{$ext_args}';">
                             <!--ButtonLink3-->
                         </td>
                         <!--the above can not work $terug being a whole url-->
@@ -972,7 +937,7 @@
                         {* JMa
                         <jan.martinec@yourit.nl>: Same thing here. Was this commented out because it offended someone? Tell me, I'm curious! *}
                             <td class="shCDbutton_2">
-                                <input name="button" class="button" type="button" onClick="request();" value="[t]Contact this candidate[/t]">
+                                <input name="button" class="button btn btn-primary" type="button" onClick="request();" value="[t]Contact this candidate[/t]">
                             </td>
                             {/if} {if $show_print_button == 1}
                             <td>&nbsp;</td>
@@ -982,7 +947,7 @@
                             {/if} {if $show_respond_button == 1}
                             <td>&nbsp;</td>
                             <td class="shCDbutton_4">
-                                <input type="button" class="button" name="form" value="[t]Respond[/t]" onClick="location='/index.php/page/customers_ext/bb/1/exp//command/reaction/kid/{$candidate.id}/terug/customers/terug_cmd/candjob_list/vid/{$vid}';">
+                                <input type="button" class="button btn btn-primary" name="form" value="[t]Respond[/t]" onClick="location='/index.php/page/customers_ext/bb/1/exp//command/reaction/kid/{$candidate.id}/terug/customers/terug_cmd/candjob_list/vid/{$vid}';">
                             </td>
                             {/if}
                             <td>&nbsp;</td>
