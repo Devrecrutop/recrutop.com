@@ -10,9 +10,9 @@
 <script type="text/javascript" language="JavaScript">
 //{/literal}
   var v_handler = '{$handler}';
-  
+
 //{literal}
-	
+
 </script>
 {/literal}
 
@@ -31,7 +31,7 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
   <td>
-    <textarea name="note_text" id="note_text" rows="9" cols="60" style="width: 330px; height: 150px;">{$noteText}</textarea>    
+    <textarea name="note_text" id="note_text" rows="9" cols="60" style="width: 330px; height: 150px;">{$noteText}</textarea>
   </td>
 </tr>
 <tr style="height: 10px;">
@@ -40,11 +40,11 @@
 <tr>
   <td align="right">
     {* <input type="submit" name="saveBttn" value="[t]Save Note[/t]"> * }
-        
-    {* asyncSaveNote function is placed in tscAdminDetail.html file which opens this dialog by jquery plugin cluetip *}    
-    <input type="button" name="bttnTest" value="[t]Save Note[/t]" onClick="asyncSaveNote('{$tscId}', '{$date}', '{$noteId}', $('#note_text').val());">            
+
+    {* asyncSaveNote function is placed in tscAdminDetail.html file which opens this dialog by jquery plugin cluetip *}
+    <input type="button" name="bttnTest" value="[t]Save Note[/t]" onClick="asyncSaveNote('{$tscId}', '{$date}', '{$noteId}', $('#note_text').val());">
   </td>
-</tr>  
+</tr>
 </table>
 
 {*
