@@ -252,67 +252,33 @@
             {/if}
             <!-- Candidates display   2 -->
             <div class="table-responsive">
-                <table class="table table-striped table-hover">
+                <table class="table table-striped table-hover table-bordered">
                     <thead>
-                        <th>Candidat </th>
-                        <th>Date d'inscription dans notre base de données </th>
-                        <th>Nom du poste </th>
-                        <th>Statut </th>
-                        <th>Préqualification</th>
-                        <th>Qualification</th>
-                        <th>Résultats</th>
+                        <th class="center">Candidat </th>
+                        <th class="center">Préqualification</th>
+                        <th class="center">Qualification</th>
+                        <th class="center">Résultats</th>
                     </thead>
                     <tbody>
                         {foreach from=$candidates item=cand key=kid}
                         <tr>
-                            <td>
+                            <td class="center" style="vertical-align: middle;">
                                 {if $cand.foto}
-                                <div class="itemImage" onClick="location='{$cand.fotolink}'"><img src="{$cand.foto}" border=0></div>
-                                {/if} {if $lmBatchSttatuses && $stChangeAllowed}
+                                <img src="{$cand.foto}" style="border-radius: 100%; width: 130px;">
+                                {/if}
+                                 {if $lmBatchSttatuses && $stChangeAllowed}
                                 <input type="checkbox" name="lm_bs[]" class="lmbs_checkbox" value="{$cand.reactieid}:{$cand.kandidaatid}"> {/if} {if $uts.siteid == 0001}
                                 <h3 class="itemTitle"><a href="/index.php/page/customers/vid/{$vid}/bb/1/code/{$code}/command/cand_detail/kid/{$kid}" {if $cand.recently_changed}style="color:orange;"{/if}>{$cand.voornaam} {$cand.tussenvoegsel} {$cand.achternaam}</a></h3> {else}
                                 <!-- code normal here -->
                                 <h3 class="itemTitle"><a href="{if $uses_cvsearch}/index.php/page/candetail/bb/1/command/start/id/{$kid}{else}/index.php/page/customers/vid/{$vid}/bb/1/code/{$code}/command/cand_detail/kid/{$kid}{/if}" {if $cand.recently_changed}style="color:orange;"{/if}>{$cand.voornaam} {$cand.tussenvoegsel} {$cand.achternaam}</a></h3> {/if}
                             </td>
-                            <td>
-                                <div class="itemWord custCandInsertDate">{$cand.invoerdatum|date_format:"%d.%m.%Y"}</div>
-                            </td>
-                            <td>
-                                <div class="itemWord custCandFunction">{$cand.functie_o}</div>
-                            </td>
-                            {if $hiring_manager} {if $cand.note}
-                            <td>
-                                <div title="{$cand.note}"><img src="http://bo01.otys.nl/adm/hta/images/notitie_icoon.gif"></div>
-                            </td>
+                            {if $hiring_manager} {if $cand.note}<td><div title="{$cand.note}"><img src="http://bo01.otys.nl/adm/hta/images/notitie_icoon.gif"></div></td>
                             {else} &nbsp; {/if} {/if} {if $cand.cand_status || $cand.status1 || $cand.status2 || $cand.status3 || $staffing } {if $cand.cand_status}
-                            <td>
-                                <span class="itemWord custCandStatus"><span>[t]Status[/t]:</span> {$cand.cand_status}
-                                </span>
-                            </td>
-                            {/if}{if $cand.status1}
-                            <td>
-                                <span class="itemWord custCandStatus1Name"><span>{$status1_name}:</span> {$cand.status1}
-                                </span>
-                            </td>
-                            {/if} {if $cand.status2}
-                            <td>
-                                <span class="itemWord custCandStatus2Name"><span>{$status2_name}:</span> {$cand.status2}
-                                </span>
-                            </td>
-                            {/if} {if $cand.status3}
-                            <td>
-                                <span class="itemWord custCandStatus3Name"><span>{$status3_name}:</span> {$cand.status3}
-                                </span>
-                            </td>
-                            {/if} {if $staffing}
-                            <td>
-                                <span class="itemWord custCandStaffingStatus"><span>[t]Staffing[/t]:</span> {$cand.staffing_status}
-                                </span>
-                            </td>
                             {/if}
-                            <td class="custlinNam1d">{if $u.st1}{$u.st1_descr|escape}
-                                <br /><span class="custlinNam1dDate">{if $u.st1_ts}{$u.st1_ts|date_format}{/if}</span>{else}---{/if}
-                            </td>
+                            {if $cand.status1}<td class="center" style="vertical-align: middle;">{$cand.status1}</td>{/if}
+                            {if $cand.status2}<td class="center" style="vertical-align: middle;">{$cand.status2}</td>{/if}
+                            {if $cand.status3}<td class="center" style="vertical-align: middle;">{$cand.status3}</td>{/if}
+                            {if $staffing}<td class="center" style="vertical-align: middle;">{$cand.staffing_status}</td>{/if}
                             <!-- MBL -->
             </div>
     </div>
