@@ -261,11 +261,17 @@
             }
     </script>
     {/literal}
+
     <!-- /UTS/customers/candidate_Q.html -->
-    <div class="header">
+    
+    <div class="container">
+    <div class="col-xs-12 col-lg-4 col-lg-offset-8" style="background-color:#77B5FE;">
+        <div class="header">
         <h1>Candidat: {$candidate.name}  {$u.candidate_name|escape}</h1>
         <span class="right">{$picHtml}</span>
+        </div>
     </div>
+    <div class="col-lg-8 col-xs-12">
     {if $customer_menu} {$customer_menu} {/if} {foreach from=$data item=record name=personal} {if $record.part=="PER"} {* Honza M.: A quick fix for translating - added here so that the UTSMAN sees the names, but in a always-false condition so that they are not displayed; FIXME: implement some kind of PHP hook, if record.name can be known in advance *} {if 0}
     <h2>These fields are generated dynamically ($record.name) - to be recognized by UTS, they must be inserted into a never-executed block, such as this one</h2> [ti]Voornaam[/ti]
     <br> [ti]Tussenvoegsel[/ti]
@@ -279,6 +285,7 @@
     <br> [ti]Geboortedatum[/ti]
     <br> {/if}
     <h2>Télécharger le {$record.name}:{$record.value} </h2> {if $smarty.foreach.personal.first} {/if} {/if} {/foreach} {if $killerQuestions}
+
     <div class="custCandDtlKillerQuestions">
         <h2 class="subHeader">[t]Questions[/t]</h2>
         <div class="text">
@@ -286,7 +293,9 @@
             <div class="textWord kqQuestion">{$kq.qq|escape}</div>
             <div class="textWord kqAnswer">{$kq.qa|escape}</div>
             {/if} {/foreach}
-        </div>
+    </div>
+    </div>
+    </div>
     </div>
     {/if} {if $candidateSocialNetworks}
     <div>[t]Social networks[/t]</div>
@@ -295,6 +304,7 @@
             <a href="{$sn.url}" target=_ "blank"><img src="{$sn.logo_url}" width="80" height="25" border="0" title="{$sn.network_type}"></a>{else}{$sn.network_type}{/if}</div>
         <div class="socNetLink"><a href="{$sn.url}" target=_ "blank">{if $sn.link_text}{$sn.link_text}{else}{$sn.url}{/if}</a></div>
     </div>
+
     {/foreach} {/if}
     <!--START STATUS CHANGE/OVERVIEW-->
     {if ($CustomersRemote)}
@@ -752,6 +762,7 @@
         <div id="printWebserviceDocSelecter" style="display:none">
             [th]Maak een keuze uit printemplates en taal[/th] [th]Print Resume[/th]">
         </div>
+    </div>
         <!--uts:end inner-->
 </body>
 
