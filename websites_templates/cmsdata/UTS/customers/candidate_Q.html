@@ -265,13 +265,13 @@
     <!-- /UTS/customers/candidate_Q.html -->
     <div class="container-fluid">
     <div class="row" style="background-color:#77B5FE;">
-                <div class="col-xs-4">
+                <div class="col-xs-12 col-lg-4 col-md-4">
                     <div class="header">
                 <h1>Candidat: {$candidate.name}  {$u.candidate_name|escape}</h1>
         <span class="right">{$picHtml}</span>
         </div>
     </div>
-                   <div class="col-xs-8" style="background-color:#FFFFFF;box-shadow: 0px 0px 20px black;">
+                   <div class="col-xs-12 col-lg-8 col-md-8" style="background-color:#FFFFFF;box-shadow: 0px 0px 20px black;">
     {foreach from=$data item=record name=personal} {if $record.part=="PER"} {* Honza M.: A quick fix for translating - added here so that the UTSMAN sees the names, but in a always-false condition so that they are not displayed; FIXME: implement some kind of PHP hook, if record.name can be known in advance *} {if 0}
     <h2>These fields are generated dynamically ($record.name) - to be recognized by UTS, they must be inserted into a never-executed block, such as this one</h2> [ti]Voornaam[/ti]
     <br> [ti]Tussenvoegsel[/ti]
