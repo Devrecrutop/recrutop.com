@@ -33,8 +33,6 @@
     <meta content="Le groupe Recrutop est réparti en agences ultra spécialisées pour accompagner votre croissance. Concentrez-vous sur vos projets, nous staffons vos équipes" name='description'>
     <link rel="canonical" href="http://www.recrutop.com/" />
     <meta name="google-site-verification" content="" />
-    <!-- JQuery -->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
     <!-- FontAwesome -->
@@ -95,6 +93,7 @@
                             <li><a href="http://rambouillet.recrutop.com/">Rambouillet</a></li>
                             <li><a href="http://tertiaire.recrutop.com/">Tertiaire &amp; Informatique </a></li>
                         </ul>
+                        <li><a href="http://www.recrutop.com">Chercher un job </a></li>
                     </li>
                     [ocdLoginHook]
                 </ul>
@@ -103,45 +102,23 @@
             <!--/.nav-collapse -->
         </div>
     </nav>
-    <!-- Baseline -->
-    <div class="row">
-        <div class="container event">[bisjab]</div>
+    <div class="row bg-white candidat">
+       
+                [bisjab]
+        </div>
     </div>
-    <footer class="footer center white shadow">
-        <div class="container">
-            <p><a href="http://legal.recrutop.com">Mentions légales</a> <a href="http://faq.recrutop.com">FAQ</a></p>
-        </div>
-    </footer>
-    <!-- Scripts -->
-    <!-- Template de Recherche Algolia -->
-    <script type="text/html" id="hit-template">
-        <div class="hit">
-            <div class="hit-content">
-                <h2 class="hit-name event"><a href="{{url}}" target="_blank">{{nomduspote}} - {{lieu}} </a></h2>
-                <p class="hit-description noevent">{{descriptioncourte}}... <a href="{{url}}" class="event" target="_blank">En savoir plus</a></p>
-            </div>
-        </div>
-    </script>
-    <script type="text/html" id="stats-template">
-        <div data-reactroot="" class="ais-root ais-stats">
-            <div class="ais-body ais-stats--body">
-                <div>
-                    {{nbHits}} Offres correspondent à votre recherche
-                </div>
-            </div>
-        </div>
-    </script>
-    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- JQuery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- Bootstrap -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/particles.js"></script>
     <script src="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.js"></script>
-    <script src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/app.js"></script>
+    <script src="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/app.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/modernizr.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/isotope.pkgd.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/jquery.browser.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/SmoothScroll.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/template.js"></script>
+    <!-- Typeform -->
     <script>
     (function() {
         var qs, js, q, s, d = document,
@@ -159,6 +136,7 @@
         }
     })()
     </script>
+    <!-- Chatlio  -->
     <script type="text/javascript">
     window._chatlio = window._chatlio || [];
     ! function() {
@@ -176,6 +154,7 @@
         c.parentNode.insertBefore(n, c);
     }();
     </script>
+    <!-- Google Analytics  -->
     <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-11566180-1']);
@@ -190,6 +169,7 @@
         s.parentNode.insertBefore(ga, s);
     })();
     </script>
+    <!-- FullStory -->
     <script>
     window['_fs_debug'] = false;
     window['_fs_host'] = 'www.fullstory.com';
