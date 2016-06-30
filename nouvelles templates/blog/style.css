@@ -219,7 +219,7 @@ h1 {
 .candidat {
   min-height: 90vh;
   padding-top: 60px; }
-  .candidat .header {
+  .candidat .header img {
     border-radius: 100%; }
   .candidat .bisjab {
     margin: 3em auto 5em;

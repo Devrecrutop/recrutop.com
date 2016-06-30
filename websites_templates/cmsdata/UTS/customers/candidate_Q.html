@@ -263,7 +263,7 @@
     {/literal}
     <!-- /UTS/customers/candidate_Q.html -->
     <div class="center header margin-l">
-        <h1>Votre fiche candidat {$candidate.name}  {$u.candidate_name|escape}</h1>
+        <h1>Fiche candidat {$candidate.name}  {$u.candidate_name|escape}</h1>
         <span class="right">{$picHtml}</span>
     </div>
     {if $customer_menu} {$customer_menu} {/if} {foreach from=$data item=record name=personal} {if $record.part=="PER"} {* Honza M.: A quick fix for translating - added here so that the UTSMAN sees the names, but in a always-false condition so that they are not displayed; FIXME: implement some kind of PHP hook, if record.name can be known in advance *} {if 0}
@@ -279,9 +279,11 @@
     <br> [ti]Geboortedatum[/ti]
     <br> {/if}
     <h2 class="center margin-m">Télécharger le {$record.name}:{$record.value} </h2>
-<hr>
-    {if $smarty.foreach.personal.first} {/if} {/if} {/foreach} {if $killerQuestions}
-
+    <div class="center">
+            <input type="button" class="button btn btn-primary uppercase" name="form" value="[th]Terug[/th]" onClick="document.location='{$terug}/{$ext_args}';">
+            <input type="button" class="button btn btn btn-primary uppercase" name="form" value="Envoyer une remarque à propos de ce candidat" onClick="location='/index.php/page/customers_ext/bb/1/exp//command/reaction/kid/{$candidate.id}/terug/customers/terug_cmd/candjob_list/vid/{$vid}';">
+    </div>
+    <hr> {if $smarty.foreach.personal.first} {/if} {/if} {/foreach} {if $killerQuestions}
     <div class="custCandDtlKillerQuestions">
         <h2 class="subHeader">[t]Questions[/t]</h2>
         <div class="text">
@@ -336,7 +338,7 @@
                 {/if} {/if}
             </table>
             <div class="center margin-s">
-                <button type="submit" class="btn btn-lg btn-primary uppercase" onClick="candidate_form_submit();"> Mettre à jour le statut</button>
+                <button type="submit" class="btn btn-lg btn-primary uppercase margin-m" onClick="candidate_form_submit();"> Mettre à jour le statut</button>
             </div>
             </td>
             </tr>
@@ -698,40 +700,6 @@
         </tr>
         {/if}
         <!--END_STATISTICS-->
-        <tr>
-            <td class="formButton">
-                <table border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <!--<td class="shCDbutton_1"><input type="button" class="button" name="form" value="[th]Terug[/th]" onClick="document.location='{$site}/index.php/bb/1/page/{$terug}/command/{$terug_cmd}/{$ext_args}';"></td>-->
-                        <td class="shCDbutton_1">
-                            <input type="button" class="button btn btn-primary" name="form" value="[th]Terug[/th]" onClick="document.location='{$terug}/{$ext_args}';">
-                            <!--ButtonLink3-->
-                        </td>
-                        <!--the above can not work $terug being a whole url-->
-                        {if $show_contact_button == 1}
-                        <td>&nbsp;</td>
-                        {* JMa
-                        <jan.martinec@yourit.nl>: Same thing here. Was this commented out because it offended someone? Tell me, I'm curious! *}
-                            <td class="shCDbutton_2">
-                                <input name="button" class="button btn btn-primary" type="button" onClick="request();" value="[t]Contact this candidate[/t]">
-                            </td>
-                            {/if} {if $show_print_button == 1}
-                            <td>&nbsp;</td>
-                            <!--                             <td class="shCDbutton_3">
-                                <input name="button2" class="button" type="button" onClick="print_it();" value="[t]Print Resume[/t]">
-                            </td> -->
-                            {/if} {if $show_respond_button == 1}
-                            <td>&nbsp;</td>
-                            <td class="shCDbutton_4">
-                                <input type="button" class="button btn btn-primary" name="form" value="[t]Respond[/t]" onClick="location='/index.php/page/customers_ext/bb/1/exp//command/reaction/kid/{$candidate.id}/terug/customers/terug_cmd/candjob_list/vid/{$vid}';">
-                            </td>
-                            {/if}
-                            <td>&nbsp;</td>
-                            <!-- <input type="button" class="button shCDbutton_3" value="[th]E-mail Kandidaat[/th]" onclick="document.location.href='/index.php/page/foevents/command/bulkmailcreate/evid/{$evid}/cid/{$candidate.id}/bb/1/'">-->
-                    </tr>
-                </table>
-            </td>
-        </tr>
         </table>
         <iframe name="actionframe" id="actionframe" width="1" height="1" frameborder="0"></iframe>
         {if $linemanager_extra_remarks}
