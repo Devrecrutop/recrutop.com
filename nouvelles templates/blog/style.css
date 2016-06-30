@@ -51,8 +51,6 @@ html {
 
 body {
   font-family: "Maven Pro", sans-serif;
-  overflow-y: scroll;
-  overflow-x: hidden;
   margin-bottom: 60px; }
   body a {
     font-weight: 500; }
