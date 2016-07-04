@@ -239,6 +239,15 @@ h1 {
     padding: 5%; }
   .candidat .shCDhistoryDate {
     font-weight: bold; }
+  .candidat .custCandReaction h2 {
+    text-align: center;
+    margin: 2em; }
+  .candidat .custCandReaction .formInput {
+    text-align: center;
+    margin: 2em; }
+    .candidat .custCandReaction .formInput input, .candidat .custCandReaction .formInput textarea {
+      border-radius: 10px;
+      min-width: 70%; }
   .candidat .qaPageDocUpload .formInput {
     margin-top: 10px; }
   .candidat .qaPageDocUpload .aplFileButton input {
