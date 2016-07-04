@@ -373,9 +373,9 @@
                 <div class="statusHistory">
                     <h2 class="center">[t]Status History[/t]</h2>
                     <br>
-                    <div Id="history" border="0" cellpadding="0" cellspacing="0" width="100%" class="shCandListNameTbl">
+                    <div Id="history" border="0" cellpadding="0" cellspacing="0" width="100%" class="shCandListNameTbl border-thin">
                         {foreach from=$history item=row key=count}
-                        <div class="shCDStatusHistory">
+                        <div class="shCDStatusHistory ">
                             <span class="shCDhistoryDate">{$row.changetime|date_format:"%d-%m-%Y"}</span> {if $row.status}<span class="shCandListStatus1"><span class="shCandListStatusLabel">[t]Status[/t]:</span> {$row.status} </span>{/if} {if $row.vb_procedures_status}<span class="shCandListStatus2"><span class="shCandListStatusLabel">{$status1_name}:</span> {$row.vb_procedures_status} </span>{/if} {if $row.vb_procedures_status2}<span class="shCandListStatus3"><span class="shCandListStatusLabel">{$status2_name}:</span> {$row.vb_procedures_status2} </span>{/if} {if $row.vb_procedures_status3}<span class="shCandListStatus4"><span class="shCandListStatusLabel">{$status3_name}:</span> {$row.vb_procedures_status3} </span>{/if} {if $staffing}<span class="shCandListStatus5"><span class="shCandListStatusLabel">[t]Note[/t]:</span> {$row.note} </span>{/if}
                         </div>
                         {/foreach}
