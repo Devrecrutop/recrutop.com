@@ -233,6 +233,12 @@ h1 {
   .candidat .choice-candidates button {
     box-shadow: 1px 1px 2px black;
     margin: 20px; }
+  .candidat .border-thin {
+    border: thin solid #DCDADA;
+    border-radius: 20px;
+    padding: 5%; }
+  .candidat .shCDhistoryDate {
+    font-weight: bold; }
   .candidat .qaPageDocUpload .formInput {
     margin-top: 10px; }
   .candidat .qaPageDocUpload .aplFileButton input {
