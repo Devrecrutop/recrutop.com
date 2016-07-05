@@ -248,6 +248,8 @@ h1 {
     .candidat .custCandReaction .formInput input, .candidat .custCandReaction .formInput textarea {
       border-radius: 10px;
       min-width: 70%; }
+  .candidat .Adresse {
+    display: none; }
   .candidat .qaPageDocUpload .formInput {
     margin-top: 10px; }
   .candidat .qaPageDocUpload .aplFileButton input {

@@ -1,0 +1,723 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+    <title> CustomersCandidatesDetail
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link href="formstyles.css" rel="stylesheet" type="text/css">
+    <SCRIPT LANGUAGE="Javascript" type="text/javascript">
+    <!--
+    function hidestatus() {
+        window.status = 'Otys e-Recruiting Systems'
+        return true
+    }
+    if (document.layers)
+        document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+    document.onmouseover = hidestatus
+    document.onmouseout = hidestatus
+        -->
+    </SCRIPT>
+</head>
+
+<body>
+    <!--uts:begin inner-->
+    {if $stReachTextNotes}
+    <script language="javascript" type="text/javascript" src="/_javascript_global/editor/TinyMCE/tiny_mce.js"></script>
+    <script language="javascript" type="text/javascript">
+    var intRid = parseInt('{$reactie.id}');
+
+    //{literal}
+
+    tinyMCE.init({
+        theme: "advanced",
+        mode: "exact",
+        elements: "note",
+        theme_advanced_toolbar_location: "top",
+        theme_advanced_buttons1: "bold,italic,underline,strikethrough,separator," + "justifyleft,justifycenter,justifyright,justifyfull,formatselect," + "bullist,numlist,outdent,indent",
+        theme_advanced_buttons2: "link,unlink,separator," + "undo,redo,separator,sub,sup,charmap",
+        theme_advanced_buttons3: "",
+        height: "200px",
+        width: "100%"
+    });
+
+
+    function loadEvalNote(noteId) {
+        var nid = parseInt(noteId);
+        if (isNaN(nid)) {
+            return false;
+        }
+
+        $.post('/index.php/page/cust_cand_note/', {
+                command: 'get_note',
+                note_id: nid,
+                re_id: intRid
+            },
+            loadEvalNoteCB,
+            'json');
+    }
+
+    // callback for loadEvalNote
+    function loadEvalNoteCB(data) {
+        var nid = parseInt(data.id);
+        if (isNaN(nid)) {
+            return false;
+        }
+
+        $('#note_id').val(nid);
+        tinyMCE.get('note').setContent(data.note);
+
+    }
+
+    //{/literal}
+    </script>
+    {/if}
+    <script language="Javascript1.2">
+    var linemanager_extra_remarks = parseInt('{$linemanager_extra_remarks}');
+    var trigger_timeslot_invite = '{$trigger_timeslot_invite}'; {
+        literal
+    }
+
+    function check_formstate(tabcode) {
+        layerShow(tabcode);
+        //switch_tab(tabcode);
+    }
+
+    function printWindow() {
+        browserVersion = parseInt(navigator.appVersion)
+        if (browserVersion >= 4) window.print()
+    }
+
+    function request() {
+        {
+            /literal}
+            location = '/index.php/page/CustomersRemote/bb/1/exp//command/prerequest/kid/{$candidate.id}'; {
+                literal
+            }
+        }
+
+        function print_it() {
+            {
+                /literal}
+                //  document.frames.actionframe.location = '/index.php/page/CustomersRemote/bb/1/exp//command/detail/kid/{$kid}/option/print&amp;vid={$vid}';
+                f = document.getElementById("actionframe");
+                f.src = "/index.php/page/CustomersRemote/bb/1/exp//command/detail/kid/{$candidate.id}/option/print&amp;vid={$vid}"; {
+                    literal
+                }
+            }
+
+
+            function openRemarksForm() {
+
+                allow_comments = false;
+                ols = $('#old_status').val();
+                olvs = $('#old_vb_procedures_status').val();
+                olvs2 = $('#old_vb_procedures_status2').val();
+                olvs3 = $('#old_vb_procedures_status3').val();
+                ns = $('#status').val();
+                nvs = $('#vb_procedures_status').val();
+                nvs2 = $('#vb_procedures_status2').val();
+                nvs3 = $('#vb_procedures_status3').val();
+                if (ols != ns || olvs != nvs || olvs2 != nvs2 || olvs3 != nvs3) {
+                    allow_comments = true;
+                }
+
+
+                if (allow_comments)
+                    $('#dialog-form-extra-remarks').dialog('open');
+                else
+                //$('#candForm').submit();
+                    candidate_form_submit();
+
+            }
+
+            function candidate_form_submit() {
+                if (trigger_timeslot_invite == 1) {
+                    timeslot_invite();
+                } else {
+                    $('#candForm').submit();
+                }
+            }
+
+            $(document).ready(function() {
+
+                if (linemanager_extra_remarks == 1) {
+                    var linemanager_remarks = $("#linemanager_remarks"),
+                        allExtraFields = $([]).add(linemanager_remarks),
+                        tenTips = $(".validateTenTips");
+
+
+                    function checkLength(o, n, min, max) {
+                        if (o.val().length > max || o.val().length < min) {
+                            o.addClass("ui-state-error");
+                            updateTips('[th]Please add a comment[/th]' + n);
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+
+                    function updateTips(t) {
+                        tenTips
+                            .text(t)
+                            .addClass("ui-state-highlight");
+                        setTimeout(function() {
+                            tenTips.removeClass("ui-state-highlight", 1500);
+                        }, 500);
+                    }
+
+                    $("#dialog-form-extra-remarks").dialog({
+                        modal: true,
+                        autoOpen: false,
+                        height: 250,
+                        width: 500,
+                        resizable: false,
+                        buttons: {
+                            "[th]Save[/th]": function() {
+                                var bValid = true;
+                                allExtraFields.removeClass("ui-state-error");
+
+                                bValid = bValid && checkLength(linemanager_remarks, "", 1, 1000);
+
+
+                                if (bValid) {
+
+                                    $('#lm_remarks').val(linemanager_remarks.val());
+                                    //$('#candForm').submit();
+                                    candidate_form_submit();
+                                }
+
+                            },
+                            "[th]Cancel[/th]": function() {
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
+
+                }
+
+            });
+            // Candidates appointment invitation
+            function timeslot_invite() {
+                if (trigger_timeslot_invite == 1) {
+
+                    $(document).ready(function() {
+
+                        status_changed = false;
+
+                        olvs = $('#old_vb_procedures_status').val();
+                        olvs2 = $('#old_vb_procedures_status2').val();
+                        olvs3 = $('#old_vb_procedures_status3').val();
+
+                        nvs = $('#vb_procedures_status').val();
+                        nvs2 = $('#vb_procedures_status2').val();
+                        nvs3 = $('#vb_procedures_status3').val();
+                        if (olvs != nvs || olvs2 != nvs2 || olvs3 != nvs3) {
+                            status_changed = true;
+                        }
+
+
+                        if (status_changed == true) {
+
+                            $.post('/index.php/page/lm_timeslots/command/timeslotCheck',
+                                $("#candForm").serialize(),
+                                TimeslotFeedback,
+                                'json');
+
+
+                        }
+
+                    });
+
+                }
+            }
+
+            function TimeslotFeedback(data) {
+
+                if (data.status == "OK" && data.popup == "show") {
+
+                    var r = confirm("[th]Do you want to invite this candidate for an appointment?[/th]");
+                    if (r == true) {
+                        // save invitation
+                        $.post('/index.php/page/lm_timeslots/command/timeslotSingleInvitationSaveInBackground',
+                            $("#candForm").serialize(),
+                            InvitationFeedback,
+                            'html');
+
+                    } else {
+                        /// dont save invitation only continue...
+                        $('#candForm').submit();
+                    }
+
+
+                } else {
+
+                    $('#candForm').submit();
+                }
+            }
+
+            function InvitationFeedback(data) {
+                $('#candForm').submit();
+            }
+    </script>
+    {/literal}
+    <!-- /UTS/customers/candidate_Q.html -->
+    <div class="center header margin-l">
+        <h1>Fiche candidat {$candidate.name}  {$u.candidate_name|escape}</h1>
+        <span class="right">{$picHtml}</span>
+    </div>
+    {if $customer_menu} {$customer_menu} {/if} {foreach from=$data item=record name=personal} {if $record.part=="PER"} {* Honza M.: A quick fix for translating - added here so that the UTSMAN sees the names, but in a always-false condition so that they are not displayed; FIXME: implement some kind of PHP hook, if record.name can be known in advance *} {if 0}
+    <h2>These fields are generated dynamically ($record.name) - to be recognized by UTS, they must be inserted into a never-executed block, such as this one</h2> [ti]Voornaam[/ti]
+    <br> [ti]Tussenvoegsel[/ti]
+    <br> [ti]Achternaam[/ti]
+    <br> [ti]Adres[/ti]
+    <br> [ti]Woonplaats[/ti]
+    <br> [ti]Mobiel[/ti]
+    <br> [ti]Email[/ti]
+    <br> [ti]Opleidingen[/ti]
+    <br> [ti]Werkervaring[/ti]
+    <br> [ti]Geboortedatum[/ti]
+    <br> {/if}
+    <h2 class="center margin-m">Télécharger le {$record.name}:{$record.value} </h2>
+    <div class="center">
+        <input type="button" class="button btn btn-primary uppercase" name="form" value="[th]Terug[/th]" onClick="document.location='{$terug}/{$ext_args}';">
+        <input type="button" class="button btn btn btn-primary uppercase" name="form" value="Envoyer une remarque à propos de ce candidat" onClick="location='/index.php/page/customers_ext/bb/1/exp//command/reaction/kid/{$candidate.id}/terug/customers/terug_cmd/candjob_list/vid/{$vid}';">
+    </div>
+    <hr> {if $smarty.foreach.personal.first} {/if} {/if} {/foreach} {if $killerQuestions}
+    <div class="custCandDtlKillerQuestions">
+        <h2 class="subHeader">[t]Questions[/t]</h2>
+        <div class="text">
+            {foreach from=$killerQuestions item=kq} {if $kq.qq && $kq.qa}
+            <div class="textWord kqQuestion">{$kq.qq|escape}</div>
+            <div class="textWord kqAnswer">{$kq.qa|escape}</div>
+            {/if} {/foreach}
+        </div>
+    </div>
+    {/if} {if $candidateSocialNetworks}
+    <div>[t]Social networks[/t]</div>
+    <div>{foreach from=$socNetProfiles item=sn}
+        <div class="socNetLogo">{if $sn.logo_url}
+            <a href="{$sn.url}" target=_ "blank"><img src="{$sn.logo_url}" width="80" height="25" border="0" title="{$sn.network_type}"></a>{else}{$sn.network_type}{/if}</div>
+        <div class="socNetLink"><a href="{$sn.url}" target=_ "blank">{if $sn.link_text}{$sn.link_text}{else}{$sn.url}{/if}</a></div>
+    </div>
+    {/foreach} {/if}
+    <!--START EVALUATION-->
+    {if $stReachTextNotes} {*ITEM BASED EVALUATION ITEMS*} {if $listReactieNots}
+    <div>
+        <h2 class="center margin-m">[t]Evaluation History[/t]</h2>
+        <input type="hidden" id="note_id" name="note_id" value="">{*value is set by loadEvalNote function*}
+        <div id="evalHistoryList">
+            {foreach from=$listReactieNots item=note}
+            <div class="evalNote">
+                <span class="evalNoteCreated">
+          {$note.created_date_time|date_format:"%d.%m.%Y %H:%M"}
+
+          {if $stReachTextNotesEdit}
+            <span class="evalNoteEditButton"><input class="button shButton" type="button" name="load_note" value="[t]Edit[/t]" onClick="loadEvalNote('{$note.id}');"></span> {/if}
+                </span>
+                <span class="evalNoteAuthor">{$note.author|escape}</span>
+                <span class="evalNoteNote">{$note.note}</span>
+            </div>
+            {/foreach}
+        </div>
+        {/if} {else} {*TEXT BASED EVALUATION ITEMS*} {if $reactie.quick_evaluation}
+        <h2 class="center margin-m">Remarques</h2>
+        <div class="border-thin">{$reactie.quick_evaluation|nl2br}</div>
+        {/if} {/if}
+        <!--END EVALUATION-->
+        <!--START STATUS CHANGE/OVERVIEW-->
+        {if ($CustomersRemote)}
+        <form method="post" action="/index.php/page/CustomersRemote/bb/1/command/status_save/userkid/{$candidate.id}">
+            {else}
+            <form method="post" action="/index.php/page/customers/vid/{$vid}/bb/1/command/cand_save/kid/{$candidate.id}" name="candForm" id="candForm" class="margin-l">
+                {/if} {if $allow_status_change}
+                <h2 class="center margin-s">[t]Change Status[/t]</h2>
+                <table border="0" cellpadding="0" cellspacing="0" class="shCDactionTbl table table-bordered table-hover table-responsive table-striped">
+                    <thead>
+                        <th class="center">{$status1_name}</th>
+                        <th class="center">{$status2_name}</th>
+                        <th class="center">{$status3_name}</th>
+                    </thead>
+                    <tr>
+                        <td class="center">
+                            {if $allow_status_change && $e_statuses.ps1}
+                            <input type="hidden" name="old_vb_procedures_status" id="old_vb_procedures_status" value="{$reactie.vb_procedures_status}"> {html_options name=vb_procedures_status id=vb_procedures_status options=$vb_procedures_status_options selected=$reactie.vb_procedures_status} {else} {assign var=st value=$reactie.vb_procedures_status} {$vb_procedures_status_options.$st}
+                            <input type="hidden" name="vb_procedures_status" value="{$st}"> {/if}
+                        </td>
+                        <td class="center">
+                            {if $allow_status_change && $e_statuses.ps2}
+                            <input type="hidden" name="old_vb_procedures_status2" id="old_vb_procedures_status2" value="{$reactie.vb_procedures_status2}"> {html_options name=vb_procedures_status2 id=vb_procedures_status2 options=$vb_procedures_status_options2 selected=$reactie.vb_procedures_status2} {else} {assign var=st value=$reactie.vb_procedures_status2} {$vb_procedures_status_options2.$st}
+                            <input type="hidden" name="vb_procedures_status2" value="{$st}"> {/if}
+                        </td>
+                        <td class="center">
+                            {if $allow_status_change && $e_statuses.ps3}
+                            <input type="hidden" name="old_vb_procedures_status3" id="old_vb_procedures_status3" value="{$reactie.vb_procedures_status3}"> {html_options name=vb_procedures_status3 id=vb_procedures_status3 options=$vb_procedures_status_options3 selected=$reactie.vb_procedures_status3} {else} {assign var=st value=$reactie.vb_procedures_status3} {$vb_procedures_status_options3.$st}
+                            <input type="hidden" name="vb_procedures_status3" value="{$st}"> {/if}
+                        </td>
+                    </tr>
+                    {if $allow_status_change && ($e_statuses.cs || $e_statuses.ps1 || $e_statuses.ps2 || $e_statuses.ps3)} {if $linemanager_extra_remarks}
+                    <td>
+                        <input class="button shButton" type="button" value="[t]Save[/t]" {if $linemanager_extra_remarks}onClick="openRemarksForm();" {/if}> {else}
+                    </td>
+                    {/if} {/if}
+                </table>
+                <div class="center margin-s">
+                    <button type="submit" class="btn btn-lg btn-primary uppercase margin-m" onClick="candidate_form_submit();"> Mettre à jour le statut</button>
+                </div>
+                </td>
+                </tr>
+                <input type="hidden" name="lm_remarks" id="lm_remarks" value=""> {/if}
+                </td>
+                </tr>
+                {if is_array($history) && !empty($history)}
+                <div class="statusHistory">
+                    <h2 class="center">[t]Status History[/t]</h2>
+                    <br>
+                    <div Id="history" border="0" cellpadding="0" cellspacing="0" width="100%" class="shCandListNameTbl border-thin">
+                        {foreach from=$history item=row key=count}
+                        <div class="shCDStatusHistory ">
+                            <span class="shCDhistoryDate">{$row.changetime|date_format:"%d-%m-%Y"}</span> {if $row.status}<span class="shCandListStatus1"><span class="shCandListStatusLabel">[t]Status[/t]:</span> {$row.status} </span>{/if} {if $row.vb_procedures_status}<span class="shCandListStatus2"><span class="shCandListStatusLabel">{$status1_name}:</span> {$row.vb_procedures_status} </span>{/if} {if $row.vb_procedures_status2}<span class="shCandListStatus3"><span class="shCandListStatusLabel">{$status2_name}:</span> {$row.vb_procedures_status2} </span>{/if} {if $row.vb_procedures_status3}<span class="shCandListStatus4"><span class="shCandListStatusLabel">{$status3_name}:</span> {$row.vb_procedures_status3} </span>{/if} {if $staffing}<span class="shCandListStatus5"><span class="shCandListStatusLabel">[t]Note[/t]:</span> {$row.note} </span>{/if}
+                        </div>
+                        {/foreach}
+                    </div>
+                </div>
+                {/if}
+                <input type="hidden" name="vid" value="{$reactie.vacatureid}">
+                <input type="hidden" name="rid" value="{$reactie.id}">
+                <input type="hidden" name="terug" value="{$terug}">
+            </form>
+            </td>
+            </tr>
+            <!--END STATUS CHANGE/OVERVIEW-->
+            <tr>
+                <td class="shCDstatusContainer">
+                    <!--START CV-->
+                    {if !$nodata}
+                    <br>
+                    <tr>
+                        <td>
+                            <div style="overflow:none;width:100%;">
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td>
+                                            {foreach from=$data item=record} {if $record.value && $record.part neq "PER"}
+                                            <!--START_RECORD-->
+                                            <table border="0" cellpadding="0" cellspacing="0" class="QuestionTbl">
+                                                <tr>
+                                                    <td class="formSubHeaderContainer">
+                                                        <table border="0" cellpadding="0" cellspacing="0" class="formSubHeaderTbl">
+                                                            <tr>
+                                                                <td class="formSubHeader">
+                                                                    <h2>{$record.name}</h2></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                {if $record.part=="TXT" || $record.part=="CRIT"}
+                                                <!--START_TEXT_PART-->
+                                                <tr>
+                                                    <td class="formTextContainer">
+                                                        <table border="0" cellpadding="0" cellspacing="0" class="formTextTbl">
+                                                            <tr>
+                                                                <td class="formText">{$record.value}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <!--END_TEXT_PART-->
+                                                {/if} {if $record.part=="OTH"}
+                                                <!--START_ITEM_PART-->
+                                                <tr>
+                                                    <td class="formText">
+                                                        <table cellpadding="0" cellspacing="0">
+                                                            {foreach from=$record.value key=subkey item=subvalue}
+                                                            <!--START_SUBITEM-->
+                                                            <tr>
+                                                                <td valign="top" class="HQuestion"><i>{$subkey}</i></td>
+                                                                <td valign="top" class="CCSubItem">
+                                                                    {if is_array($subvalue) && count($subvalue) > 0} {foreach from=$subvalue item=subv} {$subv.data}
+                                                                    <br> {/foreach} {else} {$subvalue} {/if}
+                                                                </td>
+                                                            </tr>
+                                                            <!--END_SUBITEM-->
+                                                            {/foreach}
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <!--END_ITEM_PART-->
+                                                {/if} {if $record.part=="SKI"}
+                                                <!--START_ITEM_PART-->
+                                                <tr>
+                                                    <td class="formText">
+                                                        <table cellpadding="0" cellspacing="0">
+                                                            {foreach from=$record.value key=subkey item=subvalue}
+                                                            <!--START_SUBITEM-->
+                                                            <tr>
+                                                                <td valign="top" class="HQuestion"><i>{$subkey}</i></td>
+                                                                <td valign="top" class="CCSubItem">
+                                                                    {foreach from=$subvalue item=skill} {$skill.skill} {if $skill.proficiency}({$skill.proficiency}){/if} {if $skill.lezen || $skill.schrijven || $skill.spreken}
+                                                                    <br>( {if $skill.lezen} [t]Read[/t]:{$skill.lezen} {/if} {if $skill.schrijven} [t]Write[/t]:{$skill.schrijven} {/if} {if $skill.spreken} [t]Speak[/t]:{$skill.spreken} {/if} ) {/if}
+                                                                    <br> {/foreach}
+                                                                </td>
+                                                            </tr>
+                                                            <!--END_SUBITEM-->
+                                                            {/foreach}
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <!--END_ITEM_PART-->
+                                                {/if} {if $record.part=="COM"} {foreach from=$record.value key=subkey item=item}
+                                                <!--START_COMPETENCE_ITEM-->
+                                                <tr>
+                                                    <td class="formText">
+                                                        <table cellpadding="0" cellspacing="0" width="100%">
+                                                            <tr>
+                                                                <td>
+                                                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                                                        <colgroup>
+                                                                            <col width="130">
+                                                                            <col>
+                                                                        </colgroup>
+                                                                        <tr>
+                                                                            <td colspan="2"><i>{$item._Name|escape}</i></td>
+                                                                        </tr>
+                                                                        {if $item._Level}
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;vertical-align:top"> [t]Level[/t]</td>
+                                                                            <td>{$item._Level|escape}</td>
+                                                                        </tr>
+                                                                        {/if} {if $item._Certificate}
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;vertical-align:top"> [t]Certificate[/t]</td>
+                                                                            <td>{$item._Certificate|escape}</td>
+                                                                        </tr>
+                                                                        {/if}
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;vertical-align:top"> [t]Category[/t]</td>
+                                                                            <td>{$item._Category|escape}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <!--END_COMPETENCE_ITEM-->
+                                                {/foreach} {/if} {if $record.part=="WER"} {foreach from=$record.value key=subkey item=item}
+                                                <!--START_HISTORY_ITEM-->
+                                                <tr>
+                                                    <td class="formText">
+                                                        <table cellpadding="0" cellspacing="0" width="100%">
+                                                            <tr>
+                                                                <td>
+                                                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                                                        <colgroup>
+                                                                            <col width="130">
+                                                                            <col>
+                                                                        </colgroup>
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;vertical-align:top"> [t]Van/tot[/t]
+                                                                                <!--SingleWordLink2-->
+                                                                            </td>
+                                                                            <td>{$item.StartDate} - {$item.EndDate}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;vertical-align:top"> [t]Job title[/t]</td>
+                                                                            <td>{$item.Experience}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;vertical-align:top"> [t]Employer name and place[/t]</td>
+                                                                            <td>{$item.EmployerNameAndPlace}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;vertical-align:top;"> [t]Experience[/t]</td>
+                                                                            <td>{$item.ExperienceDescription}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <!--END_HISTORY_ITEM-->
+                                                {/foreach} {/if} {if $record.part=="OPL"} {foreach from=$record.value key=subkey item=item}
+                                                <!--START_HISTORY_ITEM-->
+                                                <tr>
+                                                    <td class="formText">
+                                                        <table cellpadding="0" cellspacing="0" width="100%">
+                                                            <tr>
+                                                                <td>
+                                                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                                                        <colgroup>
+                                                                            <col width="130">
+                                                                            <col>
+                                                                        </colgroup>
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;"> [t]Van/tot[/t]
+                                                                                <!--SingleWordLink2-->
+                                                                            </td>
+                                                                            <td>{$item.StartDate} - {$item.EndDate}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;"> [t]Degree direction[/t]
+                                                                                <!--SingleWordLink2-->
+                                                                            </td>
+                                                                            <td>{$item.Degree}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;"> [t]Institute[/t]
+                                                                                <!--SingleWordLink2-->
+                                                                            </td>
+                                                                            <td>{$item.InstituteNameAndPlace}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;"> [t]Diploma[/t]
+                                                                                <!--SingleWordLink2-->
+                                                                            </td>
+                                                                            <td>{$item.Diploma}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;"> [t]Diploma date[/t]
+                                                                                <!--SingleWordLink2-->
+                                                                            </td>
+                                                                            <td>{$item.DiplomaDate}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="font-size:10px;color:#666666;"> [t]Subjects[/t]
+                                                                                <!--SingleWordLink2-->
+                                                                            </td>
+                                                                            <td>{$item.Subjects}</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <!--END_HISTORY_ITEM-->
+                                                {/foreach} {/if}
+                                            </table>
+                                            <!--END_RECORD-->
+                                            {/if} {/foreach}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    </table>
+                    {else} [t]No data to display for this candidate.[/t] {/if}
+                    <!--END CV-->
+                </td>
+            </tr>
+            <!--DOCUMENTS-->
+            {if count($docs)>0}
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="shCDstatusTbl shCDDocTbl">
+                        <tr>
+                            <td colspan="2" class="shCDtblHeader">[t]Documents[/t]</td>
+                        </tr>
+                        <tr>
+                            <td class="shCDactionContainer">
+                                {foreach from=$docs item=doc }
+                                <span><a href = "[website]/index.php/page/viewcv/bypass_smartlink/1/bb/1/nr/{$doc.nr}" target="actionframe">{if $doc.subject}{$doc.subject|escape}{else}{$doc.name|escape}{/if}</a></span>
+                                <br> {/foreach}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            {/if}
+            <!--END_DOCUMENTS-->
+            <!--NOTES-->
+            {if count($notes)>0}
+            <div>
+                <h2>[t]notes[/t]</h2> {foreach from=$notes item=note }
+                <p> <i>{$note.date|date_format:"%d-%m-%Y"}</i> {$note.onderwerp} {$note.note}</p>
+                {/foreach}
+            </div>
+            {/if}
+            <!--END_NOTES-->
+            <!--BEGIN LINKED JOBS-->
+            {if $displayLinkedJobs && count($linkedJobsList) > 0}
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="shCDstatusTbl shCDNoteTbl">
+                        <tr>
+                            <td colspan="2" class="linkedJobsTblHeader">[t]Linked Jobs[/t]</td>
+                        </tr>
+                        <tr>
+                            <td class="linkedJobsTblcontainer">
+                                <table cellspacing="0" cellpadding="0" border="0" width="100%" class="linkedJobsListTbl">
+                                    {foreach from=$linkedJobsList item=lj}
+                                    <tr>
+                                        <td>{$lj.join_date|escape}</td>
+                                        <td colspan="2">{$lj.job_name|escape}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{$lj.st_1_name|escape}</td>
+                                        <td>{$lj.st_2_name|escape}</td>
+                                        <td>{$lj.st_3_name|escape}</td>
+                                    </tr>
+                                    {/foreach}
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            {/if}
+            <!--END LINKED JOBS-->
+            <!--STATISTICS-->
+            {if OTYSCZ == 1}
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="shCDstatusTbl shCDStatsTbl">
+                        <tr>
+                            <td colspan="2" class="shCDtblHeader">[t]Statistics[/t]</td>
+                        </tr>
+                        <tr>
+                            <td class="shCDactionContainer">
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td>[t]Time[/t]: {$stats.time}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="shCDactionContainer">
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td>[t]Portal[/t]: {$stats.portal}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            {/if}
+            <!--END_STATISTICS-->
+            </table>
+            <iframe name="actionframe" id="actionframe" width="1" height="1" frameborder="0"></iframe>
+            {if $linemanager_extra_remarks}
+            <div id="dialog-form-extra-remarks" title="[thn]Add a remark[/thn]" class="hidden">
+                <form id="frmExtraRemark">
+                    <fieldset style="border: none;">
+                        <p class="validateTenTips">[thn]Here you can add a remark.[/thn]</p>
+                        <label for="linemanager_remarks">[thn]Remark[/thn]:</label>
+                        <textarea rows="5" id="linemanager_remarks" name="linemanager_remarks"></textarea>
+                    </fieldset>
+                    <input type="hidden" name="command" value="recruitmentAcceptance">
+                </form>
+            </div>
+            {/if}
+            <div id="printWebserviceDocSelecter" style="display:none">
+                [th]Maak een keuze uit printemplates en taal[/th] [th]Print Resume[/th]">
+            </div>
+            <!--uts:end inner-->
+</body>
+
+</html>
