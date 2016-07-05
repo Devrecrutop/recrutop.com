@@ -46,13 +46,24 @@ search.addWidget(
     container: '#brands',
     attributeName: 'JobCategory',
     operator: 'or',
-    limit: 10,
+    limit: 15,
     templates: {
       header: 'Catégories'
     }
   })
 );
 
+search.addWidget(
+  instantsearch.widgets.refinementList({
+    container: '#lieu',
+    attributeName: 'lieu',
+    operator: 'or',
+    limit: 15,
+    templates: {
+      header: 'Lieu'
+    }
+  })
+);
 
 
 function getTemplate(templateName) {
