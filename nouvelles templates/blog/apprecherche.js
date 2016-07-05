@@ -51,7 +51,7 @@ var search = instantsearch({
 search.addWidget(
   instantsearch.widgets.refinementList({
     container: '#brands',
-    attributeName: 'Jobcategory',
+    attributeName: 'JobCategory',
     operator: 'and',
     limit: 10,
     templates: {
