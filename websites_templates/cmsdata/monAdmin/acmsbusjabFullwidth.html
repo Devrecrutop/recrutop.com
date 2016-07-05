@@ -1,106 +1,256 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]> <html lang="en-us" class="no-js ie6 oldie"> <![endif]-->
-<!--[if IE 7]>    <html lang="en-us" class="no-js ie7 oldie"> <![endif]-->
-<!--[if IE 8]>    <html lang="en-us" class="no-js ie8 oldie"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en-us" class="no-js"> <!--<![endif]-->
-<head>
-<title>[klantnaam]</title>
-<meta charset="UTF-8">
-<link rel="icon" type="image/png" href="http://img15.hostingpics.net/pics/787545logoadmin.png" />
-<link rel="stylesheet" href="[website]/_css/styleSite.css" type="text/css">
-<link rel="shortcut icon" href="[website]/_images/[code].ico">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="https://rawgit.com/Devrecrutop/NTMOtys/master/overstylesheet.css">
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="fr">
+<!--<![endif]-->
 
-<!--jsrepository:require(JQueryBase,JQueryMagicSelect,JQueryFileInput,JQueryInputLabel,JQuerySmoothMenu)-->
-<!-- ACMSBUSJAB<Content> / <[klantnaam] - [code] - Content> / <NUM> MENUS / <vojtech srutek> -->
+<head>
+    <title>Recrutop - L'humain au cœur du recrutement</title>
+    <meta charset="utf-8">
+    <meta name="google-site-verification" content="fvlg6Pkfm6muhjNrby0z5bpoNgzx29hyk5cqkos8vKw" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Le groupe Recrutop est réparti en agences ultra spécialisées pour accompagner votre croissance. Concentrez-vous sur vos projets, nous staffons vos équipes">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='[website]/_images/favicon_ugxu0q.png' rel='shortcut icon' type='image/x-icon'>
+    <link href="[website]/_images/logo-recrutop_xzngd7.png" rel="apple-touch-icon" sizes="60x60" />
+    <link href="[website]/_images/logo-recrutop_xzngd7-1.png" rel="apple-touch-icon" sizes="76x76" />
+    <link href="[website]/_images/logo-recrutop_xzngd7-2.png" sizes="120x120" />
+    <link href="[website]/_images/logo-recrutop_xzngd7-3.png" rel="apple-touch-icon" sizes="152x152" />
+    <meta content='Recrutop' property='og:title'>
+    <meta content='http://www.recrutop.com/' property='og:url'>
+    <meta content='[website]/_images/logo-recrutop_xzngd7-4.png' property='og:image'>
+    <meta content='Recrutop' property='og:site_name'>
+    <meta content="Le groupe Recrutop est réparti en agences ultra spécialisées pour accompagner votre croissance. Concentrez-vous sur vos projets, nous staffons vos équipes" property='og:description'>
+    <meta content='Recrutop ' itemprop='name'>
+    <meta content="Le groupe Recrutop est réparti en agences ultra spécialisées pour accompagner votre croissance. Concentrez-vous sur vos projets, nous staffons vos équipes" itemprop='description'>
+    <meta content='http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_630,q_90,w_1200/v1/697512/logo-recrutop_xzngd7.png' itemprop='image'>
+    <meta content='summary' name='twitter:card'>
+    <meta content='Recrutop' name='twitter:title'>
+    <meta content="Le groupe Recrutop est réparti en agences ultra spécialisées pour accompagner votre croissance. Concentrez-vous sur vos projets, nous staffons vos équipes" name='twitter:description'>
+    <meta content='[website]/_images/logo-recrutop_xzngd7-4.png' name='twitter:image'>
+    <meta content="Le groupe Recrutop est réparti en agences ultra spécialisées pour accompagner votre croissance. Concentrez-vous sur vos projets, nous staffons vos équipes" name='description'>
+    <link rel="canonical" href="http://www.recrutop.com/" />
+    <meta name="google-site-verification" content="" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <!-- Style de Philippe & Frantz -->
+    <link href='https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700|Lato:100' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/style.css" />
+    <!-- Template Algolia -->
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3.14.5/algoliasearch.min.js"></script>
+    <script type="text/html" id="no-results-template">
+        <div id="no-results-message">
+            <p>Désolé, nous n'avons trouvé aucune annonce pour votre recherche<em>"{{query}}"</em> aujourd'hui.</p>
+            <p>
+                Vous voulez gérer vos candidatures en un seul endroit et être mis au courant en cas de nouvelles annonces ?</p>
+            <div class="col-xs-2 col-xs-offset-4">
+                <a href="http://www.recrutop.com/index.php/page/applicants/bb/1/command/startsignup/cms_categorie/82247">
+                    <button class="btn cta event marginbas">Inscrivez-vous</button>
+                </a>
+            </div>
+        </div>
+        </div>
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.css" />
+    <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
 </head>
 
-<body id="fullwidth" class="pageBody">
-	<div>
-	<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid" style="background-color:#12467e;opacity:0.8;">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="float:left;margin-left:10px;">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="http://www.mon-administrateur-informatique.com/"><img src="http://img11.hostingpics.net/pics/424772homerecrutop.png" alt="Vous cherchez un administrateur informatique ?"/></a>
+<body>
+    <!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+    <nav class="navbar navbar-light navbar-fixed-top white shadow uppercase event">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.recrutop.com/">
+                    <img alt="Recrutop" src="http://www.recrutop.com/_images_upload/_tn_6b234b07fa61318c.png" class="img-fluid event">
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nos Agences <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://artetinterim.fr/">Art &amp; Intérim</a></li>
+                            <li><a href="http://batiment-second-oeuvre.recrutop.com/">Bâtiment Second Œuvre</a></li>
+                            <li><a href="http://btp.recrutop.com/">BTP</a></li>
+                            <li><a href="http://chartres.recrutop.com/">Chartres</a></li>
+                            <li><a href="http://audiovisuel-event.recrutop.com/">Event &amp; Audiovisuel</a></li>
+                            <li><a href="http://garden.recrutop.com/">Garden</a></li>
+                            <li><a href="http://hotels-and-tables.recrutop.com/">Hotels &amp; Tables</a></li>
+                            <li><a href="http://rambouillet.recrutop.com/">Rambouillet</a></li>
+                            <li><a href="http://tertiaire.recrutop.com/">Tertiaire &amp; Informatique </a></li>
+                        </ul>
+                        <li><a href="http://www.recrutop.com">Chercher un job </a></li>
+                    </li>
+                    [ocdLoginHook]
+                </ul>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+    <div class="row bg-white candidat">
+        <div class="container">
+            <div class="col-xs-12">
+                        <div class="row shadow algolia">
+            <div class="container noevent col-xs-12 col-md-6 col-md-offset-3 radius-l">
+                <p style="font-size:20px;">Recherchez parmi nos offres d'emploi, par postes, métiers, lieux, etc. </p>
+                <header>
+                    <div id="search-input" class="event"></div>
+                    <div id="search-input-icon"></div>
+                </header>
+                <main>
+                    <div id="right-column">
+                        <div id="stats"></div>
+                        <div id="hits"></div>
+                        <div id="pagination" class="event"></div>
+                    </div>
+                </main>
+            </div>
+        </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-       <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">RECRUTEURS<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="http://contact.mon-administrateur-informatique.com">ESPACE RECRUTEUR</a></li>
-            <li class="divider"></li>
-            </ul>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">CANDIDATS<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="http://www.recrutop.com/index.php/page/applicants/bb/1/command/startlogin">CONNEXION/INSCRIPTION</a></li>
-            <li class="divider"></li>
-            <li><a href="http://offres-informatique.recrutop.com/">OFFRES D'EMPLOI</a></li>
-            </ul></li> 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">L'EQUIPE<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="http://equipe.mon-administrateur-informatique.com">QUI SOMMES NOUS ?</a></li>
-            <li class="divider"></li>
-            <li><a href="http://presentation.mon-administrateur-informatique.com/">NOTRE PLAQUETTE</a></li>
-          </ul>
-      </ul>
-      <ul class="nav navbar-nav navbar-right nav-pills" style:"margin-right:15px;">
-            <li>
-            <a href="https://www.facebook.com/MonAdminInformatique" class="btn btn-social-icon btn-facebook">
-                <i class="fa fa-facebook"></i>
-            </a>
-            </li>
-            <li>
-            <a href="https://twitter.com/philmonadmi" class="btn btn-social-icon btn-twitter">
-                <i class="fa fa-twitter"></i>
-            </a>
-            </li>
-                            <li>
-            <a href="https://www.linkedin.com/profile/preview?locale=fr_FR&trk=prof-0-sb-preview-primary-button" class="btn btn-social-icon btn-linkedin">
-                <i class="fa fa-linkedin"></i></a></li>
+        <!-- Template de Recherche Algolia -->
+    <script type="text/html" id="hit-template">
+        <div class="hit">
+            <div class="hit-content">
+                <h2 class="hit-name event"><a href="{{url}}" target="_blank">{{nomduspote}} - {{lieu}} </a></h2>
+                <p class="hit-description noevent">{{descriptioncourte}}... <a href="{{url}}" class="event" target="_blank">En savoir plus</a></p>
+            </div>
+        </div>
+    </script>
+    <script type="text/html" id="stats-template">
+        <div data-reactroot="" class="ais-root ais-stats">
+            <div class="ais-body ais-stats--body">
+                <div>
+                    {{nbHits}} Offres correspondent à votre recherche
+                </div>
+            </div>
+        </div>
+    </script>
+    
+    <!-- JQuery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.js"></script>
+    <script src="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/app.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/modernizr.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/jquery.browser.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/SmoothScroll.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/template.js"></script>
+    <!-- Typeform -->
+    <script>
+    (function() {
+        var qs, js, q, s, d = document,
+            gi = d.getElementById,
+            ce = d.createElement,
+            gt = d.getElementsByTagName,
+            id = 'typef_orm',
+            b = 'https://s3-eu-west-1.amazonaws.com/share.typeform.com/';
+        if (!gi.call(d, id)) {
+            js = ce.call(d, 'script');
+            js.id = id;
+            js.src = b + 'share.js';
+            q = gt.call(d, 'script')[0];
+            q.parentNode.insertBefore(js, q)
+        }
+    })()
+    </script>
+    <!-- Chatlio  -->
+    <script type="text/javascript">
+    window._chatlio = window._chatlio || [];
+    ! function() {
+        var t = document.getElementById("chatlio-widget-embed");
+        if (t && window.ChatlioReact && _chatlio.init) return void _chatlio.init(t, ChatlioReact);
+        for (var e = function(t) {
+                return function() {
+                    _chatlio.push([t].concat(arguments))
+                }
+            }, i = ["configure", "identify", "track", "show", "hide", "isShown", "isOnline"], a = 0; a < i.length; a++) _chatlio[i[a]] || (_chatlio[i[a]] = e(i[a]));
+        var n = document.createElement("script"),
+            c = document.getElementsByTagName("script")[0];
+        n.id = "chatlio-widget-embed", n.src = "https://w.chatlio.com/w.chatlio-widget.js", n.async = !0, n.setAttribute("data-embed-version", "2.1");
+        n.setAttribute('data-widget-id', '93b369e7-61ae-4d28-650c-1f0bde40cd0c');
+        c.parentNode.insertBefore(n, c);
+    }();
+    </script>
+    <!-- Google Analytics  -->
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-11566180-1']);
+    _gaq.push(['_trackPageview']);
 
-                <li>
-            <a href="https://plus.google.com/+Mon-administrateur-informatique/posts" class="btn btn-social-icon btn-google-plus">
-                <i class="fa fa-google-plus"></i></i></a></li></ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-</div>
-<div>
-<div>
-[teaser6]
-[teaser5]
-<div class="cleaner"></div>
-<div>
-[bisjab]
-<div id="rightEnd"></div>
-</div>
-<div class="cleaner"></div>
-</div>
-</div>
-
-
-<script type="text/javascript" src="[website]/_javascript/vs_script.js"></script>
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3.js"></script>
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+    <!-- FullStory -->
+    <script>
+    window['_fs_debug'] = false;
+    window['_fs_host'] = 'www.fullstory.com';
+    window['_fs_org'] = '1CP7P';
+    window['_fs_namespace'] = 'FS';
+    (function(m, n, e, t, l, o, g, y) {
+        if (e in m && m.console && m.console.log) {
+            m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');
+            return;
+        }
+        g = m[e] = function(a, b) {
+            g.q ? g.q.push([a, b]) : g._api(a, b);
+        };
+        g.q = [];
+        o = n.createElement(t);
+        o.async = 1;
+        o.src = 'https://' + _fs_host + '/s/fs.js';
+        y = n.getElementsByTagName(t)[0];
+        y.parentNode.insertBefore(o, y);
+        g.identify = function(i, v) {
+            g(l, {
+                uid: i
+            });
+            if (v) g(l, v)
+        };
+        g.setUserVars = function(v) {
+            g(l, v)
+        };
+        g.identifyAccount = function(i, v) {
+            o = 'account';
+            v = v || {};
+            v.acctId = i;
+            g(o, v)
+        };
+        g.clearUserCookie = function(d, i) {
+            d = n.domain;
+            while (1) {
+                n.cookie = 'fs_uid=;domain=' + d +
+                    ';path=/;expires=' + new Date(0);
+                i = d.indexOf('.');
+                if (i < 0) break;
+                d = d.slice(i + 1)
+            }
+        }
+    })(window, document, window['_fs_namespace'], 'script', 'user');
+    </script>
 </body>
-<footer><div id="footCan">
-<a href="http://Recrutop.com"/><img src="http://img11.hostingpics.net/pics/467540recrutoplogo.png" alt:"Recrutop - Vous cherchez un Conducteur de travaux ?" style="width:200px;float:left;margin-left:30px;margin-top:5px;"/></a>
-</div>
 
-</footer>
 </html>
