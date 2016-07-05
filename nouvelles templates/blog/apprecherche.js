@@ -48,8 +48,17 @@ var search = instantsearch({
     })
   );
 
-
-
+search.addWidget(
+  instantsearch.widgets.refinementList({
+    container: '#brands',
+    attributeName: 'Jobcategory',
+    operator: 'and',
+    limit: 10,
+    templates: {
+      header: 'Catégories'
+    }
+  })
+);
 
 
 
