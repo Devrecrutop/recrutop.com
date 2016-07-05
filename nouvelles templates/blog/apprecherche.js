@@ -4,13 +4,6 @@ var search = instantsearch({
   indexName: 'search-job',
   urlSync: true,
 
-  searchFunction(helper) {
-    if (helper.state.query === '') {
-      return;
-    }
-
-    helper.search();
-  }
 });
 
   search.addWidget(
