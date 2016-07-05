@@ -45,7 +45,7 @@ search.addWidget(
   instantsearch.widgets.refinementList({
     container: '#brands',
     attributeName: 'JobCategory',
-    operator: 'and',
+    operator: 'or',
     limit: 10,
     templates: {
       header: 'Catégories'
