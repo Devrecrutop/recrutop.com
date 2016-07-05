@@ -46,7 +46,7 @@ search.addWidget(
     container: '#brands',
     attributeName: 'JobCategory',
     operator: 'or',
-    limit: 15,
+    limit: 10,
     templates: {
       header: 'Catégories'
     }
@@ -57,8 +57,8 @@ search.addWidget(
   instantsearch.widgets.refinementList({
     container: '#lieu',
     attributeName: 'lieu',
-    operator: 'or',
-    limit: 15,
+    operator: 'and',
+    limit: 10,
     templates: {
       header: 'Lieu'
     }
