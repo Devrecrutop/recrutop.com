@@ -184,6 +184,17 @@ h1 {
   border: 0;
   width: 15em; }
 
+.presentation-blocks {
+  height: 210px;
+  background-color: #4078b5;
+  padding: 2%;
+  color: #fff;
+  text-align: center;
+  font-weight: 300;
+  font-family: lato, sans-serif; }
+  .presentation-blocks a {
+    color: #fff; }
+
 #outer {
   position: absolute;
   z-index: 1;
