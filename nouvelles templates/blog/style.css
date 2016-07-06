@@ -149,7 +149,9 @@ h1 {
 .ais-header {
   margin-top: 2%;
   margin-bottom: 2%;
-  border-bottom: thin solid #DCDADA; }
+  border-bottom: thin solid #DCDADA;
+  padding-bottom: 2%;
+  font-weight: blod; }
 
 .ais-refinement-list--label {
   font-weight: 300; }
