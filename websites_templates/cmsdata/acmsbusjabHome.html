@@ -41,25 +41,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
     <!-- Style de Philippe & Frantz -->
     <link href='https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700|Lato:100' rel='stylesheet' type='text/css' />
-    <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/style.css" />
-    <script src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/homejquery.js"></script>
-    <!-- Template Algolia -->
-    <script src="https://cdn.jsdelivr.net/algoliasearch/3.14.5/algoliasearch.min.js"></script>
-    <script type="text/html" id="no-results-template">
-        <div id="no-results-message">
-            <p>Désolé, nous n'avons trouvé aucune annonce pour votre recherche<em>"{{query}}"</em> aujourd'hui.</p>
-            <p>
-                Vous voulez gérer vos candidatures en un seul endroit et être mis au courant en cas de nouvelles annonces ?</p>
-            <div class="col-xs-2 col-xs-offset-4">
-                <a href="http://www.recrutop.com/index.php/page/applicants/bb/1/command/startsignup/cms_categorie/82247">
-                    <button class="btn bg-yellow white shadow event marginbas">Inscrivez-vous</button>
-                </a>
-            </div>
-        </div>
-        </div>
-    </script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.css" />
-    <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
+    <link rel="stylesheet" href="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/style.css" />    
 </head>
 
 <body style="background-color: rgba(18, 70, 126, 1);">
@@ -67,7 +49,7 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
     <!-- Outer -->
-    <div id="outer" class="noevent white">
+    <div id="outer" class="white" style="pointer-events:none;">
         <nav class="navbar  navbar-light shadow " style="background-color: rgba(18, 70, 126, 0);">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -114,24 +96,7 @@
                 </div>
             </div>
         </div>
-        <!--  Recherche Algolia -->
-        <div class="row shadow algolia">
-            <div class="container noevent col-xs-12 col-md-6 col-md-offset-3 radius-l">
-                <p style="font-size:20px;">Recherchez parmi nos offres d'emploi, par postes, métiers, lieux, etc. </p>
-                <header>
-                    <div id="search-input" class="event"></div>
-                    <div id="search-input-icon"></div>
-                </header>
-                <main>
-                    <div id="right-column">
-                        <div id="stats"></div>
-                        <div id="hits"></div>
-                        <div id="pagination" class="event"></div>
-                    </div>
-                </main>
-            </div>
-        </div>
-        <div class="row inactive-on-search">
+        <div class="row">
             <div class="container">
                 <div class="col-xs-12 ">
                     <br>
@@ -272,24 +237,6 @@
         </footer> -->
     </div>
     <!-- Scripts -->
-    <!-- Template de Recherche Algolia -->
-    <script type="text/html" id="hit-template">
-        <div class="hit">
-            <div class="hit-content">
-                <h2 class="hit-name event"><a href="{{url}}" target="_blank">{{nomduspote}} - {{lieu}} </a></h2>
-                <p class="hit-description noevent">{{descriptioncourte}}... <a href="{{url}}" class="event" target="_blank">En savoir plus</a></p>
-            </div>
-        </div>
-    </script>
-    <script type="text/html" id="stats-template">
-        <div data-reactroot="" class="ais-root ais-stats">
-            <div class="ais-body ais-stats--body">
-                <div>
-                    {{nbHits}} Offres correspondent à votre recherche
-                </div>
-            </div>
-        </div>
-    </script>
     <!-- particles.js container -->
     <div id="particles-js"></div>
     <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
