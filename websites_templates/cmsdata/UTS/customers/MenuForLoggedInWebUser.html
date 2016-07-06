@@ -7,9 +7,9 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="mLhome"><a href="/index.php/page/CustomersRemote/bb/1/command/clientlogin/bb/1/option/start/level/supplier">[t]Home[/t]</a></li>
-                        <li class="mLjbl"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/list">[t]Jobs List[/t]</a></li>
+                        <li class="mLjbl"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/list"><i class="fa fa-suitcase" aria-hidden="true"></i>   Mes postes</a></li>
                         {*MBL*} {if $linemanag_cand_update}
-                        <li class="mLmng mblA"><a href="/index.php/page/linemanager/bb/1/command/appstart/">[t]Updates[/t]</a></li>
+                        <li class="mLmng mblA hidden="" "><a href="/index.php/page/linemanager/bb/1/command/appstart/">[t]Updates[/t]</a></li>
                         {/if}
                         <!-- <li class="mLcandList"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/c_list">[t]Candidates[/t]</a></li> -->
                         {if $show_ocd_logindata}
@@ -38,7 +38,7 @@
             <div class="collapse navbar-collapse" id="secondNavbar">
                 <ul class="nav navbar-nav navbar-right">
                     {if $show_job_list}
-                    <li class="mLjbl"><a href="[website]/index.php/page/customers_ext/bb/1"> <i class="fa fa-suitcase" aria-hidden="true"></i>  Mes annonces</a></li>
+                    <li class="mLjbl"><a href="[website]/index.php/page/customers_ext/bb/1"> <i class="fa fa-suitcase" aria-hidden="true"></i>  Mes postes</a></li>
                     {*MBL*} {/if} {if $direct_vacancy_adding}
                     <li class="mLaddavacancy"><a href="{if $recrowd_mode}[website]/index.php/page/recrowd/bb/1/command/addVacancy{else}[website]/index.php/page/customers_ext/command/addavacancy/bb/1{/if}">[t]Add vacancy[/t]</a></li>
                     {/if} {if $allow_timeslots && $lineman_timeslots_and_invites}
@@ -55,7 +55,7 @@
                     {/if}
                     </li>
                     {if $linemanag_cand_update}
-                    <li class="mLmng mblB"><a href="/index.php/page/linemanager/bb/1/command/appstart/"><i class="fa fa-users" aria-hidden="true"></i> Derniers candidats</a></li>
+                    <li class="mLmng mblB hidden "><a href="/index.php/page/linemanager/bb/1/command/appstart/"><i class="fa fa-users" aria-hidden="true"></i> Derniers candidats</a></li>
                     {/if} {if $allow_search_cand} {if $enable_cv_search}
                     <li class="menuLinkFirstChild mLcandSearch hidden"><a href="/index.php/page/advsearchcvs/bb/1/command/editrequest">[t]Search[/t]</a></li>
                     {if $loggedinuser}

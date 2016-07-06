@@ -1,340 +1,78 @@
-/*SOMMAIRE
- *
- * -GENERAL
- * -USEFUL-CLASS
- * -NAVBAR
- * -ALGOLIA-SEARCH
- * -FOOTER
- * -CUSTOM-CLASS
- * -OTYS */
-/*-------------------------------------------------- */
-/*-VARIABLES */
-/*-------------------------------------------------- */
-/*-------------------------------------------------- */
-/*-NAVBAR */
-/*-------------------------------------------------- */
-.navbar {
-  font-size: 1.2em;
-  padding: 1%;
-  background-color: #12467e; }
-  .navbar .navbar-toggle {
-    border-color: #fff; }
-    .navbar .navbar-toggle .icon-bar {
-      background-color: #fff; }
-  .navbar .navbar-brand {
-    padding-top: 0px; }
-    .navbar .navbar-brand > img {
-      display: block;
-      height: 50px; }
-  .navbar .navbar .btn:hover {
-    background-color: #DCDADA;
-    color: #000;
-    display: block; }
-  .navbar .nav > li > a:hover, .navbar .nav .open > a, .navbar .nav .open > a:focus, .navbar .nav .open > a:hover, .navbar .nav .open > a:active {
-    color: #000;
-    border-radius: 10px; }
-  .navbar .dropdown-menu {
-    background-color: #12467e; }
-    .navbar .dropdown-menu li > a {
-      color: #fff; }
-      .navbar .dropdown-menu li > a:hover {
-        color: #000; }
-  .navbar .dropdown:hover .dropdown-menu {
-    display: block; }
+/*
+Error: Invalid CSS after "margin-top:": expected pseudoclass or pseudoelement, was "2%"
+        on line 176 of import.sass
 
-/*---------------------------------------- */
-/*-GENERAL */
-/*---------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%; }
+171:   width: 100%
+172:   &:focus
+173:     outline-width: 0
+174: 
+175: .ais-header
+176:   margin-top:2%
+177:   margin-bottom:2%
+178: 
+179: #stats
+180:   padding-top: 1.25em
+181:   text-align: center
 
-body {
-  font-family: "Maven Pro", sans-serif;
-  margin-bottom: 60px; }
-  body a {
-    font-weight: 500; }
-
-h1 {
-  font-size: 3em;
-  margin: 1em; }
-
-/*---------------------------------------- */
-/*-USEFUL-CLASS */
-/*---------------------------------------- */
-.shadow {
-  text-shadow: 1px 1px 2px black; }
-  .shadow:hover, .shadow:active, .shadow:focus {
-    text-shadow: none; }
-
-.left {
-  text-align: left; }
-
-.right {
-  text-align: right; }
-
-.center {
-  text-align: center; }
-
-.justify {
-  text-align: justify; }
-
-.font-light {
-  font-family: lato;
-  font-weight: 100; }
-
-.radius-s {
-  border-radius: 5px; }
-  .radius-s input {
-    border-radius: 5px; }
-
-.radius-m {
-  border-radius: 10px; }
-  .radius-m input {
-    border-radius: 10px; }
-
-.radius-l {
-  border-radius: 15px; }
-  .radius-l input {
-    border-radius: 15px; }
-
-.radius-xxl {
-  border-radius: 20px; }
-  .radius-xxl input {
-    border-radius: 20px; }
-
-.margin-s {
-  margin: 1em; }
-
-.margin-m {
-  margin: 2em; }
-
-.margin-l {
-  margin: 3em; }
-
-.white {
-  color: #fff; }
-  .white a {
-    color: #fff; }
-
-.black {
-  color: #000; }
-
-.bg-yellow {
-  background-color: #ede211; }
-
-.bg-white {
-  background-color: #fff; }
-
-.bg-blue-1 {
-  background-color: #12467e; }
-
-.uppercase {
-  text-transform: uppercase;
-  text-align: center; }
-
-/*---------------------------------------- */
-/* -ALGOLIA-SEARCH */
-/*---------------------------------------- */
-.ais-search-box > input {
-  border: none;
-  color: #000;
-  height: 70px;
-  font-size: 20px;
-  padding-left: 2em;
-  width: 100%; }
-  .ais-search-box > input:focus {
-    outline-width: 0; }
-
-#stats {
-  padding-top: 1.25em;
-  text-align: center; }
-
-#no-results-message {
-  padding-top: 0.9em; }
-  #no-results-message a {
-    text-decoration: underline; }
-
-.hit-description {
-  font-family: lato, sans-serif;
-  font-weight: 300;
-  text-align: left;
-  font-size: 17px; }
-  .hit-description a {
-    text-decoration: underline; }
-
-.hit-name {
-  text-transform: uppercase;
-  font-size: 20px; }
-
-/*---------------------------------------- */
-/*-FOOTER */
-/*---------------------------------------- */
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background-color: #12467e; }
-
-/*---------------------------------------- */
-/*-CUSTOM-CLASS */
-/*---------------------------------------- */
-.login {
-  height: 3em;
-  border: 0;
-  width: 15em; }
-
-.presentation-blocks {
-  height: 210px;
-  background-color: #4078b5;
-  padding: 2%;
-  color: #fff;
-  text-align: center;
-  font-weight: 300;
-  font-family: lato, sans-serif; }
-  .presentation-blocks a {
-    color: #fff; }
-
-#outer {
-  position: absolute;
-  z-index: 1;
-  width: 100%; }
-  #outer canvas {
-    display: block;
-    vertical-align: bottom; }
-  #outer .noevent {
-    pointer-events: none; }
-  #outer .event {
-    pointer-events: all; }
-  #outer .algolia p {
-    font-size: 17px; }
-  #outer .tab-content {
-    font-size: 17px; }
-
-#particles-js {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #12467e;
-  background-image: url("");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 50%; }
-
-.btn-linkedin {
-  background-color: RGBA(0, 115, 178, 1); }
-
-/*---------------------------------------- */
-/*-OTYS */
-/*---------------------------------------- */
-.candidat {
-  min-height: 90vh;
-  padding-top: 60px; }
-  .candidat .header img {
-    border-radius: 100%; }
-  .candidat .bisjab {
-    margin: 3em auto 5em;
-    font-size: 20px; }
-    .candidat .bisjab h1 {
-      font-size: 47px; }
-    .candidat .bisjab .jblOuter .jblItemContainer {
-      text-transform: capitalize; }
-      .candidat .bisjab .jblOuter .jblItemContainer .jblItemDescr {
-        text-transform: none; }
-  .candidat .choice-candidates button {
-    box-shadow: 1px 1px 2px black;
-    margin: 20px; }
-  .candidat .border-thin {
-    border: thin solid #DCDADA;
-    border-radius: 20px;
-    padding: 5%; }
-  .candidat .shCDhistoryDate {
-    font-weight: bold; }
-  .candidat .custCandReaction h2 {
-    text-align: center;
-    margin: 2em; }
-  .candidat .custCandReaction .formInput {
-    text-align: center;
-    margin: 2em; }
-    .candidat .custCandReaction .formInput input, .candidat .custCandReaction .formInput textarea {
-      border-radius: 10px;
-      min-width: 70%; }
-  .candidat .Adresse {
-    display: none; }
-  .candidat .qaPageDocUpload .formInput {
-    margin-top: 10px; }
-  .candidat .qaPageDocUpload .aplFileButton input {
-    background-color: #12467e;
-    border-radius: 50px;
-    color: white;
-    padding: 11px;
-    margin: 5px; }
-  .candidat .qaPageDocUpload .text {
-    padding: 25px 25px; }
-  .candidat .menuContainer, .candidat .aplListTbl, .candidat .menuLink, .candidat .buttonContainer, .candidat .aplTitle, .candidat .title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1em;
-    text-align: center; }
-  .candidat .customerMenu nav {
-    margin: 0;
-    display: inherit;
-    font-size: 20px;
-    background-color: #fff; }
-    .candidat .customerMenu nav .navbar-nav > li > a {
-      color: #12467e; }
-    .candidat .customerMenu nav .navbar-toggle {
-      border-color: #000; }
-      .candidat .customerMenu nav .navbar-toggle .icon-bar {
-        background-color: #000; }
-  .candidat .buttonContainer > input, .candidat .displayNone > input {
-    background-color: #12467e;
-    border-radius: 50px;
-    border: 0px none;
-    color: #fff;
-    padding: 1em; }
-  .candidat .jbMafOuter h2 {
-    padding: 1.1em;
-    float: left; }
-  .candidat .jbMafOuter .formInput {
-    float: right;
-    margin-right: 4em; }
-  .candidat .jbdOuter .addthis_button {
-    display: none; }
-  @media (max-width: 990px) {
-    .candidat form {
-      margin-right: 0%; }
-    .candidat .menuContainer, .candidat .aplListTbl, .candidat .text, .candidat .menuContainer, .candidat .menuLink, .candidat .buttonContainer, .candidat .itemContainer, .candidat .aplTitle, .candidat .title, .candidat .aplIntro {
-      display: inherit; } }
-  .candidat .formInput input, .candidat textarea {
-    border: thin solid #DCDADA; }
-  @media (min-width: 990px) {
-    .candidat .aplListTbl {
-      display: inline-block; }
-      .candidat .aplListTbl th {
-        text-align: center;
-        text-transform: uppercase;
-        padding: 1em; }
-      .candidat .aplListTbl td {
-        padding: 0.5em; }
-    .candidat form textarea {
-      min-width: 19em; }
-    .candidat .jbMafOuter .buttonContainer {
-      padding-top: 41vh;
-      padding-left: 6vh; } }
-  .candidat .jblOuter .category {
-    display: none; }
-  .candidat .bisjab .vacstable .formHeaderContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center; }
-  .candidat .listFunctionContainer td {
-    padding-top: 2em;
-    text-transform: uppercase; }
-  .candidat .custAddJobOuter label, .candidat .custAddJobOuter .formInput input, .candidat .custAddJobOuter textarea input, .candidat .custAddJobOuter .formInput textarea {
-    width: 30em;
-    height: 2em; }
-
-/*# sourceMappingURL=style.css.map */
+Backtrace:
+import.sass:176
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1189:in `expected'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1125:in `expected'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1120:in `tok!'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/static_parser.rb:276:in `pseudo'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/static_parser.rb:159:in `simple_selector_sequence'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/static_parser.rb:111:in `selector'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/static_parser.rb:86:in `selector_comma_sequence'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1103:in `expr!'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/static_parser.rb:20:in `parse_selector'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:427:in `visit_rule'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/stack.rb:79:in `block in with_base'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/stack.rb:115:in `with_frame'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/stack.rb:79:in `with_base'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:160:in `visit'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:433:in `block (2 levels) in visit_rule'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:433:in `map'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:433:in `block in visit_rule'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:431:in `visit_rule'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/stack.rb:79:in `block in with_base'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/stack.rb:115:in `with_frame'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/stack.rb:79:in `with_base'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:160:in `visit'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:52:in `map'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:169:in `block in visit_children'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:168:in `visit_children'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:188:in `visit_root'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:159:in `visit'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/root_node.rb:36:in `css_tree'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/engine.rb:381:in `_render_with_sourcemap'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/engine.rb:298:in `render_with_sourcemap'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:492:in `update_stylesheet'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `each'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:473:in `on_file_changed'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:331:in `block in watch'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/vendor/listen/lib/listen/listener.rb:252:in `call'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/vendor/listen/lib/listen/listener.rb:252:in `on_change'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/vendor/listen/lib/listen/adapter.rb:254:in `call'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/vendor/listen/lib/listen/adapter.rb:254:in `report_changes'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/vendor/listen/lib/listen/adapter.rb:323:in `poll_changed_directories'
+/Users/Bouli1/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/sass-3.4.22/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid CSS after \"margin-top:\": expected pseudoclass or pseudoelement, was \"2%\"\A         on line 176 of import.sass\A \A 171:   width: 100%\A 172:   &:focus\A 173:     outline-width: 0\A 174: \A 175: .ais-header\A 176:   margin-top:2%\A 177:   margin-bottom:2%\A 178: \A 179: #stats\A 180:   padding-top: 1.25em\A 181:   text-align: center"; }

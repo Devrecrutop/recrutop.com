@@ -275,9 +275,9 @@
                             {if $hiring_manager} {if $cand.note}<td><div title="{$cand.note}"><img src="http://bo01.otys.nl/adm/hta/images/notitie_icoon.gif"></div></td>
                             {else} &nbsp; {/if} {/if} {if $cand.cand_status || $cand.status1 || $cand.status2 || $cand.status3 || $staffing } {if $cand.cand_status}
                             {/if}
-                            {if $cand.status1}<td class="center" style="vertical-align: middle;">{$cand.status1}</td>{/if}
-                            {if $cand.status2}<td class="center" style="vertical-align: middle;">{$cand.status2}</td>{/if}
-                            {if $cand.status3}<td class="center" style="vertical-align: middle;">{$cand.status3}</td>{/if}
+                            <td class="center" style="vertical-align: middle;">{if $cand.status1}{$cand.status1}{/if}</td>
+                            <td class="center" style="vertical-align: middle;">{if $cand.status2}{$cand.status2}{/if}</td>
+                            <td class="center" style="vertical-align: middle;">{if $cand.status3}{$cand.status3}{/if}</td>
                             {if $staffing}<td class="center" style="vertical-align: middle;">{$cand.staffing_status}</td>{/if}
                             <!-- MBL -->
             </div>
