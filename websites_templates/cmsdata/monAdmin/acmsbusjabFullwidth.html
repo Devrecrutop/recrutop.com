@@ -73,13 +73,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="http://www.recrutop.com/">
-                    <img alt="Recrutop" src="http://www.recrutop.com/_images_upload/_tn_6b234b07fa61318c.png" class="img-fluid event">
+                    <img alt="Recrutop" src="http://www.recrutop.com/_images_upload/_tn_6b234b07fa61318c.png" class="img-fluid event hidden-xs">
                 </a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nos Agences <span class="caret"></span></a>
+                    <li class="dropdown" class="hidden-xs hidden-sm">
+                        <a href="#" class="dropdown-toggle hidden-sm" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nos Agences <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="http://artetinterim.fr/">Art &amp; Intérim</a></li>
                             <li><a href="http://batiment-second-oeuvre.recrutop.com/">Bâtiment Second Œuvre</a></li>
@@ -91,7 +91,7 @@
                             <li><a href="http://rambouillet.recrutop.com/">Rambouillet</a></li>
                             <li><a href="http://tertiaire.recrutop.com/">Tertiaire &amp; Informatique </a></li>
                         </ul>
-                        <li><a href="http://www.recrutop.com">Chercher un job </a></li>
+                        <li><a href="http://www.recrutop.com" class="hidden-sm hidden-md">Chercher un job </a></li>
                     </li>
                     [ocdLoginHook]
                 </ul>
@@ -103,19 +103,18 @@
     <div class="row bg-white candidat">
         <div style="padding-top:5%;">
             <div class="col-xs-12">
-                <p style="font-size:20px;text-align:center;">Toutes nos offres d'emploi, par poste, lieu, et catégorie</p>
-                <div style="padding-top:5%;"><header>
-                    <div id="search-input" class="event col-lg-8 col-lg-offset-2 col-xs-12 col-md-8 col-md-offset-2" style="border: thin solid #DCDADA;border-radius: 20px;"></div>
-                </header></div>
+            <header>
+                    <div id="search-input" class="event col-lg-5 col-lg-offset-5 col-xs-12 col-md-5 col-md-offset-5 col-sm-5 col-sm-offset-5" style="border: thin solid #DCDADA;border-radius: 20px;"></div>
+                </header>
                 <main>
-                    <div id="left-column" class="col-lg-3 col-lg-offset-1" style="padding-top:5%;">
-                        <div id="brands" class="facet"></div>
-                        <div id="lieu" class="facet" style="padding-top:5%;"></div>
+                    <div id="left-column" class="col-lg-3 col-md-3 col-sm-3">
+                        <div id="brands" class="facet" style="text-transform:uppercase;border-top:thin solid gray;"></div>
+                        <div id="lieu" class="facet" style="text-transform:uppercase;padding-top:2%"></div>
   </div>
-                    <div id="central-column" class="col-lg-7" style="padding-top:5%;">
+                    <div id="central-column" class="col-lg-9 col-md-9 col-sm-9">
                         <div id="stats"></div>
                         <div id="hits"></div>
-                        <div id="pagination" class="event"></div>
+                        <div id="pagination" class="event" style="text-transform:uppercase;"></div>
                     </div>
                 </main>
 
