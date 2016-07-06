@@ -9,7 +9,7 @@ var search = instantsearch({
   search.addWidget(
     instantsearch.widgets.searchBox({
       container: '#search-input',
-      placeholder: 'Exemple : Chargé de Clientèle Boulogne',
+      placeholder: 'Exemple : Chargé de Clientèle',
     })
   );
 
