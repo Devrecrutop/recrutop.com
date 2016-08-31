@@ -317,10 +317,7 @@ function InvitationFeedback(data){
   <tr>
   <!-- téléchargement du CV  -->
      <div class="{$record.name}">
-         <h2 class="center margin-m ">Télécharger le {$record.name} ⇒
-                 <button class="button btn btn-lg btn-primary uppercase white">
-                     {$record.value}
-                 </button>
+         <h2 class="center margin-m ">Télécharger le {$record.name} ⇒ {$record.value}
              </h2>
       </div>
    {if $smarty.foreach.personal.first}
