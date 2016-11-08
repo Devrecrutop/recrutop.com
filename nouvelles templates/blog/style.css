@@ -195,7 +195,7 @@ h1 {
 
 .presentation-blocks {
   height: 210px;
-  background-color: #045A9F;
+  background-color: #022B4C;
   padding: 2%;
   color: #fff;
   text-align: center;
@@ -280,6 +280,8 @@ h1 {
     margin: 5px; }
   .candidat .qaPageDocUpload .text {
     padding: 25px 25px; }
+  .candidat .menuLink a {
+    color: #022B4C; }
   .candidat .menuContainer, .candidat .aplListTbl, .candidat .menuLink, .candidat .buttonContainer, .candidat .aplTitle, .candidat .title {
     display: flex;
     justify-content: center;
