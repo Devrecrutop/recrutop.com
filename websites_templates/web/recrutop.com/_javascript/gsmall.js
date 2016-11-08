@@ -10,4 +10,3 @@ google_color_link = "c40202";
 google_color_url = "c40202";
 google_color_text = "333333";
 google_font_face = "Arial";
-google_font_size = "small";
