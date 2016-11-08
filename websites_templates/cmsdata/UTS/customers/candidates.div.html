@@ -305,6 +305,14 @@
                     <span class="itemWord custCandStaffingStatus"><span>[t]Staffing[/t]:</span> {$cand.staffing_status}
                     </span>
                     {/if}
+                    <!-- MBL -->
+                    <div class="itemFooter hidden>
+                        <div class="itemFooterWord custCandItemFooterWord" title="[th]Send e-mail to[/th] {$cand.contactpersoon}"><a href="/index.php/page/sh_portal/bb/1/code/{$code}/command/mailform/id/{$cand.reactieid}/alt/1">[th]E-mail[/th] {$cand.contactpersoon}</a></div>
+                        {if $allow_passive_status_change}
+                        <div class="itemFooterWord custCandItemFooterWord" title="[th]Set to[/th] {if $cand.passive=='N'}[th]Passive[/th]{/if} {if $cand.passive=='Y'}[th]Active[/th]{/if}"><a href="/index.php/page/customers/bb/1/command/candjob_list/option/change_status/kid/{$kid}/vid/{$vid}/">[th]Set to[/th] {if $cand.passive=='N'}[th]Passive[/th]{/if} {if $cand.passive=='Y'} [th]Active[/th]{/if}</a></div>
+                        {/if}
+                    </div>
+                    <div class="cleaner cstIc"></div>
                 </div>
                 {/if}
             </div>

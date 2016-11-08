@@ -1,18 +1,21 @@
 {* this is a fragment template of the main question set *}
+
 <!-- UTS/questionsets/qsPage.html ORIGINAL.. -->
+
 <script src="/_javascript_global/json2.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 <!--
 // javascript support functions for questionsets here
-var vQsHandler = '{$handler|escape:javascript}';
-var vMicroCommand = '{$microCommand|escape:javascript}'; // the qs micro controller command, default is qsmicrocall
+var vQsHandler='{$handler|escape:javascript}';
+var vMicroCommand='{$microCommand|escape:javascript}'; // the qs micro controller command, default is qsmicrocall
 
-var qsessionuid = '{$sessionUID}';
-var qsid = '{$qsId}';
-var qspage = '{$pageno}';
+var qsessionuid='{$sessionUID}';
+var qsid='{$qsId}';
+var qspage='{$pageno}';
 
-var mc_combination_in_qs = '{$enable_mc_combination_in_qs}';
-var question_show_based_on_answers = '{$question_show_based_on_answers}';
+var mc_combination_in_qs='{$enable_mc_combination_in_qs}';
+var question_show_based_on_answers='{$question_show_based_on_answers}';
 var questions_json = '{$questions_json}';
 
 
@@ -22,31 +25,29 @@ var multiSelectStorage = new Array();
 // functions here
 
 //mesym
-function refreshStatesProvinces() {
-    var country = $(".qsCountrySelectView").val();
-
-    ajaxUrl = '/index.php/page/applicants_mc_comb/bb/1/command/get_states_province/';
-
-
+function refreshStatesProvinces(){
+   var country = $(".qsCountrySelectView").val();   
+   
+   ajaxUrl = '/index.php/page/applicants_mc_comb/bb/1/command/get_states_province/';   
+  
+   
     $.ajax({
-        type: 'POST',
+        type:'POST',
         url: ajaxUrl,
-        data: {
-            "mc_comb_command": "get_states_province",
-            "country": country
-        },
-        dataType: "json",
-        success: function(response) {
-            $(".qsStateProvinceSelectView").html("");
-
-            jQuery.each(response.data, function(index, item) {
-                $(".qsStateProvinceSelectView").append($("<option><\/option>").val(index).html(item));
-            });
-
-            $('.qsStateProvinceSelectView').css("display", "block");
-
-        }
-    });
+        data: { "mc_comb_command" : "get_states_province",
+                "country" : country                 
+              },        
+        dataType: "json",      
+        success: function(response) {                      
+              $(".qsStateProvinceSelectView").html("");
+              
+              jQuery.each(response.data, function(index, item) {
+                    $(".qsStateProvinceSelectView").append($("<option><\/option>").val(index).html(item));                                     
+                });
+                                
+              $('.qsStateProvinceSelectView').css("display", "block");
+                    
+    }});
 }
 
 
@@ -54,143 +55,147 @@ function refreshStatesProvinces() {
 function qsDeleteFile(qid, subkey) {
     if (!confirm('[th]Are you sure to delete this file?[/th]')) return;
     //alert('delete file '+qid);
-    var f = document.forms['qsForm'];
-    f.command.value = vMicroCommand;
-    f.qsmicrocommand.value = 'deletefile';
-    f.param1.value = qid;
-    f.param2.value = subkey;
+    var f=document.forms['qsForm'];
+    f.command.value=vMicroCommand;
+    f.qsmicrocommand.value='deletefile';
+    f.param1.value=qid;
+    f.param2.value=subkey;
     f.submit();
 }
 
 function qsUploadFile(qid) {
-    var f = document.forms['qsForm'];
-    f.command.value = vMicroCommand;
-    f.qsmicrocommand.value = 'uploadfile';
-    f.param1.value = qid;
+    var f=document.forms['qsForm'];
+    f.command.value=vMicroCommand;
+    f.qsmicrocommand.value='uploadfile';
+    f.param1.value=qid;
     f.submit();
 }
 
 function qsAddCVItem(qid, itemType) {
-    var f = document.forms['qsForm'];
-    f.command.value = vMicroCommand;
-    f.qsmicrocommand.value = 'addcvitem';
-    f.param1.value = qid;
-    f.param2.value = itemType;
+    var f=document.forms['qsForm'];
+    f.command.value=vMicroCommand;
+    f.qsmicrocommand.value='addcvitem';
+    f.param1.value=qid;
+    f.param2.value=itemType;
     f.submit();
 }
-
 function qsDeleteCVItem(qid, itemType, key) {
     if (!confirm('[th]Are you sure to delete this item?[/th]')) return;
 
-    var f = document.forms['qsForm'];
-    f.command.value = vMicroCommand;
-    f.qsmicrocommand.value = 'deletecvitem';
-    f.param1.value = qid;
-    f.param2.value = itemType;
-    f.param3.value = key;
+    var f=document.forms['qsForm'];
+    f.command.value=vMicroCommand;
+    f.qsmicrocommand.value='deletecvitem';
+    f.param1.value=qid;
+    f.param2.value=itemType;
+    f.param3.value=key;
     f.submit();
 }
 
 function qsDeleteWiqet(qid, key) {
     if (!confirm('[th]Are you sure to delete this Wiqet?[/th]')) return;
 
-    var f = document.forms['qsForm'];
-    f.command.value = vMicroCommand;
-    f.qsmicrocommand.value = 'deletewiqet';
-    f.param1.value = qid;
-    f.param2.value = key;
+    var f=document.forms['qsForm'];
+    f.command.value=vMicroCommand;
+    f.qsmicrocommand.value='deletewiqet';
+    f.param1.value=qid;
+    f.param2.value=key;
     f.submit();
 }
 
 function qsChangeFilterSelect(masterSelect, slaveSelectId, data, currentVal) {
-    var slaveSelect = document.getElementById(slaveSelectId);
+    var slaveSelect=document.getElementById(slaveSelectId);
     // kill all options inside
-    slaveSelect.options.length = 0;
+    slaveSelect.options.length=0;
     slaveSelect.options.add(new Option('---', 'NULL', false, false));
     var len, i, optcnt, j;
     // now, we need to search the category
-    var catid = masterSelect.value;
-    len = data.length; // number of categories
-    for (i = 0; i < len; i++) {
-        if (data[i][0] == catid) {
-            optcnt = data[i][2].length;
-            for (j = 0; j < optcnt; j++) {
-                slaveSelect.options.add(new Option(data[i][2][j][1], data[i][2][j][0], false, (data[i][2][j][0] == currentVal)));
+    var catid=masterSelect.value;
+    len=data.length; // number of categories
+    for(i=0;i<len;i++) {
+        if (data[i][0]==catid) {
+            optcnt=data[i][2].length;
+            for(j=0;j<optcnt;j++) {
+                slaveSelect.options.add(new Option(data[i][2][j][1], data[i][2][j][0], false, (data[i][2][j][0]==currentVal)));
             }
             break;
         }
     }
 }
 
-function processFieldValueChange(selectId) {
-    if (mc_combination_in_qs == "1") {
-        getQuestionsCombinations(selectId);
-    }
+function processFieldValueChange(selectId){
+        if (mc_combination_in_qs == "1" ) {
+            getQuestionsCombinations(selectId);
+        }
 }
 
 function qsLimitMultiSelect(selectId, maxValues) {
 
 
-    if (mc_combination_in_qs == "1") {
-        getQuestionsCombinations(selectId);
-    }
-
-    if (maxValues == '') maxValues = 0;
-    else maxValues = Number(maxValues);
-
-    if (maxValues != 0) {
-        sel = document.getElementById(selectId);
-        numValues = 0;
-
-        values = '';
-        for (x = 0; x < sel.length; x++) {
-            if (sel[x].selected) {
-                numValues++;
-                if (values != '') values = values + ',';
-                values = values + sel[x].value;
-            }
+        if (mc_combination_in_qs == "1" ) {
+            getQuestionsCombinations(selectId);
         }
 
-        if (numValues > maxValues) {
-            alert('[th]Maximum number of items you can select is [/th]' + maxValues);
-            loadMultiSelect(selectId);
-        } else {
-            saveMultiSelect(selectId, values);
-        }
-    }
+	if (maxValues == '') maxValues = 0;
+	else maxValues = Number(maxValues);
+
+	if (maxValues != 0) {
+		sel = document.getElementById(selectId);
+		numValues = 0;
+
+		values = '';
+		for (x = 0; x < sel.length; x++) {
+			if (sel[x].selected) {
+				numValues++;
+				if (values != '') values = values + ',';
+				values = values + sel[x].value;
+			}
+		}
+
+		if (numValues > maxValues) {
+			alert('[th]Maximum number of items you can select is [/th]' + maxValues);
+			loadMultiSelect(selectId);
+		}
+		else {
+			saveMultiSelect(selectId, values);
+		}
+	}
 
 }
 
-function getQuestionsCombinations(selectId) {
+function getQuestionsCombinations(selectId){
     ajaxUrl = '/index.php/page/applicants_mc_comb/bb/1/command/get_mc_comb/';
 
     $('input[name="mc_comb_command"]').val("get_mc_comb");
     $('input[name="mc_comb_current_field"]').val(selectId);
 
     $.ajax({
-        type: 'POST',
+        type:'POST',
         url: ajaxUrl,
-        data: $('form[name="qsForm"]').serialize(),
+        data:$('form[name="qsForm"]').serialize(),
         dataType: "json",
         success: function(response) {
             //alert(response);
             if (response.data) {
                 var n = response.data.length;
-            } else {
+            }
+            else {
                 var n = 0;
             }
 
-            if (n == 0) {
+            if (n==0){
                 processEmptyMcCombinations(response.criterias_on_page);
-            } else {
+            }
+            else {
                 if (response.status == "STATUSOK") {
                     processMcCombinations(response.data);
-                } else {}
+                }
+                else{
+                }
             }
 
         },
         error: function(response) {
-            //alert("error"+response.status);
+           //alert("error"+response.status);
         }
     });
 
@@ -198,82 +203,88 @@ function getQuestionsCombinations(selectId) {
 }
 
 
-function processEmptyMcCombinations(mcOnPage) {
-    jQuery.each(mcOnPage, function(i, val) {
+function processEmptyMcCombinations(mcOnPage){
+    jQuery.each(mcOnPage, function(i,val){
 
         if (val.q_type == "Multiselect") {
-            if (val.show_cat == "1") {
-                $(val.categories).each(function(cat, catval) {
+            if (val.show_cat == "1"){
+                $(val.categories).each(function(cat,catval){
 
-                    $("." + val.q_id + "_" + catval.id + "_select option").each(function() {
-                        $("." + val.q_id + "_" + catval.id + "_select").children('option[value="' + $(this).val() + '"]').show();
-                        $("." + val.q_id + "_" + catval.id + "_select").children('option[value="' + $(this).val() + '"]').attr('selected', false);
-                        $("." + val.q_id + "_" + catval.id + "_select").children('option[value="' + $(this).val() + '"]').removeAttr('disabled');
+                    $("."+val.q_id+"_"+catval.id+"_select option").each(function(){
+                        $("."+val.q_id+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').show();
+                        $("."+val.q_id+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').attr('selected',false);
+                        $("."+val.q_id+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').removeAttr('disabled');
                     });
                 });
 
-            } else {
+            }
+            else{
 
-                $("#" + val.q_id + " option").each(function(index, item) {
-                    $(item).remove();
-                });
+               $("#"+val.q_id+" option").each(function(index, item) {
+                $(item).remove();
+               });
 
 
-                jQuery.each(val.display_options._ALL, function(index, item) {
-                    $("#" + val.q_id).append($("<option><\/option>").val(index).html(item));
+               jQuery.each(val.display_options._ALL, function(index, item) {
+                    $("#"+val.q_id).append($("<option><\/option>").val(index).html(item));
                 });
 
             }
 
-        } else if (val.q_type == "Select") {
+        }
+        else if (val.q_type == "Select") {
 
-            $("#" + val.q_id + " option").each(function(index, item) {
+            $("#"+val.q_id+" option").each(function(index, item) {
                 $(item).remove();
             });
 
 
-            $("#" + val.q_id).append($("<option><\/option>").val("NULL").html("---"));
+            $("#"+val.q_id).append($("<option><\/option>").val("NULL").html("---"));
             jQuery.each(val.display_options._ALL, function(index, item) {
-                $("#" + val.q_id).append($("<option><\/option>").val(index).html(item));
+                $("#"+val.q_id).append($("<option><\/option>").val(index).html(item));
             });
 
-        } else if (val.q_type == "Radio" || val.q_type == "Checkbox") {
-            $("input[name=" + "'" + val.q_name + "[]']").each(function(j, selval) {
-                $("#" + val.q_name + "_" + $(this).val()).show();
-                $("#" + val.q_name + "_" + $(this).val()).attr('checked', false);
+        }
+        else if (val.q_type == "Radio" || val.q_type == "Checkbox"){
+            $("input[name="+"'"+val.q_name+"[]']").each(function(j,selval)
+            {
+                $("#"+val.q_name+"_"+$(this).val()).show();
+                $("#"+val.q_name+"_"+$(this).val()).attr('checked',false);
             });
-        } else {
+        }
+        else{
             // ops
         }
 
     });
 }
 
-function processMcCombinations(mcCombinations) {
-    jQuery.each(mcCombinations, function(i, val) {
+function processMcCombinations(mcCombinations){
+    jQuery.each(mcCombinations, function(i,val){
 
         if (val.SubType == "Multiselect") {
 
-            if (val.show_cat == "1") {
+            if (val.show_cat == "1"){
 
-                $(val.categories).each(function(cat, catval) {
-
-
-                    $("." + val.qid + "_" + catval.id + "_select option").each(function() {
-
-                        if (jQuery.inArray($(this).val(), val.options) == -1) {
+                $(val.categories).each(function(cat,catval){
 
 
+                    $("."+val.qid+"_"+catval.id+"_select option").each(function(){
+
+                        if (jQuery.inArray($(this).val(), val.options) == -1 ){
+
+                                       
                             if ($(this).val() > 0) {
-                                $("." + val.qid + "_" + catval.id + "_select").children('option[value="' + $(this).val() + '"]').attr('selected', false);
+                                $("."+val.qid+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').attr('selected', false);
 
-                                $("." + val.qid + "_" + catval.id + "_select").children('option[value="' + $(this).val() + '"]').attr('disabled', 'disabled');
-                                $("." + val.qid + "_" + catval.id + "_select").children('option[value="' + $(this).val() + '"]').hide();
+                                $("."+val.qid+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').attr('disabled','disabled');
+                                $("."+val.qid+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').hide();
                             }
-                        } else {
-
-                            $("." + val.qid + "_" + catval.id + "_select").children('option[value="' + $(this).val() + '"]').removeAttr('disabled');
-                            $("." + val.qid + "_" + catval.id + "_select").children('option[value="' + $(this).val() + '"]').show();
+                        }
+                        else{
+                          
+                            $("."+val.qid+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').removeAttr('disabled');
+                            $("."+val.qid+"_"+catval.id+"_select").children('option[value="'+$(this).val()+'"]').show();
                         }
 
                     });
@@ -282,77 +293,82 @@ function processMcCombinations(mcCombinations) {
                 });
 
 
-            } else {
-
-
-                $("#" + val.qid + " option").each(function(index, option) {
-                    $(option).remove();
-                });
-
-
-                jQuery.each(val.display_options._ALL, function(index, item) {
-                    $("#" + val.qid).append($("<option><\/option>").val(index).html(item));
-                });
-
             }
+            else{
 
 
-        } else if (val.SubType == "Select") {
-
-            var selectedindex = 0;
-            $("#" + val.qid).find(":selected").each(function(index, option) {
-                if ($(this).val() != 'NULL') {
-                    selectedindex = $(this).val();
-                }
-            });
-            $("#" + val.qid + " option").each(function(index, option) {
+               $("#"+val.qid+" option").each(function(index, option) {
                 $(option).remove();
-            });
+               });
 
-            var temphtml = "<option value=\"NULL\">---<\/option>";
 
-            var temparray = Array();
-            jQuery.each(val.display_options._ALL, function(index, item) {
-                temparray.push({
-                    'id': index,
-                    'opt': item
+               jQuery.each(val.display_options._ALL, function(index, item) {
+                    $("#"+val.qid).append($("<option><\/option>").val(index).html(item));
                 });
-            });
-            bubbleSort(temparray);
-            for (var i = 0; i < temparray.length; i++) {
-                if (selectedindex == temparray[i]['id']) {
-                    temphtml += '<option value="' + temparray[i]['id'] + '" SELECTED>' + temparray[i]['opt'] + "<\/option>";
-                } else {
-                    temphtml += '<option value="' + temparray[i]['id'] + '">' + temparray[i]['opt'] + "<\/option>";
-                }
+
             }
-            $("#" + val.qid).html(temphtml);
 
 
-        } else if (val.SubType == "Radio" || val.SubType == "Checkbox") {
-            $("input[name=" + "'" + val.qid + "[]']").each(function(j, selval) {
-                if (jQuery.inArray($(this).val(), val.options) == -1) {
-                    $("#" + val.qid + "_" + $(this).val()).hide();
-                    $("#" + val.qid + "_" + $(this).val()).attr("checked", "");
-                } else {
-                    $("#" + val.qid + "_" + $(this).val()).show();
+        }
+        else if (val.SubType == "Select") {
+
+               var selectedindex = 0;
+                $("#"+val.qid).find(":selected").each(function(index, option){
+                    if($(this).val() != 'NULL'){
+                        selectedindex = $(this).val();
+                    }
+                });
+               $("#"+val.qid+" option").each(function(index, option) {
+                $(option).remove();
+               });
+
+                var temphtml = "<option value=\"NULL\">---<\/option>";
+                
+                var temparray = Array();
+                jQuery.each(val.display_options._ALL, function(index, item) {
+                    temparray.push({'id': index, 'opt': item});
+                });
+                bubbleSort(temparray);
+                for (var i = 0; i < temparray.length; i++) {
+                     if(selectedindex == temparray[i]['id']){
+                        temphtml += '<option value="'+temparray[i]['id']+'" SELECTED>'+temparray[i]['opt']+"<\/option>";
+                    }else {
+                        temphtml += '<option value="'+temparray[i]['id']+'">'+temparray[i]['opt']+"<\/option>";
+                    }
+                }
+               $("#"+val.qid).html(temphtml);
+
+
+        }
+        else if (val.SubType == "Radio" || val.SubType == "Checkbox"){
+           $("input[name="+"'"+val.qid+"[]']").each(function(j,selval)
+            {
+                if (jQuery.inArray($(this).val(), val.options) == -1 ){
+                    $("#"+val.qid+"_"+$(this).val()).hide();
+                    $("#"+val.qid+"_"+$(this).val()).attr("checked","");
+                }
+                else{
+                    $("#"+val.qid+"_"+$(this).val()).show();
 
                 }
 
             });
-            if ($("input[name=" + "'" + val.qid + "']")) {
-                $("input[name=" + "'" + val.qid + "']").each(function(j, selval) {
-                    if (jQuery.inArray($(this).val(), val.options) == -1) {
-                        $("#" + val.qid + "_" + $(this).val()).hide();
-                        $("#" + val.qid + "_" + $(this).val()).attr("checked", "");
-                    } else {
-                        $("#" + val.qid + "_" + $(this).val()).show();
+           if ( $("input[name="+"'"+val.qid+"']")){
+               $("input[name="+"'"+val.qid+"']").each(function(j,selval)
+                {
+                    if (jQuery.inArray($(this).val(), val.options) == -1 ){
+                        $("#"+val.qid+"_"+$(this).val()).hide();
+                        $("#"+val.qid+"_"+$(this).val()).attr("checked","");
+                    }
+                    else{
+                        $("#"+val.qid+"_"+$(this).val()).show();
                     }
 
                 });
-            }
+           }            
 
-        } else {
+        }
+        else{
             // ops
         }
 
@@ -360,15 +376,16 @@ function processMcCombinations(mcCombinations) {
     });
 }
 
-function bubbleSort(a) {
+function bubbleSort(a)
+{
     var swapped;
     do {
         swapped = false;
-        for (var i = 0; i < a.length - 1; i++) {
-            if (a[i]['opt'] > a[i + 1]['opt']) {
+        for (var i=0; i < a.length-1; i++) {
+            if (a[i]['opt'] > a[i+1]['opt']) {
                 var temp = a[i];
-                a[i] = a[i + 1];
-                a[i + 1] = temp;
+                a[i] = a[i+1];
+                a[i+1] = temp;
                 swapped = true;
             }
         }
@@ -376,391 +393,440 @@ function bubbleSort(a) {
 }
 
 function saveMultiSelect(selectId, values) {
-    multiSelectStorage[selectId] = values;
+	multiSelectStorage[selectId] = values;
 }
 
 function loadMultiSelect(selectId) {
-    select = document.getElementById(selectId);
-    saved = multiSelectStorage[selectId].split(',');
+	select = document.getElementById(selectId);
+	saved = multiSelectStorage[selectId].split(',');
 
-    for (x = 0; x < select.length; x++) {
-        if (in_array(select[x].value, saved)) select[x].selected = 1;
-        else select[x].selected = 0;
-    }
+	for (x = 0; x < select.length; x++) {
+		if (in_array(select[x].value, saved)) select[x].selected = 1;
+		else select[x].selected = 0;
+	}
 }
 
-function in_array(what, where) {
-    var a = false;
-    for (var i = 0; i < where.length; i++) {
-        if (what == where[i]) {
-            a = true;
-            break;
-        }
-    }
-    return a;
+function in_array(what, where){
+	var a=false;
+	for(var i=0;i<where.length;i++){
+		if(what == where[i]){
+			a=true;
+			break;
+		}
+	}
+	return a;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 var xmlHttp = null;
 
-function GetXmlHttpObject() {
-    var xmlHttp = null;
+function GetXmlHttpObject()
+{
+	var xmlHttp = null;
 
-    try {
-        xmlHttp = new XMLHttpRequest();
-    } catch (e) {
-        // IE
-        try {
-            xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (e) {
-            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-    }
-    return xmlHttp;
+	try
+	{
+	  xmlHttp = new XMLHttpRequest();
+	}
+	catch (e)
+	{
+	  // IE
+	  try
+	  {
+	    xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+	  }
+	  catch (e)
+	  {
+	    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	}
+	return xmlHttp;
 }
 
-function clearCmpOptions(intLevel, intMaxLevel, intKey, prefix) {
-    var slaveSelect = null;
-    var cmpSelect = null;
+function clearCmpOptions(intLevel, intMaxLevel, intKey, prefix)
+{
+ 	var slaveSelect = null;
+ 	var cmpSelect = null;
 
-    // remove options from all slave subcategory selects
-    for (lv = intLevel + 1; lv <= intMaxLevel; lv++) {
-        slaveSelect = null;
-        try {
-            slaveSelect = document.getElementById(prefix + '_' + intKey + '_L' + lv + '_category_id')
-        } catch (e) {}
+	// remove options from all slave subcategory selects
+	for(lv = intLevel+1; lv <= intMaxLevel; lv++)
+	{
+		slaveSelect = null;
+		try
+		{
+			slaveSelect = document.getElementById(prefix+'_'+intKey+'_L'+lv+'_category_id')
+		}
+		catch(e)
+		{
+		}
 
-        if (slaveSelect) {
-            slaveSelect.options.length = 0;
-            slaveSelect.options.add(new Option('---', '0', false, false));
-        }
-    }
+		if(slaveSelect)
+		{
+			slaveSelect.options.length = 0;
+			slaveSelect.options.add(new Option('---', '0', false, false));
+		}
+	}
 
-    // remove options from competence select
-    try {
-        cmpSelect = document.getElementById(prefix + '_' + intKey + '_competence_id');
-    } catch (e) {}
+	// remove options from competence select
+	try
+	{
+		cmpSelect = document.getElementById(prefix+'_'+intKey+'_competence_id');
+	}
+	catch(e)
+	{
+	}
 
-    if (cmpSelect) {
-        cmpSelect.options.length = 0;
-        cmpSelect.options.add(new Option('---', '0', false, false));
-    }
+	if(cmpSelect)
+	{
+		cmpSelect.options.length = 0;
+		cmpSelect.options.add(new Option('---', '0', false, false));
+	}
 }
 
-function qsSetCmpSelect(level, maxLevel, prefix, key, value) {
+function qsSetCmpSelect(level, maxLevel, prefix, key, value)
+{
 
-    var intLevel = parseInt(level, 10);
-    var intMaxLevel = parseInt(maxLevel, 10);
-    var intKey = parseInt(key, 10);
-    var intValue = parseInt(value, 10);
+	var intLevel = parseInt(level, 10);
+	var intMaxLevel = parseInt(maxLevel, 10);
+	var intKey = parseInt(key, 10);
+	var intValue = parseInt(value, 10);
 
-    var searchType = 'tree';
-    var ajaxUrl = '';
-    var parsed = null;
-    var currentSelect = null;
+ 	var searchType = 'tree';
+	var ajaxUrl = '';
+	var parsed = null;
+	var currentSelect = null;
 
-    // test
-    //    var id = prefix+'_'+intKey+'_L'+intLevel+'_category_id';
-    //    alert("level: "+intLevel+"\nmaxLevel: "+intMaxLevel+"\nkey: "+intKey+"\nvalue: "+intValue+"\nprefix: "+prefix+"\nid: "+id+"\nqsessionuid: "+qsessionuid);
+ 	// test
+//  	var id = prefix+'_'+intKey+'_L'+intLevel+'_category_id';
+//  	alert("level: "+intLevel+"\nmaxLevel: "+intMaxLevel+"\nkey: "+intKey+"\nvalue: "+intValue+"\nprefix: "+prefix+"\nid: "+id+"\nqsessionuid: "+qsessionuid);
 
-    if (intLevel == NaN || intMaxLevel == NaN || intKey == NaN || intValue == NaN || prefix == '') {
-        // throw exception or some kind of error here
-        return false;
-    }
+ 	if(intLevel == NaN || intMaxLevel == NaN || intKey == NaN || intValue == NaN || prefix == '')
+	{
+		// throw exception or some kind of error here
+		return false;
+	}
 
-
-    if (intValue == 0) {
+    
+ 	if(intValue == 0)
+ 	{
         console.log("intValue\t" + intValue);
-        clearCmpOptions(intLevel, intMaxLevel, intKey, prefix);
-        return false;
-    }
+ 		clearCmpOptions(intLevel, intMaxLevel, intKey, prefix);
+ 		return false;
+	}
 
-    // search for tree or competence
-    if (intLevel == intMaxLevel) {
-        searchType = 'cmp';
-    }
+	// search for tree or competence
+	if(intLevel == intMaxLevel)
+	{
+		searchType = 'cmp';
+	}
 
-    try {
-        xmlHttp = GetXmlHttpObject();
-    } catch (e) {}
+	try
+	{
+		xmlHttp = GetXmlHttpObject();
+	}
+	catch(e)
+	{
+	}
 
-    if (xmlHttp != null) {
+	if(xmlHttp != null)
+	{
         //console.log("qsessionuid\t" + qsessionuid);
-        if (qsessionuid == '') {
-            // myProfile
-            ajaxUrl = '/index.php/page/applicants/bb/1/command/qsmicrocallmp/qsmicrocommand/ajaxmichal/';
-            ajaxUrl = ajaxUrl + 'qsid/' + qsid + '/';
-            ajaxUrl = ajaxUrl + 'qspage/' + qspage + '/';
-        } else {
-            // questioset
-            ajaxUrl = '/index.php/page/applicants/bb/1/command/qsmicrocall/qsmicrocommand/ajaxmichal/';
-            ajaxUrl = ajaxUrl + 'qsessionuid/' + qsessionuid + '/';
-        }
+		if(qsessionuid == '')
+		{
+			// myProfile
+			ajaxUrl = '/index.php/page/applicants/bb/1/command/qsmicrocallmp/qsmicrocommand/ajaxmichal/';
+			ajaxUrl = ajaxUrl+'qsid/'+qsid+'/';
+			ajaxUrl = ajaxUrl+'qspage/'+qspage+'/';
+		}
+		else
+		{
+			// questioset
+			ajaxUrl = '/index.php/page/applicants/bb/1/command/qsmicrocall/qsmicrocommand/ajaxmichal/';
+			ajaxUrl = ajaxUrl+'qsessionuid/'+qsessionuid+'/';
+		}
 
-        ajaxUrl = ajaxUrl + 'type/' + searchType + '/';
-        ajaxUrl = ajaxUrl + 'id/' + intValue + '/';
-        ajaxUrl = ajaxUrl + 'rnd/' + Math.random() + '/'; // prevent caching
+		ajaxUrl = ajaxUrl+'type/'+searchType+'/';
+		ajaxUrl = ajaxUrl+'id/'+intValue+'/';
+		ajaxUrl = ajaxUrl+'rnd/'+Math.random()+'/'; // prevent caching
 
-        //alert(ajaxUrl);
+		//alert(ajaxUrl);
 
-        xmlHttp.onreadystatechange = function() {
+		xmlHttp.onreadystatechange = function()
+		{
 
-            if (xmlHttp.readyState == 1) {
-                clearCmpOptions(intLevel, intMaxLevel, intKey, prefix);
-            }
+			if (xmlHttp.readyState == 1)
+			{
+				clearCmpOptions(intLevel, intMaxLevel, intKey, prefix);
+			}
 
-            if (xmlHttp.readyState == 4) {
-                //alert(xmlHttp.responseText);
-                try {
-                    parsed = JSON.parse(xmlHttp.responseText);
-                    //alert(parsed.status);
+			if (xmlHttp.readyState == 4)
+			{
+				//alert(xmlHttp.responseText);
+				try
+				{
+					parsed = JSON.parse(xmlHttp.responseText);
+					//alert(parsed.status);
 
-                    currentSelect = null;
-                    if (searchType == 'tree') {
-                        var lv = intLevel + 1;
-                        currentSelect = document.getElementById(prefix + '_' + intKey + '_L' + lv + '_category_id');
-                        console.log("Tree:currentSelect \t" + prefix + '_' + intKey + '_L' + lv + '_category_id');
-                    }
+					currentSelect = null;
+					if(searchType == 'tree')
+			  	{
+			  		var lv = intLevel+1;
+			  		currentSelect = document.getElementById(prefix+'_'+intKey+'_L'+lv+'_category_id');
+                    console.log("Tree:currentSelect \t" + prefix+'_'+intKey+'_L'+lv+'_category_id' );
+			  	}
 
-                    if (searchType == 'cmp') {
-                        currentSelect = document.getElementById(prefix + '_' + intKey + '_competence_id');
-                        console.log("cmd:currentSelect\t" + prefix + '_' + intKey + '_competence_id');
-                    }
+			  	if(searchType == 'cmp')
+			  	{
+			  		currentSelect = document.getElementById(prefix+'_'+intKey+'_competence_id');
+                    console.log("cmd:currentSelect\t" + prefix+'_'+intKey+'_competence_id');
+			  	}
 
-                    if (currentSelect) {
-                        console.log(currentSelect);
-                        for (i in parsed.data) {
+					if(currentSelect)
+				  {
+                    console.log(currentSelect);
+						for (i in parsed.data)
+					  {
+                        
+					  	currentSelect.options.add(new Option(parsed.data[i], i, false, false));
+                        console.log("currentSelection add option \t" + parsed.data[i]);
+					  	//alert(i+', '+parsed.data[i]);
+					  }
+				  }
 
-                            currentSelect.options.add(new Option(parsed.data[i], i, false, false));
-                            console.log("currentSelection add option \t" + parsed.data[i]);
-                            //alert(i+', '+parsed.data[i]);
-                        }
-                    }
+				}
+				catch(e)
+				{
+					alert('[th]Invalid server response[/th]\n'+xmlHttp.responseText);
+        	return false;
+				}
+			}
+		}
 
-                } catch (e) {
-                    alert('[th]Invalid server response[/th]\n' + xmlHttp.responseText);
-                    return false;
-                }
-            }
-        }
-
-        xmlHttp.open('GET', ajaxUrl, true);
-        xmlHttp.send(null);
-    } else {
-        alert('[th]AJAX ERROR[/th]');
-    }
+		xmlHttp.open('GET', ajaxUrl, true);
+		xmlHttp.send(null);
+	}
+	else
+	{
+		alert('[th]AJAX ERROR[/th]');
+	}
 
 }
 
 function qsMultiSelectListValidateItem(questionId, maxValues, selectedValue) {
 
-    var validated = true;
+	var validated = true;
 
-    if (selectedValue != '0' && maxValues != '') {
-        maxValues = Number(maxValues);
-        if (maxValues != 0) {
-            var numValues = $('#' + questionId + '_selectedContainer li').length;
-            if (numValues > maxValues) {
-                alert('[th]Maximum number of items you can select is [/th]' + maxValues);
-                validated = false;
-            }
-        }
-    }
+	if (selectedValue != '0' && maxValues != '') {
+		maxValues = Number(maxValues);
+		if (maxValues != 0) {
+			var numValues = $('#' + questionId + '_selectedContainer li').length;
+			if (numValues > maxValues) {
+				alert('[th]Maximum number of items you can select is [/th]' + maxValues);
+				validated = false;
+			}
+		}
+	}
 
-    if (selectedValue == '0' || validated == false) {
-        // remove last insterted element
-        $('#' + questionId + '_selectedContainer li:last').click();
-    }
+	if (selectedValue == '0' || validated == false) {
+		// remove last insterted element
+		$('#' + questionId + '_selectedContainer li:last').click();
+	}
 }
 
 function qsMultiSelectListCategoryShow(questionId, categoryId) {
-    console.log('catshow');
-    //processFieldValueChange(questionId);
+console.log('catshow');
+//processFieldValueChange(questionId);
 
-    if ($('select').parent().parent().is('.ui-select')) {
-        $('.' + questionId + '_select').parent().parent().css('display', 'none');
-        $('.' + questionId + '_' + categoryId + '_select:last').parent().parent().css('display', 'inline');
-    } else {
-        console.log($('.' + questionId + '_' + categoryId + '_select:last'));
-        $('.' + questionId + '_select').css('display', 'none');
-        $('.' + questionId + '_' + categoryId + '_select:last').css('display', 'inline-block');
-        $('.' + questionId + '_' + categoryId + '_select:last').parent().css('display', 'inline-block');
-    }
+if(  $('select').parent().parent().is('.ui-select') ){
+	$('.' + questionId + '_select').parent().parent().css('display', 'none');
+	$('.' + questionId + '_' + categoryId + '_select:last').parent().parent().css('display', 'inline');
+}
+else{
+	console.log($('.' + questionId + '_' + categoryId + '_select:last'));
+	$('.' + questionId + '_select').css('display', 'none');
+	$('.' + questionId + '_' + categoryId + '_select:last').css('display', 'inline-block');
+	$('.' + questionId + '_' + categoryId + '_select:last').parent().css('display', 'inline-block');
+}
 }
 $(document).bind('pageinit');
-$('body').live('pageinit', function() {
-    if ($('select').parent().parent().is('.ui-select')) {
-        $('select').css('display', 'inline');
-        $('.qMSCvH').each(function(i, that) {
-            $(that).find('.ui-select:not(:first)').css('display', 'none');
-        });
-        $('#QEID_2489333_categories').parent().parent().css('display', 'inline');
-    }
+$( 'body' ).live( 'pageinit',function(){
+if( $('select').parent().parent().is('.ui-select') ){
+	$('select').css('display', 'inline');
+$('.qMSCvH').each(function(i,that){
+$(that).find('.ui-select:not(:first)').css('display', 'none');
+});
+$('#QEID_2489333_categories').parent().parent().css('display', 'inline');
+}
 });
 
 
-$(document).ready(function() {
-    if (question_show_based_on_answers == "1") {
+$(document).ready(function(){
+if (question_show_based_on_answers == "1") {
+  
+  $.each( jQuery.parseJSON(questions_json), function( dkey, dvalue ) {
 
-        $.each(jQuery.parseJSON(questions_json), function(dkey, dvalue) {
-
-            var reqCount = dvalue.requirements_cnt;
-
-            $(dvalue.requirements_to_show).each(function(index, req) {
-                var questionElId = "Q_" + req.related_question;
-                if ($("[name=" + questionElId + "]").length == 0) {
-                    // BKo: question was answered in the previous step, since it is not displayed anymore, skip dependency check
-                    reqCount--;
-                }
-            });
-
-            if (dvalue.killerCheck == "1" && reqCount > 0) {
-
-                divname = "div#KQDIV_" + dvalue.id;
-
-                $(divname).hide();
-                $('.explain_Q_' + dvalue.id).hide();
-                $('.error_Q_' + dvalue.id).hide();
-            } else {
-                divname = "div#KQDIV_" + dvalue.id;
-                $(divname).show();
-                $('.explain_Q_' + dvalue.id).show();
-                $('.error_Q_' + dvalue.id).show();
-            }
-        });
-
-
-        // load fields values and background check
-        // BKo: also do this on page 1, e.g. if back button in browser was pressed
-        //if (qspage !="1"){
-        killerQHandlerFull();
-        //}
-
+    var reqCount = dvalue.requirements_cnt;
+  
+    $(dvalue.requirements_to_show).each(function(index, req) {
+        var questionElId = "Q_" + req.related_question;
+        if ($("[name=" + questionElId + "]").length == 0) {
+            // BKo: question was answered in the previous step, since it is not displayed anymore, skip dependency check
+            reqCount--;
+        }
+    });
+    
+    if (dvalue.killerCheck == "1" && reqCount > 0) {
+      
+      divname = "div#KQDIV_"+dvalue.id;
+      
+      $(divname).hide();
+      $('.explain_Q_' + dvalue.id).hide();
+      $('.error_Q_' + dvalue.id).hide();
     }
+    else{
+        divname = "div#KQDIV_"+dvalue.id;
+      $(divname).show();
+      $('.explain_Q_' + dvalue.id).show();
+      $('.error_Q_' + dvalue.id).show();
+    }
+  });
+  
+  
+  // load fields values and background check 
+  // BKo: also do this on page 1, e.g. if back button in browser was pressed
+  //if (qspage !="1"){
+    killerQHandlerFull();
+  //}
+  
+}
 });
 
-jQuery.fn.addHidden = function(name, value) {
-    return this.each(function() {
+jQuery.fn.addHidden = function (name, value) {
+    return this.each(function () {
         var input = $("<input>").attr("type", "hidden").attr("name", name).val(value);
         $(this).append($(input));
     });
 };
 
-function killerQHandlerFull() {
-
-
-    kqsAjaxUrl = '/index.php/page/applicants_killerquestion_filter/bb/1/command/getKillerQuestionsToShowOrHide/';
-    var kq_qsid = qsid;
-
-    jQuery(document).ready(function($) {
-
-
-        $('form[name="qsForm"]').addHidden('killqsid', kq_qsid);
-        $('form[name="qsForm"]').addHidden('commandopt', "getKillerQuestionsToShowOrHide");
-        $('form[name="qsForm"]').addHidden('commandsubopt', "full");
-        $('input[name="microcommand"]').remove();
-
-        $.ajax({
-            type: 'POST',
-            url: kqsAjaxUrl,
-            data: $('form[name="qsForm"]').serialize(),
-            dataType: "json",
-            success: function(response) {
-
-                $(response.questions_to_hide).each(function(qhkey, qhval) {
-                    divname = "div#KQDIV_" + qhval;
-                    $(divname).hide();
-                    $('.explain_Q_' + qhval).hide();
-                    $('.error_Q_' + qhval).hide();
-                    $('#QEID_' + qhval).val('');
-                });
-                $(response.questions_to_show).each(function(qskey, qsval) {
-                    divname = "div#KQDIV_" + qsval;
-                    $(divname).show();
-                    $('.explain_Q_' + qsval).show();
-                    $('.error_Q_' + qsval).show();
-                });
-
-            }
-        });
-
-        $('input[name="killqsid"]').remove();
-        $('input[name="commandopt"]').remove();
-        $('input[name="commandsubopt"]').remove();
-        $('form[name="qsForm"]').addHidden('microcommand', "save");
+function killerQHandlerFull(){
+   
+   
+   kqsAjaxUrl = '/index.php/page/applicants_killerquestion_filter/bb/1/command/getKillerQuestionsToShowOrHide/';   
+   var kq_qsid = qsid;
+   
+   jQuery(document).ready(function($){
+   
+  
+   $('form[name="qsForm"]').addHidden('killqsid', kq_qsid);   
+   $('form[name="qsForm"]').addHidden('commandopt', "getKillerQuestionsToShowOrHide");
+   $('form[name="qsForm"]').addHidden('commandsubopt', "full");
+   $('input[name="microcommand"]').remove();
+                    
+   $.ajax({
+        type:'POST',
+        url: kqsAjaxUrl,
+        data: $('form[name="qsForm"]').serialize() ,        
+        dataType: "json",      
+        success: function(response) {
+              
+              $(response.questions_to_hide).each(function(qhkey,qhval){
+                      divname = "div#KQDIV_"+qhval;
+                      $(divname).hide();
+                      $('.explain_Q_' + qhval).hide();
+                      $('.error_Q_' + qhval).hide();
+                      $('#QEID_'+qhval).val('');
+              });
+              $(response.questions_to_show).each(function(qskey,qsval){
+                      divname = "div#KQDIV_"+qsval;
+                      $(divname).show();
+                      $('.explain_Q_' + qsval).show();
+                      $('.error_Q_' + qsval).show();
+              });             
+                           
+        }
     });
-
-
+    
+   $('input[name="killqsid"]').remove();
+   $('input[name="commandopt"]').remove();
+   $('input[name="commandsubopt"]').remove();
+   $('form[name="qsForm"]').addHidden('microcommand', "save");
+   });
+   
+   
 }
 
 
-function killerQHandler(kq_id, kans_id, fieldtype) {
-
-    kqsAjaxUrl = '/index.php/page/applicants_killerquestion_filter/bb/1/command/getKillerQuestionsToShowOrHide/';
-    var kq_qsid = qsid;
-
-    jQuery(document).ready(function($) {
-        if (fieldtype == "select") {
-            kans_id = $("#QEID_" + kq_id).val();
+function killerQHandler(kq_id, kans_id, fieldtype){
+   
+   kqsAjaxUrl = '/index.php/page/applicants_killerquestion_filter/bb/1/command/getKillerQuestionsToShowOrHide/';   
+   var kq_qsid = qsid;
+   
+   jQuery(document).ready(function($){
+   if (fieldtype == "select") {
+    kans_id = $("#QEID_"+kq_id).val();
+   }
+   
+   $('form[name="qsForm"]').addHidden('related_question', kq_id);
+   $('form[name="qsForm"]').addHidden('related_answer', kans_id);   
+   $('form[name="qsForm"]').addHidden('killqsid', kq_qsid);   
+   $('form[name="qsForm"]').addHidden('fieldtype', fieldtype);   
+   $('form[name="qsForm"]').addHidden('commandopt', "getKillerQuestionsToShowOrHide");
+   $('form[name="qsForm"]').addHidden('commandsubopt', "target");
+   $('input[name="microcommand"]').remove();
+                    
+   $.ajax({
+        type:'POST',
+        url: kqsAjaxUrl,
+        data: $('form[name="qsForm"]').serialize() ,        
+        dataType: "json",      
+        success: function(response) {
+              
+              $(response.questions_to_hide).each(function(qhkey,qhval){
+                      divname = "div#KQDIV_"+qhval;
+                      $(divname).hide();
+                      $('.explain_Q_' + qhval).hide();
+                      $('.error_Q_' + qhval).hide();
+                      $('#QEID_'+qhval).val('');
+              });
+              $(response.questions_to_show).each(function(qskey,qsval){
+                      divname = "div#KQDIV_"+qsval;
+                      $(divname).show();
+                      $('.explain_Q_' + qsval).show();
+                      $('.error_Q_' + qsval).show();
+              });             
+                           
         }
-
-        $('form[name="qsForm"]').addHidden('related_question', kq_id);
-        $('form[name="qsForm"]').addHidden('related_answer', kans_id);
-        $('form[name="qsForm"]').addHidden('killqsid', kq_qsid);
-        $('form[name="qsForm"]').addHidden('fieldtype', fieldtype);
-        $('form[name="qsForm"]').addHidden('commandopt', "getKillerQuestionsToShowOrHide");
-        $('form[name="qsForm"]').addHidden('commandsubopt', "target");
-        $('input[name="microcommand"]').remove();
-
-        $.ajax({
-            type: 'POST',
-            url: kqsAjaxUrl,
-            data: $('form[name="qsForm"]').serialize(),
-            dataType: "json",
-            success: function(response) {
-
-                $(response.questions_to_hide).each(function(qhkey, qhval) {
-                    divname = "div#KQDIV_" + qhval;
-                    $(divname).hide();
-                    $('.explain_Q_' + qhval).hide();
-                    $('.error_Q_' + qhval).hide();
-                    $('#QEID_' + qhval).val('');
-                });
-                $(response.questions_to_show).each(function(qskey, qsval) {
-                    divname = "div#KQDIV_" + qsval;
-                    $(divname).show();
-                    $('.explain_Q_' + qsval).show();
-                    $('.error_Q_' + qsval).show();
-                });
-
-            }
-        });
-
-        $('input[name="related_question"]').remove();
-        $('input[name="related_answer"]').remove();
-        $('input[name="killqsid"]').remove();
-        $('input[name="fieldtype"]').remove();
-        $('input[name="commandsubopt"]').remove();
-        $('input[name="commandopt"]').remove();
-        $('form[name="qsForm"]').addHidden('microcommand', "save");
     });
+    
+   $('input[name="related_question"]').remove();
+   $('input[name="related_answer"]').remove();
+   $('input[name="killqsid"]').remove();
+   $('input[name="fieldtype"]').remove();
+   $('input[name="commandsubopt"]').remove();
+   $('input[name="commandopt"]').remove();
+   $('form[name="qsForm"]').addHidden('microcommand', "save");
+   });
 }
 
 //{/literal}
 //-->
 </script>
+
 <!-- vacancy_title: {$vacancy_title|escape} -->
-{* removed useless comment tags by Maikel *} {if 1==0}
+
+{* removed useless comment tags by Maikel *}
+{if 1==0}
 <select onChange="document.location = '/index.php/page/sh_portal/bb/1/command/apply/vid/{$candidate_list_vid}/kid/'+this.options[this.selectedIndex].value;">
-    <option value="">---</option>
-    {foreach from=$candidates key=candidate_id item=candidate_name}
-    <option value="{$candidate_id}">{$candidate_name}</option>
-    {/foreach}
+<option value="">---</option>
+{foreach from=$candidates key=candidate_id item=candidate_name}
+<option value="{$candidate_id}">{$candidate_name}</option>
+{/foreach}
 </select>
 {/if}
+
 <form name="qsForm" enctype="multipart/form-data" action="{$handler}" method="post" class="qsPageOuter qaPageDocUpload">
-    <input type="hidden" name="MAX_FILE_SIZE" value="5000000">
+    <input type="hidden" name="MAX_FILE_SIZE" value="5000000" >
     <input type="hidden" name="qsform" value="1">
     <input type="hidden" name="qspage" value="{$pageno}">
     <input type="hidden" name="qsessionuid" value="{$sessionUID}">
@@ -772,29 +838,42 @@ function killerQHandler(kq_id, kans_id, fieldtype) {
     <input type="hidden" name="param3" value="">
     <input type="hidden" name="hide_links" value="{$hide_links}">
     <input type="hidden" name="qserrorschecked" value="{if $errorsChecked}1{else}0{/if}">
-    <h2 class="subHeader">{$title}</h2>
-    <if $introText>
-        <div class="text">{$introText}</div>
-    </if>
-    <if $errorsChecked && $numErrors>
-        <div class="error">[th]Whoops, there are errors or missing data in the form submitted. Please correct.[/th]</div>
-    </if>
-    <div class="form qsPage{$pageno}">
-        <foreach from=$questions item=q>
-            <input type="hidden" name="qPresent{$q.id}" value="1"> {$q._html} {*
-            <!-- {$q._html|escape:'htmlall'} -->*}
-        </foreach>
-    </div>
-    <div class="buttonContainer">
-        {if $cand_profile_req_approval}
-        <input type="submit" value="[tb]Submit and ask for approval[/tb]" class="button" name="sSubmit"> {else}
-        <input type="submit" value="[tb]Submit[/tb]" class="button" name="sSubmit"> {/if}
-        <if $isLastPage && $enableAutoMatching>
-            <input type="submit" value="[tb]Submit and match[/tb]" class="button" name="sSubmitMatch">
-        </if>
-        {if $enable_mc_combination_in_qs}
-        <input type="hidden" name="mc_comb_command" value="">
-        <input type="hidden" name="mc_comb_current_field" value=""> {/if}
-    </div>
+<h2 class="subHeader">{$title}</h2>
+<if $introText>
+<div class="text">{$introText}</div>
+</if>
+<if $errorsChecked && $numErrors>
+<div class="error">[th]Whoops, there are errors or missing data in the form submitted. Please correct.[/th]</div>
+</if>
+<div class="form qsPage{$pageno}">
+	<foreach from=$questions item=q>
+
+	<input type="hidden" name="qPresent{$q.id}" value="1">
+    {$q._html}
+	{*<!-- {$q._html|escape:'htmlall'} -->*}
+
+	</foreach>
+</div>
+<div class="buttonContainer">
+  {if $cand_profile_req_approval}
+    <input type="submit" value="[tb]Submit and ask for approval[/tb]" class="button" name="sSubmit">
+  {else}
+	<input type="submit" value="[tb]Submit[/tb]" class="button" name="sSubmit">
+  {/if}
+	<if $isLastPage && $enableAutoMatching>
+		<input type="submit" value="[tb]Submit and match[/tb]" class="button" name="sSubmitMatch">
+	</if>
+
+
+
+	{if $enable_mc_combination_in_qs}
+		<input type="hidden" name="mc_comb_command" value="">
+		<input type="hidden" name="mc_comb_current_field" value="">
+	{/if}
+	
+</div>
+
 </form>
-{*[th]By filling this form you agree that our company can work with your personal data[/th]*} {*[th]You need to agree with processing your personal data[/th]*}
+
+{*[th]By filling this form you agree that our company can work with your personal data[/th]*}
+{*[th]You need to agree with processing your personal data[/th]*}

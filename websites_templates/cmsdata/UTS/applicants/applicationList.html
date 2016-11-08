@@ -1,57 +1,54 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html lang="en">
-<head>
-    <title><!-- Insert your title here --></title>
-</head>
-<body>
-<!--uts:begin inner-->
-<div class="outer aplOuter aplListOuter">
-	<!-- /UTS/applicants/applicationList.html -->
-	<h1 class="title aplTitle aplListTitle">[t]Application list[/t]</h1>
-	{$menu}
-	<div class="text aplText aplListText">[t]If you have applied for one or more jobs, you can find the details regarding your registration below.[/t]</div>
-	<table cellspacing="0" cellpadding="0" border="0" class="aplTbl aplListTbl">
-		<thead>
-			<tr>
-				<th class="aplTblHeader aplTblHeaderDate">[t]Date, time[/t]</th>
-				<th class="aplTblHeader aplTblHeaderJob">[t]Job[/t]</th>
-                {if [uts:display_location]}
-				<th class="aplTblHeader aplTblHeaderLocation">[t]Location[/t]</th>
-                {/if}
-				{if $show_status}
-					<th class="aplTblHeader aplTblHeaderStatus">[t]Status[/t]</th>
-				{/if}
-                {if [uts:display_company_name]}
-                <th class="aplTblHeader aplTblHeaderStatus">[t]Company[/t]</th>
-                {/if}
-            </tr>
-		</thead>
-		<tbody>
-			<foreach from=$applist item=app name=aplList>
-				<if !$app._invisible>
-					<tr class="{cycle values='aplListItemOdd,aplListItemEven'} {if $smarty.foreach.aplList.last}aplListItemLast{else}{/if}">
-						<td class="aplListDateTime">{$app.datetime}</td>
-						<td class="aplListLink"><a rel="external" href="[website]/index.php/page/JobsRemote/command/detail/bb/1/vid/{$app.id}">{$app.title|escape}</a></td>
-                        {if [uts:display_location]}
-						<td class="aplListLocation">{$app.location|escape}</td>
-                        {/if}
-						{if $show_status}
-							<td class="aplListStatus">{$app.status|escape}</td>
-						{/if}
-                        {if [uts:display_company_name]}
-                            {if [uts:redirect_to_company_page] && $app.networkConId}
-                                <td class="aplListLink"><a rel="external" href="[website]/index.php/page/network/command/custdetail/connectionId/{$app.networkConId}/bb/1">{$app.companyName|escape}</a></td>
-                            {else}
-                                <td class="aplListStatus">{$app.companyName|escape}</td>
-                             {/if}
-                        {/if}
 
-					</tr>
-				</if>
-			</foreach>
-		</tbody>
-	</table>
-</div>
-<!--uts:end inner-->
+<head>
+    <title>
+        <!-- Insert your title here -->
+    </title>
+</head>
+
+<body>
+    <!--uts:begin inner-->
+    <div class="outer aplOuter aplListOuter">
+        <!-- /UTS/applicants/applicationList.html -->
+        <h1 class="title aplTitle aplListTitle">[t]Application list[/t]</h1> {$menu}
+        <div class="text aplText aplListText">[t]If you have applied for one or more jobs, you can find the details regarding your registration below.[/t]</div>
+        <table class="center margin-s table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th class="aplTblHeader aplTblHeaderDate center">[t]Date, time[/t]</th>
+                    <th class="aplTblHeader aplTblHeaderJob center">[t]Job[/t]</th>
+                    {if [uts:display_location]}
+                    <th class="aplTblHeader aplTblHeaderLocation center">[t]Location[/t]</th>
+                    {/if} {if $show_status}
+                    <th class="aplTblHeader aplTblHeaderStatus center">[t]Status[/t]</th>
+                    {/if} {if [uts:display_company_name]}
+                    <th class="aplTblHeader aplTblHeaderStatus center">[t]Company[/t]</th>
+                    {/if}
+                </tr>
+            </thead>
+            <tbody>
+                <foreach from=$applist item=app name=aplList>
+                    <if !$app._invisible>
+                        <tr class="{cycle values='aplListItemOdd,aplListItemEven'} {if $smarty.foreach.aplList.last}aplListItemLast{else}{/if}">
+                            <td class="aplListDateTime">{$app.datetime}</td>
+                            <td class="aplListLink"><a rel="external" href="[website]/index.php/page/JobsRemote/command/detail/bb/1/vid/{$app.id}">{$app.title|escape}</a></td>
+                            {if [uts:display_location]}
+                            <td class="aplListLocation">{$app.location|escape}</td>
+                            {/if} {if $show_status}
+                            <td class="aplListStatus">{$app.status|escape}</td>
+                            {/if} {if [uts:display_company_name]} {if [uts:redirect_to_company_page] && $app.networkConId}
+                            <td class="aplListLink"><a rel="external" href="[website]/index.php/page/network/command/custdetail/connectionId/{$app.networkConId}/bb/1">{$app.companyName|escape}</a></td>
+                            {else}
+                            <td class="aplListStatus">{$app.companyName|escape}</td>
+                            {/if} {/if}
+                        </tr>
+                    </if>
+                </foreach>
+            </tbody>
+        </table>
+    </div>
+    <!--uts:end inner-->
 </body>
+
 </html>
