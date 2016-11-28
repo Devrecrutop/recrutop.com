@@ -1,0 +1,69 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Algolia</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+    <link rel="stylesheet" href="algolia-search.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <!--<link rel="stylesheet" href="css/main.css"> -->
+</head>
+
+<body>
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- Add your site or application content here -->
+    <header>
+        <div id="search-input"></div>
+        <div id="search-input-icon"></div>
+    </header>
+    <main>
+        <div id="left-column">
+            <div id="qualif-principale" class="facet"></div>
+            <div id="specialite" class="facet"></div>
+            <div id="qualif-secondaire" class="facet"></div>
+            <div id="ville" class="facet"></div>
+        </div>
+        <div id="right-column">
+            <div id="stats"></div>
+            <div id="hits"></div>
+            <div id="pagination"></div>
+        </div>
+    </main>
+    <script type="text/html" id="hit-template">
+        <div class="hit">
+            <div class="hit-content">
+                <h2 class="hit-name">{{_highlightResult.qualif-principale.value}} - {{{_highlightResult.qualif-secondaire.value}}}</h2>
+                <h3 class="hit-price">{{{_highlightResult.nom.value}}} {{{_highlightResult.prenom.value}}}</h3>
+                <p class="hit-description">Autres qualifs : {{{qualif-rare}}} {{{qualif-3}}}</p>
+                <p class="hit-description">Ville : {{{ville}}}</p>
+                <p class="hit-description">CACES : {{{caces}}}</p>
+                <p class="hit-description">Remarques : {{{remarques}}}</p>
+                <p class="hit-description">Tél : {{{telephone}}}</p>
+                <p class="hit-description">Dossier : {{{n-dossier}}} → {{{_highlightResult.pieces-du-dossier.value}}} - <a href="{{{url-dossier}}}" target="_blank">{{{url-dossier}}}</a></p>
+            </div>
+        </div>
+    </script>
+    <script type="text/html" id="no-results-template">
+        <div id="no-results-message">
+            <p>Je n'ai trouvé aucun résultat pour ta recherche <em>"{{query}}"</em>.</p>
+            <a href="." class="clear-all">Clear search</a>
+        </div>
+    </script>
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+    window.jQuery || document.write('<script src="js/vendor/jquery-1.12.4.min.js"><\/script>')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
