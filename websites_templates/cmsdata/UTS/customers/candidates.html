@@ -154,13 +154,25 @@
 
         //-->
     </script>
+    <script>
+      $(function() { $('a[href*="#"]:not([href="#"])').click(function() { if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) { var target = $(this.hash); target = target.length ? target : $('[name=' + this.hash.slice(1) +']'); if (target.length) { $('html, body').animate({ scrollTop: target.offset().top }, 1000); return false; } } }); });
+
+    </script>
     {/literal}
     <div class="outer custCandMultiple">
         <!-- UTS: Candidates (multiple) -->
         <!-- /UTS/customers/candidates.div.html custom -->
-        <h1 class="title">{$count_linked}  [t]Candidates for[/t]&nbsp;{$vacancy}</h1> {$customer_menu}
+        <h1 class="title">[t]Candidates for[/t]&nbsp;{$vacancy}</h1>
+        <div>{$customer_menu}</div>
+        <div class="row">
+        <div class="col-xs-3">
+        <a href="#page-bottom">
+            <button class="btn btn-lg margin-s" style="background-color: #022B4C; color: white; margin-right: 110px; margin-bottom: 20px;">Voir les derniers candidats </button>
+        </a>
+        </div>
+        <div class="col-xs-9">
         <div class="tscFilterDiv">
-            <form action="/index.php/page/customers/command/candjob_list/bb/1/" id="frm_flt" name="frm_flt" method="post" class="form-inline center margin-l">
+            <form action="/index.php/page/customers/command/candjob_list/bb/1/" id="frm_flt" name="frm_flt" method="post" class="form-inline center margin-s">
                 <input type="hidden" name="vid" value="{$vid}">
                 <div class="formInput form-group ">
                     <label class="sr-only">[t]Candidate[/t]</label>
@@ -199,8 +211,10 @@
                     </select>
                 </div>
                 {/if} {/if}
-                <button type="submit" class="btn btn-primary btn-lg">Filter les candidats par nom </button>
+                <button type="submit" class="btn btn-lg" style="background-color: #022B4C; color: white;">Filter les candidats par nom </button>
             </form>
+        </div>
+        </div>
         </div>
         {*FILTER FORM END*} {if $lmBatchSttatuses && $stChangeAllowed}
         <!-- SET BATCH STATUSES SELECTS -->
@@ -264,21 +278,22 @@
                         <tr>
                             <td class="center" style="vertical-align: middle;">
                                 {if $cand.foto}
-                                <img src="{$cand.foto}" style="border-radius: 100%; width: 130px;">
-                                {/if}
-                                 {if $lmBatchSttatuses && $stChangeAllowed}
+                                <img src="{$cand.foto}" style="border-radius: 100%; width: 130px;"> {/if} {if $lmBatchSttatuses && $stChangeAllowed}
                                 <input type="checkbox" name="lm_bs[]" class="lmbs_checkbox" value="{$cand.reactieid}:{$cand.kandidaatid}"> {/if} {if $uts.siteid == 0001}
                                 <h3 class="itemTitle"><a href="/index.php/page/customers/vid/{$vid}/bb/1/code/{$code}/command/cand_detail/kid/{$kid}" {if $cand.recently_changed}style="color:orange;"{/if}>{$cand.voornaam} {$cand.tussenvoegsel} {$cand.achternaam}</a></h3> {else}
                                 <!-- code normal here -->
                                 <h3 class="itemTitle"><a href="{if $uses_cvsearch}/index.php/page/candetail/bb/1/command/start/id/{$kid}{else}/index.php/page/customers/vid/{$vid}/bb/1/code/{$code}/command/cand_detail/kid/{$kid}{/if}" {if $cand.recently_changed}style="color:orange;"{/if}>{$cand.voornaam} {$cand.tussenvoegsel} {$cand.achternaam}</a></h3> {/if}
                             </td>
-                            {if $hiring_manager} {if $cand.note}<td><div title="{$cand.note}"><img src="http://bo01.otys.nl/adm/hta/images/notitie_icoon.gif"></div></td>
-                            {else} &nbsp; {/if} {/if} {if $cand.cand_status || $cand.status1 || $cand.status2 || $cand.status3 || $staffing } {if $cand.cand_status}
-                            {/if}
+                            {if $hiring_manager} {if $cand.note}
+                            <td>
+                                <div title="{$cand.note}"><img src="http://bo01.otys.nl/adm/hta/images/notitie_icoon.gif"></div>
+                            </td>
+                            {else} &nbsp; {/if} {/if} {if $cand.cand_status || $cand.status1 || $cand.status2 || $cand.status3 || $staffing } {if $cand.cand_status} {/if}
                             <td class="center" style="vertical-align: middle;">{if $cand.status1}{$cand.status1}{/if}</td>
                             <td class="center" style="vertical-align: middle;">{if $cand.status2}{$cand.status2}{/if}</td>
                             <td class="center" style="vertical-align: middle;">{if $cand.status3}{$cand.status3}{/if}</td>
-                            {if $staffing}<td class="center" style="vertical-align: middle;">{$cand.staffing_status}</td>{/if}
+                            {if $staffing}
+                            <td class="center" style="vertical-align: middle;">{$cand.staffing_status}</td>{/if}
                             <!-- MBL -->
             </div>
     </div>
@@ -289,6 +304,7 @@
     </td>
     </tbody>
     </table>
+    <div id="page-bottom"></div>
     </div>
     <div class="buttonContainer">
         <!--START_BUTTON2-->
