@@ -22,7 +22,7 @@
 <!--END_TAGCLOUD_TOP-->
 <!--BUTTONS_TOP-->
 <!--START_PageTitle-->
-<h1 class="title jbdTitle">[PageTitle]</h1>
+<h1 class="title jbdTitle eush2">[PageTitle]</h1>
 <!--END_PageTitle-->
 
 <!--START_Block1-->
@@ -37,7 +37,7 @@
 
 
 <!--START_VACANCY_TBL-->
-<h1 class="title jbdTitle">[functie_o]</h1>
+<h1 class="title jbdTitle eush3 ">[functie_o]</h1>
 <!--START_ReferenceNr-->
 <div class="text jbsRef">[ReferenceNr]</div>
 <!--END_ReferenceNr-->
@@ -133,8 +133,8 @@
 <!--START_BUTTON_SECTION-->
 <div class="buttonContainer jbdBc">
 <!--START_BUTTON1-->
-<input class="button jbdButton jbdButPrint" type="button" name="Button" value="[Button1]" onClick="javascript:window.printframe.location='/index.php/page/JobsRemote/command/detail/vid/[id]/option/print/CurrentLanguage/[CurrentLanguage]/bb/1';"><!--ButtonLink1-->
-<!--END_BUTTON1-->
+<!-- <input class="button jbdButton jbdButPrint" type="button" name="Button" value="[Button1]" onClick="javascript:window.printframe.location='/index.php/page/JobsRemote/command/detail/vid/[id]/option/print/CurrentLanguage/[CurrentLanguage]/bb/1';"><!--ButtonLink1-->
+ --><!--END_BUTTON1-->
 <!--START_BUTTON2-->
 <input class="button jbdButton jbdButBack" type="button" value="[Button2]" onClick="javascript:history.go(-1)" name="button"><!--ButtonLink2-->
 <!--END_BUTTON2-->
@@ -157,11 +157,11 @@
 
 function addToJobBasket() {
 
-	var xhr; 
+	var xhr;
     try {
 		xhr = new ActiveXObject('Msxml2.XMLHTTP');
 	}
-    catch (e) {	
+    catch (e) {
         try {
 			xhr = new ActiveXObject('Microsoft.XMLHTTP');
 		}
@@ -174,53 +174,53 @@ function addToJobBasket() {
 			}
         }
     }
-  
-	xhr.open('GET', "[website]/index.php/page/jobbasket/command/jobbasketadd/vid/[id]",  true); 
-	xhr.onreadystatechange = function() { 
-	
+
+	xhr.open('GET', "[website]/index.php/page/jobbasket/command/jobbasketadd/vid/[id]",  true);
+	xhr.onreadystatechange = function() {
+
 		if(xhr.readyState == 4) {
 			if(xhr.status == 200) {
 
 				try {
-				
+
 					response = eval("(" + xhr.responseText + ")");
-					
+
 					if (response['status'] == 'OK') {
-						
+
 						// defined in jobBasketHook.html UTS template
-						if(typeof jobBasketRefreshCount == 'function') { 
+						if(typeof jobBasketRefreshCount == 'function') {
 							jobBasketRefreshCount(response['data']['vacanciesCount']);
 						}
-					
+
 						alert('[System3]'); // job was added to the job basket
 						return;
 					}
 					if (response['status'] == 'ERR_NOT_AVAIL') {
-					
+
 						alert('[System4]'); // job is unavailable
 						return;
 					}
 				}
 				catch (exception) {
 				}
-				
+
 			}
 //            alert('Request failed'); // response error
         }
-		
-    }; 
-	
-	xhr.send(null); 
+
+    };
+
+	xhr.send(null);
 
 }
 
 //-->
 </script>
-<input class="button jbdButton jbdButBasket" type="button" name="addtobasket" value="[Button5]"  onClick="javascript:addToJobBasket();"><!--ButtonLink5-->
-<!--END_BUTTON5-->
+<!-- <input class="button jbdButton jbdButBasket" type="button" name="addtobasket" value="[Button5]"  onClick="javascript:addToJobBasket();"><!--ButtonLink5-->
+ --><!--END_BUTTON5-->
 <!--START_BUTTON4-->
-<input class="button jbdButton jbdButMail" type="button" name="mailfriend" value="[Button4]"  onClick="location='/index.php/page/JobsRemote/command/mailfriend/vid/[id]/bb/1';"><!--ButtonLink4-->
-<!--END_BUTTON4-->
+<!-- <input class="button jbdButton jbdButMail" type="button" name="mailfriend" value="[Button4]"  onClick="location='/index.php/page/JobsRemote/command/mailfriend/vid/[id]/bb/1';"><!--ButtonLink4-->
+ --><!--END_BUTTON4-->
 </div>
 <!--END_BUTTON_SECTION-->
 <!--START_TAGCLOUD_BOTTOM-->
@@ -234,8 +234,8 @@ function addToJobBasket() {
 </div>
 <!--END_JOB_TAGCLOUD-->
 </div>
-<iframe title="printframe" id="printframe" name="printframe" width="0" height="0" frameborder="0" scrolling="NO"></iframe>
-<!--START_SystemBlock-->
+<!-- <iframe title="printframe" id="printframe" name="printframe" width="0" height="0" frameborder="0" scrolling="NO"></iframe>
+ --><!--START_SystemBlock-->
 <!--SystemLinks-->
 <!--END_SystemBlock-->
 <!--END_9-->

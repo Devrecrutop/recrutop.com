@@ -8,6 +8,14 @@
  * -CUSTOM-CLASS
  * -OTYS
 
+// MODE D'EMPLOI
+// Le fichier style fonctionne comme un fichier css normal.
+// Il est cependant possible d’utiliser SASS
+// Aller sur http://css2sass.herokuapp.com/ et convertir le css en sass
+// > gem install sass
+// Enregistrer la sortie dans un fichier (aujourd’hui nommé import.sass)
+// scanner les modifications du fichiers et les compiler directement en css avec la commande ⇒     >sass --watch import.sass:style.css
+
 
 /*--------------------------------------------------
 
@@ -55,7 +63,7 @@ $white: #fff
         color: $black
   .dropdown:hover .dropdown-menu
     display: block
-  #login
+
 
 
 
@@ -344,10 +352,19 @@ h1
 
   .buttonContainer > input, .displayNone > input
     background-color: $blue
-    border-radius: 50px
     border: 0px none
     color: $white
-    padding: 1em
+
+  .jbdButApl
+    text-transform: uppercase
+    border-radius: 13px
+    padding: 15px
+
+
+  // Suppression des boutons inutiles sur les pages des postes
+  .jbdButMail, .jbdButBack, .jbdButPrint
+    display: none
+
 
   .jbMafOuter h2
     padding: 1.1em

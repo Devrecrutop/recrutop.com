@@ -7,6 +7,7 @@
 <!--<![endif]-->
 
 <head>
+    <!-- /websites_templates/cmsdata/acmsbusjabCandidat.html -->
     <title>Recrutop - L'humain au cœur du recrutement</title>
     <meta charset="utf-8">
     <meta name="google-site-verification" content="fvlg6Pkfm6muhjNrby0z5bpoNgzx29hyk5cqkos8vKw" />
@@ -94,111 +95,70 @@
     </div>
     <!-- Bootstrap -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/instantsearch.js/1.5.1/instantsearch.min.js"></script>
-    <script src="https://rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/app.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/modernizr.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/isotope.pkgd.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/jquery.browser.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/SmoothScroll.js"></script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/Devrecrutop/recrutop.com/master/nouvelles%20templates/blog/template.js"></script>
-    <!-- Typeform -->
-    <script>
-    (function() {
-        var qs, js, q, s, d = document,
-            gi = d.getElementById,
-            ce = d.createElement,
-            gt = d.getElementsByTagName,
-            id = 'typef_orm',
-            b = 'https://s3-eu-west-1.amazonaws.com/share.typeform.com/';
-        if (!gi.call(d, id)) {
-            js = ce.call(d, 'script');
-            js.id = id;
-            js.src = b + 'share.js';
-            q = gt.call(d, 'script')[0];
-            q.parentNode.insertBefore(js, q)
-        }
-    })()
-    </script>
-    <!-- Chatlio  -->
-    <script type="text/javascript">
-    window._chatlio = window._chatlio || [];
-    ! function() {
-        var t = document.getElementById("chatlio-widget-embed");
-        if (t && window.ChatlioReact && _chatlio.init) return void _chatlio.init(t, ChatlioReact);
-        for (var e = function(t) {
-                return function() {
-                    _chatlio.push([t].concat(arguments))
-                }
-            }, i = ["configure", "identify", "track", "show", "hide", "isShown", "isOnline"], a = 0; a < i.length; a++) _chatlio[i[a]] || (_chatlio[i[a]] = e(i[a]));
-        var n = document.createElement("script"),
-            c = document.getElementsByTagName("script")[0];
-        n.id = "chatlio-widget-embed", n.src = "https://w.chatlio.com/w.chatlio-widget.js", n.async = !0, n.setAttribute("data-embed-version", "2.1");
-        n.setAttribute('data-widget-id', '93b369e7-61ae-4d28-650c-1f0bde40cd0c');
-        c.parentNode.insertBefore(n, c);
-    }();
-    </script>
-    <!-- Google Analytics  -->
-    <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-11566180-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-        var ga = document.createElement('script');
-        ga.type = 'text/javascript';
-        ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(ga, s);
-    })();
-    </script>
-    <!-- FullStory -->
-    <script>
-    window['_fs_debug'] = false;
-    window['_fs_host'] = 'www.fullstory.com';
-    window['_fs_org'] = '1CP7P';
-    window['_fs_namespace'] = 'FS';
-    (function(m, n, e, t, l, o, g, y) {
-        if (e in m && m.console && m.console.log) {
-            m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');
-            return;
-        }
-        g = m[e] = function(a, b) {
-            g.q ? g.q.push([a, b]) : g._api(a, b);
-        };
-        g.q = [];
-        o = n.createElement(t);
-        o.async = 1;
-        o.src = 'https://' + _fs_host + '/s/fs.js';
-        y = n.getElementsByTagName(t)[0];
-        y.parentNode.insertBefore(o, y);
-        g.identify = function(i, v) {
-            g(l, {
-                uid: i
-            });
-            if (v) g(l, v)
-        };
-        g.setUserVars = function(v) {
-            g(l, v)
-        };
-        g.identifyAccount = function(i, v) {
-            o = 'account';
-            v = v || {};
-            v.acctId = i;
-            g(o, v)
-        };
-        g.clearUserCookie = function(d, i) {
-            d = n.domain;
-            while (1) {
-                n.cookie = 'fs_uid=;domain=' + d +
-                    ';path=/;expires=' + new Date(0);
-                i = d.indexOf('.');
-                if (i < 0) break;
-                d = d.slice(i + 1)
+    <!-- TypeForm -->
+        <script>
+        (function() {
+            var qs, js, q, s, d = document,
+                gi = d.getElementById,
+                ce = d.createElement,
+                gt = d.getElementsByTagName,
+                id = 'typef_orm',
+                b = 'https://s3-eu-west-1.amazonaws.com/share.typeform.com/';
+            if (!gi.call(d, id)) {
+                js = ce.call(d, 'script');
+                js.id = id;
+                js.src = b + 'share.js';
+                q = gt.call(d, 'script')[0];
+                q.parentNode.insertBefore(js, q)
             }
-        }
-    })(window, document, window['_fs_namespace'], 'script', 'user');
-    </script>
+        })()
+        </script>
+      <!-- Chatlio -->
+        <script type="text/javascript">
+        window._chatlio = window._chatlio || [];
+        ! function() {
+            var t = document.getElementById("chatlio-widget-embed");
+            if (t && window.ChatlioReact && _chatlio.init) return void _chatlio.init(t, ChatlioReact);
+            for (var e = function(t) {
+                    return function() {
+                        _chatlio.push([t].concat(arguments))
+                    }
+                }, i = ["configure", "identify", "track", "show", "hide", "isShown", "isOnline"], a = 0; a < i.length; a++) _chatlio[i[a]] || (_chatlio[i[a]] = e(i[a]));
+            var n = document.createElement("script"),
+                c = document.getElementsByTagName("script")[0];
+            n.id = "chatlio-widget-embed", n.src = "https://w.chatlio.com/w.chatlio-widget.js", n.async = !0, n.setAttribute("data-embed-version", "2.1");
+            n.setAttribute('data-widget-id', '93b369e7-61ae-4d28-650c-1f0bde40cd0c');
+            c.parentNode.insertBefore(n, c);
+        }();
+        </script>
+      <!-- Google Analytics -->
+        <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-11566180-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+        </script>
+      <!-- Get Smartlook -->
+        <script type="text/javascript">
+          window.smartlook||(function(d) {
+          var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+          var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+          c.charset='utf-8';c.src='//rec.smartlook.com/recorder.js';h.appendChild(c);
+          })(document);
+          smartlook('init', '6d58cb3f30eb3be3a11db1556c6a33e2f11b77c8');
+        </script>
 </body>
 
 </html>
