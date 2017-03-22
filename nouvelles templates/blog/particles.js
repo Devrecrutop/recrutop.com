@@ -1,10 +1,10 @@
-particlesJS("particles-js", {
+{
   "particles": {
     "number": {
-      "value": 114,
+      "value": 50,
       "density": {
         "enable": true,
-        "value_area": 800
+        "value_area": 950
       }
     },
     "color": {
@@ -26,7 +26,7 @@ particlesJS("particles-js", {
       }
     },
     "opacity": {
-      "value": 0.9,
+      "value": 0.5,
       "random": false,
       "anim": {
         "enable": false,
@@ -36,11 +36,11 @@ particlesJS("particles-js", {
       }
     },
     "size": {
-      "value": 5,
+      "value": 1.9,
       "random": true,
       "anim": {
         "enable": false,
-        "speed": 40,
+        "speed": 20,
         "size_min": 0.1,
         "sync": false
       }
@@ -68,14 +68,14 @@ particlesJS("particles-js", {
     }
   },
   "interactivity": {
-    "detect_on": "canvas",
+    "detect_on": "window",
     "events": {
       "onhover": {
         "enable": true,
         "mode": "repulse"
       },
       "onclick": {
-        "enable": false,
+        "enable": true,
         "mode": "push"
       },
       "resize": true
@@ -95,7 +95,7 @@ particlesJS("particles-js", {
         "speed": 3
       },
       "repulse": {
-        "distance": 180,
+        "distance": 200,
         "duration": 0.4
       },
       "push": {
@@ -108,5 +108,3 @@ particlesJS("particles-js", {
   },
   "retina_detect": true
 }
-
-);
